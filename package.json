@@ -1,0 +1,36 @@
+{
+  "name": "embeddable.com-remarkable-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "npm": ">=9.0.0",
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "embeddable:build": "embeddable build",
+    "embeddable:push": "embeddable push",
+    "embeddable:login": "embeddable login",
+    "embeddable:dev": "cross-env NODE_OPTIONS='--max-old-space-size=4096' embeddable dev",
+    "embeddable:update": "npx npm-check-updates -u \"/embeddable/\"",
+    "build": "embeddable build",
+    "push": "embeddable push",
+    "dev": "cross-env NODE_OPTIONS='--max-old-space-size=4096' embeddable dev",
+    "check-types": "tsc --noemit",
+    "ct": "tsc --noEmit",
+    "lint": "npx eslint . --ext .ts --ext .tsx",
+    "license-report": "license-report --output=csv --csvHeaders --fields name --fields link --fields licenseType --fields installedVersion --fields author > license-report.csv"
+  },
+  "dependencies": {
+    "@embeddable.com/sdk-core": "^3.13.5",
+    "@embeddable.com/sdk-react": "^3.10.12",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.11",
+    "@types/react-dom": "^19.0.4",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.8.2"
+  }
+}
