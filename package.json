@@ -22,10 +22,13 @@
     "license-report": "license-report --output=csv --csvHeaders --fields name --fields link --fields licenseType --fields installedVersion --fields author > license-report.csv"
   },
   "dependencies": {
+    "@embeddable.com/core": "^2.9.4",
+    "@embeddable.com/react": "^2.9.7",
     "@embeddable.com/sdk-core": "^3.13.5",
     "@embeddable.com/sdk-react": "^3.10.12",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "styled-components": "^6.1.16"
   },
   "devDependencies": {
     "@types/react": "^19.0.11",
