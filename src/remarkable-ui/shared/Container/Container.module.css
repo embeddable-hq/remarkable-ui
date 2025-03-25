@@ -1,9 +1,0 @@
-.headerContainer {
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-self: stretch;
-    gap: 16px;
-}

@@ -1,4 +1,4 @@
-import Container from '../../shared/Container/Container';
+import Card from '../../shared/Card';
 import type { TestComponentProps } from './TestComponent.emb';
 
 
@@ -16,7 +16,7 @@ const RandomTable = () => {
   const columns = Array.from({ length: 10 }, (_, index) => `Column ${index + 1}`);
 
   // Generate 50 rows of random data, each row with 10 cells
-  const rows = Array.from({ length: 50 }, () =>
+  const rows = Array.from({ length: 20 }, () =>
     Array.from({ length: 10 }, () => getRandomString())
   );
 
@@ -25,7 +25,7 @@ const RandomTable = () => {
       <thead style={{ position: 'sticky', top: '0px' }}>
         <tr>
           {columns.map((col) => (
-            <th key={col} style={{ border: '1px solid #ccc', padding: '0.5rem' }}>
+            <th key={col} style={{ border: '1px solid #eee', padding: '0.5rem' }}>
               {col}
             </th>
           ))}
@@ -35,7 +35,7 @@ const RandomTable = () => {
         {rows.map((rowData, rowIndex) => (
           <tr key={rowIndex}>
             {rowData.map((cellData, cellIndex) => (
-              <td key={cellIndex} style={{ border: '1px solid #ccc', padding: '0.5rem' }}>
+              <td key={cellIndex} style={{ border: '1px solid #eee', padding: '0.5rem' }}>
                 {cellData}
               </td>
             ))}
@@ -48,12 +48,12 @@ const RandomTable = () => {
 
 export default (props:TestComponentProps) => {
 
-  const errorMessage = "";
-  const noResults = true;
-  const loading = false;
+  const errorMessage = props.errorMessage;
+  const noResults = props.noResults;
+  const loading = props.loading;
 
   return (
-    <Container
+    <Card
         title={props.title}
         description={props.description}
         errorMessage={errorMessage}
@@ -61,6 +61,6 @@ export default (props:TestComponentProps) => {
         loading={loading}
     >
       {RandomTable()}
-    </Container>
+    </Card>
   );
 };

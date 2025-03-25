@@ -3,10 +3,11 @@
     height: 100%;
     box-sizing: border-box;
     display: flex;
-    padding: 32px;
+    padding: var(--padding-8, 32px);
     flex-direction: column;
     align-items: center;
-    gap: 32px;
-    border-radius: 32px;
+    gap: var(--padding-8, 32px);
+    border-radius: var(--rounded-3xl, 32px);
     background: #F9F9FA;
+    background: var(--background-default, #F9F9FA);
 }

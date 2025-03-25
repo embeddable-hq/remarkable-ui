@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.css'
 
-type Props = {
+type ChartContainerProps = {
     children?: React.ReactNode;
 }
 
@@ -14,7 +14,8 @@ function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
     };
 }
 
-export default function ChartContainer({children}:Props) {
+export default function ChartContainer({children}:ChartContainerProps) {
+    
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerHeight, setContainerHeight] = useState(0);
 
