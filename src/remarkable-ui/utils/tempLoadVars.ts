@@ -153,6 +153,8 @@ export function loadRootVariables() {
         
         /* Semantic */
         '--background-default': 'var(--gray-50)',
+        '--foreground-default': 'var(--gray-900)',
+        '--foreground-muted': 'var(--gray-700)'
     };
   
     Object.entries(variables).forEach(([key, value]) => {

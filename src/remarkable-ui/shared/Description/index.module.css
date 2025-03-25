@@ -1,8 +1,8 @@
 .description {
     width: 100%;
-    color: #5C5C66;
-    font-size: 14px;
+    color: var(--foreground-muted);
+    font-size: var(--text-sm);
     font-style: normal;
-    font-weight: 500;
+    font-weight: var(--font-medium);
     line-height: 16px;
 }

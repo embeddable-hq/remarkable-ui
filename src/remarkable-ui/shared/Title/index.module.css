@@ -1,8 +1,8 @@
 .title {
     width: 100%;
-    color: #212129;
-    font-size: 16px;
+    color: var(--foreground-default);
+    font-size: var(--text-default);
     font-style: normal;
-    font-weight: 700;
+    font-weight: var(--font-bold);
     line-height: 19px;
 }
