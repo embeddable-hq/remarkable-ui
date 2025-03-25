@@ -23,7 +23,6 @@ export default function ChartContainer({children}:ChartContainerProps) {
         if (containerRef.current) {
           // Measure the container's own height
           const height = containerRef.current.offsetHeight;
-          console.log(containerRef.current.offsetHeight);
           setContainerHeight(height);
         }
     };

@@ -1,8 +1,16 @@
 .icon {
     display: flex;
-    padding: 8px 2px;
+    padding: var(--padding-2) var(--padding-0-5);
     align-items: center;
     gap: 8px;
-    border-radius: 100px;
-    background: #EDEDF1;
+    border-radius: var(--rounded-full);
+    background: var(--background-light);
+}
+
+.icon:hover {
+    background: var(--background-subtle);
+}
+
+.icon:pressed {
+    background: var(--background-muted);
 }

@@ -25,11 +25,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     >
       {items.map((item) => {
         const Icon = item.icon;
+
         return (
           <div
             key={item.id}
             className={styles.dropdownItem}
             role="menuitem"
+            onMouseDown={(e) => e.stopPropagation()}
             onClick={() => onItemClick(item)}
           >
             {Icon && <Icon className={styles.dropdownItemIcon} />}

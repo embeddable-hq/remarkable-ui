@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.module.css'
-import { ExportIcon } from '../../constants/icons'
+import { ExportIcon, DownloadCSVIcon, DownloadPNGIcon } from '../../constants/icons'
 import Dropdown from '../Dropdown'
 
 
@@ -8,32 +8,26 @@ type Props = {
     children?: React.ReactNode;
 }
 
-const items = [
-    {
-        id: "download",
-        label: "download",
-        icon: ExportIcon
-    }
-]
-
 export default function ExportButton() {
 
     const downloadCSV = {
-        id: "download",
+        id: "downloadCSV",
         label: "Download CSV",
-        icon: ExportIcon
+        icon: DownloadCSVIcon,
+        onClick: () => console.log("dowload csv!")
     };
 
     const downloadPNG = {
-        id: "download",
+        id: "downloadPNG",
         label: "Download PNG",
-        icon: ExportIcon
+        icon: DownloadPNGIcon,
+        onClick: () => console.log("dowload png!")
     };
 
     return (
-        <Dropdown items={items} align='right'>
+        <Dropdown items={[downloadCSV, downloadPNG]} align='right'>
             <div className={styles.icon}>
-                <ExportIcon/>       
+                <ExportIcon className={styles.exportIcon}/>       
             </div>
         </Dropdown>
     );

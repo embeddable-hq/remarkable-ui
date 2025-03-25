@@ -3,6 +3,7 @@ export function loadRootVariables() {
   
     const variables: Record<string, string> = {
         /* Gray */
+        '--gray-0': '#fff',
         '--gray-50': '#f9f9fa',
         '--gray-100': '#ededf1',
         '--gray-200': '#e4e4ea',
@@ -152,9 +153,11 @@ export function loadRootVariables() {
         '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)',
         
         /* Semantic */
+        '--background-neutral': 'var(--gray-0)',
         '--background-default': 'var(--gray-50)',
-        '--background-neutral': '#fff',
         '--background-light': 'var(--gray-100)',
+        '--background-subtle': 'var(--gray-200)',
+        '--background-muted': 'var(--gray-300)',
         '--foreground-default': 'var(--gray-900)',
         '--foreground-muted': 'var(--gray-700)',
         '--foreground-subtle': 'var(--gray-400)'

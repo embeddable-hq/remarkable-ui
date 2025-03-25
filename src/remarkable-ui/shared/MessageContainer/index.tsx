@@ -28,7 +28,7 @@ export default function MessageContainer({variant, message, title, className}: P
                 className={styles.message}
                 style={{ color: variant === 'error' ? '#D03109' : 'inherit'}}
             >
-                {icon('error', className)}            
+                {variant && icon('error', className)}            
                 {title && (<span className={styles.titleText}>{title}</span>)}
                 {message && (<span className={styles.bodyText}>{message}</span>)}
             </div>              

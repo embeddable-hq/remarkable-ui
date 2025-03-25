@@ -21,15 +21,19 @@ const Dropdown = ({ children, items, className, align = 'left' }: DropdownProps)
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isOpen) return; // only add listener when isOpen is true
+  
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
-
+  
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -45,7 +49,6 @@ const Dropdown = ({ children, items, className, align = 'left' }: DropdownProps)
       <div onClick={handleToggle}>
         {React.isValidElement(children)
           ? React.cloneElement(children as React.ReactElement<any>, {
-              isOpen,
               onClick: handleToggle,
             })
           : children}
