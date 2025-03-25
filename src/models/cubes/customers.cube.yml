@@ -1,0 +1,30 @@
+cubes:
+  - name: customers
+    title: My customers
+    data_source: default
+    sql_table: public.customers
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: email
+        title: 'Email address'
+        sql: email
+        type: string
+
+      - name: country
+        title: 'Country of origin'
+        sql: country
+        type: string
+
+      - name: signed_up_at
+        sql: signed_up_at
+        type: time
+
+    measures:
+      - name: count
+        type: count
+        title: '# of customers'

@@ -23,11 +23,12 @@ export default function ChartContainer({children}:ChartContainerProps) {
         if (containerRef.current) {
           // Measure the container's own height
           const height = containerRef.current.offsetHeight;
+          const width = containerRef.current.offsetWidth;
           setContainerHeight(height);
         }
     };
     
-    const debouncedUpdateHeight = debounce(updateHeight, 100);
+    const debouncedUpdateHeight = debounce(updateHeight, 10);
     
     useEffect(() => {
         // Initial measurement
@@ -56,7 +57,7 @@ export default function ChartContainer({children}:ChartContainerProps) {
                 className={styles.chartContainerInner}
                 style={{ height: containerHeight === 0 ? '100%' : `${containerHeight}px`}}
             >
-                {children}
+                {containerHeight && children}
             </div>                         
         </div>
     );

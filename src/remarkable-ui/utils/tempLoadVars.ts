@@ -14,9 +14,10 @@ export function loadRootVariables() {
         '--gray-700': '#5c5c66',
         '--gray-800': '#31313d',
         '--gray-900': '#212129',
-        
+      
         /* Font family */
-        '--font-sans': "'Inter', sans-serif",
+        // '--font-sans': "'Inter', sans-serif",
+        '--font-sans': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
         
         /* Headings */
         '--text-4xl': '2rem',
