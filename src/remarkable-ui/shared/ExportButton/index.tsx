@@ -14,18 +14,25 @@ export default function ExportButton() {
         id: "downloadCSV",
         label: "Download CSV",
         icon: DownloadCSVIcon,
-        onClick: () => console.log("dowload csv!")
+        onClick: () => alert("dowload csv!")
     };
 
     const downloadPNG = {
         id: "downloadPNG",
         label: "Download PNG",
         icon: DownloadPNGIcon,
-        onClick: () => console.log("dowload png!")
+        onClick: () => alert("dowload png!")
+    };
+
+    const testElement = {
+        id: "test",
+        label: "Test Element that is going to be way longer than 256px",
+        icon: DownloadPNGIcon,
+        onClick: () => alert("dowload test!")
     };
 
     return (
-        <Dropdown items={[downloadCSV, downloadPNG]} align='right'>
+        <Dropdown items={[downloadCSV, downloadPNG, testElement]} align='right'>
             <div className={styles.icon}>
                 <ExportIcon className={styles.exportIcon}/>       
             </div>

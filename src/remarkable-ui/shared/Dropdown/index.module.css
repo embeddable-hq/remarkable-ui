@@ -28,7 +28,7 @@
     visibility: hidden;
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
     min-width: 100px;
-    max-width: 300px;
+    max-width: 256px;
     text-wrap: nowrap;
     color: var(--foreground-default);
 }
@@ -47,6 +47,8 @@
 .dropdownItem {
     display: flex;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
     padding: var(--padding-2);
     gap: var(--padding-2);
     color: var(--foreground-default);
@@ -57,6 +59,13 @@
     line-height: normal;
     transition: background-color 0.2s ease;
     border-radius: var(--rounded-lg);
+}
+
+.dropdownItem .itemText {
+    flex: 1;
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .dropdownItem:hover {

@@ -35,7 +35,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             onClick={() => onItemClick(item)}
           >
             {Icon && <Icon className={styles.dropdownItemIcon} />}
-            <span>{item.label}</span>
+            <span title={item.label} className={styles.itemText}>{item.label}</span>
           </div>
         );
       })}
