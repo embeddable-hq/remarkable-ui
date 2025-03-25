@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.module.css'
-import IconButton from '../IconButton';
+import ExportButton from '../ExportButton';
 import Spinner from '../Spinner';
 
 type Props = {
@@ -15,7 +15,7 @@ export default function CardHeader({ loading = false, children }:Props) {
                 {children}
             </div>  
             <div>
-                {loading ? <Spinner/> : <IconButton/>}               
+                {loading ? <Spinner/> : <ExportButton/>}               
             </div>
         </div>
     );
