@@ -30,6 +30,12 @@ export function loadRootVariables() {
         '--font-normal': '400',
         '--font-medium': '500',
         '--font-bold': '700',
+
+        /* Font height*/
+        '--font-height-sm': '1.2',
+        '--font-height-md' : '1.5',
+        '--font-height-lg' : '1.75',
+        '--font-height-xl' : '2',
         
         /* Padding */
         '--padding-0': '0rem',
@@ -102,6 +108,7 @@ export function loadRootVariables() {
         '--height-48': '12rem',
         '--height-56': '14rem',
         '--height-64': '16rem',
+        '--height-128': '32rem',
         
         /* Width */
         '--width-0': '0rem',
