@@ -12,12 +12,12 @@ type CardProps = {
     title?: string;
     description?: string;
     errorMessage?:string;
-    loading?: boolean;
-    noResults?: boolean;
+    isLoading?: boolean;
+    data?: { [attr: string]: any; }[];
     children?: React.ReactNode;
 }
 
-export default function Card({ title, description, errorMessage, children, loading, noResults }: CardProps) {
+export default function Card({ title, description, errorMessage, children, isLoading, data }: CardProps) {
 
     useEffect(() => {
         loadRootVariables();
@@ -26,13 +26,13 @@ export default function Card({ title, description, errorMessage, children, loadi
     return (
         <Surface>            
             <CardHeader 
-                loading={loading}
+                isLoading={isLoading}
             >
                 <Title>{title}</Title>
                 <Description>{description}</Description>
             </CardHeader>
             <CardContent
-                loading={loading}
+                showSkeletonLoader={isLoading && !data}
             >
                 {errorMessage 
                     ? (
@@ -41,7 +41,7 @@ export default function Card({ title, description, errorMessage, children, loadi
                             title="Something went wrong"
                             message={errorMessage} 
                         />
-                    ) : noResults ? (
+                    ) : data?.length === 0 ? (
                         <MessageContainer
                             title="No results" 
                         />

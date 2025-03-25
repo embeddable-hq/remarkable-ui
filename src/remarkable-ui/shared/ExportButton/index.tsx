@@ -3,18 +3,24 @@ import styles from './index.module.css'
 import { ExportIcon, DownloadCSVIcon, DownloadPNGIcon } from '../../constants/icons'
 import Dropdown from '../Dropdown'
 
+type SetBoolean = React.Dispatch<React.SetStateAction<boolean>>;
 
-type Props = {
-    children?: React.ReactNode;
+type ExportButtonProps = {
+    setLocalLoading: SetBoolean;
 }
 
-export default function ExportButton() {
+const handleDownload = (setLocalLoading:SetBoolean) => {
+    alert("dowload csv!")
+    setLocalLoading(true);
+}
+
+export default function ExportButton({setLocalLoading}:ExportButtonProps) {
 
     const downloadCSV = {
         id: "downloadCSV",
         label: "Download CSV",
         icon: DownloadCSVIcon,
-        onClick: () => alert("dowload csv!")
+        onClick: () => handleDownload(setLocalLoading)
     };
 
     const downloadPNG = {

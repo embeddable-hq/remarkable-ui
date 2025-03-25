@@ -5,15 +5,14 @@ import MessageContainer from '../MessageContainer';
 
 type Props = {
     children?: React.ReactNode;
-    errorMessage?: string;
-    loading?: boolean;
+    showSkeletonLoader?: boolean;
 }
 
-export default function CardContent({ loading = false, errorMessage, children }: Props) {
+export default function CardContent({ showSkeletonLoader = false, children }: Props) {
 
     return (
         <div className={styles.content}>
-            {loading 
+            {showSkeletonLoader 
                 ? <SkeletonLoader/> 
                 : children 
             }

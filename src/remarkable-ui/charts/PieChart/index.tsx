@@ -58,15 +58,15 @@ export const PieChart = ({
     return {
         labels: data?.map((item) => item[dimension.name]),
         datasets: [
-        {
-            data: data?.map((item) => item[measure.name]),
-            backgroundColor: CHART_COLORS.slice(0, data?.length),
-            borderColor: CHART_BORDERS.slice(0, data?.length),
-            borderWidth: 1,
-            hoverBackgroundColor: CHART_COLORS.map(color => color.replace('0.8', '0.9')),
-            hoverBorderColor: CHART_BORDERS,
-            hoverBorderWidth: 2,
-        },
+            {
+                data: data?.map((item) => item[measure.name]),
+                backgroundColor: CHART_COLORS.slice(0, data?.length),
+                borderColor: CHART_BORDERS.slice(0, data?.length),
+                borderWidth: 1,
+                hoverBackgroundColor: CHART_COLORS.map(color => color.replace('0.8', '0.9')),
+                hoverBorderColor: CHART_BORDERS,
+                hoverBorderWidth: 2,
+            },
         ],
     }
     };
@@ -127,9 +127,9 @@ export const PieChart = ({
   return (
     <Card
         errorMessage={error}
-        noResults={data?.length === 0}
-        loading={isLoading}
+        isLoading={isLoading}
         title={title}
+        data={data}
         description={description}
     >
         <Pie 

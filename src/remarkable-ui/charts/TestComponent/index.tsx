@@ -49,16 +49,14 @@ const RandomTable = () => {
 export default (props:TestComponentProps) => {
 
   const errorMessage = props.errorMessage;
-  const noResults = props.noResults;
-  const loading = props.loading;
+  const isLoading = props.loading;
 
   return (
     <Card
         title={props.title}
         description={props.description}
         errorMessage={errorMessage}
-        noResults={noResults}
-        loading={loading}
+        isLoading={isLoading}
     >
       {RandomTable()}
     </Card>
