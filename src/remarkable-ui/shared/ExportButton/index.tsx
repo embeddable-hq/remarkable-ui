@@ -30,15 +30,15 @@ export default function ExportButton({setLocalLoading}:ExportButtonProps) {
         onClick: () => alert("dowload png!")
     };
 
-    const testElement = {
-        id: "test",
-        label: "Test Element that is going to be way longer than 256px",
-        icon: DownloadPNGIcon,
-        onClick: () => alert("dowload test!")
-    };
+    // const testElement = {
+    //     id: "test",
+    //     label: "Test Element that is going to be way longer than 256px",
+    //     icon: DownloadPNGIcon,
+    //     onClick: () => alert("dowload test!")
+    // };
 
     return (
-        <Dropdown items={[downloadCSV, downloadPNG, testElement]} align='right'>
+        <Dropdown items={[downloadCSV, downloadPNG]} align='right'>
             <div className={styles.icon}>
                 <ExportIcon className={styles.exportIcon}/>       
             </div>

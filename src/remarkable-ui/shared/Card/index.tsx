@@ -33,23 +33,13 @@ export default function Card({ title, description, errorMessage, children, isLoa
             </CardHeader>
             <CardContent
                 showSkeletonLoader={isLoading && !data}
+                showNoResults={!errorMessage && data?.length === 0}
+                showErrorMessage={!!errorMessage}    
+                errorMessage={errorMessage}            
             >
-                {errorMessage 
-                    ? (
-                        <MessageContainer
-                            variant={"error"}
-                            title="Something went wrong"
-                            message={errorMessage} 
-                        />
-                    ) : data?.length === 0 ? (
-                        <MessageContainer
-                            title="No results" 
-                        />
-                    ) : (
-                        <ChartContainer>
-                            {children}
-                        </ChartContainer>
-                    )}
+                <ChartContainer>
+                    {children}
+                </ChartContainer>
             </CardContent>
         </Surface>
     );

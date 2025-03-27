@@ -163,7 +163,7 @@ export function loadRootVariables() {
         /* Semantic */
         '--background-neutral': 'var(--gray-0)',
         '--background-default': 'var(--gray-50)',
-        '--background-light': 'var(--gray-100)',
+        '--background-light': 'var(--gray-100)', /* could change to 'soft'*/
         '--background-subtle': 'var(--gray-200)',
         '--background-muted': 'var(--gray-300)',
         '--foreground-default': 'var(--gray-900)',
