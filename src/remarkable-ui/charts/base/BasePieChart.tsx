@@ -4,6 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions,
 import { Pie } from 'react-chartjs-2';
 import { getCSSValue } from '../../utils/cssUtils'
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { mergician } from 'mergician';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend);
@@ -39,98 +40,108 @@ const CHART_BORDERS = [
 type BasePieChartProps = {
     measure: Measure;
     dimension: Dimension;
-    results: DataResponse
+    results: DataResponse;
+    chartDataOverrides?: Partial<ChartData<'pie'>>;
+    chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
 }
 
 const BasePieChart = ({
   measure,
   dimension,
   results,
+  chartDataOverrides,
+  chartOptionsOverrides,
 }: BasePieChartProps ) => {
 
     const { data } = results;
   
     const chartRef = useRef<ChartJS<'pie', number[], string> | null>(null);
 
+    
+
     const chartData = () => {
-    return {
-        labels: data?.map((item) => item[dimension.name]),
-        datasets: [
-            {
-                data: data?.map((item) => item[measure.name]),
-                backgroundColor: CHART_COLORS.slice(0, data?.length),
-                borderColor: CHART_BORDERS.slice(0, data?.length),
-                borderWidth: 1,
-                hoverBackgroundColor: CHART_COLORS.map(color => color.replace('0.8', '0.9')),
-                hoverBorderColor: CHART_BORDERS,
-                hoverBorderWidth: 2,
-            },
-        ],
-    }
+        return mergician({
+            labels: data?.map((item) => item[dimension.name]),
+            datasets: [
+                {
+                    data: data?.map((item) => item[measure.name]),
+                    backgroundColor: CHART_COLORS.slice(0, data?.length),
+                    borderColor: CHART_BORDERS.slice(0, data?.length),
+                    borderWidth: 1,
+                    hoverBackgroundColor: CHART_COLORS.map(color => color.replace('0.8', '0.9')),
+                    hoverBorderColor: CHART_BORDERS,
+                    hoverBorderWidth: 2,
+                },
+            ],
+        }, 
+        chartDataOverrides || {}) as ChartData<'pie'>;
     };
 
-    const chartOptions = ():ChartOptions<'pie'> => {
-        return {
+    const chartOptions = () => {
+        return mergician({
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-            legend: {
-                display: true,
-                position: 'bottom',
-                labels: {
-                    font: {
-                        family: getCSSValue('--font-sans') as string,
-                        size: getCSSValue('--text-xs') as number
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: getCSSValue('--font-sans') as string,
+                            size: getCSSValue('--text-xs') as number
+                        },
+                        boxHeight: 8,
+                        boxWidth: 8,
+                        usePointStyle: true,
                     },
-                    boxHeight: 8,
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    titleColor: '#333',
+                    bodyColor: '#333',
+                    bodyFont: {
+                        family: 'Inter, sans-serif',
+                        size: 12,
+                    },
+                    titleFont: {
+                        family: 'Inter, sans-serif',
+                        size: 14,
+                        weight: 'bold',
+                    },
+                    padding: 12,
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 1,
+                    displayColors: true,
                     boxWidth: 8,
+                    boxHeight: 8,
+                    boxPadding: 4,
                     usePointStyle: true,
-                },
-            },
-            tooltip: {
-                backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                titleColor: '#333',
-                bodyColor: '#333',
-                bodyFont: {
-                    family: 'Inter, sans-serif',
-                    size: 12,
-                },
-                titleFont: {
-                    family: 'Inter, sans-serif',
-                    size: 14,
-                    weight: 'bold',
-                },
-                padding: 12,
-                borderColor: 'rgba(0, 0, 0, 0.1)',
-                borderWidth: 1,
-                displayColors: true,
-                boxWidth: 8,
-                boxHeight: 8,
-                boxPadding: 4,
-                usePointStyle: true,
-                callbacks: {
-                    label: function(context:any) {
-                        const label = context.label || '';
-                        const value = context.raw as number;
-                        const total = context.dataset.data.reduce((acc:number, val:number) => acc + (val as number), 0);
-                        const percentage = Math.round((value / total) * 100);
-                        return `${label}: ${value} (${percentage}%)`;
+                    callbacks: {
+                        label: function(context:any) {
+                            const label = context.label || '';
+                            const value = context.raw as number;
+                            const total = context.dataset.data.reduce((acc:number, val:number) => acc + (val as number), 0);
+                            const percentage = Math.round((value / total) * 100);
+                            return `${label}: ${value} (${percentage}%)`;
+                        }
                     }
                 }
             }
-            }
-        }
+        }, chartOptionsOverrides || {}) as ChartOptions<'pie'>
     };
 
-  return (
-    <Pie 
-        ref={chartRef}
-        data={chartData()} 
-        options={chartOptions()} 
-        height="100%"
-        width="100%"
-    />
-  );
+
+    console.log('chartData', chartData());
+
+    return (
+        <Pie 
+            ref={chartRef}
+            data={chartData()} 
+            options={chartOptions()} 
+            height="100%"
+            width="100%"
+        />
+    );
 };
 
 export default BasePieChart;

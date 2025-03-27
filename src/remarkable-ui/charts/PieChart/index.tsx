@@ -14,18 +14,29 @@ export const PieChart = ({
 
     const { isLoading, error, data } = results;
 
+
+    const chartOptionsOverrides = {
+        cutout: '50%',
+        plugins: {
+            legend: {
+              display: true
+            }
+        }
+    };
+
     return (
         <Card
             errorMessage={error}
             isLoading={isLoading}
             title={title}
-            data={data}
             description={description}
+            data={data}            
         >
             <BasePieChart 
                 measure={measure}
                 dimension={dimension}
                 results={results}
+                chartOptionsOverrides={chartOptionsOverrides}
             />        
         </Card>
     );
