@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useCallback, useEffect, useRef } from 'react';
 import styles from './index.module.css'
 
 type ChartContainerProps = {
     children?: React.ReactNode;
 }
 
-// Debounce function
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
     let timeout: ReturnType<typeof setTimeout>;
     return (...args: Parameters<T>) => {
@@ -17,36 +16,29 @@ function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
 export default function ChartContainer({children}:ChartContainerProps) {
     
     const containerRef = useRef<HTMLDivElement>(null);
-    const [containerHeight, setContainerHeight] = useState(0);
+    const [innerContainerHeight, setInnerContainerHeight] = useState(0);
 
-    const updateHeight = () => {
+    const updateHeight = useCallback(() => {
         if (containerRef.current) {
-          // Measure the container's own height
-          const height = containerRef.current.offsetHeight;
-          const width = containerRef.current.offsetWidth;
-          setContainerHeight(height);
+            const height = containerRef.current.offsetHeight;
+            setInnerContainerHeight(height);
         }
-    };
+    }, []);
     
-    const debouncedUpdateHeight = debounce(updateHeight, 10);
-    
-    useEffect(() => {
-        // Initial measurement
-        updateHeight();
+    const debouncedUpdateHeight = useCallback(debounce(updateHeight, 0), [updateHeight]);
 
-        // Watch for size changes
+    useLayoutEffect(() => {
+        updateHeight();
         const resizeObserver = new ResizeObserver(() => {
             debouncedUpdateHeight();
         });
-
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
         }
-
         return () => {
             resizeObserver.disconnect();
         };
-    }, [debouncedUpdateHeight]);
+    }, [debouncedUpdateHeight, updateHeight]);
 
     return (
         <div
@@ -54,10 +46,10 @@ export default function ChartContainer({children}:ChartContainerProps) {
             className={styles.chartContainer}
         >
             <div
-                className={styles.chartContainerInner}
-                style={{ height: containerHeight === 0 ? '100%' : `${containerHeight}px`}}
+                className={styles.chartInnerContainer}
+                style={{ height: `${innerContainerHeight}px`}}
             >
-                {containerHeight && children}
+                {innerContainerHeight && children}
             </div>                         
         </div>
     );
