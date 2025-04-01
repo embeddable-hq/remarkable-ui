@@ -1,12 +1,10 @@
 .spinner {
-    height: 24px;
-    width: 24px;
-}
-
-.spinner svg {
+    height: var(--card-spinner-width);
+    width: var(--card-spinner-height);
+    color: var(--card-spinner-color);
     animation: spin 1s linear infinite;
 }
-  
+
 @keyframes spin {
 0% {
     transform: rotate(0deg);

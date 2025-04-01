@@ -4,24 +4,18 @@
     cursor: pointer;
 }
   
-.dropdownIcon {
-    width: var(--width-4);
-    height: var(--width-4);
-    transition: transform 0.3s ease;
-}
-
 .dropdownMenu {
     position: absolute;
     top: 100%;
     left: 0;
     margin-top: 2px;
-    padding: var(--padding-2);
+    padding: var(--dropdown-padding);
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    gap: var(--padding-0);
-    border-radius: var(--rounded-xl);
-    background: var(--background-neutral);
+    gap: var(--dropdown-gap);
+    border-radius: var(--dropdown-border-radius);
+    background: var(--dropdown-background);
     box-shadow: 0px 1px 40px 0px rgba(33, 33, 41, 0.25);
     z-index: 10;
     opacity: 0;
@@ -30,8 +24,8 @@
     min-width: 100px;
     max-width: 256px;
     text-wrap: nowrap;
-    color: var(--foreground-default);
-    max-height: var(--height-128);
+    color: var(--dropdown-color);
+    max-height: var(--dropdown-max-height);
     overflow: auto;
 }
 
@@ -47,20 +41,22 @@
 }
 
 .dropdownItem {
-    display: flex;
     align-items: center;
-    width: 100%;
+    border-radius: var(--li-radius);
     box-sizing: border-box;
-    padding: var(--padding-2);
-    gap: var(--padding-2);
-    color: var(--foreground-default);
+    color: var(--li-label-color-default);
     cursor: pointer;
-    font-size: 12px;
+    display: flex;
+    font: var(--li-label-family);
+    font-size: var(--li-label-size);
     font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+    font-weight: var(--li-label-weight);
+    gap: var(--padding-2);
+    height: var(--li-height);
+    line-height: var(--li-label-line-height);
+    padding: var(--li-padding);
     transition: background-color 0.2s ease;
-    border-radius: var(--rounded-lg);
+    width: 100%;
 }
 
 .dropdownItem .itemText {
@@ -68,18 +64,20 @@
     overflow: hidden; 
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding: var(--li-label-padding);
 }
 
 .dropdownItem:hover {
     background-color: var(--background-default);
+    color: var(--li-label-color-default);
 }
 
 .dropdownItem:pressed {
     background-color: var(--background-light);
+    color: var(--li-label-color-pressed);
 }
 
 .dropdownItemIcon {
-    margin-right: 12px;
-    width: var(--width-4);
-    height: var(--width-4);
+    width: var(--li-icn-width);
+    height: var(--li-icn-height);
 }

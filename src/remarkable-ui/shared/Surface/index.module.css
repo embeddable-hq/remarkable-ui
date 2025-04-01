@@ -3,11 +3,10 @@
     height: 100%;
     box-sizing: border-box;
     display: flex;
-    padding: var(--padding-8, 32px);
+    padding: var(--surface-padding);
     flex-direction: column;
     align-items: center;
-    gap: var(--padding-8, 32px);
-    border-radius: var(--rounded-3xl, 32px);
-    background: #F9F9FA;
-    background: var(--background-default, #F9F9FA);
+    gap: var(--surface-gap);
+    border-radius: var(--surface-radius);
+    background: var(--surface-background);
 }

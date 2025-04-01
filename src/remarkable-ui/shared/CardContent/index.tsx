@@ -25,9 +25,10 @@ export default function CardContent({ showSkeletonLoader = false, showErrorMessa
                 message={errorMessage} 
             /> 
         )
-    } else if (showNoResults) {
+    } else if (showErrorMessage) {
         content = (
             <MessageContainer
+                variant={"noResults"}
                 title="No results" 
             />
         )

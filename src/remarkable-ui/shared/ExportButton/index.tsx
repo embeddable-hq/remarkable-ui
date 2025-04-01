@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './index.module.css'
 import { ExportIcon, DownloadCSVIcon, DownloadPNGIcon } from '../../constants/icons'
 import Dropdown from '../Dropdown'
+import IconButton from '../IconButton';
 
 type SetBoolean = React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -30,18 +30,16 @@ export default function ExportButton({setLocalLoading}:ExportButtonProps) {
         onClick: () => alert("dowload png!")
     };
 
-    // const testElement = {
-    //     id: "test",
-    //     label: "Test Element that is going to be way longer than 256px",
-    //     icon: DownloadPNGIcon,
-    //     onClick: () => alert("dowload test!")
-    // };
+    const veryLongOption = {
+        id: "something",
+        label: "Something way too long has to go here for testing",
+        icon: DownloadPNGIcon,
+        onClick: () => alert("dowload png!")
+    };
 
     return (
-        <Dropdown items={[downloadCSV, downloadPNG]} align='right'>
-            <div className={styles.icon}>
-                <ExportIcon className={styles.exportIcon}/>       
-            </div>
+        <Dropdown items={[downloadCSV, downloadPNG, veryLongOption]} align='right'>
+            <IconButton icon={ExportIcon}/>
         </Dropdown>
     );
 }

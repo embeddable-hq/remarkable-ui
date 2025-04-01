@@ -2,33 +2,32 @@ import React, { JSX } from 'react';
 import styles from './index.module.css'
 import { ErrorIcon } from '../../constants/icons'
 
-type IconVariant = 'error';
+type variantType = 'error' | 'noResults';
 
 type Props = {
-    variant?: IconVariant
+    variant?: variantType
     message?: string;
     title?: string;
     className?: string;
 }
 
-const icon = (variant: IconVariant, className?: string) => {
-    const svgs: Record<IconVariant, (className?: string) => JSX.Element> = {
-        error: (className) => <ErrorIcon className={className} />,
-    };
-
-    const renderIcon = svgs[variant];
-    return renderIcon ? renderIcon(className) : null;
+const svgs: Partial<Record<variantType, (className?: string) => JSX.Element>> = {
+    error: (className) => <ErrorIcon className={className || ''} />,
 };
 
 export default function MessageContainer({variant, message, title, className}: Props) {
+    
+    const classNames = [styles.message];
+    if (variant && styles[variant]) {
+        classNames.push(styles[variant]);
+    }
+
+    const Icon = variant && svgs[variant];
 
     return (
         <div className={styles.messageContainer}> 
-            <div
-                className={styles.message}
-                style={{ color: variant === 'error' ? '#D03109' : 'inherit'}}
-            >
-                {variant && icon('error', className)}            
+            <div className={classNames.join(' ')}>
+                {Icon && Icon(styles.icon)}           
                 {title && (<span className={styles.titleText}>{title}</span>)}
                 {message && (<span className={styles.bodyText}>{message}</span>)}
             </div>              
