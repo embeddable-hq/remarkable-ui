@@ -18,7 +18,7 @@ export default ({
 }: DonutChartProps) => {
 
     const chartOptionsOverrides= {
-        cutout: '50%',
+        cutout: '60%',
     }
 
     return (

@@ -1,9 +1,8 @@
 import React from 'react';
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { ChartOptions } from 'chart.js';
 import Card from '../../../shared/Card';
 import BasePieChart from '../../../shared/BasePieChart'
 import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
+import { getCSSValue } from '../../../utils/cssUtils';
 
 export default ({
     description,
@@ -19,16 +18,18 @@ export default ({
     title,  
 }: DonutChartWithLabelProps) => {
 
+    const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "";
+
     const chartOptionsOverrides= {
-        cutout: '75%',
+        cutout: '60%',
         plugins: {
             annotation: {
                 annotations: {
                   dLabel: {
                     type: 'doughnutLabel',
-                    content: () => [resultsInnerLabel?.data?.[0][innerLabelMeasure.name]],
-                    font: [{size: 20}],
-                    color: ['black']
+                    content: () => [innerLabelValue], // one element per line
+                    font: [{size: 30, weight: getCSSValue('--font-bold')}],
+                    color: [getCSSValue('--foreground-default')]
                   }
                 }
             } as any

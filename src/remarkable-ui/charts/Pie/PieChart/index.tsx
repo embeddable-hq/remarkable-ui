@@ -1,5 +1,4 @@
 import React from 'react';
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import Card from '../../../shared/Card';
 import BasePieChart from '../../../shared/BasePieChart'
 import { PieChartProps } from './PieChart.emb';

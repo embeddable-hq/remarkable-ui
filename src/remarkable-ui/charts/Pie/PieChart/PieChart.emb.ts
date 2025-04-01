@@ -1,6 +1,6 @@
 import { loadData, DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
-import { title, description } from '../../../constants/chartInputs'
+import { title, description, showLegend, showToolTips, showValueLabels, maxLegendItems } from '../../../constants/commonChartInputs'
 
 import PieChart from './index';
 
@@ -48,46 +48,12 @@ export const meta = {
         required: true,
         category: 'Chart Data'
     },
-    {
-        name: 'title',
-        type: 'string',
-        label: 'Title',
-        category: 'Chart Header'
-    },
-    {
-        name: 'description',
-        type: 'string',
-        label: 'Description',
-        category: 'Chart Header'
-    },  
-    {
-        name: 'showLegend',
-        type: 'boolean',
-        label: 'Show Legend',
-        defaultValue: true,
-        category: 'Chart Settings'
-    },
-    {
-        name: 'maxLegendItems',
-        type: 'number',
-        label: 'Max Legend Items',
-        defaultValue: 10,
-        category: 'Chart Settings'
-    },  
-    {
-        name: 'showTooltips',
-        type: 'boolean',
-        label: 'Show Tooltips',
-        defaultValue: true,
-        category: 'Chart Settings'
-    }, 
-    {
-        name: 'showValueLabels',
-        type: 'boolean',
-        label: 'Show Value Labels',
-        defaultValue: true,
-        category: 'Chart Settings'
-    },   
+    {...title},
+    {...description},  
+    {...showLegend},
+    {...maxLegendItems},  
+    {...showToolTips}, 
+    {...showValueLabels}  
   ],
 } as const satisfies EmbeddedComponentMeta;
 
