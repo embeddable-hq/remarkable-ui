@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { Pie } from 'react-chartjs-2';
 import { getCSSValue } from '../../utils/cssUtils'
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
@@ -9,7 +10,7 @@ import { mergician } from 'mergician';
 import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/chartJSElements'
 
 // Register ChartJS components
-ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
 // Global font defaults. TODO: These have backups currently because sometimes the css variables aren't loaded when this is run, causing chartJS to not render. This won't be a problem when css variables are loaded at the correct time.
 ChartJS.defaults.font.family = getCSSValue('--font-sans') as string || '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
@@ -45,19 +46,23 @@ const CHART_BORDERS = [
   ];
 
 type BasePieChartProps = {
-    chartDataOverrides?: Partial<ChartData<'pie'>>;
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
     dimension: Dimension;
     measure: Measure;
     results: DataResponse;
+    showDataLabels?: 'auto' | true | false;
+    showLegend?: boolean;
+    showTooltips?: boolean;
 }
 
 const BasePieChart = ({
-  chartDataOverrides,
   chartOptionsOverrides,
   dimension,
   measure,
   results,
+  showDataLabels,
+  showLegend,
+  showTooltips
 }: BasePieChartProps ) => {
 
     const { data } = results;
@@ -87,7 +92,7 @@ const BasePieChart = ({
             maintainAspectRatio: false,
             plugins: {
                 datalabels: {
-                    display: 'auto',
+                    display: showDataLabels || 'auto',
                     ...datalabelStyle,
                     anchor: 'center',
                     align: 'center',
@@ -96,11 +101,12 @@ const BasePieChart = ({
                     },                    
                 },
                 legend: {
-                    display: true,
+                    display: showLegend || true,
                     position: 'bottom',
                     labels: legendStyle,
                 },
                 tooltip: {
+                    enabled: showTooltips || true,
                     ...tooltipStyle,
                     callbacks: {
                         label: function(context:any) {

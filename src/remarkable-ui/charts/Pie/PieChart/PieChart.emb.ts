@@ -1,8 +1,20 @@
 import { loadData, DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
-import { title, description } from '../../constants/chartInputs'
+import { title, description } from '../../../constants/chartInputs'
 
-import { PieWrapper } from './components/PieWrapper'
+import PieChart from './index';
+
+export type PieChartProps = {
+    description?: string;
+    dimension: Dimension;
+    maxLegendItems?: number;
+    measure: Measure;
+    results: DataResponse;
+    showLegend?: boolean;
+    showTooltips?: boolean;
+    showValueLabels?: boolean;
+    title?: string;
+}
 
 export const meta = {
   name: 'PieChart',
@@ -79,7 +91,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(PieWrapper, meta, {
+export default defineComponent(PieChart, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
         ...inputs,

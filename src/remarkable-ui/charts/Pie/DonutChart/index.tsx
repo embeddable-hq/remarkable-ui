@@ -1,0 +1,43 @@
+import React from 'react';
+import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { ChartOptions } from 'chart.js';
+import Card from '../../../shared/Card';
+import BasePieChart from '../../../shared/BasePieChart'
+import { DonutChartProps } from './DonutChart.emb';
+
+export default ({
+    description,
+    dimension,
+    maxLegendItems,
+    measure,
+    results,
+    showLegend,
+    showTooltips,
+    showValueLabels,
+    title,
+}: DonutChartProps) => {
+
+    const chartOptionsOverrides= {
+        cutout: '50%',
+    }
+
+    return (
+        <Card
+            data={results.data}            
+            description={description}
+            errorMessage={results.error}
+            isLoading={results.isLoading}
+            title={title}
+        >
+            <BasePieChart 
+                chartOptionsOverrides={chartOptionsOverrides}
+                dimension={dimension}
+                measure={measure}
+                results={results}
+                showDataLabels={showValueLabels ? 'auto' : false}
+                showLegend={showLegend}
+                showTooltips={showTooltips}
+            />        
+        </Card>
+    );
+};

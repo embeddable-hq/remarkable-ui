@@ -26,6 +26,7 @@
     "@embeddable.com/react": "^2.9.7",
     "@embeddable.com/sdk-core": "^3.13.5",
     "@embeddable.com/sdk-react": "^3.10.12",
+    "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "mergician": "^2.0.2",
     "react": "^18.3.1",
