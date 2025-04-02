@@ -27,9 +27,23 @@ export default ({
                 annotations: {
                   dLabel: {
                     type: 'doughnutLabel',
-                    content: () => [innerLabelValue], // one element per line
-                    font: [{size: 30, weight: getCSSValue('--font-bold')}],
-                    color: [getCSSValue('--foreground-default')]
+                    content: () => [
+                        innerLabelValue, 
+                        'Some Label'
+                    ], // one element per line
+                    font: [{
+                        family: getCSSValue('--donut-number-family'),
+                        size: getCSSValue('--donut-number-size'), 
+                        weight: getCSSValue('--donut-number-weight'),
+                    }, {
+                        family: getCSSValue('--donut-label-family'),
+                        size: getCSSValue('--donut-label-size'), 
+                        weight: getCSSValue('--donut-label-weight'),
+                    }],
+                    color: [
+                        getCSSValue('--donut-number-color'), 
+                        getCSSValue('--donut-label-color')
+                    ]
                   }
                 }
             } as any

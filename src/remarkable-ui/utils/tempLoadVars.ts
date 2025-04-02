@@ -416,16 +416,16 @@ export function loadRootVariables() {
     '--donut-number-family': "var(--font-default)",
     '--donut-number-size': 'var(--font-size-4xl)',
     '--donut-number-weight': 'var(--font-weight-bold)',
-    '--donut-number-line-height': 'var(--font-height-xl)',
+    // '--donut-number-line-height': 'var(--font-height-xl)', unused
     '--donut-number-color': 'var(--foreground-default)',
 
-    /* Donut Dimension (Namespace: --donut-dimension-) */
+    /* Donut Measure Label (Namespace: --donut-dimension-) */
     /* Typography */
-    '--donut-dimension-family': "var(--font-default)",
-    '--donut-dimension-size': 'var(--font-size-default)',
-    '--donut-dimension-weight': 'var(--font-weight-bold)',
-    '--donut-dimension-line-height': 'var(--font-height-lg)',
-    '--donut-dimension-color': 'var(--foreground-muted)',
+    '--donut-label-family': "var(--font-default)",
+    '--donut-label-size': 'var(--font-size-default)',
+    '--donut-label-weight': 'var(--font-weight-medium)',
+    // '--donut-label-line-height': 'var(--font-height-lg)',unused
+    '--donut-label-color': 'var(--foreground-muted)',
   };
   
   Object.entries(variables).forEach(([key, value]) => {
