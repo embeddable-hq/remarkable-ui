@@ -22,10 +22,10 @@
     "license-report": "license-report --output=csv --csvHeaders --fields name --fields link --fields licenseType --fields installedVersion --fields author > license-report.csv"
   },
   "dependencies": {
-    "@embeddable.com/core": "^2.9.4",
-    "@embeddable.com/react": "^2.9.7",
-    "@embeddable.com/sdk-core": "^3.13.5",
-    "@embeddable.com/sdk-react": "^3.10.12",
+    "@embeddable.com/core": "^2.10.1",
+    "@embeddable.com/react": "^2.10.1",
+    "@embeddable.com/sdk-core": "^3.14.1",
+    "@embeddable.com/sdk-react": "^3.11.1",
     "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "mergician": "^2.0.2",
