@@ -6,7 +6,6 @@ import Description from '../Description';
 import CardContent from '../CardContent';
 import MessageContainer from '../MessageContainer';
 import ChartContainer from '../ChartContainer';
-import { loadRootVariables } from '../../utils/tempLoadVars'
 
 type CardProps = {
     title?: string;
@@ -18,10 +17,6 @@ type CardProps = {
 }
 
 export default function Card({ title, description, errorMessage, children, isLoading, data }: CardProps) {
-
-    useEffect(() => {
-        loadRootVariables();
-    }, []);
 
     return (
         <Surface>            

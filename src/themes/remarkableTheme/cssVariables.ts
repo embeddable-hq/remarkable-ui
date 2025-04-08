@@ -1,8 +1,5 @@
-export function loadRootVariables() {
-  const root = document.documentElement;
-
-  const variables: Record<string, string> = {
-    /* Gray */
+const baseVariables = {
+	/* Gray */
     '--gray-0': '#fff',
     '--gray-50': '#f9f9fa',
     '--gray-100': '#ededf1',
@@ -171,7 +168,14 @@ export function loadRootVariables() {
 
     /* Box Shadow – Default */
     '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)',
+}
 
+
+
+
+export const cssVariables:Record<string, string> = {
+	...baseVariables, 
+	
     /* Semantic variables */
     '--background-neutral': 'var(--gray-0)',
     '--background-default': 'var(--gray-50)',
@@ -426,9 +430,4 @@ export function loadRootVariables() {
     '--donut-label-weight': 'var(--font-weight-medium)',
     // '--donut-label-line-height': 'var(--font-height-lg)',unused
     '--donut-label-color': 'var(--foreground-muted)',
-  };
-  
-  Object.entries(variables).forEach(([key, value]) => {
-    root.style.setProperty(key, value);
-  });
-}
+};
