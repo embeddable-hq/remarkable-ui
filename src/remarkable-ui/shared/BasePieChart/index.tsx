@@ -6,7 +6,7 @@ import { Pie } from 'react-chartjs-2';
 import { getCSSValue } from '../../utils/cssUtils'
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { mergician } from 'mergician';
-import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/chartJSElements'
+import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/commonChartStyles'
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../utils/formatUtils';
