@@ -19,32 +19,6 @@ ChartJS.defaults.font.size = getCSSValue('--text-xs') as number || 12;
 ChartJS.defaults.font.weight = 'normal';
 ChartJS.defaults.color = getCSSValue('--foreground-default') as string || '#212129';
 
-const CHART_COLORS = [
-    "#5F6CAF",
-    "#EF8A88", 
-    "#8FBED8",
-    "#F4B992",
-    "#75B9B0",
-    "#B5AEE0",
-    "#D28CA5",
-    "#D4A373",
-    "#A9C5A0",
-    "#8CA587"
-];
-
-const CHART_BORDERS = [
-    "#5F6CAF",
-    "#EF8A88", 
-    "#8FBED8",
-    "#F4B992",
-    "#75B9B0",
-    "#B5AEE0",
-    "#D28CA5",
-    "#D4A373",
-    "#A9C5A0",
-    "#8CA587"
-];
-
 type BasePieChartProps = {
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
     dimension: Dimension;
