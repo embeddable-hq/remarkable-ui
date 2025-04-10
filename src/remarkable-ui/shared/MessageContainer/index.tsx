@@ -4,7 +4,7 @@ import { ErrorIcon } from '../../constants/icons'
 
 type variantType = 'error' | 'noResults';
 
-type Props = {
+type MessageContainerProps = {
     variant?: variantType
     message?: string;
     title?: string;
@@ -15,7 +15,7 @@ const svgs: Partial<Record<variantType, (className?: string) => JSX.Element>> = 
     error: (className) => <ErrorIcon className={className || ''} />,
 };
 
-export default function MessageContainer({variant, message, title, className}: Props) {
+export default function MessageContainer({variant, message, title, className}: MessageContainerProps) {
     
     const classNames = [styles.message];
     if (variant && styles[variant]) {

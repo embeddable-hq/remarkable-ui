@@ -26,6 +26,9 @@ const baseVariables = {
 
     /* Typography: Phase 1 */
     '--font-sans': "'Inter', sans-serif",
+    '--font-align-left': 'left',
+    '--font-align-center': 'center',
+    '--font-align-right': 'right',
 
     /* Headings */
     '--font-size-4xl': '2rem',
@@ -170,9 +173,6 @@ const baseVariables = {
     '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)',
 }
 
-
-
-
 export const cssVariables:Record<string, string> = {
 	...baseVariables, 
 	
@@ -279,8 +279,8 @@ export const cssVariables:Record<string, string> = {
 
     /* Card Header (Namespace: --card-header-) */
     /* Layout */
-    '--surface-header-gap': 'var(--padding-1)',
-    '--surface-header-content-gap': 'var(--padding-4)', /* gap between title and description*/
+    '--card-header-gap': 'var(--padding-1)',
+    '--card-header-content-gap': 'var(--padding-4)', /* gap between title and description*/
 
     /* Card Title (Namespace: --card-title-) */
     /* Typography */

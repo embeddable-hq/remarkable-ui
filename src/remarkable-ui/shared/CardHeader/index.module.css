@@ -12,6 +12,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--surface-header-content-gap);
+    gap: var(--card-header-content-gap);
     flex: 1 0 0;
 }

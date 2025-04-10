@@ -2,12 +2,43 @@
 //may want to break out css base variables, so they're not included in the theme. 
 //And import them somewhere else. 
 
+import { Theme } from './theme';
 import { cssVariables } from './cssVariables'
 
+const CHART_COLORS = [
+    "#5F6CAF",
+    "#EF8A88", 
+    "#8FBED8",
+    "#F4B992",
+    "#75B9B0",
+    "#B5AEE0",
+    "#D28CA5",
+    "#D4A373",
+    "#A9C5A0",
+    "#8CA587"
+];
+
+const CHART_BORDERS = [
+    "#5F6CAF",
+    "#EF8A88", 
+    "#8FBED8",
+    "#F4B992",
+    "#75B9B0",
+    "#B5AEE0",
+    "#D28CA5",
+    "#D4A373",
+    "#A9C5A0",
+    "#8CA587"
+];
  
-export const remarkableTheme = {
-	cssVariables: cssVariables
+export const remarkableTheme: Theme = {
+	cssVariables: cssVariables,
+	charts: {
+		colors: CHART_COLORS,
+		borderColors: CHART_BORDERS
+	}
 }
+
 
 
 export default remarkableTheme;

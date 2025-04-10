@@ -3,6 +3,9 @@ import Card from '../../../shared/Card';
 import BasePieChart from '../../../shared/BasePieChart'
 import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
 import { getCSSValue } from '../../../utils/cssUtils';
+import { formatValue } from '../../../utils/formatUtils';
+import { useTheme } from '@embeddable.com/react';
+import { Theme } from '../../../../themes/remarkableTheme/theme'
 
 export default ({
     description,
@@ -18,6 +21,8 @@ export default ({
     title,  
 }: DonutChartWithLabelProps) => {
 
+    const theme = useTheme() as Theme;
+
     const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "";
 
     const chartOptionsOverrides= {
@@ -28,8 +33,8 @@ export default ({
                   dLabel: {
                     type: 'doughnutLabel',
                     content: () => [
-                        innerLabelValue, 
-                        'Some Label'
+                        formatValue(innerLabelValue, { typeHint: 'number', theme: theme }), 
+                        formatValue('Some Label', { typeHint: 'string', theme: theme })
                     ], // one element per line
                     font: [{
                         family: getCSSValue('--donut-number-family'),
