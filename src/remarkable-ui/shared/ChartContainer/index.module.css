@@ -8,6 +8,7 @@
     height: 100%;
     width: 100%;
     min-height: 5px;
+    min-width: 5px;
     overflow: auto;
     position: relative;
 }

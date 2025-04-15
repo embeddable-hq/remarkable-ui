@@ -1,8 +1,13 @@
+// React & Third Party Libraries
 import React from 'react';
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartOptions } from 'chart.js';
+
+// Embeddable Libraries
+import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+
+// Local Libraries
 import Card from '../../../shared/Card';
-import BasePieChart from '../../../shared/BasePieChart'
+import BasePieChart from '../../../shared/BasePieChart';
 import { DonutChartProps } from './DonutChart.emb';
 
 export default ({

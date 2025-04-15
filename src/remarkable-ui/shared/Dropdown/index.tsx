@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import DropdownMenu from './DropdownMenu';
 import styles from './index.module.css'
+import { DataResponse } from '@embeddable.com/core';
 
 export type DropdownItem = {
   id: string;
   label: string;
   icon?: React.ComponentType<{ className?: string }>;
-  onClick?: () => void;
+  onClick?: (data?: DataResponse["data"]) => void;
 };
 
 type DropdownProps = {

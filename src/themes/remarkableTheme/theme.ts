@@ -1,4 +1,5 @@
 import { valueProps, configProps } from '../../remarkable-ui/utils/formatUtils';
+import { DropdownItem } from '../../remarkable-ui/shared/Dropdown';
 
 export type Theme = {
     cssVariables: {
@@ -12,4 +13,5 @@ export type Theme = {
     customDateFormats?: {
         [key: string]: string;
     };
+    customExportOptions?: DropdownItem[];
 };

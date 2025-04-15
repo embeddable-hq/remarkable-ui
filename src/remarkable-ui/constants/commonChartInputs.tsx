@@ -1,6 +1,3 @@
-
-//common chart inputs
-
 export const title = {
     name: 'title',
     type: 'string' as 'string',

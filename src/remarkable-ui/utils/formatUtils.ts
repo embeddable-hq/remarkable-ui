@@ -1,7 +1,9 @@
-import { Theme } from '../../themes/remarkableTheme/theme';
+// React & Third Party Libraries
 import { format as dateFnsFormat } from 'date-fns';
 import { mergician } from 'mergician';
 
+// Local Libraries
+import { Theme } from '../../themes/remarkableTheme/theme';
 
 export type valueProps = string | number | Date;
 export type typeHintProps = "string" | "number" | "date";

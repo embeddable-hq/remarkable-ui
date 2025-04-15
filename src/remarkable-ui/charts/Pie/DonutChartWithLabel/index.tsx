@@ -1,11 +1,17 @@
+// React & Third Party Libraries
 import React from 'react';
-import Card from '../../../shared/Card';
-import BasePieChart from '../../../shared/BasePieChart'
-import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
-import { getCSSValue } from '../../../utils/cssUtils';
-import { formatValue } from '../../../utils/formatUtils';
+import { ChartOptions } from 'chart.js';
+
+// Embeddable Libraries
 import { useTheme } from '@embeddable.com/react';
-import { Theme } from '../../../../themes/remarkableTheme/theme'
+
+// Local Libraries
+import Card from '../../../shared/Card';
+import BasePieChart from '../../../shared/BasePieChart';
+import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
+import { getStyle } from '../../../utils/cssUtils';
+import { formatValue } from '../../../utils/formatUtils';
+import { Theme } from '../../../../themes/remarkableTheme/theme';
 
 export default ({
     description,
@@ -25,33 +31,35 @@ export default ({
 
     const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "";
 
-    const chartOptionsOverrides= {
+    const chartOptionsOverrides: Partial<ChartOptions<'pie'>> = {
         cutout: '60%',
         plugins: {
             annotation: {
                 annotations: {
-                  dLabel: {
-                    type: 'doughnutLabel',
-                    content: () => [
-                        formatValue(innerLabelValue, { typeHint: 'number', theme: theme }), 
-                        formatValue('Some Label', { typeHint: 'string', theme: theme })
-                    ], // one element per line
-                    font: [{
-                        family: getCSSValue('--donut-number-family'),
-                        size: getCSSValue('--donut-number-size'), 
-                        weight: getCSSValue('--donut-number-weight'),
-                    }, {
-                        family: getCSSValue('--donut-label-family'),
-                        size: getCSSValue('--donut-label-size'), 
-                        weight: getCSSValue('--donut-label-weight'),
-                    }],
-                    color: [
-                        getCSSValue('--donut-number-color'), 
-                        getCSSValue('--donut-label-color')
-                    ]
-                  }
-                }
-            } as any
+                    innerlabel: {
+                        type: 'doughnutLabel',
+                        content: () => [
+                            formatValue(innerLabelValue, { typeHint: 'number', theme: theme }), 
+                            formatValue('Some Label', { typeHint: 'string', theme: theme })
+                        ], //one element per line  
+                        font: [{
+                            family: getStyle('--donut-number-family'),
+                            size: getStyle('--donut-number-size'), 
+                            weight: getStyle('--donut-number-weight'),
+                        }, {
+                            family: getStyle('--donut-label-family'),   
+                            size: getStyle('--donut-label-size'), 
+                            weight: getStyle('--donut-label-weight'),
+                        }],
+                        color: [
+                            getStyle('--donut-number-color') as string, 
+                            getStyle('--donut-label-color') as string
+                        ]
+                    }
+                } as any
+                //TODO: any above is due to the error mentioned here: https://github.com/chartjs/chartjs-plugin-annotation/issues/968
+                //According to the last comment, a fix should be coming in the next release: https://github.com/chartjs/chartjs-plugin-annotation/commit/1e95744fb98e6fe9426f8b6a7bd17b1fcdee2f42
+            }
         }
     }
 

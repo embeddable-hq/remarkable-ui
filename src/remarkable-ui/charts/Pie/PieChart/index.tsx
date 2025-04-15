@@ -1,6 +1,9 @@
+// React & Third Party Libraries
 import React from 'react';
+
+// Local Libraries
 import Card from '../../../shared/Card';
-import BasePieChart from '../../../shared/BasePieChart'
+import BasePieChart from '../../../shared/BasePieChart';
 import { PieChartProps } from './PieChart.emb';
 
 export default ({

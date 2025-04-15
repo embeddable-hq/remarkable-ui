@@ -1,7 +1,9 @@
+// Embeddable Libraries
 import { loadData, DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
-import { title, description, showLegend, showToolTips, showValueLabels, maxLegendItems } from '../../../constants/commonChartInputs'
 
+// Local Libraries
+import { title, description, showLegend, showToolTips, showValueLabels, maxLegendItems } from '../../../constants/commonChartInputs';
 import PieChart from './index';
 
 export type PieChartProps = {

@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import styles from './index.module.css'
 import ExportButton from '../ExportButton';
 import Spinner from '../Spinner';
+import { DataResponse } from '@embeddable.com/core';
 
-type Props = {
+type CardHeaderProps = {
     isLoading?: boolean;
     children?: React.ReactNode;
+    data?: DataResponse["data"]
 }
 
-export default function CardHeader({ isLoading, children }:Props) {
+export default function CardHeader({ isLoading, children, data }:CardHeaderProps) {
 
     const [localLoading, setLocalLoading] = useState(false);
 
@@ -20,7 +22,7 @@ export default function CardHeader({ isLoading, children }:Props) {
                 {children}
             </div>  
             <div>
-                {loading ? <Spinner/> : <ExportButton setLocalLoading={ setLocalLoading }/>}               
+                {loading ? <Spinner/> : <ExportButton data={data} setLocalLoading={ setLocalLoading }/>}               
             </div>
         </div>
     );

@@ -8,6 +8,8 @@
 
 import { mergician } from 'mergician';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
+import { DropdownItem } from './src/remarkable-ui/shared/Dropdown';
+import { DataResponse } from '@embeddable.com/core';
 
 const themeProvider = (clientContext: any, parentTheme:any): any => {
 
@@ -24,9 +26,18 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
         return value + "wooop!"
     }
 
+    const customExportOptions: DropdownItem[] = [
+        {
+            id: "testOption",
+            label: "Test Option",
+            onClick: (data: DataResponse["data"]) => { alert("test option!") }
+        }
+    ]
+
     const testTheme = {
         //cssVariables: darkModeVariables
         //customFormatFunction: customFormatFunction
+        customExportOptions: customExportOptions
     }
 
     return mergician(remarkableTheme, testTheme);
