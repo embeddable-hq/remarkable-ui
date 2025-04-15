@@ -25,6 +25,7 @@ const baseVariables = {
     '--orange-900': '#ff5400',
 
     /* Typography: Phase 1 */
+    '--font-native': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     '--font-sans': "'Inter', sans-serif",
     '--font-align-left': 'left',
     '--font-align-center': 'center',
@@ -189,7 +190,7 @@ export const cssVariables:Record<string, string> = {
 
     /* New Semantic Variables*/
 
-    '--font-default': 'var(--font-sans)',
+    '--font-default': 'var(--font-native)',
 
     /* Icons (Namespace: --icn-) */
 
@@ -284,7 +285,7 @@ export const cssVariables:Record<string, string> = {
 
     /* Card Title (Namespace: --card-title-) */
     /* Typography */
-    // '--card-title-family': "var(--font-default)",
+    '--card-title-family': "var(--font-default)",
     '--card-title-size': 'var(--font-size-default)',
     '--card-title-weight': 'var(--font-weight-bold)',
     '--card-title-line-height': 'var(--font-height-lg)',
@@ -292,7 +293,7 @@ export const cssVariables:Record<string, string> = {
 
     /* Card Subtitle (Namespace: --card-subtitle-) */
     /* Typography */
-    // '--card-subtitle-family': "var(--font-default)",
+    '--card-subtitle-family': "var(--font-default)",
     '--card-subtitle-size': 'var(--font-size-sm)',
     '--card-subtitle-weight': 'var(--font-weight-medium)',
     '--card-subtitle-line-height': 'var(--font-height-md)',
@@ -321,7 +322,8 @@ export const cssVariables:Record<string, string> = {
 
     /* Card Message Title (Namespace: --card-error-title-) */
     /* Typography */
-    // '--card-error-family': "var(--font-default)", /*unused*/
+    '--card-error-family': "var(--font-default)",//unused
+    '--card-message-family': "var(--font-default)",
     '--card-message-default-color': 'var(--foreground-default)',
     '--card-message-size': 'var(--font-size-sm)', // changed to avoid duplication
     '--card-message-weight': 'var(--font-weight-medium)',

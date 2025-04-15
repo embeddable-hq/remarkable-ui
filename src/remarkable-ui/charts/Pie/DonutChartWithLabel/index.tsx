@@ -1,4 +1,4 @@
-// React & Third Party Libraries
+// Third Party Libraries
 import React from 'react';
 import { ChartOptions } from 'chart.js';
 

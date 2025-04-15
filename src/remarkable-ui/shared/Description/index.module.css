@@ -1,5 +1,6 @@
 .description {
     width: 100%;
+    font-family: var(--card-subtitle-family);
     color: var(--card-subtitle-color);
     font-size: var(--card-subtitle-size);
     font-style: normal;

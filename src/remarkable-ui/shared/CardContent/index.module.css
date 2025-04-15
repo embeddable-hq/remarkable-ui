@@ -2,5 +2,5 @@
     flex: 1;
     align-self: stretch;
     overflow: hidden;
-    min-height: 1px; /*Ensures */
+    min-height: 1px;
 }

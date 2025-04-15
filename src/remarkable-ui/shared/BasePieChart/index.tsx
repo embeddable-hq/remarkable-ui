@@ -1,4 +1,4 @@
-// React & Third Party Libraries
+// Third Party Libraries
 import React, { useRef } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -19,11 +19,11 @@ import { formatValue } from '../../utils/formatUtils';
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
-// Global font defaults. TODO: These have backups currently because sometimes the css variables aren't loaded when this is run, causing chartJS to not render. This won't be a problem when css variables are loaded at the correct time.
-ChartJS.defaults.font.family = getStyle('--font-sans') as string || '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
-ChartJS.defaults.font.size = getStyle('--text-xs') as number || 12;
+// Global font defaults
+ChartJS.defaults.font.family = getStyle('--font-sans') as string;
+ChartJS.defaults.font.size = getStyle('--text-xs') as number;
 ChartJS.defaults.font.weight = 'normal';
-ChartJS.defaults.color = getStyle('--foreground-default') as string || '#212129';
+ChartJS.defaults.color = getStyle('--foreground-default') as string;
 
 type BasePieChartProps = {
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;

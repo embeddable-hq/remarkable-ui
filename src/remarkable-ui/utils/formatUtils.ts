@@ -1,4 +1,4 @@
-// React & Third Party Libraries
+// Third Party Libraries
 import { format as dateFnsFormat } from 'date-fns';
 import { mergician } from 'mergician';
 

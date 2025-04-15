@@ -1,4 +1,4 @@
-// React & Third Party Libraries
+// Third Party Libraries
 import React, { useEffect } from 'react';
 
 // Embeddable Libraries
