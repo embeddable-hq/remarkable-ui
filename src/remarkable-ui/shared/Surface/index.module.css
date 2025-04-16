@@ -1,12 +1,12 @@
 .card {
-    width: 100%;
-    height: 100%;
+    align-items: center;
+    background: var(--surface-background);
+    border-radius: var(--surface-radius);
     box-sizing: border-box;
     display: flex;
-    padding: var(--surface-padding);
     flex-direction: column;
-    align-items: center;
     gap: var(--surface-gap);
-    border-radius: var(--surface-radius);
-    background: var(--surface-background);
+    height: 100%;
+    padding: var(--surface-padding);
+    width: 100%;
 }

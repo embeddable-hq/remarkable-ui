@@ -1,32 +1,32 @@
 .dropdown {
-    position: relative;
-    display: inline-block;
     cursor: pointer;
+    display: inline-block;
+    position: relative;
 }
   
 .dropdownMenu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 2px;
-    padding: var(--dropdown-padding);
-    display: flex;
     align-items: flex-start;
+    background: var(--dropdown-background);
+    border-radius: var(--dropdown-border-radius);
+    box-shadow: 0px 1px 40px 0px rgba(33, 33, 41, 0.25);
+    color: var(--dropdown-color);
+    display: flex;
     flex-direction: column;
     gap: var(--dropdown-gap);
-    border-radius: var(--dropdown-border-radius);
-    background: var(--dropdown-background);
-    box-shadow: 0px 1px 40px 0px rgba(33, 33, 41, 0.25);
-    z-index: 10;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    min-width: 100px;
-    max-width: 256px;
-    text-wrap: nowrap;
-    color: var(--dropdown-color);
+    left: 0;
+    margin-top: 2px;
     max-height: var(--dropdown-max-height);
+    max-width: 256px;
+    min-width: 100px;
+    opacity: 0;
     overflow: auto;
+    padding: var(--dropdown-padding);
+    position: absolute;
+    text-wrap: nowrap;
+    top: 100%;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    visibility: hidden;
+    z-index: 10;
 }
 
 .dropdownMenu.rightAligned {
@@ -47,7 +47,7 @@
     color: var(--li-label-color-default);
     cursor: pointer;
     display: flex;
-    font: var(--li-label-family);
+    font-family: var(--li-label-family);
     font-size: var(--li-label-size);
     font-style: normal;
     font-weight: var(--li-label-weight);
@@ -61,10 +61,10 @@
 
 .dropdownItem .itemText {
     flex: 1;
-    overflow: hidden; 
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    overflow: hidden;
     padding: var(--li-label-padding);
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .dropdownItem:hover {
@@ -78,6 +78,6 @@
 }
 
 .dropdownItemIcon {
-    width: var(--li-icn-width);
     height: var(--li-icn-height);
+    width: var(--li-icn-width);
 }

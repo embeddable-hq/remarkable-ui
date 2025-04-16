@@ -19,10 +19,10 @@ import { formatValue } from '../../utils/formatUtils';
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
-// Global font defaults
+// Global font defaults - todo: replace with pie chart general css variables. 
 ChartJS.defaults.font.family = getStyle('--font-sans') as string;
 ChartJS.defaults.font.size = getStyle('--text-xs') as number;
-ChartJS.defaults.font.weight = 'normal';
+ChartJS.defaults.font.weight = getStyle('--font-weight-medium') as number | "normal" | "bold" | "lighter" | "bolder" | null | undefined;
 ChartJS.defaults.color = getStyle('--foreground-default') as string;
 
 type BasePieChartProps = {

@@ -35,7 +35,7 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
     ]
 
     const testTheme = {
-        //cssVariables: darkModeVariables
+        //styles: darkModeVariables
         //customFormatFunction: customFormatFunction
         customExportOptions: customExportOptions
     }

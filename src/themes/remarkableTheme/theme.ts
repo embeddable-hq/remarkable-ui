@@ -2,8 +2,8 @@ import { valueProps, configProps } from '../../remarkable-ui/utils/formatUtils';
 import { DropdownItem } from '../../remarkable-ui/shared/Dropdown';
 
 export type Theme = {
-    cssVariables: {
-        [key: string]: string;
+    styles: {
+        [key: string]: string; //todo: add specific variables and types
     };
     charts: {
         colors: string[];

@@ -1,12 +1,13 @@
 .iconButton {
-    display: flex;
-    padding: var(--icn-btn-padding);
     align-items: center;
-    gap: 8px;
-    border-radius: var(--icn-btn-radius);
     background: var(--icn-btn-background);
     border: none;
+    border-radius: var(--icn-btn-radius);
     cursor: pointer;
+    display: flex;
+    gap: 8px;
+    padding: var(--icn-btn-padding);
+    width: 100%;
 }
 
 .iconButton:hover {
@@ -22,10 +23,10 @@
 }
 
 .icon {
-    width: var(--icn-btn-icon-width);
-    height: var(--icn-btn-icon-height);
     color: var(--icn-btn-color-default);
     flex-shrink: 0;
+    height: var(--icn-btn-icon-height);
+    width: var(--icn-btn-icon-width);
 }
 
 .iconButton:hover .icon {

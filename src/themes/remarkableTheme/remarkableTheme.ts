@@ -32,7 +32,7 @@ const CHART_BORDERS = [
 ];
  
 export const remarkableTheme: Theme = {
-	cssVariables: cssVariables,
+	styles: cssVariables,
 	charts: {
 		colors: CHART_COLORS,
 		borderColors: CHART_BORDERS

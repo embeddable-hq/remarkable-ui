@@ -1,9 +1,9 @@
 .title {
-    width: 100%;
-    font-family: var(--card-title-family);
     color: var(--card-title-color);
+    font-family: var(--card-title-family);
     font-size: var(--card-title-size);
     font-style: normal;
     font-weight: var(--card-title-weight);
     line-height: var(--card-title-line-height);
+    width: 100%;
 }

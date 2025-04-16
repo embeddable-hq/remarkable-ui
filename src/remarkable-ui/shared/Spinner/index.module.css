@@ -1,8 +1,8 @@
 .spinner {
+    animation: spin 1s linear infinite;
+    color: var(--card-spinner-color);
     height: var(--card-spinner-width);
     width: var(--card-spinner-height);
-    color: var(--card-spinner-color);
-    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {

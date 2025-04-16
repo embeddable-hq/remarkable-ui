@@ -12,7 +12,7 @@ export default {
 
         console.log("new theme", newTheme);
         
-        const cssVariables = generateCssVariables(newTheme.cssVariables);
+        const cssVariables = generateCssVariables(newTheme.styles);
         const style = document.createElement('style');
         style.textContent = `:root {\n${cssVariables}}`;
         style.id = 'embeddable-style';
