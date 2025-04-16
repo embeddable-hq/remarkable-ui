@@ -1,0 +1,9 @@
+.description {
+    color: var(--card-subtitle-color);
+    font-family: var(--card-subtitle-family);
+    font-size: var(--card-subtitle-size);
+    font-style: normal;
+    font-weight: var(--card-subtitle-weight);
+    line-height: var(--card-subtitle-line-height);
+    width: 100%;
+}

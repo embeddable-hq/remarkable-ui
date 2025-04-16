@@ -1,0 +1,15 @@
+.spinner {
+    animation: spin 1s linear infinite;
+    color: var(--card-spinner-color);
+    height: var(--card-spinner-width);
+    width: var(--card-spinner-height);
+}
+
+@keyframes spin {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}

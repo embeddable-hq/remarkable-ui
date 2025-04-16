@@ -1,0 +1,6 @@
+.content {
+    align-self: stretch;
+    flex: 1;
+    min-height: 1px;
+    overflow: hidden;
+}

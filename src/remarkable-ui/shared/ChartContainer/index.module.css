@@ -1,0 +1,14 @@
+.chartContainer {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+.chartInnerContainer {
+    height: 100%;
+    min-height: 5px;
+    min-width: 5px;
+    overflow: auto;
+    position: relative;
+    width: 100%;
+}
