@@ -69,7 +69,7 @@
 
 .dropdownItem:hover {
     background-color: var(--background-default);
-    color: var(--li-label-color-default);
+    color: var(--li-label-color-hover);
 }
 
 .dropdownItem:pressed {

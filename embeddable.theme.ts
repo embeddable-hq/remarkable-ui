@@ -26,6 +26,11 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
         return value + "wooop!"
     }
 
+    //test custom number function
+    const customNumberFormatFunction = (value:any) => {
+        return value + "nuuumber!"
+    }
+
     const customExportOptions: DropdownItem[] = [
         {
             id: "testOption",
@@ -35,9 +40,14 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
     ]
 
     const testTheme = {
-        //styles: darkModeVariables
-        //customFormatFunction: customFormatFunction
-        customExportOptions: customExportOptions
+        styles: {
+            ...darkModeVariables,
+            '--text-align-default': 'center'
+        },
+        //customFormatFunction: customFormatFunction,
+        //customNumberFormatFunction: customNumberFormatFunction,
+        customExportOptions: customExportOptions,
+        
     }
 
     return mergician(remarkableTheme, testTheme);

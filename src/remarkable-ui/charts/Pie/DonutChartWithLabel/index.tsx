@@ -19,6 +19,7 @@ export default ({
     innerLabelMeasure,
     maxLegendItems,
     measure,
+    onSegmentClick,
     results,
     resultsInnerLabel,
     showLegend,
@@ -75,6 +76,7 @@ export default ({
                 chartOptionsOverrides={chartOptionsOverrides}
                 dimension={dimension}
                 measure={measure}
+                onSegmentClick={onSegmentClick}
                 results={results}
                 showDataLabels={showValueLabels ? 'auto' : false}
                 showLegend={showLegend}

@@ -1,9 +1,10 @@
 // Third Party Libraries
-import React, { useRef } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, LinearScale } from 'chart.js';
+import React, { useState, useRef, useCallback } from 'react';
+import type { Chart, ChartEvent, ActiveElement } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, InteractionItem, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
-import { Pie } from 'react-chartjs-2';
+import { Pie, getElementAtEvent } from 'react-chartjs-2';
 import { mergician } from 'mergician';
 
 // Embeddable Libraries
@@ -20,10 +21,10 @@ import { formatValue } from '../../utils/formatUtils';
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
 // Global font defaults - todo: replace with pie chart general css variables. 
-ChartJS.defaults.font.family = getStyle('--font-sans') as string;
-ChartJS.defaults.font.size = getStyle('--text-xs') as number;
-ChartJS.defaults.font.weight = getStyle('--font-weight-medium') as number | "normal" | "bold" | "lighter" | "bolder" | null | undefined;
-ChartJS.defaults.color = getStyle('--foreground-default') as string;
+ChartJS.defaults.font.family = getStyle('--chart-font-family-default') as string;
+ChartJS.defaults.font.size = getStyle('--chart-font-size-default') as number;
+ChartJS.defaults.font.weight = getStyle('--chart-font-weight-default') as number | "normal" | "bold" | "lighter" | "bolder" | null | undefined;
+ChartJS.defaults.color = getStyle('--chart-font-color-default') as string;
 
 type BasePieChartProps = {
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
@@ -33,6 +34,7 @@ type BasePieChartProps = {
     showDataLabels?: 'auto' | true | false;
     showLegend?: boolean;
     showTooltips?: boolean;
+    onSegmentClick?: (args: { dimensionValue: string | null; }) => void;
 }
 
 const BasePieChart = ({
@@ -42,12 +44,37 @@ const BasePieChart = ({
   results,
   showDataLabels,
   showLegend,
-  showTooltips
+  showTooltips,
+  onSegmentClick
 }: BasePieChartProps ) => {
 
+    const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+
     const { data } = results; 
-    const chartRef = useRef<ChartJS<'pie', number[], string> | null>(null);
+    const chartRef = useRef<ChartJS<'pie', []>>(null);
     const theme = useTheme() as Theme; 
+
+    const handlePieClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+        const { current: chart } = chartRef;
+        if (!chart) {
+            return;
+        }
+        const element: InteractionItem[] = getElementAtEvent(chart, event);
+        if (!element.length || element[0].index === clickedIndex) {
+            //clicked outside pie, or re-clicked segment
+            onSegmentClick?.({
+                dimensionValue: null
+            })
+            setClickedIndex(null);
+            return;
+        }
+        const { index } = element[0];
+        setClickedIndex(index);
+        const dimensionValue = data?.[index][dimension.name]
+        onSegmentClick?.({
+            dimensionValue: dimensionValue
+        })
+    };
 
     const chartData = () => {
         return {
@@ -82,7 +109,7 @@ const BasePieChart = ({
                 },
                 legend: {
                     display: showLegend || true,
-                    position: 'bottom',
+                    position: theme.charts.legendPosition || 'bottom',
                     labels: legendStyle,
                 },
                 tooltip: {
@@ -104,9 +131,10 @@ const BasePieChart = ({
 
     return (        
         <Pie
-            ref={chartRef}
             data={chartData()} 
+            onClick={handlePieClick}
             options={chartOptions()} 
+            ref={chartRef}
         />
     );
 };

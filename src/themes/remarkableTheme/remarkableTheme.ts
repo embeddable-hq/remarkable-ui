@@ -35,7 +35,7 @@ export const remarkableTheme: Theme = {
 	styles: cssVariables,
 	charts: {
 		colors: CHART_COLORS,
-		borderColors: CHART_BORDERS
+		borderColors: CHART_BORDERS, 
 	}
 }
 

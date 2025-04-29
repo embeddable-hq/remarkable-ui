@@ -170,266 +170,189 @@ const baseVariables = {
     '--border-dashed': 'dashed',
     '--border-dotted': 'dotted',
 
-    /* Box Shadow – Default */
-    '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)',
 }
 
-export const cssVariables:Record<string, string> = {
-	...baseVariables, 
-	
-    /* Semantic variables */
+const semanticVariables = {
+    /* Background Colors */
     '--background-neutral': 'var(--gray-0)',
     '--background-default': 'var(--gray-50)',
-    '--background-light': 'var(--gray-100)', /* could change to 'soft'*/
+    '--background-light': 'var(--gray-100)',
     '--background-subtle': 'var(--gray-200)',
     '--background-muted': 'var(--gray-300)',
+
+    /* Foreground Colors */
     '--foreground-default': 'var(--gray-900)',
     '--foreground-muted': 'var(--gray-700)',
     '--foreground-subtle': 'var(--gray-400)',
     '--foreground-inverted': 'var(--gray-0)',
 
-    /* New Semantic Variables*/
-
+    /* Font Defaults */
     '--font-default': 'var(--font-native)',
+    '--text-align-default': 'var(--text-left)',
 
+    /* Box Shadow – Default */
+    '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)',   
+};
+
+const componentVariables = {
     /* Icons (Namespace: --icn-) */
-
-    /* Size */
     '--icn-width': 'var(--width-4)',
     '--icn-height': 'var(--height-4)',
-
-    /* Color */
     '--icn-color': 'var(--foreground-default)',
 
     /* Icon Button (Namespace: --icn-btn-) */
-    /* Layout */
     '--icn-btn-radius': 'var(--rounded-full)',
     '--icn-btn-padding': 'var(--padding-2) var(--padding-0-5)',
-
-    /* Style: different states */
     '--icn-btn-background': 'var(--background-light)',
     '--icn-btn-background-hover': 'var(--background-subtle)',
     '--icn-btn-background-pressed': 'var(--background-muted)',
     '--icn-btn-background-disabled': 'var(--background-light)',
-
-    /* Icon Button Icon (Namespace: --icn-btn-icon-) */
-    /* Layout */
     '--icn-btn-icon-width': 'var(--width-4)',
     '--icn-btn-icon-height': 'var(--width-4)',
-
-    /* Style: different states */
     '--icn-btn-color': 'var(--foreground-default)',
     '--icn-btn-color-hover': 'var(--foreground-default)',
     '--icn-btn-color-pressed': 'var(--foreground-default)',
     '--icn-btn-color-disabled': 'var(--foreground-subtle)',
 
     /* Select Menu – Dropdown and List Item (Namespace: --li-) */
-
     '--dropdown-padding': 'var(--padding-2)',
     '--dropdown-border-radius': 'var(--rounded-xl)',
     '--dropdown-background': 'var(--background-neutral)',
     '--dropdown-color': 'var(--foreground-default)',
     '--dropdown-max-height': 'var(--height-128)',
     '--dropdown-gap': 'var(--padding-0)',
-    
-    /* Layout */
     '--li-height': 'var(--height-8)',
     '--li-padding': 'var(--padding-2)',
-
-    /* Style */
     '--li-radius': 'var(--rounded-lg)',
-
-    /* List Item Label (Namespace: --li-label-) */
-    /* Layout */
     '--li-label-padding': 'var(--padding-0) var(--padding-2)',
-
-    /* Typography */
     '--li-label-family': "var(--font-default)",
     '--li-label-size': 'var(--font-size-xs)',
     '--li-label-weight': 'var(--font-weight-medium)',
     '--li-label-line-height': 'var(--font-height-sm)',
-
-    /* Style: different states */
     '--li-label-color': 'var(--foreground-default)',
     '--li-label-color-hover': 'var(--foreground-default)',
     '--li-label-color-pressed': 'var(--foreground-default)',
     '--li-label-color-disabled': 'var(--foreground-neutral)',
-
-    /* List Item Icon (Namespace: --li-icn-) */
-    /* Layout */
     '--li-icn-width': 'var(--width-4)',
-    '--li-icn-height': 'var(--height-4)', // possibly a typo in original (“--icn-icn-height”)
-
-    /* Style: different states */
+    '--li-icn-height': 'var(--height-4)',
     '--li-icn-color': 'var(--foreground-default)',
-    // '--li-icn-color-hover': 'var(--foreground-default)', /*unused*/
-    // '--li-icn-color-pressed': 'var(--foreground-default)', /*unused*/
-    // '--li-icn-color-disabled': 'var(--foreground-neutral)', /*unused*/
 
     /* Card – Surface (Namespace: --surface-) */
-    /* Style */
     '--surface-background': 'var(--background-default)',
-
-    /* Layout */
     '--surface-padding': 'var(--padding-8)',
     '--surface-gap': 'var(--padding-8)',
-    // '--surface-height': 'var(--height-4)',/* Unused */
-
-    /* Style */
     '--surface-radius': 'var(--rounded-3xl)',
 
     /* Card Header (Namespace: --card-header-) */
-    /* Layout */
     '--card-header-gap': 'var(--padding-1)',
-    '--card-header-content-gap': 'var(--padding-4)', /* gap between title and description*/
+    '--card-header-content-gap': 'var(--padding-4)',
 
     /* Card Title (Namespace: --card-title-) */
-    /* Typography */
     '--card-title-family': "var(--font-default)",
     '--card-title-size': 'var(--font-size-default)',
     '--card-title-weight': 'var(--font-weight-bold)',
     '--card-title-line-height': 'var(--font-height-lg)',
     '--card-title-color': 'var(--foreground-default)',
+    '--card-title-align':' var(--text-align-default)',
 
     /* Card Subtitle (Namespace: --card-subtitle-) */
-    /* Typography */
     '--card-subtitle-family': "var(--font-default)",
     '--card-subtitle-size': 'var(--font-size-sm)',
     '--card-subtitle-weight': 'var(--font-weight-medium)',
     '--card-subtitle-line-height': 'var(--font-height-md)',
     '--card-subtitle-color': 'var(--foreground-muted)',
+    '--card-subtitle-align': 'var(--text-align-default)',
 
     /* Card Spinner (Namespace: --card-spinner-) */
-    /* Layout */
     '--card-spinner-width': 'var(--width-6)',
     '--card-spinner-height': 'var(--height-6)',
-
-    /* Style */
     '--card-spinner-color': 'var(--foreground-default)',
 
     /* Card Error (Namespace: --card-error-) */
-    /* Layout */
-    // '--card-error-padding-bottom': 'var(--padding-8)', /*unused*/
     '--card-message-gap': 'var(--padding-3)',
-
-    /* Card Error Icon (Namespace: --card-error-icon-) */
-    /* Layout */
     '--card-message-icon-width': 'var(--width-4)',
     '--card-message-icon-height': 'var(--height-4)',
-
-    /* Style */
     '--card-error-icon-color': 'var(--foreground-error)',
-
-    /* Card Message Title (Namespace: --card-error-title-) */
-    /* Typography */
-    '--card-error-family': "var(--font-default)",//unused
+    '--card-error-family': "var(--font-default)",
     '--card-message-family': "var(--font-default)",
     '--card-message-default-color': 'var(--foreground-default)',
-    '--card-message-size': 'var(--font-size-sm)', // changed to avoid duplication
+    '--card-message-size': 'var(--font-size-sm)',
     '--card-message-weight': 'var(--font-weight-medium)',
     '--card-message-line-height': 'var(--font-height-md)',
     '--card-error-color': 'var(--foreground-error)',
 
+    /* Chart Essentials - Fonts*/
+    '--chart-font-family-default': 'var(--font-default)',
+    '--chart-font-weight-default': 'var(--font-weight-medium)',
+    '--chart-font-size-default': 'var(--text-xs)',
+    '--chart-font-color-default': 'var(--foreground-default)',
+   
     /* Chart Essentials – Category Legend Indicator (Namespace: --cat-indicator-) */
-    /* Layout */
     '--cat-indicator-width': 'var(--width-2)',
     '--cat-indicator-height': 'var(--height-2)',
 
-    /* Style */
-    // '--cat-indicator-radius': 'var(--rounded-full)',/* Can't use in ChartJS */
-    // '--cat-indicator-color': 'var(--categories-1)', /* Can't use in ChartJS */
-
     /* Category Name (Namespace: --cat-name-) */
-    /* Typography */
     '--cat-name-family': "var(--font-default)",
     '--cat-name-size': 'var(--font-size-xs)',
     '--cat-name-weight': 'var(--font-weight-medium)',
-    // '--cat-name-line-height': 'var(--font-height-sm)',/*Unused */
     '--cat-name-color': 'var(--foreground-muted)',
 
-    /* Chart Category (Namespace: --cat-) */
-    /* Layout */
-    // '--cat-gap': 'var(--padding-1)',//unused
-
     /* Chart Label (Namespace: --chart-label-) */
-    /* Layout */
-    // '--chart-label-padding': 'var(--padding-0-5) var(--padding-1)',//unused
     '--chart-label-padding-top': 'var(--padding-0-5)',
     '--chart-label-padding-bottom': 'var(--padding-0-5)',
     '--chart-label-padding-left': 'var(--padding-0-5)',
-    '--chart-label-padding-right': 'var(--padding-0-5)', 
-
-    /* Style */
+    '--chart-label-padding-right': 'var(--padding-0-5)',
     '--chart-label-background': 'var(--background-neutral)',
     '--chart-label-radius': 'var(--rounded-full)',
-
-    /* Typography */
     '--chart-label-family': "var(--font-default)",
     '--chart-label-size': 'var(--font-size-xs)',
     '--chart-label-weight': 'var(--font-weight-medium)',
-    // '--chart-label-line-height': 'var(--font-height-sm)',//unused
     '--chart-label-color': 'var(--foreground-default)',
 
     /* Chart Tooltip (Namespace: --chart-tooltip-) */
-    /* Layout */
     '--chart-tooltip-padding': 'var(--padding-4)',
-    // '--chart-tooltip-gap': 'var(--padding-2)', unused
     '--chart-tooltip-radius': 'var(--rounded-xl)',
-
-    /* Style */
     '--chart-tooltip-background': 'var(--background-inverted)',
-
-    /* Chart Tooltip Title (Namespace: --chart-tooltip-title-) */
-    /* Typography */
     '--chart-tooltip-title-family': "var(--font-default)",
     '--chart-tooltip-title-size': 'var(--font-size-xs)',
     '--chart-tooltip-title-weight': 'var(--font-weight-bold)',
-    // '--chart-tooltip-title-line-height': 'var(--font-height-md)', unused
     '--chart-tooltip-title-color': 'var(--foreground-inverted)',
-
-    /* Chart Tooltip Category (Namespace: --chart-tooltip-category-) */
-    /* Typography */
     '--chart-tooltip-category-family': "var(--font-default)",
     '--chart-tooltip-category-size': 'var(--font-size-xs)',
     '--chart-tooltip-category-weight': 'var(--font-weight-medium)',
-    // '--chart-tooltip-category-line-height': 'var(--font-height-sm)', unused
     '--chart-tooltip-category-color': 'var(--foreground-inverted)',
 
     /* Radio Button (Namespace: --radio-) */
-    /* Layout */
     '--radio-width': 'var(--width-4)',
     '--radio-height': 'var(--height-4)',
-
-    /* Style: unselected, selected, disabled */
     '--radio-color-unselected': 'var(--foreground-default)',
     '--radio-color-selected': 'var(--foreground-default)',
     '--radio-color-unselected-disabled': 'var(--foreground-subtle)',
     '--radio-color-selected-disabled': 'var(--foreground-subtle)',
 
     /* Checkbox (Namespace: --checkbox-) */
-    /* Layout */
     '--checkbox-width': 'var(--width-4)',
     '--checkbox-height': 'var(--height-4)',
-
-    /* Style: unselected, selected, disabled */
     '--checkbox-color-unselected': 'var(--foreground-default)',
     '--checkbox-color-selected': 'var(--foreground-default)',
     '--checkbox-color-unselected-disabled': 'var(--foreground-subtle)',
     '--checkbox-color-selected-disabled': 'var(--foreground-subtle)',
 
     /* Pie & Donut – Donut Number (Namespace: --donut-number-) */
-    /* Typography */
     '--donut-number-family': "var(--font-default)",
     '--donut-number-size': 'var(--font-size-4xl)',
     '--donut-number-weight': 'var(--font-weight-bold)',
-    // '--donut-number-line-height': 'var(--font-height-xl)', unused
     '--donut-number-color': 'var(--foreground-default)',
 
     /* Donut Measure Label (Namespace: --donut-dimension-) */
-    /* Typography */
     '--donut-label-family': "var(--font-default)",
     '--donut-label-size': 'var(--font-size-default)',
     '--donut-label-weight': 'var(--font-weight-medium)',
-    // '--donut-label-line-height': 'var(--font-height-lg)',unused
     '--donut-label-color': 'var(--foreground-muted)',
+};
+
+export const cssVariables: Record<string, string> = {
+    ...baseVariables,
+    ...semanticVariables,
+    ...componentVariables,
 };

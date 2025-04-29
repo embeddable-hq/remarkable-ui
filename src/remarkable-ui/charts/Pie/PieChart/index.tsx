@@ -11,6 +11,7 @@ export default ({
     dimension,
     maxLegendItems,
     measure,
+    onSegmentClick,
     results,
     showLegend,
     showTooltips,
@@ -29,6 +30,7 @@ export default ({
             <BasePieChart
                 dimension={dimension}
                 measure={measure}
+                onSegmentClick={onSegmentClick}
                 results={results}
                 showDataLabels={showValueLabels ? 'auto' : false}
                 showLegend={showLegend}

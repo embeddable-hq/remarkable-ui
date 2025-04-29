@@ -1,5 +1,5 @@
 // Embeddable Libraries
-import { loadData, DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { Value, loadData, DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 // Local Libraries
@@ -7,15 +7,16 @@ import { title, description, showLegend, showToolTips, showValueLabels, maxLegen
 import DonutChart from './index';
 
 export type DonutChartProps = {
-    description?: string;
-    dimension: Dimension;
-    maxLegendItems?: number;
-    measure: Measure;
-    results: DataResponse;
-    showLegend?: boolean;
-    showTooltips?: boolean;
-    showValueLabels?: boolean;
-    title?: string;
+  description?: string;
+  dimension: Dimension;
+  maxLegendItems?: number;
+  measure: Measure;
+  results: DataResponse;
+  showLegend?: boolean;
+  showTooltips?: boolean;
+  showValueLabels?: boolean;
+  title?: string;
+  onSegmentClick: (args: { dimensionValue: string | null; }) => void;
 }
 
 export const meta = {
@@ -57,6 +58,19 @@ export const meta = {
     {...showToolTips}, 
     {...showValueLabels}
   ],
+  events: [
+    {
+      name: 'onSegmentClick',
+      label: 'A segment is clicked',
+      properties: [
+        {
+          name: 'dimensionValue',
+          label: 'Clicked Dimension',
+          type: 'string',
+        }
+      ],
+    },
+  ],
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(DonutChart, meta, {
@@ -69,5 +83,12 @@ export default defineComponent(DonutChart, meta, {
             dimensions: [inputs.dimension], 
         })
     };
+  },
+  events: {
+    onSegmentClick: (value) => {
+      return {
+        dimensionValue: value.dimensionValue || Value.noFilter(),
+      };
+    },
   },
 });
