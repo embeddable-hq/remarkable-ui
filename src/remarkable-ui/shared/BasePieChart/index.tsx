@@ -1,5 +1,5 @@
 // Third Party Libraries
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import type { Chart, ChartEvent, ActiveElement } from 'chart.js';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, InteractionItem, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -20,32 +20,26 @@ import { formatValue } from '../../utils/formatUtils';
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
-// Global font defaults - todo: replace with pie chart general css variables. 
-ChartJS.defaults.font.family = getStyle('--chart-font-family-default') as string;
-ChartJS.defaults.font.size = getStyle('--chart-font-size-default') as number;
-ChartJS.defaults.font.weight = getStyle('--chart-font-weight-default') as number | "normal" | "bold" | "lighter" | "bolder" | null | undefined;
-ChartJS.defaults.color = getStyle('--chart-font-color-default') as string;
-
 type BasePieChartProps = {
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
     dimension: Dimension;
     measure: Measure;
+    onSegmentClick?: (args: { dimensionValue: string | null; }) => void;
     results: DataResponse;
     showDataLabels?: 'auto' | true | false;
     showLegend?: boolean;
     showTooltips?: boolean;
-    onSegmentClick?: (args: { dimensionValue: string | null; }) => void;
 }
 
 const BasePieChart = ({
   chartOptionsOverrides,
   dimension,
   measure,
+  onSegmentClick,
   results,
   showDataLabels,
   showLegend,
   showTooltips,
-  onSegmentClick
 }: BasePieChartProps ) => {
 
     const [clickedIndex, setClickedIndex] = useState<number | null>(null);
