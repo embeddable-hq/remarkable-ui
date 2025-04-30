@@ -6,7 +6,6 @@
 // •	Receives the new theme as an argument.
 // •	Returns a cleanup function to remove applied styles (e.g. fonts, variables).
 
-
 export default {
     onThemeUpdated: (newTheme:any) => {
 
@@ -21,7 +20,7 @@ export default {
 
         if (!styleElement) {
             document.head.appendChild(style);
-        }      
+        }   
   
         // Cleanup: remove the styles/fonts when the component is unmounted / re-rendered
         return () => {            

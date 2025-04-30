@@ -41,7 +41,7 @@ export default ({
                         type: 'doughnutLabel',
                         content: () => [
                             formatValue(innerLabelValue, { typeHint: 'number', theme: theme }), 
-                            formatValue('Some Label', { typeHint: 'string', theme: theme })
+                            formatValue('Some Label', { typeHint: 'string', theme: theme }) //TODO: replace "Some Label" with data (or an additional input associated with the InnerLabelValue Measure)
                         ], //one element per line  
                         font: [{
                             family: getStyle('--donut-number-family'),
