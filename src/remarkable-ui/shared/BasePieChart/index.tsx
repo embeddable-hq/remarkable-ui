@@ -16,6 +16,7 @@ import { getStyle } from '../../utils/cssUtils';
 import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/commonChartStyles';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../utils/formatUtils';
+import { aggregateLongTail } from '../../utils/dataUtils';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
@@ -23,6 +24,7 @@ ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, Anno
 type BasePieChartProps = {
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
     dimension: Dimension;
+    maxLegendItems?: number;
     measure: Measure;
     onSegmentClick?: (args: { dimensionValue: string | null; }) => void;
     results: DataResponse;
@@ -40,11 +42,14 @@ const BasePieChart = ({
   showDataLabels,
   showLegend,
   showTooltips,
+  maxLegendItems
 }: BasePieChartProps ) => {
 
     const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
-    const { data } = results; 
+    const { data } = results;  
+    const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems);
+
     const chartRef = useRef<ChartJS<'pie', []>>(null);
     const theme = useTheme() as Theme; 
 
@@ -72,12 +77,12 @@ const BasePieChart = ({
 
     const chartData = () => {
         return {
-            labels: data?.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })) || [],
+            labels: mergedData.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })) || [],
             datasets: [
                 {
-                    data: data?.map((item) => item[measure.name]) || [],
-                    backgroundColor: theme.charts.colors.slice(0, data?.length || 0),
-                    borderColor: theme.charts.borderColors.slice(0, data?.length || 0),
+                    data: mergedData.map((item) => item[measure.name]) || [],
+                    backgroundColor: theme.charts.colors.slice(0, mergedData?.length || 0),
+                    borderColor: theme.charts.borderColors.slice(0, mergedData?.length || 0),
                     borderWidth: 1,
                     hoverBackgroundColor: theme.charts.colors.map((color:string) => color.replace('0.8', '0.9')),
                     hoverBorderColor: theme.charts.borderColors,

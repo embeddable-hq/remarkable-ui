@@ -28,3 +28,8 @@ cubes:
       - name: count
         type: count
         title: '# of customers'
+
+      - name: large_numbers
+        sql: (RANDOM() * 5000)
+        type: number
+        title: 'Large numbers'

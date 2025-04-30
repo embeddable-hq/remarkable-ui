@@ -81,6 +81,7 @@ export default ({
                 showDataLabels={showValueLabels ? 'auto' : false}
                 showLegend={showLegend}
                 showTooltips={showTooltips}
+                maxLegendItems={maxLegendItems}
             />        
         </Card>
     );
