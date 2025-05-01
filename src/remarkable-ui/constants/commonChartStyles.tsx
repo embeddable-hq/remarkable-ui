@@ -4,22 +4,25 @@ import { getStyle } from "../utils/cssUtils"
 
 export const tooltipStyle = {
     backgroundColor: getStyle('--chart-tooltip-background'),
-    titleColor: getStyle('--chart-tooltip-title-color'),
+    bodyAlign: getStyle('--chart-tooltip-category-align'),
     bodyColor: getStyle('--chart-tooltip-category-color'),
-    padding: getStyle('--chart-tooltip-padding'),
-    cornerRadius: getStyle('--chart-tooltip-radius'),
-    displayColors: true,
-    usePointStyle: true,
-    titleFont: {
-        family: getStyle('--chart-tooltip-title-family'),
-        size: getStyle('--chart-tooltip-title-size'),
-        weight: getStyle('--chart-tooltip-title-weight'),
-    },
     bodyFont: {
         family: getStyle('--chart-tooltip-category-family'),
         size: getStyle('--chart-tooltip-category-size'),
         weight: getStyle('--chart-tooltip-category-weight'),
     },
+    boxPadding: getStyle('--chart-tooltip-gap'),
+    cornerRadius: getStyle('--chart-tooltip-radius'),
+    displayColors: true,
+    padding: getStyle('--chart-tooltip-padding'),
+    titleAlign: getStyle('--chart-tooltip-title-align'),
+    titleColor: getStyle('--chart-tooltip-title-color'),
+    titleFont: {
+        family: getStyle('--chart-tooltip-title-family'),
+        size: getStyle('--chart-tooltip-title-size'),
+        weight: getStyle('--chart-tooltip-title-weight'),
+    },
+    usePointStyle: true,
 }
 
 export const datalabelStyle = {

@@ -312,15 +312,18 @@ const componentVariables = {
     /* Chart Tooltip (Namespace: --chart-tooltip-) */
     '--chart-tooltip-padding': 'var(--padding-4)',
     '--chart-tooltip-radius': 'var(--rounded-xl)',
+    '--chart-tooltip-gap': 'var(--padding-2)',
     '--chart-tooltip-background': 'var(--background-inverted)',
     '--chart-tooltip-title-family': "var(--font-default)",
     '--chart-tooltip-title-size': 'var(--font-size-xs)',
     '--chart-tooltip-title-weight': 'var(--font-weight-bold)',
     '--chart-tooltip-title-color': 'var(--foreground-inverted)',
+    '--chart-tooltip-title-align': 'var(--text-align-default)',
     '--chart-tooltip-category-family': "var(--font-default)",
     '--chart-tooltip-category-size': 'var(--font-size-xs)',
     '--chart-tooltip-category-weight': 'var(--font-weight-medium)',
     '--chart-tooltip-category-color': 'var(--foreground-inverted)',
+    '--chart-tooltip-category-align': 'var(--text-align-default)',
 
     /* Radio Button (Namespace: --radio-) */
     '--radio-width': 'var(--width-4)',

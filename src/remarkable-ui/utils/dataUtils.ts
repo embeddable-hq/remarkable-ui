@@ -1,5 +1,7 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
+
+// Merge long tail data when a user specifies a maximum number of legend items.
 export const aggregateLongTail = (
     data: DataResponse["data"] = [],
     dimension: Dimension,
@@ -7,7 +9,7 @@ export const aggregateLongTail = (
     threshold?: number,
 ) => {
 
-    if (!threshold || (data?.length || 0) <= threshold) return data;
+    if (!threshold || data.length <= threshold) return data;
     
     const head = data.slice(0, threshold - 1);
     const tail = data.slice(threshold - 1);
