@@ -13,12 +13,16 @@ import { DataResponse } from '@embeddable.com/core';
 
 const themeProvider = (clientContext: any, parentTheme:any): any => {
 
+    //Test. TODO: Remove this later. 
+    const theme = clientContext.theme;
+    
     //test overrides
     const darkModeVariables = {
-        // '--background-default': '#111',
-        // '--foreground-default': '#fff',
-        // '--foreground-muted': '#fff',
-        // '--background-neutral': '#222',
+        '--background-default': '#111',
+        '--foreground-default': '#fff',
+        '--foreground-muted': '#fff',
+        '--background-neutral': '#222',
+        '--text-align-default': 'center'
     }
 
     //test custom format function
@@ -41,12 +45,11 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
 
     const testTheme = {
         styles: {
-            ...darkModeVariables,
-            '--text-align-default': 'center'
+            ...(theme === 'dark' ? darkModeVariables : {}),
         },
         //customFormatFunction: customFormatFunction,
         //customNumberFormatFunction: customNumberFormatFunction,
-        customExportOptions: customExportOptions,
+        //customExportOptions: customExportOptions,
         
     }
 

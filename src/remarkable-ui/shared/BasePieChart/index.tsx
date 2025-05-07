@@ -12,11 +12,11 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 
 // Local Libraries
-import { getStyle } from '../../utils/cssUtils';
 import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/commonChartStyles';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../utils/formatUtils';
 import { aggregateLongTail } from '../../utils/dataUtils';
+import { getColor } from '../../utils/colorUtils';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
@@ -75,18 +75,20 @@ const BasePieChart = ({
         })
     };
 
+    const themeColors = mergedData.map((item, index) => getColor(item[dimension.name], theme.charts.colors, index))
+    const themeBorderColors = mergedData.map((item, index) => getColor(item[dimension.name], theme.charts.borderColors, index));
+
     const chartData = () => {
         return {
             labels: mergedData.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })) || [],
             datasets: [
                 {
                     data: mergedData.map((item) => item[measure.name]) || [],
-                    backgroundColor: theme.charts.colors.slice(0, mergedData?.length || 0),
-                    borderColor: theme.charts.borderColors.slice(0, mergedData?.length || 0),
-                    borderWidth: 1,
-                    hoverBackgroundColor: theme.charts.colors.map((color:string) => color.replace('0.8', '0.9')),
-                    hoverBorderColor: theme.charts.borderColors,
-                    hoverBorderWidth: 2,
+                    backgroundColor: themeColors,
+                    borderColor: themeBorderColors,
+                    borderWidth: 0,
+                    hoverBackgroundColor: themeBorderColors,
+                    hoverBorderWidth: 0,
                 }
             ],
         }

@@ -12,7 +12,7 @@ export default defineConfig({
   //
   // Uncomment for EU deployments
   //
-  // region: 'EU'
+  region: 'EU'
 
   //
   // For internal use only
