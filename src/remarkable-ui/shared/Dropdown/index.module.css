@@ -41,7 +41,6 @@
 }
 
 .dropdownItem {
-    align-items: center;
     border-radius: var(--li-radius);
     box-sizing: border-box;
     color: var(--li-label-color-default);
@@ -51,11 +50,17 @@
     font-size: var(--li-label-size);
     font-style: normal;
     font-weight: var(--li-label-weight);
-    gap: var(--padding-2);
     height: var(--li-height);
     line-height: var(--li-label-line-height);
-    padding: var(--li-padding);
     transition: background-color 0.2s ease;
+    width: 100%;
+}
+
+.dropdownItemInnerDefault {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-2);
+    padding: var(--li-padding);
     width: 100%;
 }
 

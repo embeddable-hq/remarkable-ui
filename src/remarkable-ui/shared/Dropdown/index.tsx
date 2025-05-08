@@ -4,17 +4,18 @@ import styles from './index.module.css'
 import { DataResponse } from '@embeddable.com/core';
 
 export type DropdownItem = {
+  icon?: React.ComponentType<{ className?: string }>;
   id: string;
   label: string;
-  icon?: React.ComponentType<{ className?: string }>;
   onClick?: (data?: DataResponse["data"]) => void;
+  customContent?: React.ReactNode;
 };
 
 type DropdownProps = {
-  children: React.ReactNode;
-  items: DropdownItem[];
-  className?: string;
   align?: 'left' | 'right';
+  children: React.ReactNode;
+  className?: string;
+  items: DropdownItem[];
 }
 
 const Dropdown = ({ children, items, className, align = 'left' }: DropdownProps) => {
