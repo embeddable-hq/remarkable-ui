@@ -50,6 +50,11 @@ const baseVariables = {
     '--font-height-md': '1',
     '--font-height-sm': '0.875rem',
 
+    /*Font alignment */
+    '--text-left': 'left',
+    '--text-center': 'center',
+    '--text-right': 'right',
+
     /* Spacing & Size – Paddings */
     '--padding-0': '0rem',
     '--padding-0-5': '0.125rem',
@@ -169,7 +174,6 @@ const baseVariables = {
     '--border-solid': 'solid',
     '--border-dashed': 'dashed',
     '--border-dotted': 'dotted',
-
 }
 
 const semanticVariables = {

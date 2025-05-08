@@ -18,10 +18,10 @@ export default function CardHeader({ isLoading, children, data }:CardHeaderProps
 
     return (
         <div className={styles.header}> 
-            <div className={styles.content}>
+            <div className={styles.mainContent}>
                 {children}
             </div>  
-            <div>
+            <div className={styles.rightContent}>
                 {loading ? <Spinner/> : <ExportButton data={data} setLocalLoading={ setLocalLoading }/>}               
             </div>
         </div>

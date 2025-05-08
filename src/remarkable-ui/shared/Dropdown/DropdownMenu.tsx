@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { DropdownItem } from './index';
 import styles from './index.module.css';
 
@@ -6,16 +6,55 @@ type DropdownMenuProps = {
   isOpen: boolean;
   items: DropdownItem[];
   onItemClick: (item: DropdownItem) => void;
+  closeDropdown: () => void;
   align?: 'left' | 'right';
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ 
+  align = 'left',
+  closeDropdown,
   isOpen, 
   items, 
   onItemClick,
-  align = 'left'
 }) => {
   if (!isOpen) return null;
+
+  useEffect(() => {
+    if (isOpen) itemsRefs.current[0]?.focus()
+  }, [isOpen])
+
+  const itemsRefs = useRef<Array<HTMLDivElement|null>>([]);
+
+  const handleItemKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>, 
+    i: number
+  ) => {
+
+    // Prevent default behavior for arrow keys (e.g. scrolling)
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault()
+    }
+
+    switch (e.key) {
+      case 'ArrowDown':
+        return itemsRefs.current[(i+1)%items.length]?.focus();
+      case 'ArrowUp':
+        return itemsRefs.current[(i-1+items.length)%items.length]?.focus();
+      case 'Enter': case ' ':
+        onItemClick(items[i]);
+        break;
+      case 'Escape':
+        closeDropdown();
+        break;
+    }
+  }
+
+  const handleTriggerKeyDown = (e: KeyboardEvent) => {
+    if (e.key==='Enter'||e.key===' ') {
+      e.preventDefault();
+      // setIsOpen(o=>!o);
+    }
+  }
   
   return (
     <div 
@@ -23,14 +62,17 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       role="menu"
       aria-orientation="vertical"
     >
-      {items.map((item) => {
+      {items.map((item, i) => {
         const Icon = item.icon;
 
         return (
           <div
+            role="menuitem"
+            tabIndex={-1}
+            ref={el => { itemsRefs.current[i] = el; }}
             key={item.id}
             className={styles.dropdownItem}
-            role="menuitem"
+            onKeyDown={e => handleItemKeyDown(e, i)}
             onMouseDown={(e) => e.stopPropagation()}
             onClick={() => onItemClick(item)}
           >

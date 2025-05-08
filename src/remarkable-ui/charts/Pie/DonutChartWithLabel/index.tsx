@@ -30,7 +30,7 @@ export default ({
 
     const theme = useTheme() as Theme;
 
-    const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "";
+    const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "...";
 
     const chartOptionsOverrides: Partial<ChartOptions<'pie'>> = {
         cutout: '60%',

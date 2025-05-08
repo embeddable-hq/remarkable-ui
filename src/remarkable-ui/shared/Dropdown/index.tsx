@@ -56,6 +56,7 @@ const Dropdown = ({ children, items, className, align = 'left' }: DropdownProps)
       </div>
       <DropdownMenu
         isOpen={isOpen}
+        closeDropdown={() => setIsOpen(false)}
         items={items}
         onItemClick={handleItemClick}
         align={align}

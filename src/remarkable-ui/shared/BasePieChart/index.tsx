@@ -1,10 +1,9 @@
 // Third Party Libraries
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import type { Chart, ChartEvent, ActiveElement } from 'chart.js';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, InteractionItem, LinearScale } from 'chart.js';
+import React, { useState, useRef } from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
-import { Pie, getElementAtEvent } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 import { mergician } from 'mergician';
 
 // Embeddable Libraries
@@ -17,6 +16,7 @@ import { Theme } from '../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../utils/formatUtils';
 import { aggregateLongTail } from '../../utils/dataUtils';
 import { getColor } from '../../utils/colorUtils';
+import { handlePieClick } from './handlers';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
@@ -47,43 +47,21 @@ const BasePieChart = ({
 
     const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
-    const { data } = results;  
-    const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems);
-
     const chartRef = useRef<ChartJS<'pie', []>>(null);
+    
+    const { data } = results;  
+    const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems) || [];
+
     const theme = useTheme() as Theme; 
-
-    const handlePieClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-        const { current: chart } = chartRef;
-        if (!chart) {
-            return;
-        }
-        const element: InteractionItem[] = getElementAtEvent(chart, event);
-        if (!element.length || element[0].index === clickedIndex) {
-            //clicked outside pie, or re-clicked segment
-            onSegmentClick?.({
-                dimensionValue: null
-            })
-            setClickedIndex(null);
-            return;
-        }
-        const { index } = element[0];
-        setClickedIndex(index);
-        const dimensionValue = data?.[index][dimension.name]
-        onSegmentClick?.({
-            dimensionValue: dimensionValue
-        })
-    };
-
-    const themeColors = mergedData.map((item, index) => getColor(item[dimension.name], theme.charts.colors, index))
-    const themeBorderColors = mergedData.map((item, index) => getColor(item[dimension.name], theme.charts.borderColors, index));
+    const themeColors = mergedData.map((item, i) => getColor(item[dimension.name], theme.charts.colors, i))
+    const themeBorderColors = mergedData.map((item, i) => getColor(item[dimension.name], theme.charts.borderColors, i));
 
     const chartData = () => {
         return {
-            labels: mergedData.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })) || [],
+            labels: mergedData.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })),
             datasets: [
                 {
-                    data: mergedData.map((item) => item[measure.name]) || [],
+                    data: mergedData.map((item) => item[measure.name]),
                     backgroundColor: themeColors,
                     borderColor: themeBorderColors,
                     borderWidth: 0,
@@ -133,7 +111,16 @@ const BasePieChart = ({
     return (        
         <Pie
             data={chartData()} 
-            onClick={handlePieClick}
+            onClick={(event) => handlePieClick(
+                event,
+                chartRef.current,
+                clickedIndex,
+                onSegmentClick,
+                setClickedIndex,
+                data,
+                dimension,
+                mergedData
+            )}
             options={chartOptions()} 
             ref={chartRef}
         />
