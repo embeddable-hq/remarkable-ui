@@ -41,16 +41,18 @@ export default function ChartContainer({children}:ChartContainerProps) {
     }, [debouncedUpdateHeight, updateHeight]);
 
     return (
-        <div
-            ref={containerRef}
-            className={styles.chartContainer}
-        >
+        <div className={styles.outerContainer}>
             <div
-                className={styles.chartInnerContainer}
-                style={{ height: `${innerContainerHeight}px`}}
+                ref={containerRef}
+                className={styles.chartContainer}
             >
-                {innerContainerHeight && children}
-            </div>                         
+                <div
+                    className={styles.chartInnerContainer}
+                    style={{ height: `${innerContainerHeight}px`}}
+                >
+                    {innerContainerHeight && children}
+                </div>                         
+            </div>
         </div>
     );
 }

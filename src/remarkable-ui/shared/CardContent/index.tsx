@@ -37,8 +37,8 @@ export default function CardContent({ showSkeletonLoader = false, showErrorMessa
     }
 
     return (
-        <div className={styles.content}>
-            {content}
+        <div className={styles.content}>                        
+            {content}           
         </div>
     );
 }
