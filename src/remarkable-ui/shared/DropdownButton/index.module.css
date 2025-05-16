@@ -1,0 +1,13 @@
+.dropdownButton {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    display: flex;
+    gap: 8px;
+    height: 50px;
+    padding: 8px 16px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+}

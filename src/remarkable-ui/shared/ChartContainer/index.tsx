@@ -1,4 +1,7 @@
+// Third Party Libraries
 import React, { useState, useLayoutEffect, useCallback, useEffect, useRef } from 'react';
+
+// Local Libraries
 import styles from './index.module.css'
 
 type ChartContainerProps = {

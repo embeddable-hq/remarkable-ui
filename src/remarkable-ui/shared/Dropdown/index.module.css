@@ -1,7 +1,11 @@
 .dropdown {
-    cursor: pointer;
     display: inline-block;
     position: relative;
+}
+
+.dropdownButtonContainer {
+    display: inline-block;
+    width: 100%;
 }
   
 .dropdownMenu {

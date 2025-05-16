@@ -78,7 +78,7 @@ const BasePieChart = ({
             maintainAspectRatio: false,
             plugins: {
                 datalabels: {
-                    display: showDataLabels || 'auto',
+                    display: showDataLabels ? 'auto' : false,
                     ...datalabelStyle,
                     anchor: 'center',
                     align: 'center',

@@ -6,53 +6,48 @@ import { DataResponse } from '@embeddable.com/core';
 export type DropdownItem = {
   icon?: React.ComponentType<{ className?: string }>;
   id: string;
-  label: string;
-  onClick?: (data?: DataResponse["data"]) => void;
+  label?: string;
+  onClick?: (item?: DataResponse["data"]) => void;
   customContent?: React.ReactNode;
 };
 
 type DropdownProps = {
   align?: 'left' | 'right';
-  children: React.ReactNode;
+  children: React.ReactElement<{ isOpen?: boolean }>;
   className?: string;
   items: DropdownItem[];
+  closeDropdownOnItemClick?: boolean;
 }
 
-const Dropdown = ({ children, items, className, align = 'left' }: DropdownProps) => {
+const Dropdown = ({ children, items, className, align = 'left', closeDropdownOnItemClick = true }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isOpen) return; // only add listener when isOpen is true
-  
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    if (!isOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      //Use composedPath rather than target because the click lands on a web-component host, and browser events through Shadow DOM don't bubble in the normal way.
+      const path = e.composedPath?.() as EventTarget[];
+      if (!path.includes(dropdownRef.current!)) {
         setIsOpen(false);
       }
     };
-  
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
   }, [isOpen]);
-
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleItemClick = (item: DropdownItem) => {
     item.onClick?.();
-    setIsOpen(false);
+    if (closeDropdownOnItemClick) {
+      setIsOpen(false);
+    }
   };
 
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
-      <div onClick={handleToggle}>
+      <div className={styles.dropdownButtonContainer} onClick={() => setIsOpen(prev => !prev)}>
         {React.isValidElement(children)
-          ? React.cloneElement(children as React.ReactElement<any>, {
-              onClick: handleToggle,
-            })
+          ? React.cloneElement(children, { isOpen })
           : children}
       </div>
       <DropdownMenu

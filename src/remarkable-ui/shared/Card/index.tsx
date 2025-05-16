@@ -40,13 +40,13 @@ export default function Card({
                 isLoading={isLoading}
                 data={data}
             >
-                <Title>{title}</Title>
-                <Description>{description}</Description>
+                {title && <Title>{title}</Title>}
+                {description && <Description>{description}</Description>}
             </CardHeader>
             <CardContent
                 showSkeletonLoader={isLoading && !data}
                 showNoResults={!errorMessage && data?.length === 0}
-                showErrorMessage={!!errorMessage}    
+                showErrorMessage={!!errorMessage}
                 errorMessage={errorMessage}            
             >
                 {chartHeader}

@@ -18,13 +18,14 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   items, 
   onItemClick,
 }) => {
-  if (!isOpen) return null;
 
   const itemsRefs = useRef<Array<HTMLDivElement|null>>([]);
 
   useEffect(() => {
     if (isOpen) itemsRefs.current[0]?.focus()
   }, [isOpen]);
+
+  if (!isOpen) return null;
 
   return (
     <div 
