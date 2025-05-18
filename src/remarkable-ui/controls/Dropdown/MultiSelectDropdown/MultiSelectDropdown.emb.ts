@@ -9,9 +9,11 @@ import MultiSelectDropdown from './index';
 export type MultiSelectDropdownProps = {
     description?: string;
     dimension: Dimension;
+    onChangeSelectedValues?: (selectedValues: string[]) => void;
     results: DataResponse;
-    title?: string;
+    preSelectedValues: string[];
     setSearchValue: (search: string) => void;
+    title?: string;
 }
 
 export const meta = {
@@ -38,7 +40,37 @@ export const meta = {
         },
         {...title},
         {...description},
+        {
+            name: 'preSelectedValues',
+            type: 'string',
+            array: true,
+            label: 'Selected Values',
+            category: 'Pre-configured variables'
+          },
     ],
+    events: [
+        {
+          name: 'onChangeSelectedValues',
+          label: 'Change',
+          properties: [
+            {
+              name: 'value',
+              type: 'string',
+              array: true
+            }
+          ]
+        }
+      ],
+    variables: [
+        {
+          name: 'Multi-select dropdown values',
+          type: 'string',
+          defaultValue: Value.noFilter(),
+          array: true,
+          inputs: ['preSelectedValues'],
+          events: [{ name: 'onChangeSelectedValues', property: 'value' }]
+        }
+    ]
 } as const satisfies EmbeddedComponentMeta;
 
 type MultiSelectDropdownState = {
@@ -67,4 +99,11 @@ export default defineComponent(MultiSelectDropdown, meta, {
             })
         };
     },
+    events: {
+        onChangeSelectedValues: (selectedValues: string[]) => {
+            return {
+                value: selectedValues.length ? selectedValues : Value.noFilter()
+            };
+        }
+    }
 });

@@ -9,36 +9,46 @@ import { MultiSelectDropdownProps } from './MultiSelectDropdown.emb';
 import ControlCard from '../../../shared/ControlCard'
 import Dropdown, { DropdownItem } from '../../../shared/Dropdown';
 import DropdownButton from '../../../shared/DropdownButton';
+import { CheckboxIcon, CheckboxSelectedIcon } from '../../../constants/icons';
 
 export default ({
-    title,
     description, 
     dimension,
+    onChangeSelectedValues,
+    preSelectedValues,
     results,
     setSearchValue,
+    title,
 }: MultiSelectDropdownProps) => {
 
-    const [selected, setSelected] = useState(() => new Set());
+    const [selected, setSelected] = useState(() => new Set(preSelectedValues));
     const [localSearchValue, setLocalSearchValue] = useState<string>("");
-    const { isLoading, data = [], error } = results;
+    const { isLoading, data = [], error } = results; 
     
-    // Only call setSearchValue after typing stops.
+    useEffect(() => {
+        setSelected(new Set(preSelectedValues));
+    }, [preSelectedValues]);
+    
+    // Only call setSearchValue once typing stops.
     useEffect(() => {
         const id = setTimeout(() => setSearchValue(localSearchValue), 500);
         return () => clearTimeout(id);
       }, [localSearchValue, setSearchValue]);
 
-    const toggleValue = (value:string) =>
+    const toggleValue = (value:string) => {
         setSelected((prev) => {
             const next = new Set(prev); // make a *new* Set (don’t mutate)
             next.has(value) ? next.delete(value) : next.add(value);
+            onChangeSelectedValues?.(Array.from(next) as string[]);
             return next;
         });
+    }
     
     const buildDropdownItem = (value: string, index:number):DropdownItem => {
         return {
             id: `multiselect-dropdown-${value}-${index}`,
-            label: `${value} ${selected.has(value) ? "checked" : "not checked"}`,
+            label: `${value}`,
+            icon: selected.has(value) ? CheckboxSelectedIcon : CheckboxIcon,
             onClick: () => toggleValue(value),
         }
     }
@@ -81,16 +91,8 @@ export default ({
 
 /*
 
-If a user selects all, set the mode to 'none'. 
-If a user deselects all, set the mode to 'include'
-If the previous mode was 'none', and a user deselects an item, set the mode to 'exclude'
-
-
-
-
-
-
-
-
-
+TODO:
+- pass selected values to Embeddable
+- add search to dropdown component generally and pass in prop onSearch
+- add all relevant stylings
 */
