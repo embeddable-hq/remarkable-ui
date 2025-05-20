@@ -15,14 +15,22 @@ type DropdownProps = {
   align?: 'left' | 'right';
   children: React.ReactElement<{ isOpen?: boolean }>;
   className?: string;
-  items: DropdownItem[];
   closeDropdownOnItemClick?: boolean;
+  items: DropdownItem[];
+  onSearch?: (value: string) => void;
 }
 
-const Dropdown = ({ children, items, className, align = 'left', closeDropdownOnItemClick = true }: DropdownProps) => {
+const Dropdown = ({ children,
+  items,
+  className,
+  align = 'left',
+  closeDropdownOnItemClick = true,
+  onSearch 
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  //Close menu if the user clicks outside
   useEffect(() => {
     if (!isOpen) return;
     const onDocClick = (e: MouseEvent) => {
@@ -51,11 +59,12 @@ const Dropdown = ({ children, items, className, align = 'left', closeDropdownOnI
           : children}
       </div>
       <DropdownMenu
-        isOpen={isOpen}
+        align={align}
         closeDropdown={() => setIsOpen(false)}
+        isOpen={isOpen}
         items={items}
         onItemClick={handleItemClick}
-        align={align}
+        onSearch={onSearch}
       />
     </div>
   );

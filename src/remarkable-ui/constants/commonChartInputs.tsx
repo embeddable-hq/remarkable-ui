@@ -43,3 +43,10 @@ export const maxLegendItems = {
     defaultValue: 10,
     category: 'Chart Settings'
 }
+
+export const placeholder = {
+    name: 'placeholder',
+    type: 'string' as 'string',
+    label: 'Placeholder',
+    category: 'Chart Settings'
+}

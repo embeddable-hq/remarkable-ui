@@ -2,19 +2,20 @@
 import React, { useState, useEffect } from 'react';
 
 // Embeddable Libraries
-import { DataResponse, Dimension } from '@embeddable.com/core';
+// import { DataResponse, Dimension } from '@embeddable.com/core';
 
 // Local Libraries
 import { MultiSelectDropdownProps } from './MultiSelectDropdown.emb';
 import ControlCard from '../../../shared/ControlCard'
 import Dropdown, { DropdownItem } from '../../../shared/Dropdown';
-import DropdownButton from '../../../shared/DropdownButton';
+import MultiSelectDropdownButton from './MultiSelectDropdownButton';
 import { CheckboxIcon, CheckboxSelectedIcon } from '../../../constants/icons';
 
 export default ({
     description, 
     dimension,
     onChangeSelectedValues,
+    placeholder,
     preSelectedValues,
     results,
     setSearchValue,
@@ -22,19 +23,8 @@ export default ({
 }: MultiSelectDropdownProps) => {
 
     const [selected, setSelected] = useState(() => new Set(preSelectedValues));
-    const [localSearchValue, setLocalSearchValue] = useState<string>("");
     const { isLoading, data = [], error } = results; 
     
-    useEffect(() => {
-        setSelected(new Set(preSelectedValues));
-    }, [preSelectedValues]);
-    
-    // Only call setSearchValue once typing stops.
-    useEffect(() => {
-        const id = setTimeout(() => setSearchValue(localSearchValue), 500);
-        return () => clearTimeout(id);
-      }, [localSearchValue, setSearchValue]);
-
     const toggleValue = (value:string) => {
         setSelected((prev) => {
             const next = new Set(prev); // make a *new* Set (don’t mutate)
@@ -42,6 +32,11 @@ export default ({
             onChangeSelectedValues?.(Array.from(next) as string[]);
             return next;
         });
+    }
+
+    const clearSelectedValues = () => {
+        setSelected(new Set());
+        onChangeSelectedValues?.([]);
     }
     
     const buildDropdownItem = (value: string, index:number):DropdownItem => {
@@ -64,12 +59,6 @@ export default ({
             label: `No results found`,
         }];
 
-    //Add search input to the top of the dropdown
-    dropdownItems.unshift({
-        id: `multiselect-dropdown-search`,
-        customContent: (<input value={localSearchValue} onChange={(e) => setLocalSearchValue(e.target.value)}/>),
-    });
-
     return (
         <ControlCard
             title={title}
@@ -80,19 +69,16 @@ export default ({
                 items={dropdownItems}
                 align='left'
                 closeDropdownOnItemClick={false}
-            >
-                {/* Refactor later to make this a component*/}                
-                <DropdownButton isLoading={isLoading}/>                 
+                onSearch={setSearchValue}
+            >              
+                <MultiSelectDropdownButton
+                    isLoading={isLoading}
+                    selectedValues={Array.from(selected)}
+                    clearSelectedValues={clearSelectedValues}
+                    dimension={dimension}
+                    placeholder={placeholder}
+                />                 
             </Dropdown>                                 
         </ControlCard>       
     );
 };
-
-
-/*
-
-TODO:
-- pass selected values to Embeddable
-- add search to dropdown component generally and pass in prop onSearch
-- add all relevant stylings
-*/

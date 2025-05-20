@@ -240,6 +240,22 @@ const componentVariables = {
     '--li-icn-width': 'var(--width-4)',
     '--li-icn-height': 'var(--height-4)',
     '--li-icn-color': 'var(--foreground-default)',
+    '--li-gap': 'var(--padding-2)',
+    '--li-search-background': 'var(--background-default)',
+    '--li-search-background-hover': 'var(--background-subtle)',
+
+    /* Multi Select Dropdown (Namespace: --multi-select-dropdown-) */
+    '--dropdown-button-height': '40px',
+    '--dropdown-button-padding': 'var(--padding-3) var(--padding-2)',
+    '--dropdown-button-gap': 'var(--padding-2)',
+    '--dropdown-button-border-radius': 'var(--rounded-xl)',
+    '--dropdown-button-border': '1px solid var(--background-muted)',
+    '--dropdown-button-background': 'var(--background-neutral)',
+    '--dropdown-button-color': 'var(--foreground-default)',
+    '--dropdown-button-hover-background': 'var(--background-default)',
+    '--dropdown-button-hover-border': '1px solid var(--background-muted)',
+    '--dropdown-button-pressed-background': 'var(--background-light)',
+    '--dropdown-button-pressed-border': '1px solid var(--background-muted)',
 
     /* Card – Surface (Namespace: --surface-) */
     '--surface-background': 'var(--background-default)',

@@ -3,13 +3,14 @@ import { Value, loadData, DataResponse, Dimension } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 // Local Libraries
-import { title, description, showLegend, showToolTips, showValueLabels, maxLegendItems } from '../../../constants/commonChartInputs';
+import { title, description, placeholder } from '../../../constants/commonChartInputs';
 import MultiSelectDropdown from './index';
 
 export type MultiSelectDropdownProps = {
     description?: string;
     dimension: Dimension;
     onChangeSelectedValues?: (selectedValues: string[]) => void;
+    placeholder?: string;
     results: DataResponse;
     preSelectedValues: string[];
     setSearchValue: (search: string) => void;
@@ -40,6 +41,7 @@ export const meta = {
         },
         {...title},
         {...description},
+        {...placeholder},
         {
             name: 'preSelectedValues',
             type: 'string',
