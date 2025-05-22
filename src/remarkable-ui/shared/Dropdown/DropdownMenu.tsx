@@ -24,25 +24,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   onSearch,
 }) => {
 
-  const [searchValue, setSearchValue] = useState<string>("");
-
   const itemsRefs = useRef<Array<HTMLDivElement|null>>([]);
-
-  const itemsToRender = onSearch
-    ? [{ id: 'dropdown-search', customContent: (
-      <DropdownSearch 
-        onSetSearchValue={setSearchValue} 
-        searchValue={searchValue} 
-        onSearch={onSearch}
-      />
-    )}, ...items] as DropdownItem[]
-    : items;
 
   useEffect(() => {
     if (isOpen) itemsRefs.current[0]?.focus()
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  // if (!isOpen) return null;
 
   return (
     <div 
@@ -50,7 +38,15 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       role="menu"
       aria-orientation="vertical"
     >
-      {itemsToRender.map((item, i) => {
+      {onSearch
+        && (
+          <DropdownSearch 
+            onSearch={onSearch}
+          />
+        )
+      }
+      
+      {items.map((item, i) => {
           const { id, icon: Icon, customContent, label } = item;
           const content = customContent ?? (
             <div className={styles.dropdownItemInnerDefault}>
@@ -65,8 +61,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
               role="menuitem"
               tabIndex={-1}
               ref={el => { itemsRefs.current[i] = el; }}
-              className={`${styles.dropdownItem} ${onSearch && i === 0 ? styles.searchMenuItem : ''}`}
-              onKeyDown={e => handleItemKeyDown(e, i, itemsRefs, itemsToRender, onItemClick, closeDropdown)}
+              className={styles.dropdownItem}
+              onKeyDown={e => handleItemKeyDown(e, i, itemsRefs, items, onItemClick, closeDropdown)}
               onMouseDown={e => e.stopPropagation()}
               onClick={() => onItemClick(item)}
             >
