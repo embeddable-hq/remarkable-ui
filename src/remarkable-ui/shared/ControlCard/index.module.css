@@ -1,5 +1,5 @@
 .controlCard {
     display: flex;
     flex-direction: column;
-    gap: var(--surface-gap);
+    gap: var(--control-surface-gap);
 }

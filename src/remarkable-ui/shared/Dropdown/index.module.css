@@ -22,26 +22,18 @@
     max-height: var(--dropdown-max-height);
     max-width: 300px;
     min-width: 160px;
-    opacity: 0;
     overflow: auto;
     padding: var(--dropdown-padding);
     position: absolute;
     text-wrap: nowrap;
     top: 100%;
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-    visibility: hidden;
     z-index: 10;
 }
 
 .dropdownMenu.rightAligned {
     left: auto;
     right: 0;
-}
-
-.dropdownMenu.open {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
 }
 
 .dropdownItem {
@@ -93,6 +85,8 @@
 
 .searchMenuItem {
     margin-bottom: 8px;
+    position: sticky;
+    top: 0;
 }
 
 .searchInput {

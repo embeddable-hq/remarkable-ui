@@ -7,7 +7,7 @@ import { Dimension } from '@embeddable.com/core';
 // Local Libraries
 import styles from './index.module.css'
 import Spinner from '../../../shared/Spinner';
-import { DropdownArrow, CheckboxSelectedIcon } from '../../../constants/icons';
+import { DropdownArrow, CloseIcon } from '../../../constants/icons';
 
 type MultiSelectDropdownButtonProps = {
     dimension: Dimension;
@@ -35,16 +35,6 @@ export default function MultiSelectDropdownButton({
 
     return (
         <button className={styles.dropdownButton}>
-            {count > 0 && (
-                <div
-                    className={styles.dropdownButtonSelectedValues}
-                    onClick={handleClearSelectedValues}
-                    aria-label="Clear selection"
-                >
-                    <CheckboxSelectedIcon/>
-                </div>
-            )}
-
             <div className={styles.dropdownButtonText}>
                 {count > 0
                     ? isOpen
@@ -62,7 +52,15 @@ export default function MultiSelectDropdownButton({
                     : placeholder || 'Select values...'
                 }
             </div>
-
+            {count > 0 && (
+                <div
+                    className={styles.dropdownButtonSelectedValues}
+                    onClick={handleClearSelectedValues}
+                    title="Clear selection"
+                >
+                    <CloseIcon/>
+                </div>
+            )}
             <div className={styles.dropdownButtonIconContainer}>
                 {isLoading ? <Spinner/> : <DropdownArrow/>}
             </div>

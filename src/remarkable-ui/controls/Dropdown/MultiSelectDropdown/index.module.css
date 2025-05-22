@@ -34,7 +34,6 @@
 }
 
 .dropdownButtonItems {
-    flex: 1 1 auto;
     min-width: 0; 
     overflow: hidden;
     text-align: left;
@@ -44,7 +43,6 @@
 
 .dropdownButtonCount {
     flex: 0 0 auto;
-    margin-left: var(--dropdown-button-gap);
 }
 
 .dropdownButtonIconContainer,

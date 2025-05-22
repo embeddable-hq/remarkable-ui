@@ -1,7 +1,7 @@
 const baseVariables = {
 	/* Gray */
     '--gray-0': '#fff',
-    '--gray-50': '#f9f9fa',
+    '--gray-50': '#f7f7f8',
     '--gray-100': '#ededf1',
     '--gray-200': '#e4e4ea',
     '--gray-300': '#d2d2d5',
@@ -256,6 +256,9 @@ const componentVariables = {
     '--dropdown-button-hover-border': '1px solid var(--background-muted)',
     '--dropdown-button-pressed-background': 'var(--background-light)',
     '--dropdown-button-pressed-border': '1px solid var(--background-muted)',
+
+    /* Card - Control Surface */
+    '--control-surface-gap': 'var(--padding-4)',
 
     /* Card – Surface (Namespace: --surface-) */
     '--surface-background': 'var(--background-default)',
