@@ -246,7 +246,7 @@ const componentVariables = {
 
     /* Multi Select Dropdown (Namespace: --multi-select-dropdown-) */
     '--dropdown-button-height': '40px',
-    '--dropdown-button-padding': 'var(--padding-3) var(--padding-2)',
+    '--dropdown-button-padding': 'var(--padding-3)',
     '--dropdown-button-gap': 'var(--padding-2)',
     '--dropdown-button-border-radius': 'var(--rounded-xl)',
     '--dropdown-button-border': '1px solid var(--background-muted)',

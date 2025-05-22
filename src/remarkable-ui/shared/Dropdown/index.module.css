@@ -24,7 +24,7 @@
     min-width: 160px;
     opacity: 0;  
     overflow: auto;
-    padding: var(--dropdown-padding);
+    padding: 0 var(--dropdown-padding) var(--dropdown-padding) var(--dropdown-padding);
     position: absolute;
     text-wrap: nowrap;
     top: 100%;
@@ -52,6 +52,10 @@
     line-height: var(--li-label-line-height);
     transition: background-color 0.2s ease;
     width: 100%;
+}
+
+.dropdownItem:first-child {
+    margin-top: var(--dropdown-padding);
 }
 
 .dropdownItemInnerDefault {
@@ -85,6 +89,14 @@
     width: var(--li-icn-width);
 }
 
+.searchInputContainer {
+    background: var(--dropdown-background);
+    padding: var(--dropdown-padding) 0px var(--dropdown-padding) 0px;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+}
+
 .searchInput {
     align-items: center;
     background-color: var(--li-search-background);
@@ -94,10 +106,7 @@
     gap: var(--li-gap);
     height: 32px;
     justify-content: space-between;
-    margin-bottom: 8px;
     padding: var(--li-padding);
-    position: sticky;
-    top: 0px;
     width: 100%;
 }
 

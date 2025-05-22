@@ -56,7 +56,7 @@ export default function ExportButton({setLocalLoading, data}:ExportButtonProps) 
         onClick: () => alert("dowload png!")
     };
 
-    const items = [downloadCSV, downloadPNG, veryLongOption, ...customExportOptions];
+    const items = [downloadCSV, downloadPNG, ...customExportOptions];
 
     return (
         <Dropdown items={items} align='right'>

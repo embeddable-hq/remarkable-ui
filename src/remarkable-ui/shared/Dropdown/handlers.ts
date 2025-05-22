@@ -27,3 +27,12 @@ export const handleItemKeyDown = (
         break;
     }
 }
+
+export const handleSearchKeyDown = (
+  e: React.KeyboardEvent,
+  itemsRefs: React.RefObject<Array<HTMLDivElement | null>>) => {
+  if ((e.key === 'Tab' && !e.shiftKey) || e.key === 'ArrowDown') {
+    e.preventDefault()
+    itemsRefs.current[0]?.focus()
+  }
+}

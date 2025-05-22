@@ -7,11 +7,10 @@ import { SearchIcon, CloseIcon } from '../../constants/icons';
 
 type DropdownSearch = {
     onSearch: (value:string) => void;
-    // onSetSearchValue: (value:string) => void;
-    // searchValue: string;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-export default function DropdownSearch({ onSearch }:DropdownSearch) {
+export default function DropdownSearch({ onSearch, onKeyDown }:DropdownSearch) {
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -23,29 +22,29 @@ export default function DropdownSearch({ onSearch }:DropdownSearch) {
     
     //call onSearch on a timer so it triggers once the user stops typing  
     useEffect(() => {
-        if (searchValue.length === 0) {
-            onSearch("");
-            return;
-        }
-        const id = setTimeout(() => onSearch(searchValue), 500);
+        const delay = searchValue.length > 0 ? 500 : 0;
+        const id = setTimeout(() => onSearch(searchValue), delay);
         return () => clearTimeout(id);
     }, [searchValue, setSearchValue]);
 
     return (
-        <div className={`${styles.searchInput} ${searchValue.length > 0 ? styles.searchInputActive : ''}`}>
-            <SearchIcon />
-            <input
-                ref={inputRef}
-                autoFocus
-                placeholder="Search..."
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}                
-            /> 
-            <div onClick={() => setSearchValue("")} className={styles.closeIconContainer}>
-                {searchValue.length > 0 && (
-                    <CloseIcon />
-                )}
-            </div>         
-        </div>      
+        <div className={styles.searchInputContainer}>
+            <div className={`${styles.searchInput} ${searchValue.length > 0 ? styles.searchInputActive : ''}`}>
+                <SearchIcon />
+                <input
+                    ref={inputRef}
+                    autoFocus
+                    placeholder="Search..."
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)} 
+                    onKeyDown={onKeyDown}              
+                /> 
+                <div onClick={() => setSearchValue("")} className={styles.closeIconContainer}>
+                    {searchValue.length > 0 && (
+                        <CloseIcon />
+                    )}
+                </div>         
+            </div>  
+        </div>    
     );
 }

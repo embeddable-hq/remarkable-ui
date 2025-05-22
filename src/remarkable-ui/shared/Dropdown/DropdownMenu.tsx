@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 //Import Local Libraries
 import { DropdownItem } from './index';
 import styles from './index.module.css';
-import { handleItemKeyDown } from './handlers';
+import { handleItemKeyDown, handleSearchKeyDown } from './handlers';
 import DropdownSearch from './DropdownSearch';
 
 type DropdownMenuProps = {
@@ -24,28 +24,39 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   onSearch,
 }) => {
 
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [lockedWidth, setLockedWidth] = useState<number>();
+
   const itemsRefs = useRef<Array<HTMLDivElement|null>>([]);
+
+  // when the menu opens, measure and lock its width
+  useEffect(() => {
+    if (isOpen && menuRef.current && lockedWidth == null) {
+      const w = menuRef.current.getBoundingClientRect().width;
+      setLockedWidth(w);
+    }
+  }, [isOpen, lockedWidth]);
 
   useEffect(() => {
     if (isOpen) itemsRefs.current[0]?.focus()
   }, [isOpen]);
 
-  // if (!isOpen) return null;
-
   return (
     <div 
+      ref={menuRef}
       className={`${styles.dropdownMenu} ${isOpen ? styles.open : ''} ${align === 'right' ? styles.rightAligned : ''}`}
       role="menu"
+      style={lockedWidth ? { width: lockedWidth } : undefined}
       aria-orientation="vertical"
     >
       {onSearch
-        && (
+        && (          
           <DropdownSearch 
             onSearch={onSearch}
+            onKeyDown={(e) => handleSearchKeyDown(e, itemsRefs)}
           />
         )
-      }
-      
+      }      
       {items.map((item, i) => {
           const { id, icon: Icon, customContent, label } = item;
           const content = customContent ?? (
