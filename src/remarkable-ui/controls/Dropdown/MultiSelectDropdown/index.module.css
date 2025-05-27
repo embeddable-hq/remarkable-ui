@@ -1,13 +1,16 @@
 .dropdownButton {
     align-items: center;
     background-color: var(--dropdown-button-background);
-    border: var(--dropdown-button-border);
     border-radius: var(--dropdown-button-border-radius);
+    border: var(--dropdown-button-border);
     box-sizing: border-box;
     color: var(--dropdown-button-color);
     cursor: pointer;
     display: flex;
     flex-direction: row;
+    font-family: var(--dropdown-button-font-family);
+    font-size: var(--dropdown-button-font-size);
+    font-weight: var(--dropdown-button-font-weight);
     gap: var(--dropdown-button-gap);
     height: var(--dropdown-button-height);
     justify-content: space-between;

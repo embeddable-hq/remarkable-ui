@@ -256,6 +256,9 @@ const componentVariables = {
     '--dropdown-button-hover-border': '1px solid var(--background-muted)',
     '--dropdown-button-pressed-background': 'var(--background-light)',
     '--dropdown-button-pressed-border': '1px solid var(--background-muted)',
+    '--dropdown-button-font-family': "var(--font-default)",
+    '--dropdown-button-font-size': 'var(--font-size-xs)',
+    '--dropdown-button-font-weight': 'var(--font-weight-medium)',
 
     /* Card - Control Surface */
     '--control-surface-gap': 'var(--padding-4)',
