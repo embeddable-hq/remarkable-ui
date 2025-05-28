@@ -22,7 +22,9 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
         '--foreground-default': '#fff',
         '--foreground-muted': '#fff',
         '--background-neutral': '#222',
-        '--text-align-default': 'center'
+        '--text-align-default': 'center',
+        '--background-inverted': '#fafafa',
+        '--foreground-inverted': '#111',
     }
 
     //test custom format function
@@ -48,7 +50,7 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
             ...(theme === 'dark' ? darkModeVariables : {}),
         },
         //customFormatFunction: customFormatFunction,
-        //customNumberFormatFunction: customNumberFormatFunction,
+        // customNumberFormatFunction: customNumberFormatFunction,
         //customExportOptions: customExportOptions,
         
     }

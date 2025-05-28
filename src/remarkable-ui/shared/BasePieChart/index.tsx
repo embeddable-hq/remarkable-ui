@@ -1,5 +1,5 @@
 // Third Party Libraries
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
@@ -11,7 +11,7 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 
 // Local Libraries
-import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/commonChartStyles';
+import { getTooltipStyle, getDatalabelStyle, getLegendStyle } from '../../constants/commonChartStyles';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../utils/formatUtils';
 import { aggregateLongTail } from '../../utils/dataUtils';
@@ -72,6 +72,12 @@ const BasePieChart = ({
         }
     };
 
+    const { tooltipOptions, dataLabelOptions, legendOptions } = useMemo(() => ({
+        tooltipOptions: getTooltipStyle(),
+        dataLabelOptions: getDatalabelStyle(),
+        legendOptions: getLegendStyle(),
+    }), [theme]);
+
     const chartOptions = () => {
         return mergician({
             responsive: true,
@@ -79,7 +85,7 @@ const BasePieChart = ({
             plugins: {
                 datalabels: {
                     display: showDataLabels ? 'auto' : false,
-                    ...datalabelStyle,
+                    ...dataLabelOptions,
                     anchor: 'center',
                     align: 'center',
                     formatter: (value:string, context:any) => {
@@ -89,11 +95,11 @@ const BasePieChart = ({
                 legend: {
                     display: showLegend || true,
                     position: theme.charts.legendPosition || 'bottom',
-                    labels: legendStyle,
+                    labels: legendOptions,
                 },
                 tooltip: {
                     enabled: showTooltips || true,
-                    ...tooltipStyle,
+                    ...tooltipOptions,
                     callbacks: {
                         label: function(context:any) {
                             const label = context.label || '';
@@ -106,7 +112,7 @@ const BasePieChart = ({
                 }
             },
         }, chartOptionsOverrides || {}) as ChartOptions<'pie'>
-    };
+    }
 
     return (        
         <Pie

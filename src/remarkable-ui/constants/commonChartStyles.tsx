@@ -2,7 +2,7 @@
 import { getStyle } from "../utils/cssUtils"
 
 
-export const tooltipStyle = {
+export const getTooltipStyle = () => ({
     backgroundColor: getStyle('--chart-tooltip-background'),
     bodyAlign: getStyle('--chart-tooltip-category-align'),
     bodyColor: getStyle('--chart-tooltip-category-color'),
@@ -23,9 +23,9 @@ export const tooltipStyle = {
         weight: getStyle('--chart-tooltip-title-weight'),
     },
     usePointStyle: true,
-}
+})
 
-export const datalabelStyle = {
+export const getDatalabelStyle = () => ({
     backgroundColor: getStyle('--chart-label-background'), // white background for the label
     borderRadius: getStyle('--chart-label-radius'), // round the corners
     padding: {
@@ -40,9 +40,9 @@ export const datalabelStyle = {
         size: getStyle('--chart-label-size'),
         weight: getStyle('--chary-label-weight'), 
     }
-}
+})
 
-export const legendStyle = {
+export const getLegendStyle = () => ({
     boxHeight: getStyle('--cat-indicator-width'),
     boxWidth: getStyle('--cat-indicator-height'),
     usePointStyle: true,
@@ -52,4 +52,4 @@ export const legendStyle = {
         size: getStyle('--cat-name-size'),
         weight: getStyle('--cat-name-weight'),        
     }
-}
+})  

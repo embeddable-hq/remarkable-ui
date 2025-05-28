@@ -7,28 +7,23 @@
 // •	Returns a cleanup function to remove applied styles (e.g. fonts, variables).
 
 export default {
-    onThemeUpdated: (newTheme:any) => {
-
-        console.log("new theme", newTheme);
-        
-        const cssVariables = generateCssVariables(newTheme.styles);
-        const style = document.createElement('style');
-        style.textContent = `:root {\n${cssVariables}}`;
-        style.id = 'embeddable-style';
-
-        const styleElement = document.getElementById('embeddable-style');
-
-        if (!styleElement) {
-            document.head.appendChild(style);
-        }   
-  
-        // Cleanup: remove the styles/fonts when the component is unmounted / re-rendered
-        return () => {            
-            if (styleElement) {
-                styleElement.remove();
-            }        
-        };
-    },
+    onThemeUpdated: (newTheme: any) => {
+        const css = `:root {\n${generateCssVariables(newTheme.styles)}}`;
+        const styleId = 'embeddable-style';
+        let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;
+      
+        if (styleEl) {
+          // overwrite the old vars
+          styleEl.textContent = css;
+        } else {
+          styleEl = document.createElement('style');
+          styleEl.id = styleId;
+          styleEl.textContent = css;
+          document.head.appendChild(styleEl);
+        }
+      
+        return () => styleEl?.remove();
+    }
 };
 
 
