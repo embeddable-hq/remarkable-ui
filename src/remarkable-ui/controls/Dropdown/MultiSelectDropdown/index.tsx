@@ -10,6 +10,7 @@ import ControlCard from '../../../shared/ControlCard'
 import Dropdown, { DropdownItem } from '../../../shared/Dropdown';
 import MultiSelectDropdownButton from './MultiSelectDropdownButton';
 import { CheckboxIcon, CheckboxSelectedIcon } from '../../../constants/icons';
+import { useDebouncedEffect } from '../../../hooks/useDebouncedEffect';
 
 export default ({
     description, 
@@ -29,10 +30,15 @@ export default ({
         setSelected((prev) => {
             const next = new Set(prev); // make a *new* Set (don’t mutate)
             next.has(value) ? next.delete(value) : next.add(value);
-            onChangeSelectedValues?.(Array.from(next) as string[]);
+            // onChangeSelectedValues?.(Array.from(next) as string[]);
             return next;
         });
     }
+
+    //send the selected values to Embeddable after a delay so we don't send too many requests
+    useDebouncedEffect(() => {
+        onChangeSelectedValues?.(Array.from(selected) as string[]);
+    }, [selected, onChangeSelectedValues], 500);
 
     const clearSelectedValues = () => {
         setSelected(new Set());
