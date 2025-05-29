@@ -8,7 +8,7 @@
 
 import { mergician } from 'mergician';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
-import { DropdownItem } from './src/remarkable-ui/shared/Dropdown';
+import { DropdownItem } from './src/remarkable-ui/shared/BaseDropdown';
 import { DataResponse } from '@embeddable.com/core';
 
 const themeProvider = (clientContext: any, parentTheme:any): any => {
@@ -49,6 +49,9 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
         styles: {
             ...(theme === 'dark' ? darkModeVariables : {}),
         },
+        // charts: {
+        //     legendPosition: 'right'
+        // },
         //customFormatFunction: customFormatFunction,
         // customNumberFormatFunction: customNumberFormatFunction,
         //customExportOptions: customExportOptions,

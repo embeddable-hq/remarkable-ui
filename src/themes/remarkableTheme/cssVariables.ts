@@ -27,9 +27,9 @@ const baseVariables = {
     /* Typography: Phase 1 */
     '--font-native': '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
     '--font-sans': "'Inter', sans-serif",
-    '--font-align-left': 'left',
-    '--font-align-center': 'center',
-    '--font-align-right': 'right',
+    // '--font-align-left': 'left', 
+    // '--font-align-center': 'center',
+    // '--font-align-right': 'right',
 
     /* Headings */
     '--font-size-4xl': '2rem',
@@ -195,15 +195,16 @@ const semanticVariables = {
     '--text-align-default': 'var(--text-left)',
 
     /* Box Shadow – Default */
-    '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)',   
+    '--default-shadow': '0px 1px 40px 0px rgba(33, 33, 41, 0.25)', 
+    
+    /* Icons (Namespace: --icn-) */
+    '--icn-width': 'var(--icn-width)',
+    '--icn-height': 'var(--height-4)',
+    '--icn-color': 'var(--foreground-default)',
 };
 
 const componentVariables = {
-    /* Icons (Namespace: --icn-) */
-    '--icn-width': 'var(--width-4)',
-    '--icn-height': 'var(--height-4)',
-    '--icn-color': 'var(--foreground-default)',
-
+    
     /* Icon Button (Namespace: --icn-btn-) */
     '--icn-btn-radius': 'var(--rounded-full)',
     '--icn-btn-padding': 'var(--padding-2) var(--padding-0-5)',
@@ -211,12 +212,12 @@ const componentVariables = {
     '--icn-btn-background-hover': 'var(--background-subtle)',
     '--icn-btn-background-pressed': 'var(--background-muted)',
     '--icn-btn-background-disabled': 'var(--background-light)',
-    '--icn-btn-icon-width': 'var(--width-4)',
-    '--icn-btn-icon-height': 'var(--width-4)',
-    '--icn-btn-color': 'var(--foreground-default)',
-    '--icn-btn-color-hover': 'var(--foreground-default)',
-    '--icn-btn-color-pressed': 'var(--foreground-default)',
-    '--icn-btn-color-disabled': 'var(--foreground-subtle)',
+    '--icn-btn-icon-width': 'var(--icn-width)',
+    '--icn-btn-icon-height': 'var(--icn-height)',
+    '--icn-btn-color': 'var(--icn-color)',
+    // '--icn-btn-color-hover': 'var(--foreground-default)', unused
+    // '--icn-btn-color-pressed': 'var(--foreground-default)', unused
+    // '--icn-btn-color-disabled': 'var(--foreground-subtle)', unused
 
     /* Select Menu – Dropdown and List Item (Namespace: --li-) */
     '--dropdown-padding': 'var(--padding-2)',
@@ -237,8 +238,8 @@ const componentVariables = {
     '--li-label-color-hover': 'var(--foreground-default)',
     '--li-label-color-pressed': 'var(--foreground-default)',
     '--li-label-color-disabled': 'var(--foreground-neutral)',
-    '--li-icn-width': 'var(--width-4)',
-    '--li-icn-height': 'var(--height-4)',
+    '--li-icn-width': 'var(--icn-width)',
+    '--li-icn-height': 'var(--icn-height)',
     '--li-icn-color': 'var(--foreground-default)',
     '--li-gap': 'var(--padding-2)',
     '--li-search-background': 'var(--background-default)',
@@ -296,8 +297,8 @@ const componentVariables = {
 
     /* Card Error (Namespace: --card-error-) */
     '--card-message-gap': 'var(--padding-3)',
-    '--card-message-icon-width': 'var(--width-4)',
-    '--card-message-icon-height': 'var(--height-4)',
+    '--card-message-icon-width': 'var(--icn-width)',
+    '--card-message-icon-height': 'var(--icn-height)',
     '--card-error-icon-color': 'var(--foreground-error)',
     '--card-error-family': "var(--font-default)",
     '--card-message-family': "var(--font-default)",
@@ -308,10 +309,11 @@ const componentVariables = {
     '--card-error-color': 'var(--foreground-error)',
 
     /* Chart Essentials - Fonts*/
-    '--chart-font-family-default': 'var(--font-default)',
-    '--chart-font-weight-default': 'var(--font-weight-medium)',
-    '--chart-font-size-default': 'var(--text-xs)',
-    '--chart-font-color-default': 'var(--foreground-default)',
+    // TODO: These are currently unused - to decide: set the chartJS defaults?
+    // '--chart-font-family-default': 'var(--font-default)',
+    // '--chart-font-weight-default': 'var(--font-weight-medium)',
+    // '--chart-font-size-default': 'var(--text-xs)',
+    // '--chart-font-color-default': 'var(--foreground-default)',
    
     /* Chart Essentials – Category Legend Indicator (Namespace: --cat-indicator-) */
     '--cat-indicator-width': 'var(--width-2)',

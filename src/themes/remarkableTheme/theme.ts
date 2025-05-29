@@ -1,5 +1,5 @@
 import { valueProps, configProps } from '../../remarkable-ui/utils/formatUtils';
-import { DropdownItem } from '../../remarkable-ui/shared/Dropdown';
+import { DropdownItem } from '../../remarkable-ui/shared/BaseDropdown';
 
 export type Theme = {
     styles?: {

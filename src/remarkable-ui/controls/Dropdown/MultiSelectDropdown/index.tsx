@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 // Local Libraries
 import { MultiSelectDropdownProps } from './MultiSelectDropdown.emb';
 import ControlCard from '../../../shared/ControlCard'
-import Dropdown, { DropdownItem } from '../../../shared/Dropdown';
+import Dropdown, { DropdownItem } from '../../../shared/BaseDropdown';
 import MultiSelectDropdownButton from './MultiSelectDropdownButton';
 import { CheckboxIcon, CheckboxSelectedIcon } from '../../../constants/icons';
 import { useDebouncedEffect } from '../../../hooks/useDebouncedEffect';
