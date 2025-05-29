@@ -116,6 +116,9 @@
     background-color: transparent;
     display: flex;
     flex: 1;
+    font-family: var(--li-label-family);
+    font-size: var(--li-label-size);
+    font-weight: var(--li-label-weight);
 }
 
 .searchInput:hover, .searchInput:focus-within, .searchInputActive {

@@ -20,7 +20,7 @@ type MultiSelectDropdownButtonProps = {
 
 export default function MultiSelectDropdownButton({
     dimension,
-    placeholder,
+    placeholder = '',
     isLoading = false,
     isOpen = false,
     selectedValues = [],
@@ -49,7 +49,7 @@ export default function MultiSelectDropdownButton({
                                 </span>
                             </>
                         )
-                    : placeholder || 'Select values...'
+                    : placeholder
                 }
             </div>
             {count > 0 && (

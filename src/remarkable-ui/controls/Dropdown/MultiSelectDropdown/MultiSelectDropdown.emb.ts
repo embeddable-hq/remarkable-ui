@@ -3,7 +3,7 @@ import { Value, loadData, DataResponse, Dimension } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 // Local Libraries
-import { title, description, placeholder } from '../../../constants/commonChartInputs';
+import { title, description, placeholder, dataset, dimension } from '../../../constants/commonChartInputs';
 import MultiSelectDropdown from './index';
 
 export type MultiSelectDropdownProps = {
@@ -21,34 +21,21 @@ export const meta = {
     name: 'MultiSelectDropdown',
     label: 'Multi-select dropdown',
     category: 'Dropdowns',
+    defaultHeight: 125,
+    defaultWidth: 250,
     inputs: [
-        {
-            name: 'dataset',
-            type: 'dataset',
-            label: 'Dataset',
-            required: true,
-            category: 'Dropdown Data'
-        },
-        {
-            name: 'dimension',
-            type: 'dimension',
-            label: 'Dimension (to load Dropdown values)',
-            config: {
-                dataset: 'dataset',
-            },
-            required: true,
-            category: 'Dropdown Data'
-        },
+        {...dataset},
+        {...dimension, label: 'Dimension (to load Dropdown values)'},
         {...title},
         {...description},
-        {...placeholder},
+        {...placeholder, defaultValue: 'Select values...'},
         {
             name: 'preSelectedValues',
             type: 'string',
             array: true,
             label: 'Selected Values',
             category: 'Pre-configured variables'
-          },
+        },
     ],
     events: [
         {
@@ -87,7 +74,8 @@ export default defineComponent(MultiSelectDropdown, meta, {
             setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
             results: loadData({
                 from: inputs.dataset,
-                dimensions: [inputs.dimension], 
+                dimensions: [inputs.dimension],
+                limit: 200,
                 filters:
                     state?.searchValue
                         ? [
