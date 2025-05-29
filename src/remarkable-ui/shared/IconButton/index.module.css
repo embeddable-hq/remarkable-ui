@@ -23,18 +23,18 @@
 }
 
 .icon {
-    color: var(--icn-btn-color-default);
+    color: var(--icn-btn-color);
     flex-shrink: 0;
     height: var(--icn-btn-icon-height);
     width: var(--icn-btn-icon-width);
 }
 
 .iconButton:hover .icon {
-    color: var(--icn-btn-color-default);
+    color: var(--icn-btn-color);
 }
 
 .iconButton:pressed .icon {
-    color: var(--icn-btn-color-default);   
+    color: var(--icn-btn-color);   
 }
 
 .iconButton:disabled .icon {

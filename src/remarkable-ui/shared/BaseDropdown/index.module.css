@@ -116,6 +116,7 @@
     background-color: transparent;
     display: flex;
     flex: 1;
+    color: var(--li-label-color-default);
     font-family: var(--li-label-family);
     font-size: var(--li-label-size);
     font-weight: var(--li-label-weight);

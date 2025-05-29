@@ -24,6 +24,10 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
         '--foreground-default': '#fff',
         '--foreground-inverted': '#111',
         '--foreground-muted': '#fff',
+        '--border-radius-default': '0px',
+        '--background-light': '#333',
+        '--icn-color': '#fafafa',
+        '--background-subtle': '#444'
     }
 
     //test custom format function

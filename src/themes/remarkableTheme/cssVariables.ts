@@ -201,6 +201,11 @@ const semanticVariables = {
     '--icn-width': 'var(--icn-width)',
     '--icn-height': 'var(--height-4)',
     '--icn-color': 'var(--foreground-default)',
+
+    /* Borders */
+    '--border-default': '1px solid var(--background-muted)',
+    '--border-radius-default': 'var(--rounded-xl)',
+
 };
 
 const componentVariables = {
@@ -249,8 +254,8 @@ const componentVariables = {
     '--dropdown-button-height': '40px',
     '--dropdown-button-padding': 'var(--padding-3)',
     '--dropdown-button-gap': 'var(--padding-2)',
-    '--dropdown-button-border-radius': 'var(--rounded-xl)',
-    '--dropdown-button-border': '1px solid var(--background-muted)',
+    '--dropdown-button-border-radius': 'var(--border-radius-default)',
+    '--dropdown-button-border': 'var(--border-default)',
     '--dropdown-button-background': 'var(--background-neutral)',
     '--dropdown-button-color': 'var(--foreground-default)',
     '--dropdown-button-hover-background': 'var(--background-default)',
