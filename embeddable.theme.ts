@@ -19,12 +19,11 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
     //test overrides
     const darkModeVariables = {
         '--background-default': '#111',
-        '--foreground-default': '#fff',
-        '--foreground-muted': '#fff',
-        '--background-neutral': '#222',
-        '--text-align-default': 'center',
         '--background-inverted': '#fafafa',
+        '--background-neutral': '#222',
+        '--foreground-default': '#fff',
         '--foreground-inverted': '#111',
+        '--foreground-muted': '#fff',
     }
 
     //test custom format function
