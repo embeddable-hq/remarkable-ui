@@ -88,7 +88,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       })}
       {onApply 
         && (
-          <ApplyButton handleButtonKeyDown={(e) => handleButtonKeyDown(e, itemsRefs, items, onApply)} onApply={onApply} disableApply={disableApply} />
+          <ApplyButton
+            handleButtonKeyDown={(e) => handleButtonKeyDown(e, itemsRefs, items, onApply)}
+            onApply={onApply}
+            disableApply={disableApply} 
+          />
         )
       }      
     </div>
