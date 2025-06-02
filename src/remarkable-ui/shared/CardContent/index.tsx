@@ -25,7 +25,7 @@ export default function CardContent({ showSkeletonLoader = false, showErrorMessa
                 message={errorMessage} 
             /> 
         )
-    } else if (showErrorMessage) {
+    } else if (showNoResults) {
         content = (
             <MessageContainer
                 variant={"noResults"}
@@ -37,8 +37,8 @@ export default function CardContent({ showSkeletonLoader = false, showErrorMessa
     }
 
     return (
-        <div className={styles.content}>
-            {content}
+        <div className={styles.content}>                        
+            {content}           
         </div>
     );
 }

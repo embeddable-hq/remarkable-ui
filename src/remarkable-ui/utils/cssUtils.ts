@@ -9,50 +9,45 @@
  * --var: #3498db -> returns string
  * --var: rgba(52, 152, 219, 0.8) -> returns string
  */
-export function getStyle(variableName: string): string | number {
-  
-  const rawValue = getComputedStyle(document.documentElement)
-    .getPropertyValue(variableName)
-    .trim();
+const rootElement = document.documentElement;
+const numericRegex = /^-?\d+(\.\d+)?$/;
 
-  // Early exit if it's empty
+export function getStyle(variableName: string): string | number {
+  const computedStyle = getComputedStyle(rootElement);
+  const rawValue = computedStyle.getPropertyValue(variableName).trim();
   if (!rawValue) return rawValue;
 
-  // 1a) rem -> convert to px
-  if (/^-?\d+(\.\d+)?rem$/.test(rawValue)) {
-    const remValue = parseFloat(rawValue);
-    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    return remValue * rootFontSize as number;
+  const numericValue = parseFloat(rawValue);
+  const rootFontSize = parseFloat(computedStyle.fontSize);
+
+  // “px”?
+  if (rawValue.slice(-2) === 'px') {
+    return numericValue;
   }
 
-  // 1b) em -> convert to px
-  if (/^-?\d+(\.\d+)?em$/.test(rawValue)) {
-    const emValue = parseFloat(rawValue);
-    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    return emValue * rootFontSize as number;
+  // “rem” or “em”?
+  const unit3 = rawValue.slice(-3);
+  if (unit3 === 'rem') {
+    return numericValue * rootFontSize;
+  }
+  if (unit3 === 'em') {
+    return numericValue * rootFontSize;
   }
 
-  // 2) px -> parse as number
-  if (/^-?\d+(\.\d+)?px$/.test(rawValue)) {
-    return parseFloat(rawValue) as number;
+  // pure number
+  if (numericRegex.test(rawValue)) {
+    return numericValue;
   }
 
-  // 3) Purely numeric -> parse as float
-  //    (e.g. "16", "1.25", or negative "-5")
-  if (/^-?\d+(\.\d+)?$/.test(rawValue)) {
-    return parseFloat(rawValue) as number;
+  // colors (#…, rgb(, rgba()
+  const firstChar = rawValue.charAt(0);
+  if (
+    firstChar === '#' ||
+    rawValue.startsWith('rgb(') ||
+    rawValue.startsWith('rgba(')
+  ) {
+    return rawValue;
   }
 
-  // 4) If it looks like a hex color (#abc, #abcdef, etc.), return as string
-  if (/^#[0-9A-Fa-f]{3,8}$/.test(rawValue)) {
-    return rawValue as string;
-  }
-
-  // 5) If it's rgb() or rgba(), treat as a color string
-  if (/^rgb(a?)\(/.test(rawValue)) {
-    return rawValue as string;
-  }
-
-  // Otherwise, return the raw string
-  return rawValue as string;
+  return rawValue;
 }

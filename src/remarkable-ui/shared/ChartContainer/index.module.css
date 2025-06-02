@@ -1,3 +1,10 @@
+.outerContainer {
+    align-self: stretch;
+    flex: 1;
+    min-height: 1px;
+    overflow: hidden;
+}
+
 .chartContainer {
     height: 100%;
     overflow: hidden;

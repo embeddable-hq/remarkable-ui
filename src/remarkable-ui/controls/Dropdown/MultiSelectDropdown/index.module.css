@@ -1,0 +1,56 @@
+.dropdownButton {
+    align-items: center;
+    background-color: var(--dropdown-button-background);
+    border-radius: var(--dropdown-button-border-radius);
+    border: var(--dropdown-button-border);
+    box-sizing: border-box;
+    color: var(--dropdown-button-color);
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    font-family: var(--dropdown-button-font-family);
+    font-size: var(--dropdown-button-font-size);
+    font-weight: var(--dropdown-button-font-weight);
+    gap: var(--dropdown-button-gap);
+    height: var(--dropdown-button-height);
+    justify-content: space-between;
+    padding: var(--dropdown-button-padding);
+    width: 100%;
+}
+
+.dropdownButton:hover {
+    background-color: var(--dropdown-button-hover-background);
+    border: var(--dropdown-button-hover-border);
+}
+
+.dropdownButton:pressed {
+    background-color: var(--dropdown-button-pressed-background);
+    border: var(--dropdown-button-pressed-border);
+}
+
+.dropdownButtonText {
+    display: flex;
+    align-items: center;
+    gap: var(--dropdown-button-gap);
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdownButtonItems {
+    min-width: 0; 
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dropdownButtonCount {
+    flex: 0 0 auto;
+}
+
+.dropdownButtonIconContainer,
+.dropdownButtonSelectedValues {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

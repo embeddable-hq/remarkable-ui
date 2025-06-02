@@ -1,6 +1,6 @@
 // Third Party Libraries
-import React, { useRef } from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions, LinearScale } from 'chart.js';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions, LinearScale } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { Pie } from 'react-chartjs-2';
@@ -11,24 +11,22 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 
 // Local Libraries
-import { getStyle } from '../../utils/cssUtils';
-import { tooltipStyle, datalabelStyle, legendStyle } from '../../constants/commonChartStyles';
+import { getTooltipStyle, getDatalabelStyle, getLegendStyle } from '../../constants/commonChartStyles';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../utils/formatUtils';
+import { aggregateLongTail } from '../../utils/dataUtils';
+import { getColor } from '../../utils/colorUtils';
+import { handlePieClick } from './handlers';
 
 // Register ChartJS components
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
-// Global font defaults - todo: replace with pie chart general css variables. 
-ChartJS.defaults.font.family = getStyle('--font-sans') as string;
-ChartJS.defaults.font.size = getStyle('--text-xs') as number;
-ChartJS.defaults.font.weight = getStyle('--font-weight-medium') as number | "normal" | "bold" | "lighter" | "bolder" | null | undefined;
-ChartJS.defaults.color = getStyle('--foreground-default') as string;
-
 type BasePieChartProps = {
     chartOptionsOverrides?: Partial<ChartOptions<'pie'>>;
     dimension: Dimension;
+    maxLegendItems?: number;
     measure: Measure;
+    onSegmentClick?: (args: { dimensionValue: string | null; }) => void;
     results: DataResponse;
     showDataLabels?: 'auto' | true | false;
     showLegend?: boolean;
@@ -39,32 +37,46 @@ const BasePieChart = ({
   chartOptionsOverrides,
   dimension,
   measure,
+  onSegmentClick,
   results,
   showDataLabels,
   showLegend,
-  showTooltips
+  showTooltips,
+  maxLegendItems
 }: BasePieChartProps ) => {
 
-    const { data } = results; 
-    const chartRef = useRef<ChartJS<'pie', number[], string> | null>(null);
+    const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+
+    const chartRef = useRef<ChartJS<'pie', []>>(null);
+    
+    const { data } = results;  
+    const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems) || [];
+
     const theme = useTheme() as Theme; 
+    const themeColors = mergedData.map((item, i) => getColor(item[dimension.name], theme.charts.colors, i))
+    const themeBorderColors = mergedData.map((item, i) => getColor(item[dimension.name], theme.charts.borderColors, i));
 
     const chartData = () => {
         return {
-            labels: data?.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })) || [],
+            labels: mergedData.map((item) => formatValue(item[dimension.name], { typeHint: 'string', theme: theme })),
             datasets: [
                 {
-                    data: data?.map((item) => item[measure.name]) || [],
-                    backgroundColor: theme.charts.colors.slice(0, data?.length || 0),
-                    borderColor: theme.charts.borderColors.slice(0, data?.length || 0),
-                    borderWidth: 1,
-                    hoverBackgroundColor: theme.charts.colors.map((color:string) => color.replace('0.8', '0.9')),
-                    hoverBorderColor: theme.charts.borderColors,
-                    hoverBorderWidth: 2,
+                    data: mergedData.map((item) => item[measure.name]),
+                    backgroundColor: themeColors,
+                    borderColor: themeBorderColors,
+                    borderWidth: 0,
+                    hoverBackgroundColor: themeBorderColors,
+                    hoverBorderWidth: 0,
                 }
             ],
         }
     };
+
+    const { tooltipOptions, dataLabelOptions, legendOptions } = useMemo(() => ({
+        tooltipOptions: getTooltipStyle(),
+        dataLabelOptions: getDatalabelStyle(),
+        legendOptions: getLegendStyle(),
+    }), [theme]);
 
     const chartOptions = () => {
         return mergician({
@@ -72,8 +84,8 @@ const BasePieChart = ({
             maintainAspectRatio: false,
             plugins: {
                 datalabels: {
-                    display: showDataLabels || 'auto',
-                    ...datalabelStyle,
+                    display: showDataLabels ? 'auto' : false,
+                    ...dataLabelOptions,
                     anchor: 'center',
                     align: 'center',
                     formatter: (value:string, context:any) => {
@@ -82,12 +94,12 @@ const BasePieChart = ({
                 },
                 legend: {
                     display: showLegend || true,
-                    position: 'bottom',
-                    labels: legendStyle,
+                    position: theme.charts.legendPosition || 'bottom',
+                    labels: legendOptions,
                 },
                 tooltip: {
                     enabled: showTooltips || true,
-                    ...tooltipStyle,
+                    ...tooltipOptions,
                     callbacks: {
                         label: function(context:any) {
                             const label = context.label || '';
@@ -100,13 +112,23 @@ const BasePieChart = ({
                 }
             },
         }, chartOptionsOverrides || {}) as ChartOptions<'pie'>
-    };
+    }
 
     return (        
         <Pie
-            ref={chartRef}
             data={chartData()} 
+            onClick={(event) => handlePieClick(
+                event,
+                chartRef.current,
+                clickedIndex,
+                onSegmentClick,
+                setClickedIndex,
+                data,
+                dimension,
+                mergedData
+            )}
             options={chartOptions()} 
+            ref={chartRef}
         />
     );
 };

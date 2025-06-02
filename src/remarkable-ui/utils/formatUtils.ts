@@ -17,12 +17,19 @@ export type configProps = {
 }
 
 // Helper function to add prefix and suffix to formatted values
-function addPrefixAndSuffix(value: valueProps, config?: configProps): string {
+export function addPrefixAndSuffix(value: valueProps, config?: configProps): string {
     return `${config?.pretext || ''}${value}${config?.posttext || ''}`;
 }
 
 // Formats numbers with configurable decimal places and locale-aware separators
 function formatNumber(num: number, config?: configProps): string {
+
+    // Check for custom formatting function in theme
+    const customNumberFormatFunction = config?.theme?.customNumberFormatFunction;
+    if (customNumberFormatFunction) {
+        return customNumberFormatFunction(num, config);
+    }
+
     const minimumFractionDigits = config?.decimalPlaces || 0;
     const maximumFractionDigits = config?.decimalPlaces || 2;
     const formatted = new Intl.NumberFormat(undefined, { 
@@ -34,6 +41,13 @@ function formatNumber(num: number, config?: configProps): string {
 
 // Formats dates with configurable granularity and custom formats from theme
 function formatDate(date: Date, config?: configProps): string {
+
+    // Check for custom formatting function in theme
+    const customDateFormatFunction = config?.theme?.customDateFormatFunction;
+    if (customDateFormatFunction) {
+        return customDateFormatFunction(date, config);
+    }
+
     // Get custom date formats from theme if available
     const customDateFormats = config?.theme?.customDateFormats || {};
     
@@ -60,6 +74,13 @@ function formatDate(date: Date, config?: configProps): string {
 
 // Formats strings by trimming whitespace
 function formatString(str: string, config?: configProps): string {
+
+    // Check for custom formatting function in theme
+    const customTextFormatFunction = config?.theme?.customTextFormatFunction;
+    if (customTextFormatFunction) {
+        return customTextFormatFunction(str, config);
+    }
+
     const formatted = str.trim();
     return addPrefixAndSuffix(formatted, config);
 }

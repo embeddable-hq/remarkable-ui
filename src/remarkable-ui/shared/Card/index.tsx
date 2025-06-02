@@ -19,9 +19,20 @@ type CardProps = {
     isLoading?: boolean;
     data?: DataResponse["data"]
     children?: React.ReactNode;
+    chartHeader?: React.ReactNode;
+    chartFooter?: React.ReactNode;
 }
 
-export default function Card({ title, description, errorMessage, children, isLoading, data }: CardProps) {
+export default function Card({ 
+    title,
+    description,
+    errorMessage,
+    children,
+    isLoading,
+    data,
+    chartHeader,
+    chartFooter
+}: CardProps) {
 
     return (
         <Surface>            
@@ -29,18 +40,18 @@ export default function Card({ title, description, errorMessage, children, isLoa
                 isLoading={isLoading}
                 data={data}
             >
-                <Title>{title}</Title>
-                <Description>{description}</Description>
+                {title && <Title>{title}</Title>}
+                {description && <Description>{description}</Description>}
             </CardHeader>
             <CardContent
                 showSkeletonLoader={isLoading && !data}
                 showNoResults={!errorMessage && data?.length === 0}
-                showErrorMessage={!!errorMessage}    
+                showErrorMessage={!!errorMessage}
                 errorMessage={errorMessage}            
             >
-                <ChartContainer>
-                    {children}
-                </ChartContainer>
+                {chartHeader}
+                <ChartContainer>{children}</ChartContainer>
+                {chartFooter}
             </CardContent>
         </Surface>
     );

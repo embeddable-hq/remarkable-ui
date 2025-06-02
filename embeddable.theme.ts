@@ -8,22 +8,36 @@
 
 import { mergician } from 'mergician';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
-import { DropdownItem } from './src/remarkable-ui/shared/Dropdown';
+import { DropdownItem } from './src/remarkable-ui/shared/BaseDropdown';
 import { DataResponse } from '@embeddable.com/core';
 
 const themeProvider = (clientContext: any, parentTheme:any): any => {
 
+    //Test. TODO: Remove this later. 
+    const theme = clientContext.theme;
+    
     //test overrides
     const darkModeVariables = {
-        // '--background-default': '#111',
-        // '--foreground-default': '#fff',
-        // '--foreground-muted': '#fff',
-        // '--background-neutral': '#222',
+        '--background-default': '#111',
+        '--background-inverted': '#fafafa',
+        '--background-neutral': '#222',
+        '--foreground-default': '#fff',
+        '--foreground-inverted': '#111',
+        '--foreground-muted': '#fff',
+        '--border-radius-default': '0px',
+        '--background-light': '#333',
+        '--icn-color': '#fafafa',
+        '--background-subtle': '#444'
     }
 
     //test custom format function
     const customFormatFunction = (value:any) => {
         return value + "wooop!"
+    }
+
+    //test custom number function
+    const customNumberFormatFunction = (value:any) => {
+        return value + "nuuumber!"
     }
 
     const customExportOptions: DropdownItem[] = [
@@ -35,9 +49,16 @@ const themeProvider = (clientContext: any, parentTheme:any): any => {
     ]
 
     const testTheme = {
-        //styles: darkModeVariables
-        //customFormatFunction: customFormatFunction
-        customExportOptions: customExportOptions
+        styles: {
+            ...(theme === 'dark' ? darkModeVariables : {}),
+        },
+        // charts: {
+        //     legendPosition: 'right'
+        // },
+        //customFormatFunction: customFormatFunction,
+        // customNumberFormatFunction: customNumberFormatFunction,
+        //customExportOptions: customExportOptions,
+        
     }
 
     return mergician(remarkableTheme, testTheme);

@@ -19,6 +19,7 @@ export default ({
     innerLabelMeasure,
     maxLegendItems,
     measure,
+    onSegmentClick,
     results,
     resultsInnerLabel,
     showLegend,
@@ -29,7 +30,7 @@ export default ({
 
     const theme = useTheme() as Theme;
 
-    const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "";
+    const innerLabelValue = resultsInnerLabel?.data?.[0][innerLabelMeasure.name] || "...";
 
     const chartOptionsOverrides: Partial<ChartOptions<'pie'>> = {
         cutout: '60%',
@@ -40,7 +41,7 @@ export default ({
                         type: 'doughnutLabel',
                         content: () => [
                             formatValue(innerLabelValue, { typeHint: 'number', theme: theme }), 
-                            formatValue('Some Label', { typeHint: 'string', theme: theme })
+                            formatValue('Some Label', { typeHint: 'string', theme: theme }) //TODO: replace "Some Label" with data (or an additional input associated with the InnerLabelValue Measure)
                         ], //one element per line  
                         font: [{
                             family: getStyle('--donut-number-family'),
@@ -75,10 +76,12 @@ export default ({
                 chartOptionsOverrides={chartOptionsOverrides}
                 dimension={dimension}
                 measure={measure}
+                onSegmentClick={onSegmentClick}
                 results={results}
                 showDataLabels={showValueLabels ? 'auto' : false}
                 showLegend={showLegend}
                 showTooltips={showTooltips}
+                maxLegendItems={maxLegendItems}
             />        
         </Card>
     );

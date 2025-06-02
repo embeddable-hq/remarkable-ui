@@ -5,5 +5,6 @@
     font-style: normal;
     font-weight: var(--card-subtitle-weight);
     line-height: var(--card-subtitle-line-height);
+    text-align: var(--card-subtitle-align);
     width: 100%;
 }

@@ -1,6 +1,10 @@
 .content {
-    align-self: stretch;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     flex: 1;
-    min-height: 1px;
-    overflow: hidden;
-}
+    min-height: 0;
+    /* overflow: auto; */
+}   

@@ -1,8 +1,8 @@
 import React from 'react';
 import { ExportIcon, DownloadCSVIcon, DownloadPNGIcon } from '../../constants/icons'
-import Dropdown from '../Dropdown'
+import Dropdown from '../BaseDropdown'
 import IconButton from '../IconButton';
-import { DropdownItem } from '../Dropdown'
+import { DropdownItem } from '../BaseDropdown'
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { useTheme } from '@embeddable.com/react'
 import { DataResponse } from '@embeddable.com/core';
@@ -15,6 +15,7 @@ type ExportButtonProps = {
 }
 
 const handleDownload = (data: DataResponse["data"]) => {
+
     alert("dowload csv!")
 }
 
@@ -55,7 +56,7 @@ export default function ExportButton({setLocalLoading, data}:ExportButtonProps) 
         onClick: () => alert("dowload png!")
     };
 
-    const items = [downloadCSV, downloadPNG, veryLongOption, ...customExportOptions];
+    const items = [downloadCSV, downloadPNG, ...customExportOptions];
 
     return (
         <Dropdown items={items} align='right'>

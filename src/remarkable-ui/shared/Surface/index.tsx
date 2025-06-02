@@ -8,7 +8,7 @@ type Props = {
 export default function Surface({ children }: Props) {
 
     return (
-        <div className={styles.card}>
+        <div className={styles.surface}>
             {children}
         </div>
     );
