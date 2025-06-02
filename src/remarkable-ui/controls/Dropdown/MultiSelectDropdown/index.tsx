@@ -1,16 +1,12 @@
 // Third Party Libraries
 import React, { useState, useEffect } from 'react';
 
-// Embeddable Libraries
-// import { DataResponse, Dimension } from '@embeddable.com/core';
-
 // Local Libraries
 import { MultiSelectDropdownProps } from './MultiSelectDropdown.emb';
 import ControlCard from '../../../shared/ControlCard'
 import Dropdown, { DropdownItem } from '../../../shared/BaseDropdown';
 import MultiSelectDropdownButton from './MultiSelectDropdownButton';
 import { CheckboxIcon, CheckboxSelectedIcon } from '../../../constants/icons';
-import { useDebouncedEffect } from '../../../hooks/useDebouncedEffect';
 
 export default ({
     description, 
@@ -24,25 +20,36 @@ export default ({
 }: MultiSelectDropdownProps) => {
 
     const [selected, setSelected] = useState(() => new Set(preSelectedValues));
-    const { isLoading, data = [], error } = results; 
+
+    const { isLoading, data = [], error } = results;
+
+    const preSelectedValuesList = preSelectedValues ?? [];
+    const selectedValues = Array.from(selected);
+
+    //check if the selected values are the same as the pre-selected values, and if so, disable the apply button
+    const disableApplyButton = isLoading || (
+          selectedValues.length === preSelectedValuesList.length &&
+          selectedValues.every(v => preSelectedValuesList.includes(v))
+    );
     
+    //toggle the values as users select/deselect values
     const toggleValue = (value:string) => {
         setSelected((prev) => {
             const next = new Set(prev); // make a *new* Set (don’t mutate)
             next.has(value) ? next.delete(value) : next.add(value);
-            // onChangeSelectedValues?.(Array.from(next) as string[]);
             return next;
         });
     }
 
-    //send the selected values to Embeddable after a delay so we don't send too many requests
-    useDebouncedEffect(() => {
-        onChangeSelectedValues?.(Array.from(selected) as string[]);
-    }, [selected, onChangeSelectedValues], 500);
-
+    //clear the selected values and send the empty array to Embeddable
     const clearSelectedValues = () => {
         setSelected(new Set());
         onChangeSelectedValues?.([]);
+    }
+
+    //send the selected values to Embeddable when the users clicks the apply button
+    const handleApplyClick = () => {
+        onChangeSelectedValues?.(selectedValues as string[]);
     }
     
     const buildDropdownItem = (value: string, index:number):DropdownItem => {
@@ -76,10 +83,12 @@ export default ({
                 align='left'
                 closeDropdownOnItemClick={false}
                 onSearch={setSearchValue}
+                onApply={handleApplyClick}
+                disableApply={disableApplyButton}
             >              
                 <MultiSelectDropdownButton
                     isLoading={isLoading}
-                    selectedValues={Array.from(selected)}
+                    selectedValues={selectedValues}
                     clearSelectedValues={clearSelectedValues}
                     dimension={dimension}
                     placeholder={placeholder}

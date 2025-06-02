@@ -5,6 +5,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    font-family: var(--surface-font-family);
     gap: var(--surface-gap);
     height: 100%;
     padding: var(--surface-padding);

@@ -209,6 +209,22 @@ const semanticVariables = {
 };
 
 const componentVariables = {
+
+    /* Primary Button (Namespace: --primary-btn-) */
+    '--primary-btn-padding': 'var(--padding-3)',
+    '--primary-btn-text-default': 'var(--foreground-inverted)',
+    '--primary-btn-text-hover': 'var(--foreground-inverted)',
+    '--primary-btn-text-pressed': 'var(--foreground-inverted)',
+    '--primary-btn-text-disabled': 'var(--foreground-subtle)',
+    '--primary-btn-background-default': 'var(--foreground-muted)',
+    '--primary-btn-background-hover': 'var(--foreground-default)',
+    '--primary-btn-background-pressed': 'var(--foreground-neutral)',
+    '--primary-btn-background-disabled': 'var(--background-light)', 
+    '--primary-btn-border-radius': 'var(--rounded-full)',
+    '--primary-btn-border': 'none',
+    '--primary-btn-gap': 'var(--padding-2)',
+    '--primary-btn-font-weight': 'var(--font-weight-medium)',
+    '--primary-btn-font-size': 'var(--font-size-sm)',
     
     /* Icon Button (Namespace: --icn-btn-) */
     '--icn-btn-radius': 'var(--rounded-full)',
@@ -274,6 +290,7 @@ const componentVariables = {
     '--surface-padding': 'var(--padding-8)',
     '--surface-gap': 'var(--padding-8)',
     '--surface-radius': 'var(--rounded-3xl)',
+    '--surface-font-family': 'var(--font-default)',
 
     /* Card Header (Namespace: --card-header-) */
     '--card-header-gap': 'var(--padding-1)',

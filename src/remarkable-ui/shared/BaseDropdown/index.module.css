@@ -24,7 +24,7 @@
     min-width: 160px;
     opacity: 0;  
     overflow: auto;
-    padding: 0 var(--dropdown-padding) var(--dropdown-padding) var(--dropdown-padding);
+    padding: 0 var(--dropdown-padding) 0 var(--dropdown-padding);
     position: absolute;
     text-wrap: nowrap;
     top: 100%;
@@ -58,6 +58,10 @@
     margin-top: var(--dropdown-padding);
 }
 
+.dropdownItem:last-child {
+    margin-bottom: var(--dropdown-padding);
+}
+
 .dropdownItemInnerDefault {
     display: flex;
     align-items: center;
@@ -89,12 +93,20 @@
     width: var(--li-icn-width);
 }
 
-.searchInputContainer {
+.searchInputContainer, .applyButtonContainer {
     background: var(--dropdown-background);
     padding: var(--dropdown-padding) 0px var(--dropdown-padding) 0px;
     position: sticky;
     top: 0px;
     width: 100%;
+}
+
+.searchInputContainer {
+    top: 0px;
+}
+
+.applyButtonContainer {
+    bottom: 0px;
 }
 
 .searchInput {
@@ -129,9 +141,34 @@
 .closeIconContainer {
     width: var(--li-icn-width);
     height: var(--li-icn-height);
+    cursor: pointer;
 }
 
 .open {
     visibility: visible;
     opacity: 1;
+}
+
+.applyButtonContainer {
+
+}
+
+.applyButton {
+    background-color: var(--background-default);
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+    border: none;
+    border-radius: var(--li-radius);
+    color: var(--li-label-color-default);
+    cursor: pointer;
+    font-family: var(--li-label-family);
+    font-size: var(--li-label-size);
+    font-weight: var(--li-label-weight);
+    height: var(--li-height);
+}
+
+.applyButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
