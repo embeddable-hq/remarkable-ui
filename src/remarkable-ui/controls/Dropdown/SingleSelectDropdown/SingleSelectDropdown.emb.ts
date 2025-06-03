@@ -1,12 +1,13 @@
 // Embeddable Libraries
-import { Value, loadData, DataResponse, Dimension } from "@embeddable.com/core";
 import {
+	defineComponent,
 	EmbeddedComponentMeta,
 	Inputs,
-	defineComponent,
 } from "@embeddable.com/react";
+import { Value, loadData, DataResponse, Dimension } from "@embeddable.com/core";
 
-// Local Libraries
+//Local Libraries
+import SingleSelectDropdown from "./index";
 import {
 	title,
 	description,
@@ -14,25 +15,24 @@ import {
 	dataset,
 	dimension,
 } from "../../../constants/commonChartInputs";
-import MultiSelectDropdown from "./index";
 
-export type MultiSelectDropdownProps = {
+export type SingleSelectDropdownProps = {
 	description?: string;
 	dimension: Dimension;
-	onChangeSelectedValues?: (selectedValues: string[]) => void;
+	onChangeSelectedValue?: (selectedValue: string) => void;
 	placeholder?: string;
 	results: DataResponse;
-	preSelectedValues: string[];
+	preSelectedValue: string;
 	setSearchValue: (search: string) => void;
 	title?: string;
 };
 
 export const meta = {
-	name: "MultiSelectDropdown",
-	label: "Multi-select dropdown",
-	category: "Dropdowns",
-	defaultHeight: 125,
-	defaultWidth: 250,
+	name: "SingleSelectDropdown",
+	label: "Single Select Dropdown",
+	category: "Controls",
+	defaultWidth: 200,
+	defaultHeight: 40,
 	inputs: [
 		{ ...dataset },
 		{ ...dimension, label: "Dimension (to load Dropdown values)" },
@@ -40,48 +40,45 @@ export const meta = {
 		{ ...description },
 		{ ...placeholder, defaultValue: "Select values..." },
 		{
-			name: "preSelectedValues",
+			name: "preSelectedValue",
 			type: "string",
-			array: true,
-			label: "Selected Values",
+			label: "Selected Value",
 			category: "Pre-configured variables",
 		},
 	],
 	events: [
 		{
-			name: "onChangeSelectedValues",
+			name: "onChangeSelectedValue",
 			label: "Change",
 			properties: [
 				{
 					name: "value",
 					type: "string",
-					array: true,
 				},
 			],
 		},
 	],
 	variables: [
 		{
-			name: "Multi-select dropdown values",
+			name: "Single-select dropdown value",
 			type: "string",
 			defaultValue: Value.noFilter(),
-			array: true,
-			inputs: ["preSelectedValues"],
-			events: [{ name: "onChangeSelectedValues", property: "value" }],
+			inputs: ["preSelectedValue"],
+			events: [{ name: "onChangeSelectedValue", property: "value" }],
 		},
 	],
 } as const satisfies EmbeddedComponentMeta;
 
-type MultiSelectDropdownState = {
+type SingleSelectDropdownState = {
 	searchValue?: string;
 };
 
-export default defineComponent(MultiSelectDropdown, meta, {
+export default defineComponent(SingleSelectDropdown, meta, {
 	props: (
 		inputs: Inputs<typeof meta>,
 		[state, setState]: [
-			MultiSelectDropdownState,
-			(state: MultiSelectDropdownState) => void,
+			SingleSelectDropdownState,
+			(state: SingleSelectDropdownState) => void,
 		],
 	) => {
 		return {
@@ -105,9 +102,9 @@ export default defineComponent(MultiSelectDropdown, meta, {
 		};
 	},
 	events: {
-		onChangeSelectedValues: (selectedValues: string[]) => {
+		onChangeSelectedValue: (selectedValue: string) => {
 			return {
-				value: selectedValues.length ? selectedValues : Value.noFilter(),
+				value: selectedValue || Value.noFilter(),
 			};
 		},
 	},
