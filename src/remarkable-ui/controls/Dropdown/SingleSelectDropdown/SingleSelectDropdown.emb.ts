@@ -30,7 +30,7 @@ export type SingleSelectDropdownProps = {
 export const meta = {
 	name: "SingleSelectDropdown",
 	label: "Single Select Dropdown",
-	category: "Controls",
+	category: "Dropdowns",
 	defaultWidth: 200,
 	defaultHeight: 40,
 	inputs: [
@@ -38,7 +38,7 @@ export const meta = {
 		{ ...dimension, label: "Dimension (to load Dropdown values)" },
 		{ ...title },
 		{ ...description },
-		{ ...placeholder, defaultValue: "Select values..." },
+		{ ...placeholder, defaultValue: "Select value..." },
 		{
 			name: "preSelectedValue",
 			type: "string",

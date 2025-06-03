@@ -53,29 +53,25 @@ export default ({
 		onChangeSelectedValues?.(selectedValues as string[]);
 	};
 
-	const buildDropdownItem = (value: string, index: number): DropdownItem => {
-		return {
-			id: `multiselect-dropdown-${value}-${index}`,
-			label: `${value}`,
-			icon: selected.has(value) ? CheckboxSelectedIcon : CheckboxIcon,
-			onClick: () => toggleValue(value),
-		};
-	};
-
 	//Populate dropdown items
 	const dropdownItems =
 		data.length > 0
 			? data.map((row, i) => {
 					const label = row[dimension.name];
-					return buildDropdownItem(label, i);
+					return {
+						id: `multi-select-dropdown-${label}-${i}`,
+						label: `${label}`,
+						icon: selected.has(label) ? CheckboxSelectedIcon : CheckboxIcon,
+						onClick: () => toggleValue(label),
+					};
 				})
-			: [
+			: ([
 					{
 						//'No results' item
-						id: `multiselect-dropdown-no-results`,
+						id: `multi-select-dropdown-no-results`,
 						label: `No results found`,
 					},
-				];
+				] as DropdownItem[]);
 
 	return (
 		<ControlCard title={title} description={description} errorMessage={error}>

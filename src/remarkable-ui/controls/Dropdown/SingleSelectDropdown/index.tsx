@@ -1,11 +1,11 @@
-import React from "react";
-import { Inputs } from "@embeddable.com/react";
-import { meta } from "./SingleSelectDropdown.emb";
+// Third Party Libraries
+import React, { useState } from "react";
+
+// Local Libraries
 import { SingleSelectDropdownProps } from "./SingleSelectDropdown.emb";
-
-// type SingleSelectDropdownType = {
-
-// }
+import ControlCard from "../../../shared/ControlCard";
+import Dropdown, { DropdownItem } from "../../../shared/BaseDropdown";
+import DropdownButton from "../../../shared/DropdownButton";
 
 export default function SingleSelectDropdown({
 	description,
@@ -17,5 +17,50 @@ export default function SingleSelectDropdown({
 	setSearchValue,
 	title,
 }: SingleSelectDropdownProps) {
-	return <div>{/* Component implementation will go here */}</div>;
+	const [selected, setSelected] = useState(preSelectedValue);
+	const { isLoading, data = [], error } = results;
+
+	const handleClick = (value: string) => {
+		setSelected(value);
+		onChangeSelectedValue?.(value);
+	};
+
+	//Populate dropdown items
+	const dropdownItems =
+		data.length > 0
+			? data.map((row, i) => {
+					const label = row[dimension.name];
+					return {
+						id: `singleselect-dropdown-${label}-${i}`,
+						label: `${label}`,
+						onClick: () => handleClick(label),
+					};
+				})
+			: ([
+					{
+						//'No results' item
+						id: `single-select-dropdown-no-results`,
+						label: `No results found`,
+					},
+				] as DropdownItem[]);
+
+	return (
+		<ControlCard title={title} description={description} errorMessage={error}>
+			<Dropdown
+				items={dropdownItems}
+				align="left"
+				closeDropdownOnItemClick={true}
+				onSearch={setSearchValue}
+			>
+				<DropdownButton
+					clearSelectedValues={() => handleClick("")}
+					isLoading={isLoading}
+					selectedValues={selected}
+					placeholder={placeholder}
+					isOpenText={selected}
+					isClosedText={selected}
+				/>
+			</Dropdown>
+		</ControlCard>
+	);
 }
