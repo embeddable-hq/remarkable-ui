@@ -1,137 +1,176 @@
 .dropdown {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .dropdownButtonContainer {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
-  
+
 .dropdownMenu {
-    align-items: flex-start;
-    background: var(--dropdown-background);
-    border-radius: var(--dropdown-border-radius);
-    box-shadow: 0px 1px 40px 0px rgba(33, 33, 41, 0.25);
-    color: var(--dropdown-color);
-    display: flex;
-    flex-direction: column;
-    gap: var(--dropdown-gap);
-    left: 0;
-    margin-top: 2px;
-    max-height: var(--dropdown-max-height);
-    max-width: 300px;
-    min-width: 160px;
-    opacity: 0;  
-    overflow: auto;
-    padding: 0 var(--dropdown-padding) var(--dropdown-padding) var(--dropdown-padding);
-    position: absolute;
-    text-wrap: nowrap;
-    top: 100%;
-    transition: opacity 0.1s ease, transform 0.1s ease, visibility 0.1s;
-    visibility: hidden;
-    z-index: 10;
+  align-items: flex-start;
+  background: var(--dropdown-background);
+  border-radius: var(--dropdown-border-radius);
+  box-shadow: 0px 1px 40px 0px rgba(33, 33, 41, 0.25);
+  color: var(--dropdown-color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--dropdown-gap);
+  left: 0;
+  margin-top: 2px;
+  max-height: var(--dropdown-max-height);
+  max-width: 300px;
+  min-width: 160px;
+  opacity: 0;
+  overflow: auto;
+  padding: 0 var(--dropdown-padding) 0 var(--dropdown-padding);
+  position: absolute;
+  text-wrap: nowrap;
+  top: 100%;
+  transition:
+    opacity 0.1s ease,
+    transform 0.1s ease,
+    visibility 0.1s;
+  visibility: hidden;
+  z-index: 10;
 }
 
 .dropdownMenu.rightAligned {
-    left: auto;
-    right: 0;
+  left: auto;
+  right: 0;
 }
 
 .dropdownItem {
-    border-radius: var(--li-radius);
-    box-sizing: border-box;
-    color: var(--li-label-color-default);
-    cursor: pointer;
-    display: flex;
-    font-family: var(--li-label-family);
-    font-size: var(--li-label-size);
-    font-style: normal;
-    font-weight: var(--li-label-weight);
-    height: var(--li-height);
-    line-height: var(--li-label-line-height);
-    transition: background-color 0.2s ease;
-    width: 100%;
+  border-radius: var(--li-radius);
+  box-sizing: border-box;
+  color: var(--li-label-color-default);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--li-label-family);
+  font-size: var(--li-label-size);
+  font-style: normal;
+  font-weight: var(--li-label-weight);
+  height: var(--li-height);
+  line-height: var(--li-label-line-height);
+  transition: background-color 0.2s ease;
+  width: 100%;
 }
 
 .dropdownItem:first-child {
-    margin-top: var(--dropdown-padding);
+  margin-top: var(--dropdown-padding);
+}
+
+.dropdownItem:last-child {
+  margin-bottom: var(--dropdown-padding);
 }
 
 .dropdownItemInnerDefault {
-    display: flex;
-    align-items: center;
-    gap: var(--li-gap);
-    padding: var(--li-padding);
-    width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--li-gap);
+  padding: var(--li-padding);
+  width: 100%;
 }
 
 .dropdownItem .itemText {
-    flex: 1;
-    overflow: hidden;
-    padding: var(--li-label-padding);
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  flex: 1;
+  overflow: hidden;
+  padding: var(--li-label-padding);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .dropdownItem:hover {
-    background-color: var(--background-default);
-    color: var(--li-label-color-hover);
+  background-color: var(--background-default);
+  color: var(--li-label-color-hover);
 }
 
 .dropdownItem:pressed {
-    background-color: var(--background-light);
-    color: var(--li-label-color-pressed);
+  background-color: var(--background-light);
+  color: var(--li-label-color-pressed);
 }
 
 .dropdownItemIcon {
-    height: var(--li-icn-height);
-    width: var(--li-icn-width);
+  height: var(--li-icn-height);
+  width: var(--li-icn-width);
+}
+
+.searchInputContainer,
+.applyButtonContainer {
+  background: var(--dropdown-background);
+  padding: var(--dropdown-padding) 0px var(--dropdown-padding) 0px;
+  position: sticky;
+  top: 0px;
+  width: 100%;
 }
 
 .searchInputContainer {
-    background: var(--dropdown-background);
-    padding: var(--dropdown-padding) 0px var(--dropdown-padding) 0px;
-    position: sticky;
-    top: 0px;
-    width: 100%;
+  top: 0px;
+}
+
+.applyButtonContainer {
+  bottom: 0px;
 }
 
 .searchInput {
-    align-items: center;
-    background-color: var(--li-search-background);
-    border-radius: var(--li-radius);
-    box-sizing: border-box;
-    display: flex;
-    gap: var(--li-gap);
-    height: 32px;
-    justify-content: space-between;
-    padding: var(--li-padding);
-    width: 100%;
+  align-items: center;
+  background-color: var(--li-search-background);
+  border-radius: var(--li-radius);
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--li-gap);
+  height: 32px;
+  justify-content: space-between;
+  padding: var(--li-padding);
+  width: 100%;
 }
 
 .searchInput input {
-    outline: none;
-    border: none;
-    background-color: transparent;
-    display: flex;
-    flex: 1;
-    color: var(--li-label-color-default);
-    font-family: var(--li-label-family);
-    font-size: var(--li-label-size);
-    font-weight: var(--li-label-weight);
+  outline: none;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  flex: 1;
+  color: var(--li-label-color-default);
+  font-family: var(--li-label-family);
+  font-size: var(--li-label-size);
+  font-weight: var(--li-label-weight);
 }
 
-.searchInput:hover, .searchInput:focus-within, .searchInputActive {
-    background-color: var(--li-search-background-hover);
+.searchInput:hover,
+.searchInput:focus-within,
+.searchInputActive {
+  background-color: var(--li-search-background-hover);
 }
 
 .closeIconContainer {
-    width: var(--li-icn-width);
-    height: var(--li-icn-height);
+  width: var(--li-icn-width);
+  height: var(--li-icn-height);
+  cursor: pointer;
 }
 
 .open {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
+}
+
+.applyButton {
+  background-color: var(--background-default);
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  border: none;
+  border-radius: var(--li-radius);
+  color: var(--li-label-color-default);
+  cursor: pointer;
+  font-family: var(--li-label-family);
+  font-size: var(--li-label-size);
+  font-weight: var(--li-label-weight);
+  height: var(--li-height);
+}
+
+.applyButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

@@ -5,9 +5,9 @@ export type Theme = {
     styles?: {
         [key: string]: string; //todo: add specific variables and types
     };
-    charts: {
+    charts?: {
         colors: string[];
-        borderColors: string[];
+        borderColors?: string[];
         legendPosition?: "top" | "right" | "bottom" | "left";
     };
     customFormatFunction?: (value: valueProps, config?: configProps) => string;

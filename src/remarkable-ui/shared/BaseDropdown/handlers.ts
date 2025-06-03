@@ -36,3 +36,21 @@ export const handleSearchKeyDown = (
     itemsRefs.current[0]?.focus()
   }
 }
+
+export const handleButtonKeyDown = (
+  e: React.KeyboardEvent<HTMLButtonElement>,
+  itemsRefs: React.RefObject<Array<HTMLDivElement | null>>,
+  items: DropdownItem[],
+  onApply: () => void
+) => {
+  // when ApplyButton is focused, Enter or Space should fire onApply
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    onApply();
+  }
+  if (e.key === 'ArrowUp') {
+    // move focus back to last item
+    e.preventDefault();
+    itemsRefs.current[items.length-1]?.focus()
+  }
+}

@@ -16,16 +16,20 @@ type DropdownProps = {
   children: React.ReactElement<{ isOpen?: boolean }>;
   className?: string;
   closeDropdownOnItemClick?: boolean;
+  disableApply?: boolean;
   items: DropdownItem[];
+  onApply?: () => void;
   onSearch?: (value: string) => void;
 }
 
 const Dropdown = ({ children,
-  items,
-  className,
   align = 'left',
+  className,
   closeDropdownOnItemClick = true,
-  onSearch 
+  disableApply,
+  items,
+  onApply,
+  onSearch,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,6 +69,8 @@ const Dropdown = ({ children,
         items={items}
         onItemClick={handleItemClick}
         onSearch={onSearch}
+        onApply={onApply}
+        disableApply={disableApply}
       />
     </div>
   );

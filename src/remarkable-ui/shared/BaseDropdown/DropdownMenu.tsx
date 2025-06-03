@@ -3,8 +3,9 @@ import React, { useState, useRef, useEffect } from 'react';
 //Import Local Libraries
 import { DropdownItem } from './index';
 import styles from './index.module.css';
-import { handleItemKeyDown, handleSearchKeyDown } from './handlers';
-import DropdownSearch from './DropdownSearch';
+import { handleItemKeyDown, handleSearchKeyDown, handleButtonKeyDown } from './handlers';
+import SearchBar from './SearchBar';
+import ApplyButton from './ApplyButton';
 
 type DropdownMenuProps = {
   align?: 'left' | 'right';
@@ -13,13 +14,17 @@ type DropdownMenuProps = {
   items: DropdownItem[];
   onItemClick: (item: DropdownItem) => void;
   onSearch?: (value: string) => void;
+  onApply?: () => void;
+  disableApply?: boolean;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({ 
   align = 'left',
   closeDropdown,
+  disableApply,
   isOpen, 
   items, 
+  onApply,
   onItemClick,
   onSearch,
 }) => {
@@ -51,7 +56,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     >
       {onSearch
         && (          
-          <DropdownSearch 
+          <SearchBar 
             onSearch={onSearch}
             onKeyDown={(e) => handleSearchKeyDown(e, itemsRefs)}
           />
@@ -80,7 +85,16 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
               {content}
             </div>
           );
-        })}
+      })}
+      {onApply 
+        && (
+          <ApplyButton
+            handleButtonKeyDown={(e) => handleButtonKeyDown(e, itemsRefs, items, onApply)}
+            onApply={onApply}
+            disableApply={disableApply} 
+          />
+        )
+      }      
     </div>
   );
 };

@@ -5,12 +5,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.css'
 import { SearchIcon, CloseIcon } from '../../constants/icons';
 
-type DropdownSearch = {
+type SearchBar = {
     onSearch: (value:string) => void;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
 }
 
-export default function DropdownSearch({ onSearch, onKeyDown }:DropdownSearch) {
+export default function SearchBar({ onSearch, onKeyDown }:SearchBar) {
 
     const [searchValue, setSearchValue] = useState('');
 
