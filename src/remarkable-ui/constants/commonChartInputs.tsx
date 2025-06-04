@@ -1,73 +1,71 @@
-
 export const dataset = {
-    name: 'dataset',
-    type: 'dataset',
-    label: 'Dataset',
-    required: true,
-    category: 'Dropdown Data'
+	name: "dataset",
+	type: "dataset",
+	label: "Dataset",
+	required: true,
+	category: "Component Data",
 } as const;
 
 export const dimension = {
-    name: 'dimension',
-    type: 'dimension',
-    label: 'Dimension',
-    config: {
-        dataset: 'dataset',
-    },
-    required: true,
-    category: 'Dropdown Data'
+	name: "dimension",
+	type: "dimension",
+	label: "Dimension",
+	config: {
+		dataset: "dataset",
+	},
+	required: true,
+	category: "Component Data",
 } as const;
 
-
 export const title = {
-    name: 'title',
-    type: 'string' as 'string',
-    label: 'Title',
-    category: 'Chart Header'
+	name: "title",
+	type: "string" as "string",
+	label: "Title",
+	category: "Component Header",
 } as const;
 
 export const description = {
-    name: 'description',
-    type: 'string' as 'string',
-    label: 'Description',
-    category: 'Chart Header'
+	name: "description",
+	type: "string" as "string",
+	label: "Description",
+	category: "Component Header",
 } as const;
 
 export const showLegend = {
-    name: 'showLegend',
-    type: 'boolean' as 'boolean',
-    label: 'Show Legend',
-    defaultValue: true,
-    category: 'Chart Settings'
+	name: "showLegend",
+	type: "boolean" as "boolean",
+	label: "Show Legend",
+	defaultValue: true,
+	category: "Component Settings",
 } as const;
 
 export const showToolTips = {
-    name: 'showTooltips',
-    type: 'boolean' as 'boolean',
-    label: 'Show Tooltips',
-    defaultValue: true,
-    category: 'Chart Settings'
+	name: "showTooltips",
+	type: "boolean" as "boolean",
+	label: "Show Tooltips",
+	defaultValue: true,
+	category: "Component Settings",
 } as const;
 
 export const showValueLabels = {
-    name: 'showValueLabels',
-    type: 'boolean' as 'boolean',
-    label: 'Show Value Labels',
-    defaultValue: true,
-    category: 'Chart Settings'
+	name: "showValueLabels",
+	type: "boolean" as "boolean",
+	label: "Show Value Labels",
+	defaultValue: true,
+	category: "Component Settings",
 } as const;
 
 export const maxLegendItems = {
-    name: 'maxLegendItems',
-    type: 'number' as 'number',
-    label: 'Max Legend Items',
-    defaultValue: 10,
-    category: 'Chart Settings'
+	name: "maxLegendItems",
+	type: "number" as "number",
+	label: "Max Legend Items",
+	defaultValue: 10,
+	category: "Component Settings",
 } as const;
 
 export const placeholder = {
-    name: 'placeholder',
-    type: 'string' as 'string',
-    label: 'Placeholder',
-    category: 'Chart Settings'
+	name: "placeholder",
+	type: "string" as "string",
+	label: "Placeholder",
+	category: "Component Settings",
 } as const;
