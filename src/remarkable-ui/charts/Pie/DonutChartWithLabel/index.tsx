@@ -43,12 +43,9 @@ export default ({
 								typeHint: 'number',
 								theme: theme,
 							}),
-							// only show the second line if it exists (we use array spreading to avoid an empty string)
-							[
-								...(innerLabelText
-									? formatValue(innerLabelText || '', { typeHint: 'string', theme: theme })
-									: []),
-							],
+							innerLabelText
+								? formatValue(innerLabelText || '', { typeHint: 'string', theme: theme })
+								: '',
 						], //one element per line
 						font: [
 							{
