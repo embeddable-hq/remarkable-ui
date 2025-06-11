@@ -1,22 +1,22 @@
 // Third Party Libraries
-import React from "react";
-import { ChartOptions } from "chart.js";
+import { ChartOptions } from 'chart.js';
 
 // Embeddable Libraries
-import { useTheme } from "@embeddable.com/react";
+import { useTheme } from '@embeddable.com/react';
 
 // Local Libraries
-import Card from "../../../shared/Card";
-import BasePieChart from "../../../shared/BasePieChart";
-import { DonutChartWithLabelProps } from "./DonutChartWithLabel.emb";
-import { getStyle } from "../../../utils/cssUtils";
-import { formatValue } from "../../../utils/formatUtils";
-import { Theme } from "../../../../themes/remarkableTheme/theme";
+import BasePieChart from '../../../shared/BasePieChart';
+import Card from '../../../shared/Card';
+import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
+import { Theme } from '../../../../themes/remarkableTheme/theme';
+import { formatValue } from '../../../utils/formatUtils';
+import { getStyle } from '../../../utils/cssUtils';
 
 export default ({
 	description,
 	dimension,
 	innerLabelMeasure,
+	innerLabelText,
 	maxLegendItems,
 	measure,
 	onSegmentClick,
@@ -29,38 +29,37 @@ export default ({
 }: DonutChartWithLabelProps) => {
 	const theme = useTheme() as Theme;
 
-	const innerLabelValue =
-		resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || "...";
+	const innerLabelValue = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
 
-	const chartOptionsOverrides: Partial<ChartOptions<"pie">> = {
-		cutout: "60%",
+	const chartOptionsOverrides: Partial<ChartOptions<'pie'>> = {
+		cutout: '60%',
 		plugins: {
 			annotation: {
 				annotations: {
 					innerlabel: {
-						type: "doughnutLabel",
+						type: 'doughnutLabel',
 						content: () => [
 							formatValue(innerLabelValue, {
-								typeHint: "number",
+								typeHint: 'number',
 								theme: theme,
 							}),
-							formatValue("Some Label", { typeHint: "string", theme: theme }), //TODO: replace "Some Label" with data (or an additional input associated with the InnerLabelValue Measure)
+							formatValue(innerLabelText || '', { typeHint: 'string', theme: theme }),
 						], //one element per line
 						font: [
 							{
-								family: getStyle("--donut-number-family"),
-								size: getStyle("--donut-number-size"),
-								weight: getStyle("--donut-number-weight"),
+								family: getStyle('--donut-number-family'),
+								size: getStyle('--donut-number-size'),
+								weight: getStyle('--donut-number-weight'),
 							},
 							{
-								family: getStyle("--donut-label-family"),
-								size: getStyle("--donut-label-size"),
-								weight: getStyle("--donut-label-weight"),
+								family: getStyle('--donut-label-family'),
+								size: getStyle('--donut-label-size'),
+								weight: getStyle('--donut-label-weight'),
 							},
 						],
 						color: [
-							getStyle("--donut-number-color") as string,
-							getStyle("--donut-label-color") as string,
+							getStyle('--donut-number-color') as string,
+							getStyle('--donut-label-color') as string,
 						],
 					},
 				} as any,
@@ -81,13 +80,13 @@ export default ({
 			<BasePieChart
 				chartOptionsOverrides={chartOptionsOverrides}
 				dimension={dimension}
+				maxLegendItems={maxLegendItems}
 				measure={measure}
 				onSegmentClick={onSegmentClick}
 				results={results}
-				showDataLabels={showValueLabels ? "auto" : false}
+				showDataLabels={showValueLabels ? 'auto' : false}
 				showLegend={showLegend}
 				showTooltips={showTooltips}
-				maxLegendItems={maxLegendItems}
 			/>
 		</Card>
 	);
