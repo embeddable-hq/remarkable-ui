@@ -9,9 +9,9 @@ export type valueProps = string | number | Date;
 export type typeHintProps = 'string' | 'number' | 'date';
 export type configProps = {
 	decimalPlaces?: number;
-	pretext?: string;
-	posttext?: string;
 	granularity?: string;
+	posttext?: string;
+	pretext?: string;
 	theme?: Theme;
 	typeHint?: typeHintProps;
 };
