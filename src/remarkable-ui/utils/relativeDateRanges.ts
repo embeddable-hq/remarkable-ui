@@ -91,8 +91,10 @@ const defaultRanges = {
 		label: 'Last 7 days',
 		calculate: () => {
 			const to = new Date();
+			to.setHours(23, 59, 59, 999); // end of today
 			const from = new Date(to);
-			from.setDate(to.getDate() - 7);
+			from.setDate(to.getDate() - 6); // include today + 6 previous days = 7 calendar days
+			from.setHours(0, 0, 0, 0); // start of that day
 			return { from, to };
 		},
 		dateFormat: 'MMM dd',
@@ -102,8 +104,10 @@ const defaultRanges = {
 		label: 'Next 7 days',
 		calculate: () => {
 			const from = new Date();
+			from.setHours(0, 0, 0, 0); // start of today
 			const to = new Date(from);
-			to.setDate(from.getDate() + 7);
+			to.setDate(from.getDate() + 6); // today + 6 more days = 7 calendar days
+			to.setHours(23, 59, 59, 999); // end of that last day
 			return { from, to };
 		},
 		dateFormat: 'MMM dd',
@@ -113,8 +117,12 @@ const defaultRanges = {
 		label: 'Last 30 days',
 		calculate: () => {
 			const to = new Date();
+			to.setHours(23, 59, 59, 999); // end of today
+
 			const from = new Date(to);
-			from.setDate(to.getDate() - 30);
+			from.setDate(to.getDate() - 29); // include today + 29 previous days = 30 days
+			from.setHours(0, 0, 0, 0); // start of that day
+
 			return { from, to };
 		},
 		dateFormat: 'MMM dd',
@@ -124,8 +132,12 @@ const defaultRanges = {
 		label: 'Next 30 days',
 		calculate: () => {
 			const from = new Date();
+			from.setHours(0, 0, 0, 0); // start of today
+
 			const to = new Date(from);
-			to.setDate(from.getDate() + 30);
+			to.setDate(from.getDate() + 29); // today + 29 more days = 30 days
+			to.setHours(23, 59, 59, 999); // end of that last day
+
 			return { from, to };
 		},
 		dateFormat: 'MMM dd',
@@ -197,8 +209,12 @@ const defaultRanges = {
 		label: 'Last 6 months',
 		calculate: () => {
 			const to = new Date();
+			to.setHours(23, 59, 59, 999); // end of today
+
 			const from = new Date(to);
-			from.setMonth(to.getMonth() - 6);
+			from.setMonth(to.getMonth() - 6); // 6 months ago, same day
+			from.setHours(0, 0, 0, 0); // start of that day
+
 			return { from, to };
 		},
 		dateFormat: 'MMM yy',
@@ -208,8 +224,12 @@ const defaultRanges = {
 		label: 'Last 12 months',
 		calculate: () => {
 			const to = new Date();
+			to.setHours(23, 59, 59, 999); // end of today
+
 			const from = new Date(to);
-			from.setMonth(to.getMonth() - 12);
+			from.setMonth(to.getMonth() - 12); // 12 months ago, same day
+			from.setHours(0, 0, 0, 0); // start of that day
+
 			return { from, to };
 		},
 		dateFormat: 'MMM yy',
