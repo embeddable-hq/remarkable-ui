@@ -1,71 +1,71 @@
 export const dataset = {
-	name: "dataset",
-	type: "dataset",
-	label: "Dataset",
+	name: 'dataset',
+	type: 'dataset',
+	label: 'Dataset',
 	required: true,
-	category: "Component Data",
+	category: 'Component Data',
 } as const;
 
 export const dimension = {
-	name: "dimension",
-	type: "dimension",
-	label: "Dimension",
+	name: 'dimension',
+	type: 'dimension',
+	label: 'Dimension',
 	config: {
-		dataset: "dataset",
+		dataset: 'dataset',
 	},
 	required: true,
-	category: "Component Data",
+	category: 'Component Data',
 } as const;
 
 export const title = {
-	name: "title",
-	type: "string" as "string",
-	label: "Title",
-	category: "Component Header",
+	name: 'title',
+	type: 'string' as 'string',
+	label: 'Title',
+	category: 'Component Header',
 } as const;
 
 export const description = {
-	name: "description",
-	type: "string" as "string",
-	label: "Description",
-	category: "Component Header",
+	name: 'description',
+	type: 'string' as 'string',
+	label: 'Description',
+	category: 'Component Header',
 } as const;
 
 export const showLegend = {
-	name: "showLegend",
-	type: "boolean" as "boolean",
-	label: "Show Legend",
+	name: 'showLegend',
+	type: 'boolean' as 'boolean',
+	label: 'Show Legend',
 	defaultValue: true,
-	category: "Component Settings",
+	category: 'Component Settings',
 } as const;
 
 export const showToolTips = {
-	name: "showTooltips",
-	type: "boolean" as "boolean",
-	label: "Show Tooltips",
+	name: 'showTooltips',
+	type: 'boolean' as 'boolean',
+	label: 'Show Tooltips',
 	defaultValue: true,
-	category: "Component Settings",
+	category: 'Component Settings',
 } as const;
 
 export const showValueLabels = {
-	name: "showValueLabels",
-	type: "boolean" as "boolean",
-	label: "Show Value Labels",
+	name: 'showValueLabels',
+	type: 'boolean' as 'boolean',
+	label: 'Show Value Labels',
 	defaultValue: true,
-	category: "Component Settings",
+	category: 'Component Settings',
 } as const;
 
 export const maxLegendItems = {
-	name: "maxLegendItems",
-	type: "number" as "number",
-	label: "Max Legend Items",
+	name: 'maxLegendItems',
+	type: 'number' as 'number',
+	label: 'Max Legend Items',
 	defaultValue: 10,
-	category: "Component Settings",
+	category: 'Component Settings',
 } as const;
 
 export const placeholder = {
-	name: "placeholder",
-	type: "string" as "string",
-	label: "Placeholder",
-	category: "Component Settings",
+	name: 'placeholder',
+	type: 'string' as 'string',
+	label: 'Placeholder',
+	category: 'Component Settings',
 } as const;

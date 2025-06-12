@@ -2,60 +2,53 @@
 import React, { useState, useLayoutEffect, useCallback, useEffect, useRef } from 'react';
 
 // Local Libraries
-import styles from './index.module.css'
+import styles from './index.module.css';
 
 type ChartContainerProps = {
-    children?: React.ReactNode;
-}
+	children?: React.ReactNode;
+};
 
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
-    let timeout: ReturnType<typeof setTimeout>;
-    return (...args: Parameters<T>) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
+	let timeout: ReturnType<typeof setTimeout>;
+	return (...args: Parameters<T>) => {
+		clearTimeout(timeout);
+		timeout = setTimeout(() => func(...args), wait);
+	};
 }
 
-export default function ChartContainer({children}:ChartContainerProps) {
-    
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [innerContainerHeight, setInnerContainerHeight] = useState(0);
+export default function ChartContainer({ children }: ChartContainerProps) {
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [innerContainerHeight, setInnerContainerHeight] = useState(0);
 
-    const updateHeight = useCallback(() => {
-        if (containerRef.current) {
-            const height = containerRef.current.offsetHeight;
-            setInnerContainerHeight(height);
-        }
-    }, []);
-    
-    const debouncedUpdateHeight = useCallback(debounce(updateHeight, 0), [updateHeight]);
+	const updateHeight = useCallback(() => {
+		if (containerRef.current) {
+			const height = containerRef.current.offsetHeight;
+			setInnerContainerHeight(height);
+		}
+	}, []);
 
-    useLayoutEffect(() => {
-        updateHeight();
-        const resizeObserver = new ResizeObserver(() => {
-            debouncedUpdateHeight();
-        });
-        if (containerRef.current) {
-            resizeObserver.observe(containerRef.current);
-        }
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, [debouncedUpdateHeight, updateHeight]);
+	const debouncedUpdateHeight = useCallback(debounce(updateHeight, 0), [updateHeight]);
 
-    return (
-        <div className={styles.outerContainer}>
-            <div
-                ref={containerRef}
-                className={styles.chartContainer}
-            >
-                <div
-                    className={styles.chartInnerContainer}
-                    style={{ height: `${innerContainerHeight}px`}}
-                >
-                    {innerContainerHeight && children}
-                </div>                         
-            </div>
-        </div>
-    );
+	useLayoutEffect(() => {
+		updateHeight();
+		const resizeObserver = new ResizeObserver(() => {
+			debouncedUpdateHeight();
+		});
+		if (containerRef.current) {
+			resizeObserver.observe(containerRef.current);
+		}
+		return () => {
+			resizeObserver.disconnect();
+		};
+	}, [debouncedUpdateHeight, updateHeight]);
+
+	return (
+		<div className={styles.outerContainer}>
+			<div ref={containerRef} className={styles.chartContainer}>
+				<div className={styles.chartInnerContainer} style={{ height: `${innerContainerHeight}px` }}>
+					{innerContainerHeight && children}
+				</div>
+			</div>
+		</div>
+	);
 }
