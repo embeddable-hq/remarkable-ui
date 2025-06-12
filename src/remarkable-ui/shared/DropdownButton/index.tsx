@@ -1,11 +1,11 @@
 // Third Party Libraries
-import React from "react";
+import React from 'react';
 
 // Local Libraries
-import styles from "./index.module.css";
-import Spinner from "../Spinner";
-import { DropdownArrow, CloseIcon } from "../../constants/icons";
-import Ellipsis from "../Ellipsis";
+import styles from './index.module.css';
+import Spinner from '../Spinner';
+import { DropdownArrow, CloseIcon } from '../../constants/icons';
+import Ellipsis from '../Ellipsis';
 
 type DropdownButtonProps = {
 	clearSelectedValues: () => void;
@@ -24,7 +24,7 @@ export default function DropdownButton({
 	isLoading = false,
 	isOpen = false,
 	isOpenText,
-	placeholder = "",
+	placeholder = '',
 }: DropdownButtonProps) {
 	const handleClearSelectedValues = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
@@ -34,7 +34,7 @@ export default function DropdownButton({
 	const hasSelectedValues = selectedValues && selectedValues.length > 0;
 
 	const wrapEllipsis = (value: string | React.ReactNode) => {
-		if (typeof value === "string") {
+		if (typeof value === 'string') {
 			return <Ellipsis>{value}</Ellipsis>;
 		}
 		return value;

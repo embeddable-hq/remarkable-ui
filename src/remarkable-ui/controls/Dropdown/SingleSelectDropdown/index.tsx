@@ -1,11 +1,11 @@
 // Third Party Libraries
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Local Libraries
-import { SingleSelectDropdownProps } from "./SingleSelectDropdown.emb";
-import ControlCard from "../../../shared/ControlCard";
-import Dropdown, { DropdownItem } from "../../../shared/BaseDropdown";
-import DropdownButton from "../../../shared/DropdownButton";
+import { SingleSelectDropdownProps } from './SingleSelectDropdown.emb';
+import ControlCard from '../../../shared/ControlCard';
+import Dropdown, { DropdownItem } from '../../../shared/BaseDropdown';
+import DropdownButton from '../../../shared/DropdownButton';
 
 export default function SingleSelectDropdown({
 	description,
@@ -53,7 +53,7 @@ export default function SingleSelectDropdown({
 				onSearch={setSearchValue}
 			>
 				<DropdownButton
-					clearSelectedValues={() => handleClick("")}
+					clearSelectedValues={() => handleClick('')}
 					isLoading={isLoading}
 					selectedValues={selected}
 					placeholder={placeholder}

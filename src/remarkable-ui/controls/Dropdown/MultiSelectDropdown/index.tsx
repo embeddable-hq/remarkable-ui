@@ -1,14 +1,14 @@
 // Third Party Libraries
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Local Libraries
-import { CheckboxIcon, CheckboxSelectedIcon } from "../../../constants/icons";
-import { MultiSelectDropdownProps } from "./MultiSelectDropdown.emb";
-import ControlCard from "../../../shared/ControlCard";
-import Dropdown, { DropdownItem } from "../../../shared/BaseDropdown";
-import DropdownButton from "../../../shared/DropdownButton";
-import Ellipsis from "../../../shared/Ellipsis";
-import styles from "./index.module.css";
+import { CheckboxIcon, CheckboxSelectedIcon } from '../../../constants/icons';
+import { MultiSelectDropdownProps } from './MultiSelectDropdown.emb';
+import ControlCard from '../../../shared/ControlCard';
+import Dropdown, { DropdownItem } from '../../../shared/BaseDropdown';
+import DropdownButton from '../../../shared/DropdownButton';
+import Ellipsis from '../../../shared/Ellipsis';
+import styles from './index.module.css';
 
 export default ({
 	description,
@@ -86,15 +86,13 @@ export default ({
 				<DropdownButton
 					clearSelectedValues={clearSelectedValues}
 					isLoading={isLoading}
-					selectedValues={selectedValues}
+					selectedValues={preSelectedValues}
 					placeholder={placeholder}
-					isOpenText={`${dimension.title} (${selectedValues.length})`}
+					isOpenText={`${dimension.title} (${preSelectedValues?.length})`}
 					isClosedText={
 						<>
-							<Ellipsis>{selectedValues.join(", ")}</Ellipsis>
-							<span className={styles.dropdownCount}>
-								({selectedValues.length})
-							</span>
+							<Ellipsis>{selectedValues.join(', ')}</Ellipsis>
+							<span className={styles.dropdownCount}>({preSelectedValues?.length})</span>
 						</>
 					}
 				/>

@@ -1,10 +1,6 @@
 // Embeddable Libraries
-import { Value, loadData, DataResponse, Dimension } from "@embeddable.com/core";
-import {
-	EmbeddedComponentMeta,
-	Inputs,
-	defineComponent,
-} from "@embeddable.com/react";
+import { Value, loadData, DataResponse, Dimension } from '@embeddable.com/core';
+import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
 // Local Libraries
 import {
@@ -13,8 +9,8 @@ import {
 	placeholder,
 	dataset,
 	dimension,
-} from "../../../constants/commonChartInputs";
-import MultiSelectDropdown from "./index";
+} from '../../../constants/commonChartInputs';
+import MultiSelectDropdown from './index';
 
 export type MultiSelectDropdownProps = {
 	description?: string;
@@ -28,33 +24,33 @@ export type MultiSelectDropdownProps = {
 };
 
 export const meta = {
-	name: "MultiSelectDropdown",
-	label: "Multi-select dropdown",
-	category: "Dropdowns",
+	name: 'MultiSelectDropdown',
+	label: 'Multi-select dropdown',
+	category: 'Dropdowns',
 	defaultHeight: 125,
 	defaultWidth: 250,
 	inputs: [
 		{ ...dataset },
-		{ ...dimension, label: "Dimension (to load Dropdown values)" },
+		{ ...dimension, label: 'Dimension (to load Dropdown values)' },
 		{ ...title },
 		{ ...description },
-		{ ...placeholder, defaultValue: "Select values..." },
+		{ ...placeholder, defaultValue: 'Select values...' },
 		{
-			name: "preSelectedValues",
-			type: "string",
+			name: 'preSelectedValues',
+			type: 'string',
 			array: true,
-			label: "Selected Values",
-			category: "Pre-configured variables",
+			label: 'Selected Values',
+			category: 'Pre-configured variables',
 		},
 	],
 	events: [
 		{
-			name: "onChangeSelectedValues",
-			label: "Change",
+			name: 'onChangeSelectedValues',
+			label: 'Change',
 			properties: [
 				{
-					name: "value",
-					type: "string",
+					name: 'value',
+					type: 'string',
 					array: true,
 				},
 			],
@@ -62,12 +58,12 @@ export const meta = {
 	],
 	variables: [
 		{
-			name: "Multi-select dropdown values",
-			type: "string",
+			name: 'Multi-select dropdown values',
+			type: 'string',
 			defaultValue: Value.noFilter(),
 			array: true,
-			inputs: ["preSelectedValues"],
-			events: [{ name: "onChangeSelectedValues", property: "value" }],
+			inputs: ['preSelectedValues'],
+			events: [{ name: 'onChangeSelectedValues', property: 'value' }],
 		},
 	],
 } as const satisfies EmbeddedComponentMeta;
@@ -79,15 +75,11 @@ type MultiSelectDropdownState = {
 export default defineComponent(MultiSelectDropdown, meta, {
 	props: (
 		inputs: Inputs<typeof meta>,
-		[state, setState]: [
-			MultiSelectDropdownState,
-			(state: MultiSelectDropdownState) => void,
-		],
+		[state, setState]: [MultiSelectDropdownState, (state: MultiSelectDropdownState) => void],
 	) => {
 		return {
 			...inputs,
-			setSearchValue: (searchValue: string) =>
-				setState({ searchValue: searchValue }),
+			setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
 			results: loadData({
 				from: inputs.dataset,
 				dimensions: [inputs.dimension],
@@ -95,7 +87,7 @@ export default defineComponent(MultiSelectDropdown, meta, {
 				filters: state?.searchValue
 					? [
 							{
-								operator: "contains",
+								operator: 'contains',
 								property: inputs.dimension,
 								value: state?.searchValue,
 							},

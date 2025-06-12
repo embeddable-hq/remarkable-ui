@@ -13,46 +13,42 @@ import CardContent from '../CardContent';
 import ChartContainer from '../ChartContainer';
 
 type CardProps = {
-    title?: string;
-    description?: string;
-    errorMessage?:string;
-    isLoading?: boolean;
-    data?: DataResponse["data"]
-    children?: React.ReactNode;
-    chartHeader?: React.ReactNode;
-    chartFooter?: React.ReactNode;
-}
+	title?: string;
+	description?: string;
+	errorMessage?: string;
+	isLoading?: boolean;
+	data?: DataResponse['data'];
+	children?: React.ReactNode;
+	chartHeader?: React.ReactNode;
+	chartFooter?: React.ReactNode;
+};
 
-export default function Card({ 
-    title,
-    description,
-    errorMessage,
-    children,
-    isLoading,
-    data,
-    chartHeader,
-    chartFooter
+export default function Card({
+	title,
+	description,
+	errorMessage,
+	children,
+	isLoading,
+	data,
+	chartHeader,
+	chartFooter,
 }: CardProps) {
-
-    return (
-        <Surface>            
-            <CardHeader 
-                isLoading={isLoading}
-                data={data}
-            >
-                {title && <Title>{title}</Title>}
-                {description && <Description>{description}</Description>}
-            </CardHeader>
-            <CardContent
-                showSkeletonLoader={isLoading && !data}
-                showNoResults={!errorMessage && data?.length === 0}
-                showErrorMessage={!!errorMessage}
-                errorMessage={errorMessage}            
-            >
-                {chartHeader}
-                <ChartContainer>{children}</ChartContainer>
-                {chartFooter}
-            </CardContent>
-        </Surface>
-    );
+	return (
+		<Surface>
+			<CardHeader isLoading={isLoading} data={data}>
+				{title && <Title>{title}</Title>}
+				{description && <Description>{description}</Description>}
+			</CardHeader>
+			<CardContent
+				showSkeletonLoader={isLoading && !data}
+				showNoResults={!errorMessage && data?.length === 0}
+				showErrorMessage={!!errorMessage}
+				errorMessage={errorMessage}
+			>
+				{chartHeader}
+				<ChartContainer>{children}</ChartContainer>
+				{chartFooter}
+			</CardContent>
+		</Surface>
+	);
 }

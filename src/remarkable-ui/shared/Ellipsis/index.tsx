@@ -1,8 +1,8 @@
 // Third Party Libraries
-import React from "react";
+import React from 'react';
 
 // Local Libraries
-import styles from "./index.module.css";
+import styles from './index.module.css';
 
 type EllipsisProps = {
 	children: React.ReactNode;

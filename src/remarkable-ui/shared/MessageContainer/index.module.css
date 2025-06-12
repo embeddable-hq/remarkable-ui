@@ -1,7 +1,7 @@
 .messageContainer {
     align-items: center;
     display: flex;
-    font-family: var(--card-message-family);
+    font-family: var(--em-card-message-family);
     height: 100%;
     justify-content: center;   
     width: 100%;
@@ -9,34 +9,34 @@
 
 .message {
     align-items: center;
-    color: var(--card-message-default-color);
+    color: var(--em-card-message-default-color);
     display: flex;
     flex-direction: column;
-    gap: var(--card-message-gap);
+    gap: var(--em-card-message-gap);
     text-align: center;
 }
 
 .titleText {
-    font-size: var(--card-message-size);
+    font-size: var(--em-card-message-size);
     font-style: normal;
-    font-weight: var(--card-message-weight);
-    line-height: var(--card-message-line-height);
+    font-weight: var(--em-card-message-weight);
+    line-height: var(--em-card-message-line-height);
 }
 
 .bodyText {
-    font-size: var(--card-message-size);
+    font-size: var(--em-card-message-size);
     font-style: normal;
-    font-weight: var(--card-message-weight);
-    line-height: var(--card-message-line-height);
+    font-weight: var(--em-card-message-weight);
+    line-height: var(--em-card-message-line-height);
 }
 
 .error {
-    color: var(--card-error-color);
+    color: var(--em-card-error-color);
 }
 
 .icon {
     color: inherit;
-    height: var(--card-message-icon-height);
-    width: var(--card-message-icon-width);
+    height: var(--em-card-message-icon-height);
+    width: var(--em-card-message-icon-width);
 }
 

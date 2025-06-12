@@ -49,19 +49,19 @@ export default ({
 						], //one element per line
 						font: [
 							{
-								family: getStyle('--donut-number-family'),
-								size: getStyle('--donut-number-size'),
-								weight: getStyle('--donut-number-weight'),
+								family: getStyle('--em-donut-number-family'),
+								size: getStyle('--em-donut-number-size'),
+								weight: getStyle('--em-donut-number-weight'),
 							},
 							{
-								family: getStyle('--donut-label-family'),
-								size: getStyle('--donut-label-size'),
-								weight: getStyle('--donut-label-weight'),
+								family: getStyle('--em-donut-label-family'),
+								size: getStyle('--em-donut-label-size'),
+								weight: getStyle('--em-donut-label-weight'),
 							},
 						],
 						color: [
-							getStyle('--donut-number-color') as string,
-							getStyle('--donut-label-color') as string,
+							getStyle('--em-donut-number-color') as string,
+							getStyle('--em-donut-label-color') as string,
 						],
 					},
 				} as any,

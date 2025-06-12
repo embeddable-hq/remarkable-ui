@@ -1,20 +1,16 @@
 // Embeddable Libraries
-import {
-	defineComponent,
-	EmbeddedComponentMeta,
-	Inputs,
-} from "@embeddable.com/react";
-import { Value, loadData, DataResponse, Dimension } from "@embeddable.com/core";
+import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
+import { Value, loadData, DataResponse, Dimension } from '@embeddable.com/core';
 
 //Local Libraries
-import SingleSelectDropdown from "./index";
+import SingleSelectDropdown from './index';
 import {
 	title,
 	description,
 	placeholder,
 	dataset,
 	dimension,
-} from "../../../constants/commonChartInputs";
+} from '../../../constants/commonChartInputs';
 
 export type SingleSelectDropdownProps = {
 	description?: string;
@@ -28,43 +24,43 @@ export type SingleSelectDropdownProps = {
 };
 
 export const meta = {
-	name: "SingleSelectDropdown",
-	label: "Single Select Dropdown",
-	category: "Dropdowns",
+	name: 'SingleSelectDropdown',
+	label: 'Single Select Dropdown',
+	category: 'Dropdowns',
 	defaultWidth: 200,
 	defaultHeight: 40,
 	inputs: [
 		{ ...dataset },
-		{ ...dimension, label: "Dimension (to load Dropdown values)" },
+		{ ...dimension, label: 'Dimension (to load Dropdown values)' },
 		{ ...title },
 		{ ...description },
-		{ ...placeholder, defaultValue: "Select value..." },
+		{ ...placeholder, defaultValue: 'Select value...' },
 		{
-			name: "preSelectedValue",
-			type: "string",
-			label: "Selected Value",
-			category: "Pre-configured variables",
+			name: 'preSelectedValue',
+			type: 'string',
+			label: 'Selected Value',
+			category: 'Pre-configured variables',
 		},
 	],
 	events: [
 		{
-			name: "onChangeSelectedValue",
-			label: "Change",
+			name: 'onChangeSelectedValue',
+			label: 'Change',
 			properties: [
 				{
-					name: "value",
-					type: "string",
+					name: 'value',
+					type: 'string',
 				},
 			],
 		},
 	],
 	variables: [
 		{
-			name: "Single-select dropdown value",
-			type: "string",
+			name: 'Single-select dropdown value',
+			type: 'string',
 			defaultValue: Value.noFilter(),
-			inputs: ["preSelectedValue"],
-			events: [{ name: "onChangeSelectedValue", property: "value" }],
+			inputs: ['preSelectedValue'],
+			events: [{ name: 'onChangeSelectedValue', property: 'value' }],
 		},
 	],
 } as const satisfies EmbeddedComponentMeta;
@@ -76,15 +72,11 @@ type SingleSelectDropdownState = {
 export default defineComponent(SingleSelectDropdown, meta, {
 	props: (
 		inputs: Inputs<typeof meta>,
-		[state, setState]: [
-			SingleSelectDropdownState,
-			(state: SingleSelectDropdownState) => void,
-		],
+		[state, setState]: [SingleSelectDropdownState, (state: SingleSelectDropdownState) => void],
 	) => {
 		return {
 			...inputs,
-			setSearchValue: (searchValue: string) =>
-				setState({ searchValue: searchValue }),
+			setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
 			results: loadData({
 				from: inputs.dataset,
 				dimensions: [inputs.dimension],
@@ -92,7 +84,7 @@ export default defineComponent(SingleSelectDropdown, meta, {
 				filters: state?.searchValue
 					? [
 							{
-								operator: "contains",
+								operator: 'contains',
 								property: inputs.dimension,
 								value: state?.searchValue,
 							},
