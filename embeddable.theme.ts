@@ -16,16 +16,16 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 
 	//test overrides
 	const darkModeVariables = {
-		'--background-default': '#111',
-		'--background-inverted': '#fafafa',
-		'--background-neutral': '#222',
-		'--foreground-default': '#fff',
-		'--foreground-inverted': '#111',
-		'--foreground-muted': '#fff',
-		'--border-radius-default': '0px',
-		'--background-light': '#333',
-		'--icn-color': '#fafafa',
-		'--background-subtle': '#444',
+		'--em-background-default': '#111',
+		'--em-background-inverted': '#fafafa',
+		'--em-background-neutral': '#222',
+		'--em-foreground-default': '#fff',
+		'--em-foreground-inverted': '#111',
+		'--em-foreground-muted': '#fff',
+		'--em-border-radius-default': '0px',
+		'--em-background-light': '#333',
+		'--em-icn-color': '#fafafa',
+		'--em-background-subtle': '#444',
 	};
 
 	//test custom format function

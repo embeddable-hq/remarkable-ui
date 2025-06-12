@@ -1,43 +1,43 @@
 .iconButton {
     align-items: center;
-    background: var(--icn-btn-background);
+    background: var(--em-icn-btn-background);
     border: none;
-    border-radius: var(--icn-btn-radius);
+    border-radius: var(--em-icn-btn-radius);
     cursor: pointer;
     display: flex;
     gap: 8px;
-    padding: var(--icn-btn-padding);
+    padding: var(--em-icn-btn-padding);
     width: 100%;
 }
 
 .iconButton:hover {
-    background: var(--icn-btn-background-hover);
+    background: var(--em-icn-btn-background-hover);
 }
 
 .iconButton:pressed {
-    background: var(--icn-btn-background-pressed);
+    background: var(--em-icn-btn-background-pressed);
 }
 
 .iconButton:disabled {
-    background: var(--icn-btn-background-disabled);
+    background: var(--em-icn-btn-background-disabled);
 }
 
 .icon {
-    color: var(--icn-btn-color);
+    color: var(--em-icn-btn-color);
     flex-shrink: 0;
-    height: var(--icn-btn-icon-height);
-    width: var(--icn-btn-icon-width);
+    height: var(--em-icn-btn-icon-height);
+    width: var(--em-icn-btn-icon-width);
 }
 
 .iconButton:hover .icon {
-    color: var(--icn-btn-color);
+    color: var(--em-icn-btn-color);
 }
 
 .iconButton:pressed .icon {
-    color: var(--icn-btn-color);   
+    color: var(--em-icn-btn-color);   
 }
 
 .iconButton:disabled .icon {
-    color: var(--foreground-subtle);
+    color: var(--em-foreground-subtle);
 }
 

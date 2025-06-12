@@ -1,13 +1,13 @@
 .surface {
     align-items: center;
-    background: var(--surface-background);
-    border-radius: var(--surface-radius);
+    background: var(--em-surface-background);
+    border-radius: var(--em-surface-radius);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    font-family: var(--surface-font-family);
-    gap: var(--surface-gap);
+    font-family: var(--em-surface-font-family);
+    gap: var(--em-surface-gap);
     height: 100%;
-    padding: var(--surface-padding);
+    padding: var(--em-surface-padding);
     width: 100%;
 }

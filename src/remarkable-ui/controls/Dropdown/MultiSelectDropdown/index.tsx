@@ -86,13 +86,13 @@ export default ({
 				<DropdownButton
 					clearSelectedValues={clearSelectedValues}
 					isLoading={isLoading}
-					selectedValues={selectedValues}
+					selectedValues={preSelectedValues}
 					placeholder={placeholder}
-					isOpenText={`${dimension.title} (${selectedValues.length})`}
+					isOpenText={`${dimension.title} (${preSelectedValues?.length})`}
 					isClosedText={
 						<>
 							<Ellipsis>{selectedValues.join(', ')}</Ellipsis>
-							<span className={styles.dropdownCount}>({selectedValues.length})</span>
+							<span className={styles.dropdownCount}>({preSelectedValues?.length})</span>
 						</>
 					}
 				/>
