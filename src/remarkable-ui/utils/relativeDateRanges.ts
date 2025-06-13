@@ -286,7 +286,7 @@ const defaultRanges = {
 	},
 };
 
-export type enabledRange = {
+export type EnabledRange = {
 	label: string;
 	from: Date | undefined;
 	to: Date | undefined;
@@ -305,7 +305,7 @@ const formattedRange = (from: Date | undefined, to: Date | undefined, dateFormat
 	return `${formattedFrom} - ${formattedTo}`;
 };
 
-export const relativeDateRanges = (dateRangesFromTheme = {} as ranges): enabledRange[] => {
+export const relativeDateRanges = (dateRangesFromTheme = {} as ranges): EnabledRange[] => {
 	//Merge the default ranges with any passed in via the theme
 	const ranges = mergician(defaultRanges, dateRangesFromTheme) as ranges;
 	//Return an array of enabled ranges

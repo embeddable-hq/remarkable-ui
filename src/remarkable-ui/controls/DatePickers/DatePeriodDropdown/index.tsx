@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 // Local Libraries
 import { DatePeriodDropdownProps } from './DatePeriodDropdown.emb';
-import { enabledRange } from '../../../utils/relativeDateRanges';
+import { EnabledRange } from '../../../utils/relativeDateRanges';
 import ControlCard from '../../../shared/ControlCard';
 import DropdownButton from '../../../shared/DropdownButton';
 import BaseDatePeriodDropdown from '../../../shared/BaseDatePeriodDropdown';
@@ -17,7 +17,7 @@ export default function DatePeriodDropdown({
 }: DatePeriodDropdownProps) {
 	const [selected, setSelected] = useState(preSelectedValue?.relativeTimeString);
 
-	const handleClick = (range?: enabledRange) => {
+	const handleClick = (range?: EnabledRange) => {
 		//When there's no range, clear the selected value and pass undefined to Embeddable
 		if (!range || !range.from || !range.to) {
 			setSelected('');
