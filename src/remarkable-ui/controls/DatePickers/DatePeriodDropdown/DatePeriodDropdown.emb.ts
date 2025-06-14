@@ -1,10 +1,11 @@
 // Embeddable Libraries
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import { Value, loadData, DataResponse, Dimension, TimeRange } from '@embeddable.com/core';
+import { Value, TimeRange } from '@embeddable.com/core';
 
 //Local Libraries
 import RelativeDateDropdown from './index';
 import { title, description, placeholder } from '../../../constants/commonChartInputs';
+import { forceUtc } from '../../../utils/dateUtils';
 
 export type DatePeriodDropdownProps = {
 	description?: string;
@@ -61,9 +62,15 @@ export default defineComponent(RelativeDateDropdown, meta, {
 		};
 	},
 	events: {
-		onChangeSelectedValue: (selectedTimeRange: string) => {
+		onChangeSelectedValue: (range) => {
 			return {
-				value: selectedTimeRange || Value.noFilter(),
+				value: range
+					? {
+							from: forceUtc(range.from),
+							to: forceUtc(range.to),
+							relativeTimeString: range.relativeTimeString,
+						}
+					: Value.noFilter(),
 			};
 		},
 	},
