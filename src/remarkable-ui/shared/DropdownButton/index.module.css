@@ -54,3 +54,10 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.hasSelectedValues,
+.hasSelectedValues:hover {
+	background: var(--em-dropdown-button-active-background);
+	color: var(--em-dropdown-button-active-color);
+	border: var(--em-dropdown-button-active-border);
+}

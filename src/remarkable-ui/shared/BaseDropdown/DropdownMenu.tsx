@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 
 //Import Local Libraries
 import { DropdownItem } from './index';
-import styles from './index.module.css';
 import { handleItemKeyDown, handleSearchKeyDown, handleButtonKeyDown } from './handlers';
-import SearchBar from './SearchBar';
 import ApplyButton from './ApplyButton';
+import DefaultDropdownItem from './DefaultDropdownItem';
+import SearchBar from './SearchBar';
+import styles from './index.module.css';
 
 type DropdownMenuProps = {
 	align?: 'left' | 'right';
@@ -59,12 +60,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 			{items.map((item, i) => {
 				const { id, icon: Icon, customContent, label } = item;
 				const content = customContent ?? (
-					<div className={styles.dropdownItemInnerDefault}>
+					<DefaultDropdownItem>
 						{Icon && <Icon className={styles.dropdownItemIcon} />}
 						<span title={label} className={styles.itemText}>
 							{label}
 						</span>
-					</div>
+					</DefaultDropdownItem>
 				);
 
 				return (

@@ -15,17 +15,17 @@ export default function DatePeriodDropdown({
 	preSelectedValue,
 	title,
 }: DatePeriodDropdownProps) {
-	const [selected, setSelected] = useState(preSelectedValue?.relativeTimeString);
+	const [selected, setSelected] = useState<EnabledRange | undefined>();
 
 	const handleClick = (range?: EnabledRange) => {
 		//When there's no range, clear the selected value and pass undefined to Embeddable
 		if (!range || !range.from || !range.to) {
-			setSelected('');
+			setSelected(undefined);
 			onChangeSelectedValue(undefined);
 			return;
 		}
 		//When there's a range, set the selected value and pass the range to Embeddable
-		setSelected(range.label);
+		setSelected(range);
 		onChangeSelectedValue({
 			from: range.from,
 			to: range.to,
@@ -38,10 +38,10 @@ export default function DatePeriodDropdown({
 			<BaseDatePeriodDropdown handleClick={handleClick} preSelectedValue={preSelectedValue}>
 				<DropdownButton
 					clearSelectedValues={handleClick}
-					selectedValues={selected}
+					selectedValues={selected?.label}
 					placeholder={placeholder}
-					isOpenText={selected}
-					isClosedText={selected}
+					isOpenText={selected?.label}
+					isClosedText={selected?.label}
 				/>
 			</BaseDatePeriodDropdown>
 		</ControlCard>

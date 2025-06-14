@@ -4,13 +4,14 @@ import { relativeDateRanges, EnabledRange } from '../../utils/relativeDateRanges
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { DropdownItem } from '../BaseDropdown';
 import { TimeRange } from '@embeddable.com/core';
+import DefaultDropdownItem from '../BaseDropdown/DefaultDropdownItem';
 
 type Params = {
 	preSelectedValue: TimeRange;
-	onSelect: (range?: EnabledRange) => void;
+	handleClick: (range?: EnabledRange) => void;
 };
 
-export function useDateRangeDropdown({ preSelectedValue, onSelect }: Params) {
+export function useDateRangeDropdown({ preSelectedValue, handleClick }: Params) {
 	// 1) pull and compute the ranges
 	const theme = useTheme() as Theme;
 	const ranges = useMemo(
@@ -25,22 +26,11 @@ export function useDateRangeDropdown({ preSelectedValue, onSelect }: Params) {
 		if (preSelectedValue?.relativeTimeString) {
 			hasRun.current = true;
 			const match = ranges.find((r) => r.label === preSelectedValue.relativeTimeString);
-			onSelect(match);
+			handleClick(match);
 		}
 		// we only ever want to run this once, so we intentionally omit `ranges` from the deps
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [preSelectedValue]);
 
-	//Build the dropdown items
-	const items: DropdownItem[] = useMemo(
-		() =>
-			ranges.map((r, i) => ({
-				id: `${r.label}-${i}`,
-				label: `${r.label} ${r.formattedRange}`,
-				onClick: () => onSelect(r),
-			})),
-		[ranges, onSelect],
-	);
-
-	return { items, ranges };
+	return { ranges };
 }

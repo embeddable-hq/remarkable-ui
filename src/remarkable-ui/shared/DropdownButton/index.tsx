@@ -41,7 +41,9 @@ export default function DropdownButton({
 	};
 
 	return (
-		<button className={styles.dropdownButton}>
+		<button
+			className={`${styles.dropdownButton} ${hasSelectedValues ? styles.hasSelectedValues : ''}`}
+		>
 			<div className={styles.dropdownButtonText}>
 				{hasSelectedValues
 					? isOpen
