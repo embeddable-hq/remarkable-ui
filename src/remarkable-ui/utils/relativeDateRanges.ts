@@ -67,13 +67,13 @@ const defaultRanges = {
 	thisWeek: {
 		label: 'This week',
 		calculate: () => getWeekBounds(new Date(), 0),
-		dateFormat: 'dd MMM',
+		dateFormat: 'MMM dd',
 	},
 
 	lastWeek: {
 		label: 'Last week',
 		calculate: () => getWeekBounds(new Date(), -1),
-		dateFormat: 'dd MMM',
+		dateFormat: 'MMM dd',
 	},
 
 	weekToDate: {
@@ -84,7 +84,7 @@ const defaultRanges = {
 			const to = now;
 			return { from, to };
 		},
-		dateFormat: 'dd MMM',
+		dateFormat: 'MMM dd',
 	},
 
 	last7Days: {
