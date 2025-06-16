@@ -46,7 +46,7 @@ export const meta = {
 	],
 	variables: [
 		{
-			name: 'Date Periods Dropdown value',
+			name: 'Date period',
 			type: 'timeRange',
 			defaultValue: Value.noFilter(),
 			inputs: ['preSelectedValue'],
