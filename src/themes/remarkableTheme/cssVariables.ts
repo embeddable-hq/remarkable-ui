@@ -184,6 +184,7 @@ const semanticVariables = {
 	'--em-background-light': 'var(--em-gray-100)',
 	'--em-background-subtle': 'var(--em-gray-200)',
 	'--em-background-muted': 'var(--em-gray-300)',
+	'--em-background-inverted': 'var(--em-gray-900)',
 
 	/* Foreground Colors */
 	'--em-foreground-default': 'var(--em-gray-900)',
@@ -253,8 +254,10 @@ const componentVariables = {
 	'--em-li-label-family': 'var(--em-font-default)',
 	'--em-li-label-size': 'var(--em-font-size-xs)',
 	'--em-li-label-weight': 'var(--em-font-weight-medium)',
+	'--em-li-label-weight-secondary': 'var(--em-font-weight-regular)', // Used for secondary labels (e.g. date range dropdown ranges)
 	'--em-li-label-line-height': 'var(--em-font-height-sm)',
 	'--em-li-label-color': 'var(--em-foreground-default)',
+	'--em-li-label-color-secondary': 'var(--em-foreground-muted)', // Used for secondary labels (e.g. date range dropdown ranges)
 	'--em-li-label-color-hover': 'var(--em-foreground-default)',
 	'--em-li-label-color-pressed': 'var(--em-foreground-default)',
 	'--em-li-label-color-disabled': 'var(--em-foreground-neutral)',
@@ -281,6 +284,9 @@ const componentVariables = {
 	'--em-dropdown-button-font-family': 'var(--em-font-default)',
 	'--em-dropdown-button-font-size': 'var(--em-font-size-xs)',
 	'--em-dropdown-button-font-weight': 'var(--em-font-weight-medium)',
+	'--em-dropdown-button-active-border': 'var(--em-background-muted)',
+	'--em-dropdown-button-active-background': 'var(--em-background-inverted)',
+	'--em-dropdown-button-active-color': 'var(--em-foreground-inverted)',
 
 	/* Card - Control Surface */
 	'--em-control-surface-gap': 'var(--em-padding-4)',
@@ -315,7 +321,7 @@ const componentVariables = {
 	/* Card Spinner (Namespace: --em-card-spinner-) */
 	'--em-card-spinner-width': 'var(--em-width-6)',
 	'--em-card-spinner-height': 'var(--em-height-6)',
-	'--em-card-spinner-color': 'var(--em-foreground-default)',
+	// '--em-card-spinner-color': 'var(--em-foreground-default)', Unused
 
 	/* Card Error (Namespace: --em-card-error-) */
 	'--em-card-message-gap': 'var(--em-padding-3)',

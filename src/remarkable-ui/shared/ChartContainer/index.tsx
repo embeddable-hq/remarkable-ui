@@ -3,18 +3,11 @@ import React, { useState, useLayoutEffect, useCallback, useEffect, useRef } from
 
 // Local Libraries
 import styles from './index.module.css';
+import { debounce } from '../../utils/debounce';
 
 type ChartContainerProps = {
 	children?: React.ReactNode;
 };
-
-function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
-	let timeout: ReturnType<typeof setTimeout>;
-	return (...args: Parameters<T>) => {
-		clearTimeout(timeout);
-		timeout = setTimeout(() => func(...args), wait);
-	};
-}
 
 export default function ChartContainer({ children }: ChartContainerProps) {
 	const containerRef = useRef<HTMLDivElement>(null);

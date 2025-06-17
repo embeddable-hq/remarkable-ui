@@ -1,0 +1,10 @@
+.innerContainer {
+	display: flex;
+	justify-content: space-between;
+}
+
+.right {
+	flex-shrink: 0;
+	color: var(--em-li-label-color-secondary);
+	font-weight: var(--em-li-label-weight-secondary);
+}

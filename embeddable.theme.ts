@@ -52,6 +52,11 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		styles: {
 			...(theme === 'dark' ? darkModeVariables : {}),
 		},
+		// customRelativeDateRanges: {
+		// 	today: {
+		// 		enabled: false,
+		// 	},
+		// },
 		// charts: {
 		//     legendPosition: 'right'
 		// },
