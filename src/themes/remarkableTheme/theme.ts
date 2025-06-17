@@ -1,5 +1,5 @@
 import { configProps, valueProps } from '../../remarkable-ui/utils/formatUtils';
-import { DropdownItem } from '../../remarkable-ui/shared/BaseDropdown';
+import { ExportOption } from '../../remarkable-ui/shared/ExportButton';
 
 export type Theme = {
 	charts: {
@@ -11,7 +11,7 @@ export type Theme = {
 	customDateFormats?: {
 		[key: string]: string;
 	};
-	customExportOptions?: DropdownItem[];
+	customExportOptions?: ExportOption[];
 	customFormatFunction?: (value: valueProps, config?: configProps) => string;
 	customNumberFormatFunction?: (value: valueProps, config?: configProps) => string;
 	customTextFormatFunction?: (value: valueProps, config?: configProps) => string;

@@ -14,6 +14,13 @@ type ExportButtonProps = {
 	data?: DataResponse['data'];
 };
 
+export type ExportOption = {
+	id: string;
+	label: string;
+	icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+	fn: (data?: DataResponse['data']) => void;
+};
+
 const handleDownload = (data: DataResponse['data']) => {
 	alert('dowload csv!');
 };
@@ -21,39 +28,37 @@ const handleDownload = (data: DataResponse['data']) => {
 export default function ExportButton({ setLocalLoading, data }: ExportButtonProps) {
 	const theme = useTheme() as Theme;
 
-	const handleClick = (onClick: () => void | Promise<void>) => {
+	const handleClick = (onClick: () => void) => {
 		setLocalLoading(true);
 		Promise.resolve(onClick()).then(() => setLocalLoading(false));
 	};
 
-	const customExportOptions =
-		theme.customExportOptions?.map((option) => ({
-			...option,
-			onClick: () => handleClick(() => option.onClick?.(data)),
-		})) || ([] as DropdownItem[]);
+	const rawOptions = [
+		{
+			id: 'downloadCSV',
+			label: 'Download CSV',
+			icon: DownloadCSVIcon,
+			fn: () => handleDownload(data),
+		},
+		{
+			id: 'downloadPNG',
+			label: 'Download PNG',
+			icon: DownloadPNGIcon,
+			fn: () => alert('download png!'),
+		},
+		// include theme.customExportOptions, turning the onClick(data) into fn()
+		...(theme.customExportOptions ?? []).map((opt) => ({
+			...opt,
+			fn: () => opt.fn(data),
+		})),
+	];
 
-	const downloadCSV: DropdownItem = {
-		id: 'downloadCSV',
-		label: 'Download CSV',
-		icon: DownloadCSVIcon,
-		onClick: () => handleClick(() => handleDownload(data)),
-	};
-
-	const downloadPNG: DropdownItem = {
-		id: 'downloadPNG',
-		label: 'Download PNG',
-		icon: DownloadPNGIcon,
-		onClick: () => handleClick(() => alert('dowload png!')),
-	};
-
-	const veryLongOption: DropdownItem = {
-		id: 'something',
-		label: 'Something way too long has to go here for testing',
-		icon: DownloadPNGIcon,
-		onClick: () => alert('dowload png!'),
-	};
-
-	const items = [downloadCSV, downloadPNG, ...customExportOptions];
+	const items: DropdownItem[] = rawOptions.map(({ id, label, icon, fn }) => ({
+		id,
+		label,
+		icon,
+		onClick: () => handleClick(fn),
+	}));
 
 	return (
 		<Dropdown items={items} align="right">

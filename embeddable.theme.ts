@@ -8,7 +8,7 @@
 
 import { DataResponse, defineTheme } from '@embeddable.com/core';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
-import { DropdownItem } from './src/remarkable-ui/shared/BaseDropdown';
+import { ExportOption } from './src/remarkable-ui/shared/ExportButton';
 
 const themeProvider = (clientContext: any, parentTheme: any): any => {
 	//Test. TODO: Remove this later.
@@ -38,11 +38,11 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		return value + 'nuuumber!';
 	};
 
-	const customExportOptions: DropdownItem[] = [
+	const customExportOptions: ExportOption[] = [
 		{
 			id: 'testOption',
 			label: 'Test Option',
-			onClick: (data: DataResponse['data']) => {
+			fn: (data: DataResponse['data']) => {
 				alert('test option!');
 			},
 		},
@@ -57,7 +57,7 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		// },
 		//customFormatFunction: customFormatFunction,
 		// customNumberFormatFunction: customNumberFormatFunction,
-		//customExportOptions: customExportOptions,
+		customExportOptions: customExportOptions,
 	};
 
 	return defineTheme(remarkableTheme, testTheme);
