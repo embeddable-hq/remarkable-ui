@@ -6,6 +6,7 @@ import styles from './index.module.css';
 import Spinner from '../Spinner';
 import { DropdownArrow, CloseIcon } from '../../constants/icons';
 import Ellipsis from '../Ellipsis';
+import { debounce } from '../../utils/debounce';
 
 type DropdownButtonProps = {
 	clearSelectedValues: () => void;
@@ -28,7 +29,8 @@ export default function DropdownButton({
 }: DropdownButtonProps) {
 	const handleClearSelectedValues = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		clearSelectedValues();
+		//Potentially debounce if we find clearing many filters at once causes issues
+		debounce(clearSelectedValues, 0)();
 	};
 
 	const hasSelectedValues = selectedValues && selectedValues.length > 0;
@@ -41,7 +43,9 @@ export default function DropdownButton({
 	};
 
 	return (
-		<button className={styles.dropdownButton}>
+		<button
+			className={`${styles.dropdownButton} ${hasSelectedValues ? styles.hasSelectedValues : ''}`}
+		>
 			<div className={styles.dropdownButtonText}>
 				{hasSelectedValues
 					? isOpen
