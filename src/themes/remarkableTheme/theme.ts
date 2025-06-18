@@ -1,5 +1,5 @@
 import { configProps, valueProps } from '../../remarkable-ui/utils/formatUtils';
-import { ExportOption } from '../../remarkable-ui/shared/ExportButton';
+import { ExportOption } from '../../remarkable-ui/shared/ExportButton/nativeOptions';
 import { RangeConfig } from '../../remarkable-ui/utils/relativeDateRanges';
 
 export type Theme = {

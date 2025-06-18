@@ -8,7 +8,7 @@
 
 import { DataResponse, defineTheme } from '@embeddable.com/core';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
-import { ExportOption } from './src/remarkable-ui/shared/ExportButton';
+import { ExportOption } from './src/remarkable-ui/shared/ExportButton/nativeOptions';
 
 const themeProvider = (clientContext: any, parentTheme: any): any => {
 	//Test. TODO: Remove this later.

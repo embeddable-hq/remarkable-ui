@@ -2,10 +2,13 @@
 import Card from '../../../shared/Card';
 import BasePieChart from '../../../shared/BasePieChart';
 import { DonutChartProps } from './DonutChart.emb';
+import { generateExportConfig } from '../../../utils/exportUtils';
 
 export default ({
 	description,
 	dimension,
+	downloadCSV,
+	downloadPNG,
 	maxLegendItems,
 	measure,
 	onSegmentClick,
@@ -26,6 +29,10 @@ export default ({
 			errorMessage={results.error}
 			isLoading={results.isLoading}
 			title={title}
+			exportConfig={generateExportConfig(results.data, [dimension], [measure], title, {
+				downloadCSV: downloadCSV || false,
+				downloadPNG: downloadPNG || false,
+			})}
 		>
 			<BasePieChart
 				chartOptionsOverrides={chartOptionsOverrides}

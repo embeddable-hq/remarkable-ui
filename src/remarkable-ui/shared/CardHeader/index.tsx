@@ -3,18 +3,21 @@ import styles from './index.module.css';
 import ExportButton from '../ExportButton';
 import Spinner from '../Spinner';
 import { DataResponse } from '@embeddable.com/core';
+import { ExportConfig } from '../ExportButton/useExportItems';
 
 type CardHeaderProps = {
 	isLoading?: boolean;
 	children?: React.ReactNode;
 	data?: DataResponse['data'];
 	showExportOptions?: boolean; //TODO: temp.
+	exportConfig?: ExportConfig;
 };
 
 export default function CardHeader({
-	isLoading,
 	children,
 	data,
+	exportConfig,
+	isLoading,
 	showExportOptions = true,
 }: CardHeaderProps) {
 	const [localLoading, setLocalLoading] = useState(false);
@@ -36,7 +39,9 @@ export default function CardHeader({
 				{loading ? (
 					<Spinner />
 				) : (
-					showExportOptions && <ExportButton data={data} setLocalLoading={setLocalLoading} />
+					showExportOptions && (
+						<ExportButton exportConfig={exportConfig} setLocalLoading={setLocalLoading} />
+					)
 				)}
 			</div>
 		</div>
