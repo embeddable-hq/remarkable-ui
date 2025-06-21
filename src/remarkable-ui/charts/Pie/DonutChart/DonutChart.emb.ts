@@ -6,6 +6,7 @@ import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/
 import {
 	description,
 	downloadCSV,
+	downloadExcel,
 	downloadPNG,
 	maxLegendItems,
 	showLegend,
@@ -20,6 +21,7 @@ export type DonutChartProps = {
 	dimension: Dimension;
 	downloadCSV?: boolean;
 	downloadPNG?: boolean;
+	downloadExcel?: boolean;
 	maxLegendItems?: number;
 	measure: Measure;
 	onSegmentClick: (args: { dimensionValue: string | null }) => void;
@@ -69,6 +71,7 @@ export const meta = {
 		{ ...showToolTips },
 		{ ...showValueLabels },
 		{ ...downloadCSV },
+		{ ...downloadExcel },
 		{ ...downloadPNG },
 	],
 	events: [

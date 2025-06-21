@@ -1,19 +1,14 @@
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { DownloadCSVIcon, DownloadPNGIcon } from '../../constants/icons';
-import { exportCSV } from '../../utils/exportUtils';
+import { exportCSV, exportExcel, exportPNG } from '../../utils/exportUtils';
+import { ExportConfig } from './useExportItems';
 
-export type ExportOptionKey = 'downloadCSV' | 'downloadPNG';
+export type ExportOptionKey = 'downloadCSV' | 'downloadPNG' | 'downloadExcel';
 
 export type ExportOption = {
 	id: string;
 	label: string;
 	icon?: React.FC<React.SVGProps<SVGSVGElement>>;
-	fn: (
-		data?: DataResponse['data'],
-		dimensions?: Dimension[],
-		measures?: Measure[],
-		title?: string,
-	) => void;
+	fn: (config: ExportConfig) => void;
 };
 
 export const nativeExportOptions: Record<ExportOptionKey, ExportOption> = {
@@ -21,12 +16,18 @@ export const nativeExportOptions: Record<ExportOptionKey, ExportOption> = {
 		id: 'downloadCSV',
 		label: 'Download CSV',
 		icon: DownloadCSVIcon,
-		fn: (data, dimensions, measures, title) => exportCSV(data, dimensions, measures, title),
+		fn: (config) => exportCSV(config),
+	},
+	downloadExcel: {
+		id: 'downloadExcel',
+		label: 'Download XLSX',
+		icon: DownloadPNGIcon,
+		fn: (config) => exportExcel(config),
 	},
 	downloadPNG: {
 		id: 'downloadPNG',
 		label: 'Download PNG',
 		icon: DownloadPNGIcon,
-		fn: (data, dimensions, measures, title) => null,
+		fn: (config) => exportPNG(config),
 	},
 };

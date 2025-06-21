@@ -2,9 +2,7 @@ import { useEffect, useRef, useMemo } from 'react';
 import { useTheme } from '@embeddable.com/react';
 import { relativeDateRanges, EnabledRange } from '../../utils/relativeDateRanges';
 import { Theme } from '../../../themes/remarkableTheme/theme';
-import { DropdownItem } from '../BaseDropdown';
 import { TimeRange } from '@embeddable.com/core';
-import DefaultDropdownItem from '../BaseDropdown/DefaultDropdownItem';
 
 type Params = {
 	preSelectedValue: TimeRange;

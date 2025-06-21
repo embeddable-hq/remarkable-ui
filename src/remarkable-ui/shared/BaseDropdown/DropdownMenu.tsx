@@ -68,11 +68,14 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 					</DefaultDropdownItem>
 				);
 
+				// Only make the very first menu item keyboard-focusable when there's no SearchBar present
+				const isInitial = !onSearch && i === 0;
+
 				return (
 					<div
 						key={id}
 						role="menuitem"
-						tabIndex={-1}
+						tabIndex={isInitial ? 0 : -1}
 						ref={(el) => {
 							itemsRefs.current[i] = el;
 						}}

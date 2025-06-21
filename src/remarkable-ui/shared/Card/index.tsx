@@ -23,12 +23,14 @@ type CardProps = {
 	chartHeader?: React.ReactNode;
 	chartFooter?: React.ReactNode;
 	exportConfig?: ExportConfig;
+	containerRef?: React.RefObject<HTMLDivElement | null>;
 };
 
 export default function Card({
 	chartFooter,
 	chartHeader,
 	children,
+	containerRef,
 	data,
 	description,
 	errorMessage,
@@ -37,7 +39,7 @@ export default function Card({
 	title,
 }: CardProps) {
 	return (
-		<Surface>
+		<Surface ref={containerRef}>
 			<CardHeader isLoading={isLoading} data={data} exportConfig={exportConfig}>
 				{title && <Title>{title}</Title>}
 				{description && <Description>{description}</Description>}

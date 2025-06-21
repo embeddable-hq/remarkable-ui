@@ -1,28 +1,13 @@
 // Embeddable Libraries
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
+// Third Party Libraries
+import * as XLSX from 'xlsx';
+
 //Local Libraries
 import { ExportConfig } from '../shared/ExportButton/useExportItems';
 
-type ExportConfigArgs = [
-	ExportConfig['dataToExport'],
-	ExportConfig['dimensions'],
-	ExportConfig['measures'],
-	ExportConfig['title'],
-	ExportConfig['enabledOptions'],
-];
-
-export function generateExportConfig(...args: ExportConfigArgs): ExportConfig {
-	const [dataToExport, dimensions, measures, title, enabledOptions] = args;
-	return { dataToExport, dimensions, measures, title, enabledOptions };
-}
-
-export function exportCSV(
-	dataToExport?: DataResponse['data'],
-	dimensions?: Dimension[],
-	measures?: Measure[],
-	title?: string,
-) {
+export function exportCSV({ dataToExport, dimensions, measures, title }: ExportConfig) {
 	const csvData = generateCSVData(dataToExport, dimensions, measures);
 	const csvBlob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
 	const csvUrl = URL.createObjectURL(csvBlob);
@@ -65,3 +50,74 @@ function generateCSVData(
 	// Combine into full CSV
 	return [headerRow, ...(dataRows ?? [])].join('\r\n');
 }
+
+export function exportExcel({ dataToExport, dimensions, measures, title }: ExportConfig) {
+	// 1) build the same field-key and header arrays as CSV
+	const fieldKeys = [
+		...(dimensions?.map((d) => d.name) || []),
+		...(measures?.map((m) => m.name) || []),
+	];
+	const headerLabels = [
+		...(dimensions?.map((d) => d.title ?? d.name) || []),
+		...(measures?.map((m) => m.title ?? m.name) || []),
+	];
+
+	// 2) build an "array of arrays": first row is your headers, then each data row
+	const sheetData = [
+		headerLabels,
+		...(dataToExport?.map((row) => fieldKeys.map((key) => (row as any)[key] ?? '')) || []),
+	];
+
+	// 3) turn that into a worksheet
+	const worksheet = XLSX.utils.aoa_to_sheet(sheetData);
+
+	// 4) append to a new workbook
+	const workbook = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+	// 5) trigger a download
+	// writeFile automatically creates a blob and clicks an <a> for you
+	XLSX.writeFile(workbook, `${title}.xlsx`);
+}
+
+// export async function exportPNG({
+// 	title,
+// 	containerRef,
+// }: ExportConfig) {
+
+// 	const element = containerRef?.current;
+// 	const fileName = `${title}.png`;
+
+// 	if (!element) {
+// 		throw new Error('exportComponentAsPNG: element is undefined');
+// 	}
+
+// 	// 1) render the element to a canvas
+// 	const canvas = await html2canvas(element, {
+// 		useCORS: true, // if you have external images
+// 		backgroundColor: null, // preserve transparency
+// 		scale: window.devicePixelRatio, // high-res output
+// 	});
+
+// 	// 2) convert the canvas to a Blob and download it
+// 	return new Promise((resolve, reject) => {
+// 		canvas.toBlob((blob) => {
+// 			if (!blob) return reject(new Error('Could not convert canvas to Blob'));
+
+// 			const url = URL.createObjectURL(blob);
+// 			const a = document.createElement('a');
+
+// 			a.href = url;
+// 			a.download = fileName;
+// 			a.style.display = 'none';
+// 			document.body.appendChild(a);
+// 			a.click();
+
+// 			// cleanup
+// 			document.body.removeChild(a);
+// 			URL.revokeObjectURL(url);
+
+// 			resolve();
+// 		}, 'image/png');
+// 	});
+// }

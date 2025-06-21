@@ -68,7 +68,7 @@ export default defineComponent(RelativeDateDropdown, meta, {
 					? {
 							from: forceUtc(range.from),
 							to: forceUtc(range.to),
-							relativeTimeString: range.relativeTimeString,
+							relativeTimeString: '', // This is prioritised over the from and to dates, so we don't pass this for now (as we don't want Cube parsing this instead of using the calculated dates)
 						}
 					: Value.noFilter(),
 			};

@@ -43,7 +43,7 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 			id: 'testOption',
 			label: 'Test Option',
 			fn: (data: DataResponse['data']) => {
-				alert('test option!');
+				console.log('data', data);
 			},
 		},
 	];
@@ -62,7 +62,7 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		// },
 		//customFormatFunction: customFormatFunction,
 		// customNumberFormatFunction: customNumberFormatFunction,
-		customExportOptions: customExportOptions,
+		// customExportOptions: customExportOptions,
 	};
 
 	return defineTheme(remarkableTheme, testTheme);

@@ -87,3 +87,11 @@ export const downloadPNG = {
 	defaultValue: true,
 	category: 'Export Options',
 } as const;
+
+export const downloadExcel = {
+	name: 'downloadExcel' as ExportOptionKey,
+	type: 'boolean' as 'boolean',
+	label: 'Enable download as XLSX',
+	defaultValue: true,
+	category: 'Export Options',
+} as const;
