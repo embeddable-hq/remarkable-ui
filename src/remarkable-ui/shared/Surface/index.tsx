@@ -3,12 +3,12 @@ import styles from './index.module.css';
 
 type Props = {
 	children?: React.ReactNode;
-	ref?: React.RefObject<HTMLDivElement | null>;
+	containerRef?: React.RefObject<HTMLDivElement | null>;
 };
 
-export default function Surface({ children, ref }: Props) {
+export default function Surface({ children, containerRef }: Props) {
 	return (
-		<div className={styles.surface} ref={ref}>
+		<div className={styles.surface} ref={containerRef}>
 			{children}
 		</div>
 	);

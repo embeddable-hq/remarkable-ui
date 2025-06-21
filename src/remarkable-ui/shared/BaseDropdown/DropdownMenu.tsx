@@ -49,6 +49,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 	return (
 		<div
 			ref={menuRef}
+			data-png-export-ignore // This is used to hide the dropdown menu when exporting to PNG
 			className={`${styles.dropdownMenu} ${isOpen ? styles.open : ''} ${align === 'right' ? styles.rightAligned : ''}`}
 			role="menu"
 			style={lockedWidth ? { width: lockedWidth } : undefined}

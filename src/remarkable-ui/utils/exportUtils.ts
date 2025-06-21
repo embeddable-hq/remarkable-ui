@@ -2,6 +2,9 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
 // Third Party Libraries
+import html2canvas from 'html2canvas';
+
+// Third Party Libraries
 import * as XLSX from 'xlsx';
 
 //Local Libraries
@@ -80,44 +83,48 @@ export function exportExcel({ dataToExport, dimensions, measures, title }: Expor
 	XLSX.writeFile(workbook, `${title}.xlsx`);
 }
 
-// export async function exportPNG({
-// 	title,
-// 	containerRef,
-// }: ExportConfig) {
+export async function exportPNG({ title, containerRef }: ExportConfig): Promise<void> {
+	const element = containerRef?.current;
+	const fileName = `${title}.png`;
 
-// 	const element = containerRef?.current;
-// 	const fileName = `${title}.png`;
+	const hidden = Array.from(
+		element?.querySelectorAll<HTMLElement>('[data-png-export-ignore]') || [],
+	);
+	hidden.forEach((el) => (el.style.display = 'none'));
 
-// 	if (!element) {
-// 		throw new Error('exportComponentAsPNG: element is undefined');
-// 	}
+	if (!element) {
+		throw new Error('exportPNG: element is undefined');
+	}
 
-// 	// 1) render the element to a canvas
-// 	const canvas = await html2canvas(element, {
-// 		useCORS: true, // if you have external images
-// 		backgroundColor: null, // preserve transparency
-// 		scale: window.devicePixelRatio, // high-res output
-// 	});
+	// 1) render the element to a canvas
+	const canvas = await html2canvas(element, {
+		useCORS: true, // if you have external images
+		backgroundColor: null, // preserve transparency
+		scale: window.devicePixelRatio, // high-res output
+	});
 
-// 	// 2) convert the canvas to a Blob and download it
-// 	return new Promise((resolve, reject) => {
-// 		canvas.toBlob((blob) => {
-// 			if (!blob) return reject(new Error('Could not convert canvas to Blob'));
+	// 2) restore
+	hidden.forEach((el) => (el.style.display = ''));
 
-// 			const url = URL.createObjectURL(blob);
-// 			const a = document.createElement('a');
+	// 3) convert the canvas to a Blob and download it
+	return new Promise((resolve, reject) => {
+		canvas.toBlob((blob) => {
+			if (!blob) return reject(new Error('Could not convert canvas to Blob'));
 
-// 			a.href = url;
-// 			a.download = fileName;
-// 			a.style.display = 'none';
-// 			document.body.appendChild(a);
-// 			a.click();
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
 
-// 			// cleanup
-// 			document.body.removeChild(a);
-// 			URL.revokeObjectURL(url);
+			a.href = url;
+			a.download = fileName;
+			a.style.display = 'none';
+			document.body.appendChild(a);
+			a.click();
 
-// 			resolve();
-// 		}, 'image/png');
-// 	});
-// }
+			// cleanup
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+
+			resolve();
+		}, 'image/png');
+	});
+}

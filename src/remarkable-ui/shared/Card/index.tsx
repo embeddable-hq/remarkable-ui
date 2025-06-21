@@ -39,7 +39,7 @@ export default function Card({
 	title,
 }: CardProps) {
 	return (
-		<Surface ref={containerRef}>
+		<Surface containerRef={containerRef}>
 			<CardHeader isLoading={isLoading} data={data} exportConfig={exportConfig}>
 				{title && <Title>{title}</Title>}
 				{description && <Description>{description}</Description>}
