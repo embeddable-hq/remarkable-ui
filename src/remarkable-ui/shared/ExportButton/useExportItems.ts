@@ -47,7 +47,10 @@ export function useExportItems(
 				onClick: () => {
 					//1. set loading to true, 2. run the export function, 3. then set loading to false
 					setLocalLoading(true);
-					Promise.resolve(fn(config)).finally(() => setLocalLoading(false));
+					//Because certain options (like export png) jump straight into heavy DOM reads/writes and canvas drawing, it can delay the loader showing. We add a timeout to make the sure . We add a timeout to ensure that the loading state is set to true before the export function is called
+					setTimeout(() => {
+						Promise.resolve(fn(config)).finally(() => setLocalLoading(false));
+					}, 0);
 				},
 			}));
 
