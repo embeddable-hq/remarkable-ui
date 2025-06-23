@@ -4,14 +4,11 @@ import { useRef } from 'react';
 import Card from '../../../shared/Card';
 import BasePieChart from '../../../shared/BasePieChart';
 import { DonutChartProps } from './DonutChart.emb';
-import { ExportConfig } from '../../../shared/ExportButton/useExportItems';
+import { buildExportConfig } from '../../../utils/exportUtils';
 
 export default ({
 	description,
 	dimension,
-	downloadCSV,
-	downloadPNG,
-	downloadExcel,
 	maxLegendItems,
 	measure,
 	onSegmentClick,
@@ -20,24 +17,12 @@ export default ({
 	showTooltips,
 	showValueLabels,
 	title,
+	...exportFlags
 }: DonutChartProps) => {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const chartOptionsOverrides = {
 		cutout: '60%',
-	};
-
-	const exportConfig: ExportConfig = {
-		containerRef: containerRef,
-		dataToExport: results.data,
-		dimensions: [dimension],
-		measures: [measure],
-		title,
-		enabledOptions: {
-			downloadCSV: downloadCSV,
-			downloadPNG: downloadPNG,
-			downloadExcel: downloadExcel,
-		},
 	};
 
 	return (
@@ -46,9 +31,16 @@ export default ({
 			data={results.data}
 			description={description}
 			errorMessage={results.error}
+			exportConfig={buildExportConfig(
+				results.data,
+				containerRef,
+				[dimension],
+				[measure],
+				title,
+				exportFlags,
+			)}
 			isLoading={results.isLoading}
 			title={title}
-			exportConfig={exportConfig}
 		>
 			<BasePieChart
 				chartOptionsOverrides={chartOptionsOverrides}

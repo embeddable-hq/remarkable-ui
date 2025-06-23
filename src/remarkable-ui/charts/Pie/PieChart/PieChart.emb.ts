@@ -5,6 +5,7 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 // Local Libraries
 import {
 	description,
+	exportOptions,
 	maxLegendItems,
 	showLegend,
 	showToolTips,
@@ -12,6 +13,7 @@ import {
 	title,
 } from '../../../constants/commonChartInputs';
 import PieChart from './index';
+import { ExportOptionFlags } from '../../../shared/ExportButton/nativeOptions';
 
 export type PieChartProps = {
 	description?: string;
@@ -24,7 +26,7 @@ export type PieChartProps = {
 	showTooltips?: boolean;
 	showValueLabels?: boolean;
 	title?: string;
-};
+} & ExportOptionFlags;
 
 export const meta = {
 	name: 'PieChart',
@@ -64,6 +66,7 @@ export const meta = {
 		{ ...maxLegendItems },
 		{ ...showToolTips },
 		{ ...showValueLabels },
+		...exportOptions,
 	],
 	events: [
 		{

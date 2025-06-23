@@ -6,7 +6,39 @@ import html2canvas from 'html2canvas';
 import * as XLSX from 'xlsx';
 
 // Local Libraries
-import { ExportConfig } from '../shared/ExportButton/useExportItems';
+import {
+	ExportConfig,
+	ExportOptionFlags,
+	ExportOptionKey,
+} from '../shared/ExportButton/nativeOptions';
+import { exportOptions } from '../constants/commonChartInputs';
+
+//This builds the config object that is passed through from each charting component
+export function buildExportConfig(
+	dataToExport?: DataResponse['data'],
+	containerRef?: React.RefObject<HTMLDivElement | null>,
+	dimensions?: Dimension[],
+	measures?: Measure[],
+	title?: string,
+	exportFlags?: ExportOptionFlags,
+): ExportConfig {
+	return {
+		containerRef,
+		dataToExport,
+		dimensions,
+		measures,
+		title,
+		enabledOptions: {
+			...exportOptions.reduce(
+				(acc, opt) => {
+					acc[opt.name] = exportFlags?.[opt.name];
+					return acc;
+				},
+				{} as Partial<Record<ExportOptionKey, boolean>>,
+			),
+		},
+	};
+}
 
 // helper to extract field keys & header labels from dimensions/measures
 function buildSchema(

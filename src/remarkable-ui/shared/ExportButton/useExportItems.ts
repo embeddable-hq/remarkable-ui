@@ -1,24 +1,14 @@
 import { useMemo } from 'react';
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { DropdownItem } from '../BaseDropdown';
 import { nativeExportOptions, ExportOptionKey, ExportOption } from './nativeOptions';
-
-// This is the config object that is passed through from each component, containing the key information needed to export.
-export type ExportConfig = {
-	dataToExport?: DataResponse['data'];
-	dimensions?: Dimension[];
-	measures?: Measure[];
-	title?: string;
-	enabledOptions?: Partial<Record<ExportOptionKey, boolean | undefined>>;
-	containerRef?: React.RefObject<HTMLDivElement | null>;
-};
+import { ExportConfig } from './nativeOptions';
 
 const DEFAULT_EXPORT_CONFIG: ExportConfig = {
 	dataToExport: [],
 	dimensions: [],
 	measures: [],
-	title: '',
+	title: 'export',
 	enabledOptions: {} as Partial<Record<ExportOptionKey, boolean | undefined>>,
 };
 

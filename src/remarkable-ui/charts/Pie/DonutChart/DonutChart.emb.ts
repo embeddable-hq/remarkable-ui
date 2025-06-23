@@ -2,12 +2,13 @@
 import { DataResponse, Dimension, Measure, Value, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
+//Local Libraries
+import { ExportOptionFlags } from '../../../shared/ExportButton/nativeOptions';
+
 // Local Libraries
 import {
 	description,
-	downloadCSV,
-	downloadExcel,
-	downloadPNG,
+	exportOptions,
 	maxLegendItems,
 	showLegend,
 	showToolTips,
@@ -19,9 +20,6 @@ import DonutChart from './index';
 export type DonutChartProps = {
 	description?: string;
 	dimension: Dimension;
-	downloadCSV?: boolean;
-	downloadPNG?: boolean;
-	downloadExcel?: boolean;
 	maxLegendItems?: number;
 	measure: Measure;
 	onSegmentClick: (args: { dimensionValue: string | null }) => void;
@@ -30,7 +28,7 @@ export type DonutChartProps = {
 	showTooltips?: boolean;
 	showValueLabels?: boolean;
 	title?: string;
-};
+} & ExportOptionFlags;
 
 export const meta = {
 	name: 'DonutChart',
@@ -70,9 +68,7 @@ export const meta = {
 		{ ...maxLegendItems },
 		{ ...showToolTips },
 		{ ...showValueLabels },
-		{ ...downloadCSV },
-		{ ...downloadExcel },
-		{ ...downloadPNG },
+		...exportOptions,
 	],
 	events: [
 		{

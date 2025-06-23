@@ -95,3 +95,5 @@ export const downloadExcel = {
 	defaultValue: true,
 	category: 'Export Options',
 } as const;
+
+export const exportOptions = [downloadCSV, downloadPNG, downloadExcel];
