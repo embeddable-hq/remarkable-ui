@@ -4,7 +4,7 @@ const used = new Map<string, Set<string>>();
 /*We save the colors to local storage so that they are persistent across refreshes. 
 This is important, for example, if the user is looking at multiple tabs, or if the user refreshes the page.*/
 
-const STORAGE_KEY = 'dashboardColors';
+const STORAGE_KEY = 'embeddable.dashboardColors';
 
 function save() {
 	const obj: Record<string, Record<string, string>> = {};
