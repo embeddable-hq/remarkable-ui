@@ -6,7 +6,7 @@ This is important, for example, if the user is looking at multiple tabs, or if t
 
 const STORAGE_KEY = 'embeddable.dashboardColors';
 
-function save() {
+function saveColorMap() {
 	const obj: Record<string, Record<string, string>> = {};
 	for (const [cat, m] of colorMap) {
 		obj[cat] = Object.fromEntries(m);
@@ -14,7 +14,7 @@ function save() {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
 }
 
-function load() {
+function loadColorMap() {
 	const data = localStorage.getItem(STORAGE_KEY);
 	if (!data) return;
 	const obj: Record<string, Record<string, string>> = JSON.parse(data);
@@ -24,7 +24,7 @@ function load() {
 		used.set(cat, new Set(m.values()));
 	}
 }
-load();
+loadColorMap();
 
 export function getColor(value: string, palette: string[], idx: number, category?: string): string {
 	const cat = category ?? 'global';
@@ -49,6 +49,6 @@ export function getColor(value: string, palette: string[], idx: number, category
 	// 4) store & mark used
 	catMap.set(value, pick);
 	catUsed.add(pick);
-	save();
+	saveColorMap();
 	return pick;
 }
