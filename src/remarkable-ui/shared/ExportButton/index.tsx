@@ -4,7 +4,8 @@ import Dropdown from '../BaseDropdown';
 import IconButton from '../IconButton';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../themes/remarkableTheme/theme';
-import { useExportItems, ExportConfig } from './useExportItems';
+import { useExportItems } from './useExportItems';
+import { ExportConfig } from './nativeOptions';
 
 export type ExportButtonProps = {
 	setLocalLoading: React.Dispatch<React.SetStateAction<boolean>>;

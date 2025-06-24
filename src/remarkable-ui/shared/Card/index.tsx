@@ -11,7 +11,7 @@ import Title from '../Title';
 import Description from '../Description';
 import CardContent from '../CardContent';
 import ChartContainer from '../ChartContainer';
-import { ExportConfig } from '../../shared/ExportButton/useExportItems';
+import { ExportConfig } from '../../shared/ExportButton/nativeOptions';
 
 type CardProps = {
 	title?: string;

@@ -3,7 +3,7 @@ import styles from './index.module.css';
 import ExportButton from '../ExportButton';
 import Spinner from '../Spinner';
 import { DataResponse } from '@embeddable.com/core';
-import { ExportConfig } from '../ExportButton/useExportItems';
+import { ExportConfig } from '../ExportButton/nativeOptions';
 
 type CardHeaderProps = {
 	isLoading?: boolean;
