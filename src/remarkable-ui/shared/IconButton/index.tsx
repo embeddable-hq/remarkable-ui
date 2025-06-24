@@ -8,5 +8,12 @@ type IconButtonProps = {
 export default function IconButton({ icon }: IconButtonProps) {
 	const Icon = icon;
 
-	return <button className={styles.iconButton}>{Icon && <Icon className={styles.icon} />}</button>;
+	return (
+		<button
+			data-png-export-ignore // This is used to hide the icon when exporting to PNG
+			className={styles.iconButton}
+		>
+			{Icon && <Icon className={styles.icon} />}
+		</button>
+	);
 }

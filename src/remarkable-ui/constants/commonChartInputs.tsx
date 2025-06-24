@@ -1,3 +1,5 @@
+import { ExportOptionKey } from '../shared/ExportButton/nativeOptions';
+
 export const dataset = {
 	name: 'dataset',
 	type: 'dataset',
@@ -69,3 +71,29 @@ export const placeholder = {
 	label: 'Placeholder',
 	category: 'Component Settings',
 } as const;
+
+export const downloadCSV = {
+	name: 'downloadCSV' as ExportOptionKey,
+	type: 'boolean' as 'boolean',
+	label: 'Enable download as CSV',
+	defaultValue: true,
+	category: 'Export Options',
+} as const;
+
+export const downloadPNG = {
+	name: 'downloadPNG' as ExportOptionKey,
+	type: 'boolean' as 'boolean',
+	label: 'Enable download as PNG',
+	defaultValue: true,
+	category: 'Export Options',
+} as const;
+
+export const downloadExcel = {
+	name: 'downloadExcel' as ExportOptionKey,
+	type: 'boolean' as 'boolean',
+	label: 'Enable download as XLSX',
+	defaultValue: true,
+	category: 'Export Options',
+} as const;
+
+export const exportOptions = [downloadCSV, downloadPNG, downloadExcel];

@@ -1,59 +1,22 @@
 import React from 'react';
-import { ExportIcon, DownloadCSVIcon, DownloadPNGIcon } from '../../constants/icons';
+import { ExportIcon } from '../../constants/icons';
 import Dropdown from '../BaseDropdown';
 import IconButton from '../IconButton';
-import { DropdownItem } from '../BaseDropdown';
-import { Theme } from '../../../themes/remarkableTheme/theme';
 import { useTheme } from '@embeddable.com/react';
-import { DataResponse } from '@embeddable.com/core';
+import { Theme } from '../../../themes/remarkableTheme/theme';
+import { useExportItems } from './useExportItems';
+import { ExportConfig } from './nativeOptions';
 
-type SetBoolean = React.Dispatch<React.SetStateAction<boolean>>;
-
-type ExportButtonProps = {
-	setLocalLoading: SetBoolean;
-	data?: DataResponse['data'];
+export type ExportButtonProps = {
+	setLocalLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	exportConfig?: ExportConfig;
 };
 
-const handleDownload = (data: DataResponse['data']) => {
-	alert('dowload csv!');
-};
-
-export default function ExportButton({ setLocalLoading, data }: ExportButtonProps) {
+export default function ExportButton({ setLocalLoading, exportConfig }: ExportButtonProps) {
 	const theme = useTheme() as Theme;
+	const items = useExportItems(exportConfig, theme, setLocalLoading);
 
-	const handleClick = (onClick: () => void | Promise<void>) => {
-		setLocalLoading(true);
-		Promise.resolve(onClick()).then(() => setLocalLoading(false));
-	};
-
-	const customExportOptions =
-		theme.customExportOptions?.map((option) => ({
-			...option,
-			onClick: () => handleClick(() => option.onClick?.(data)),
-		})) || ([] as DropdownItem[]);
-
-	const downloadCSV: DropdownItem = {
-		id: 'downloadCSV',
-		label: 'Download CSV',
-		icon: DownloadCSVIcon,
-		onClick: () => handleClick(() => handleDownload(data)),
-	};
-
-	const downloadPNG: DropdownItem = {
-		id: 'downloadPNG',
-		label: 'Download PNG',
-		icon: DownloadPNGIcon,
-		onClick: () => handleClick(() => alert('dowload png!')),
-	};
-
-	const veryLongOption: DropdownItem = {
-		id: 'something',
-		label: 'Something way too long has to go here for testing',
-		icon: DownloadPNGIcon,
-		onClick: () => alert('dowload png!'),
-	};
-
-	const items = [downloadCSV, downloadPNG, ...customExportOptions];
+	if (items.length === 0) return null;
 
 	return (
 		<Dropdown items={items} align="right">

@@ -1,5 +1,5 @@
 import { configProps, valueProps } from '../../remarkable-ui/utils/formatUtils';
-import { DropdownItem } from '../../remarkable-ui/shared/BaseDropdown';
+import { ExportOption } from '../../remarkable-ui/shared/ExportButton/nativeOptions';
 import { RangeConfig } from '../../remarkable-ui/utils/relativeDateRanges';
 
 export type Theme = {
@@ -14,8 +14,8 @@ export type Theme = {
 	customDateFormats?: {
 		[key: string]: string;
 	};
-	customExportOptions?: DropdownItem[];
-	//Used to override the entire default format function for displayed values
+
+	customExportOptions?: ExportOption[];
 	customFormatFunction?: (value: valueProps, config?: configProps) => string;
 	//Used to override the default number format function for displayed numbers
 	customNumberFormatFunction?: (value: valueProps, config?: configProps) => string;

@@ -11,6 +11,7 @@ import Title from '../Title';
 import Description from '../Description';
 import CardContent from '../CardContent';
 import ChartContainer from '../ChartContainer';
+import { ExportConfig } from '../../shared/ExportButton/nativeOptions';
 
 type CardProps = {
 	title?: string;
@@ -21,21 +22,25 @@ type CardProps = {
 	children?: React.ReactNode;
 	chartHeader?: React.ReactNode;
 	chartFooter?: React.ReactNode;
+	exportConfig?: ExportConfig;
+	containerRef?: React.RefObject<HTMLDivElement | null>;
 };
 
 export default function Card({
-	title,
+	chartFooter,
+	chartHeader,
+	children,
+	containerRef,
+	data,
 	description,
 	errorMessage,
-	children,
+	exportConfig,
 	isLoading,
-	data,
-	chartHeader,
-	chartFooter,
+	title,
 }: CardProps) {
 	return (
-		<Surface>
-			<CardHeader isLoading={isLoading} data={data}>
+		<Surface containerRef={containerRef}>
+			<CardHeader isLoading={isLoading} data={data} exportConfig={exportConfig}>
 				{title && <Title>{title}</Title>}
 				{description && <Description>{description}</Description>}
 			</CardHeader>

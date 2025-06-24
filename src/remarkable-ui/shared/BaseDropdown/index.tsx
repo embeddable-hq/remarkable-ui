@@ -7,7 +7,7 @@ export type DropdownItem = {
 	icon?: React.ComponentType<{ className?: string }>;
 	id: string;
 	label?: string;
-	onClick?: (item?: DataResponse['data']) => void;
+	onClick?: () => void;
 	customContent?: React.ReactNode;
 };
 

@@ -5,6 +5,7 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 // Local Libraries
 import {
 	description,
+	exportOptions,
 	maxLegendItems,
 	showLegend,
 	showToolTips,
@@ -12,6 +13,7 @@ import {
 	title,
 } from '../../../constants/commonChartInputs';
 import DonutChartWithLabel from './index';
+import { ExportOptionFlags } from '../../../shared/ExportButton/nativeOptions';
 
 export type DonutChartWithLabelProps = {
 	description?: string;
@@ -27,7 +29,7 @@ export type DonutChartWithLabelProps = {
 	showTooltips?: boolean;
 	showValueLabels?: boolean;
 	title?: string;
-};
+} & ExportOptionFlags;
 
 export const meta = {
 	name: 'DonutChartWithLabel',
@@ -85,6 +87,7 @@ export const meta = {
 		{ ...maxLegendItems },
 		{ ...showToolTips },
 		{ ...showValueLabels },
+		...exportOptions,
 	],
 	events: [
 		{

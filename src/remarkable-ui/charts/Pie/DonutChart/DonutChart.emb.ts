@@ -2,9 +2,13 @@
 import { DataResponse, Dimension, Measure, Value, loadData } from '@embeddable.com/core';
 import { EmbeddedComponentMeta, Inputs, defineComponent } from '@embeddable.com/react';
 
+//Local Libraries
+import { ExportOptionFlags } from '../../../shared/ExportButton/nativeOptions';
+
 // Local Libraries
 import {
 	description,
+	exportOptions,
 	maxLegendItems,
 	showLegend,
 	showToolTips,
@@ -24,7 +28,7 @@ export type DonutChartProps = {
 	showTooltips?: boolean;
 	showValueLabels?: boolean;
 	title?: string;
-};
+} & ExportOptionFlags;
 
 export const meta = {
 	name: 'DonutChart',
@@ -64,6 +68,7 @@ export const meta = {
 		{ ...maxLegendItems },
 		{ ...showToolTips },
 		{ ...showValueLabels },
+		...exportOptions,
 	],
 	events: [
 		{

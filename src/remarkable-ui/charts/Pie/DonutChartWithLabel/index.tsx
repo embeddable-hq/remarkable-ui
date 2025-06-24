@@ -1,4 +1,5 @@
 // Third Party Libraries
+import { useRef } from 'react';
 import { ChartOptions } from 'chart.js';
 
 // Embeddable Libraries
@@ -11,6 +12,7 @@ import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
 import { Theme } from '../../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../../utils/formatUtils';
 import { getStyle } from '../../../utils/cssUtils';
+import { buildExportConfig } from '../../../utils/exportUtils';
 
 export default ({
 	description,
@@ -26,7 +28,9 @@ export default ({
 	showTooltips,
 	showValueLabels,
 	title,
+	...exportFlags
 }: DonutChartWithLabelProps) => {
+	const containerRef = useRef<HTMLDivElement | null>(null);
 	const theme = useTheme() as Theme;
 
 	const innerLabelValue = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
@@ -76,7 +80,16 @@ export default ({
 			data={results.data}
 			description={description}
 			errorMessage={results.error}
+			exportConfig={buildExportConfig(
+				results.data,
+				containerRef,
+				[dimension],
+				[measure],
+				title,
+				exportFlags,
+			)}
 			isLoading={results.isLoading || resultsInnerLabel.isLoading}
+			containerRef={containerRef}
 			title={title}
 		>
 			<BasePieChart
