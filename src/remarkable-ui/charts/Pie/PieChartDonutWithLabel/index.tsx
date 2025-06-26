@@ -1,29 +1,32 @@
-//Third Party Libraries
+// Third Party Libraries
 import { useRef } from 'react';
 
 // Local Libraries
-import BasePieChart from '../../../shared/BasePieChart';
-import Card from '../../../shared/Card';
-import { PieChartProps } from './PieChart.emb';
 import { buildExportConfig } from '../../../utils/exportUtils';
+import { PieChartDonutWithLabelProps } from './PieChartDonutWithLabel.emb';
+import { PieChartDonutWithLabel } from '../../../shared/BasePieChart/variants/PieChartDonutWithLabel';
+import Card from '../../../shared/Card';
 
 export default ({
 	description,
 	dimension,
+	innerLabelMeasure,
+	innerLabelText,
 	maxLegendItems,
 	measure,
 	onSegmentClick,
 	results,
+	resultsInnerLabel,
 	showLegend,
 	showTooltips,
 	showValueLabels,
 	title,
 	...exportFlags
-}: PieChartProps) => {
+}: PieChartDonutWithLabelProps) => {
 	const containerRef = useRef<HTMLDivElement | null>(null);
+
 	return (
 		<Card
-			containerRef={containerRef}
 			data={results.data}
 			description={description}
 			errorMessage={results.error}
@@ -35,18 +38,22 @@ export default ({
 				title,
 				exportFlags,
 			)}
-			isLoading={results.isLoading}
+			isLoading={results.isLoading || resultsInnerLabel.isLoading}
+			containerRef={containerRef}
 			title={title}
 		>
-			<BasePieChart
+			<PieChartDonutWithLabel
 				dimension={dimension}
+				innerLabelMeasure={innerLabelMeasure}
+				innerLabelText={innerLabelText}
 				maxLegendItems={maxLegendItems}
 				measure={measure}
 				onSegmentClick={onSegmentClick}
 				results={results}
-				showValueLabels={showValueLabels ? 'auto' : false}
+				resultsInnerLabel={resultsInnerLabel}
 				showLegend={showLegend}
 				showTooltips={showTooltips}
+				showValueLabels={showValueLabels}
 			/>
 		</Card>
 	);

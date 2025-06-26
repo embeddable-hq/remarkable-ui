@@ -4,6 +4,9 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 
 // Local Libraries
 import {
+	dataset,
+	dimension,
+	measure,
 	description,
 	exportOptions,
 	maxLegendItems,
@@ -12,10 +15,10 @@ import {
 	showValueLabels,
 	title,
 } from '../../../constants/commonChartInputs';
-import DonutChartWithLabel from './index';
+import PieChartDonutWithLabel from './index';
 import { ExportOptionFlags } from '../../../shared/ExportButton/nativeOptions';
 
-export type DonutChartWithLabelProps = {
+export type PieChartDonutWithLabelProps = {
 	description?: string;
 	dimension: Dimension;
 	innerLabelMeasure: Measure;
@@ -32,54 +35,21 @@ export type DonutChartWithLabelProps = {
 } & ExportOptionFlags;
 
 export const meta = {
-	name: 'DonutChartWithLabel',
-	label: 'Donut Chart With Label',
+	name: 'PieChartDonutWithLabel',
+	label: 'Pie Chart Donut With Label',
 	category: 'Pie Charts',
 	inputs: [
-		{
-			name: 'dataset',
-			type: 'dataset' as 'dataset',
-			label: 'Dataset',
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'measure',
-			type: 'measure' as 'measure',
-			label: 'Measure',
-			config: {
-				dataset: 'dataset', // restricts measure options to the selected dataset
-			},
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'dimension',
-			type: 'dimension' as 'dimension',
-			label: 'Dimension',
-			config: {
-				dataset: 'dataset',
-			},
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'innerLabelMeasure',
-			type: 'measure',
-			label: 'Inner Label Measure',
-			config: {
-				dataset: 'dataset',
-			},
-			required: true,
-			category: 'Chart Data',
-		},
+		{ ...dataset },
+		{ ...measure },
+		{ ...dimension },
+		{ ...measure, name: 'innerLabelMeasure', label: 'Inner Label Measure' },
 		{
 			name: 'innerLabelText',
 			type: 'string',
 			label: 'Inner Label Text',
 			description: 'Text to display inside the donut chart',
 			required: false,
-			category: 'Chart Data',
+			category: 'Component Data',
 		},
 		{ ...title },
 		{ ...description },
@@ -104,7 +74,7 @@ export const meta = {
 	],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(DonutChartWithLabel, meta, {
+export default defineComponent(PieChartDonutWithLabel, meta, {
 	props: (inputs: Inputs<typeof meta>) => {
 		return {
 			...inputs,

@@ -4,8 +4,11 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 
 // Local Libraries
 import {
+	dimension,
+	dataset,
 	description,
 	exportOptions,
+	measure,
 	maxLegendItems,
 	showLegend,
 	showToolTips,
@@ -33,33 +36,9 @@ export const meta = {
 	label: 'Pie Chart',
 	category: 'Pie Charts',
 	inputs: [
-		{
-			name: 'dataset',
-			type: 'dataset',
-			label: 'Dataset',
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'measure',
-			type: 'measure',
-			label: 'Measure',
-			config: {
-				dataset: 'dataset', // restricts measure options to the selected dataset
-			},
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'dimension',
-			type: 'dimension',
-			label: 'Dimension',
-			config: {
-				dataset: 'dataset',
-			},
-			required: true,
-			category: 'Chart Data',
-		},
+		{ ...dataset },
+		{ ...measure },
+		{ ...dimension },
 		{ ...title },
 		{ ...description },
 		{ ...showLegend },

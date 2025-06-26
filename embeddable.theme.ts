@@ -6,9 +6,9 @@
 //  - In the Boiler Plate library, it merges the client theme with the parent theme and returns that.
 //  - The merged theme is returned at the component level by the useTheme() react hook.
 
-import { DataResponse, defineTheme } from '@embeddable.com/core';
+import { defineTheme } from '@embeddable.com/core';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
-import { ExportOption } from './src/remarkable-ui/shared/ExportButton/nativeOptions';
+import { ExportConfig, ExportOption } from './src/remarkable-ui/shared/ExportButton/nativeOptions';
 
 const themeProvider = (clientContext: any, parentTheme: any): any => {
 	//Test. TODO: Remove this later.
@@ -42,8 +42,8 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		{
 			id: 'testOption',
 			label: 'Test Option',
-			fn: (data: DataResponse['data']) => {
-				console.log('data', data);
+			fn: (config: ExportConfig) => {
+				console.log('config', config);
 			},
 		},
 	];

@@ -7,17 +7,20 @@ import { ExportOptionFlags } from '../../../shared/ExportButton/nativeOptions';
 
 // Local Libraries
 import {
+	dataset,
 	description,
+	dimension,
 	exportOptions,
 	maxLegendItems,
+	measure,
 	showLegend,
 	showToolTips,
 	showValueLabels,
 	title,
 } from '../../../constants/commonChartInputs';
-import DonutChart from './index';
+import PieChartDonut from './index';
 
-export type DonutChartProps = {
+export type PieChartDonutProps = {
 	description?: string;
 	dimension: Dimension;
 	maxLegendItems?: number;
@@ -31,37 +34,13 @@ export type DonutChartProps = {
 } & ExportOptionFlags;
 
 export const meta = {
-	name: 'DonutChart',
-	label: 'Donut Chart',
+	name: 'PieChartDonut',
+	label: 'Pie Chart Donut',
 	category: 'Pie Charts',
 	inputs: [
-		{
-			name: 'dataset',
-			type: 'dataset',
-			label: 'Dataset',
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'measure',
-			type: 'measure',
-			label: 'Measure',
-			config: {
-				dataset: 'dataset', // restricts measure options to the selected dataset
-			},
-			required: true,
-			category: 'Chart Data',
-		},
-		{
-			name: 'dimension',
-			type: 'dimension',
-			label: 'Dimension',
-			config: {
-				dataset: 'dataset',
-			},
-			required: true,
-			category: 'Chart Data',
-		},
+		{ ...dataset },
+		{ ...measure },
+		{ ...dimension },
 		{ ...title },
 		{ ...description },
 		{ ...showLegend },
@@ -85,7 +64,7 @@ export const meta = {
 	],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(DonutChart, meta, {
+export default defineComponent(PieChartDonut, meta, {
 	props: (inputs: Inputs<typeof meta>) => {
 		return {
 			...inputs,
