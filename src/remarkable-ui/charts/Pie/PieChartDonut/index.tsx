@@ -2,9 +2,9 @@ import { useRef } from 'react';
 
 // Local Libraries
 import Card from '../../../shared/Card';
-import BasePieChart from '../../../shared/BasePieChart';
-import { DonutChartProps } from './DonutChart.emb';
+import { PieChartDonutProps } from './PieChartDonut.emb';
 import { buildExportConfig } from '../../../utils/exportUtils';
+import { PieChartDonut } from '../../../shared/BasePieChart/variants/PieChartDonut';
 
 export default ({
 	description,
@@ -18,12 +18,8 @@ export default ({
 	showValueLabels,
 	title,
 	...exportFlags
-}: DonutChartProps) => {
+}: PieChartDonutProps) => {
 	const containerRef = useRef<HTMLDivElement | null>(null);
-
-	const chartOptionsOverrides = {
-		cutout: '60%',
-	};
 
 	return (
 		<Card
@@ -42,14 +38,13 @@ export default ({
 			isLoading={results.isLoading}
 			title={title}
 		>
-			<BasePieChart
-				chartOptionsOverrides={chartOptionsOverrides}
+			<PieChartDonut
 				dimension={dimension}
 				maxLegendItems={maxLegendItems}
 				measure={measure}
 				onSegmentClick={onSegmentClick}
 				results={results}
-				showDataLabels={showValueLabels ? 'auto' : false}
+				showValueLabels={showValueLabels ? 'auto' : false}
 				showLegend={showLegend}
 				showTooltips={showTooltips}
 			/>

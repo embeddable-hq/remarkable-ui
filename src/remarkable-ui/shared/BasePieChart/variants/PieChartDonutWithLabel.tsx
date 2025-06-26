@@ -1,21 +1,26 @@
 // Third Party Libraries
-import { useRef } from 'react';
 import { ChartOptions } from 'chart.js';
 
 // Embeddable Libraries
 import { useTheme } from '@embeddable.com/react';
 
 // Local Libraries
-import BasePieChart from '../../../shared/BasePieChart';
-import Card from '../../../shared/Card';
-import { DonutChartWithLabelProps } from './DonutChartWithLabel.emb';
+import BasePieChart from '..';
 import { Theme } from '../../../../themes/remarkableTheme/theme';
 import { formatValue } from '../../../utils/formatUtils';
 import { getStyle } from '../../../utils/cssUtils';
-import { buildExportConfig } from '../../../utils/exportUtils';
+import { BasePieChartProps } from '..';
+import { DataResponse, Measure } from '@embeddable.com/core';
 
-export default ({
-	description,
+//TODO: showValuesLabels and showDataLabels: should use one single name.
+
+type PieChartDonutWithLabelProps = {
+	innerLabelMeasure: Measure;
+	innerLabelText?: string;
+	resultsInnerLabel: DataResponse;
+} & BasePieChartProps;
+
+export function PieChartDonutWithLabel({
 	dimension,
 	innerLabelMeasure,
 	innerLabelText,
@@ -27,10 +32,7 @@ export default ({
 	showLegend,
 	showTooltips,
 	showValueLabels,
-	title,
-	...exportFlags
-}: DonutChartWithLabelProps) => {
-	const containerRef = useRef<HTMLDivElement | null>(null);
+}: PieChartDonutWithLabelProps) {
 	const theme = useTheme() as Theme;
 
 	const innerLabelValue = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
@@ -76,33 +78,16 @@ export default ({
 	};
 
 	return (
-		<Card
-			data={results.data}
-			description={description}
-			errorMessage={results.error}
-			exportConfig={buildExportConfig(
-				results.data,
-				containerRef,
-				[dimension],
-				[measure],
-				title,
-				exportFlags,
-			)}
-			isLoading={results.isLoading || resultsInnerLabel.isLoading}
-			containerRef={containerRef}
-			title={title}
-		>
-			<BasePieChart
-				chartOptionsOverrides={chartOptionsOverrides}
-				dimension={dimension}
-				maxLegendItems={maxLegendItems}
-				measure={measure}
-				onSegmentClick={onSegmentClick}
-				results={results}
-				showDataLabels={showValueLabels ? 'auto' : false}
-				showLegend={showLegend}
-				showTooltips={showTooltips}
-			/>
-		</Card>
+		<BasePieChart
+			chartOptionsOverrides={chartOptionsOverrides}
+			dimension={dimension}
+			maxLegendItems={maxLegendItems}
+			measure={measure}
+			onSegmentClick={onSegmentClick}
+			results={results}
+			showValueLabels={showValueLabels ? 'auto' : false}
+			showLegend={showLegend}
+			showTooltips={showTooltips}
+		/>
 	);
-};
+}

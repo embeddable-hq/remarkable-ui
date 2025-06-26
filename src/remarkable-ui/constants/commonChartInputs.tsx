@@ -19,6 +19,17 @@ export const dimension = {
 	category: 'Component Data',
 } as const;
 
+export const measure = {
+	name: 'measure',
+	type: 'measure',
+	label: 'Measure',
+	config: {
+		dataset: 'dataset',
+	},
+	required: true,
+	category: 'Component Data',
+} as const;
+
 export const title = {
 	name: 'title',
 	type: 'string' as 'string',

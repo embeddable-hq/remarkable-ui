@@ -7,7 +7,7 @@ import { Dimension, DataResponse } from '@embeddable.com/core';
 
 export const handlePieClick = (
 	event: React.MouseEvent<HTMLCanvasElement>,
-	chart: Chart<'pie', [], unknown> | null,
+	chart: Chart<'pie', number[], unknown> | null,
 	clickedIndex: number | null,
 	onSegmentClick: ((args: { dimensionValue: string | null }) => void) | undefined,
 	setClickedIndex: (index: number | null) => void,
