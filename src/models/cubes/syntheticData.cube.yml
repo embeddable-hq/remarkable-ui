@@ -1,0 +1,62 @@
+cubes:
+  - name: synthetic_data
+    title: Synthetic Data
+    data_source: default
+    sql: |
+      SELECT
+        d.ts                                     AS hour,
+        floor(random() * 1000000)               AS large_number,
+        random()                                AS fraction_value,
+        -floor(random() * 100)                  AS negative_number,
+        (ARRAY[
+          'United States','Canada','Germany','France','Spain',
+          'Italy','Brazil','Japan','Australia','South Africa'
+        ])[floor(random() * 10) + 1]            AS country,
+        (ARRAY[
+          'United Nations Educational, Scientific and Cultural Organization',
+          'International Federation of Association Football',
+          'Organization for the Prohibition of Chemical Weapons',
+          'World Health Organization',
+          'Federation of International Civil Aviation',
+          'European Organization for Nuclear Research',
+          'International Criminal Court',
+          'International Monetary Fund',
+          'International Labour Organization',
+          'African Union'
+        ])[floor(random() * 10) + 1]            AS long_label
+      FROM generate_series(
+        date_trunc('hour', now() - interval '2 years'),
+        date_trunc('hour', now()),
+        '1 hour'
+      ) AS d(ts)
+
+    dimensions:
+      - name: hour
+        sql: hour
+        type: time
+
+      - name: country
+        title: Country
+        sql: country
+        type: string
+
+      - name: long_label
+        title: Long Label
+        sql: long_label
+        type: string
+
+    measures:
+      - name: total_large_number
+        sql: large_number
+        type: sum
+        title: Total Large Number
+
+      - name: average_fraction_value
+        sql: fraction_value
+        type: avg
+        title: Average Fraction Value
+
+      - name: total_negative_number
+        sql: negative_number
+        type: sum
+        title: Total Negative Number
