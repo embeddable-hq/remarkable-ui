@@ -9,8 +9,19 @@
 import { defineTheme } from '@embeddable.com/core';
 import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
 import { ExportConfig, ExportOption } from './src/remarkable-ui/shared/ExportButton/nativeOptions';
+import { Theme } from './src/themes/remarkableTheme/theme';
 
-const themeProvider = (clientContext: any, parentTheme: any): any => {
+// TODO: export this from sdk instead of re-defining it here
+type DeepPartial<T> = {
+    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
+export type ClientContext = {
+	locale?: string; // e.g. 'en-US'
+	theme?: 'dark' | 'light'
+}
+
+const themeProvider = (clientContext: ClientContext, parentTheme: Theme): any => {
 	//Test. TODO: Remove this later.
 	const theme = clientContext.theme;
 
@@ -48,10 +59,13 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		},
 	];
 
-	const testTheme = {
+	const testTheme: DeepPartial<Theme> = {
 		styles: {
 			...(theme === 'dark' ? darkModeVariables : {}),
 		},
+		i18n: {
+			preferredLocales: [clientContext.locale || 'en-US']
+		}
 		// customRelativeDateRanges: {
 		// 	today: {
 		// 		enabled: false,

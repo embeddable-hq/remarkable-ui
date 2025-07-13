@@ -17,6 +17,7 @@ import { aggregateLongTail } from '../../utils/dataUtils';
 import { getColor } from '../../utils/colorUtils';
 import { handlePieClick } from './handlers';
 import type { BasePieChartProps } from './index';
+import useI18n from '../../hooks/useI18n';
 
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
@@ -38,6 +39,7 @@ export function useBasePieChart({
 	const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems) || [];
 
 	const theme = useTheme() as Theme;
+	const i18n = useI18n(theme);
 	const themeColors = mergedData.map((item, i) =>
 		getColor(item[dimension.name], theme.charts.colors, i),
 	);
@@ -47,7 +49,7 @@ export function useBasePieChart({
 
 	const chartData = () => ({
 		labels: mergedData.map((item) =>
-			formatValue(item[dimension.name], { typeHint: 'string', theme }),
+			i18n.dimension(dimension, item[dimension.name])
 		),
 		datasets: [
 			{

@@ -33,19 +33,19 @@ export type ExportConfig = {
 export const nativeExportOptions: Record<ExportOptionKey, ExportOption> = {
 	downloadCSV: {
 		id: 'downloadCSV',
-		label: 'Download CSV',
+		label: 'ExportOptions.downloadCSV.label',
 		icon: DownloadCSVIcon,
 		fn: (config) => exportCSV(config),
 	},
 	downloadExcel: {
 		id: 'downloadExcel',
-		label: 'Download XLSX',
+		label: 'ExportOptions.downloadExcel.label',
 		icon: DownloadPNGIcon,
 		fn: (config) => exportExcel(config),
 	},
 	downloadPNG: {
 		id: 'downloadPNG',
-		label: 'Download PNG',
+		label: 'ExportOptions.downloadPNG.label',
 		icon: DownloadPNGIcon,
 		fn: (config) => exportPNG(config),
 	},
