@@ -1,30 +1,9 @@
 import { configProps, valueProps } from '../../remarkable-ui/utils/formatUtils';
 import { ExportOption } from '../../remarkable-ui/shared/ExportButton/nativeOptions';
 import { RangeConfig } from '../../remarkable-ui/utils/relativeDateRanges';
-import { Dimension, Granularity, Measure } from '@embeddable.com/core';
 import { Resource } from 'i18next';
-import { $Dictionary } from 'i18next/typescript/helpers';
+import { DateTimeFormatterParams, I18nFormatter, NumberFormatterParams } from './18n';
 
-export type NumberFormatter = {
-	format: (number: number | bigint) => string
-}
-export type DateTimeFormatter = {
-	format: (date: Date) => string
-}
-export type DateTimeFormatterParams = {
-	granularity?: Granularity
-}
-export type NumberFormatterParams = {
-	minimumFractionDigits?: number;
-	maximumFractionDigits?: number;
-}
-export type I18nFormatter = {
-	text: (key: string, params?: $Dictionary) => string;
-	number: (params?: NumberFormatterParams) => NumberFormatter;
-	dateTime: (params?: DateTimeFormatterParams) => DateTimeFormatter
-	dimension: (dimension: Dimension, value?: any) => string;
-	measure: (measure: Measure, value?: any) => string;
-}
 
 export type I18nTheme = {
 	preferredLocales: string[];
@@ -41,6 +20,7 @@ export type Theme = {
 		borderColors?: string[];
 		legendPosition?: 'top' | 'right' | 'bottom' | 'left';
 	};
+	//Used to override everything related to internationalisation (i18n)
 	i18n: I18nTheme;
 	//Used to override the default date format function for displayed dates
 	customDateFormatFunction?: (value: valueProps, config?: configProps) => string;
