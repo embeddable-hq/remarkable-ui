@@ -2,7 +2,7 @@ import { configProps, valueProps } from '../../remarkable-ui/utils/formatUtils';
 import { ExportOption } from '../../remarkable-ui/shared/ExportButton/nativeOptions';
 import { RangeConfig } from '../../remarkable-ui/utils/relativeDateRanges';
 import { Resource } from 'i18next';
-import { DateTimeFormatter, DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatter } from './18n';
+import { DateTimeFormatter, DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatter } from './i18n';
 
 
 export type I18nTheme = {

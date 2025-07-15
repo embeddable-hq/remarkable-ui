@@ -1,5 +1,5 @@
 import { DimensionOrMeasure, isDimension, isDimensionOrMeasure } from "@embeddable.com/core";
-import { DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/18n";
+import { DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
 import { Theme } from "../../themes/remarkableTheme/theme";
 
 const ISO_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/

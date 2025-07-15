@@ -2,7 +2,7 @@
 //may want to break out css base variables, so they're not included in the theme.
 //And import them somewhere else.
 
-import { defaultI18nTheme } from './18n';
+import { defaultI18nTheme } from './i18n';
 import { cssVariables } from './cssVariables';
 import { Theme } from './theme';
 
