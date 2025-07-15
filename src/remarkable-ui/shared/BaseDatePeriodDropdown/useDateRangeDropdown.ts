@@ -3,6 +3,7 @@ import { useTheme } from '@embeddable.com/react';
 import { relativeDateRanges, EnabledRange } from '../../utils/relativeDateRanges';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { TimeRange } from '@embeddable.com/core';
+import useI18n from '../../hooks/useI18n';
 
 type Params = {
 	preSelectedValue: TimeRange;
@@ -12,8 +13,9 @@ type Params = {
 export function useDateRangeDropdown({ preSelectedValue, handleClick }: Params) {
 	// 1) pull and compute the ranges
 	const theme = useTheme() as Theme;
+	const i18n = useI18n(theme);
 	const ranges = useMemo(
-		() => relativeDateRanges(theme.customRelativeDateRanges),
+		() => relativeDateRanges(theme.customRelativeDateRanges, i18n),
 		[theme.customRelativeDateRanges],
 	);
 

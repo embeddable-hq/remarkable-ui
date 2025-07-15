@@ -4,7 +4,7 @@ import { Theme } from "../../themes/remarkableTheme/theme";
 
 const ISO_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/
 
-export type I18nFormatter = {
+export type I18nHelper = {
     text: (key: string, params?: TextFormatterParams) => string;
     number: (value: number | bigint, params?: NumberFormatterParams) => string;
     dateTime: (value: Date, params?: DateTimeFormatterParams) => string;
@@ -15,7 +15,7 @@ type Meta = {
     currency?: string
 }
 
-const useI18n = (theme: Theme): I18nFormatter => {
+const useI18n = (theme: Theme): I18nHelper => {
     const { i18n } = theme;
     const textFormatter = i18n.textFormatter(theme);
     const numberFormatter = i18n.numberFormatter(theme);

@@ -19,6 +19,7 @@ export type TextFormatter = {
 }
 export type DateTimeFormatterParams = {
     granularity?: Granularity
+    shortYear?: boolean
 }
 export type NumberFormatterParams = {
     currency?: string // e.g. 'USD'
@@ -42,8 +43,8 @@ export const defaultI18nTheme: I18nTheme = {
 	},
 	defaultDateTimeFormatOptions: (theme: Theme, params?: DateTimeFormatterParams): Intl.DateTimeFormatOptions => {
 		return { 
-			year: 'numeric', 
-			month: 'numeric', 
+			year: params?.shortYear ? '2-digit' : 'numeric', 
+			month: 'short', 
 			day: 'numeric', 
 			hour: 'numeric', 
 			minute: 'numeric', 

@@ -1,9 +1,11 @@
 // Third Party Libraries
 import { mergician } from 'mergician';
 import { format as dateFnsFormat } from 'date-fns';
+import { Granularity } from '@embeddable.com/core';
+import { I18nHelper } from '../hooks/useI18n';
 
 // Get start/end of quarter, offset=0 for this quarter, -1 for last, +1 for next, etc.
-function getQuarterBounds(date: Date, offset = 0) {
+function getQuarterBounds(date: Date, offset = 0): { from: Date, to: Date, granularity: Granularity } {
 	const currentQuarter = Math.floor(date.getMonth() / 3);
 	const targetQuarter = currentQuarter + offset;
 	const yearShift = Math.floor(targetQuarter / 4);
@@ -11,11 +13,11 @@ function getQuarterBounds(date: Date, offset = 0) {
 	const year = date.getFullYear() + yearShift;
 	const start = new Date(year, quarterIndex * 3, 1);
 	const end = new Date(year, quarterIndex * 3 + 3, 0, 23, 59, 59, 999);
-	return { from: start, to: end };
+	return { from: start, to: end, granularity: 'quarter' };
 }
 
 // Get start/end of week (ISO Monday–Sunday), offset=0 this week, -1 last, +1 next
-function getWeekBounds(date: Date, offset = 0) {
+function getWeekBounds(date: Date, offset = 0): { from: Date; to: Date, granularity: Granularity } {
 	const d = new Date(date);
 	const day = (d.getDay() + 6) % 7; // Mon=0…Sun=6
 	d.setDate(d.getDate() - day + offset * 7);
@@ -23,13 +25,12 @@ function getWeekBounds(date: Date, offset = 0) {
 	const to = new Date(from);
 	to.setDate(from.getDate() + 6);
 	to.setHours(23, 59, 59, 999);
-	return { from, to };
+	return { from, to, granularity: 'day' };
 }
 
 export type RangeConfig = {
 	label: string;
-	calculate?: () => { from: Date; to: Date };
-	dateFormat?: string;
+	calculate?: () => { from: Date; to: Date, granularity: Granularity };
 	enabled?: boolean;
 };
 
@@ -37,7 +38,7 @@ export type ranges = {
 	[key: string]: RangeConfig;
 };
 
-const defaultRanges = {
+const defaultRanges: { [key: string]: RangeConfig } = {
 	today: {
 		label: 'Today',
 		calculate: () => {
@@ -45,9 +46,8 @@ const defaultRanges = {
 			const from = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 			const to = new Date(from);
 			to.setHours(23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	yesterday: {
@@ -59,21 +59,18 @@ const defaultRanges = {
 			from.setHours(0, 0, 0, 0);
 			const to = new Date(from);
 			to.setHours(23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'day' }
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	thisWeek: {
 		label: 'This week',
 		calculate: () => getWeekBounds(new Date(), 0),
-		dateFormat: 'MMM dd',
 	},
 
 	lastWeek: {
 		label: 'Last week',
 		calculate: () => getWeekBounds(new Date(), -1),
-		dateFormat: 'MMM dd',
 	},
 
 	weekToDate: {
@@ -82,9 +79,8 @@ const defaultRanges = {
 			const now = new Date();
 			const { from } = getWeekBounds(now, 0);
 			const to = now;
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	last7Days: {
@@ -95,9 +91,8 @@ const defaultRanges = {
 			const from = new Date(to);
 			from.setDate(to.getDate() - 6); // include today + 6 previous days = 7 calendar days
 			from.setHours(0, 0, 0, 0); // start of that day
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	next7Days: {
@@ -108,9 +103,8 @@ const defaultRanges = {
 			const to = new Date(from);
 			to.setDate(from.getDate() + 6); // today + 6 more days = 7 calendar days
 			to.setHours(23, 59, 59, 999); // end of that last day
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	last30Days: {
@@ -123,9 +117,8 @@ const defaultRanges = {
 			from.setDate(to.getDate() - 29); // include today + 29 previous days = 30 days
 			from.setHours(0, 0, 0, 0); // start of that day
 
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	next30Days: {
@@ -138,9 +131,8 @@ const defaultRanges = {
 			to.setDate(from.getDate() + 29); // today + 29 more days = 30 days
 			to.setHours(23, 59, 59, 999); // end of that last day
 
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM dd',
 	},
 
 	thisMonth: {
@@ -149,9 +141,8 @@ const defaultRanges = {
 			const now = new Date();
 			const from = new Date(now.getFullYear(), now.getMonth(), 1);
 			const to = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'month' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	lastMonth: {
@@ -160,9 +151,8 @@ const defaultRanges = {
 			const now = new Date();
 			const from = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 			const to = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'month' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	nextMonth: {
@@ -171,27 +161,23 @@ const defaultRanges = {
 			const now = new Date();
 			const from = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 			const to = new Date(now.getFullYear(), now.getMonth() + 2, 0, 23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'month' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	thisQuarter: {
 		label: 'This quarter',
 		calculate: () => getQuarterBounds(new Date(), 0),
-		dateFormat: 'MMM yy',
 	},
 
 	lastQuarter: {
 		label: 'Last quarter',
 		calculate: () => getQuarterBounds(new Date(), -1),
-		dateFormat: 'MMM yy',
 	},
 
 	nextQuarter: {
 		label: 'Next quarter',
 		calculate: () => getQuarterBounds(new Date(), +1),
-		dateFormat: 'MMM yy',
 	},
 
 	quarterToDate: {
@@ -200,9 +186,8 @@ const defaultRanges = {
 			const now = new Date();
 			const { from } = getQuarterBounds(now, 0);
 			const to = now;
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	last6Months: {
@@ -215,9 +200,8 @@ const defaultRanges = {
 			from.setMonth(to.getMonth() - 6); // 6 months ago, same day
 			from.setHours(0, 0, 0, 0); // start of that day
 
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	last12Months: {
@@ -230,9 +214,8 @@ const defaultRanges = {
 			from.setMonth(to.getMonth() - 12); // 12 months ago, same day
 			from.setHours(0, 0, 0, 0); // start of that day
 
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	thisYear: {
@@ -241,9 +224,8 @@ const defaultRanges = {
 			const now = new Date();
 			const from = new Date(now.getFullYear(), 0, 1);
 			const to = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'year' };
 		},
-		dateFormat: 'yyyy',
 	},
 
 	lastYear: {
@@ -253,9 +235,8 @@ const defaultRanges = {
 			const year = now.getFullYear() - 1;
 			const from = new Date(year, 0, 1);
 			const to = new Date(year, 11, 31, 23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'year' };
 		},
-		dateFormat: 'yyyy',
 	},
 
 	nextYear: {
@@ -265,9 +246,8 @@ const defaultRanges = {
 			const year = now.getFullYear() + 1;
 			const from = new Date(year, 0, 1);
 			const to = new Date(year, 11, 31, 23, 59, 59, 999);
-			return { from, to };
+			return { from, to, granularity: 'year' };
 		},
-		dateFormat: 'yyyy',
 	},
 
 	yearToDate: {
@@ -276,9 +256,8 @@ const defaultRanges = {
 			const now = new Date();
 			const from = new Date(now.getFullYear(), 0, 1);
 			const to = now;
-			return { from, to };
+			return { from, to, granularity: 'day' };
 		},
-		dateFormat: 'MMM yy',
 	},
 
 	allTime: {
@@ -293,19 +272,19 @@ export type EnabledRange = {
 	formattedRange: string;
 };
 
-const formattedRange = (from: Date | undefined, to: Date | undefined, dateFormat?: string) => {
-	if (!from || !to || !dateFormat) {
+const formattedRange = (from: Date | undefined, to: Date | undefined, granularity: Granularity, i18n: I18nHelper) => {
+	if (!from || !to) {
 		return '';
 	}
-	const formattedFrom = dateFnsFormat(from, dateFormat);
-	const formattedTo = dateFnsFormat(to, dateFormat);
+	const formattedFrom = i18n.dateTime(from, { granularity, shortYear: true });
+	const formattedTo = i18n.dateTime(to, { granularity, shortYear: true });
 	if (formattedFrom === formattedTo) {
-		return formattedFrom;
+		return i18n.dateTime(from, { granularity, shortYear: false });
 	}
 	return `${formattedFrom} - ${formattedTo}`;
 };
 
-export const relativeDateRanges = (dateRangesFromTheme = {} as ranges): EnabledRange[] => {
+export const relativeDateRanges = (dateRangesFromTheme = {} as ranges, i18n: I18nHelper): EnabledRange[] => {
 	//Merge the default ranges with any passed in via the theme
 	const ranges = mergician(defaultRanges, dateRangesFromTheme) as ranges;
 	//Return an array of enabled ranges
@@ -315,12 +294,12 @@ export const relativeDateRanges = (dateRangesFromTheme = {} as ranges): EnabledR
 			if (item.enabled === false) {
 				return null;
 			}
-			const { from, to } = item.calculate?.() || { from: undefined, to: undefined };
+			const { from, to, granularity } = item.calculate?.() || { from: undefined, to: undefined, granularity: 'day' };
 			return {
 				label: item.label,
 				from: from,
 				to: to,
-				formattedRange: formattedRange(from, to, item.dateFormat),
+				formattedRange: formattedRange(from, to, granularity, i18n),
 			};
 		})
 		.filter((range) => range !== null);
