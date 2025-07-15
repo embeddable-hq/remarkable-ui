@@ -68,8 +68,7 @@ export default defineComponent(PieChart, meta, {
 			...inputs,
 			results: loadData({
 				from: inputs.dataset,
-				measures: [inputs.measure],
-				dimensions: [inputs.dimension],
+				select: [inputs.measure, inputs.dimension],
 			}),
 		};
 	},

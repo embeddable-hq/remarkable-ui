@@ -49,7 +49,7 @@ export function useBasePieChart({
 
 	const chartData = () => ({
 		labels: mergedData.map((item) =>
-			i18n.dimension(dimension, item[dimension.name])
+			i18n.data(dimension, item[dimension.name])
 		),
 		datasets: [
 			{
@@ -80,7 +80,7 @@ export function useBasePieChart({
 						...dataLabelOptions,
 						anchor: 'center',
 						align: 'center',
-						formatter: (value: string) => formatValue(value, { typeHint: 'number', theme }),
+						formatter: (value: string) => i18n.data(measure, value),
 					},
 					legend: {
 						display: showLegend !== false,
@@ -98,7 +98,7 @@ export function useBasePieChart({
 									0,
 								);
 								const pct = Math.round((raw / total) * 100);
-								return `${formatValue(raw, { typeHint: 'number', theme })} (${pct}%)`;
+								return `${i18n.data(measure, raw)} (${pct}%)`;
 							},
 						},
 					},

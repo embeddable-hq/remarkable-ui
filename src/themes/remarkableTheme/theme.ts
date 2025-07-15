@@ -2,16 +2,44 @@ import { configProps, valueProps } from '../../remarkable-ui/utils/formatUtils';
 import { ExportOption } from '../../remarkable-ui/shared/ExportButton/nativeOptions';
 import { RangeConfig } from '../../remarkable-ui/utils/relativeDateRanges';
 import { Resource } from 'i18next';
-import { DateTimeFormatterParams, I18nFormatter, NumberFormatterParams } from './18n';
+import { DateTimeFormatter, DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatter } from './18n';
 
 
 export type I18nTheme = {
+	/** 
+	 * Used to pass in the locale you want to use, and any backups (e.g. ['es-AR', 'es-ES', 'en-US'] or simply ['de-DE'])
+	 */ 
 	preferredLocales: string[];
+	/** 
+	 * Used to add additional translations (e.g. { ...theme.i18n.translations, { es: { ... } } })
+	 */
 	translations: Resource;
+	
+	/** 
+	 * Override to customise the default locale logic (by default it will try the `preferredLocales` above in order)
+	 */
 	locale: (theme: Theme) => Intl.Locale;
-	i18nFormatter: (theme: Theme) => I18nFormatter;
+	/** 
+	 * Override to customise the default number formatter options
+	 */
 	defaultNumberFormatOptions: (theme: Theme, params?: NumberFormatterParams) => Intl.NumberFormatOptions;
+	/** 
+	 * Override to customise the default dateTime formatter options
+	 */
 	defaultDateTimeFormatOptions: (theme: Theme, params?: DateTimeFormatterParams) => Intl.DateTimeFormatOptions;
+
+	/** 
+	 * Override if the format options above aren't enough and you want to fully customise the number formatter
+	 */
+	numberFormatter: (theme: Theme, params?: NumberFormatterParams) => NumberFormatter;
+	/**
+	 * Override if the format options above aren't enough and you want to fully customise the dateTime formatter
+	 */
+	dateTimeFormatter: (theme: Theme, params?: DateTimeFormatterParams) => DateTimeFormatter;
+	/**
+	 * Override if the `translations` above aren't enough and you want to fully customise the text formatter
+	 */
+	textFormatter: (theme: Theme) => TextFormatter;
 };
 
 export type Theme = {

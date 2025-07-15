@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { DateTimeFormatterParams, NumberFormatterParams, Theme } from '../../../themes/remarkableTheme/theme';
+import { Theme } from '../../../themes/remarkableTheme/theme';
 import { DropdownItem } from '../BaseDropdown';
 import { nativeExportOptions, ExportOptionKey, ExportOption } from './nativeOptions';
 import { ExportConfig } from './nativeOptions';
