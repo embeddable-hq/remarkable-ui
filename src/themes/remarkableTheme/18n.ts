@@ -97,13 +97,14 @@ export const defaultI18nTheme: I18nTheme = {
     },
     textFormatter: (theme: Theme): TextFormatter => {
         const { locale, translations } = theme.i18n;
-		i18next.init({
+        const instance = i18next.createInstance();
+		instance.init({
 			lng: locale(theme).language, 
-			debug: true,
 			resources: translations
 		});
-        return { format: (key: string | string[], params?: TextFormatterParams) => {
-                return i18next.t(key, params);
+        return { 
+            format: (key: string | string[], params?: TextFormatterParams) => {
+                return instance.t(key, params);
             } 
         }
     }

@@ -11,6 +11,7 @@ import { formatValue } from '../../../utils/formatUtils';
 import { getStyle } from '../../../utils/cssUtils';
 import { BasePieChartProps } from '..';
 import { DataResponse, Measure } from '@embeddable.com/core';
+import useI18n from '../../../hooks/useI18n';
 
 //TODO: showValuesLabels and showDataLabels: should use one single name.
 
@@ -34,6 +35,7 @@ export function PieChartDonutWithLabel({
 	showValueLabels,
 }: PieChartDonutWithLabelProps) {
 	const theme = useTheme() as Theme;
+	const i18n = useI18n(theme);
 
 	const innerLabelValue = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
 
@@ -45,10 +47,7 @@ export function PieChartDonutWithLabel({
 					innerlabel: {
 						type: 'doughnutLabel',
 						content: () => [
-							formatValue(innerLabelValue, {
-								typeHint: 'number',
-								theme: theme,
-							}),
+							i18n.data(innerLabelMeasure, innerLabelValue),
 							innerLabelText
 								? formatValue(innerLabelText || '', { typeHint: 'string', theme: theme })
 								: '',
