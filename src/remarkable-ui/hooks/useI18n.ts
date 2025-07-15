@@ -74,7 +74,7 @@ const useI18n = (theme: Theme): I18nHelper => {
                     if(value && ISO_DATE_TIME_REGEX.test(value)) {
                         // date time
                         return i18n
-                            .dateTimeFormatter(theme, { granularity: key.inputs?.granularity })
+                            .dateTimeFormatter(theme, { granularity: key.inputs?.granularity, shortMonth: true })
                             .format(new Date(value))
                     }
                 }
