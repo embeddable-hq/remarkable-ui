@@ -12,11 +12,6 @@ import { ExportConfig, ExportOption } from './src/remarkable-ui/shared/ExportBut
 import { Theme } from './src/themes/remarkableTheme/theme';
 import { de } from './src/themes/translations/de';
 
-// TODO: export this from sdk instead of re-defining it here
-type DeepPartial<T> = {
-    [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
-
 export type ClientContext = {
 	locale?: string; // e.g. 'en-US'
 	theme?: 'dark' | 'light'
@@ -60,7 +55,7 @@ const themeProvider = (clientContext: ClientContext): any => {
 		},
 	];
 
-	const testTheme: DeepPartial<Theme> = {
+	return defineTheme<Theme>(parentTheme, {
 		styles: {
 			...(theme === 'dark' ? darkModeVariables : {}),
 		},
@@ -82,9 +77,7 @@ const themeProvider = (clientContext: ClientContext): any => {
 		//customFormatFunction: customFormatFunction,
 		// customNumberFormatFunction: customNumberFormatFunction,
 		// customExportOptions: customExportOptions,
-	};
-
-	return defineTheme(parentTheme, testTheme);
+	});
 };
 
 export default themeProvider;
