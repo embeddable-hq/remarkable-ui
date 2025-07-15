@@ -7,9 +7,10 @@
 //  - The merged theme is returned at the component level by the useTheme() react hook.
 
 import { defineTheme } from '@embeddable.com/core';
-import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
+import parentTheme from './src/themes/remarkableTheme/remarkableTheme';
 import { ExportConfig, ExportOption } from './src/remarkable-ui/shared/ExportButton/nativeOptions';
 import { Theme } from './src/themes/remarkableTheme/theme';
+import { de } from './src/themes/translations/de';
 
 // TODO: export this from sdk instead of re-defining it here
 type DeepPartial<T> = {
@@ -21,7 +22,7 @@ export type ClientContext = {
 	theme?: 'dark' | 'light'
 }
 
-const themeProvider = (clientContext: ClientContext, parentTheme: Theme): any => {
+const themeProvider = (clientContext: ClientContext): any => {
 	//Test. TODO: Remove this later.
 	const theme = clientContext.theme;
 
@@ -64,7 +65,11 @@ const themeProvider = (clientContext: ClientContext, parentTheme: Theme): any =>
 			...(theme === 'dark' ? darkModeVariables : {}),
 		},
 		i18n: {
-			preferredLocales: [clientContext.locale || 'en-US']
+			preferredLocales: [clientContext.locale],
+			translations: {
+				...parentTheme.i18n.translations,
+				de
+			}
 		}
 		// customRelativeDateRanges: {
 		// 	today: {
@@ -79,7 +84,7 @@ const themeProvider = (clientContext: ClientContext, parentTheme: Theme): any =>
 		// customExportOptions: customExportOptions,
 	};
 
-	return defineTheme(remarkableTheme, testTheme);
+	return defineTheme(parentTheme, testTheme);
 };
 
 export default themeProvider;
