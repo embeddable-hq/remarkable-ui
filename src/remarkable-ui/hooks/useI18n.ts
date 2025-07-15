@@ -11,6 +11,10 @@ export type I18nFormatter = {
     data: (key: DimensionOrMeasure, value: any) => string;
 }
 
+type Meta = {
+    currency?: string
+}
+
 const useI18n = (theme: Theme): I18nFormatter => {
     const { i18n } = theme;
     const textFormatter = i18n.textFormatter(theme);
@@ -29,24 +33,34 @@ const useI18n = (theme: Theme): I18nFormatter => {
             const prefix = isDimension(key) ? 'Dimension' : 'Measure';
             switch(key.nativeType) {
                 case 'number':
+                    if((key?.meta as Meta)?.currency) {
+                        // currency
+                        return i18n
+                            .numberFormatter(theme, { currency: (key.meta as Meta).currency })
+                            .format(value);
+                    }
+                    // number
                     return numberFormatter.format(value);
                 case 'time': {
                     if(value && ISO_DATE_TIME_REGEX.test(value)) {
+                        // date time
                         return i18n
                             .dateTimeFormatter(theme, { granularity: key.inputs?.granularity })
                             .format(new Date(value))
                     }
                 }
-                case 'string':
                 case 'boolean':
+                    // treat as string
             }
+            // string
             const name = key.name;
+            // allow translation at 3 levels of abstraction
             const keys = [
-                `${prefix}.${name}.${value}`, 
-                `${prefix}.${name}`, 
-                `${prefix}`
+                `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
+                `${prefix}.${name}`, // e.g. 'Dimension.customers.country': 'Country is {{value}}',
+                `${prefix}` // e.g. Dimension: '{{value}}',
             ];
-            return textFormatter.format(keys, { value: value, type: key.nativeType })
+            return textFormatter.format(keys, { value: value, type: key.nativeType, name: name })
         }
     }
 }

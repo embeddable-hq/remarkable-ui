@@ -34,12 +34,13 @@ export function useBasePieChart({
 }: BasePieChartProps) {
 	const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 	const chartRef = useRef<ChartJS<'pie', number[]>>(null);
-
-	const { data } = results;
-	const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems) || [];
-
 	const theme = useTheme() as Theme;
 	const i18n = useI18n(theme);
+
+	const { data } = results;
+	const mergedData = aggregateLongTail(data, dimension, measure, i18n.text('Charts.other.label'), maxLegendItems) || [];
+
+	
 	const themeColors = mergedData.map((item, i) =>
 		getColor(item[dimension.name], theme.charts.colors, i),
 	);

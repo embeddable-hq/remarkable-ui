@@ -33,3 +33,9 @@ cubes:
         sql: (RANDOM() * 5000)
         type: number
         title: 'Large numbers'
+
+      - name: some_price
+        sql: (RANDOM() * 3000)
+        type: number
+        meta: 
+          currency: 'EUR'

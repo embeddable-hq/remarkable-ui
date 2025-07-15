@@ -3,6 +3,9 @@ import { Resource } from 'i18next';
 export const translations: Resource = {
     en: {
         translation: {
+            Charts: {
+                'other.label': 'Other'
+            },
             Dimension: '{{value}}',
             ExportOptions: {
                 downloadCSV: {
@@ -23,6 +26,9 @@ export const translations: Resource = {
     },
     de: {
         translation: {
+            Charts: {
+                'other.label': 'Andere'
+            },
             Dimension: '{{value}}',
             'Dimension.customers.country.United States': 'Vereinigte Staaten',
             'Dimension.customers.country.Germany': 'Deutschland',
