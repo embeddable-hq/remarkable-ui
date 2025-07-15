@@ -5,10 +5,37 @@ import { Theme } from "../../themes/remarkableTheme/theme";
 const ISO_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/
 
 export type I18nHelper = {
+    /**
+     * Retrieves a translation
+     * @example i18n.text('Charts.other.label')
+     * @example i18n.text('Granularity.quarter', { quarter: 3, year: 2025 })
+     */
     text: (key: string, params?: TextFormatterParams) => string;
+    /**
+     * Formats a number in the currently active locale
+     * @example i18n.number(123.45)
+     * @example i18n.number(123.45, { currency: 'EUR' })
+     */
     number: (value: number | bigint, params?: NumberFormatterParams) => string;
+    /**
+     * Formats a date in the currently active locale
+     * @example i18n.dateTime(new Date(), { granularity: 'week' })
+     */
     dateTime: (value: Date, params?: DateTimeFormatterParams) => string;
+    /**
+     * Formats (or translates) a value returned from `loadData
+     * @example i18n.data(measure, row[measure.name])
+     * @example i18n.data(dimension, row[dimension.name])
+     */
     data: (key: DimensionOrMeasure, value: any) => string;
+    /**
+     * @returns the currently active locale (e.g. 'en-GB')
+     */
+    locale: () => Intl.Locale
+    /**
+     * @returns the currently active language (e.g. 'en', 'de' or 'es')
+     */
+    language: () => string
 }
 
 type Meta = {
@@ -20,6 +47,8 @@ const useI18n = (theme: Theme): I18nHelper => {
     const textFormatter = i18n.textFormatter(theme);
     const numberFormatter = i18n.numberFormatter(theme);
     return {
+        locale: () => i18n.locale(theme),
+        language: () => i18n.locale(theme).language,
         text: (key: string, params?: TextFormatterParams) => {
             return textFormatter.format(key, params);
         },

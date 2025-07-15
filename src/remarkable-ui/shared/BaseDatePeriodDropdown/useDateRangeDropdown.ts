@@ -16,7 +16,7 @@ export function useDateRangeDropdown({ preSelectedValue, handleClick }: Params) 
 	const i18n = useI18n(theme);
 	const ranges = useMemo(
 		() => relativeDateRanges(theme.customRelativeDateRanges, i18n),
-		[theme.customRelativeDateRanges],
+		[theme.customRelativeDateRanges, i18n.language()],
 	);
 
 	// If the associated time range variable is given a default value within Embeddable's builder, check if it's one of the enabled ranges. If it is, calculate the range and pass it to Embeddable. If it's not, it should not be used so clear it.
