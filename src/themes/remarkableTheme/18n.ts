@@ -1,9 +1,7 @@
 import { Granularity } from '@embeddable.com/core';
 import { Theme, I18nTheme } from './theme';
 import i18next from 'i18next';
-import { translations } from './translations';
 import { en } from '../translations/en';
-import { de } from '../translations/de';
 
 
 export type NumberFormatter = {
