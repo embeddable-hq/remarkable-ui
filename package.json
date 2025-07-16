@@ -1,0 +1,34 @@
+{
+  "name": "@embeddable/remarkable-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "engines": {
+    "npm": ">=9.0.0",
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck"
+  },
+  "keywords": [
+    "embeddable",
+    "embeddable-components",
+    "embeddable-ui",
+    "remarkable-components",
+    "remarkable-ui"
+  ],
+  "author": "embeddable (https://embeddable.com)",
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  
+  }
+}
+
