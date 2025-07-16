@@ -21,7 +21,7 @@ src
 │       │   └── index.ts            > control component default export
 │       └── ...
 │
-├── components.                     > components used to build the library (users can import and build ready-made components with them)
+├── components                      > components used to build the library (users can import and build ready-made components with them)
 │   ├── charts                      > components that are charts
 │   │   ├── PieChart
 │   │   │   ├── sub-components      > internal sub-components (optional)
@@ -88,7 +88,7 @@ src
 ├── embeddable.theme.ts             > default theme using `/theme` properties
 ├── embeddable.config.ts            > main embeddable config
 ├── lifecycle.config.ts             > hook for applying theme updates to the DOM and others
-├── index.ts                        > auto-generated entry file (see Export Policy bellow)
+├── index.ts                        > auto-generated entry file (see Export Policy below)
 ├── tsconfig.json
 ├── eslintrc.js
 ├── prettier.config.js
@@ -194,7 +194,7 @@ The root-level `index.ts` is **auto-generated** by `scripts/generate-exports.ts`
 
 What gets exported:
 
-✅ `components`, `shared`, `theme`, `i18n`, `utils`, `types`
+✅ `components`, `theme`, `i18n`, `utils`, `types`
 🚫 `ready-made` (internal use only)
 
 ---
