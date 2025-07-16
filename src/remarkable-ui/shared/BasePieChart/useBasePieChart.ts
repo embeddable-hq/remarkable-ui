@@ -12,11 +12,11 @@ import {
 	getLegendStyle,
 } from '../../constants/commonChartStyles';
 import { Theme } from '../../../themes/remarkableTheme/theme';
-import { formatValue } from '../../utils/formatUtils';
 import { aggregateLongTail } from '../../utils/dataUtils';
 import { getColor } from '../../utils/colorUtils';
 import { handlePieClick } from './handlers';
 import type { BasePieChartProps } from './index';
+import useFormatter from '../../hooks/useFormatter';
 
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
@@ -33,11 +33,13 @@ export function useBasePieChart({
 }: BasePieChartProps) {
 	const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 	const chartRef = useRef<ChartJS<'pie', number[]>>(null);
+	const theme = useTheme() as Theme;
+	const formatter = useFormatter();
 
 	const { data } = results;
-	const mergedData = aggregateLongTail(data, dimension, measure, maxLegendItems) || [];
+	const mergedData = aggregateLongTail(data, dimension, measure, formatter.text('Charts.other.label'), maxLegendItems) || [];
 
-	const theme = useTheme() as Theme;
+	
 	const themeColors = mergedData.map((item, i) =>
 		getColor(item[dimension.name], theme.charts.colors, i),
 	);
@@ -47,7 +49,7 @@ export function useBasePieChart({
 
 	const chartData = () => ({
 		labels: mergedData.map((item) =>
-			formatValue(item[dimension.name], { typeHint: 'string', theme }),
+			formatter.data(dimension, item[dimension.name])
 		),
 		datasets: [
 			{
@@ -78,7 +80,7 @@ export function useBasePieChart({
 						...dataLabelOptions,
 						anchor: 'center',
 						align: 'center',
-						formatter: (value: string) => formatValue(value, { typeHint: 'number', theme }),
+						formatter: (value: string | number) => formatter.data(measure, value),
 					},
 					legend: {
 						display: showLegend !== false,
@@ -96,7 +98,7 @@ export function useBasePieChart({
 									0,
 								);
 								const pct = Math.round((raw / total) * 100);
-								return `${formatValue(raw, { typeHint: 'number', theme })} (${pct}%)`;
+								return `${formatter.data(measure, raw)} (${pct}%)`;
 							},
 						},
 					},

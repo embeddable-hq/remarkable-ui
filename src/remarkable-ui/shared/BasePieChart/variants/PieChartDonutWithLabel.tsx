@@ -6,11 +6,10 @@ import { useTheme } from '@embeddable.com/react';
 
 // Local Libraries
 import BasePieChart from '..';
-import { Theme } from '../../../../themes/remarkableTheme/theme';
-import { formatValue } from '../../../utils/formatUtils';
 import { getStyle } from '../../../utils/cssUtils';
 import { BasePieChartProps } from '..';
 import { DataResponse, Measure } from '@embeddable.com/core';
+import useFormatter from '../../../hooks/useFormatter';
 
 //TODO: showValuesLabels and showDataLabels: should use one single name.
 
@@ -33,7 +32,7 @@ export function PieChartDonutWithLabel({
 	showTooltips,
 	showValueLabels,
 }: PieChartDonutWithLabelProps) {
-	const theme = useTheme() as Theme;
+	const formatter = useFormatter();
 
 	const innerLabelValue = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
 
@@ -45,13 +44,8 @@ export function PieChartDonutWithLabel({
 					innerlabel: {
 						type: 'doughnutLabel',
 						content: () => [
-							formatValue(innerLabelValue, {
-								typeHint: 'number',
-								theme: theme,
-							}),
-							innerLabelText
-								? formatValue(innerLabelText || '', { typeHint: 'string', theme: theme })
-								: '',
+							formatter.data(innerLabelMeasure, innerLabelValue),
+							innerLabelText || '',
 						], //one element per line
 						font: [
 							{

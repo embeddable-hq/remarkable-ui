@@ -5,6 +5,7 @@ export const aggregateLongTail = (
 	data: DataResponse['data'] = [],
 	dimension: Dimension,
 	measure: Measure,
+	otherLabel: string,
 	threshold?: number,
 ) => {
 	if (!threshold || data.length <= threshold) return data;
@@ -16,7 +17,7 @@ export const aggregateLongTail = (
 	return [
 		...head,
 		{
-			[dimension.name]: 'Other',
+			[dimension.name]: otherLabel,
 			[measure.name]: sumTail,
 		},
 	];

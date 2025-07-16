@@ -13,8 +13,7 @@ export type ExportButtonProps = {
 };
 
 export default function ExportButton({ setLocalLoading, exportConfig }: ExportButtonProps) {
-	const theme = useTheme() as Theme;
-	const items = useExportItems(exportConfig, theme, setLocalLoading);
+	const items = useExportItems(exportConfig, setLocalLoading);
 
 	if (items.length === 0) return null;
 

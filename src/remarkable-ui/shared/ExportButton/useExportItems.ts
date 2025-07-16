@@ -3,6 +3,8 @@ import { Theme } from '../../../themes/remarkableTheme/theme';
 import { DropdownItem } from '../BaseDropdown';
 import { nativeExportOptions, ExportOptionKey, ExportOption } from './nativeOptions';
 import { ExportConfig } from './nativeOptions';
+import { useTheme } from '@embeddable.com/react';
+import useFormatter from '../../hooks/useFormatter';
 
 const DEFAULT_EXPORT_CONFIG: ExportConfig = {
 	dataToExport: [],
@@ -14,11 +16,12 @@ const DEFAULT_EXPORT_CONFIG: ExportConfig = {
 
 export function useExportItems(
 	config: ExportConfig = DEFAULT_EXPORT_CONFIG,
-	theme: Theme,
 	setLocalLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ): DropdownItem[] {
+	const theme = useTheme() as Theme;
+	const formatter = useFormatter();
 	const { enabledOptions } = config;
-
+	
 	// array of native export option keys that are toggled on. It could be empty.
 	const enabledKeys = (Object.keys(nativeExportOptions) as ExportOptionKey[]).filter(
 		(key) => enabledOptions && enabledOptions[key],
@@ -32,7 +35,7 @@ export function useExportItems(
 			.map(({ id, label, icon, fn }) => ({
 				//create the dropdownItem object
 				id,
-				label,
+				label: formatter.text(label),
 				icon,
 				onClick: () => {
 					//1. set loading to true, 2. run the export function, 3. then set loading to false

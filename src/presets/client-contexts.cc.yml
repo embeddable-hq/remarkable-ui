@@ -1,12 +1,18 @@
-- name: Light mode
+- name: "Colours: Light mode"
   clientContext:
     theme: light
   canvas:
     background: "#fff"
 
-- name: Dark mode
+- name: "Colours: Dark mode"
   clientContext:
     theme: dark
   canvas:
     background: "#000"
 
+- name: "Language: German"
+  clientContext:
+    theme: dark
+    locale: de-DE
+  canvas:
+    background: "#000"

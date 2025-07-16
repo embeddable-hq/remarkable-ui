@@ -6,8 +6,10 @@
 // •	Receives the new theme as an argument.
 // •	Returns a cleanup function to remove applied styles (e.g. fonts, variables).
 
+import { Theme } from "./src/themes/remarkableTheme/theme";
+
 export default {
-	onThemeUpdated: (newTheme: any) => {
+	onThemeUpdated: (newTheme: Theme) => {
 		const css = `:root {\n${generateCssVariables(newTheme.styles)}}`;
 		const styleId = 'embeddable-style';
 		let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;

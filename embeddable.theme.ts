@@ -7,10 +7,17 @@
 //  - The merged theme is returned at the component level by the useTheme() react hook.
 
 import { defineTheme } from '@embeddable.com/core';
-import remarkableTheme from './src/themes/remarkableTheme/remarkableTheme';
+import parentTheme from './src/themes/remarkableTheme/remarkableTheme';
 import { ExportConfig, ExportOption } from './src/remarkable-ui/shared/ExportButton/nativeOptions';
+import { Theme } from './src/themes/remarkableTheme/theme';
+import { de } from './src/themes/translations/de';
 
-const themeProvider = (clientContext: any, parentTheme: any): any => {
+export type ClientContext = {
+	locale?: string; // e.g. 'en-US'
+	theme?: 'dark' | 'light'
+}
+
+const themeProvider = (clientContext: ClientContext): any => {
 	//Test. TODO: Remove this later.
 	const theme = clientContext.theme;
 
@@ -48,10 +55,17 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		},
 	];
 
-	const testTheme = {
+	return defineTheme<Theme>(parentTheme, {
 		styles: {
 			...(theme === 'dark' ? darkModeVariables : {}),
 		},
+		i18n: {
+			preferredLocales: [clientContext.locale],
+			translations: {
+				...parentTheme.i18n.translations,
+				de
+			}
+		}
 		// customRelativeDateRanges: {
 		// 	today: {
 		// 		enabled: false,
@@ -63,9 +77,7 @@ const themeProvider = (clientContext: any, parentTheme: any): any => {
 		//customFormatFunction: customFormatFunction,
 		// customNumberFormatFunction: customNumberFormatFunction,
 		// customExportOptions: customExportOptions,
-	};
-
-	return defineTheme(remarkableTheme, testTheme);
+	});
 };
 
 export default themeProvider;

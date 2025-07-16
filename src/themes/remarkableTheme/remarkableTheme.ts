@@ -2,8 +2,9 @@
 //may want to break out css base variables, so they're not included in the theme.
 //And import them somewhere else.
 
-import { Theme } from './theme';
+import { defaultI18nTheme } from './i18n';
 import { cssVariables } from './cssVariables';
+import { Theme } from './theme';
 
 const CHART_BORDERS = [
 	'#5F6CAF',
@@ -37,6 +38,7 @@ export const remarkableTheme: Theme = {
 		borderColors: CHART_BORDERS,
 		colors: CHART_COLORS,
 	},
+	i18n: defaultI18nTheme
 };
 
 export default remarkableTheme;
