@@ -1,5 +1,5 @@
 import { DimensionOrMeasure, isDimension } from "@embeddable.com/core";
-import { DateTimeFormatter, DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
+import { DateTimeFormatter, DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatter, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
 import { Theme } from "../../themes/remarkableTheme/theme";
 import { useTheme } from "@embeddable.com/react";
 
@@ -28,7 +28,7 @@ export type FormatHelper = {
      * @example i18n.data(measure, row[measure.name])
      * @example i18n.data(dimension, row[dimension.name])
      */
-    data: (key: DimensionOrMeasure, value: any, config?: Config) => string;
+    data: (key: DimensionOrMeasure, value: any, config?: DataConfig) => string;
     /**
      * @returns the currently active locale (e.g. 'en-GB')
      */
@@ -69,6 +69,54 @@ function cache<Params, Formatter>(factory: (params?: Params) => Formatter){
     return get;
 } 
 
+function formatData(
+        key: DimensionOrMeasure, 
+        value: any, 
+        textFormatter: TextFormatter, 
+        numberFormatter: (params: NumberFormatterParams) => NumberFormatter, 
+        dateTimeFormatter: (params: DateTimeFormatterParams) => DateTimeFormatter, 
+        config?: DataConfig) {
+    const prefix = isDimension(key) ? 'Dimension' : 'Measure';
+    switch(key.nativeType) {
+        case 'number':
+            const params: NumberFormatterParams = { 
+                maxDecimalPlaces: config?.decimalPlaces, 
+                minDecimalPlaces: config?.decimalPlaces
+            }
+            if((key?.meta as MeasureMeta)?.currency) {
+                // currency
+                return numberFormatter({ 
+                        ...params,
+                        currency: (key.meta as MeasureMeta).currency,
+                        })
+                    .format(value);
+            }
+            // number
+            return numberFormatter(params).format(value);
+        case 'time': {
+            if(value && ISO_DATE_TIME_REGEX.test(value)) {
+                // date time
+                return dateTimeFormatter({ granularity: key.inputs?.granularity, shortMonth: true })
+                    .format(new Date(value))
+            }
+            // fall through to string formatting for non-ISO time values
+            break;
+        }
+        case 'boolean':
+            // fall through to string formatting for booleans
+            break;
+    }
+    // string
+    const name = key.name;
+    // allow translation at 3 levels of abstraction
+    const keys = [
+        `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
+        `${prefix}.${name}`, // e.g. 'Dimension.customers.country': 'Country is {{value}}',
+        `${prefix}` // e.g. Dimension: '{{value}}',
+    ];
+    return textFormatter.format(keys, { value: value, type: key.nativeType, name: name })
+}
+
 /**
  * Formatter Helper exists to make it easy to apply standard formatting (and internationalisation) to all components
  */
@@ -91,45 +139,17 @@ const useFormatter = (): FormatHelper => {
             return dateTimeFormatter(params).format(value);
         },
         data: (key: DimensionOrMeasure, value: any, config?: DataConfig): string => {
-            const prefix = isDimension(key) ? 'Dimension' : 'Measure';
-            switch(key.nativeType) {
-                case 'number':
-                    const params: NumberFormatterParams = { 
-                        maxDecimalPlaces: config?.decimalPlaces, 
-                        minDecimalPlaces: config?.decimalPlaces
-                    }
-                    if((key?.meta as MeasureMeta)?.currency) {
-                        // currency
-                        return numberFormatter({ 
-                                ...params,
-                                currency: (key.meta as MeasureMeta).currency,
-                             })
-                            .format(value);
-                    }
-                    // number
-                    return numberFormatter(params).format(value);
-                case 'time': {
-                    if(value && ISO_DATE_TIME_REGEX.test(value)) {
-                        // date time
-                        return dateTimeFormatter({ granularity: key.inputs?.granularity, shortMonth: true })
-                            .format(new Date(value))
-                    }
-                    // fall through to string formatting for non-ISO time values
-                    break;
-                }
-                case 'boolean':
-                    // fall through to string formatting for booleans
-                    break;
+            const result = formatData(key, value, textFormatter, numberFormatter, dateTimeFormatter, config);
+            //add prefix and suffix
+            const appended = `${config?.prefix || ''}${result}${config?.suffix || ''}`;
+            // trim to max character length
+            const ellipsis = '...';
+            if(config?.maxCharacterLength 
+                    && config?.maxCharacterLength > ellipsis.length
+                    && appended.length > config.maxCharacterLength) {
+                return appended.substring(0, config?.maxCharacterLength-ellipsis.length)+ellipsis;
             }
-            // string
-            const name = key.name;
-            // allow translation at 3 levels of abstraction
-            const keys = [
-                `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
-                `${prefix}.${name}`, // e.g. 'Dimension.customers.country': 'Country is {{value}}',
-                `${prefix}` // e.g. Dimension: '{{value}}',
-            ];
-            return textFormatter.format(keys, { value: value, type: key.nativeType, name: name })
+            return appended;
         }
     }
 }
