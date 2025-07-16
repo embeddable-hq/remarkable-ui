@@ -1,10 +1,11 @@
-import { DimensionOrMeasure, isDimension, isDimensionOrMeasure } from "@embeddable.com/core";
-import { DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
+import { DimensionOrMeasure, isDimension } from "@embeddable.com/core";
+import { DateTimeFormatterParams, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
 import { Theme } from "../../themes/remarkableTheme/theme";
+import { useTheme } from "@embeddable.com/react";
 
 const ISO_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/
 
-export type I18nHelper = {
+export type FormatHelper = {
     /**
      * Retrieves a translation
      * @example i18n.text('Charts.other.label')
@@ -42,7 +43,8 @@ type Meta = {
     currency?: string
 }
 
-const useI18n = (theme: Theme): I18nHelper => {
+const useFormatter = (): FormatHelper => {
+    const theme = useTheme() as Theme;
     const { i18n } = theme;
     const textFormatter = i18n.textFormatter(theme);
     const numberFormatter = i18n.numberFormatter(theme);
@@ -77,9 +79,12 @@ const useI18n = (theme: Theme): I18nHelper => {
                             .dateTimeFormatter(theme, { granularity: key.inputs?.granularity, shortMonth: true })
                             .format(new Date(value))
                     }
+                    // fall through to string formatting for non-ISO time values
+                    break;
                 }
                 case 'boolean':
-                    // treat as string
+                    // fall through to string formatting for booleans
+                    break;
             }
             // string
             const name = key.name;
@@ -94,4 +99,4 @@ const useI18n = (theme: Theme): I18nHelper => {
     }
 }
     
-export default useI18n;
+export default useFormatter;

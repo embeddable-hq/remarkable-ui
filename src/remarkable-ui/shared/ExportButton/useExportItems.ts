@@ -4,7 +4,7 @@ import { DropdownItem } from '../BaseDropdown';
 import { nativeExportOptions, ExportOptionKey, ExportOption } from './nativeOptions';
 import { ExportConfig } from './nativeOptions';
 import { useTheme } from '@embeddable.com/react';
-import useI18n from '../../hooks/useI18n';
+import useFormatter from '../../hooks/useFormatter';
 
 const DEFAULT_EXPORT_CONFIG: ExportConfig = {
 	dataToExport: [],
@@ -19,7 +19,7 @@ export function useExportItems(
 	setLocalLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ): DropdownItem[] {
 	const theme = useTheme() as Theme;
-	const i18n = useI18n(theme);
+	const formatter = useFormatter();
 	const { enabledOptions } = config;
 	
 	// array of native export option keys that are toggled on. It could be empty.
@@ -35,7 +35,7 @@ export function useExportItems(
 			.map(({ id, label, icon, fn }) => ({
 				//create the dropdownItem object
 				id,
-				label:  i18n.text(label),
+				label: formatter.text(label),
 				icon,
 				onClick: () => {
 					//1. set loading to true, 2. run the export function, 3. then set loading to false

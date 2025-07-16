@@ -3,7 +3,7 @@ import { useTheme } from '@embeddable.com/react';
 import { relativeDateRanges, EnabledRange } from '../../utils/relativeDateRanges';
 import { Theme } from '../../../themes/remarkableTheme/theme';
 import { TimeRange } from '@embeddable.com/core';
-import useI18n from '../../hooks/useI18n';
+import useFormatter from '../../hooks/useFormatter';
 
 type Params = {
 	preSelectedValue: TimeRange;
@@ -13,10 +13,10 @@ type Params = {
 export function useDateRangeDropdown({ preSelectedValue, handleClick }: Params) {
 	// 1) pull and compute the ranges
 	const theme = useTheme() as Theme;
-	const i18n = useI18n(theme);
+	const formatter = useFormatter();
 	const ranges = useMemo(
-		() => relativeDateRanges(theme.customRelativeDateRanges, i18n),
-		[theme.customRelativeDateRanges, i18n.language()],
+		() => relativeDateRanges(theme.customRelativeDateRanges, formatter),
+		[theme.customRelativeDateRanges, formatter.language()],
 	);
 
 	// If the associated time range variable is given a default value within Embeddable's builder, check if it's one of the enabled ranges. If it is, calculate the range and pass it to Embeddable. If it's not, it should not be used so clear it.

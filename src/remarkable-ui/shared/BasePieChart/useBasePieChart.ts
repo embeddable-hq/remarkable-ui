@@ -12,12 +12,11 @@ import {
 	getLegendStyle,
 } from '../../constants/commonChartStyles';
 import { Theme } from '../../../themes/remarkableTheme/theme';
-import { formatValue } from '../../utils/formatUtils';
 import { aggregateLongTail } from '../../utils/dataUtils';
 import { getColor } from '../../utils/colorUtils';
 import { handlePieClick } from './handlers';
 import type { BasePieChartProps } from './index';
-import useI18n from '../../hooks/useI18n';
+import useFormatter from '../../hooks/useFormatter';
 
 ChartJS.register(ArcElement, LinearScale, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
@@ -35,10 +34,10 @@ export function useBasePieChart({
 	const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 	const chartRef = useRef<ChartJS<'pie', number[]>>(null);
 	const theme = useTheme() as Theme;
-	const i18n = useI18n(theme);
+	const formatter = useFormatter();
 
 	const { data } = results;
-	const mergedData = aggregateLongTail(data, dimension, measure, i18n.text('Charts.other.label'), maxLegendItems) || [];
+	const mergedData = aggregateLongTail(data, dimension, measure, formatter.text('Charts.other.label'), maxLegendItems) || [];
 
 	
 	const themeColors = mergedData.map((item, i) =>
@@ -50,7 +49,7 @@ export function useBasePieChart({
 
 	const chartData = () => ({
 		labels: mergedData.map((item) =>
-			i18n.data(dimension, item[dimension.name])
+			formatter.data(dimension, item[dimension.name])
 		),
 		datasets: [
 			{
@@ -81,7 +80,7 @@ export function useBasePieChart({
 						...dataLabelOptions,
 						anchor: 'center',
 						align: 'center',
-						formatter: (value: string) => i18n.data(measure, value),
+						formatter: (value: string | number) => formatter.data(measure, value),
 					},
 					legend: {
 						display: showLegend !== false,
@@ -99,7 +98,7 @@ export function useBasePieChart({
 									0,
 								);
 								const pct = Math.round((raw / total) * 100);
-								return `${i18n.data(measure, raw)} (${pct}%)`;
+								return `${formatter.data(measure, raw)} (${pct}%)`;
 							},
 						},
 					},

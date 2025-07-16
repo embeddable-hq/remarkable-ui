@@ -40,7 +40,7 @@ export const defaultI18nTheme: I18nTheme = {
 				console.debug('Unsupported locale: '+locale);
 			}
 		}
-		return new Intl.Locale('en-US'); // fall back to en-US whic should work everywhere
+		return new Intl.Locale('en-US'); // fall back to en-US which should work everywhere
 	},
 	defaultDateTimeFormatOptions: (theme: Theme, params?: DateTimeFormatterParams): Intl.DateTimeFormatOptions => {
 		return { 

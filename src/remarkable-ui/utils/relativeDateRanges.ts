@@ -2,7 +2,7 @@
 import { mergician } from 'mergician';
 import { format as dateFnsFormat } from 'date-fns';
 import { Granularity } from '@embeddable.com/core';
-import { I18nHelper } from '../hooks/useI18n';
+import { FormatHelper } from '../hooks/useFormatter';
 
 // Get start/end of quarter, offset=0 for this quarter, -1 for last, +1 for next, etc.
 function getQuarterBounds(date: Date, offset = 0): { from: Date, to: Date, granularity: Granularity } {
@@ -272,19 +272,19 @@ export type EnabledRange = {
 	formattedRange: string;
 };
 
-const formattedRange = (from: Date | undefined, to: Date | undefined, granularity: Granularity, i18n: I18nHelper) => {
+const formattedRange = (from: Date | undefined, to: Date | undefined, granularity: Granularity, formatter: FormatHelper) => {
 	if (!from || !to) {
 		return '';
 	}
-	const formattedFrom = i18n.dateTime(from, { granularity, shortYear: true });
-	const formattedTo = i18n.dateTime(to, { granularity, shortYear: true });
+	const formattedFrom = formatter.dateTime(from, { granularity, shortYear: true });
+	const formattedTo = formatter.dateTime(to, { granularity, shortYear: true });
 	if (formattedFrom === formattedTo) {
-		return i18n.dateTime(from, { granularity, shortYear: false });
+		return formatter.dateTime(from, { granularity, shortYear: false });
 	}
 	return `${formattedFrom} - ${formattedTo}`;
 };
 
-export const relativeDateRanges = (dateRangesFromTheme = {} as ranges, i18n: I18nHelper): EnabledRange[] => {
+export const relativeDateRanges = (dateRangesFromTheme = {} as ranges, formatter: FormatHelper): EnabledRange[] => {
 	//Merge the default ranges with any passed in via the theme
 	const ranges = mergician(defaultRanges, dateRangesFromTheme) as ranges;
 	//Return an array of enabled ranges
@@ -299,7 +299,7 @@ export const relativeDateRanges = (dateRangesFromTheme = {} as ranges, i18n: I18
 				label: item.label,
 				from: from,
 				to: to,
-				formattedRange: formattedRange(from, to, granularity, i18n),
+				formattedRange: formattedRange(from, to, granularity, formatter),
 			};
 		})
 		.filter((range) => range !== null);
