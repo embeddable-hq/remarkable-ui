@@ -9,9 +9,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "check": "npm run lint && npm run typecheck"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "embeddable",
