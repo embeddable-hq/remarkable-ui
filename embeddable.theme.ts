@@ -60,11 +60,7 @@ const themeProvider = (clientContext: ClientContext): any => {
 			...(theme === 'dark' ? darkModeVariables : {}),
 		},
 		i18n: {
-			preferredLocales: [clientContext.locale],
-			translations: {
-				...parentTheme.i18n.translations,
-				de
-			}
+			preferredLocales: [clientContext.locale]
 		}
 		// customRelativeDateRanges: {
 		// 	today: {

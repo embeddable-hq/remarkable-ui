@@ -1,6 +1,5 @@
 // Third Party Libraries
 import { mergician } from 'mergician';
-import { format as dateFnsFormat } from 'date-fns';
 import { Granularity } from '@embeddable.com/core';
 import { FormatHelper } from '../hooks/useFormatter';
 
