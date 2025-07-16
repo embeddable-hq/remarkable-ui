@@ -1,5 +1,5 @@
 import { DimensionOrMeasure, isDimension } from "@embeddable.com/core";
-import { DateTimeFormatterParams, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
+import { DateTimeFormatter, DateTimeFormatterParams, NumberFormatter, NumberFormatterParams, TextFormatterParams } from "../../themes/remarkableTheme/i18n";
 import { Theme } from "../../themes/remarkableTheme/theme";
 import { useTheme } from "@embeddable.com/react";
 
@@ -28,7 +28,7 @@ export type FormatHelper = {
      * @example i18n.data(measure, row[measure.name])
      * @example i18n.data(dimension, row[dimension.name])
      */
-    data: (key: DimensionOrMeasure, value: any) => string;
+    data: (key: DimensionOrMeasure, value: any, config?: Config) => string;
     /**
      * @returns the currently active locale (e.g. 'en-GB')
      */
@@ -39,44 +39,79 @@ export type FormatHelper = {
     language: () => string
 }
 
-type Meta = {
+type MeasureMeta = {
     currency?: string
 }
 
+type DataConfig = {
+    maxCharacterLength?: number;
+    decimalPlaces?: number;
+    prefix?: string;
+    suffix?: string;
+} 
+
+/**
+ * Creates a formatter cache.
+ * Cache used to prevent unnecessary (expensive) creation of formatter objects
+ */
+function cache<Params, Formatter>(factory: (params?: Params) => Formatter){
+    const cache: { [key: string]: Formatter } = {};
+    const get = (params?: Params) => {
+        const key = JSON.stringify(params);
+        let formatter = cache[key];
+        if(formatter) {
+            return formatter;
+        }
+        formatter = factory(params);
+        cache[key] = formatter;
+        return formatter;
+    }
+    return get;
+} 
+
+/**
+ * Formatter Helper exists to make it easy to apply standard formatting (and internationalisation) to all components
+ */
 const useFormatter = (): FormatHelper => {
     const theme = useTheme() as Theme;
-    const { i18n } = theme;
-    const textFormatter = i18n.textFormatter(theme);
-    const numberFormatter = i18n.numberFormatter(theme);
+    const textFormatter = theme.i18n.textFormatter(theme);
+    const numberFormatter = cache<NumberFormatterParams, NumberFormatter>(params => theme.i18n.numberFormatter(theme, params));
+    const dateTimeFormatter = cache<DateTimeFormatterParams, DateTimeFormatter>(params => theme.i18n.dateTimeFormatter(theme, params));
+    
     return {
-        locale: () => i18n.locale(theme),
-        language: () => i18n.locale(theme).language,
-        text: (key: string, params?: TextFormatterParams) => {
+        locale: (): Intl.Locale => theme.i18n.locale(theme),
+        language: (): string => theme.i18n.locale(theme).language,
+        text: (key: string, params?: TextFormatterParams): string => {
             return textFormatter.format(key, params);
         },
-        number: (value: number | bigint, params?: NumberFormatterParams) => {
-            return i18n.numberFormatter(theme, params).format(value);
+        number: (value: number | bigint, params?: NumberFormatterParams): string => {
+            return numberFormatter(params).format(value);
         },
-        dateTime: (value: Date, params?: DateTimeFormatterParams) => {
-            return i18n.dateTimeFormatter(theme, params).format(value);
+        dateTime: (value: Date, params?: DateTimeFormatterParams): string => {
+            return dateTimeFormatter(params).format(value);
         },
-        data: (key: DimensionOrMeasure, value: any) => {
+        data: (key: DimensionOrMeasure, value: any, config?: DataConfig): string => {
             const prefix = isDimension(key) ? 'Dimension' : 'Measure';
             switch(key.nativeType) {
                 case 'number':
-                    if((key?.meta as Meta)?.currency) {
+                    const params: NumberFormatterParams = { 
+                        maxDecimalPlaces: config?.decimalPlaces, 
+                        minDecimalPlaces: config?.decimalPlaces
+                    }
+                    if((key?.meta as MeasureMeta)?.currency) {
                         // currency
-                        return i18n
-                            .numberFormatter(theme, { currency: (key.meta as Meta).currency })
+                        return numberFormatter({ 
+                                ...params,
+                                currency: (key.meta as MeasureMeta).currency,
+                             })
                             .format(value);
                     }
                     // number
-                    return numberFormatter.format(value);
+                    return numberFormatter(params).format(value);
                 case 'time': {
                     if(value && ISO_DATE_TIME_REGEX.test(value)) {
                         // date time
-                        return i18n
-                            .dateTimeFormatter(theme, { granularity: key.inputs?.granularity, shortMonth: true })
+                        return dateTimeFormatter({ granularity: key.inputs?.granularity, shortMonth: true })
                             .format(new Date(value))
                     }
                     // fall through to string formatting for non-ISO time values

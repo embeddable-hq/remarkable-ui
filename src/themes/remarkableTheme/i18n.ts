@@ -24,6 +24,8 @@ export type DateTimeFormatterParams = {
 }
 export type NumberFormatterParams = {
     currency?: string // e.g. 'USD'
+    minDecimalPlaces?: number // e.g. 0
+    maxDecimalPlaces?: number // e.g. 2
 }
 export type TextFormatterParams<T = unknown> = { [key: string]: T };
 
@@ -37,7 +39,7 @@ export const defaultI18nTheme: I18nTheme = {
 			try {
 				return new Intl.Locale(locale);
 			} catch (e) {
-				console.debug('Unsupported locale: '+locale);
+				// not supported in current browser
 			}
 		}
 		return new Intl.Locale('en-US'); // fall back to en-US which should work everywhere
@@ -46,7 +48,7 @@ export const defaultI18nTheme: I18nTheme = {
 		return { 
 			year: params?.shortYear ? '2-digit' : 'numeric', 
 			month: params?.shortMonth ? '2-digit' : 'short', 
-			day: 'numeric', 
+			day: params?.shortMonth ? '2-digit' : 'numeric', 
 			hour: 'numeric', 
 			minute: 'numeric', 
 			second: 'numeric'
@@ -56,8 +58,8 @@ export const defaultI18nTheme: I18nTheme = {
 		return { 
             style: params?.currency ? 'currency' : undefined,
             currency: params?.currency,
-			minimumFractionDigits: 0,
-			maximumFractionDigits: 2
+			minimumFractionDigits: params?.minDecimalPlaces || 0,
+			maximumFractionDigits: params?.maxDecimalPlaces || 2
 		}
 	},
     numberFormatter: (theme: Theme, params?: NumberFormatterParams): NumberFormatter => {
