@@ -2,6 +2,7 @@ import { Granularity } from '@embeddable.com/core';
 import { Theme, I18nTheme } from './theme';
 import i18next from 'i18next';
 import { en } from '../translations/en';
+import { de } from '../translations/de';
 
 
 export type NumberFormatter = {
@@ -31,9 +32,7 @@ export type TextFormatterParams<T = unknown> = { [key: string]: T };
 
 export const defaultI18nTheme: I18nTheme = {
 	preferredLocales: [navigator.language],
-    translations: {
-        en
-    },
+    translations: { en, de },
 	locale: (theme: Theme) => {
 		for(const locale of theme.i18n.preferredLocales) {
 			try {
