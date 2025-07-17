@@ -1,18 +1,18 @@
 {
   "name": "@embeddable/remarkable-ui",
+  "author": "embeddable (https://embeddable.com)",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "main": "dist/index.js",
-  "engines": {
-    "npm": ">=9.0.0",
-    "node": ">=18.0.0"
-  },
   "scripts": {
-    "types:check": "tsc --noEmit",
-    "lint": "eslint .",
+    "types:check": "tsc --noEmit --incremental false",
+    "lint:staged": "lint-staged",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint --fix --quiet .",
     "prettier:check": "prettier . --check",
-    "prettier:write": "prettier . --write"
+    "prettier:write": "prettier . --write",
+    "prepare": "husky"
   },
   "keywords": [
     "embeddable",
@@ -21,7 +21,18 @@
     "remarkable-components",
     "remarkable-ui"
   ],
-  "author": "embeddable (https://embeddable.com)",
+  "engines": {
+    "npm": ">=9.0.0",
+    "node": ">=18.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,json,md}": [
+      "npm run prettier:write"
+    ],
+    "*.{ts,tsx}": [
+      "npm run eslint:fix"
+    ]
+  },
   "dependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
@@ -37,6 +48,8 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"
