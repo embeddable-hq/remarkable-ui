@@ -8,6 +8,5 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "jsxSingleQuote": false,
-  "jsxBracketSameLine": false,
   "useTabs": false
 }
