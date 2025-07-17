@@ -34,10 +34,7 @@
       "npm run eslint:fix"
     ]
   },
-  "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.31.0",
@@ -54,5 +51,9 @@
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
