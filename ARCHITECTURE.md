@@ -176,7 +176,7 @@ All exposed via:
 
 Contains shared **global types** for the project.
 
-> **Note:** Component-specific types should live **inside the component** itself (`*.types.ts`), not in this folder.
+**Note:** Component-specific types should live **inside the component** itself (`*.types.ts`), not in this folder.
 
 ---
 
@@ -210,7 +210,7 @@ Every component in `components` should have:
 
 ## Extending the Library
 
-### Adding a new *ready-made* component
+### Adding a new _ready-made_ component
 
 1. Create a folder in `ready-made/charts` or `ready-made/controls`
 2. Add:
@@ -219,7 +219,7 @@ Every component in `components` should have:
 
 ---
 
-### Adding a new *reusable* component
+### Adding a new _reusable_ component
 
 1. Create a folder in `components/charts`, `components/controls`, or `components/shared`
 2. Add:
@@ -239,4 +239,3 @@ Every component in `components` should have:
 - Maintain consistent folder and file naming
 - Keep `ready-made` isolated and non-exported
 - Run the export script after adding or renaming components
-

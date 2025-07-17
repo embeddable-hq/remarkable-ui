@@ -5,6 +5,7 @@ import pluginReact from "eslint-plugin-react";
 import css from "@eslint/css";
 import reactHooks from "eslint-plugin-react-hooks";
 import { defineConfig } from "eslint/config";
+import configPrettier from "eslint-config-prettier";
 
 export default defineConfig([
   // Base JavaScript rules for all JS/TS files
@@ -68,4 +69,7 @@ export default defineConfig([
       ],
     },
   },
+
+  // Prettier integration
+  configPrettier,
 ]);
