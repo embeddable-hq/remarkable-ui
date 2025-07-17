@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "build": "tsc",
+    "embeddable:build": "embeddable build",
+    "embeddable:package": "embeddable buildPackage",
     "types:check": "tsc --noEmit --incremental false",
     "lint:staged": "lint-staged",
     "eslint:check": "eslint .",
@@ -40,6 +42,10 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@embeddable.com/core": "^2.10.5",
+    "@embeddable.com/react": "^2.10.6",
+    "@embeddable.com/sdk-core": "^4.0.0",
+    "@embeddable.com/sdk-react": "^4.0.0",
     "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.31.0",
     "@types/react": "^19.1.8",
