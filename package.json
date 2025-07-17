@@ -5,6 +5,10 @@
   "version": "0.0.0",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "types:check": "tsc --noEmit --incremental false",
