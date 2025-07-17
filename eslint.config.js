@@ -26,7 +26,7 @@ export default defineConfig([
 
   // React-specific linting for TSX files
   {
-    files: ['**/*.{tsx}'],
+    files: ['**/*.tsx'],
     ...pluginReact.configs.flat.recommended,
     settings: {
       react: {
