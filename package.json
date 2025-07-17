@@ -9,7 +9,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "types:check": "tsc --noEmit",
     "lint": "eslint .",
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write"
