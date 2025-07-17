@@ -6,6 +6,7 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "types:check": "tsc --noEmit --incremental false",
     "lint:staged": "lint-staged",
     "eslint:check": "eslint .",
