@@ -12,7 +12,11 @@
   "scripts": {
     "build": "tsc",
     "embeddable:build": "embeddable build",
+    "embeddable:dev": "cross-env NODE_OPTIONS='--max-old-space-size=4096' embeddable dev",
+    "embeddable:login": "embeddable login",
     "embeddable:package": "embeddable buildPackage",
+    "embeddable:push": "embeddable push",
+    "embeddable:upgrade": "npx npm-check-updates -u \"/embeddable/\"",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix --quiet .",
     "lint:staged": "lint-staged",
