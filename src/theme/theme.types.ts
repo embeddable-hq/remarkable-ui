@@ -1,16 +1,22 @@
 import {
-  themeBaseVariables,
-  themeComponentVariables,
-  themeSemanticVariables,
+  themeColors,
+  themeSpacingAndSizes,
+  themeBorders,
+  themeComponents,
+  themeTypography,
 } from './theme.constants';
 
-type ThemeBaseVariables = Record<keyof typeof themeBaseVariables, string>;
-type ThemeSemanticVariables = Record<keyof typeof themeSemanticVariables, string>;
-type ThemeComponentVariables = Record<keyof typeof themeComponentVariables, string>;
+type ThemeColors = Record<keyof typeof themeColors, string>;
+type ThemeSpacingAndSizes = Record<keyof typeof themeSpacingAndSizes, string>;
+type ThemeBorders = Record<keyof typeof themeBorders, string>;
+type ThemeComponents = Record<keyof typeof themeComponents, string>;
+type ThemeTypography = Record<keyof typeof themeTypography, string>;
 
-export type ThemeCssVariables = ThemeBaseVariables &
-  ThemeSemanticVariables &
-  ThemeComponentVariables &
+export type ThemeStyles = ThemeColors &
+  ThemeSpacingAndSizes &
+  ThemeBorders &
+  ThemeComponents &
+  ThemeTypography &
   Record<string, string>;
 
 export type Theme = {
@@ -20,5 +26,5 @@ export type Theme = {
     legendPosition?: 'top' | 'right' | 'bottom' | 'left';
   };
   // TODO: add as we go
-  styles: ThemeCssVariables;
+  styles: ThemeStyles;
 };
