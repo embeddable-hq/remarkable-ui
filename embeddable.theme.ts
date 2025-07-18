@@ -1,5 +1,5 @@
-import { theme } from './src/theme/theme.constants';
 import { Theme } from './src/theme/theme.types';
+import { theme } from './src/theme/theme';
 
 const themeProvider = (): Theme => {
   return theme;

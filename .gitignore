@@ -3,4 +3,7 @@ dist
 
 .embeddable
 .embeddable-build
+.embeddable-dev-build
+.embeddable-dev-tmp
 .embeddable-tmp
+

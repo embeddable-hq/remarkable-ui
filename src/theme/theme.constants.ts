@@ -1,6 +1,4 @@
-import { Theme, ThemeStyles } from './theme.types';
-
-export const themeColors = {
+const themeColors = {
   '--em-gray-0': 'rgb(255 255 255)',
   '--em-gray-100': 'rgb(237 237 241)',
   '--em-gray-1000': 'rgb(0 0 0)',
@@ -25,7 +23,7 @@ export const themeColors = {
   '--em-orange-900': 'rgb(255 84 0)',
 };
 
-export const themeSpacingAndSizes = {
+const themeSpacingAndSizes = {
   '--em-height-0': '0px',
   '--em-height-0,5': '2px',
   '--em-height-1': '4px',
@@ -118,7 +116,7 @@ export const themeSpacingAndSizes = {
   '--em-width-9': '36px',
 };
 
-export const themeBorders = {
+const themeBorders = {
   '--em-border-0': '0px',
   '--em-border-2': '2px',
   '--em-border-4': '4px',
@@ -134,7 +132,7 @@ export const themeBorders = {
   '--em-rounded-xl': '12px',
 };
 
-export const themeComponents = {
+const themeComponents = {
   '--em-background-default': 'var(--em-gray-50)',
   '--em-background-inverted': 'var(--em-gray-900)',
   '--em-background-light': 'var(--em-gray-100)',
@@ -181,7 +179,7 @@ export const themeComponents = {
   '--em-toggle-thumb-default': 'var(--em-background-neutral)',
 };
 
-export const themeTypography = {
+const themeTypography = {
   '--em-font-height-lg': '19px',
   '--em-font-height-md': '16px',
   '--em-font-height-sm': '14px',
@@ -194,6 +192,19 @@ export const themeTypography = {
   '--em-font-weight-medium': '500',
   '--em-font-weight-regular': '400',
 };
+
+type ThemeColors = Record<keyof typeof themeColors, string>;
+type ThemeSpacingAndSizes = Record<keyof typeof themeSpacingAndSizes, string>;
+type ThemeBorders = Record<keyof typeof themeBorders, string>;
+type ThemeComponents = Record<keyof typeof themeComponents, string>;
+type ThemeTypography = Record<keyof typeof themeTypography, string>;
+
+export type ThemeStyles = ThemeColors &
+  ThemeSpacingAndSizes &
+  ThemeBorders &
+  ThemeComponents &
+  ThemeTypography &
+  Record<string, string>;
 
 export const themeStyles: ThemeStyles = {
   ...themeColors,
@@ -228,11 +239,3 @@ export const themeChartColors: string[] = [
   '#A9C5A0',
   '#8CA587',
 ];
-
-export const theme: Theme = {
-  styles: themeStyles,
-  charts: {
-    borderColors: themeChartBorderColors,
-    colors: themeChartColors,
-  },
-};
