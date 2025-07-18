@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import css from '@eslint/css';
 import reactHooks from 'eslint-plugin-react-hooks';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import configPrettier from 'eslint-config-prettier';
 
 export default defineConfig([
@@ -71,4 +71,7 @@ export default defineConfig([
 
   // Prettier integration
   configPrettier,
+
+  // Ignore
+  globalIgnores(['.embeddable', '.embeddable-build', '.embeddable-tmp', 'dist', 'node_modules']),
 ]);
