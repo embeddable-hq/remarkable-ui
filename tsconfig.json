@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     /* Language and Environment */
+    "baseUrl": "./src",
     "target": "es2022",
     "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "react-jsx",
@@ -33,5 +34,5 @@
     /* Completeness */
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src"]
 }

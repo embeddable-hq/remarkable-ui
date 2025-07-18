@@ -13,13 +13,14 @@
     "build": "tsc",
     "embeddable:build": "embeddable build",
     "embeddable:package": "embeddable buildPackage",
-    "types:check": "tsc --noEmit --incremental false",
-    "lint:staged": "lint-staged",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix --quiet .",
+    "lint:staged": "lint-staged",
+    "prepare": "husky",
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
-    "prepare": "husky"
+    "release": "npm run embeddable:package && changeset publish",
+    "types:check": "tsc --noEmit --incremental false"
   },
   "keywords": [
     "embeddable",
