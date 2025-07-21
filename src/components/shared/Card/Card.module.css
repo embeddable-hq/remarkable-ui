@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  padding: var(--padding-8);
+  background: var(--orange-900);
+  border-radius: var(--rounded-3xl);
+  background: var(--background-default);
+}
+
+.header {
+  display: flex;
+  gap: var(--padding-4);
+  width: 100%;
+  justify-content: space-between;
+}
+
+.headerTitles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-4);
+}
+
+.title {
+  color: var(--foreground-default);
+  font-family: Inter;
+  font-size: var(--font-size-default);
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  line-height: var(--font-height-lg);
+}
+
+.subtitle {
+  color: var(--foreground-muted);
+  font-family: Inter;
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--font-height-md);
+}
