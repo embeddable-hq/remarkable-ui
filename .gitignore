@@ -7,3 +7,6 @@ dist
 .embeddable-dev-tmp
 .embeddable-tmp
 
+
+*storybook.log
+storybook-static
