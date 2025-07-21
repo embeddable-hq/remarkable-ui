@@ -47,32 +47,32 @@ export const formatData = (
         minDecimalPlaces: config?.decimalPlaces,
       };
       if ((key?.meta as MeasureMeta)?.currency) {
-        // currency
+        // Currency
         return numberFormatter({
           ...params,
           currency: (key.meta as MeasureMeta).currency,
         }).format(value);
       }
-      // number
+      // Number
       return numberFormatter(params).format(value);
     }
     case 'time': {
       if (value && ISO_DATE_TIME_REGEX.test(value)) {
-        // date time
+        // Date time
         return dateTimeFormatter({ granularity: key.inputs?.granularity, shortMonth: true }).format(
           new Date(value),
         );
       }
-      // fall through to string formatting for non-ISO time values
+      // Fall through to string formatting for non-ISO time values
       break;
     }
     case 'boolean':
-      // fall through to string formatting for booleans
+      // Fall through to string formatting for booleans
       break;
   }
-  // string
+  // String
   const name = key.name;
-  // allow translation at 3 levels of abstraction
+  // Allow translation at 3 levels of abstraction
   const keys = [
     `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
     `${prefix}.${name}`, // e.g. 'Dimension.customers.country': 'Country is {{value}}',

@@ -11,7 +11,8 @@ type Props = {
 let timeout: number | null = null;
 
 const TextInput = (props: Props) => {
-  const formatter = useThemeFormatter();
+  const themeFormatter = useThemeFormatter();
+
   const ref = useRef<HTMLInputElement | null>(null);
   const [value, setValue] = useState(props.value);
 
@@ -31,7 +32,7 @@ const TextInput = (props: Props) => {
 
   return (
     <div title={props.title}>
-      {formatter.text('welcome')}
+      {themeFormatter.text('welcome')}
       <div
         className={`
           border

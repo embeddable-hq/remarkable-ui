@@ -8,8 +8,8 @@ import {
   TextFormatter,
   TextFormatterParams,
 } from './theme-formatter.types';
-import { de } from './translations/de';
-import { en } from './translations/en';
+import { de } from './theme-formatter-translations/de';
+import { en } from './theme-formatter-translations/en';
 import i18next from 'i18next';
 
 export const themeFormatter: ThemeFormatter = {
@@ -23,10 +23,10 @@ export const themeFormatter: ThemeFormatter = {
       try {
         return new Intl.Locale(locale);
       } catch {
-        // not supported in current browser
+        // Not supported in current browser
       }
     }
-    return new Intl.Locale('en-US'); // fall back to en-US which should work everywhere
+    return new Intl.Locale('en-US'); // Fallback to en-US which should work everywhere
   },
   defaultDateTimeFormatOptions: (
     _theme: Theme,

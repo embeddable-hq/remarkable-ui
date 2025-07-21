@@ -81,9 +81,9 @@ export const useThemeFormatter = (): UseThemeFormatter => {
         dateTimeFormatter,
         config,
       );
-      //add prefix and suffix
+      // Add prefix and suffix
       const appended = `${config?.prefix || ''}${result}${config?.suffix || ''}`;
-      // trim to max character length
+      // Trim to max character length
       const ellipsis = '...';
       if (
         config?.maxCharacterLength &&
