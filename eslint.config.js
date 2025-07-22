@@ -54,6 +54,9 @@ export default defineConfig([
     plugins: { css },
     language: 'css/css',
     extends: ['css/recommended'],
+    rules: {
+      'css/no-invalid-properties': ['error', { allowUnknownVariables: true }], // Allow unknown CSS custom properties (e.g. --font-default)
+    },
   },
 
   // Disallow JS and JSX files inside src directory (use TS/TSX only)
