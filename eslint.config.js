@@ -1,14 +1,12 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from 'eslint-plugin-storybook';
-
 import js from '@eslint/js';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
 import css from '@eslint/css';
-import reactHooks from 'eslint-plugin-react-hooks';
-import { defineConfig, globalIgnores } from 'eslint/config';
 import configPrettier from 'eslint-config-prettier';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
+import pluginReact from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import storybook from 'eslint-plugin-storybook';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   // Base JavaScript rules for all JS/TS files
@@ -37,7 +35,6 @@ export default defineConfig([
       },
     },
   },
-
   // React Hooks rules for TS and TSX files
   {
     files: ['**/*.{ts,tsx}'],
@@ -47,6 +44,7 @@ export default defineConfig([
     rules: {
       'react-hooks/rules-of-hooks': 'error', // Enforce rules of hooks
       'react-hooks/exhaustive-deps': 'warn', // Warn about missing deps in useEffect
+      'react/react-in-jsx-scope': 0,
     },
   },
 

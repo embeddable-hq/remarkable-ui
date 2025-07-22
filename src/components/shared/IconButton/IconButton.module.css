@@ -1,6 +1,6 @@
 .iconButton {
   cursor: pointer;
-  /* TODO: fix padding 0.5 */
+  /* TODO: add specifics */
   padding: var(--padding-2) calc(var(--padding-2) / 4);
   border-radius: var(--rounded-full);
   background: var(--icn-btn-background-default, #ededf1);
@@ -23,6 +23,7 @@
 }
 
 .icon {
+  /* TODO: add specifics */
   width: var(--width-400);
   height: var(--width-400);
 }

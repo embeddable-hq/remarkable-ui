@@ -1,13 +1,7 @@
-import React from 'react';
 import { themeColors } from '../../../theme/theme.constants';
-
-const FoundationColor = () => {
-  return <div>ola</div>;
-};
 
 export default {
   title: 'Foundations/Colors',
-  component: FoundationColor,
 };
 
 export const Default = () => {

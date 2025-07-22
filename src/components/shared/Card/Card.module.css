@@ -1,5 +1,6 @@
 .card {
   display: flex;
+  /* TODO: add specifics */
   padding: var(--padding-8);
   border-radius: var(--rounded-3xl);
   background: var(--background-default);
