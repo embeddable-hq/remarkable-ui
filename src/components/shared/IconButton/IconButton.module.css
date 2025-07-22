@@ -1,0 +1,28 @@
+.iconButton {
+  cursor: pointer;
+  /* TODO: fix padding 0.5 */
+  padding: var(--padding-2) calc(var(--padding-2) / 4);
+  border-radius: var(--rounded-full);
+  background: var(--icn-btn-background-default, #ededf1);
+  border: none;
+  height: 2rem;
+  display: flex;
+}
+
+.iconButton:hover {
+  background: var(--icn-btn-background-hover, #e4e4ea);
+}
+
+.iconButton:active {
+  background: var(--icn-btn-background-pressed, #d2d2d5);
+}
+
+.iconButton:disabled {
+  pointer-events: none;
+  background: var(--icn-btn-background-disabled, #ededf1);
+}
+
+.icon {
+  width: var(--width-400);
+  height: var(--width-400);
+}
