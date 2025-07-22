@@ -49,6 +49,7 @@
     ]
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.34.1",
     "chart.js": "^4.5.0",
     "clsx": "^2.1.1",
     "i18next": "^25.3.2",
