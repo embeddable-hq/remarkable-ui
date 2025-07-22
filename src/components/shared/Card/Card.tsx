@@ -1,16 +1,27 @@
 import React from 'react';
 import styles from './Card.module.css';
 import { Typography } from '../Typography/Typography';
+import { IconButton } from '../IconButton/IconButton';
+import { IconDotsVertical, IconLoader2 } from '@tabler/icons-react';
+import clsx from 'clsx';
 
 type CardProps = {
   title: string;
   subtitle?: string;
+  children?: React.ReactNode;
+  isLoading?: boolean;
 };
-export const Card: React.FC<CardProps> = ({ children }) => {
+
+export const Card: React.FC<CardProps> = ({ children, isLoading }) => {
   return (
     <div className={styles.card}>
-      <CardHeader title="Card Title" subtitle="Card Subtitle" />
-      {children}
+      <div className={clsx(styles.cardContent, isLoading && styles.cardContentLoading)}>
+        <span className={styles.loadingIcon}>
+          <IconLoader2 />
+        </span>
+        <CardHeader title="Card Title" subtitle="Card Subtitle" />
+        {children}
+      </div>
     </div>
   );
 };
@@ -28,7 +39,8 @@ export const CardHeader: React.FC<CardProps> = ({ title, subtitle }) => {
           </Typography>
         )}
       </div>
-      <button>ola</button>
+      {/* TODO: replace with 3 dots component */}
+      <IconButton icon={IconDotsVertical} />
     </div>
   );
 };

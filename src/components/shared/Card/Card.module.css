@@ -1,9 +1,47 @@
 .card {
   display: flex;
   padding: var(--padding-8);
-  background: var(--orange-900);
   border-radius: var(--rounded-3xl);
   background: var(--background-default);
+}
+
+.cardContent {
+  width: 100%;
+  border-radius: var(--rounded-xl);
+  position: relative;
+}
+
+.cardContentLoading * {
+  visibility: hidden;
+}
+
+.cardContentLoading .loadingIcon,
+.cardContentLoading .loadingIcon * {
+  visibility: visible;
+}
+
+.loadingIcon {
+  width: min-content;
+  border-radius: var(--rounded-full);
+  background: var(--background-default);
+  padding: var(--padding-1);
+  display: flex;
+  position: absolute;
+  top: -0.75rem;
+  right: -0.75rem;
+  visibility: hidden;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingIcon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: spin 2s linear infinite;
 }
 
 .header {
