@@ -1,4 +1,3 @@
-import { useTheme } from '@embeddable.com/react';
 import {
   DataConfig,
   DateTimeFormatter,
@@ -49,8 +48,7 @@ type UseThemeFormatter = {
 /**
  * Formatter Helper exists to make it easy to apply standard formatting (and internationalisation) to all components
  */
-export const useThemeFormatter = (): UseThemeFormatter => {
-  const theme = useTheme() as Theme;
+export const useThemeFormatter = (theme: Theme): UseThemeFormatter => {
   const textFormatter = theme.formatter.textFormatter(theme);
   const numberFormatter = cache<NumberFormatterParams, NumberFormatter>((params) =>
     theme.formatter.numberFormatter(theme, params),

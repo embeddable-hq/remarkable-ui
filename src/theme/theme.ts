@@ -18,11 +18,11 @@ export type Theme = {
   formatter: ThemeFormatter;
 };
 
-export const theme: Theme = {
+export const remarkableTheme: Theme = {
   charts: {
     borderColors: themeChartBorderColors,
     colors: themeChartColors,
   },
   formatter: themeFormatter,
   styles: themeStyles,
-};
+} as const;
