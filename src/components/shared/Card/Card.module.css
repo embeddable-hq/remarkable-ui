@@ -4,21 +4,11 @@
   padding: var(--padding-8);
   border-radius: var(--rounded-3xl);
   background: var(--background-default);
-}
-
-.cardContent {
-  width: 100%;
-  border-radius: var(--rounded-xl);
+  display: flex;
+  flex-direction: column;
   position: relative;
-}
-
-.cardContentLoading * {
-  visibility: hidden;
-}
-
-.cardContentLoading .loadingIcon,
-.cardContentLoading .loadingIcon * {
-  visibility: visible;
+  /* TODO: add specifics */
+  gap: 2rem;
 }
 
 .loadingIcon {
@@ -28,9 +18,13 @@
   padding: var(--padding-1);
   display: flex;
   position: absolute;
-  top: -0.75rem;
-  right: -0.75rem;
+  top: var(--padding-4);
+  right: var(--padding-4);
   visibility: hidden;
+}
+
+.loadingIcon.loadingIconVisible {
+  visibility: visible;
 }
 
 @keyframes spin {
@@ -43,6 +37,12 @@
   width: 1.5rem;
   height: 1.5rem;
   animation: spin 2s linear infinite;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .header {

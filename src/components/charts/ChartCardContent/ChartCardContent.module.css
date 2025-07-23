@@ -1,0 +1,12 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  /* TODO: add specifics */
+  gap: 12px;
+}
+
+.error {
+  color: red;
+}

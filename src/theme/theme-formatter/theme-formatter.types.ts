@@ -1,6 +1,6 @@
 import { Granularity } from '@embeddable.com/core';
 import { Resource } from 'i18next';
-import { Theme } from 'theme';
+import { Theme } from '../theme';
 
 export type MeasureMeta = {
   currency?: string;

@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
-
-import { Card } from './Card';
+import type { Meta } from '@storybook/react-webpack5';
+import { Card, CardContent, CardHeader } from './Card';
 
 const meta = {
   component: Card,
@@ -8,10 +7,9 @@ const meta = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
-  args: {
-    title: 'title',
-  },
-};
+export const Default = (args: { isLoading: boolean }) => (
+  <Card isLoading={args.isLoading}>
+    <CardHeader title="Title" subtitle="Subtitle" />
+    <CardContent>This is the content of the card.</CardContent>
+  </Card>
+);

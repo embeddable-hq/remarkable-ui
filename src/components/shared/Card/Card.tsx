@@ -1,32 +1,33 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import styles from './Card.module.css';
 import { Typography } from '../Typography/Typography';
-import { IconButton } from '../IconButton/IconButton';
-import { IconDotsVertical, IconLoader2 } from '@tabler/icons-react';
+import { IconLoader2 } from '@tabler/icons-react';
 import clsx from 'clsx';
 
 type CardProps = {
-  title: string;
-  subtitle?: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   isLoading?: boolean;
+  style?: CSSProperties;
 };
 
-export const Card: React.FC<CardProps> = ({ children, isLoading }) => {
+export const Card: React.FC<CardProps> = ({ children, isLoading, ...props }) => {
   return (
-    <div className={styles.card}>
-      <div className={clsx(styles.cardContent, isLoading && styles.cardContentLoading)}>
-        <span className={styles.loadingIcon}>
-          <IconLoader2 />
-        </span>
-        <CardHeader title="Card Title" subtitle="Card Subtitle" />
-        {children}
+    <div className={clsx(styles.card)} {...props}>
+      <div className={clsx(styles.loadingIcon, isLoading && styles.loadingIconVisible)}>
+        <IconLoader2 />
       </div>
+      {children}
     </div>
   );
 };
 
-export const CardHeader: React.FC<CardProps> = ({ title, subtitle }) => {
+type CardHeaderProps = {
+  title: string;
+  subtitle?: string;
+  rightContent?: React.ReactNode;
+};
+
+export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightContent = null }) => {
   return (
     <div className={styles.header}>
       <div className={styles.headerTitles}>
@@ -39,8 +40,15 @@ export const CardHeader: React.FC<CardProps> = ({ title, subtitle }) => {
           </Typography>
         )}
       </div>
-      {/* TODO: replace with 3 dots component */}
-      <IconButton icon={IconDotsVertical} />
+      {/* <IconButton icon={IconDotsVertical} /> */}
+      {rightContent}
     </div>
   );
+};
+
+type CardContentProps = {
+  children: React.ReactNode;
+};
+export const CardContent: React.FC<CardContentProps> = ({ children }) => {
+  return <div className={styles.content}>{children}</div>;
 };

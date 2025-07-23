@@ -1,4 +1,3 @@
-import { Theme } from 'theme';
 import {
   DateTimeFormatter,
   DateTimeFormatterParams,
@@ -11,6 +10,7 @@ import {
 import { de } from './theme-formatter-translations/de';
 import { en } from './theme-formatter-translations/en';
 import i18next from 'i18next';
+import { Theme } from '../theme';
 
 export const themeFormatter: ThemeFormatter = {
   preferredLocales: [navigator.language],

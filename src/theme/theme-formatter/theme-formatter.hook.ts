@@ -9,7 +9,7 @@ import {
 } from './theme-formatter.types';
 import { cache, formatData } from './theme-formatter.utils';
 import { DimensionOrMeasure } from '@embeddable.com/core';
-import { Theme } from 'theme/theme';
+import { Theme } from '../theme';
 
 type UseThemeFormatter = {
   /**
