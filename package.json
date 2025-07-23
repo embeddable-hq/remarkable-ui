@@ -11,6 +11,8 @@
   ],
   "scripts": {
     "build": "tsc",
+    "build-storybook": "storybook build",
+    "circular:check": "madge --circular .",
     "embeddable:build": "embeddable build",
     "embeddable:dev": "embeddable dev",
     "embeddable:login": "embeddable login",
@@ -24,8 +26,8 @@
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
     "release": "npm run embeddable:package && changeset publish",
-    "types:check": "tsc --noEmit --incremental false",
-    "circular:check": "madge --circular ."
+    "storybook": "storybook dev -p 6006",
+    "types:check": "tsc --noEmit --incremental false"
   },
   "keywords": [
     "embeddable",
@@ -47,7 +49,11 @@
     ]
   },
   "dependencies": {
-    "i18next": "^25.3.2"
+    "@tabler/icons-react": "^3.34.1",
+    "chart.js": "^4.5.0",
+    "clsx": "^2.1.1",
+    "i18next": "^25.3.2",
+    "react-chartjs-2": "^5.3.0"
   },
   "devDependencies": {
     "@embeddable.com/core": "^2.10.5",
@@ -56,6 +62,10 @@
     "@embeddable.com/sdk-react": "^4.0.0",
     "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.31.0",
+    "@storybook/addon-docs": "^9.0.17",
+    "@storybook/addon-onboarding": "^9.0.17",
+    "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
+    "@storybook/react-webpack5": "^9.0.17",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "eslint": "^9.31.0",
@@ -63,11 +73,13 @@
     "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-storybook": "^9.0.17",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "madge": "^8.0.0",
     "prettier": "^3.6.2",
+    "storybook": "^9.0.17",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"
   },
