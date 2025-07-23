@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc",
     "embeddable:build": "embeddable build",
-    "embeddable:dev": "cross-env NODE_OPTIONS='--max-old-space-size=4096' embeddable dev",
+    "embeddable:dev": "embeddable dev",
     "embeddable:login": "embeddable login",
     "embeddable:package": "embeddable buildPackage",
     "embeddable:push": "embeddable push",
@@ -24,7 +24,8 @@
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
     "release": "npm run embeddable:package && changeset publish",
-    "types:check": "tsc --noEmit --incremental false"
+    "types:check": "tsc --noEmit --incremental false",
+    "circular:check": "madge --circular ."
   },
   "keywords": [
     "embeddable",
@@ -45,7 +46,9 @@
       "npm run eslint:fix"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "i18next": "^25.3.2"
+  },
   "devDependencies": {
     "@embeddable.com/core": "^2.10.5",
     "@embeddable.com/react": "^2.10.6",
@@ -63,6 +66,7 @@
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
+    "madge": "^8.0.0",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"

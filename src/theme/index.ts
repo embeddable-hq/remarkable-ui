@@ -1,1 +1,1 @@
-export type { Theme } from './theme.types';
+export type { Theme } from './theme';
