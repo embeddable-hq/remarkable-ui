@@ -45,6 +45,7 @@ export default defineConfig([
       'react-hooks/rules-of-hooks': 'error', // Enforce rules of hooks
       'react-hooks/exhaustive-deps': 'warn', // Warn about missing deps in useEffect
       'react/react-in-jsx-scope': 0,
+      'react/prop-types': 'off',
     },
   },
 

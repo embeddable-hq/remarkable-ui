@@ -18,4 +18,6 @@
   background-size: 200% 100%;
   height: 100%;
   width: 100%;
+  /* TODO: add specifics */
+  border-radius: 12px;
 }
