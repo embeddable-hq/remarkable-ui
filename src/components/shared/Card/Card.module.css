@@ -1,26 +1,23 @@
 .card {
-  display: flex;
-  /* TODO: add specifics */
-  padding: var(--padding-8);
-  border-radius: var(--rounded-3xl);
-  background: var(--background-default);
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
-  /* TODO: add specifics */
-  gap: 2rem;
+  gap: var(--em-card-gap-default, 2rem);
+  padding: var(--em-card-padding-default, 2rem);
+  border-radius: var(--em-card-border-radius-default, 2rem);
+  background: var(--em-background-color-default, #f7f7f8);
 }
 
 .loadingIcon {
   width: min-content;
-  border-radius: var(--rounded-full);
-  background: var(--background-default);
-  padding: var(--padding-1);
   display: flex;
   position: absolute;
-  top: var(--padding-4);
-  right: var(--padding-4);
   visibility: hidden;
+  padding: var(--em-card-loader-padding-default, 0.25rem);
+  top: calc(var(--em-card-padding-default, 2rem) / 2);
+  right: calc(var(--em-card-padding-default, 2rem) / 2);
+  border-radius: var(--em-card-loader-border-radius-default, 624.9375rem);
+  background: var(--em-background-color-default, #f7f7f8);
 }
 
 .loadingIcon.loadingIconVisible {
@@ -34,8 +31,8 @@
 }
 
 .loadingIcon svg {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: var(--em-card-loader-icon-size-width, 1.5rem);
+  height: var(--em-card-loader-icon-size-height, 1.5rem);
   animation: spin 2s linear infinite;
 }
 
@@ -48,7 +45,7 @@
 
 .header {
   display: flex;
-  gap: var(--padding-4);
+  gap: var(--em-card-title-padding-default, 1rem);
   width: 100%;
   justify-content: space-between;
 }
@@ -56,23 +53,19 @@
 .headerTitles {
   display: flex;
   flex-direction: column;
-  gap: var(--padding-4);
+  gap: var(--em-card-title-padding-default, 1rem);
 }
 
 .title {
-  color: var(--foreground-default);
-  font-family: Inter;
-  font-size: var(--font-size-default);
-  font-style: normal;
-  font-weight: var(--font-weight-bold);
-  line-height: var(--font-height-lg);
+  color: var(--em-card-title-color-default, #212129);
+  font-size: var(--em-card-title-font-size, 1.25rem);
+  font-weight: var(--em-card-title-font-weight, 700);
+  line-height: var(--em-card-title-font-line-height, 1.1875rem);
 }
 
 .subtitle {
-  color: var(--foreground-muted);
-  font-family: Inter;
-  font-size: var(--font-size-sm);
-  font-style: normal;
-  font-weight: var(--font-weight-medium);
-  line-height: var(--font-height-md);
+  color: var(--em-foreground-color-muted, #5c5c66);
+  font-size: var(--em-card-subtitle-font-size, 0.875rem);
+  font-weight: var(--em-card-subtitle-font-weight, 400);
+  line-height: var(--em-card-subtitle-font-line-height, 0.875rem);
 }

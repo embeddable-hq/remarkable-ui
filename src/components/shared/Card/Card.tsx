@@ -31,7 +31,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightCo
   return (
     <div className={styles.header}>
       <div className={styles.headerTitles}>
-        <Typography size="default" height="lg" weight="bold">
+        <Typography as="h1" size="default" height="lg" weight="bold" className={styles.title}>
           {title}
         </Typography>
         {subtitle && (
@@ -40,7 +40,6 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightCo
           </Typography>
         )}
       </div>
-      {/* <IconButton icon={IconDotsVertical} /> */}
       {rightContent}
     </div>
   );
