@@ -1,8 +1,7 @@
-import { Theme } from './src/theme/theme.types';
-import { theme } from './src/theme/theme';
+import { remarkableTheme, Theme } from './src/theme/theme';
 
 const themeProvider = (): Theme => {
-  return theme;
+  return remarkableTheme;
 };
 
 export default themeProvider;
