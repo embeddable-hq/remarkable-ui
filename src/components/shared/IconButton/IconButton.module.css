@@ -1,11 +1,13 @@
 .iconButton {
   cursor: pointer;
   /* TODO: add specifics */
-  padding: var(--padding-2) calc(var(--padding-2) / 4);
-  border-radius: var(--rounded-full);
-  background: var(--icn-btn-background-default, #ededf1);
+  padding: var(--em-icon-btn-padding-top, 0.5rem) var(--em-icon-btn-padding-right, 0.125rem)
+    var(--em-icon-btn-padding-bottom, 0.5rem) var(--em-icon-btn-padding-left, 0.125rem);
+  border-radius: var(--em-icon-btn-border-radius-default, 624.9375rem);
+  background: var(--em-icon-btn-bg-color-default, #ededf1);
   border: none;
   height: 2rem;
+  width: 1.25rem;
   display: flex;
 }
 

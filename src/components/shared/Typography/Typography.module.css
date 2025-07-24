@@ -1,52 +1,52 @@
 .typography {
-  font-family: var(--font-default, 'Inter', sans-serif);
+  font-family: var(--em-font-default, 'Inter', sans-serif);
   margin: 0;
 }
 
 .size-4xl {
-  font-size: var(--font-size-4xl, 2rem);
+  font-size: var(--em-font-size-4xl, 2rem);
 }
 
 .size-xl {
-  font-size: var(--font-size-xl, 1.25rem);
+  font-size: var(--em-font-size-xl, 1.25rem);
 }
 
 .size-default {
-  font-size: var(--font-size-default, 1rem);
+  font-size: var(--em-font-size-default, 1rem);
 }
 
 .size-sm {
-  font-size: var(--font-size-sm, 0.875rem);
+  font-size: var(--em-font-size-sm, 0.875rem);
 }
 
 .size-xs {
-  font-size: var(--font-size-xs, 0.75rem);
+  font-size: var(--em-font-size-xs, 0.75rem);
 }
 
 .weight-regular {
-  font-weight: var(--font-weight-regular, 400);
+  font-weight: var(--em-font-weight-regular, 400);
 }
 
 .weight-medium {
-  font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--em-font-weight-medium, 500);
 }
 
 .weight-bold {
-  font-weight: var(--font-weight-bold, 700);
+  font-weight: var(--em-font-weight-bold, 700);
 }
 
 .height-xl {
-  line-height: var(--font-height-xl, 2.375rem);
+  line-height: var(--em-font-height-xl, 2.375rem);
 }
 
 .height-lg {
-  line-height: var(--font-height-lg, 1.188rem);
+  line-height: var(--em-font-height-lg, 1.188rem);
 }
 
 .height-md {
-  line-height: var(--font-height-md, 1);
+  line-height: var(--em-font-height-md, 1);
 }
 
 .height-sm {
-  line-height: var(--font-height-sm, 0.875rem);
+  line-height: var(--em-font-height-sm, 0.875rem);
 }
