@@ -16,8 +16,9 @@ export const Default: Story = {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [
         {
-          label: '# of Colors',
-          data: [12, 19, 3, 5, 2, 3],
+          borderColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
+          backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
+          data: [12000, 19000, 3000, 5000, 2000, 3000],
         },
       ],
     },
@@ -26,6 +27,7 @@ export const Default: Story = {
         legend: {
           position: 'right',
         },
+        tooltip: { enabled: true },
       },
     },
   },

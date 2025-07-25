@@ -1,6 +1,6 @@
 import { TablerIcon } from '@tabler/icons-react';
 import clsx from 'clsx';
-import { Typography } from 'src/components/shared/Typography/Typography';
+import { Typography } from '../../../shared/Typography/Typography';
 import styles from './ChartCardInfo.module.css';
 
 type ChartCardInfoProps = {

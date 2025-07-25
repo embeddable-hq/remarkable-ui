@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react';
-import { Card, CardContent, CardHeader } from 'src/components/shared/Card/Card';
-import { Skeleton } from 'src/components/shared/Skeleton/Skeleton';
+import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
+import { Skeleton } from '../../shared/Skeleton/Skeleton';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { ChartCardInfo } from './sub-components/ChartCardInfo';
 import styles from './ChartCard.module.css';

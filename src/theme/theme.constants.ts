@@ -1,26 +1,26 @@
 export const themeColors = {
-  '--em-gray-0': 'rgb(255 255 255)',
-  '--em-gray-050': 'rgb(247 247 248)',
-  '--em-gray-100': 'rgb(237 237 241)',
-  '--em-gray-1000': 'rgb(0 0 0)',
-  '--em-gray-200': 'rgb(228 228 234)',
-  '--em-gray-300': 'rgb(210 210 213)',
-  '--em-gray-400': 'rgb(184 184 189)',
-  '--em-gray-500': 'rgb(144 144 152)',
-  '--em-gray-600': 'rgb(114 114 121)',
-  '--em-gray-700': 'rgb(92 92 102)',
-  '--em-gray-800': 'rgb(49 49 61)',
-  '--em-gray-900': 'rgb(33 33 41)',
-  '--em-orange-050': 'rgb(255 238 230)',
-  '--em-orange-100': 'rgb(255 221 204)',
-  '--em-orange-200': 'rgb(255 204 179)',
-  '--em-orange-300': 'rgb(255 187 153)',
-  '--em-orange-400': 'rgb(255 170 128)',
-  '--em-orange-500': 'rgb(255 153 102)',
-  '--em-orange-600': 'rgb(255 136 77)',
-  '--em-orange-700': 'rgb(255 119 51)',
-  '--em-orange-800': 'rgb(255 102 26)',
-  '--em-orange-900': 'rgb(255 84 0)',
+  '--em-gray-0': '#ffffff',
+  '--em-gray-050': '#f7f7f8',
+  '--em-gray-100': '#ededf1',
+  '--em-gray-1000': '#000000',
+  '--em-gray-200': '#e4e4ea',
+  '--em-gray-300': '#d2d2d5',
+  '--em-gray-400': '#b8b8bd',
+  '--em-gray-500': '#909098',
+  '--em-gray-600': '#727279',
+  '--em-gray-700': '#5c5c66',
+  '--em-gray-800': '#31313d',
+  '--em-gray-900': '#212129',
+  '--em-orange-050': '#ffeee6',
+  '--em-orange-100': '#ffddcc',
+  '--em-orange-200': '#ffccb3',
+  '--em-orange-300': '#ffbb99',
+  '--em-orange-400': '#ffaa80',
+  '--em-orange-500': '#ff9966',
+  '--em-orange-600': '#ff884d',
+  '--em-orange-700': '#ff7733',
+  '--em-orange-800': '#ff661a',
+  '--em-orange-900': '#ff5400',
 };
 
 const themeSpacingAndSizes = {
@@ -111,9 +111,36 @@ const themeComponents = {
   '--em-background-color-muted': 'var(--em-gray-300)',
   '--em-background-color-neutral': 'var(--em-gray-0)',
   '--em-background-color-subtle': 'var(--em-gray-200)',
+  '--em-card-border-radius-default': 'var(--em-border-radius-400)',
+  '--em-card-empty-padding-default': 'var(--em-padding-300)',
+  '--em-card-empty-subtitle-color-default': 'var(--em-foreground-color-muted)',
+  '--em-card-empty-subtitle-font-line-height': 'var(--em-line-height-md)',
+  '--em-card-empty-subtitle-font-size': 'var(--em-font-size-sm)',
+  '--em-card-empty-subtitle-font-weight': 'var(--em-font-weight-regular)',
+  '--em-card-empty-title-color-default': 'var(--em-foreground-color-default)',
+  '--em-card-empty-title-font-line-height': 'var(--em-line-height-md)',
+  '--em-card-empty-title-font-size': 'var(--em-font-size-sm)',
+  '--em-card-empty-title-font-weight': 'var(--em-font-weight-medium)',
+  '--em-card-error-padding-default': 'var(--em-padding-300)',
+  '--em-card-error-state-icon-color-default': 'var(--em-status-error)',
+  '--em-card-error-state-icon-size-height': 'var(--em-height-400)',
+  '--em-card-error-state-icon-size-width': 'var(--em-width-400)',
+  '--em-card-error-subtitle-color-default': 'var(--em-status-error)',
+  '--em-card-error-subtitle-font-line-height': 'var(--em-line-height-md)',
+  '--em-card-error-subtitle-font-size': 'var(--em-font-size-sm)',
+  '--em-card-error-subtitle-font-weight': 'var(--em-font-weight-regular)',
+  '--em-card-error-title-color-default': 'var(--em-status-error)',
+  '--em-card-error-title-font-line-height': 'var(--em-line-height-md)',
+  '--em-card-error-title-font-size': 'var(--em-font-size-sm)',
+  '--em-card-error-title-font-weight': 'var(--em-font-weight-medium)',
+  '--em-card-gap-default': 'var(--em-padding-800)',
   '--em-card-header-padding-default': 'var(--em-padding-100)',
   '--em-card-loader-border-radius-default': 'var(--em-border-radius-500)',
+  '--em-card-loader-icon-color-default': 'var(--em-foreground-color-default)',
+  '--em-card-loader-icon-size-height': 'var(--em-height-600)',
+  '--em-card-loader-icon-size-width': 'var(--em-width-600)',
   '--em-card-loader-padding-default': 'var(--em-padding-100)',
+  '--em-card-padding-default': 'var(--em-padding-800)',
   '--em-card-subtitle-color-default': 'var(--em-foreground-color-muted)',
   '--em-card-subtitle-font-line-height': 'var(--em-line-height-sm)',
   '--em-card-subtitle-font-size': 'var(--em-font-size-sm)',
@@ -142,6 +169,8 @@ const themeComponents = {
   '--em-category-indicator-group-label-font-weight': 'var(--em-font-weight-medium)',
   '--em-category-indicator-size-height': 'var(--em-width-300)',
   '--em-category-indicator-size-width': 'var(--em-width-300)',
+  '--em-chart-gap-default': 'var(--em-padding-400)',
+  '--em-chart-tooltip-background-color-default': 'var(--em-background-color-inverted)',
   '--em-chart-tooltip-border-radius-default': 'var(--em-border-radius-300)',
   '--em-chart-tooltip-gap-default': 'var(--em-padding-200)',
   '--em-chart-tooltip-label-color-default': 'rgb(255 255 255)',
@@ -169,6 +198,14 @@ const themeComponents = {
   '--em-icon-btn-size-width': 'var(--em-width-500)',
   '--em-icon-height': 'var(--em-height-400)',
   '--em-icon-width': 'var(--em-width-400)',
+  '--em-label-background-color-default': 'var(--em-background-color-neutral)',
+  '--em-label-border-radius-default': 'var(--em-border-radius-500)',
+  '--em-label-label-font-color-default': 'var(--em-foreground-color-default)',
+  '--em-label-label-font-line-height': 'var(--em-line-height-sm)',
+  '--em-label-label-font-size': 'var(--em-font-size-xs)',
+  '--em-label-label-font-weight': 'var(--em-font-weight-medium)',
+  '--em-label-padding-left-right': 'var(--em-padding-100)',
+  '--em-label-padding-top-bottom': 'var(--em-padding-050)',
   '--em-primary-btn-bg-color-default': 'var(--em-foreground-color-muted)',
   '--em-primary-btn-bg-color-disabled': 'var(--em-background-color-light)',
   '--em-primary-btn-bg-color-hover': 'var(--em-foreground-color-default)',
@@ -212,6 +249,29 @@ const themeComponents = {
   '--em-secondary-btn-padding-right': 'var(--em-padding-300)',
   '--em-secondary-btn-padding-top': 'var(--em-padding-300)',
   '--em-secondary-btn-size-height': 'var(--em-height-1000)',
+  '--em-select-list-item-padding-default': '0px',
+  '--em-select-menu-background-color-default': 'var(--em-background-color-neutral)',
+  '--em-select-menu-background-color-disabled': 'var(--em-background-color-neutral)',
+  '--em-select-menu-background-color-focus': 'var(--em-background-color-neutral)',
+  '--em-select-menu-background-color-hover': 'var(--em-background-color-default)',
+  '--em-select-menu-background-color-pressed': 'var(--em-background-color-light)',
+  '--em-select-menu-background-color-selected': 'var(--em-background-color-inverted)',
+  '--em-select-menu-border-color-default': 'var(--em-background-color-muted)',
+  '--em-select-menu-border-radius-default': 'var(--em-border-radius-300)',
+  '--em-select-menu-border-width-default': 'var(--em-border-width-default)',
+  '--em-select-menu-icon-color-defaul': 'var(--em-foreground-color-default)',
+  '--em-select-menu-icon-color-disabled': 'var(--em-foreground-color-subtle)',
+  '--em-select-menu-icon-color-selected': 'var(--em-foreground-color-inverted)',
+  '--em-select-menu-icon-size-height': 'var(--em-height-400)',
+  '--em-select-menu-icon-size-width': 'var(--em-width-400)',
+  '--em-select-menu-label-color-default': 'var(--em-foreground-color-default)',
+  '--em-select-menu-label-color-disabled': 'var(--em-foreground-color-subtle)',
+  '--em-select-menu-label-color-selected': 'var(--em-foreground-color-inverted)',
+  '--em-select-menu-label-font-line-height': 'var(--em-line-height-sm)',
+  '--em-select-menu-label-font-size': 'var(--em-font-size-xs)',
+  '--em-select-menu-label-font-weight': 'var(--em-font-weight-medium)',
+  '--em-select-menu-label-padding-default': 'var(--em-padding-200)',
+  '--em-select-menu-padding-default': 'var(--em-padding-300)',
   '--em-status-error': 'rgb(208 49 9)',
 };
 
@@ -230,18 +290,25 @@ const themeTypography = {
   '--em-line-height-xl': '38px',
 };
 
+// NOTE: figma doest allow the export of css variables of font family
+// Add this manully
+const themeComponentsFontFamily = {
+  '--em-category-indicator-group-label-family': 'Inter, sans-serif',
+};
+
 type ThemeColors = Record<keyof typeof themeColors, string>;
 type ThemeSpacingAndSizes = Record<keyof typeof themeSpacingAndSizes, string>;
 type ThemeBorders = Record<keyof typeof themeBorders, string>;
 type ThemeComponents = Record<keyof typeof themeComponents, string>;
 type ThemeTypography = Record<keyof typeof themeTypography, string>;
+type ThemeComponentsFontFamily = Record<keyof typeof themeComponentsFontFamily, string>;
 
 export type ThemeStyles = ThemeColors &
   ThemeSpacingAndSizes &
   ThemeBorders &
   ThemeComponents &
   ThemeTypography &
-  Record<string, string>;
+  ThemeComponentsFontFamily;
 
 export const themeStyles: ThemeStyles = {
   ...themeColors,
@@ -249,30 +316,33 @@ export const themeStyles: ThemeStyles = {
   ...themeBorders,
   ...themeComponents,
   ...themeTypography,
+  ...themeComponentsFontFamily,
 };
 
+export type ThemeStylesKeys = keyof typeof themeStyles;
+
 export const themeChartBorderColors: string[] = [
-  themeColors['--em-orange-050'],
-  themeColors['--em-orange-100'],
-  themeColors['--em-orange-200'],
-  themeColors['--em-orange-300'],
-  themeColors['--em-orange-400'],
-  themeColors['--em-orange-500'],
-  themeColors['--em-orange-600'],
-  themeColors['--em-orange-700'],
-  themeColors['--em-orange-800'],
   themeColors['--em-orange-900'],
+  themeColors['--em-orange-800'],
+  themeColors['--em-orange-700'],
+  themeColors['--em-orange-600'],
+  themeColors['--em-orange-500'],
+  themeColors['--em-orange-400'],
+  themeColors['--em-orange-300'],
+  themeColors['--em-orange-200'],
+  themeColors['--em-orange-100'],
+  themeColors['--em-orange-050'],
 ];
 
 export const themeChartColors: string[] = [
-  themeColors['--em-orange-050'],
-  themeColors['--em-orange-100'],
-  themeColors['--em-orange-200'],
-  themeColors['--em-orange-300'],
-  themeColors['--em-orange-400'],
-  themeColors['--em-orange-500'],
-  themeColors['--em-orange-600'],
-  themeColors['--em-orange-700'],
-  themeColors['--em-orange-800'],
   themeColors['--em-orange-900'],
+  themeColors['--em-orange-800'],
+  themeColors['--em-orange-700'],
+  themeColors['--em-orange-600'],
+  themeColors['--em-orange-500'],
+  themeColors['--em-orange-400'],
+  themeColors['--em-orange-300'],
+  themeColors['--em-orange-200'],
+  themeColors['--em-orange-100'],
+  themeColors['--em-orange-050'],
 ];

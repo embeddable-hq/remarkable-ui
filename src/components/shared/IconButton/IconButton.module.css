@@ -1,13 +1,12 @@
 .iconButton {
   cursor: pointer;
-  /* TODO: add specifics */
   padding: var(--em-icon-btn-padding-top, 0.5rem) var(--em-icon-btn-padding-right, 0.125rem)
     var(--em-icon-btn-padding-bottom, 0.5rem) var(--em-icon-btn-padding-left, 0.125rem);
   border-radius: var(--em-icon-btn-border-radius-default, 624.9375rem);
   background: var(--em-icon-btn-bg-color-default, #ededf1);
   border: none;
-  height: 2rem;
-  width: 1.25rem;
+  width: var(--em-icon-btn-size-width, 1.25rem);
+  height: var(--em-icon-btn-size-height, 2rem);
   display: flex;
 }
 
@@ -26,6 +25,6 @@
 
 .icon {
   /* TODO: add specifics */
-  width: var(--width-400);
-  height: var(--width-400);
+  width: 16px;
+  height: 16px;
 }

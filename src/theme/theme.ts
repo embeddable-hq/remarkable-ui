@@ -22,6 +22,7 @@ export const remarkableTheme: Theme = {
   charts: {
     borderColors: themeChartBorderColors,
     colors: themeChartColors,
+    legendPosition: 'bottom',
   },
   formatter: themeFormatter,
   styles: themeStyles,

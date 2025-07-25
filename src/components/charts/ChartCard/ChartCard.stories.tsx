@@ -1,12 +1,25 @@
 import type { Meta } from '@storybook/react-webpack5';
 import { ChartCard } from './ChartCard';
 import { PieChart } from '../PieChart/PieChart';
+import { ChartData } from 'chart.js';
 
 const meta = {
   component: ChartCard,
 } satisfies Meta<typeof ChartCard>;
 
 export default meta;
+
+const data: ChartData<'pie'> = {
+  labels: ['Red', 'Blue', 'Yellow'],
+  datasets: [
+    {
+      label: '# of colors',
+      data: [300, 50, 100],
+      // backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      // borderColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+    },
+  ],
+};
 
 export const ChartLoaded = () => {
   return (
@@ -17,7 +30,7 @@ export const ChartLoaded = () => {
       hasResults
       style={{ height: '300px' }}
     >
-      <PieChart />
+      <PieChart data={data} options={{}} />
     </ChartCard>
   );
 };
@@ -30,7 +43,7 @@ export const ChartLoadedWithError = () => {
       style={{ height: '300px' }}
       errorMessage="An error occurred while loading the chart."
     >
-      <PieChart />
+      <PieChart data={data} options={{}} />
     </ChartCard>
   );
 };
@@ -43,7 +56,7 @@ export const ChartLoadedWithNoData = () => {
       hasResults={false}
       style={{ height: '300px' }}
     >
-      <PieChart />
+      <PieChart data={data} options={{}} />
     </ChartCard>
   );
 };
@@ -57,7 +70,7 @@ export const ChartLoading = () => {
       hasResults
       style={{ height: '300px' }}
     >
-      <PieChart />
+      <PieChart data={data} options={{}} />
     </ChartCard>
   );
 };
@@ -71,7 +84,7 @@ export const ChartLoadingWithNoData = () => {
       isLoading
       style={{ height: '300px' }}
     >
-      <PieChart />
+      <PieChart data={data} options={{}} />
     </ChartCard>
   );
 };

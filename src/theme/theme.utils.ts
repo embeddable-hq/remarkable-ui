@@ -1,4 +1,5 @@
 import { Theme } from './theme';
+import { ThemeStylesKeys } from './theme.constants';
 
 const generateCssVariables = (variables: Record<string, string>) => {
   let textContent = '';
@@ -41,7 +42,7 @@ export const injectCssVariables = (newTheme: Theme) => {
 const rootElement = document.documentElement;
 const numericRegex = /^-?\d+(\.\d+)?$/;
 
-export const getStyle = (variableName: string): string | number => {
+export const getStyle = (variableName: ThemeStylesKeys): string | number => {
   const computedStyle = getComputedStyle(rootElement);
   const rawValue = computedStyle.getPropertyValue(variableName).trim();
   if (!rawValue) return rawValue;
@@ -75,4 +76,33 @@ export const getStyle = (variableName: string): string | number => {
   }
 
   return rawValue;
+};
+
+export const getStyleNumber = (variableName: ThemeStylesKeys): number | undefined => {
+  const computedStyle = getComputedStyle(rootElement);
+  const rawValue = computedStyle.getPropertyValue(variableName).trim();
+  if (!rawValue) return undefined;
+
+  const numericValue = parseFloat(rawValue);
+  const rootFontSize = parseFloat(computedStyle.fontSize);
+
+  // “px”?
+  if (rawValue.slice(-2) === 'px') {
+    return numericValue;
+  }
+
+  // “rem” or “em”?
+  const unit3 = rawValue.slice(-3);
+  if (unit3 === 'rem') {
+    return numericValue * rootFontSize;
+  }
+  if (unit3 === 'em') {
+    return numericValue * rootFontSize;
+  }
+
+  // pure number
+  if (numericRegex.test(rawValue)) {
+    return numericValue;
+  }
+  return undefined;
 };
