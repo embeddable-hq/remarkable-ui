@@ -11,7 +11,7 @@ export type Theme = {
   charts: {
     colors: string[];
     borderColors?: string[];
-    legendPosition?: 'top' | 'right' | 'bottom' | 'left';
+    legendPosition: 'top' | 'right' | 'bottom' | 'left';
   };
   // TODO: add as we go
   styles: ThemeStyles;

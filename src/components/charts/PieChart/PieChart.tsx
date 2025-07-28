@@ -10,10 +10,11 @@ import {
 } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { mergician } from 'mergician';
-import { remarkableTheme, Theme } from '../../../theme/theme';
-import { geDefaultOptions, getDefaultData } from './PieChart.utils';
+import { Theme } from '../../../theme/theme';
+import { defaultOptions, defaultData } from './PieChart.utils';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 type PieChartProps = {
   data: ChartData<'pie'>;
@@ -21,18 +22,18 @@ type PieChartProps = {
   theme?: Theme;
 };
 
-export const PieChart: FC<PieChartProps> = ({ data, options = {}, theme = remarkableTheme }) => {
+export const PieChart: FC<PieChartProps> = ({ data, options = {} }) => {
   const mergedData: ChartData<'pie', number[], unknown> = {
     ...data,
     datasets:
       data.datasets?.map((dataset, index) => {
-        const defaultDataset = getDefaultData(theme).datasets?.[index] || { data: [] };
+        const defaultDataset = defaultData.datasets?.[index] || { data: [] };
         const merged = mergician(defaultDataset, dataset) as ChartDataset<'pie'>;
         return merged;
       }) || [],
   };
 
-  const mergedOptions = mergician(geDefaultOptions(theme), options);
+  const mergedOptions = mergician(defaultOptions, options);
 
   return <Pie data={mergedData} options={mergedOptions} />;
 };

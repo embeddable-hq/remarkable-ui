@@ -18,7 +18,7 @@ export const Default: Story = {
         {
           borderColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
           backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
-          data: [12000, 19000, 3000, 5000, 2000, 3000],
+          data: [12, 19, 3, 5, 2, 3],
         },
       ],
     },

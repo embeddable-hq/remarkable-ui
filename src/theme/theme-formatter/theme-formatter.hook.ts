@@ -10,7 +10,7 @@ import { cache, formatData } from './theme-formatter.utils';
 import { DimensionOrMeasure } from '@embeddable.com/core';
 import { Theme } from '../theme';
 
-type UseThemeFormatter = {
+export type UseThemeFormatter = {
   /**
    * Retrieves a translation
    * @example themeFormatter.text('Charts.other.label')

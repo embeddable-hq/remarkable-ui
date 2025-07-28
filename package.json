@@ -52,6 +52,7 @@
     "@storybook/react": "^9.0.18",
     "@tabler/icons-react": "^3.34.1",
     "chart.js": "^4.5.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "clsx": "^2.1.1",
     "i18next": "^25.3.2",
     "mergician": "^2.0.2",

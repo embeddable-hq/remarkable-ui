@@ -1,82 +1,83 @@
 import { ChartData, ChartOptions } from 'chart.js';
-import { getStyleNumber } from '../../../theme/theme.utils';
-import { Theme } from '../../../theme';
+import { getStyle, getStyleNumber } from '../../../theme/theme.utils';
 
-export const getDefaultData = (theme: Theme): ChartData<'pie'> => ({
+// TODO: update the rest of the vars
+
+export const defaultData: ChartData<'pie'> = {
   datasets: [
     {
       data: [],
-      backgroundColor: theme.charts.colors,
-      borderColor: theme.charts.borderColors,
+      backgroundColor: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
+      borderColor: ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
     },
   ],
-});
+};
 
-export const geDefaultOptions = (theme: Theme): Partial<ChartOptions<'pie'>> => ({
+export const defaultOptions: Partial<ChartOptions<'pie'>> = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    // TODO: check with harry - as this prop is not recognized
-    // datalabels: {
-    //   display: showValueLabels ? 'auto' : false,
-    //   ...dataLabelOptions,
-    //   anchor: 'center',
-    //   align: 'center',
-    //   formatter: (value: string) => formatValue(value, { typeHint: 'number', theme }),
-    // },
+    datalabels: {
+      display: true,
+      backgroundColor: getStyle('--em-label-background-color-default') as string,
+      borderRadius: getStyleNumber('--em-label-border-radius-default'),
+      padding: {
+        top: getStyleNumber('--em-label-padding-top-bottom'),
+        bottom: getStyleNumber('--em-label-padding-top-bottom'),
+        right: getStyleNumber('--em-label-padding-left-right'),
+        left: getStyleNumber('--em-label-padding-left-right'),
+      },
+      color: getStyle('--em-label-label-font-color-default') as string,
+      font: {
+        family: getStyle('--em-label-label-font-family') as string,
+        size: getStyleNumber('--em-label-label-font-size'),
+        weight: getStyle('--em-label-label-font-weight') as number,
+      },
+      anchor: 'center',
+      align: 'center',
+    },
     legend: {
       display: true,
-      position: theme.charts.legendPosition,
       labels: {
-        // TODO: border radius is not stylable
-        borderRadius: 50,
         boxWidth: getStyleNumber('--em-category-indicator-size-width'),
         boxHeight: getStyleNumber('--em-category-indicator-size-height'),
         usePointStyle: true,
-        color: theme.styles['--em-category-indicator-group-label-color-default'],
+        color: 'red',
+        // color: getStyle('--em-category-indicator-group-') as string,
         font: {
-          family: theme.styles['--em-category-indicator-group-label-family'],
-          size: getStyleNumber('--em-category-indicator-group-label-font-size'),
-          weight: getStyleNumber('--em-category-indicator-group-label-font-weight'),
-          lineHeight: getStyleNumber('--em-category-indicator-group-label-font-line-height'),
+          family: getStyle('--em-category-indicator-group-label-family') as string,
+          // size: getStyleNumber('--em-category-indicator-group-label-font-size'),
+          // weight: getStyleNumber('--em-category-indicator-group-label-font-weight'),
+          // lineHeight: getStyleNumber('--em-category-indicator-group-label-font-line-height'),
         },
       },
     },
     tooltip: {
       caretSize: 0,
       enabled: true,
-      backgroundColor: theme.styles['--em-chart-tooltip-background-color-default'],
+      backgroundColor: getStyle('--em-chart-tooltip-background-color-default') as string,
       boxPadding: getStyleNumber('--em-chart-tooltip-padding-default'),
       cornerRadius: getStyleNumber('--em-chart-tooltip-border-radius-default'),
       padding: getStyleNumber('--em-chart-tooltip-padding-default'),
       displayColors: true,
-      // TODO: wait for denis designs
-      // bodyColor: theme.styles['--em-chart-tooltip-category-color'],
-      // bodyAlign: theme.styles['--em-chart-tooltip-category-align'] as any,
-      // bodyFont: {
-      //   family: theme.styles['--em-chart-tooltip-category-family'],
-      //   size: getStyle('--em-chart-tooltip-category-size') as number,
-      //   weight: getStyle('--em-chart-tooltip-category-weight') as number,
-      // },
-      // titleAlign: theme.styles['--em-chart-tooltip-title-align'] as any,
-      // titleColor: theme.styles['--em-chart-tooltip-title-color'],
-      // titleFont: {
-      //   family: theme.styles['--em-chart-tooltip-title-family'],
-      //   size: getStyle('--em-chart-tooltip-title-size') as number,
-      //   weight: getStyle('--em-chart-tooltip-title-weight') as number,
-      // },
-      // usePointStyle: true,
-      callbacks: {
-        label(tooltipItem) {
-          const raw = tooltipItem.raw as number;
-          const dataset = tooltipItem.dataset;
-          const total = Array.isArray(dataset.data)
-            ? dataset.data.reduce((sum: number, v: unknown) => sum + parseFloat(v as string), 0)
-            : 0;
-          const pct = total ? Math.round((raw / total) * 100) : 0;
-          return `${theme.formatter.numberFormatter(theme).format(raw)} (${pct}%)`;
-        },
+      bodyColor: getStyle('--em-foreground-color-inverted') as string,
+      // TODO: wait fo the variable
+      bodyAlign: 'right',
+      bodyFont: {
+        // family: getStyle('--em-category-group-item-label-font-font-family') as string,
+        size: getStyleNumber('--em-category-group-item-label-font-size'),
+        weight: getStyleNumber('--em-category-group-item-label-font-weight'),
+        // lineHeight: getStyleNumber('--em-category-group-item-label-font-height'),
       },
+      // titleAlign: getStyle('--em-chart-tooltip-title-font-align') as string,
+      // titleColor: getStyle('--em-chart-tooltip-title-font-color') as string,
+      titleFont: {
+        family: getStyle('--em-chart-tooltip-title-font-font-family') as string,
+        size: getStyleNumber('--em-chart-tooltip-title-font-size'),
+        weight: getStyleNumber('--em-chart-tooltip-title-font-weight'),
+        lineHeight: getStyleNumber('--em-chart-tooltip-title-font-line-height'),
+      },
+      usePointStyle: true,
     },
   },
-});
+};
