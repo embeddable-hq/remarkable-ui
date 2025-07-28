@@ -1,6 +1,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
-import { Theme } from 'src/theme';
 import { getStyleNumber } from '../../../theme/theme.utils';
+import { Theme } from '../../../theme';
 
 export const getDefaultData = (theme: Theme): ChartData<'pie'> => ({
   datasets: [

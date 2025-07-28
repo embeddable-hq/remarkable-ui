@@ -2,7 +2,7 @@
 import { ChartCard } from '../../../components/charts/ChartCard/ChartCard';
 import { PieChart } from '../../../components/charts/PieChart/PieChart';
 import { useTheme } from '@embeddable.com/react';
-import { Theme } from 'src/theme';
+import { Theme } from '../../../theme/theme';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { FC } from 'react';
@@ -13,9 +13,8 @@ const getPieChartData = (
   dimension: Dimension,
   measure: Measure,
   maxLegendItems?: number,
-  theme?: Theme,
 ): ChartData<'pie'> => {
-  const groupedData = groupTailAsOther(data, dimension, measure, maxLegendItems, theme);
+  const groupedData = groupTailAsOther(data, dimension, measure, maxLegendItems);
   return {
     labels: groupedData.map((item) => item[dimension.name]),
     datasets: [

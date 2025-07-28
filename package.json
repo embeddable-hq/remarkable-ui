@@ -49,6 +49,7 @@
     ]
   },
   "dependencies": {
+    "@storybook/react": "^9.0.18",
     "@tabler/icons-react": "^3.34.1",
     "chart.js": "^4.5.0",
     "clsx": "^2.1.1",

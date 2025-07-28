@@ -1,7 +1,8 @@
 import { CSSProperties, FC } from 'react';
+import { IconAlertCircle } from '@tabler/icons-react';
+import { i18nTheme } from '../../../theme/i18n';
 import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
 import { Skeleton } from '../../shared/Skeleton/Skeleton';
-import { IconAlertCircle } from '@tabler/icons-react';
 import { ChartCardInfo } from './sub-components/ChartCardInfo';
 import styles from './ChartCard.module.css';
 
@@ -24,6 +25,8 @@ export const ChartCard: FC<ChartCardProps> = ({
   errorMessage,
   ...props
 }) => {
+  const i18n = i18nTheme();
+
   const getDisplay = () => {
     if (!hasResults && isLoading) {
       return <Skeleton />;
@@ -34,14 +37,19 @@ export const ChartCard: FC<ChartCardProps> = ({
         <ChartCardInfo
           className={styles.error}
           icon={IconAlertCircle}
-          title="Something went wrong."
-          message={errorMessage ?? 'Please try again.'}
+          title={i18n.t('charts.errorTitle')}
+          message={i18n.t('charts.errorMessage')}
         />
       );
     }
 
     if (!hasResults) {
-      return <ChartCardInfo title="It's a bit empty here." message="Try adding something." />;
+      return (
+        <ChartCardInfo
+          title={i18n.t('charts.emptyTitle')}
+          message={i18n.t('charts.emptyMessage')}
+        />
+      );
     }
 
     return children;
