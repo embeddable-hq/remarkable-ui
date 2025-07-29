@@ -9,6 +9,6 @@ export type TypographyProps = {
   weight?: TypographyWeight;
   height?: TypographyHeight;
   children: React.ReactNode;
-  as?: keyof React.JSX.IntrinsicElements;
+  as?: any;
   className?: string;
 };

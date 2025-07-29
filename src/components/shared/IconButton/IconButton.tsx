@@ -5,20 +5,17 @@ import { TablerIcon } from '@tabler/icons-react';
 
 type IconButtonProps = {
   className?: string;
-  disabled?: boolean;
   icon: TablerIcon;
-  onClick?: () => void;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const IconButton: React.FC<IconButtonProps> = ({
-  icon: Icon,
-  className,
-  disabled,
-  onClick,
-}) => {
-  return (
-    <button onClick={onClick} disabled={disabled} className={clsx(styles.iconButton, className)}>
-      <Icon className={styles.icon} />
-    </button>
-  );
-};
+export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ icon: Icon, className, ...props }, ref) => {
+    return (
+      <button ref={ref} className={clsx(styles.iconButton, className)} {...props}>
+        <Icon className={styles.icon} />
+      </button>
+    );
+  },
+);
+
+IconButton.displayName = 'IconButton';

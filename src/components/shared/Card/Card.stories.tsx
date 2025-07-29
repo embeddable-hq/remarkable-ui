@@ -7,8 +7,8 @@ const meta = {
 
 export default meta;
 
-export const Default = (args: { isLoading: boolean }) => (
-  <Card isLoading={args.isLoading}>
+export const Default = () => (
+  <Card>
     <CardHeader title="Title" subtitle="Subtitle" />
     <CardContent>This is the content of the card.</CardContent>
   </Card>

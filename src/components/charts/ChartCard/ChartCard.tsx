@@ -1,34 +1,42 @@
-import { CSSProperties, FC } from 'react';
-import { IconAlertCircle } from '@tabler/icons-react';
+import React, { CSSProperties, FC } from 'react';
+import { IconAlertCircle, IconLoader2 } from '@tabler/icons-react';
 import { i18nTheme } from '../../../theme/i18n';
 import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
 import { Skeleton } from '../../shared/Skeleton/Skeleton';
 import { ChartCardInfo } from './sub-components/ChartCardInfo';
 import styles from './ChartCard.module.css';
+import { ChartCardOptions } from './sub-components/ChartCardOptions/ChartCardOptions';
+import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
 type ChartCardProps = {
   title: string;
   subtitle?: string;
   children: React.ReactNode;
-  hasResults?: boolean;
+  data: DataResponse;
   isLoading?: boolean;
   errorMessage?: string;
   style?: CSSProperties;
+  dimensions?: Dimension[];
+  measures?: Measure[];
 };
 
 export const ChartCard: FC<ChartCardProps> = ({
   title,
   subtitle,
   children,
-  hasResults,
-  isLoading,
+  data,
   errorMessage,
+  dimensions,
+  measures,
   ...props
 }) => {
   const i18n = i18nTheme();
+  const chartRef = React.createRef<HTMLDivElement>();
+
+  const hasData = data.data && data.data.length > 0;
 
   const getDisplay = () => {
-    if (!hasResults && isLoading) {
+    if (!hasData && data.isLoading) {
       return <Skeleton />;
     }
 
@@ -43,7 +51,7 @@ export const ChartCard: FC<ChartCardProps> = ({
       );
     }
 
-    if (!hasResults) {
+    if (!hasData) {
       return (
         <ChartCardInfo
           title={i18n.t('charts.emptyTitle')}
@@ -56,8 +64,26 @@ export const ChartCard: FC<ChartCardProps> = ({
   };
 
   return (
-    <Card isLoading={isLoading} {...props}>
-      <CardHeader title={title} subtitle={subtitle} />
+    <Card ref={chartRef} {...props}>
+      <CardHeader
+        title={title}
+        subtitle={subtitle}
+        rightContent={
+          <div data-png-export-ignore>
+            {data.isLoading ? (
+              <IconLoader2 className={styles.loading} />
+            ) : (
+              <ChartCardOptions
+                title={title}
+                containerRef={chartRef}
+                data={data.data}
+                dimensions={dimensions}
+                measures={measures}
+              />
+            )}
+          </div>
+        }
+      />
       <CardContent>{getDisplay()}</CardContent>
     </Card>
   );

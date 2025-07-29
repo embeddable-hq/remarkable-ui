@@ -1,0 +1,41 @@
+.content {
+  padding: var(--em-select-menu-list-padding-default, 0.5rem);
+  border-radius: var(--em-select-menu-list-border-radius-default, 0.75rem);
+  background: var(--em-background-color-neutral, #fff);
+  box-shadow: var(--em-box-shadow-default-position-x, 0)
+    var(--em-box-shadow-default-position-y, 1px) var(--em-box-shadow-default-blur, 40px)
+    var(--em-box-shadow-default-spread, 0)
+    var(--em-box-shadow-default-color, rgba(33, 33, 41, 0.25));
+}
+
+.item {
+  height: var(--em-select-list-item-size-height, 2rem);
+  padding: var(--em-select-list-item-padding-default, 0.5rem);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.item svg {
+  width: var(--em-select-menu-icon-size-width, 1rem);
+  height: var(--em-select-menu-icon-size-height, 1rem);
+}
+
+.item p {
+  color: var(--em-select-list-item-label-color-default, #212129);
+  font-family: Inter;
+  font-size: var(--em-select-list-item-left-label-font-size, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-select-list-item-left-label-font-weight, 500);
+  line-height: var(--em-select-list-item-left-label-font-line-height, 0.875rem);
+  padding: 0rem var(--em-select-list-item-label-padding-default, 0.5rem);
+}
+
+.loading {
+  padding: var(--em-card-loader-padding-default, 0.25rem);
+  border-radius: var(--em-card-loader-border-radius-default, 624.9375rem);
+  background: var(--em-background-color-default, #f7f7f8);
+  width: var(--em-card-loader-icon-size-width, 1.5rem);
+  height: var(--em-card-loader-icon-size-height, 1.5rem);
+  animation: spin 2s linear infinite;
+}

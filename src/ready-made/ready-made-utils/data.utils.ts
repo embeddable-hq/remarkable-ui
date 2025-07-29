@@ -18,7 +18,7 @@ export const groupTailAsOther = (
   return [
     ...head,
     {
-      [dimension.name]: i18n.t('common.other') || 'Other',
+      [dimension.name]: i18n.t('common.other'),
       [measure.name]: sumTail,
     },
   ];

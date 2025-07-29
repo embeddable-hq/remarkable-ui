@@ -26,8 +26,7 @@ export const ChartLoaded = () => {
     <ChartCard
       title="Chart Title"
       subtitle="Chart Subtitle"
-      isLoading={false}
-      hasResults
+      data={{ data: [{}], isLoading: false }}
       style={{ height: '300px' }}
     >
       <PieChart data={data} options={{}} />
@@ -38,6 +37,7 @@ export const ChartLoaded = () => {
 export const ChartLoadedWithError = () => {
   return (
     <ChartCard
+      data={{ data: [{}], isLoading: false }}
       title="Chart Title"
       subtitle="Chart Subtitle"
       style={{ height: '300px' }}
@@ -51,9 +51,9 @@ export const ChartLoadedWithError = () => {
 export const ChartLoadedWithNoData = () => {
   return (
     <ChartCard
+      data={{ data: [], isLoading: false }}
       title="Chart Title"
       subtitle="Chart Subtitle"
-      hasResults={false}
       style={{ height: '300px' }}
     >
       <PieChart data={data} options={{}} />
@@ -66,8 +66,7 @@ export const ChartLoading = () => {
     <ChartCard
       title="Chart Title"
       subtitle="Chart Subtitle"
-      isLoading
-      hasResults
+      data={{ data: [{}], isLoading: true }}
       style={{ height: '300px' }}
     >
       <PieChart data={data} options={{}} />
@@ -80,8 +79,7 @@ export const ChartLoadingWithNoData = () => {
     <ChartCard
       title="Chart Title"
       subtitle="Chart Subtitle"
-      hasResults={false}
-      isLoading
+      data={{ data: [], isLoading: true }}
       style={{ height: '300px' }}
     >
       <PieChart data={data} options={{}} />

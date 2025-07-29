@@ -10,7 +10,7 @@ export function Typography({
   children,
   as: Component = 'p',
   className,
-}: TypographyProps): React.JSX.Element {
+}: TypographyProps): any {
   return (
     <Component
       className={clsx(

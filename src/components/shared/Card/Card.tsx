@@ -1,25 +1,23 @@
 import React, { CSSProperties } from 'react';
 import styles from './Card.module.css';
 import { Typography } from '../Typography/Typography';
-import { IconLoader2 } from '@tabler/icons-react';
 import clsx from 'clsx';
 
 type CardProps = {
   children: React.ReactNode;
-  isLoading?: boolean;
+
   style?: CSSProperties;
 };
 
-export const Card: React.FC<CardProps> = ({ children, isLoading, ...props }) => {
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(({ children, ...props }, ref) => {
   return (
-    <div className={clsx(styles.card)} {...props}>
-      <div className={clsx(styles.loadingIcon, isLoading && styles.loadingIconVisible)}>
-        <IconLoader2 />
-      </div>
+    <div className={clsx(styles.card)} ref={ref} {...props}>
       {children}
     </div>
   );
-};
+});
+
+Card.displayName = 'Card';
 
 type CardHeaderProps = {
   title: string;
@@ -48,6 +46,14 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightCo
 type CardContentProps = {
   children: React.ReactNode;
 };
-export const CardContent: React.FC<CardContentProps> = ({ children }) => {
-  return <div className={styles.content}>{children}</div>;
-};
+export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
+  ({ children }, ref) => {
+    return (
+      <div className={styles.content} ref={ref}>
+        {children}
+      </div>
+    );
+  },
+);
+
+CardContent.displayName = 'CardContent';

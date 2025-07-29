@@ -1,3 +1,4 @@
+import { exportCSV, exportPNG, exportXLSX } from '../ready-made/ready-made-utils/export.utils';
 import { themeFormatter } from './theme-formatter/theme-formatter';
 import { ThemeFormatter } from './theme-formatter/theme-formatter.types';
 import {
@@ -6,9 +7,11 @@ import {
   ThemeStyles,
   themeStyles,
 } from './theme.constants';
+// import { IconCloudDownload, IconFileTypePng, IconFileTypeXls } from '@tabler/icons-react';
 
 export type Theme = {
   charts: {
+    exportOptions?: { label: string; icon?: any; action: any }[];
     colors: string[];
     borderColors?: string[];
     legendPosition: 'top' | 'right' | 'bottom' | 'left';
@@ -20,6 +23,26 @@ export type Theme = {
 
 export const remarkableTheme: Theme = {
   charts: {
+    exportOptions: [
+      {
+        label: 'Download CSV',
+        action: exportCSV,
+        icon: 'ola',
+        // icon: <IconCloudDownload />,
+      },
+      {
+        label: 'Download XLSX',
+        action: exportXLSX,
+        // icon: <IconFileTypeXls />,
+        icon: 'adeus',
+      },
+      {
+        label: 'Download PNG',
+        action: exportPNG,
+        icon: 'test1',
+        // icon: <IconFileTypePng />,
+      },
+    ],
     borderColors: themeChartBorderColors,
     colors: themeChartColors,
     legendPosition: 'bottom',
