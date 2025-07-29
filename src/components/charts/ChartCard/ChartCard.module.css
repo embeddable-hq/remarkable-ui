@@ -1,5 +1,12 @@
-.error {
-  color: red;
+.header {
+  display: flex;
+  gap: var(--em-card-title-padding-default, 1rem);
+}
+
+.error svg,
+.error h1,
+.error p {
+  color: var(--em-card-error-subtitle-color-default, #d03109);
 }
 
 .loading {

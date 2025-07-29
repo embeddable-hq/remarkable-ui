@@ -19,13 +19,7 @@
 }
 
 .header {
-  display: flex;
-  gap: var(--em-card-title-padding-default, 1rem);
   width: 100%;
-  justify-content: space-between;
-}
-
-.headerTitles {
   display: flex;
   flex-direction: column;
   gap: var(--em-card-title-padding-default, 1rem);
@@ -34,13 +28,16 @@
 .title {
   color: var(--em-card-title-color-default, #212129);
   font-size: var(--em-card-title-font-size, 1.25rem);
+  font-style: normal;
   font-weight: var(--em-card-title-font-weight, 700);
   line-height: var(--em-card-title-font-line-height, 1.1875rem);
 }
 
 .subtitle {
   color: var(--em-foreground-color-muted, #5c5c66);
+  font-family: var(--em-card-subtitle-font-font-family, Inter);
   font-size: var(--em-card-subtitle-font-size, 0.875rem);
+  font-style: normal;
   font-weight: var(--em-card-subtitle-font-weight, 400);
   line-height: var(--em-card-subtitle-font-line-height, 0.875rem);
 }

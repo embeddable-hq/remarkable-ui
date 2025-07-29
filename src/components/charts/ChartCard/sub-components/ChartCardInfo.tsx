@@ -1,7 +1,7 @@
 import { TablerIcon } from '@tabler/icons-react';
 import clsx from 'clsx';
-import { Typography } from '../../../shared/Typography/Typography';
 import styles from './ChartCardInfo.module.css';
+import { Typography } from '../../../shared/Typography/Typography';
 
 type ChartCardInfoProps = {
   className?: string;
@@ -19,10 +19,10 @@ export const ChartCardInfo: React.FC<ChartCardInfoProps> = ({
   return (
     <div className={clsx(styles.info, className)}>
       {Icon && <Icon />}
-      <Typography size="sm" weight="medium">
+      <Typography as="h1" className={styles.title}>
         {title}
       </Typography>
-      <Typography size="sm" weight="regular">
+      <Typography as="p" className={styles.message}>
         {message}
       </Typography>
     </div>

@@ -65,25 +65,22 @@ export const ChartCard: FC<ChartCardProps> = ({
 
   return (
     <Card ref={chartRef} {...props}>
-      <CardHeader
-        title={title}
-        subtitle={subtitle}
-        rightContent={
-          <div data-png-export-ignore>
-            {data.isLoading ? (
-              <IconLoader2 className={styles.loading} />
-            ) : (
-              <ChartCardOptions
-                title={title}
-                containerRef={chartRef}
-                data={data.data}
-                dimensions={dimensions}
-                measures={measures}
-              />
-            )}
-          </div>
-        }
-      />
+      <div className={styles.header}>
+        <CardHeader title={title} subtitle={subtitle} />
+        <div data-png-export-ignore>
+          {data.isLoading ? (
+            <IconLoader2 className={styles.loading} />
+          ) : (
+            <ChartCardOptions
+              title={title}
+              containerRef={chartRef}
+              data={data.data}
+              dimensions={dimensions}
+              measures={measures}
+            />
+          )}
+        </div>
+      </div>
       <CardContent>{getDisplay()}</CardContent>
     </Card>
   );

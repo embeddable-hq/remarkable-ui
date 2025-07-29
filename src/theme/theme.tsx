@@ -11,7 +11,8 @@ import {
 
 export type Theme = {
   charts: {
-    exportOptions?: { label: string; icon?: any; action: any }[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    exportOptions?: { label: string; icon?: any; action: (props: any) => void }[];
     colors: string[];
     borderColors?: string[];
     legendPosition: 'top' | 'right' | 'bottom' | 'left';
