@@ -1,27 +1,19 @@
 import React from 'react';
-import { TypographyProps } from './Typography.types';
 import styles from './Typography.module.css';
 import clsx from 'clsx';
 
+type TypographyElement = 'p' | 'span' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'label' | 'div';
+
+type TypographyProps = {
+  children: React.ReactNode;
+  as?: TypographyElement;
+  className?: string;
+};
+
 export function Typography({
-  size = 'default',
-  weight = 'regular',
-  height = 'md',
   children,
   as: Component = 'p',
   className,
-}: TypographyProps): any {
-  return (
-    <Component
-      className={clsx(
-        styles.typography,
-        styles[`size-${size}`],
-        styles[`weight-${weight}`],
-        styles[`height-${height}`],
-        className,
-      )}
-    >
-      {children}
-    </Component>
-  );
+}: TypographyProps): React.JSX.Element {
+  return <Component className={clsx(styles.typography, className)}>{children}</Component>;
 }
