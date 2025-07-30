@@ -16,14 +16,13 @@
   cursor: pointer;
 }
 
-.item svg {
+.icon {
   width: var(--em-select-menu-icon-size-width, 1rem);
   height: var(--em-select-menu-icon-size-height, 1rem);
 }
 
-.item p {
+.label {
   color: var(--em-select-list-item-label-color-default, #212129);
-  font-family: Inter;
   font-size: var(--em-select-list-item-left-label-font-size, 0.75rem);
   font-style: normal;
   font-weight: var(--em-select-list-item-left-label-font-weight, 500);

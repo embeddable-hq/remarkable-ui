@@ -3,10 +3,10 @@ import { IconAlertCircle, IconLoader2 } from '@tabler/icons-react';
 import { i18nTheme } from '../../../theme/i18n';
 import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
 import { Skeleton } from '../../shared/Skeleton/Skeleton';
-import { ChartCardInfo } from './sub-components/ChartCardInfo';
 import styles from './ChartCard.module.css';
-import { ChartCardOptions } from './sub-components/ChartCardOptions/ChartCardOptions';
+import { ChartCardOptions } from './ChartCardMenu/ChartCardMenu';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { ChartCardInfo } from './ChartCardInfo/ChartCardInfo';
 
 type ChartCardProps = {
   title: string;

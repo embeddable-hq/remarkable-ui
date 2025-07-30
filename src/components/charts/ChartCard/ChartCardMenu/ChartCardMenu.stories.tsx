@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { ChartCardOptions } from './ChartCardOptions';
+import { ChartCardOptions } from './ChartCardMenu';
 
 const meta = {
   component: ChartCardOptions,

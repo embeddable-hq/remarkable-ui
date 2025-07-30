@@ -1,24 +1,18 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import styles from './ChartCardOptions.module.css';
-import { IconButton } from '../../../../shared/IconButton/IconButton';
+import styles from './ChartCardMenu.module.css';
+import { IconButton } from '../../../shared/IconButton/IconButton';
 import { IconDotsVertical, IconLoader2 } from '@tabler/icons-react';
 import React from 'react';
 import { useTheme } from '@embeddable.com/react';
-import { Theme } from '../../../../../theme';
-import { ThemeChartsExportOptionActionProps } from '../../../../../theme/theme';
+import { Theme } from '../../../../theme';
+import { ThemeChartsExportOptionActionProps } from '../../../../theme/theme';
+import { Typography } from '../../../shared/Typography/Typography';
 
 type ChartCardOptionsProps = ThemeChartsExportOptionActionProps;
 
-export const ChartCardOptions: React.FC<ChartCardOptionsProps> = ({
-  title,
-  data,
-  dimensions,
-  measures,
-  containerRef,
-}) => {
-  const [isLoading, setIsLoading] = React.useState(false);
-
+export const ChartCardOptions: React.FC<ChartCardOptionsProps> = (props) => {
   const theme = useTheme() as Theme;
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const startExport = (exportFunction: () => void | Promise<void>) => {
     setIsLoading(true);
@@ -28,15 +22,7 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = ({
   };
 
   const handleExport = (action: (props: ChartCardOptionsProps) => void) => {
-    startExport(() =>
-      action({
-        title,
-        measures,
-        dimensions,
-        data,
-        containerRef,
-      }),
-    );
+    startExport(() => action(props));
   };
 
   return (
@@ -56,9 +42,9 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = ({
               onSelect={() => handleExport(option.action)}
               className={styles.item}
             >
-              <img src={option.iconSrc} />
+              <img src={option.iconSrc} className={styles.icon} />
 
-              <p>{option.label}</p>
+              <Typography className={styles.label}>{option.label}</Typography>
             </DropdownMenu.Item>
           );
         })}

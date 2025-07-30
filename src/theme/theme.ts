@@ -10,8 +10,7 @@ import {
 } from './theme.constants';
 import React from 'react';
 import CloudDownload from '../icons/cloud-download.svg';
-import FileTypePng from '../icons/file-type-png.svg';
-import FileTypeXls from '../icons/file-type-xls.svg';
+import PhotoDown from '../icons/photo-down.svg';
 
 export type ThemeChartsExportOptionActionProps = {
   title?: string;
@@ -47,12 +46,12 @@ export const remarkableTheme: Theme = {
       {
         label: 'Download XLSX',
         action: exportXLSX,
-        iconSrc: FileTypeXls,
+        iconSrc: CloudDownload,
       },
       {
         label: 'Download PNG',
         action: exportPNG,
-        iconSrc: FileTypePng,
+        iconSrc: PhotoDown,
       },
     ],
     borderColors: themeChartBorderColors,
