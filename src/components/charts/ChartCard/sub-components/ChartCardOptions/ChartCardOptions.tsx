@@ -3,17 +3,12 @@ import styles from './ChartCardOptions.module.css';
 import { IconButton } from '../../../../shared/IconButton/IconButton';
 import { IconDotsVertical, IconLoader2 } from '@tabler/icons-react';
 import React from 'react';
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../../theme';
+import { ThemeChartsExportOptionActionProps } from '../../../../../theme/theme';
 
-type ChartCardOptionsProps = {
-  title?: string;
-  data?: DataResponse['data'];
-  dimensions?: Dimension[];
-  measures?: Measure[];
-  containerRef?: React.RefObject<HTMLDivElement | null>;
-};
+type ChartCardOptionsProps = ThemeChartsExportOptionActionProps;
+
 export const ChartCardOptions: React.FC<ChartCardOptionsProps> = ({
   title,
   data,
@@ -32,9 +27,9 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = ({
     }, 100);
   };
 
-  const customExport = (customExportFunction: (props: ChartCardOptionsProps) => void) => {
+  const handleExport = (action: (props: ChartCardOptionsProps) => void) => {
     startExport(() =>
-      customExportFunction({
+      action({
         title,
         measures,
         dimensions,
@@ -58,10 +53,11 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = ({
           return (
             <DropdownMenu.Item
               key={index}
-              onSelect={() => customExport(option.action)}
+              onSelect={() => handleExport(option.action)}
               className={styles.item}
             >
-              {option.icon}
+              <img src={option.iconSrc} />
+
               <p>{option.label}</p>
             </DropdownMenu.Item>
           );

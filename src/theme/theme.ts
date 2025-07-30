@@ -1,3 +1,4 @@
+import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { exportCSV, exportPNG, exportXLSX } from '../ready-made/ready-made-utils/export.utils';
 import { themeFormatter } from './theme-formatter/theme-formatter';
 import { ThemeFormatter } from './theme-formatter/theme-formatter.types';
@@ -7,17 +8,30 @@ import {
   ThemeStyles,
   themeStyles,
 } from './theme.constants';
-// import { IconCloudDownload, IconFileTypePng, IconFileTypeXls } from '@tabler/icons-react';
+import React from 'react';
+import CloudDownload from '../icons/cloud-download.svg';
+import FileTypePng from '../icons/file-type-png.svg';
+import FileTypeXls from '../icons/file-type-xls.svg';
+
+export type ThemeChartsExportOptionActionProps = {
+  title?: string;
+  data?: DataResponse['data'];
+  dimensions?: Dimension[];
+  measures?: Measure[];
+  containerRef?: React.RefObject<HTMLDivElement | null>;
+};
 
 export type Theme = {
   charts: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    exportOptions?: { label: string; icon?: any; action: (props: any) => void }[];
+    exportOptions?: {
+      label: string;
+      iconSrc?: string;
+      action: (props: ThemeChartsExportOptionActionProps) => void;
+    }[];
     colors: string[];
     borderColors?: string[];
     legendPosition: 'top' | 'right' | 'bottom' | 'left';
   };
-  // TODO: add as we go
   styles: ThemeStyles;
   formatter: ThemeFormatter;
 };
@@ -28,20 +42,17 @@ export const remarkableTheme: Theme = {
       {
         label: 'Download CSV',
         action: exportCSV,
-        icon: 'ola',
-        // icon: <IconCloudDownload />,
+        iconSrc: CloudDownload,
       },
       {
         label: 'Download XLSX',
         action: exportXLSX,
-        // icon: <IconFileTypeXls />,
-        icon: 'adeus',
+        iconSrc: FileTypeXls,
       },
       {
         label: 'Download PNG',
         action: exportPNG,
-        icon: 'test1',
-        // icon: <IconFileTypePng />,
+        iconSrc: FileTypePng,
       },
     ],
     borderColors: themeChartBorderColors,

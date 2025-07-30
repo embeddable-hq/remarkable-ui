@@ -5,7 +5,7 @@ import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme/theme';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
-import { FC } from 'react';
+import React from 'react';
 import { groupTailAsOther } from '../../ready-made-utils/data.utils';
 // import {
 //   UseThemeFormatter,
@@ -75,7 +75,7 @@ interface PieChartProps {
   title: string;
 }
 
-const ReadyMadePieChart: FC<PieChartProps> = ({
+const ReadyMadePieChart: React.FC<PieChartProps> = ({
   description,
   dimension,
   maxLegendItems,
@@ -87,7 +87,7 @@ const ReadyMadePieChart: FC<PieChartProps> = ({
   title,
 }) => {
   const theme = useTheme() as Theme;
-  console.log('theme', theme);
+  console.log('theme', theme.charts);
   // const themeFormatter = useThemeFormatter(theme);
 
   const data = getPieChartData(results.data ?? [], dimension, measure, maxLegendItems);
