@@ -35,6 +35,7 @@ export default defineConfig([
       },
     },
   },
+
   // React Hooks rules for TS and TSX files
   {
     files: ['**/*.{ts,tsx}'],
@@ -81,5 +82,14 @@ export default defineConfig([
   ...storybook.configs['flat/recommended'],
 
   // Ignore
-  globalIgnores(['.embeddable', '.embeddable-build', '.embeddable-tmp', 'dist', 'node_modules']),
+  globalIgnores([
+    '.embeddable',
+    '.embeddable-dev-build',
+    '.embeddable-dev-tmp',
+    '.embeddable-build',
+    '.embeddable-tmp',
+    'dist',
+    'node_modules',
+    '**/*.d.ts',
+  ]),
 ]);
