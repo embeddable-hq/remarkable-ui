@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Pie } from 'react-chartjs-2';
 import {
   ArcElement,
   Chart as ChartJS,
@@ -8,11 +9,10 @@ import {
   Legend,
   Tooltip,
 } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { Theme } from '../../../theme/theme';
 import { defaultOptions, defaultData } from './PieChart.utils';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 

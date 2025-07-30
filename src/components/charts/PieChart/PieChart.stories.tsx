@@ -13,19 +13,21 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: ['Orange 1', 'Orange 2', 'Orange 3', 'Orange 4', 'Orange 5', 'Orange 6'],
       datasets: [
         {
-          borderColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
-          backgroundColor: ['red', 'blue', 'yellow', 'green', 'purple', 'orange'],
           data: [12, 19, 3, 5, 2, 3],
         },
       ],
     },
     options: {
       plugins: {
+        datalabels: {
+          display: true,
+        },
         legend: {
           position: 'right',
+          display: true,
         },
         tooltip: { enabled: true },
       },
