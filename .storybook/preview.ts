@@ -1,8 +1,6 @@
 import type { Preview } from '@storybook/react';
 import { injectCssVariables } from '../src/theme/theme.utils';
 import { remarkableTheme } from '../src/theme/theme';
-import './i18n';
-import i18next from 'i18next';
 
 export const globalTypes = {
   locale: {
@@ -19,17 +17,19 @@ export const globalTypes = {
   },
 };
 
-export const decorators = [
-  (Story, context) => {
-    const { locale } = context.globals;
+// TODO: Make storybook work with i18n
+// i18nSetup(remarkableTheme);
+// export const decorators = [
+//   (Story, context) => {
+//     const { locale } = context.globals;
 
-    if (i18next.language !== locale) {
-      i18next.changeLanguage(locale);
-    }
+//     if (i18n.language !== locale) {
+//       i18n.changeLanguage(locale);
+//     }
 
-    return Story();
-  },
-];
+//     return Story();
+//   },
+// ];
 
 injectCssVariables(remarkableTheme);
 

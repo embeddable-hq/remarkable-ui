@@ -13,6 +13,7 @@ const config: StorybookConfig = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       src: path.resolve(__dirname, '../src'),
+      '@embeddable.com/react': path.resolve(__dirname, './embeddable-react-mock.ts'),
     };
 
     return config;
