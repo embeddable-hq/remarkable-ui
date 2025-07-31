@@ -2,60 +2,78 @@
 import { ChartCard } from '../../../components/charts/ChartCard/ChartCard';
 import { PieChart } from '../../../components/charts/PieChart/PieChart';
 import { useTheme } from '@embeddable.com/react';
-import { Theme } from '../../../theme/theme';
+import { remarkableTheme, Theme } from '../../../theme/theme';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import React from 'react';
 import { groupTailAsOther } from '../../ready-made-utils/data.utils';
-// import {
-//   UseThemeFormatter,
-//   useThemeFormatter,
-// } from '../../../theme/theme-formatter/theme-formatter.hook';
+import { useThemeFormatter } from '../../../theme/theme-formatter/theme-formatter.hook';
+import { i18nSetup } from '../../../theme/i18n';
 
 const getPieChartData = (
-  data: DataResponse['data'],
-  dimension: Dimension,
-  measure: Measure,
-  maxLegendItems?: number,
+  props: {
+    data: DataResponse['data'];
+    dimension: Dimension;
+    measure: Measure;
+    maxLegendItems?: number;
+  },
+  theme: Theme = remarkableTheme,
 ): ChartData<'pie'> => {
-  const groupedData = groupTailAsOther(data, dimension, measure, maxLegendItems);
+  const themeFormatter = useThemeFormatter(theme);
+
+  if (!props.data)
+    return {
+      labels: [],
+      datasets: [{ data: [] }],
+    };
+
+  const groupedData = groupTailAsOther(
+    props.data,
+    props.dimension,
+    props.measure,
+    props.maxLegendItems,
+  );
   return {
-    labels: groupedData.map((item) => item[dimension.name]),
+    labels: groupedData.map((item) =>
+      themeFormatter.data(props.dimension, item[props.dimension.name]),
+    ),
     datasets: [
       {
-        data: groupedData.map((item) => item[measure.name]),
+        data: groupedData.map((item) => item[props.measure.name]),
       },
     ],
   };
 };
 
-const getPieChartOptions = (props: {
-  showTooltips: boolean;
-  showLegend: boolean;
-  showValueLabels: boolean;
-  legendPosition: 'left' | 'top' | 'right' | 'bottom' | 'center';
-  // themeFormatter: UseThemeFormatter;
-}): Partial<ChartOptions<'pie'>> => {
+const getPieChartOptions = (
+  props: {
+    showTooltips: boolean;
+    showLegend: boolean;
+    showValueLabels: boolean;
+    legendPosition: 'left' | 'top' | 'right' | 'bottom' | 'center';
+  },
+  theme: Theme = remarkableTheme,
+): Partial<ChartOptions<'pie'>> => {
+  const themeFormatter = useThemeFormatter(theme);
+
   return {
     plugins: {
       legend: { display: props.showLegend, position: props.legendPosition },
       datalabels: {
         display: props.showValueLabels,
-        // formatter: (value: string) => props.themeFormatter.number(Number(value)),
+        formatter: (value: string) => themeFormatter.number(Number(value)),
       },
       tooltip: {
         enabled: props.showTooltips,
         callbacks: {
           label(tooltipItem) {
-            // const raw = tooltipItem.raw as number;
-            // const dataset = tooltipItem.dataset;
-            // const total = Array.isArray(dataset.data)
-            //   ? dataset.data.reduce((sum: number, v: unknown) => sum + parseFloat(v as string), 0)
-            //   : 0;
-            // const pct = total ? Math.round((raw / total) * 100) : 0;
-            console.log('tooltipItem', tooltipItem);
-            return '1';
-            // return `${props.themeFormatter.number(Number(raw))} (${pct}%)`;
+            const raw = tooltipItem.raw as number;
+            const dataset = tooltipItem.dataset;
+            const total = Array.isArray(dataset.data)
+              ? dataset.data.reduce((sum: number, v: unknown) => sum + parseFloat(v as string), 0)
+              : 0;
+            const pct = total ? Math.round((raw / total) * 100) : 0;
+            return `${themeFormatter.number(Number(raw))} (${pct}%)`;
           },
         },
       },
@@ -87,17 +105,18 @@ const ReadyMadePieChart: React.FC<PieChartProps> = ({
   title,
 }) => {
   const theme = useTheme() as Theme;
-  console.log('theme', theme.charts);
-  // const themeFormatter = useThemeFormatter(theme);
+  i18nSetup(theme);
 
-  const data = getPieChartData(results.data ?? [], dimension, measure, maxLegendItems);
-  const options = getPieChartOptions({
-    showTooltips,
-    showLegend,
-    showValueLabels,
-    legendPosition: theme?.charts?.legendPosition ?? 'bottom',
-    // themeFormatter,
-  });
+  const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
+  const options = getPieChartOptions(
+    {
+      showTooltips,
+      showLegend,
+      showValueLabels,
+      legendPosition: theme.charts.legendPosition,
+    },
+    theme,
+  );
 
   return (
     <ChartCard

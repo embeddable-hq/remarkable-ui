@@ -11,18 +11,25 @@ import {
 import React from 'react';
 import CloudDownload from '../icons/cloud-download.svg';
 import PhotoDown from '../icons/photo-down.svg';
+import { en } from './theme-formatter/theme-formatter-translations/en';
+import { de } from './theme-formatter/theme-formatter-translations/de';
+import { Resource } from 'i18next';
 
 export type ThemeChartsExportOptionActionProps = {
   title?: string;
   data?: DataResponse['data'];
   dimensions?: Dimension[];
   measures?: Measure[];
+  // NOTE: Replace dimensions and measures with a single array of Dimension or Measure
+  // dimensionsOrMeasures?: (Dimension | Measure)[];
   containerRef?: React.RefObject<HTMLDivElement | null>;
 };
 
 export type Theme = {
+  i18n: { language: string; translations: Resource };
   charts: {
     exportOptions?: {
+      // NOTE: use i18n keys instead of hardcoded strings
       label: string;
       iconSrc?: string;
       action: (props: ThemeChartsExportOptionActionProps) => void;
@@ -36,6 +43,13 @@ export type Theme = {
 };
 
 export const remarkableTheme: Theme = {
+  i18n: {
+    language: 'de',
+    translations: {
+      en,
+      de,
+    },
+  },
   charts: {
     exportOptions: [
       {

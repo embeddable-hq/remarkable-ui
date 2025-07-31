@@ -1,12 +1,14 @@
 import React, { CSSProperties, FC } from 'react';
 import { IconAlertCircle, IconLoader2 } from '@tabler/icons-react';
-import { i18nTheme } from '../../../theme/i18n';
 import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
 import { Skeleton } from '../../shared/Skeleton/Skeleton';
 import styles from './ChartCard.module.css';
 import { ChartCardOptions } from './ChartCardMenu/ChartCardMenu';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartCardInfo } from './ChartCardInfo/ChartCardInfo';
+import { useTheme } from '@embeddable.com/react';
+import { Theme } from '../../../theme';
+import { i18nSetup, i18n } from '../../../theme/i18n';
 
 type ChartCardProps = {
   title: string;
@@ -30,7 +32,9 @@ export const ChartCard: FC<ChartCardProps> = ({
   measures,
   ...props
 }) => {
-  const i18n = i18nTheme();
+  const theme = useTheme() as Theme;
+  i18nSetup(theme);
+
   const chartRef = React.createRef<HTMLDivElement>();
 
   const hasData = data.data && data.data.length > 0;

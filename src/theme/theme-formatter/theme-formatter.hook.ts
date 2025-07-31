@@ -4,19 +4,12 @@ import {
   DateTimeFormatterParams,
   NumberFormatter,
   NumberFormatterParams,
-  TextFormatterParams,
 } from './theme-formatter.types';
 import { cache, formatData } from './theme-formatter.utils';
 import { DimensionOrMeasure } from '@embeddable.com/core';
 import { Theme } from '../theme';
 
 export type UseThemeFormatter = {
-  /**
-   * Retrieves a translation
-   * @example themeFormatter.text('Charts.other.label')
-   * @example themeFormatter.text('Granularity.quarter', { quarter: 3, year: 2025 })
-   */
-  text: (key: string, params?: TextFormatterParams) => string;
   /**
    * Formats a number in the currently active locale
    * @example themeFormatter.number(123.45)
@@ -38,18 +31,18 @@ export type UseThemeFormatter = {
   /**
    * @returns the currently active locale (e.g. 'en-GB')
    */
-  locale: () => Intl.Locale;
+  // locale: () => Intl.Locale;
+  // locale: string;
   /**
    * @returns the currently active language (e.g. 'en', 'de' or 'es')
    */
-  language: () => string;
+  // language: () => string;
 };
 
 /**
  * Formatter Helper exists to make it easy to apply standard formatting (and internationalisation) to all components
  */
 export const useThemeFormatter = (theme: Theme): UseThemeFormatter => {
-  const textFormatter = theme.formatter.textFormatter(theme);
   const numberFormatter = cache<NumberFormatterParams, NumberFormatter>((params) =>
     theme.formatter.numberFormatter(theme, params),
   );
@@ -58,11 +51,8 @@ export const useThemeFormatter = (theme: Theme): UseThemeFormatter => {
   );
 
   return {
-    locale: (): Intl.Locale => theme.formatter.locale(theme),
-    language: (): string => theme.formatter.locale(theme).language,
-    text: (key: string, params?: TextFormatterParams): string => {
-      return textFormatter.format(key, params);
-    },
+    // locale: (): Intl.Locale => theme.formatter.locale(theme),
+    // language: (): string => theme.formatter.locale(theme).language,
     number: (value: number | bigint, params?: NumberFormatterParams): string => {
       return numberFormatter(params).format(value);
     },
@@ -71,14 +61,7 @@ export const useThemeFormatter = (theme: Theme): UseThemeFormatter => {
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: (key: DimensionOrMeasure, value: any, config?: DataConfig): string => {
-      const result = formatData(
-        key,
-        value,
-        textFormatter,
-        numberFormatter,
-        dateTimeFormatter,
-        config,
-      );
+      const result = formatData(key, value, numberFormatter, dateTimeFormatter, config);
       // Add prefix and suffix
       const appended = `${config?.prefix || ''}${result}${config?.suffix || ''}`;
       // Trim to max character length

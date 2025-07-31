@@ -1,5 +1,4 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { i18nTheme } from '../../theme/i18n';
 
 export const groupTailAsOther = (
   data: DataResponse['data'] = [],
@@ -7,8 +6,6 @@ export const groupTailAsOther = (
   measure: Measure,
   maxItems?: number,
 ) => {
-  const i18n = i18nTheme();
-
   if (!maxItems || data.length <= maxItems) return data;
 
   const head = data.slice(0, maxItems - 1);
@@ -18,7 +15,7 @@ export const groupTailAsOther = (
   return [
     ...head,
     {
-      [dimension.name]: i18n.t('common.other'),
+      [dimension.name]: 'Other',
       [measure.name]: sumTail,
     },
   ];

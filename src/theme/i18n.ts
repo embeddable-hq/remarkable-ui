@@ -1,27 +1,17 @@
-import i18next, { i18n } from 'i18next';
-import { remarkableTheme, Theme } from './theme';
-import { useTheme } from '@embeddable.com/react';
+import i18n from 'i18next';
+import { Theme } from './theme';
 
-export const i18nTheme = (): i18n => {
-  if (i18next.isInitialized) return i18next;
+const i18nSetup = (theme: Theme) => {
+  if (i18n.language === theme.i18n.language && i18n.isInitialized) return;
 
-  let theme = remarkableTheme;
-
-  try {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    theme = useTheme() as Theme;
-  } catch {
-    console.warn('Failed to get theme from useTheme, using default remarkableTheme');
-  }
-
-  i18next.init({
-    lng: navigator.language,
+  i18n.init({
+    lng: theme.i18n.language,
     fallbackLng: 'en',
-    resources: theme.formatter.translations,
+    resources: theme.i18n.translations,
     interpolation: {
       escapeValue: false,
     },
   });
-
-  return i18next;
 };
+
+export { i18nSetup, i18n };

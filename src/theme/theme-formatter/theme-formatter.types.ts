@@ -1,5 +1,4 @@
 import { Granularity } from '@embeddable.com/core';
-import { Resource } from 'i18next';
 import { Theme } from '../theme';
 
 export type MeasureMeta = {
@@ -44,19 +43,19 @@ export type TextFormatter = {
 };
 
 export type ThemeFormatter = {
+  locale: string;
   /**
    * Used to pass in the locale you want to use, and any backups (e.g. ['es-AR', 'es-ES', 'en-US'] or simply ['de-DE'])
    */
-  preferredLocales: string[];
+  // preferredLocales: string[];
   /**
    * Used to add additional translations (e.g. { ...theme.i18n.translations, { es: { ... } } })
    */
-  translations: Resource;
-
+  // translations: Resource;
   /**
    * Override to customise the default locale logic (by default it will try the `preferredLocales` above in order)
    */
-  locale: (theme: Theme) => Intl.Locale;
+  getLocale: (theme: Theme) => Intl.Locale;
   /**
    * Override to customise the default dateTime formatter options
    */
@@ -82,5 +81,5 @@ export type ThemeFormatter = {
   /**
    * Override if the `translations` above aren't enough and you want to fully customise the text formatter
    */
-  textFormatter: (theme: Theme) => TextFormatter;
+  // textFormatter: (theme: Theme) => TextFormatter;
 };

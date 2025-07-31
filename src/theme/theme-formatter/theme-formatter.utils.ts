@@ -6,8 +6,8 @@ import {
   MeasureMeta,
   NumberFormatter,
   NumberFormatterParams,
-  TextFormatter,
 } from './theme-formatter.types';
+import { i18n } from '../i18n';
 
 /**
  * Creates a formatter cache.
@@ -34,12 +34,11 @@ export const formatData = (
   key: DimensionOrMeasure,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any,
-  textFormatter: TextFormatter,
   numberFormatter: (params: NumberFormatterParams) => NumberFormatter,
   dateTimeFormatter: (params: DateTimeFormatterParams) => DateTimeFormatter,
   config?: DataConfig,
 ) => {
-  const prefix = isDimension(key) ? 'Dimension' : 'Measure';
+  const prefix = isDimension(key) ? 'dimension' : 'measure';
   switch (key.nativeType) {
     case 'number': {
       const params: NumberFormatterParams = {
@@ -75,8 +74,13 @@ export const formatData = (
   // Allow translation at 3 levels of abstraction
   const keys = [
     `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
-    `${prefix}.${name}`, // e.g. 'Dimension.customers.country': 'Country is {{value}}',
-    `${prefix}`, // e.g. Dimension: '{{value}}',
+    `${prefix}.${value}`, // e.g. 'Dimension.Germany': 'Germany',
+    value, // e.g. 'Germany'
   ];
-  return textFormatter.format(keys, { value: value, type: key.nativeType, name: name });
+
+  return i18n.t(keys, {
+    value: value,
+    type: key.nativeType,
+    name: name,
+  });
 };
