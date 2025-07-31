@@ -1,85 +1,79 @@
 import {
+  DataConfig,
   DateTimeFormatter,
   DateTimeFormatterParams,
-  ThemeFormatter,
   NumberFormatter,
   NumberFormatterParams,
 } from './theme-formatter.types';
+import { cache, formatData } from './theme-formatter.utils';
+import { DimensionOrMeasure } from '@embeddable.com/core';
 import { Theme } from '../theme';
-import { i18n } from '../i18n';
 
-export const themeFormatter: ThemeFormatter = {
-  locale: navigator.language,
-  getLocale: (theme: Theme) => {
-    try {
-      return new Intl.Locale(theme.formatter.locale);
-    } catch {
-      return new Intl.Locale('en-US');
-    }
-  },
-  defaultDateTimeFormatOptions: (
-    _theme: Theme,
-    params?: DateTimeFormatterParams,
-  ): Intl.DateTimeFormatOptions => {
-    return {
-      year: params?.shortYear ? '2-digit' : 'numeric',
-      month: params?.shortMonth ? '2-digit' : 'short',
-      day: params?.shortMonth ? '2-digit' : 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-  },
-  defaultNumberFormatOptions: (
-    _theme: Theme,
-    params?: NumberFormatterParams,
-  ): Intl.NumberFormatOptions => {
-    return {
-      style: params?.currency ? 'currency' : undefined,
-      currency: params?.currency,
-      minimumFractionDigits: params?.minDecimalPlaces || 0,
-      maximumFractionDigits: params?.maxDecimalPlaces || 2,
-    };
-  },
-  numberFormatter: (theme: Theme, params?: NumberFormatterParams): NumberFormatter => {
-    const formatter = new Intl.NumberFormat(
-      theme.i18n.language,
-      theme.formatter.defaultNumberFormatOptions(theme, params),
-    );
-    return { format: (number: number | bigint) => formatter.format(number) };
-  },
-  dateTimeFormatter: (theme: Theme, params?: DateTimeFormatterParams): DateTimeFormatter => {
-    const { formatter } = theme;
-    const locale = theme.formatter.getLocale(theme);
-    const { year, month, day, hour, minute, second } = formatter.defaultDateTimeFormatOptions(
-      theme,
-      params,
-    );
-    if (!params?.granularity) {
-      return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute, second });
-    }
-    switch (params.granularity) {
-      case 'year':
-        return new Intl.DateTimeFormat(locale, { year });
-      case 'quarter': {
-        return {
-          format: (date: Date): string => {
-            return i18n.t('granularity.quarter', {
-              quarter: Math.floor(date.getMonth() / 3) + 1,
-              year: date.getFullYear(),
-            });
-          },
-        };
+export type GetThemeFormatter = {
+  /**
+   * Formats a number in the currently active locale
+   * @example themeFormatter.number(123.45)
+   * @example themeFormatter.number(123.45, { currency: 'EUR' })
+   */
+  number: (value: number | bigint, params?: NumberFormatterParams) => string;
+  /**
+   * Formats a date in the currently active locale
+   * @example themeFormatter.dateTime(new Date(), { granularity: 'week' })
+   */
+  dateTime: (value: Date, params?: DateTimeFormatterParams) => string;
+  /**
+   * Formats (or translates) a value returned from `loadData
+   * @example themeFormatter.data(measure, row[measure.name])
+   * @example themeFormatter.data(dimension, row[dimension.name])
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: (key: DimensionOrMeasure, value: any, config?: DataConfig) => string;
+  /**
+   * @returns the currently active locale (e.g. 'en-GB')
+   */
+  // locale: () => Intl.Locale;
+  // locale: string;
+  /**
+   * @returns the currently active language (e.g. 'en', 'de' or 'es')
+   */
+  // language: () => string;
+};
+
+/**
+ * Formatter Helper exists to make it easy to apply standard formatting (and internationalisation) to all components
+ */
+export const getThemeFormatter = (theme: Theme): GetThemeFormatter => {
+  const numberFormatter = cache<NumberFormatterParams, NumberFormatter>((params) =>
+    theme.formatter.numberFormatter(theme, params),
+  );
+  const dateTimeFormatter = cache<DateTimeFormatterParams, DateTimeFormatter>((params) =>
+    theme.formatter.dateTimeFormatter(theme, params),
+  );
+
+  return {
+    // locale: (): Intl.Locale => theme.formatter.locale(theme),
+    // language: (): string => theme.formatter.locale(theme).language,
+    number: (value: number | bigint, params?: NumberFormatterParams): string => {
+      return numberFormatter(params).format(value);
+    },
+    dateTime: (value: Date, params?: DateTimeFormatterParams): string => {
+      return dateTimeFormatter(params).format(value);
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: (key: DimensionOrMeasure, value: any, config?: DataConfig): string => {
+      const result = formatData(key, value, numberFormatter, dateTimeFormatter, config);
+      // Add prefix and suffix
+      const appended = `${config?.prefix || ''}${result}${config?.suffix || ''}`;
+      // Trim to max character length
+      const ellipsis = '...';
+      if (
+        config?.maxCharacterLength &&
+        config?.maxCharacterLength > ellipsis.length &&
+        appended.length > config.maxCharacterLength
+      ) {
+        return appended.substring(0, config?.maxCharacterLength - ellipsis.length) + ellipsis;
       }
-      case 'month':
-        return new Intl.DateTimeFormat(locale, { year, month });
-      case 'week':
-      case 'day':
-        return new Intl.DateTimeFormat(locale, { year, month, day });
-      case 'hour':
-      case 'minute':
-      case 'second':
-        return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute, second });
-    }
-  },
+      return appended;
+    },
+  };
 };

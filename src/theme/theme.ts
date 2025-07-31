@@ -1,13 +1,8 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { exportCSV, exportPNG, exportXLSX } from '../ready-made/ready-made-utils/export.utils';
-import { themeFormatter } from './theme-formatter/theme-formatter';
+import { defaultThemeFormatter } from './theme-formatter/theme-formatter.contants';
 import { ThemeFormatter } from './theme-formatter/theme-formatter.types';
-import {
-  themeChartBorderColors,
-  themeChartColors,
-  ThemeStyles,
-  themeStyles,
-} from './theme.constants';
+import { defaultThemeStyles, ThemeStyles } from './theme.constants';
 import React from 'react';
 import CloudDownload from '../icons/cloud-download.svg';
 import PhotoDown from '../icons/photo-down.svg';
@@ -34,8 +29,6 @@ export type Theme = {
       iconSrc?: string;
       action: (props: ThemeChartsExportOptionActionProps) => void;
     }[];
-    colors: string[];
-    borderColors?: string[];
     legendPosition: 'top' | 'right' | 'bottom' | 'left';
   };
   styles: ThemeStyles;
@@ -44,7 +37,7 @@ export type Theme = {
 
 export const remarkableTheme: Theme = {
   i18n: {
-    language: 'de',
+    language: 'en',
     translations: {
       en,
       de,
@@ -68,10 +61,8 @@ export const remarkableTheme: Theme = {
         iconSrc: PhotoDown,
       },
     ],
-    borderColors: themeChartBorderColors,
-    colors: themeChartColors,
     legendPosition: 'bottom',
   },
-  formatter: themeFormatter,
-  styles: themeStyles,
+  formatter: defaultThemeFormatter,
+  styles: defaultThemeStyles,
 } as const;

@@ -7,7 +7,7 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import React from 'react';
 import { groupTailAsOther } from '../../ready-made-utils/data.utils';
-import { useThemeFormatter } from '../../../theme/theme-formatter/theme-formatter.hook';
+import { getThemeFormatter } from '../../../theme/theme-formatter/theme-formatter';
 import { i18nSetup } from '../../../theme/i18n';
 
 const getPieChartData = (
@@ -19,7 +19,7 @@ const getPieChartData = (
   },
   theme: Theme = remarkableTheme,
 ): ChartData<'pie'> => {
-  const themeFormatter = useThemeFormatter(theme);
+  const themeFormatter = getThemeFormatter(theme);
 
   if (!props.data)
     return {
@@ -54,7 +54,7 @@ const getPieChartOptions = (
   },
   theme: Theme = remarkableTheme,
 ): Partial<ChartOptions<'pie'>> => {
-  const themeFormatter = useThemeFormatter(theme);
+  const themeFormatter = getThemeFormatter(theme);
 
   return {
     plugins: {

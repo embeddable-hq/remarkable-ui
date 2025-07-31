@@ -17,7 +17,7 @@ export const globalTypes = {
   },
 };
 
-// TODO: Make storybook work with i18n
+// TODO: Make storybook work with i18n - on language change
 // i18nSetup(remarkableTheme);
 // export const decorators = [
 //   (Story, context) => {

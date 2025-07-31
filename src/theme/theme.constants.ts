@@ -385,7 +385,7 @@ export type ThemeStyles = ThemeColors &
   ThemeTypography &
   ThemeComponentsFontFamily;
 
-export const themeStyles: ThemeStyles = {
+export const defaultThemeStyles: ThemeStyles = {
   ...themeColors,
   ...themeSpacingAndSizes,
   ...themeBorders,
@@ -394,30 +394,4 @@ export const themeStyles: ThemeStyles = {
   ...themeComponentsFontFamily,
 };
 
-export type ThemeStylesKeys = keyof typeof themeStyles;
-
-export const themeChartBorderColors: string[] = [
-  themeColors['--em-orange-900'],
-  themeColors['--em-orange-800'],
-  themeColors['--em-orange-700'],
-  themeColors['--em-orange-600'],
-  themeColors['--em-orange-500'],
-  themeColors['--em-orange-400'],
-  themeColors['--em-orange-300'],
-  themeColors['--em-orange-200'],
-  themeColors['--em-orange-100'],
-  themeColors['--em-orange-050'],
-];
-
-export const themeChartColors: string[] = [
-  themeColors['--em-orange-900'],
-  themeColors['--em-orange-800'],
-  themeColors['--em-orange-700'],
-  themeColors['--em-orange-600'],
-  themeColors['--em-orange-500'],
-  themeColors['--em-orange-400'],
-  themeColors['--em-orange-300'],
-  themeColors['--em-orange-200'],
-  themeColors['--em-orange-100'],
-  themeColors['--em-orange-050'],
-];
+export type ThemeStylesKeys = keyof typeof defaultThemeStyles;
