@@ -49,7 +49,7 @@ export const ChartCard: FC<ChartCardProps> = ({
           className={styles.error}
           icon={IconAlertCircle}
           title={i18n.t('charts.errorTitle')}
-          message={i18n.t('charts.errorMessage')}
+          message={errorMessage}
         />
       );
     }

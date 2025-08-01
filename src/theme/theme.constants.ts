@@ -148,7 +148,7 @@ const themeComponents = {
   '--em-card-title-font-size': 'var(--em-font-size-xl)',
   '--em-card-title-font-weight': 'var(--em-font-weight-bold)',
   '--em-card-title-padding-default': 'var(--em-padding-400)',
-  '--em-categor-group-gap-default': 'var(--em-padding-200)',
+  '--em-category-group-gap-default': 'var(--em-padding-200)',
   '--em-category-group-item-label-color-default': 'var(--em-foreground-color-muted)',
   '--em-category-group-item-label-font-font-family': 'var(--em-font-family-default)',
   '--em-category-group-item-label-font-line-height': 'var(--em-line-height-sm)',
