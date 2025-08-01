@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
-import { Theme } from '../../../theme/theme';
 import { defaultOptions, defaultData } from './PieChart.utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
@@ -19,7 +18,6 @@ ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 type PieChartProps = {
   data: ChartData<'pie'>;
   options?: Partial<ChartOptions<'pie'>>;
-  theme?: Theme;
 };
 
 export const PieChart: FC<PieChartProps> = ({ data, options = {} }) => {
