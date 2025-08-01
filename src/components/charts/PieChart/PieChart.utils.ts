@@ -2,16 +2,16 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { getStyle, getStyleNumber } from '../../../theme/theme.utils';
 
 const chartColors: string[] = [
-  getStyle('--em-chart-color-1') as string,
-  getStyle('--em-chart-color-2') as string,
-  getStyle('--em-chart-color-3') as string,
-  getStyle('--em-chart-color-4') as string,
-  getStyle('--em-chart-color-5') as string,
-  getStyle('--em-chart-color-6') as string,
-  getStyle('--em-chart-color-7') as string,
-  getStyle('--em-chart-color-8') as string,
-  getStyle('--em-chart-color-9') as string,
-  getStyle('--em-chart-color-10') as string,
+  getStyle('--em-chart-color-1'),
+  getStyle('--em-chart-color-2'),
+  getStyle('--em-chart-color-3'),
+  getStyle('--em-chart-color-4'),
+  getStyle('--em-chart-color-5'),
+  getStyle('--em-chart-color-6'),
+  getStyle('--em-chart-color-7'),
+  getStyle('--em-chart-color-8'),
+  getStyle('--em-chart-color-9'),
+  getStyle('--em-chart-color-10'),
 ];
 
 export const defaultData: ChartData<'pie'> = {
@@ -30,7 +30,7 @@ export const defaultOptions: Partial<ChartOptions<'pie'>> = {
   plugins: {
     datalabels: {
       display: true,
-      backgroundColor: getStyle('--em-label-background-color-default') as string,
+      backgroundColor: getStyle('--em-label-background-color-default'),
       borderRadius: getStyleNumber('--em-label-border-radius-default'),
       padding: {
         top: getStyleNumber('--em-label-padding-top-bottom'),
@@ -38,11 +38,11 @@ export const defaultOptions: Partial<ChartOptions<'pie'>> = {
         right: getStyleNumber('--em-label-padding-left-right'),
         left: getStyleNumber('--em-label-padding-left-right'),
       },
-      color: getStyle('--em-label-label-font-color-default') as string,
+      color: getStyle('--em-label-label-font-color-default'),
       font: {
-        family: getStyle('--em-label-label-font-family') as string,
+        family: getStyle('--em-label-label-font-family'),
         size: getStyleNumber('--em-label-label-font-size'),
-        weight: getStyle('--em-label-label-font-weight') as number,
+        weight: getStyleNumber('--em-label-label-font-weight'),
       },
       anchor: 'center',
       align: 'center',
@@ -53,9 +53,9 @@ export const defaultOptions: Partial<ChartOptions<'pie'>> = {
         boxWidth: getStyleNumber('--em-category-indicator-size-width'),
         boxHeight: getStyleNumber('--em-category-indicator-size-height'),
         usePointStyle: true,
-        color: getStyle('--em-category-group-item-label-color-default') as string,
+        color: getStyle('--em-category-group-item-label-color-default'),
         font: {
-          family: getStyle('--em-category-group-item-label-font-font-family') as string,
+          family: getStyle('--em-category-group-item-label-font-font-family'),
           size: getStyleNumber('--em-category-group-item-label-font-size'),
           weight: getStyleNumber('--em-category-group-item-label-font-weight'),
           lineHeight: getStyleNumber('--em-category-group-item-label-font-line-height'),
@@ -66,21 +66,21 @@ export const defaultOptions: Partial<ChartOptions<'pie'>> = {
       usePointStyle: true,
       caretSize: 0,
       enabled: true,
-      backgroundColor: getStyle('--em-chart-tooltip-background-color-default') as string,
+      backgroundColor: getStyle('--em-chart-tooltip-background-color-default'),
       cornerRadius: getStyleNumber('--em-chart-tooltip-border-radius-default'),
       padding: getStyleNumber('--em-chart-tooltip-padding-default'),
       displayColors: true,
-      bodyColor: getStyle('--em-foreground-color-inverted') as string,
+      bodyColor: getStyle('--em-foreground-color-inverted'),
       bodyAlign: 'right',
       bodyFont: {
-        family: getStyle('--em-category-group-item-label-font-font-family') as string,
+        family: getStyle('--em-category-group-item-label-font-font-family'),
         size: getStyleNumber('--em-category-group-item-label-font-size'),
         weight: getStyleNumber('--em-category-group-item-label-font-weight'),
       },
       titleAlign: 'left',
-      titleColor: getStyle('--em-chart-tooltip-label-color-default') as string,
+      titleColor: getStyle('--em-chart-tooltip-label-color-default'),
       titleFont: {
-        family: getStyle('--em-chart-tooltip-title-font-font-family') as string,
+        family: getStyle('--em-chart-tooltip-title-font-font-family'),
         size: getStyleNumber('--em-chart-tooltip-title-font-size'),
         weight: getStyleNumber('--em-chart-tooltip-title-font-weight'),
       },

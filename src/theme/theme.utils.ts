@@ -42,32 +42,10 @@ export const injectCssVariables = (newTheme: Theme) => {
 const rootElement = document.documentElement;
 const numericRegex = /^-?\d+(\.\d+)?$/;
 
-export const getStyle = (variableName: ThemeStylesKeys): string | number => {
+export const getStyle = (variableName: ThemeStylesKeys): string => {
   const computedStyle = getComputedStyle(rootElement);
   const rawValue = computedStyle.getPropertyValue(variableName).trim();
   if (!rawValue) return rawValue;
-
-  const numericValue = parseFloat(rawValue);
-  const rootFontSize = parseFloat(computedStyle.fontSize);
-
-  // “px”?
-  if (rawValue.slice(-2) === 'px') {
-    return numericValue;
-  }
-
-  // “rem” or “em”?
-  const unit3 = rawValue.slice(-3);
-  if (unit3 === 'rem') {
-    return numericValue * rootFontSize;
-  }
-  if (unit3 === 'em') {
-    return numericValue * rootFontSize;
-  }
-
-  // pure number
-  if (numericRegex.test(rawValue)) {
-    return numericValue;
-  }
 
   // colors (#…, rgb(, rgba()
   const firstChar = rawValue.charAt(0);
@@ -93,10 +71,7 @@ export const getStyleNumber = (variableName: ThemeStylesKeys): number | undefine
 
   // “rem” or “em”?
   const unit3 = rawValue.slice(-3);
-  if (unit3 === 'rem') {
-    return numericValue * rootFontSize;
-  }
-  if (unit3 === 'em') {
+  if (unit3 === 'rem' || unit3 === 'em') {
     return numericValue * rootFontSize;
   }
 

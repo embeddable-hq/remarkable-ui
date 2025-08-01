@@ -35,7 +35,6 @@ export default defineConfig([
       },
     },
   },
-
   // React Hooks rules for TS and TSX files
   {
     files: ['**/*.{ts,tsx}'],
