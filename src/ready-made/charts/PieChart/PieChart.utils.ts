@@ -64,7 +64,10 @@ export const getPieChartOptions = (
             const raw = tooltipItem.raw as number;
             const dataset = tooltipItem.dataset;
             const total = Array.isArray(dataset.data)
-              ? dataset.data.reduce((sum: number, v: number) => sum + v, 0)
+              ? dataset.data.reduce(
+                  (sum: number, v: number | string) => sum + parseFloat(v.toString()),
+                  0,
+                )
               : 0;
             const pct = total ? Math.round((raw / total) * 100) : 0;
             return `${themeFormatter.number(Number(raw))} (${pct}%)`;
