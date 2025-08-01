@@ -60,18 +60,14 @@ export const getPieChartOptions = (
       tooltip: {
         enabled: props.showTooltips,
         callbacks: {
-          label(tooltipItem) {
-            const raw = tooltipItem.raw as number;
-            const dataset = tooltipItem.dataset;
-
-            const total = Array.isArray(dataset.data)
-              ? dataset.data.reduce((sum: number, v: number | string) => {
-                  const num = typeof v === 'number' ? v : parseFloat(v);
-                  return sum + (Number.isFinite(num) ? num : 0);
-                }, 0)
-              : 0;
-
-            const pct = total > 0 && Number.isFinite(raw) ? Math.round((raw / total) * 100) : 0;
+          label(context) {
+            const raw = context.raw as number;
+            const total = context.dataset.data.reduce(
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (sum: number, v: any) => sum + parseFloat(v),
+              0,
+            );
+            const pct = Math.round((raw / total) * 100);
             return `${themeFormatter.number(raw)} (${pct}%)`;
           },
         },
