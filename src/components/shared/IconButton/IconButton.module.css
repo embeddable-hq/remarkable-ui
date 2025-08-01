@@ -11,20 +11,19 @@
 }
 
 .iconButton:hover {
-  background: var(--icn-btn-background-hover, #e4e4ea);
+  background: var(--em-icon-btn-bg-color-hover, #e4e4ea);
 }
 
 .iconButton:active {
-  background: var(--icn-btn-background-pressed, #d2d2d5);
+  background: var(--em-icon-btn-bg-color-pressed, #d2d2d5);
 }
 
 .iconButton:disabled {
   pointer-events: none;
-  background: var(--icn-btn-background-disabled, #ededf1);
+  background: var(--em-icon-btn-bg-color-disabled, #ededf1);
 }
 
 .icon {
-  /* TODO: add specifics */
-  width: 16px;
-  height: 16px;
+  width: var(--em-icon-btn-icon-size-width, 1rem);
+  height: var(--em-icon-btn-icon-size-height, 1rem);
 }
