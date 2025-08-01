@@ -1,7 +1,7 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { ExportConfig } from '../ready-made-types/export.types';
 import * as XLSX from 'xlsx';
 import html2canvas from 'html2canvas';
+import { ThemeChartsMenuOptionActionProps } from '../../theme/theme.constants';
 
 // RFC4180 cell-escaping: wrap in quotes and double any inner quotes
 const escapeCell = (val: unknown): string => {
@@ -10,10 +10,17 @@ const escapeCell = (val: unknown): string => {
 };
 
 // helper to extract field keys & header labels from dimensions/measures
-function buildSchema(
-  dimensions?: Dimension[],
-  measures?: Measure[],
-): { keys: string[]; headers: string[] } {
+function buildSchema(dimensionsAndMeasures?: (Dimension | Measure)[]): {
+  keys: string[];
+  headers: string[];
+} {
+  const dimensions = (dimensionsAndMeasures || []).filter(
+    (dimensionOrMeasure) => dimensionOrMeasure.__type__ === 'dimension',
+  ) as Dimension[];
+  const measures = (dimensionsAndMeasures || []).filter(
+    (dimensionOrMeasure) => dimensionOrMeasure.__type__ === 'measure',
+  ) as Measure[];
+
   return {
     keys: [...(dimensions?.map((d) => d.name) ?? []), ...(measures?.map((m) => m.name) ?? [])],
     headers: [
@@ -26,10 +33,9 @@ function buildSchema(
 // generate CSV data string from raw data
 function generateCSVData(
   dataToExport?: DataResponse['data'],
-  dimensions?: Dimension[],
-  measures?: Measure[],
+  dimensionsAndMeasures?: (Dimension | Measure)[],
 ): string {
-  const { keys, headers } = buildSchema(dimensions, measures);
+  const { keys, headers } = buildSchema(dimensionsAndMeasures);
   // escape headers & cells properly
   const headerRow = headers.map(escapeCell).join(',');
   const dataRows = dataToExport?.map((row) =>
@@ -49,19 +55,26 @@ function downloadBlob(url: string, fileName: string) {
   document.body.removeChild(a);
 }
 
-export function exportCSV({ data, dimensions, measures, title }: ExportConfig) {
+export function exportCSV({
+  data,
+  dimensionsAndMeasures,
+  title,
+}: ThemeChartsMenuOptionActionProps) {
   // build CSV text
-  const csvData = generateCSVData(data, dimensions, measures);
+  const csvData = generateCSVData(data, dimensionsAndMeasures);
   const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   // kick off the download
   downloadBlob(url, `${title}.csv`);
 }
 
-export function exportXLSX({ data, dimensions, measures, title }: ExportConfig) {
+export function exportXLSX({
+  data,
+  dimensionsAndMeasures,
+  title,
+}: ThemeChartsMenuOptionActionProps) {
   // build schema once
-  const { keys, headers } = buildSchema(dimensions, measures);
-  // prepare sheet: header row + raw data rows
+  const { keys, headers } = buildSchema(dimensionsAndMeasures);
   const sheetData = [
     headers,
     ...(data?.map((row) => keys.map((key) => (row as never)[key] ?? '')) ?? []),
@@ -73,7 +86,10 @@ export function exportXLSX({ data, dimensions, measures, title }: ExportConfig) 
   XLSX.writeFile(workbook, `${title}.xlsx`);
 }
 
-export async function exportPNG({ title, containerRef }: ExportConfig): Promise<void> {
+export async function exportPNG({
+  title,
+  containerRef,
+}: ThemeChartsMenuOptionActionProps): Promise<void> {
   const element = containerRef?.current;
   if (!element) {
     throw new Error('exportPNG: element is undefined');

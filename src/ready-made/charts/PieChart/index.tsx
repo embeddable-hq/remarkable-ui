@@ -2,7 +2,7 @@
 import { ChartCard } from '../../../components/charts/ChartCard/ChartCard';
 import { PieChart } from '../../../components/charts/PieChart/PieChart';
 import { useTheme } from '@embeddable.com/react';
-import { remarkableTheme, Theme } from '../../../theme/theme';
+import { remarkableTheme, Theme, ThemeChartsLegendPosition } from '../../../theme/theme';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import React from 'react';
@@ -50,7 +50,7 @@ const getPieChartOptions = (
     showTooltips: boolean;
     showLegend: boolean;
     showValueLabels: boolean;
-    legendPosition: 'left' | 'top' | 'right' | 'bottom' | 'center';
+    legendPosition: ThemeChartsLegendPosition;
   },
   theme: Theme = remarkableTheme,
 ): Partial<ChartOptions<'pie'>> => {
@@ -121,8 +121,7 @@ const ReadyMadePieChart: React.FC<PieChartProps> = ({
   return (
     <ChartCard
       data={results}
-      dimensions={[dimension]}
-      measures={[measure]}
+      dimensionsAndMeasures={[dimension, measure]}
       errorMessage={results.error}
       subtitle={description}
       title={title}

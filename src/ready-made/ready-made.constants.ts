@@ -1,4 +1,4 @@
-// import { ExportOptionKey } from '../shared/ExportButton/nativeOptions';
+// ATENTION: THIS OBJECTS SHOULD NEVER BE TOUCHED
 
 export const dataset = {
   name: 'dataset',
@@ -83,28 +83,27 @@ export const placeholder = {
   category: 'Component Settings',
 } as const;
 
-// export const downloadCSV = {
-//   name: 'downloadCSV' as ExportOptionKey,
+// TODO: check before remove
+// export const showDownloadCSV = {
+//   name: 'downloadCSV',
 //   type: 'boolean',
 //   label: 'Enable download as CSV',
 //   defaultValue: true,
 //   category: 'Export Options',
 // } as const;
 
-// export const downloadPNG = {
-//   name: 'downloadPNG' as ExportOptionKey,
-//   type: 'boolean' as 'boolean',
+// export const showDownloadPNG = {
+//   name: 'downloadPNG',
+//   type: 'boolean',
 //   label: 'Enable download as PNG',
 //   defaultValue: true,
 //   category: 'Export Options',
 // } as const;
 
-// export const downloadExcel = {
-//   name: 'downloadExcel' as ExportOptionKey,
-//   type: 'boolean' as 'boolean',
+// export const showDownloadXLSX = {
+//   name: 'downloadXLSX',
+//   type: 'boolean',
 //   label: 'Enable download as XLSX',
 //   defaultValue: true,
 //   category: 'Export Options',
 // } as const;
-
-// export const exportOptions = [downloadCSV, downloadPNG, downloadExcel];

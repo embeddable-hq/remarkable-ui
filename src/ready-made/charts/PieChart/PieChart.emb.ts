@@ -1,4 +1,3 @@
-// Embeddable Libraries
 import { DataResponse, Dimension, Measure, Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 
@@ -27,23 +26,21 @@ export type PieChartProps = {
   showValueLabels?: boolean;
   title?: string;
 };
-// & ExportOptionFlags;
 
 export const meta = {
   name: 'PieChart',
   label: 'Pie Chart',
   category: 'Pie Charts',
   inputs: [
-    { ...dataset },
-    { ...measure },
-    { ...dimension },
-    { ...title },
-    { ...description },
-    { ...showLegend },
-    { ...maxLegendItems },
-    { ...showToolTips },
-    { ...showValueLabels },
-    // ...exportOptions,
+    dataset,
+    measure,
+    dimension,
+    title,
+    description,
+    showLegend,
+    maxLegendItems,
+    showToolTips,
+    showValueLabels,
   ],
   events: [
     {

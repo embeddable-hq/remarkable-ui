@@ -22,6 +22,9 @@ export const de: ResourceLanguage = {
       Other: 'Andere',
     },
     charts: {
+      'menuOptions.downloadCSV': 'CSV herunterladen',
+      'menuOptions.downloadPNG': 'PNG herunterladen',
+      'menuOptions.downloadXLSX': 'XLSX herunterladen',
       errorTitle: 'Etwas ist schiefgelaufen.',
       errorMessage: 'Beim Laden des Diagramms ist ein Fehler aufgetreten.',
       emptyTitle: 'Hier ist es etwas leer.',

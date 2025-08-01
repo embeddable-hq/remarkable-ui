@@ -18,8 +18,7 @@ type ChartCardProps = {
   isLoading?: boolean;
   errorMessage?: string;
   style?: CSSProperties;
-  dimensions?: Dimension[];
-  measures?: Measure[];
+  dimensionsAndMeasures?: (Dimension | Measure)[];
 };
 
 export const ChartCard: FC<ChartCardProps> = ({
@@ -28,8 +27,7 @@ export const ChartCard: FC<ChartCardProps> = ({
   children,
   data,
   errorMessage,
-  dimensions,
-  measures,
+  dimensionsAndMeasures = [],
   ...props
 }) => {
   const theme = useTheme() as Theme;
@@ -79,8 +77,7 @@ export const ChartCard: FC<ChartCardProps> = ({
               title={title}
               containerRef={chartRef}
               data={data.data}
-              dimensions={dimensions}
-              measures={measures}
+              dimensionsAndMeasures={dimensionsAndMeasures}
             />
           )}
         </div>

@@ -3,8 +3,7 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
-  /* TODO: add specifics */
-  gap: 12px;
+  gap: var(--em-card-info-padding-default, 0.75rem);
 }
 
 .title {

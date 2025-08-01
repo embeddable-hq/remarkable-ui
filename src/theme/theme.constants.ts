@@ -1,3 +1,8 @@
+import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { exportCSV, exportPNG, exportXLSX } from '../ready-made/ready-made-utils/export.utils';
+import CloudDownload from '../icons/cloud-download.svg';
+import PhotoDown from '../icons/photo-down.svg';
+
 export const themeColors = {
   '--em-gray-0': '#ffffff',
   '--em-gray-050': '#f7f7f8',
@@ -395,3 +400,34 @@ export const defaultThemeStyles: ThemeStyles = {
 };
 
 export type ThemeStylesKeys = keyof typeof defaultThemeStyles;
+
+export type ThemeChartsMenuOptionActionProps = {
+  title?: string;
+  data?: DataResponse['data'];
+  dimensionsAndMeasures?: (Dimension | Measure)[];
+  containerRef?: React.RefObject<HTMLDivElement | null>;
+};
+
+export type ThemeChartsMenuOption = {
+  labelKey: string;
+  iconSrc?: string;
+  action: (props: ThemeChartsMenuOptionActionProps) => void;
+};
+
+export const defaultChartsMenuOptions = [
+  {
+    labelKey: 'charts.menuOptions.downloadCSV',
+    action: exportCSV,
+    iconSrc: CloudDownload,
+  },
+  {
+    labelKey: 'charts.menuOptions.downloadXLSX',
+    action: exportXLSX,
+    iconSrc: CloudDownload,
+  },
+  {
+    labelKey: 'charts.menuOptions.downloadPNG',
+    action: exportPNG,
+    iconSrc: PhotoDown,
+  },
+];
