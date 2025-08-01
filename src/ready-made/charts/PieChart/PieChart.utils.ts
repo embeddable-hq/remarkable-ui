@@ -63,14 +63,16 @@ export const getPieChartOptions = (
           label(tooltipItem) {
             const raw = tooltipItem.raw as number;
             const dataset = tooltipItem.dataset;
+
             const total = Array.isArray(dataset.data)
-              ? dataset.data.reduce(
-                  (sum: number, v: number | string) => sum + parseFloat(v.toString()),
-                  0,
-                )
+              ? dataset.data.reduce((sum: number, v: number | string) => {
+                  const num = typeof v === 'number' ? v : parseFloat(v);
+                  return sum + (Number.isFinite(num) ? num : 0);
+                }, 0)
               : 0;
-            const pct = total ? Math.round((raw / total) * 100) : 0;
-            return `${themeFormatter.number(Number(raw))} (${pct}%)`;
+
+            const pct = total > 0 && Number.isFinite(raw) ? Math.round((raw / total) * 100) : 0;
+            return `${themeFormatter.number(raw)} (${pct}%)`;
           },
         },
       },
