@@ -8,23 +8,3 @@
 .error p {
   color: var(--em-card-error-subtitle-color-default, #d03109);
 }
-
-.loading {
-  width: min-content;
-  display: flex;
-  position: absolute;
-  padding: var(--em-card-loader-padding-default, 0.25rem);
-  top: calc(var(--em-card-padding-default, 2rem) / 2);
-  right: calc(var(--em-card-padding-default, 2rem) / 2);
-  border-radius: var(--em-card-loader-border-radius-default, 624.9375rem);
-  background: var(--em-background-color-default, #f7f7f8);
-  width: var(--em-card-loader-icon-size-width, 1.5rem);
-  height: var(--em-card-loader-icon-size-height, 1.5rem);
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}

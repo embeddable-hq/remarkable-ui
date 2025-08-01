@@ -1,13 +1,14 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import styles from './ChartCardMenu.module.css';
 import { IconButton } from '../../../shared/IconButton/IconButton';
-import { IconDotsVertical, IconLoader2 } from '@tabler/icons-react';
+import { IconDotsVertical } from '@tabler/icons-react';
 import React from 'react';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme';
 import { Typography } from '../../../shared/Typography/Typography';
 import { i18n, i18nSetup } from '../../../../theme/i18n';
 import { ThemeChartsMenuOptionActionProps } from '../../../../theme/theme.constants';
+import { ChartCardLoading } from '../ChartCardLoading/ChartCardLoading';
 
 type ChartCardOptionsProps = ThemeChartsMenuOptionActionProps;
 
@@ -31,11 +32,7 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = (props) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        {isLoading ? (
-          <IconLoader2 className={styles.loading} />
-        ) : (
-          <IconButton icon={IconDotsVertical} />
-        )}
+        {isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={styles.content}>
         {theme.charts.menuOptions?.map((option, index) => {

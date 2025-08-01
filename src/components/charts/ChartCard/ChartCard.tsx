@@ -1,5 +1,5 @@
 import React, { CSSProperties, FC } from 'react';
-import { IconAlertCircle, IconLoader2 } from '@tabler/icons-react';
+import { IconAlertCircle } from '@tabler/icons-react';
 import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
 import { Skeleton } from '../../shared/Skeleton/Skeleton';
 import styles from './ChartCard.module.css';
@@ -9,6 +9,7 @@ import { ChartCardInfo } from './ChartCardInfo/ChartCardInfo';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme';
 import { i18nSetup, i18n } from '../../../theme/i18n';
+import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
 
 type ChartCardProps = {
   title: string;
@@ -71,7 +72,7 @@ export const ChartCard: FC<ChartCardProps> = ({
         <CardHeader title={title} subtitle={subtitle} />
         <div data-png-export-ignore>
           {data.isLoading ? (
-            <IconLoader2 className={styles.loading} />
+            <ChartCardLoading />
           ) : (
             <ChartCardOptions
               title={title}
