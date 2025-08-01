@@ -186,7 +186,6 @@ const themeComponents = {
   '--em-chart-tooltip-gap-default': 'var(--em-padding-200)',
   '--em-chart-tooltip-label-color-default': 'rgb(255 255 255)',
   '--em-chart-tooltip-padding-default': 'var(--em-padding-400)',
-  '--em-chart-tooltip-title-color-size': '0px',
   '--em-chart-tooltip-title-font-font-family': 'var(--em-font-family-default)',
   '--em-chart-tooltip-title-font-line-height': 'var(--em-line-height-md)',
   '--em-chart-tooltip-title-font-size': 'var(--em-font-size-sm)',
@@ -293,7 +292,7 @@ const themeComponents = {
   '--em-select-list-item-border-radius-default': 'var(--em-border-radius-200)',
   '--em-select-list-item-isolate-background-color-default': 'var(--em-background-color-light)',
   '--em-select-list-item-isolate-background-color-hover': 'var(--em-background-color-muted)',
-  '--em-select-list-item-isolate-border-radius-default': 'var(--radius-050)',
+  '--em-select-list-item-isolate-border-radius-default': 'var(--em-border-radius-050)',
   '--em-select-list-item-isolate-external-padding-default': 'var(--em-padding-200)',
   '--em-select-list-item-isolate-label-color-default': 'var(--em-foreground-color-default)',
   '--em-select-list-item-isolate-label-font-font-family': 'var(--em-font-family-default)',
@@ -369,8 +368,8 @@ const themeTypography = {
   '--em-line-height-xl': '38px',
 };
 
-// NOTE: figma doest allow the export of css variables of font family
-// Add this manully
+// NOTE: figma does not allow the export of css variables of font family
+// Add this manually for now
 const themeComponentsFontFamily = {
   '--em-label-label-font-family': 'Inter, sans-serif',
   '--em-category-indicator-group-label-family': 'Inter, sans-serif',
