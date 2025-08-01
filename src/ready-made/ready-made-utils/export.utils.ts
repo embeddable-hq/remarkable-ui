@@ -98,7 +98,7 @@ export async function exportPNG({
   const hidden = Array.from(
     element.querySelectorAll<HTMLElement>('[data-png-export-ignore]') || [],
   );
-  hidden.forEach((el) => (el.style.display = 'none'));
+  hidden.forEach((el) => (el.style.visibility = 'hidden'));
 
   // render to canvas
   const canvas = await html2canvas(element, {

@@ -3,13 +3,13 @@ import { IconAlertCircle } from '@tabler/icons-react';
 import { Card, CardContent, CardHeader } from '../../shared/Card/Card';
 import { Skeleton } from '../../shared/Skeleton/Skeleton';
 import styles from './ChartCard.module.css';
-import { ChartCardOptions } from './ChartCardMenu/ChartCardMenu';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartCardInfo } from './ChartCardInfo/ChartCardInfo';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme';
 import { i18nSetup, i18n } from '../../../theme/i18n';
 import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
+import { ChartCardMenu } from './ChartCardMenu/ChartCardMenu';
 
 type ChartCardProps = {
   title: string;
@@ -74,7 +74,7 @@ export const ChartCard: FC<ChartCardProps> = ({
           {data.isLoading ? (
             <ChartCardLoading />
           ) : (
-            <ChartCardOptions
+            <ChartCardMenu
               title={title}
               containerRef={chartRef}
               data={data.data}

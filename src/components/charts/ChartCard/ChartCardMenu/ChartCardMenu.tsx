@@ -10,9 +10,9 @@ import { i18n, i18nSetup } from '../../../../theme/i18n';
 import { ThemeChartsMenuOptionActionProps } from '../../../../theme/theme.constants';
 import { ChartCardLoading } from '../ChartCardLoading/ChartCardLoading';
 
-type ChartCardOptionsProps = ThemeChartsMenuOptionActionProps;
+type ChartCardMenuProps = ThemeChartsMenuOptionActionProps;
 
-export const ChartCardOptions: React.FC<ChartCardOptionsProps> = (props) => {
+export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -25,7 +25,7 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = (props) => {
     }, 100);
   };
 
-  const handleExport = (action: (props: ChartCardOptionsProps) => void) => {
+  const handleExport = (action: (props: ChartCardMenuProps) => void) => {
     startExport(() => action(props));
   };
 
@@ -36,15 +36,17 @@ export const ChartCardOptions: React.FC<ChartCardOptionsProps> = (props) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={styles.content}>
         {theme.charts.menuOptions?.map((option, index) => {
+          const label = i18n.t(option.labelKey);
+
           return (
             <DropdownMenu.Item
               key={index}
               onSelect={() => handleExport(option.action)}
               className={styles.item}
             >
-              <img src={option.iconSrc} className={styles.icon} />
+              <img src={option.iconSrc} className={styles.icon} alt={`${label} icon`} />
 
-              <Typography className={styles.label}>{i18n.t(option.labelKey)}</Typography>
+              <Typography className={styles.label}>{label}</Typography>
             </DropdownMenu.Item>
           );
         })}

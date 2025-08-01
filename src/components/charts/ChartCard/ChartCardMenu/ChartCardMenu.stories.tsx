@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { ChartCardOptions } from './ChartCardMenu';
+import { ChartCardMenu } from './ChartCardMenu';
 
 const meta = {
-  component: ChartCardOptions,
-} satisfies Meta<typeof ChartCardOptions>;
+  component: ChartCardMenu,
+} satisfies Meta<typeof ChartCardMenu>;
 
 export default meta;
 

@@ -1,4 +1,4 @@
-import { defaultThemeFormatter } from './theme-formatter/theme-formatter.contants';
+import { defaultThemeFormatter } from './theme-formatter/theme-formatter.constants';
 import { ThemeFormatter } from './theme-formatter/theme-formatter.types';
 import {
   defaultChartsMenuOptions,

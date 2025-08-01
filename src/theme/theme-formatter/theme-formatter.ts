@@ -22,7 +22,7 @@ export type GetThemeFormatter = {
    */
   dateTime: (value: Date, params?: DateTimeFormatterParams) => string;
   /**
-   * Formats (or translates) a value returned from `loadData
+   * Formats (or translates) a value returned from `loadData`
    * @example themeFormatter.data(measure, row[measure.name])
    * @example themeFormatter.data(dimension, row[dimension.name])
    */

@@ -55,7 +55,7 @@ export const getPieChartOptions = (
       legend: { display: props.showLegend, position: props.legendPosition },
       datalabels: {
         display: props.showValueLabels,
-        formatter: (value: string) => themeFormatter.number(Number(value)),
+        formatter: (value: string | number) => themeFormatter.number(Number(value)),
       },
       tooltip: {
         enabled: props.showTooltips,
@@ -64,7 +64,7 @@ export const getPieChartOptions = (
             const raw = tooltipItem.raw as number;
             const dataset = tooltipItem.dataset;
             const total = Array.isArray(dataset.data)
-              ? dataset.data.reduce((sum: number, v: number) => sum + parseFloat(v.toString()), 0)
+              ? dataset.data.reduce((sum: number, v: number) => sum + v, 0)
               : 0;
             const pct = total ? Math.round((raw / total) * 100) : 0;
             return `${themeFormatter.number(Number(raw))} (${pct}%)`;
