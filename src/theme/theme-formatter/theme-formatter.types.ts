@@ -39,7 +39,7 @@ export type ThemeFormatter = {
   locale: string;
 
   // Override to customise the default locale logic (by default it will try the `preferredLocales` above in order)
-  getLocale: (theme: Theme) => Intl.Locale;
+  getLocale: (theme: Theme) => Intl.LocalesArgument;
 
   // Override to customise the default dateTime formatter options
   defaultDateTimeFormatOptions: (
