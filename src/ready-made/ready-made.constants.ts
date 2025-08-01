@@ -82,28 +82,3 @@ export const placeholder = {
   label: 'Placeholder',
   category: 'Component Settings',
 } as const;
-
-// TODO: check before remove
-// export const showDownloadCSV = {
-//   name: 'downloadCSV',
-//   type: 'boolean',
-//   label: 'Enable download as CSV',
-//   defaultValue: true,
-//   category: 'Export Options',
-// } as const;
-
-// export const showDownloadPNG = {
-//   name: 'downloadPNG',
-//   type: 'boolean',
-//   label: 'Enable download as PNG',
-//   defaultValue: true,
-//   category: 'Export Options',
-// } as const;
-
-// export const showDownloadXLSX = {
-//   name: 'downloadXLSX',
-//   type: 'boolean',
-//   label: 'Enable download as XLSX',
-//   defaultValue: true,
-//   category: 'Export Options',
-// } as const;

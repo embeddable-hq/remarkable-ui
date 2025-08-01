@@ -3,6 +3,8 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/theme-formatter/theme-formatter';
 import { groupTailAsOther } from '../../ready-made-utils/data.utils';
 import { remarkableTheme, Theme, ThemeChartsLegendPosition } from '../../../theme/theme';
+import { getColor } from '../../../theme/theme.colors.utils';
+import { chartColors } from '../../../theme/theme.colors.constants';
 
 export const getPieChartData = (
   props: {
@@ -27,6 +29,11 @@ export const getPieChartData = (
     props.measure,
     props.maxLegendItems,
   );
+
+  const pieChartColors = groupedData.map((item, i) =>
+    getColor(`${props.dimension.name}.${item[props.dimension.name]}`, chartColors, i),
+  );
+
   return {
     labels: groupedData.map((item) =>
       themeFormatter.data(props.dimension, item[props.dimension.name]),
@@ -34,6 +41,8 @@ export const getPieChartData = (
     datasets: [
       {
         data: groupedData.map((item) => item[props.measure.name]),
+        backgroundColor: pieChartColors,
+        borderColor: pieChartColors,
       },
     ],
   };
