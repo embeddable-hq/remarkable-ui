@@ -52,7 +52,7 @@ export const showLegend = {
   category: 'Component Settings',
 } as const;
 
-export const showToolTips = {
+export const showTooltips = {
   name: 'showTooltips',
   type: 'boolean',
   label: 'Show Tooltips',

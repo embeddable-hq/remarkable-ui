@@ -9,7 +9,7 @@ import {
   measure,
   maxLegendItems,
   showLegend,
-  showToolTips,
+  showTooltips,
   showValueLabels,
   title,
 } from '../../ready-made.constants';
@@ -39,7 +39,7 @@ export const meta = {
     description,
     showLegend,
     maxLegendItems,
-    showToolTips,
+    showTooltips,
     showValueLabels,
   ],
   events: [
