@@ -3,7 +3,7 @@
     /* Language and Environment */
     "target": "es2022",
     "lib": ["es2022", "dom", "dom.iterable"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
 
     /* Modules */
     "module": "commonjs",
