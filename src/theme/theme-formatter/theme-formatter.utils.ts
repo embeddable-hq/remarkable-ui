@@ -38,8 +38,8 @@ export const formatData = (
   dateTimeFormatter: (params: DateTimeFormatterParams) => DateTimeFormatter,
   config?: DataConfig,
 ) => {
-  const prefix = isDimension(key) ? 'dimension' : 'measure';
   switch (key.nativeType) {
+    // TODO: get types from the SDK
     case 'number': {
       const params: NumberFormatterParams = {
         maxDecimalPlaces: config?.decimalPlaces,
@@ -69,18 +69,22 @@ export const formatData = (
       // Fall through to string formatting for booleans
       break;
   }
+
   // String
   const name = key.name;
-  // Allow translation at 3 levels of abstraction
-  const keys = [
-    `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
-    `${prefix}.${value}`, // e.g. 'Dimension.Germany': 'Germany',
-    value, // e.g. 'Germany'
-  ];
+  const prefix = isDimension(key) ? 'dimension' : 'measure';
 
-  return i18n.t(keys, {
-    value: value,
-    type: key.nativeType,
-    name: name,
-  });
+  // Allow translation at 3 levels of abstraction
+  return i18n.t(
+    [
+      `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
+      `${prefix}.${value}`, // e.g. 'Dimension.Germany': 'Germany',
+      value, // e.g. 'Germany'
+    ],
+    {
+      value: value,
+      type: key.nativeType,
+      name: name,
+    },
+  );
 };

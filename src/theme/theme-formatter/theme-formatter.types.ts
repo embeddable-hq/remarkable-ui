@@ -38,9 +38,6 @@ export type ThemeFormatter = {
   // Used to pass in the locale you want to use, and any backups (e.g. ['es-AR', 'es-ES', 'en-US'] or simply ['de-DE'])
   locale: string;
 
-  // Override to customise the default locale logic (by default it will try the `preferredLocales` above in order)
-  getLocale: (theme: Theme) => Intl.LocalesArgument;
-
   // Override to customise the default dateTime formatter options
   defaultDateTimeFormatOptions: (
     theme: Theme,

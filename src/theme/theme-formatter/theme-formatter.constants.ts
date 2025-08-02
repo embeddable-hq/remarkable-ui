@@ -8,15 +8,17 @@ import {
 import { Theme } from '../theme';
 import { i18n } from '../i18n';
 
+const getLocale = (locale: string) => {
+  try {
+    return new Intl.Locale(locale);
+  } catch {
+    return new Intl.Locale('en-US');
+  }
+};
+
 export const defaultThemeFormatter: ThemeFormatter = {
   locale: navigator.language,
-  getLocale: (theme: Theme) => {
-    try {
-      return new Intl.Locale(theme.formatter.locale);
-    } catch {
-      return new Intl.Locale('en-US');
-    }
-  },
+
   defaultDateTimeFormatOptions: (
     _theme: Theme,
     params?: DateTimeFormatterParams,
@@ -42,22 +44,25 @@ export const defaultThemeFormatter: ThemeFormatter = {
     };
   },
   numberFormatter: (theme: Theme, params?: NumberFormatterParams): NumberFormatter => {
+    const locale = getLocale(theme.formatter.locale);
+
     const formatter = new Intl.NumberFormat(
-      theme.i18n.language,
+      locale,
       theme.formatter.defaultNumberFormatOptions(theme, params),
     );
     return { format: (number: number | bigint) => formatter.format(number) };
   },
   dateTimeFormatter: (theme: Theme, params?: DateTimeFormatterParams): DateTimeFormatter => {
-    const { formatter } = theme;
-    const locale = theme.formatter.getLocale(theme);
-    const { year, month, day, hour, minute, second } = formatter.defaultDateTimeFormatOptions(
+    const locale = getLocale(theme.formatter.locale);
+    const { year, month, day, hour, minute, second } = theme.formatter.defaultDateTimeFormatOptions(
       theme,
       params,
     );
     if (!params?.granularity) {
       return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute, second });
     }
+
+    // NOTE: SDK export the granularity options
     switch (params.granularity) {
       case 'year':
         return new Intl.DateTimeFormat(locale, { year });

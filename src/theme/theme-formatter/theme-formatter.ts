@@ -51,8 +51,6 @@ export const getThemeFormatter = (theme: Theme): GetThemeFormatter => {
   );
 
   return {
-    // locale: (): Intl.Locale => theme.formatter.locale(theme),
-    // language: (): string => theme.formatter.locale(theme).language,
     number: (value: number | bigint, params?: NumberFormatterParams): string => {
       return numberFormatter(params).format(value);
     },
