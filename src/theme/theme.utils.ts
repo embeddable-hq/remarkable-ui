@@ -39,12 +39,15 @@ export const injectCssVariables = (newTheme: Theme) => {
  * --var: #3498db -> returns string
  * --var: rgba(52, 152, 219, 0.8) -> returns string
  */
-const rootElement = document.documentElement;
 const numericRegex = /^-?\d+(\.\d+)?$/;
 
+const getStyleValue = (variableName: ThemeStylesKeys): string => {
+  const computedStyle = getComputedStyle(document.documentElement);
+  return computedStyle.getPropertyValue(variableName).trim();
+};
+
 export const getStyle = (variableName: ThemeStylesKeys): string => {
-  const computedStyle = getComputedStyle(rootElement);
-  const rawValue = computedStyle.getPropertyValue(variableName).trim();
+  const rawValue = getStyleValue(variableName);
   if (!rawValue) return rawValue;
 
   // colors (#…, rgb(, rgba()
@@ -53,16 +56,17 @@ export const getStyle = (variableName: ThemeStylesKeys): string => {
     return rawValue;
   }
 
+  // others like font-family
   return rawValue;
 };
 
 export const getStyleNumber = (variableName: ThemeStylesKeys): number | undefined => {
-  const computedStyle = getComputedStyle(rootElement);
-  const rawValue = computedStyle.getPropertyValue(variableName).trim();
+  const rawValue = getStyleValue(variableName);
+
   if (!rawValue) return undefined;
 
   const numericValue = parseFloat(rawValue);
-  const rootFontSize = parseFloat(computedStyle.fontSize);
+  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
   // “px”?
   if (rawValue.slice(-2) === 'px') {
