@@ -410,23 +410,23 @@ export type ThemeChartsMenuOptionActionProps = {
 export type ThemeChartsMenuOption = {
   labelKey: string;
   iconSrc?: string;
-  action: (props: ThemeChartsMenuOptionActionProps) => void;
+  onClick: (props: ThemeChartsMenuOptionActionProps) => void;
 };
 
 export const defaultChartsMenuOptions = [
   {
     labelKey: 'charts.menuOptions.downloadCSV',
-    action: exportCSV,
+    onClick: exportCSV,
     iconSrc: CloudDownload,
   },
   {
     labelKey: 'charts.menuOptions.downloadXLSX',
-    action: exportXLSX,
+    onClick: exportXLSX,
     iconSrc: CloudDownload,
   },
   {
     labelKey: 'charts.menuOptions.downloadPNG',
-    action: exportPNG,
+    onClick: exportPNG,
     iconSrc: PhotoDown,
   },
-];
+] as const;

@@ -18,15 +18,15 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const startExport = (exportFunction: () => void | Promise<void>) => {
+  const startAction = (onClick: () => void | Promise<void>) => {
     setIsLoading(true);
     setTimeout(() => {
-      Promise.resolve(exportFunction()).finally(() => setIsLoading(false));
+      Promise.resolve(onClick()).finally(() => setIsLoading(false));
     }, 100);
   };
 
-  const handleExport = (action: (props: ChartCardMenuProps) => void) => {
-    startExport(() => action(props));
+  const handleExport = (onClick: (props: ChartCardMenuProps) => void) => {
+    startAction(() => onClick(props));
   };
 
   return (
@@ -41,11 +41,12 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
           return (
             <DropdownMenu.Item
               key={index}
-              onSelect={() => handleExport(option.action)}
+              onSelect={() => handleExport(option.onClick)}
               className={styles.item}
             >
-              <img src={option.iconSrc} className={styles.icon} alt={`${label} icon`} />
-
+              {option.iconSrc && (
+                <img src={option.iconSrc} className={styles.icon} alt={`${label} icon`} />
+              )}
               <Typography className={styles.label}>{label}</Typography>
             </DropdownMenu.Item>
           );

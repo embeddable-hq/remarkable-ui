@@ -16,7 +16,7 @@ export type ThemeChartsLegendPosition = 'top' | 'right' | 'bottom' | 'left';
 export type Theme = {
   i18n: { language: string; translations: Resource };
   charts: {
-    menuOptions: ThemeChartsMenuOption[];
+    menuOptions: readonly ThemeChartsMenuOption[];
     legendPosition: ThemeChartsLegendPosition;
   };
   styles: ThemeStyles;

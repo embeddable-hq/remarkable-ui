@@ -38,7 +38,6 @@ const ReadyMadePieChart: React.FC<ReadyMadePieChartProps> = ({
   const handleSegmentClick = (index: number | undefined) => {
     onSegmentClick({
       dimensionValue: index === undefined ? undefined : results.data?.[index]?.[dimension.name],
-      metricValue: index === undefined ? undefined : results.data?.[index]?.[measure.name],
     });
   };
 

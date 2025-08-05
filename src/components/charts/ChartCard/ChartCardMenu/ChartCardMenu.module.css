@@ -17,7 +17,8 @@
 }
 
 .icon {
-  height: var(--em-select-list-item-size-height, 2rem);
+  width: var(--em-select-list-item-icon-size-width, 1rem);
+  height: var(--em-select-list-item-icon-size-height, 1rem);
   padding: var(--em-select-list-item-padding-default, 0.5rem);
   color: var(--em-select-list-item-label-color-default, #212129);
 }

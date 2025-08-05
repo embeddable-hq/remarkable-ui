@@ -10,5 +10,5 @@ export interface DefaultReadyMadePieChartProps {
   showTooltips: boolean;
   showValueLabels: boolean;
   title: string;
-  onSegmentClick: (args: { dimensionValue: string | null; metricValue: number | null }) => void;
+  onSegmentClick: (args: { dimensionValue: string | null }) => void;
 }

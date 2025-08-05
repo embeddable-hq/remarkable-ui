@@ -39,11 +39,6 @@ export const meta = {
           label: 'Clicked Dimension',
           type: 'string',
         },
-        {
-          name: 'metricValue',
-          label: 'Clicked Metric',
-          type: 'number',
-        },
       ],
     },
   ],
@@ -63,7 +58,6 @@ export default defineComponent(PieChart, meta, {
     onSegmentClick: (value) => {
       return {
         dimensionValue: value.dimensionValue || Value.noFilter(),
-        metricValue: value.metricValue || Value.noFilter(),
       };
     },
   },

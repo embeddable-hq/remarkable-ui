@@ -65,7 +65,7 @@ export function exportCSV({
   const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   // kick off the download
-  downloadBlob(url, `${title}.csv`);
+  downloadBlob(url, `${title ?? 'untitled'}.csv`);
 }
 
 export function exportXLSX({
@@ -83,7 +83,7 @@ export function exportXLSX({
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
   // XLSX.writeFile handles blob creation & download for us
-  XLSX.writeFile(workbook, `${title}.xlsx`);
+  XLSX.writeFile(workbook, `${title ?? 'untitled'}.xlsx`);
 }
 
 export async function exportPNG({
@@ -116,7 +116,7 @@ export async function exportPNG({
     canvas.toBlob((blob) => {
       if (!blob) return reject(new Error('Could not convert canvas to Blob'));
       const url = URL.createObjectURL(blob);
-      downloadBlob(url, `${title}.png`);
+      downloadBlob(url, `${title ?? 'untitled'}.png`);
       URL.revokeObjectURL(url);
       resolve();
     }, 'image/png');
