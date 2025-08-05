@@ -18,6 +18,8 @@ export type Theme = {
   charts: {
     menuOptions: readonly ThemeChartsMenuOption[];
     legendPosition: ThemeChartsLegendPosition;
+    backgroundColors?: string[];
+    borderColors?: string[];
   };
   styles: ThemeStyles;
   formatter: ThemeFormatter;

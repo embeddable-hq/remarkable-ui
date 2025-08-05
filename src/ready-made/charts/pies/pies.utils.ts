@@ -30,8 +30,20 @@ export const getPieChartData = (
     props.maxLegendItems,
   );
 
-  const pieChartColors = groupedData.map((item, i) =>
-    getColor(`${props.dimension.name}.${item[props.dimension.name]}`, chartColors, i),
+  const backgroundColor = groupedData.map((item, i) =>
+    getColor(
+      `${props.dimension.name}.${item[props.dimension.name]}.backgroundColor`,
+      theme.charts.backgroundColors ?? chartColors,
+      i,
+    ),
+  );
+
+  const borderColor = groupedData.map((item, i) =>
+    getColor(
+      `${props.dimension.name}.${item[props.dimension.name]}.borderColor`,
+      theme.charts.borderColors ?? chartColors,
+      i,
+    ),
   );
 
   return {
@@ -41,8 +53,8 @@ export const getPieChartData = (
     datasets: [
       {
         data: groupedData.map((item) => item[props.measure.name]),
-        backgroundColor: pieChartColors,
-        borderColor: pieChartColors,
+        backgroundColor,
+        borderColor,
       },
     ],
   };
@@ -52,7 +64,7 @@ export type DefaultPieChartOptions = {
   showTooltips: boolean;
   showLegend: boolean;
   showValueLabels: boolean;
-  legendPosition: ThemeChartsLegendPosition;
+  legendPosition?: ThemeChartsLegendPosition;
 };
 
 export const getDefaultPieChartOptions = (
