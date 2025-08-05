@@ -35,6 +35,7 @@ export const getPieChartData = (
       `${props.dimension.name}.${item[props.dimension.name]}.backgroundColor`,
       theme.charts.backgroundColors ?? chartColors,
       i,
+      'chartBackgroundColors',
     ),
   );
 
@@ -43,6 +44,7 @@ export const getPieChartData = (
       `${props.dimension.name}.${item[props.dimension.name]}.borderColor`,
       theme.charts.borderColors ?? chartColors,
       i,
+      'chartBorderColors',
     ),
   );
 
