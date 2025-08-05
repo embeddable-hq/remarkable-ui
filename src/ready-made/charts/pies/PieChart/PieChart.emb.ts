@@ -1,4 +1,4 @@
-import { DataResponse, Dimension, Measure, Value, loadData } from '@embeddable.com/core';
+import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 
 import PieChart from './index';
@@ -12,20 +12,7 @@ import {
   showTooltips,
   showValueLabels,
   title,
-} from '../../ready-made.constants';
-
-export type PieChartProps = {
-  description?: string;
-  dimension: Dimension;
-  maxLegendItems?: number;
-  measure: Measure;
-  onSegmentClick: (args: { dimensionValue: string | null }) => void;
-  results: DataResponse;
-  showLegend?: boolean;
-  showTooltips?: boolean;
-  showValueLabels?: boolean;
-  title?: string;
-};
+} from '../../../ready-made.constants';
 
 export const meta = {
   name: 'PieChart',
@@ -52,6 +39,11 @@ export const meta = {
           label: 'Clicked Dimension',
           type: 'string',
         },
+        {
+          name: 'metricValue',
+          label: 'Clicked Metric',
+          type: 'number',
+        },
       ],
     },
   ],
@@ -71,6 +63,7 @@ export default defineComponent(PieChart, meta, {
     onSegmentClick: (value) => {
       return {
         dimensionValue: value.dimensionValue || Value.noFilter(),
+        metricValue: value.metricValue || Value.noFilter(),
       };
     },
   },

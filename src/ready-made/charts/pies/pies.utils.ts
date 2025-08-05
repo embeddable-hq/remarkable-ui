@@ -1,7 +1,7 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/theme-formatter/theme-formatter';
-import { groupTailAsOther } from '../../ready-made-utils/data.utils';
+import { groupTailAsOther } from '../charts.utils';
 import { remarkableTheme, Theme, ThemeChartsLegendPosition } from '../../../theme/theme';
 import { getColor } from '../../../theme/theme.colors.utils';
 import { chartColors } from '../../../theme/theme.colors.constants';
@@ -48,26 +48,28 @@ export const getPieChartData = (
   };
 };
 
-export const getPieChartOptions = (
-  props: {
-    showTooltips: boolean;
-    showLegend: boolean;
-    showValueLabels: boolean;
-    legendPosition: ThemeChartsLegendPosition;
-  },
+export type DefaultPieChartOptions = {
+  showTooltips: boolean;
+  showLegend: boolean;
+  showValueLabels: boolean;
+  legendPosition: ThemeChartsLegendPosition;
+};
+
+export const getDefaultPieChartOptions = (
+  options: DefaultPieChartOptions,
   theme: Theme = remarkableTheme,
 ): Partial<ChartOptions<'pie'>> => {
   const themeFormatter = getThemeFormatter(theme);
 
   return {
     plugins: {
-      legend: { display: props.showLegend, position: props.legendPosition },
+      legend: { display: options.showLegend, position: options.legendPosition },
       datalabels: {
-        display: props.showValueLabels,
+        display: options.showValueLabels,
         formatter: (value: string | number) => themeFormatter.number(Number(value)),
       },
       tooltip: {
-        enabled: props.showTooltips,
+        enabled: options.showTooltips,
         callbacks: {
           label(context) {
             const raw = context.raw as number;
