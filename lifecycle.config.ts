@@ -1,4 +1,4 @@
-import { injectCssVariables } from './src/theme/theme.utils';
+import { injectCssVariables } from './src/remarkable-ui';
 // LifeCycle.config.ts
 // •	Handles global theming logic (e.g. setting fonts, applying CSS variables).
 // •	Uses the onThemeUpdated hook.

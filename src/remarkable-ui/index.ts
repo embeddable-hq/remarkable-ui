@@ -7,7 +7,7 @@ export { IconButton } from './charts/shared/IconButton/IconButton';
 
 // Constants
 export { chartColors } from './charts/charts.constants';
-export { styles, Styles } from './styles/styles.constants';
+export { styles, type Styles } from './styles/styles.constants';
 
 // Utils
-export { getStyle, getStyleNumber } from './styles/styles.utils';
+export { getStyle, getStyleNumber, injectCssVariables } from './styles/styles.utils';
