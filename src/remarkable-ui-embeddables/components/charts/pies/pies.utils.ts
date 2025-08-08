@@ -80,7 +80,7 @@ export const getDefaultPieChartOptions = (
     plugins: {
       legend: { display: options.showLegend, position: options.legendPosition },
       datalabels: {
-        display: options.showValueLabels,
+        display: options.showValueLabels ? 'auto' : false,
         formatter: (value: string | number) => themeFormatter.number(Number(value)),
       },
       tooltip: {
