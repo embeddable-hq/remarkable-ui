@@ -10,4 +10,4 @@ export { chartColors } from './charts/charts.constants';
 export { styles, type Styles } from './styles/styles.constants';
 
 // Utils
-export { getStyle, getStyleNumber, injectCssVariables } from './styles/styles.utils';
+export { getStyle, getStyleNumber } from './styles/styles.utils';
