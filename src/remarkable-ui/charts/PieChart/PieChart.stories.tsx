@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react-webpack5';
-import { BasePieChart, DonutChart, PieChart } from './PieChart';
+import { BasePieChart } from './PieChart';
 
 const meta = {
   component: BasePieChart,
