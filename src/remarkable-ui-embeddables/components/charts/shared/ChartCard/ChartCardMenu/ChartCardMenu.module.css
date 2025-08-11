@@ -1,5 +1,6 @@
 .content {
-  padding: var(--em-select-menu-list-padding-default, 0.5rem);
+  padding: var(--em-select-menu-list-padding-default, 0.5rem)
+    var(--em-select-list-item-padding-default, 0.5rem);
   border-radius: var(--em-select-menu-list-border-radius-default, 0.75rem);
   background: var(--em-background-color-neutral, #fff);
   box-shadow: var(--em-box-shadow-default-position-x, 0)
@@ -9,16 +10,27 @@
 }
 
 .item {
+  border-radius: var(--em-select-list-item-border-radius-default, 0.5rem);
   height: var(--em-select-list-item-size-height, 2rem);
   padding: var(--em-select-list-item-padding-default, 0.5rem);
   display: flex;
   align-items: center;
   cursor: pointer;
+  outline: none;
+}
+
+.item:hover,
+.item:focus {
+  background: var(--em-select-list-item-background-color-hover, #f7f7f8);
+}
+
+.item:active {
+  background: var(--em-select-list-item-background-color-pressed, #ededf1);
 }
 
 .icon {
   width: var(--em-select-list-item-icon-size-width, 1rem);
-  height: var(--em-select-list-item-icon-size-height, 1rem);
+  height: var(--em-select-list-item-size-height, 2rem);
   padding: var(--em-select-list-item-padding-default, 0.5rem);
   color: var(--em-select-list-item-label-color-default, #212129);
 }

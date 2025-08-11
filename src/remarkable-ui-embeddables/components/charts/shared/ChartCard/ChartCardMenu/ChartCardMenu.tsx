@@ -32,7 +32,7 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
       <DropdownMenu.Trigger asChild>
         {isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content className={styles.content}>
+      <DropdownMenu.Content className={styles.content} side="bottom" align="end">
         {theme.charts.menuOptions?.map((option, index) => {
           const label = i18n.t(option.labelKey);
 
