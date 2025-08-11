@@ -1,7 +1,7 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { groupTailAsOther } from '../charts.utils';
-import { Theme, ThemeChartsLegendPosition } from '../../../theme/theme.types';
+import { Theme } from '../../../theme/theme.types';
 import { remarkableTheme } from '../../../theme/theme.constants';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { getColor } from '../../../theme/styles/stytles.utils';
@@ -67,7 +67,6 @@ export type DefaultPieChartOptions = {
   showTooltips: boolean;
   showLegend: boolean;
   showValueLabels: boolean;
-  legendPosition?: ThemeChartsLegendPosition;
 };
 
 export const getDefaultPieChartOptions = (
@@ -78,7 +77,7 @@ export const getDefaultPieChartOptions = (
 
   return {
     plugins: {
-      legend: { display: options.showLegend, position: options.legendPosition },
+      legend: { display: options.showLegend, position: theme.charts.legendPosition ?? 'bottom' },
       datalabels: {
         display: options.showValueLabels ? 'auto' : false,
         formatter: (value: string | number) => themeFormatter.number(Number(value)),

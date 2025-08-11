@@ -1,4 +1,4 @@
-// ATENTION: THIS OBJECTS SHOULD NEVER BE TOUCHED
+// ATENTION: THESE OBJECTS SHOULD NEVER BE TOUCHED
 
 export const dataset = {
   name: 'dataset',

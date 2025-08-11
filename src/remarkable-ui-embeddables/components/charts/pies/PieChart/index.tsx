@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTheme } from '@embeddable.com/react';
 import { PieChart } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
@@ -9,7 +8,7 @@ import { ChartCard } from '../../shared/ChartCard/ChartCard';
 
 type ReadyMadePieChartProps = DefaultReadyMadePieChartProps;
 
-const ReadyMadePieChart: React.FC<ReadyMadePieChartProps> = ({
+const ReadyMadePieChart = ({
   description,
   dimension,
   maxLegendItems,
@@ -20,7 +19,7 @@ const ReadyMadePieChart: React.FC<ReadyMadePieChartProps> = ({
   showValueLabels,
   title,
   onSegmentClick,
-}) => {
+}: ReadyMadePieChartProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -30,7 +29,6 @@ const ReadyMadePieChart: React.FC<ReadyMadePieChartProps> = ({
       showTooltips,
       showLegend,
       showValueLabels,
-      legendPosition: theme.charts.legendPosition,
     },
     theme,
   );

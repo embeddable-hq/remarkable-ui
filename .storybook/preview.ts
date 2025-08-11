@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
-import { injectCssVariables } from '../src/theme/theme.utils';
-import { remarkableTheme } from '../src/theme/theme';
+import { injectCssVariables } from '../src/remarkable-ui-embeddables/theme/styles/stytles.utils';
+import { remarkableTheme } from '../src/remarkable-ui-embeddables/theme/theme.constants';
 
 export const globalTypes = {
   locale: {
@@ -31,7 +31,7 @@ export const globalTypes = {
 //   },
 // ];
 
-injectCssVariables(remarkableTheme);
+injectCssVariables(remarkableTheme.styles);
 
 const preview: Preview = {
   parameters: {

@@ -63,7 +63,7 @@ export default defineComponent(PieChart, meta, {
       }),
       resultsInnerLabel: loadData({
         from: inputs.dataset,
-        measures: [inputs.innerLabelMeasure],
+        select: [inputs.innerLabelMeasure],
       }),
     };
   },

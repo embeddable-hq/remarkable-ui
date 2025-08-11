@@ -1,36 +1,34 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
-
-import { PieChart } from './PieChart';
+import type { Meta } from '@storybook/react-webpack5';
+import { BasePieChart, DonutChart, PieChart } from './PieChart';
 
 const meta = {
-  component: PieChart,
-} satisfies Meta<typeof PieChart>;
+  component: BasePieChart,
+} satisfies Meta<typeof BasePieChart>;
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+const data = {
+  labels: ['Orange 1', 'Orange 2', 'Orange 3', 'Orange 4', 'Orange 5', 'Orange 6'],
+  datasets: [
+    {
+      data: [12, 19, 3, 5, 2, 3],
+    },
+  ],
+};
 
-export const Default: Story = {
-  args: {
-    data: {
-      labels: ['Orange 1', 'Orange 2', 'Orange 3', 'Orange 4', 'Orange 5', 'Orange 6'],
-      datasets: [
-        {
-          data: [12, 19, 3, 5, 2, 3],
-        },
-      ],
+const options = {
+  plugins: {
+    datalabels: {
+      display: true,
     },
-    options: {
-      plugins: {
-        datalabels: {
-          display: true,
-        },
-        legend: {
-          position: 'right',
-          display: true,
-        },
-        tooltip: { enabled: true },
-      },
+    legend: {
+      position: 'right',
+      display: true,
     },
+    tooltip: { enabled: true },
   },
 };
+
+export const PieChart1 = () => <PieChart data={data} options={options} />;
+export const PieChart2 = () => <DonutChart data={data} options={options as any} />;
+export const PieChart3 = () => <DonutChart data={data} options={options as any} />;
