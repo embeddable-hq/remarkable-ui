@@ -11,7 +11,8 @@
   outline: none;
 }
 
-.iconButton:hover {
+.iconButton:hover,
+.iconButton:focus {
   background: var(--em-icon-btn-bg-color-hover, #e4e4ea);
 }
 

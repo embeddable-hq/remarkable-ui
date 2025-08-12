@@ -7,6 +7,7 @@ import { ChartCardLoading } from '../ChartCardLoading/ChartCardLoading';
 import { i18n, i18nSetup } from '../../../../../theme/i18n/i18n';
 import { Theme, ThemeChartsMenuOptionActionProps } from '../../../../../theme/theme.types';
 import { IconButton, Typography } from '../../../../../../remarkable-ui';
+import { RadixDropdownMenuContent } from '../../../../../third-party/radix';
 
 type ChartCardMenuProps = ThemeChartsMenuOptionActionProps;
 
@@ -33,22 +34,24 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
         {isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className={styles.content} side="bottom" align="end">
-        {theme.charts.menuOptions?.map((option, index) => {
-          const label = i18n.t(option.labelKey);
+        <RadixDropdownMenuContent autoFocus>
+          {theme.charts.menuOptions?.map((option, index) => {
+            const label = i18n.t(option.labelKey);
 
-          return (
-            <DropdownMenu.Item
-              key={index}
-              onSelect={() => handleExport(option.onClick)}
-              className={styles.item}
-            >
-              {option.iconSrc && (
-                <img src={option.iconSrc} className={styles.icon} alt={`${label} icon`} />
-              )}
-              <Typography className={styles.label}>{label}</Typography>
-            </DropdownMenu.Item>
-          );
-        })}
+            return (
+              <DropdownMenu.Item
+                key={index}
+                onSelect={() => handleExport(option.onClick)}
+                className={styles.item}
+              >
+                {option.iconSrc && (
+                  <img src={option.iconSrc} className={styles.icon} alt={`${label} icon`} />
+                )}
+                <Typography className={styles.label}>{label}</Typography>
+              </DropdownMenu.Item>
+            );
+          })}
+        </RadixDropdownMenuContent>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
