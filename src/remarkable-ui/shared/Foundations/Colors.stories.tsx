@@ -1,4 +1,4 @@
-import { stylesColors } from '../../../styles/styles.constants';
+import { stylesColors } from '../../styles/styles.constants';
 
 export default {
   title: 'Foundations/Colors',

@@ -1,8 +1,8 @@
 // Components
-export { Skeleton } from './charts/shared/Skeleton/Skeleton';
-export { Card, CardContent, CardHeader } from './charts/shared/Card/Card';
-export { Typography } from './charts/shared/Typography/Typography';
-export { IconButton } from './charts/shared/IconButton/IconButton';
+export { Skeleton } from './shared/Skeleton/Skeleton';
+export { Card, CardContent, CardHeader } from './shared/Card/Card';
+export { Typography } from './shared/Typography/Typography';
+export { IconButton } from './shared/IconButton/IconButton';
 
 // Charts
 export { DonutChart } from './charts/pies/DonutChart';
