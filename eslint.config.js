@@ -57,6 +57,7 @@ export default defineConfig([
     extends: ['css/recommended'],
     rules: {
       'css/no-invalid-properties': ['error', { allowUnknownVariables: true }], // Allow unknown CSS custom properties (e.g. --font-default)
+      'css/use-baseline': 'off',
     },
   },
 

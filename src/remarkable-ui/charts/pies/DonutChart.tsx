@@ -10,21 +10,11 @@ import { getPieData, getPieSegmentIndexClicked } from './pies.utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
-export type DonutLabelChartProps = BasePieChartProps &
-  (
-    | {
-        label: string;
-        subLabel?: string;
-      }
-    | {
-        label?: string;
-        subLabel: string;
-      }
-  );
+export type DonutLabelChartProps = BasePieChartProps & { label?: string; subLabel?: string };
 
 export const DonutChart: FC<DonutLabelChartProps> = ({
-  label,
-  subLabel,
+  label = '',
+  subLabel = '',
   options = {},
   data,
   onSegmentClick,
