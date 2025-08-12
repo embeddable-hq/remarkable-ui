@@ -7,14 +7,14 @@ const generateCssVariables = (variables: Record<string, string>) => {
   return textContent;
 };
 
-// TODO: check the possibility of injecting via CSS
+// TODO: check the possibility of injecting via CSS (future)
 export const injectCssVariables = (styles: Record<string, string>) => {
   const css = `:root {\n${generateCssVariables(styles)}}`;
   const styleId = 'remarkable-ui-embeddable-style';
   let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;
 
   if (styleEl) {
-    // overwrite the old vars
+    // Overwrite the old vars
     styleEl.textContent = css;
   } else {
     styleEl = document.createElement('style');
@@ -29,9 +29,10 @@ export const injectCssVariables = (styles: Record<string, string>) => {
 const colorsMap = new Map<string, Map<string, string>>();
 const colorsInUse = new Map<string, Set<string>>();
 
-/*We save the colors to local storage so that they are persistent across refreshes. 
-This is important, for example, if the user is looking at multiple tabs, or if the user refreshes the page.*/
-
+/* 
+We save the colors to session storage so that they are persistent across refreshes. 
+This is important, for example, if the user is looking at multiple tabs, or if the user refreshes the page.
+*/
 const STORAGE_KEY = 'embeddable';
 
 const saveColorsMap = () => {
@@ -73,7 +74,7 @@ export const getColor = (
   // Return existing color if already assigned
   if (catMap.has(value)) return catMap.get(value)!;
 
-  // Find first uncolorsInUse color, fallback to indexed one
+  // Find first colorsInUse color, fallback to indexed one
   const color = palette.find((c) => !catcolorsInUse.has(c)) ?? palette[idx % palette.length];
 
   if (typeof color !== 'string') {

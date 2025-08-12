@@ -47,7 +47,7 @@ export const getStyleNumber = (variableName: StylesKeys): number | undefined => 
 
   // Rem/Em
   const unit3 = rawValue.slice(-3);
-  if (unit3 === 'rem' || unit3 === 'em') {
+  if (unit3 === 'rem') {
     return numericValue * rootFontSize;
   }
 

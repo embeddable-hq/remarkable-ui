@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC } from 'react';
+import React, { CSSProperties, FC, useRef } from 'react';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { Card, CardContent, CardHeader, Skeleton } from '../../../../../remarkable-ui';
 import styles from './ChartCard.module.css';
@@ -33,7 +33,7 @@ export const ChartCard: FC<ChartCardProps> = ({
   const theme: Theme = useTheme() as Theme;
   i18nSetup(theme);
 
-  const chartRef = React.createRef<HTMLDivElement>();
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const hasData = data.data && data.data.length > 0;
 

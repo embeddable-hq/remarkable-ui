@@ -19,7 +19,7 @@ export const ChartCardInfo: React.FC<ChartCardInfoProps> = ({
   return (
     <div className={clsx(styles.info, className)}>
       {Icon && <Icon />}
-      <Typography as="h1" className={styles.title}>
+      <Typography as="h2" className={styles.title}>
         {title}
       </Typography>
       <Typography as="p" className={styles.message}>

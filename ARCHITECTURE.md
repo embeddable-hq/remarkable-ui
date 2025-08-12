@@ -51,7 +51,7 @@ Every component should have:
 - A `.test.ts` file for unit tests
 - A `.story.ts` file to showcase and visually test the component in Storybook
 
-## Adding a new new component
+## Adding a new component
 
 1. Create a folder in `charts`, `controls`, or `shared`
 2. Add:
@@ -86,12 +86,12 @@ src
 │   │   ├── bars
 │   │   │   └── ...
 │   │   └── shared                            > components reused inside the charts
-│   │       └── ChardCard.ts                  > react component
-│   │           ├── ChardCard.story.ts        > storybook of the component > check need
-│   │           ├── ChardCard.test.ts.        > tests of the component
-│   │           ├── ChardCard.types.ts        > types of the component (only if more than one, including the DatePickerProps)
-│   │           ├── ChardCard.utils.ts        > utils of the component
-│   │           └── ChardCard.styles.ts       > styles of the component
+│   │       └── ChartCard.ts                  > react component
+│   │           ├── ChartCard.story.ts        > storybook of the component > check need
+│   │           ├── ChartCard.test.ts.        > tests of the component
+│   │           ├── ChartCard.types.ts        > types of the component (only if more than one, including the DatePickerProps)
+│   │           ├── ChartCard.utils.ts        > utils of the component
+│   │           └── ChartCard.styles.ts       > styles of the component
 │   └── controls                              > control components
 │       ├──  DatePicker                       > name of the component
 │       │   ├── DatePicker.story.ts
@@ -144,7 +144,7 @@ Each component may include:
 - `.test.ts`: Unit tests
 - `.types.ts`: Local types (if needed)
 - `.utils.ts`: Local utilities (if needed)
-- `.styles.ts`: Component-specific stylinginternals
+- `.styles.ts`: Component-specific styling
 
 ---
 
@@ -168,7 +168,7 @@ Each includes:
 
 ## Theme
 
-Theme is splitted into 4 parts:
+Theme is split into 4 parts:
 
 1. `formatter`: controls how the data is displayed to the end user
 2. `i18n`: controls how the labels are displayed to the end user

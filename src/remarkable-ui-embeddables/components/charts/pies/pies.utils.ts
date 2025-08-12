@@ -4,7 +4,7 @@ import { groupTailAsOther } from '../charts.utils';
 import { Theme } from '../../../theme/theme.types';
 import { remarkableTheme } from '../../../theme/theme.constants';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
-import { getColor } from '../../../theme/styles/stytles.utils';
+import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
 
 export const getPieChartData = (
