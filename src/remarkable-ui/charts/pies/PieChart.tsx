@@ -5,8 +5,9 @@ import { defaultPieChartOptions } from './pies.constants';
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { getPieData, getPieSegmentIndexClicked } from './pies.utils';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 export type PieChartProps = BasePieChartProps;
 

@@ -18,7 +18,7 @@ export const defaultPieChartOptions: Partial<ChartOptions<'pie'>> = {
   maintainAspectRatio: false,
   plugins: {
     datalabels: {
-      display: true,
+      display: 'auto',
       backgroundColor: getStyle('--em-label-background-color-default'),
       borderRadius: getStyleNumber('--em-label-border-radius-default'),
       padding: {
@@ -38,6 +38,7 @@ export const defaultPieChartOptions: Partial<ChartOptions<'pie'>> = {
     },
     legend: {
       display: true,
+      position: 'bottom',
       labels: {
         boxWidth: getStyleNumber('--em-category-indicator-size-width'),
         boxHeight: getStyleNumber('--em-category-indicator-size-height'),
