@@ -69,7 +69,7 @@ export const ChartCard: FC<ChartCardProps> = ({
     <Card ref={chartRef} {...props}>
       <div className={styles.header}>
         <CardHeader title={title} subtitle={subtitle} />
-        <div data-png-export-ignore>
+        <div data-html2canvas-ignore>
           {data.isLoading ? (
             <ChartCardLoading />
           ) : (

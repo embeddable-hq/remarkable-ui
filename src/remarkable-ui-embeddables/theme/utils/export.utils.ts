@@ -94,11 +94,6 @@ export async function exportPNG({
   if (!element) {
     throw new Error('exportPNG: element is undefined');
   }
-  // hide any elements marked to ignore in the export
-  const hidden = Array.from(
-    element.querySelectorAll<HTMLElement>('[data-png-export-ignore]') || [],
-  );
-  hidden.forEach((el) => (el.style.visibility = 'hidden'));
 
   // render to canvas
   const canvas = await html2canvas(element, {
@@ -107,9 +102,6 @@ export async function exportPNG({
     scale: window.devicePixelRatio, // high-res output
     allowTaint: true, // allow cross-origin images
   });
-
-  // restore hidden elements
-  hidden.forEach((el) => (el.style.display = ''));
 
   // convert canvas to blob & download
   return new Promise((resolve, reject) => {
