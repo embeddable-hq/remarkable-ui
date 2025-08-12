@@ -1,6 +1,6 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import * as XLSX from 'xlsx';
-import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image-more';
 import { ThemeChartsMenuOptionActionProps } from '../theme.types';
 
 // RFC4180 cell-escaping: wrap in quotes and double any inner quotes
@@ -95,22 +95,25 @@ export async function exportPNG({
     throw new Error('exportPNG: element is undefined');
   }
 
-  // render to canvas
-  const canvas = await html2canvas(element, {
-    useCORS: true, // in case of external images
-    backgroundColor: null, // preserve transparency
-    scale: window.devicePixelRatio, // high-res output
-    allowTaint: true, // allow cross-origin images
-  });
+  try {
+    const dataUrl = await domtoimage.toPng(element, {
+      cacheBust: true,
+      filter: (node: unknown) => {
+        if (node instanceof HTMLElement && node.hasAttribute('data-no-export')) {
+          return false; // exclude elements with data-no-export
+        }
+        return true;
+      },
+    });
 
-  // convert canvas to blob & download
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) return reject(new Error('Could not convert canvas to Blob'));
-      const url = URL.createObjectURL(blob);
-      downloadBlob(url, `${title ?? 'untitled'}.png`);
-      URL.revokeObjectURL(url);
-      resolve();
-    }, 'image/png');
-  });
+    // Convert data URL to Blob for download
+    const res = await fetch(dataUrl);
+    const blob = await res.blob();
+
+    const url = URL.createObjectURL(blob);
+    downloadBlob(url, `${title ?? 'untitled'}.png`);
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    throw new Error(`exportPNG failed: ${(error as Error).message}`);
+  }
 }
