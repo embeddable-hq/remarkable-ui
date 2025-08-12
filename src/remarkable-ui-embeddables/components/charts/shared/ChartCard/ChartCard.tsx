@@ -67,19 +67,25 @@ export const ChartCard: FC<ChartCardProps> = ({
 
   return (
     <Card ref={chartRef} {...props}>
-      <CardHeader title={title} subtitle={subtitle} />
-      <div data-no-export className={styles.menu}>
-        {data.isLoading ? (
-          <ChartCardLoading />
-        ) : (
-          <ChartCardMenu
-            title={title}
-            containerRef={chartRef}
-            data={data.data}
-            dimensionsAndMeasures={dimensionsAndMeasures}
-          />
-        )}
-      </div>
+      <CardHeader
+        title={title}
+        subtitle={subtitle}
+        rightContent={
+          <div data-no-export>
+            {data.isLoading ? (
+              <ChartCardLoading />
+            ) : (
+              <ChartCardMenu
+                title={title}
+                containerRef={chartRef}
+                data={data.data}
+                dimensionsAndMeasures={dimensionsAndMeasures}
+              />
+            )}
+          </div>
+        }
+      />
+
       <CardContent>{getDisplay()}</CardContent>
     </Card>
   );

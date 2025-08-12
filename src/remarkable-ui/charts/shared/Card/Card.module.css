@@ -21,8 +21,15 @@
 .header {
   width: 100%;
   display: flex;
+  gap: var(--em-card-title-padding-default, 1rem);
+  justify-content: space-between;
+}
+
+.titles {
+  display: flex;
   flex-direction: column;
   gap: var(--em-card-title-padding-default, 1rem);
+  overflow: hidden;
 }
 
 .title {
@@ -31,6 +38,9 @@
   font-style: normal;
   font-weight: var(--em-card-title-font-weight, 700);
   line-height: var(--em-card-title-font-line-height, 1.1875rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .subtitle {
@@ -40,4 +50,7 @@
   font-style: normal;
   font-weight: var(--em-card-subtitle-font-weight, 400);
   line-height: var(--em-card-subtitle-font-line-height, 0.875rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

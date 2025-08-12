@@ -140,7 +140,7 @@ const stylesComponents = {
   '--em-card-title-color-default': 'var(--em-foreground-color-default)',
   '--em-card-title-font-font-family': 'var(--em-font-family-default)',
   '--em-card-title-font-line-height': 'var(--em-line-height-l)',
-  '--em-card-title-font-size': 'var(--em-font-size-xl)',
+  '--em-card-title-font-size': 'var(--em-font-size-md)',
   '--em-card-title-font-weight': 'var(--em-font-weight-bold)',
   '--em-card-title-padding-default': 'var(--em-padding-400)',
   '--em-category-group-gap-default': 'var(--em-padding-200)',

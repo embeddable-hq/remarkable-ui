@@ -21,19 +21,23 @@ Card.displayName = 'Card';
 type CardHeaderProps = {
   title: string;
   subtitle?: string;
+  rightContent?: React.ReactNode;
 };
 
-export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle }) => {
+export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightContent }) => {
   return (
     <div className={styles.header}>
-      <Typography as="h1" className={styles.title}>
-        {title}
-      </Typography>
-      {subtitle && (
-        <Typography as="p" className={styles.subtitle}>
-          {subtitle}
+      <div className={styles.titles}>
+        <Typography as="h1" className={styles.title}>
+          {title}
         </Typography>
-      )}
+        {subtitle && (
+          <Typography as="p" className={styles.subtitle}>
+            {subtitle}
+          </Typography>
+        )}
+      </div>
+      {rightContent}
     </div>
   );
 };

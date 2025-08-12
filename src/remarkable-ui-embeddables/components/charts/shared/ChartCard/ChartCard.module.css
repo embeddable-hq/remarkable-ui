@@ -1,9 +1,3 @@
-.menu {
-  position: absolute;
-  top: var(--em-card-padding-default, 2rem);
-  right: var(--em-card-padding-default, 2rem);
-}
-
 .error svg,
 .error h1,
 .error p {
