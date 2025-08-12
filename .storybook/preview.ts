@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react';
-import { injectCssVariables } from '../src/remarkable-ui-embeddables/theme/styles/stytles.utils';
+import { injectCssVariables } from '../src/remarkable-ui-embeddables/theme/styles/styles.utils';
 import { remarkableTheme } from '../src/remarkable-ui-embeddables/theme/theme.constants';
 
 export const globalTypes = {

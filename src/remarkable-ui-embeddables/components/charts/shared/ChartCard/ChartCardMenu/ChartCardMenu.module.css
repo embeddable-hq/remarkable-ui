@@ -17,6 +17,7 @@
   align-items: center;
   cursor: pointer;
   outline: none;
+  box-sizing: border-box;
 }
 
 .item:hover,
@@ -30,8 +31,7 @@
 
 .icon {
   width: var(--em-select-list-item-icon-size-width, 1rem);
-  height: var(--em-select-list-item-size-height, 2rem);
-  padding: var(--em-select-list-item-padding-default, 0.5rem);
+  height: var(--em-select-list-item-icon-size-height, 1rem);
   color: var(--em-select-list-item-label-color-default, #212129);
 }
 

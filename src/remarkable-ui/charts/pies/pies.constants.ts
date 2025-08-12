@@ -29,7 +29,7 @@ export const defaultPieChartOptions: Partial<ChartOptions<'pie'>> = {
       },
       color: getStyle('--em-label-label-font-color-default'),
       font: {
-        family: getStyle('--em-label-label-font-family'),
+        family: 'Inter, sans-serif',
         size: getStyleNumber('--em-label-label-font-size'),
         weight: getStyleNumber('--em-label-label-font-weight'),
       },
@@ -44,8 +44,8 @@ export const defaultPieChartOptions: Partial<ChartOptions<'pie'>> = {
         boxHeight: getStyleNumber('--em-category-indicator-size-height'),
         usePointStyle: true,
         color: getStyle('--em-category-group-item-label-color-default'),
+        padding: getStyleNumber('--em-chart-gap-default'),
         font: {
-          family: getStyle('--em-category-group-item-label-font-font-family'),
           size: getStyleNumber('--em-category-group-item-label-font-size'),
           weight: getStyleNumber('--em-category-group-item-label-font-weight'),
           lineHeight: getStyleNumber('--em-category-group-item-label-font-line-height'),
@@ -63,16 +63,16 @@ export const defaultPieChartOptions: Partial<ChartOptions<'pie'>> = {
       bodyColor: getStyle('--em-foreground-color-inverted'),
       bodyAlign: 'right',
       bodyFont: {
-        family: getStyle('--em-category-group-item-label-font-font-family'),
         size: getStyleNumber('--em-category-group-item-label-font-size'),
         weight: getStyleNumber('--em-category-group-item-label-font-weight'),
+        family: 'Inter, sans-serif',
       },
       titleAlign: 'left',
       titleColor: getStyle('--em-chart-tooltip-label-color-default'),
       titleFont: {
-        family: getStyle('--em-chart-tooltip-title-font-font-family'),
         size: getStyleNumber('--em-chart-tooltip-title-font-size'),
         weight: getStyleNumber('--em-chart-tooltip-title-font-weight'),
+        family: 'Inter, sans-serif',
       },
     },
   },
