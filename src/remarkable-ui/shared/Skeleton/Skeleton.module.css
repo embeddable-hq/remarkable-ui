@@ -1,0 +1,22 @@
+@keyframes shimmer {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}
+
+.skeleton {
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    rgba(237, 237, 241, 0.4) 29%,
+    rgba(210, 210, 213, 0.4) 46.21%,
+    rgba(237, 237, 241, 0.4) 78.5%
+  );
+  background-size: 200% 100%;
+  height: 100%;
+  width: 100%;
+  border-radius: var(--em-border-radius-300, 12px);
+}

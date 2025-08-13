@@ -1,0 +1,5 @@
+.error svg,
+.error h1,
+.error p {
+  color: var(--em-card-error-subtitle-color-default, #d03109);
+}

@@ -1,0 +1,14 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  padding: var(--em-card-loader-padding-default, 0.25rem);
+  border-radius: var(--em-card-loader-border-radius-default, 9999px);
+  background: var(--em-background-color-default, #f7f7f8);
+  width: var(--em-card-loader-icon-size-width, 1.5rem);
+  height: var(--em-card-loader-icon-size-height, 1.5rem);
+  animation: spin 2s linear infinite;
+}

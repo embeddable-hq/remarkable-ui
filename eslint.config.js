@@ -45,6 +45,7 @@ export default defineConfig([
       'react-hooks/rules-of-hooks': 'error', // Enforce rules of hooks
       'react-hooks/exhaustive-deps': 'warn', // Warn about missing deps in useEffect
       'react/react-in-jsx-scope': 0,
+      'react/prop-types': 'off',
     },
   },
 
@@ -56,6 +57,7 @@ export default defineConfig([
     extends: ['css/recommended'],
     rules: {
       'css/no-invalid-properties': ['error', { allowUnknownVariables: true }], // Allow unknown CSS custom properties (e.g. --font-default)
+      'css/use-baseline': 'off',
     },
   },
 
@@ -80,5 +82,14 @@ export default defineConfig([
   ...storybook.configs['flat/recommended'],
 
   // Ignore
-  globalIgnores(['.embeddable', '.embeddable-build', '.embeddable-tmp', 'dist', 'node_modules']),
+  globalIgnores([
+    '.embeddable',
+    '.embeddable-dev-build',
+    '.embeddable-dev-tmp',
+    '.embeddable-build',
+    '.embeddable-tmp',
+    'dist',
+    'node_modules',
+    '**/*.d.ts',
+  ]),
 ]);
