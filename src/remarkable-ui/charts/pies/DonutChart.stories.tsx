@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Total',
-subLabel: (pieDataMock.datasets[0]?.data ?? []).reduce((a, b) => a + b, 0).toString(),
+    subLabel: (pieDataMock.datasets[0]?.data ?? []).reduce((a, b) => a + b, 0).toString(),
     data: pieDataMock,
     options: defaultDonutChartOptions,
   },
