@@ -26,7 +26,7 @@ const ReadyMadeDonutChart = ({
   title,
   innerLabelMeasure,
   resultsInnerLabel,
-  innerLabelText = '',
+  innerLabelText,
   onSegmentClick,
 }: ReadyMadeDonutLabelChartProps) => {
   const theme = useTheme() as Theme;
@@ -41,8 +41,10 @@ const ReadyMadeDonutChart = ({
     });
   };
 
-  const rawLabel = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
-  const label = themeFormatter.number(rawLabel) ?? '';
+  const label = themeFormatter.data(
+    innerLabelMeasure,
+    resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name],
+  );
 
   const options = getDefaultPieChartOptions(
     {
