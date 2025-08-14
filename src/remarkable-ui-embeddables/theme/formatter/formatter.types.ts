@@ -18,10 +18,10 @@ export type ThemeFormatter = {
 
   // Default formatters
   numberFormatter: (theme: Theme, options?: Intl.NumberFormatOptions) => NumberFormatter;
-  dateTimeFormatter: (theme: Theme, options?: Intl.DateTimeFormatOptions) => Formatter<Date>;
+  dateTimeFormatter: (theme: Theme, options?: Intl.DateTimeFormatOptions) => DateTimeFormatter;
 
   // Formatter data for dimensions and measures
   dataNumberFormatter: (theme: Theme, key: DimensionOrMeasure) => NumberFormatter;
-  dataDateTimeFormatter: (theme: Theme, key: DimensionOrMeasure) => Formatter<Date>;
+  dataDateTimeFormatter: (theme: Theme, key: DimensionOrMeasure) => DateTimeFormatter;
   dataOthersFormatter: (theme: Theme, key: DimensionOrMeasure) => StringFormatter;
 };

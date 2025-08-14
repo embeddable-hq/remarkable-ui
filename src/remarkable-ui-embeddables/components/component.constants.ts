@@ -7,7 +7,7 @@ export const subInputPrefix = {
   description: 'Prefix',
 } as const;
 
-export const subInputSufix = {
+export const subInputSuffix = {
   name: 'suffix',
   type: 'string',
   label: 'Suffix',
@@ -58,7 +58,7 @@ export const subInputAbbreviateLargeNumber: any = {
 
 const subInputs = [
   subInputPrefix,
-  subInputSufix,
+  subInputSuffix,
   subInputDisplayName,
   subInputMaxCharacters,
   subInputDecimalPlaces,
