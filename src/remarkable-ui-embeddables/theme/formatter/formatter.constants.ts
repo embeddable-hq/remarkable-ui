@@ -16,9 +16,9 @@ const getLocale = (locale: string) => {
   }
 };
 
-const isValidCurrency = (code: string): boolean => {
+const isValidCurrency = (locale: Intl.LocalesArgument, code: string): boolean => {
   try {
-    new Intl.NumberFormat('en', {
+    new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: code,
     });
@@ -38,7 +38,7 @@ const numberFormatter = (
 
   const currency = options?.currency;
 
-  if (currency && !isValidCurrency(currency)) {
+  if (currency && !isValidCurrency(locale, currency)) {
     return {
       format: (value: number | bigint): string =>
         `${Intl.NumberFormat(locale, { ...options, currency: undefined, style: undefined }).format(value)} ${currency}`,
@@ -90,6 +90,7 @@ const dataDateTimeFormatter = (theme: Theme, key: DimensionOrMeasure): DateTimeF
 
   const { year, month, day, hour, minute, second } = theme.formatter.defaultDateTimeFormatOptions;
 
+  // TODO: Update SDK to export the needed constants for the granularity
   switch (key.inputs?.granularity) {
     case 'year':
       return new Intl.DateTimeFormat(locale, { year });

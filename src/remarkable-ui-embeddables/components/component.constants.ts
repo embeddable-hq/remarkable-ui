@@ -20,6 +20,7 @@ export const subInputDisplayName = {
   label: 'Display name',
 } as const;
 
+// TODO: Update SDK to export the needed types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const subInputMaxCharacters: any = {
   name: 'maxCharacters',
@@ -27,6 +28,8 @@ export const subInputMaxCharacters: any = {
   label: 'Maximum characters',
   supportedTypes: ['string'],
 } as const;
+
+// TODO: Update SDK to export the needed types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const subInputDecimalPlaces: any = {
   name: 'decimalPlaces',
@@ -34,6 +37,8 @@ export const subInputDecimalPlaces: any = {
   label: 'Decimal places',
   supportedTypes: ['number'],
 } as const;
+
+// TODO: Update SDK to export the needed types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const subInputCurrency: any = {
   name: 'currency',
@@ -41,6 +46,8 @@ export const subInputCurrency: any = {
   label: 'Currency',
   supportedTypes: ['number'],
 } as const;
+
+// TODO: Update SDK to export the needed types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const subInputAbbreviateLargeNumber: any = {
   name: 'abbreviateLargeNumber',
