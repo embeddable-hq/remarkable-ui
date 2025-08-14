@@ -27,6 +27,7 @@ const ReadyMadeDonutChart = ({
 
   const options = getDefaultPieChartOptions(
     {
+      measure,
       showTooltips,
       showLegend,
       showValueLabels,

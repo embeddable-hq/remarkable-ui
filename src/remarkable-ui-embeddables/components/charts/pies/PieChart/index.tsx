@@ -26,6 +26,7 @@ const ReadyMadePieChart = ({
   const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
   const options = getDefaultPieChartOptions(
     {
+      measure,
       showTooltips,
       showLegend,
       showValueLabels,

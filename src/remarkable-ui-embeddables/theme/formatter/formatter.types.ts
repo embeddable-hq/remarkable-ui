@@ -1,58 +1,27 @@
-import { Granularity } from '@embeddable.com/core';
+import { DimensionOrMeasure } from '@embeddable.com/core';
 import { Theme } from '../theme.types';
 
-export type MeasureMeta = {
-  currency?: string;
+export type Formatter<T> = {
+  format: (value: T) => string;
 };
 
-export type DataConfig = {
-  maxCharacterLength?: number;
-  decimalPlaces?: number;
-  prefix?: string;
-  suffix?: string;
-};
-
-export type DateTimeFormatterParams = {
-  granularity?: Granularity;
-  shortYear?: boolean;
-  shortMonth?: boolean;
-};
-
-export type NumberFormatterParams = {
-  currency?: string; // e.g. 'USD'
-  minDecimalPlaces?: number; // e.g. 0
-  maxDecimalPlaces?: number; // e.g. 2
-};
-
-export type TextFormatterParams<T = unknown> = { [key: string]: T };
-
-export type NumberFormatter = {
-  format: (number: number | bigint) => string;
-};
-
-export type DateTimeFormatter = {
-  format: (date: Date) => string;
-};
+export type NumberFormatter = Formatter<number | bigint>;
+export type DateTimeFormatter = Formatter<Date>;
+export type StringFormatter = Formatter<string>;
 
 export type ThemeFormatter = {
-  // Used to pass in the locale you want to use, and any backups (e.g. ['es-AR', 'es-ES', 'en-US'] or simply ['de-DE'])
   locale: string;
 
-  // Override to customise the default dateTime formatter options
-  defaultDateTimeFormatOptions: (
-    theme: Theme,
-    params?: DateTimeFormatterParams,
-  ) => Intl.DateTimeFormatOptions;
+  // Default formatter options
+  defaultNumberFormatterOptions: Intl.NumberFormatOptions;
+  defaultDateTimeFormatOptions: Intl.DateTimeFormatOptions;
 
-  // Override to customise the default number formatter options
-  defaultNumberFormatOptions: (
-    theme: Theme,
-    params?: NumberFormatterParams,
-  ) => Intl.NumberFormatOptions;
+  // Default formatters
+  numberFormatter: (theme: Theme, options?: Intl.NumberFormatOptions) => NumberFormatter;
+  dateTimeFormatter: (theme: Theme, options?: Intl.DateTimeFormatOptions) => Formatter<Date>;
 
-  // Override if the format options above aren't enough and you want to fully customise the number formatter
-  numberFormatter: (theme: Theme, params?: NumberFormatterParams) => NumberFormatter;
-
-  // Override if the format options above aren't enough and you want to fully customise the dateTime formatter
-  dateTimeFormatter: (theme: Theme, params?: DateTimeFormatterParams) => DateTimeFormatter;
+  // Formatter data for dimensions and measures
+  dataNumberFormatter: (theme: Theme, key: DimensionOrMeasure) => NumberFormatter;
+  dataDateTimeFormatter: (theme: Theme, key: DimensionOrMeasure) => Formatter<Date>;
+  dataOthersFormatter: (theme: Theme, key: DimensionOrMeasure) => StringFormatter;
 };
