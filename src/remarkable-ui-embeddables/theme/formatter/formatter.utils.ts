@@ -23,6 +23,10 @@ export const cache = <Params, Formatter>(factory: (params?: Params) => Formatter
 
 const ISO_DATE_TIME_REGEX = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}$/;
 
+const isValidDate = (value: string): boolean => {
+  return Boolean(value && ISO_DATE_TIME_REGEX.test(value));
+};
+
 export type GetThemeFormatter = {
   number: (value: number | bigint, options?: Intl.NumberFormatOptions) => string;
   dateTime: (value: Date, options?: Intl.DateTimeFormatOptions) => string;
@@ -68,7 +72,7 @@ export const getThemeFormatter = (theme: Theme): GetThemeFormatter => {
       }
 
       // Time
-      if (key.nativeType === 'time' && value && ISO_DATE_TIME_REGEX.test(value)) {
+      if (key.nativeType === 'time' && isValidDate(value)) {
         newValue = cachedDataDateTimeFormatter(key).format(new Date(value));
       }
 
