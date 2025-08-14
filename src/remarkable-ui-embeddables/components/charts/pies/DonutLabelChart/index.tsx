@@ -7,6 +7,7 @@ import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { DonutChart } from '../../../../../remarkable-ui';
+import { mergician } from 'mergician';
 
 type ReadyMadeDonutLabelChartProps = DefaultReadyMadePieChartProps & {
   innerLabelMeasure: Measure;
@@ -44,13 +45,16 @@ const ReadyMadeDonutChart = ({
   const rawLabel = resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name] || '...';
   const label = themeFormatter.number(rawLabel) ?? '';
 
-  const options = getDefaultPieChartOptions(
-    {
-      showTooltips,
-      showLegend,
-      showValueLabels,
-    },
-    theme,
+  const options = mergician(
+    getDefaultPieChartOptions(
+      {
+        showTooltips,
+        showLegend,
+        showValueLabels,
+      },
+      theme,
+    ),
+    theme.charts.overwriteDonutLabelChart ?? {},
   );
 
   return (

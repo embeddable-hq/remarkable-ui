@@ -5,6 +5,7 @@ import { getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
 import { DefaultReadyMadePieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
+import { mergician } from 'mergician';
 
 type ReadyMadePieChartProps = DefaultReadyMadePieChartProps;
 
@@ -24,13 +25,17 @@ const ReadyMadePieChart = ({
   i18nSetup(theme);
 
   const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
-  const options = getDefaultPieChartOptions(
-    {
-      showTooltips,
-      showLegend,
-      showValueLabels,
-    },
-    theme,
+
+  const options = mergician(
+    getDefaultPieChartOptions(
+      {
+        showTooltips,
+        showLegend,
+        showValueLabels,
+      },
+      theme,
+    ),
+    theme.charts.overwritePieChart ?? {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {
