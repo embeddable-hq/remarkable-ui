@@ -53,6 +53,7 @@ const ReadyMadeDonutChart = (props: ReadyMadeDonutLabelChartProps) => {
   const options = mergician(
     getDefaultPieChartOptions(
       {
+        measure,
         showTooltips,
         showLegend,
         showValueLabels,
