@@ -71,7 +71,7 @@ export const ChartCard: FC<ChartCardProps> = ({
         title={title}
         subtitle={subtitle}
         rightContent={
-          <div data-no-export>
+          <div data-no-export className={styles.rightContent}>
             {data.isLoading ? (
               <ChartCardLoading />
             ) : (
