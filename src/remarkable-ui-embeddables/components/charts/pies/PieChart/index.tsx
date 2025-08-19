@@ -38,7 +38,7 @@ const ReadyMadePieChart = (props: ReadyMadePieChartProps) => {
       } as DefaultPieChartOptions,
       theme,
     ),
-    theme.charts.overwritePieChart ?? {},
+    theme.charts.pieChartOverrides ?? {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {

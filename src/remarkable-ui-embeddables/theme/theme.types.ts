@@ -23,9 +23,9 @@ export type ThemeChartsLegendPosition = 'top' | 'right' | 'bottom' | 'left';
 export type Theme = {
   i18n: { language: string; translations: Resource };
   charts: {
-    overwritePieChart?: Partial<ChartOptions<'pie'>>;
-    overwriteDonutChart?: Partial<ChartOptions<'pie'>>;
-    overwriteDonutLabelChart?: Partial<ChartOptions<'pie'>>;
+    pieChartOverrides?: Partial<ChartOptions<'pie'>>;
+    donutChartOverrides?: Partial<ChartOptions<'pie'>>;
+    donutLabelChartOverrides?: Partial<ChartOptions<'pie'>>;
     menuOptions: readonly ThemeChartsMenuOption[];
     legendPosition: ThemeChartsLegendPosition;
     backgroundColors?: string[];

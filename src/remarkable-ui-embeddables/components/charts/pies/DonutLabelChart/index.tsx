@@ -59,7 +59,7 @@ const ReadyMadeDonutChart = (props: ReadyMadeDonutLabelChartProps) => {
       } as DefaultPieChartOptions,
       theme,
     ),
-    theme.charts.overwriteDonutLabelChart ?? {},
+    theme.charts.donutLabelChartOverrides ?? {},
   );
 
   return (

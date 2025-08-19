@@ -38,7 +38,7 @@ const ReadyMadeDonutChart = (props: ReadyMadeDonutChartProps) => {
       } as DefaultPieChartOptions,
       theme,
     ),
-    theme.charts.overwriteDonutChart ?? {},
+    theme.charts.donutChartOverrides ?? {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {
