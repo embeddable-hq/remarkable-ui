@@ -2,6 +2,7 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { Resource } from 'i18next';
 import { ThemeFormatter } from './formatter/formatter.types';
 import { ThemeStyles } from './styles/styles.types';
+import { ChartOptions } from 'chart.js';
 
 export type ThemeChartsMenuOptionActionProps = {
   title?: string;
@@ -22,6 +23,9 @@ export type ThemeChartsLegendPosition = 'top' | 'right' | 'bottom' | 'left';
 export type Theme = {
   i18n: { language: string; translations: Resource };
   charts: {
+    pieChartOverrides?: Partial<ChartOptions<'pie'>>;
+    donutChartOverrides?: Partial<ChartOptions<'pie'>>;
+    donutLabelChartOverrides?: Partial<ChartOptions<'pie'>>;
     menuOptions: readonly ThemeChartsMenuOption[];
     legendPosition: ThemeChartsLegendPosition;
     backgroundColors?: string[];

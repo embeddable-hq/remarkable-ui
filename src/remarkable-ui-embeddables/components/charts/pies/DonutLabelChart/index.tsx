@@ -1,12 +1,13 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
-import { getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
 import { DefaultReadyMadePieChartProps } from '../pies.types';
 import { DataResponse, Measure } from '@embeddable.com/core';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { DonutChart } from '../../../../../remarkable-ui';
+import { mergician } from 'mergician';
 import { resolveI18nProps } from '../../../component.utils';
 
 type ReadyMadeDonutLabelChartProps = DefaultReadyMadePieChartProps & {
@@ -49,14 +50,16 @@ const ReadyMadeDonutChart = (props: ReadyMadeDonutLabelChartProps) => {
     resultsInnerLabel?.data?.[0]?.[innerLabelMeasure.name],
   );
 
-  const options = getDefaultPieChartOptions(
-    {
-      measure,
-      showTooltips,
-      showLegend,
-      showValueLabels,
-    },
-    theme,
+  const options = mergician(
+    getDefaultPieChartOptions(
+      {
+        showTooltips,
+        showLegend,
+        showValueLabels,
+      } as DefaultPieChartOptions,
+      theme,
+    ),
+    theme.charts.donutLabelChartOverrides ?? {},
   );
 
   return (

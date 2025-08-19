@@ -1,10 +1,11 @@
 import { useTheme } from '@embeddable.com/react';
 import { PieChart } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
-import { getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
 import { DefaultReadyMadePieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
+import { mergician } from 'mergician';
 import { resolveI18nProps } from '../../../component.utils';
 
 type ReadyMadePieChartProps = DefaultReadyMadePieChartProps;
@@ -27,14 +28,17 @@ const ReadyMadePieChart = (props: ReadyMadePieChartProps) => {
   } = resolveI18nProps(props);
 
   const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
-  const options = getDefaultPieChartOptions(
-    {
-      measure,
-      showTooltips,
-      showLegend,
-      showValueLabels,
-    },
-    theme,
+
+  const options = mergician(
+    getDefaultPieChartOptions(
+      {
+        showTooltips,
+        showLegend,
+        showValueLabels,
+      } as DefaultPieChartOptions,
+      theme,
+    ),
+    theme.charts.pieChartOverrides ?? {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {
