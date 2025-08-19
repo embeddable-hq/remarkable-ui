@@ -7,6 +7,7 @@ import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { DonutChart } from '../../../../../remarkable-ui';
+import { resolveI18nProps } from '../../../component.utils';
 
 type ReadyMadeDonutLabelChartProps = DefaultReadyMadePieChartProps & {
   innerLabelMeasure: Measure;
@@ -14,24 +15,26 @@ type ReadyMadeDonutLabelChartProps = DefaultReadyMadePieChartProps & {
   resultsInnerLabel: DataResponse;
 };
 
-const ReadyMadeDonutChart = ({
-  description,
-  dimension,
-  maxLegendItems,
-  measure,
-  results,
-  showLegend,
-  showTooltips,
-  showValueLabels,
-  title,
-  innerLabelMeasure,
-  resultsInnerLabel,
-  innerLabelText,
-  onSegmentClick,
-}: ReadyMadeDonutLabelChartProps) => {
+const ReadyMadeDonutChart = (props: ReadyMadeDonutLabelChartProps) => {
   const theme = useTheme() as Theme;
   const themeFormatter = getThemeFormatter(theme);
   i18nSetup(theme);
+
+  const {
+    description,
+    dimension,
+    maxLegendItems,
+    measure,
+    results,
+    showLegend,
+    showTooltips,
+    showValueLabels,
+    title,
+    innerLabelMeasure,
+    resultsInnerLabel,
+    innerLabelText,
+    onSegmentClick,
+  } = resolveI18nProps(props);
 
   const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
 
