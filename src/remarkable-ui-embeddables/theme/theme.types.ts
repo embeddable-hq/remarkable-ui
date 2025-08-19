@@ -8,6 +8,7 @@ export type ThemeChartsMenuOptionActionProps = {
   data?: DataResponse['data'];
   dimensionsAndMeasures?: (Dimension | Measure)[];
   containerRef?: React.RefObject<HTMLDivElement | null>;
+  theme: Theme;
 };
 
 export type ThemeChartsMenuOption = {
