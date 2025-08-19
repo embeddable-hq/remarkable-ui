@@ -9,7 +9,7 @@ import { Theme, ThemeChartsMenuOptionActionProps } from '../../../../../theme/th
 import { IconButton, Typography } from '../../../../../../remarkable-ui';
 import { RadixDropdownMenuContent } from '../../../../../third-party/radix';
 
-type ChartCardMenuProps = ThemeChartsMenuOptionActionProps;
+type ChartCardMenuProps = Omit<ThemeChartsMenuOptionActionProps, 'theme'>;
 
 export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
   const theme: Theme = useTheme() as Theme;
@@ -24,8 +24,8 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
     }, 100);
   };
 
-  const handleExport = (onClick: (props: ChartCardMenuProps) => void) => {
-    startAction(() => onClick(props));
+  const handleExport = (onClick: (props: ThemeChartsMenuOptionActionProps) => void) => {
+    startAction(() => onClick({ ...props, theme }));
   };
 
   return (
