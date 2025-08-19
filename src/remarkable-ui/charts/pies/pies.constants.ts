@@ -61,7 +61,8 @@ export const defaultPieChartOptions: Partial<ChartOptions<'pie'>> = {
       padding: getStyleNumber('--em-chart-tooltip-padding-default'),
       displayColors: true,
       bodyColor: getStyle('--em-foreground-color-inverted'),
-      bodyAlign: 'right',
+      bodyAlign: 'left',
+      boxPadding: getStyleNumber('--em-category-indicator-gap-default'),
       bodyFont: {
         size: getStyleNumber('--em-category-group-item-label-font-size'),
         weight: getStyleNumber('--em-category-group-item-label-font-weight'),
@@ -95,7 +96,7 @@ export const defaultDonutLabelChartOptions: Partial<ChartOptions<'pie'>> = {
           font: [
             {
               size: getStyleNumber('--em-pie-chart-donut-number-font-size'),
-              weight: getStyleNumber('--em-pie-chart-donut-label-font-weight'),
+              weight: getStyleNumber('--em-pie-chart-donut-number-font-weight'),
               height: getStyleNumber('--em-pie-chart-donut-number-font-line-height'),
               family: 'Inter, sans-serif',
             },

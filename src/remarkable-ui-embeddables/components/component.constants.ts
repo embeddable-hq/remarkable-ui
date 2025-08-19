@@ -1,5 +1,71 @@
 // ATENTION: THESE OBJECTS SHOULD NEVER BE TOUCHED
 
+export const subInputPrefix = {
+  name: 'prefix',
+  type: 'string',
+  label: 'Prefix',
+  description: 'Prefix',
+} as const;
+
+export const subInputSuffix = {
+  name: 'suffix',
+  type: 'string',
+  label: 'Suffix',
+  description: 'Suffix',
+} as const;
+
+export const subInputDisplayName = {
+  name: 'displayName',
+  type: 'string',
+  label: 'Display name',
+} as const;
+
+// TODO: Update SDK to export the needed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subInputMaxCharacters: any = {
+  name: 'maxCharacters',
+  type: 'number',
+  label: 'Maximum characters',
+  supportedTypes: ['string'],
+} as const;
+
+// TODO: Update SDK to export the needed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subInputDecimalPlaces: any = {
+  name: 'decimalPlaces',
+  type: 'number',
+  label: 'Decimal places',
+  supportedTypes: ['number'],
+} as const;
+
+// TODO: Update SDK to export the needed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subInputCurrency: any = {
+  name: 'currency',
+  type: 'string',
+  label: 'Currency',
+  supportedTypes: ['number'],
+} as const;
+
+// TODO: Update SDK to export the needed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subInputAbbreviateLargeNumber: any = {
+  name: 'abbreviateLargeNumber',
+  type: 'boolean',
+  label: 'Abbreviate large number',
+  supportedTypes: ['number'],
+} as const;
+
+const subInputs = [
+  subInputPrefix,
+  subInputSuffix,
+  subInputDisplayName,
+  subInputMaxCharacters,
+  subInputDecimalPlaces,
+  subInputCurrency,
+  subInputAbbreviateLargeNumber,
+];
+
 export const dataset = {
   name: 'dataset',
   type: 'dataset',
@@ -17,6 +83,7 @@ export const dimension = {
   },
   required: true,
   category: 'Component Data',
+  inputs: subInputs,
 } as const;
 
 export const measure = {
@@ -28,6 +95,7 @@ export const measure = {
   },
   required: true,
   category: 'Component Data',
+  inputs: subInputs,
 } as const;
 
 export const title = {

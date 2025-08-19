@@ -1,28 +1,31 @@
 import { useTheme } from '@embeddable.com/react';
 import { PieChart } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
-import { getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
 import { DefaultReadyMadePieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { mergician } from 'mergician';
+import { resolveI18nProps } from '../../../component.utils';
 
 type ReadyMadePieChartProps = DefaultReadyMadePieChartProps;
 
-const ReadyMadePieChart = ({
-  description,
-  dimension,
-  maxLegendItems,
-  measure,
-  results,
-  showLegend,
-  showTooltips,
-  showValueLabels,
-  title,
-  onSegmentClick,
-}: ReadyMadePieChartProps) => {
+const ReadyMadePieChart = (props: ReadyMadePieChartProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
+
+  const {
+    description,
+    dimension,
+    maxLegendItems,
+    measure,
+    results,
+    showLegend,
+    showTooltips,
+    showValueLabels,
+    title,
+    onSegmentClick,
+  } = resolveI18nProps(props);
 
   const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
 
@@ -32,7 +35,7 @@ const ReadyMadePieChart = ({
         showTooltips,
         showLegend,
         showValueLabels,
-      },
+      } as DefaultPieChartOptions,
       theme,
     ),
     theme.charts.overwritePieChart ?? {},

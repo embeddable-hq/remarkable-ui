@@ -64,6 +64,7 @@ export const getPieChartData = (
 };
 
 export type DefaultPieChartOptions = {
+  measure: Measure;
   showTooltips: boolean;
   showLegend: boolean;
   showValueLabels: boolean;
@@ -80,7 +81,7 @@ export const getDefaultPieChartOptions = (
       legend: { display: options.showLegend, position: theme.charts.legendPosition ?? 'bottom' },
       datalabels: {
         display: options.showValueLabels ? 'auto' : false,
-        formatter: (value: string | number) => themeFormatter.number(Number(value)),
+        formatter: (value: string | number) => themeFormatter.data(options.measure, value),
       },
       tooltip: {
         enabled: options.showTooltips,
@@ -93,7 +94,7 @@ export const getDefaultPieChartOptions = (
               0,
             );
             const pct = Math.round((raw / total) * 100);
-            return `${themeFormatter.number(raw)} (${pct}%)`;
+            return `${themeFormatter.data(options.measure, raw)} (${pct}%)`;
           },
         },
       },
