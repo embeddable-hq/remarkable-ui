@@ -3,3 +3,8 @@
 .error p {
   color: var(--em-card-error-subtitle-color-default, #d03109);
 }
+
+.rightContent {
+  position: absolute;
+  right: 0;
+}
