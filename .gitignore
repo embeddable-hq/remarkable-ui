@@ -12,3 +12,5 @@ dist
 storybook-static
 
 .DS_Store
+
+embeddable.config.js
