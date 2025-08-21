@@ -3,8 +3,6 @@
   flex-direction: column;
   outline: none;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   width: var(--radix-dropdown-menu-trigger-width);
   padding: var(--em-padding-200, 0.5rem);
   gap: var(--em-select-menu-list-gap-default, 0.5rem);

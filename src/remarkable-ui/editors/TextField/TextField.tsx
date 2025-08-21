@@ -1,11 +1,13 @@
 import { IconX, TablerIcon } from '@tabler/icons-react';
 import styles from './TextField.module.css';
 import { FC } from 'react';
+import clsx from 'clsx';
 
 type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   value?: string;
+  className?: string;
   onChange: (value: string) => void;
 };
 
@@ -17,10 +19,11 @@ export const TextField: FC<TextFieldProps> = ({
   startIcon: StartIcon,
   endIcon: EndIcon,
   onChange,
+  className,
   ...props
 }) => {
   return (
-    <div className={styles.input} {...props}>
+    <div className={clsx(styles.input, className)}>
       {StartIcon && <StartIcon />}
       <input
         type="text"
@@ -29,6 +32,7 @@ export const TextField: FC<TextFieldProps> = ({
         disabled={disabled}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
+        {...props}
       />
       <div>
         {value && <IconX onClick={() => onChange('')} />}

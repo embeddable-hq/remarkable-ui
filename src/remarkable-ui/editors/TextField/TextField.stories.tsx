@@ -49,7 +49,7 @@ export const WithState: Story = {
   args: {
     startIcon: IconBoltFilled,
     endIcon: IconBoltFilled,
-    disabled: true,
+    disabled: false,
     onChange: (value) => console.log('onChange', value),
   },
 };

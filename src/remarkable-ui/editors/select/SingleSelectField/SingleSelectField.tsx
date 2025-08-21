@@ -53,7 +53,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       <SelectList autoFocus>
         {isSearchable && (
           <TextField
-            role="menuitem" // Includes role for accessibility (navigation)
+            role="searchbox"
             value={searchValue}
             onKeyDown={(e) => e.stopPropagation()}
             onChange={(newSearch) => setSearchValue(newSearch)}
