@@ -4,7 +4,6 @@
   box-sizing: border-box;
 
   height: var(--em-text-input-size-height, 2rem);
-  min-width: var(--em-text-input-size-min-width, 10rem);
   max-width: var(--em-text-input-size-max-width, 25rem);
   padding: var(--em-text-input-padding-default, 0.5rem);
   border-radius: var(--em-text-input-border-radius-default, 0.5rem);
@@ -31,12 +30,12 @@
 .input input {
   border: none;
   background: inherit;
-  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   outline: none;
   color: inherit;
+  width: 100%;
 
   padding: 0 var(--em-text-input-padding-default, 0.5rem);
   font-family: var(--em-text-input-label-font-font-family, Inter);
