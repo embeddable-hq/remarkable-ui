@@ -10,7 +10,7 @@ type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChang
 };
 
 export const TextField: FC<TextFieldProps> = ({
-  value,
+  value = '',
   disabled,
   placeholder = 'Enter text',
   role,

@@ -29,12 +29,6 @@
   background: var(--em-select-list-item-background-color-pressed, #ededf1);
 }
 
-.icon {
-  width: var(--em-select-list-item-icon-size-width, 1rem);
-  height: var(--em-select-list-item-icon-size-height, 1rem);
-  color: var(--em-select-list-item-label-color-default, #212129);
-}
-
 .label {
   color: var(--em-select-list-item-label-color-default, #212129);
   font-size: var(--em-select-list-item-left-label-font-size, 0.75rem);

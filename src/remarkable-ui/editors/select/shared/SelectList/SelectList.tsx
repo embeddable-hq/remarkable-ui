@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react';
 import styles from './SelectList.module.css';
+import clsx from 'clsx';
 
-type RadixDropdownMenuContent = {
+type SelectListProps = {
   children: React.ReactNode;
   autoFocus?: boolean;
+  autoWidth?: boolean;
 };
 
-export const RadixDropdownMenuContent: React.FC<RadixDropdownMenuContent> = ({
-  children,
-  autoFocus,
-}) => {
+export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, autoWidth }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(-1);
 
@@ -64,7 +63,11 @@ export const RadixDropdownMenuContent: React.FC<RadixDropdownMenuContent> = ({
   }, [autoFocus, children]);
 
   return (
-    <div ref={containerRef} tabIndex={-1} className={styles.list}>
+    <div
+      ref={containerRef}
+      tabIndex={-1}
+      className={clsx(styles.list, autoWidth && styles.autoWidth)}
+    >
       {children}
     </div>
   );

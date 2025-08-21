@@ -1,25 +1,21 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { TablerIcon } from '@tabler/icons-react';
-import { FC } from 'react';
+import { FC, ImgHTMLAttributes, SVGProps } from 'react';
 import { Typography } from '../../../../../shared/Typography/Typography';
 import styles from './SelectListItem.module.css';
 
 export type SelectListItemProps = {
-  value: string;
+  value?: string;
   label: string;
-  startIcon?: TablerIcon;
+  startIcon?:
+    | React.ReactElement<SVGProps<SVGSVGElement>>
+    | React.ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-export const SelectListItem: FC<SelectListItemProps> = ({
-  value,
-  label,
-  startIcon: StartIcon,
-  ...props
-}) => {
+export const SelectListItem: FC<SelectListItemProps> = ({ value, label, startIcon, ...props }) => {
   return (
     <DropdownMenu.Item className={styles.listItem} data-value={value} {...props}>
-      {StartIcon && <StartIcon />}
+      {startIcon}
       <Typography>{label}</Typography>
     </DropdownMenu.Item>
   );

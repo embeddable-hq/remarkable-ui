@@ -36,3 +36,10 @@
   font-weight: 500;
   line-height: var(--em-select-list-item-left-label-font-line-height, 0.875rem);
 }
+
+.listItem svg,
+.listItem img {
+  width: var(--em-select-list-item-icon-size-width, 1rem);
+  height: var(--em-select-list-item-icon-size-height, 1rem);
+  color: inherit;
+}

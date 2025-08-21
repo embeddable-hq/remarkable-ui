@@ -1,5 +1,3 @@
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { RadixDropdownMenuContent } from '../shared/SelectList/SelectList';
 import { FC, useState } from 'react';
 import { TextField } from '../../TextField/TextField';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
@@ -7,9 +5,11 @@ import {
   SelectListItem,
   SelectListItemProps,
 } from '../shared/SelectList/SelectListItem/SelectListItem';
+import { Dropdown } from '../../../shared/Dropdown/Dropdown';
+import { SelectList } from '../shared/SelectList/SelectList';
 
 export type SingleSelectFieldProps = {
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
   options: SelectListItemProps[];
   isSearchable?: boolean;
@@ -18,7 +18,7 @@ export type SingleSelectFieldProps = {
 };
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
-  value,
+  value = '',
   options,
   disabled,
   isSearchable,
@@ -33,40 +33,40 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
     ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
     : options;
 
-  const handleChange = (newValue: string) => {
+  const handleChange = (newValue?: string) => {
     setSearchValue('');
-    onChange(newValue);
+    onChange(newValue ?? '');
   };
 
   return (
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild disabled={disabled}>
+    <Dropdown
+      disabled={disabled}
+      triggerComponent={
         <SelectButton
           disabled={disabled}
           valueLabel={valueLabel}
           onClear={() => handleChange('')}
           isClearable={isClearable}
         />
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content side="bottom" align="center">
-        <RadixDropdownMenuContent autoFocus>
-          {isSearchable && (
-            <TextField
-              role="menuitem" // Includes role for accessibility (navigation)
-              value={searchValue}
-              onKeyDown={(e) => e.stopPropagation()}
-              onChange={(newSearch) => setSearchValue(newSearch)}
-            />
-          )}
-          {displayOptions.map((option) => (
-            <SelectListItem
-              key={option.value}
-              onClick={() => handleChange(option.value)}
-              {...option}
-            />
-          ))}
-        </RadixDropdownMenuContent>
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+      }
+    >
+      <SelectList autoFocus>
+        {isSearchable && (
+          <TextField
+            role="menuitem" // Includes role for accessibility (navigation)
+            value={searchValue}
+            onKeyDown={(e) => e.stopPropagation()}
+            onChange={(newSearch) => setSearchValue(newSearch)}
+          />
+        )}
+        {displayOptions.map((option) => (
+          <SelectListItem
+            key={option?.value ?? option.label}
+            onClick={() => handleChange(option?.value)}
+            {...option}
+          />
+        ))}
+      </SelectList>
+    </Dropdown>
   );
 };
