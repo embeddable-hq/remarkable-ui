@@ -6,6 +6,7 @@ import { remarkableTheme } from '../../../theme/theme.constants';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
+import { i18n } from '../../../theme/i18n/i18n';
 
 export const getPieChartData = (
   props: {
@@ -50,9 +51,16 @@ export const getPieChartData = (
   );
 
   return {
-    labels: groupedData.map((item) =>
-      themeFormatter.data(props.dimension, item[props.dimension.name]),
-    ),
+    labels: groupedData.map((item) => {
+      const value = item[props.dimension.name];
+      const formattedValue = themeFormatter.data(props.dimension, value);
+
+      // If formatter did not work, try i18n translation
+      if (value === formattedValue) {
+        return i18n.t(value);
+      }
+      return formattedValue;
+    }),
     datasets: [
       {
         data: groupedData.map((item) => item[props.measure.name]),
