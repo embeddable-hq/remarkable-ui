@@ -7,7 +7,6 @@ type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChang
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   value?: string;
-  className?: string;
   onChange: (value: string) => void;
 };
 
