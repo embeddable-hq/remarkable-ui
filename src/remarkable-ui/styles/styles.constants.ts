@@ -217,7 +217,7 @@ const stylesComponents = {
   '--em-chart-grid-padding-lg': 'var(--em-padding-400)',
   '--em-chart-grid-padding-xl': 'var(--em-padding-800)',
   '--em-chart-grid-padding-xs': 'var(--em-padding-100)',
-  '--em-chart-grid-tick-lenght-default': 'var(--em-width-100)',
+  '--em-chart-grid-tick-length-default': 'var(--em-width-100)',
   '--em-chart-grid-tick-width-0': 'var(--em-border-width-0)',
   '--em-chart-grid-tick-width-default': 'var(--em-border-width-default)',
   '--em-chart-grid-tick-width-l': 'var(--em-border-width-l)',
