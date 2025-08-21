@@ -59,13 +59,15 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             onChange={(newSearch) => setSearchValue(newSearch)}
           />
         )}
-        {displayOptions.map((option) => (
-          <SelectListItem
-            key={option?.value ?? option.label}
-            onClick={() => handleChange(option?.value)}
-            {...option}
-          />
-        ))}
+        <div>
+          {displayOptions.map((option) => (
+            <SelectListItem
+              key={option?.value ?? option.label}
+              onClick={() => handleChange(option?.value)}
+              {...option}
+            />
+          ))}
+        </div>
       </SelectList>
     </Dropdown>
   );
