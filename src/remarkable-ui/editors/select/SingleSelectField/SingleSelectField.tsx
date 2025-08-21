@@ -1,0 +1,72 @@
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { RadixDropdownMenuContent } from '../shared/SelectList/SelectList';
+import { FC, useState } from 'react';
+import { TextField } from '../../TextField/TextField';
+import { SelectButton } from '../shared/SelectButton/SelectButton';
+import {
+  SelectListItem,
+  SelectListItemProps,
+} from '../shared/SelectList/SelectListItem/SelectListItem';
+
+export type SingleSelectFieldProps = {
+  value: string;
+  onChange: (value: string) => void;
+  options: SelectListItemProps[];
+  isSearchable?: boolean;
+  isClearable?: boolean;
+  disabled?: boolean;
+};
+
+export const SingleSelectField: FC<SingleSelectFieldProps> = ({
+  value,
+  options,
+  disabled,
+  isSearchable,
+  isClearable,
+  onChange,
+}) => {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const valueLabel = options.find((option) => option.value === value)?.label;
+
+  const displayOptions = isSearchable
+    ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
+    : options;
+
+  const handleChange = (newValue: string) => {
+    setSearchValue('');
+    onChange(newValue);
+  };
+
+  return (
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild disabled={disabled}>
+        <SelectButton
+          disabled={disabled}
+          valueLabel={valueLabel}
+          onClear={() => handleChange('')}
+          isClearable={isClearable}
+        />
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content side="bottom" align="center">
+        <RadixDropdownMenuContent autoFocus>
+          {isSearchable && (
+            <TextField
+              role="menuitem" // Includes role for accessibility (navigation)
+              value={searchValue}
+              onKeyDown={(e) => e.stopPropagation()}
+              onChange={(newSearch) => setSearchValue(newSearch)}
+            />
+          )}
+          {displayOptions.map((option) => (
+            <SelectListItem
+              key={option.value}
+              onClick={() => handleChange(option.value)}
+              {...option}
+            />
+          ))}
+        </RadixDropdownMenuContent>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  );
+};
