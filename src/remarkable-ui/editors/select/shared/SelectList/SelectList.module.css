@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--em-select-menu-list-gap-default, 0.5rem);
+  padding: var(--em-padding-200, 0.5rem);
+  outline: none;
+  box-sizing: border-box;
+  width: var(--radix-dropdown-menu-trigger-width);
+  display: flex;
+  flex-direction: column;
+  padding: var(--em-padding-200, 0.5rem);
+  gap: var(--em-select-menu-list-gap-default, 0.5rem);
+  border-radius: var(--em-border-radius-300, 0.75rem);
+  background: var(--em-background-color-neutral, #fff);
+  box-shadow: var(--em-box-shadow-default-position-x, 0)
+    var(--em-box-shadow-default-position-y, 1px) var(--em-box-shadow-default-blur, 40px)
+    var(--em-box-shadow-default-spread, 0)
+    var(--em-box-shadow-default-color, rgba(33, 33, 41, 0.25));
+}
