@@ -1,4 +1,3 @@
-import styles from './ChartCardMenu.module.css';
 import { IconDotsVertical } from '@tabler/icons-react';
 import React from 'react';
 import { useTheme } from '@embeddable.com/react';
@@ -40,9 +39,7 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
               label={label}
               onClick={() => handleExport(option.onClick)}
               startIcon={
-                option.iconSrc ? (
-                  <img src={option.iconSrc} className={styles.icon} alt={`${label} icon`} />
-                ) : undefined
+                option.iconSrc ? <img src={option.iconSrc} alt={`${label} icon`} /> : undefined
               }
             />
           );
