@@ -1,7 +1,7 @@
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 import { Value, loadData } from '@embeddable.com/core';
 import { dataset, description, dimension, placeholder, title } from '../../component.constants';
-import SingleSelectFieldPro from '.';
+import SingleSelectFieldPro, { MAX_OPTIONS } from '.';
 
 export const meta = {
   name: 'SingleSelectField',
@@ -27,6 +27,12 @@ export const meta = {
       name: 'selectedValue',
       type: 'string',
       label: 'Selected Value',
+      category: 'Pre-configured variables',
+    },
+    {
+      name: 'maxOptions',
+      type: 'number',
+      label: 'Maximum options',
       category: 'Pre-configured variables',
     },
   ],
@@ -65,9 +71,10 @@ export default defineComponent(SingleSelectFieldPro, meta, {
     const operator = inputs.dimension.nativeType === 'string' ? 'contains' : 'equals';
     return {
       ...inputs,
+      maxOptions: inputs.maxOptions ?? MAX_OPTIONS,
       setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
       results: loadData({
-        limit: 200,
+        limit: inputs.maxOptions,
         from: inputs.dataset,
         select: [inputs.dimension, inputs.optionalSecondDimension],
         filters: state?.searchValue

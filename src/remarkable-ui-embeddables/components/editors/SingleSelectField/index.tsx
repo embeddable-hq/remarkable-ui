@@ -5,6 +5,9 @@ import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme/theme.types';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { resolveI18nProps } from '../../component.utils';
+import { i18n } from '../../../theme/i18n/i18n';
+
+export const MAX_OPTIONS = 200;
 
 type SingleSelectFieldProProps = {
   title?: string;
@@ -14,6 +17,7 @@ type SingleSelectFieldProProps = {
   placeholder?: string;
   results: DataResponse;
   selectedValue: string;
+  maxOptions?: number;
   setSearchValue: (search: string) => void;
   onChange?: (selectedValue: string) => void;
 };
@@ -42,15 +46,18 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
       };
     }) ?? [];
 
+  const showNoOptionsMessage = Boolean(!results.isLoading && (results.data?.length ?? 0) === 0);
+
   return (
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
-        placeholder={placeholder}
-        isLoading={results.isLoading}
         isClearable
         isSearchable
+        isLoading={results.isLoading}
         value={selectedValue}
         options={options}
+        placeholder={placeholder}
+        noOptionsMessage={showNoOptionsMessage ? i18n.t('common.noOptionsFound') : undefined}
         onChange={(newValue) => onChange?.(newValue)}
         onSearch={setSearchValue}
       />

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { TextField } from '../../TextField/TextField';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
@@ -8,6 +8,7 @@ import {
   SelectListOption,
   SelectListOptionProps,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import { debounce } from '../../../utils/debounce.utils';
 
 export type SingleSelectFieldProps = {
   options: SelectListOptionProps[];
@@ -17,6 +18,7 @@ export type SingleSelectFieldProps = {
   isSearchable?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
+  noOptionsMessage?: string;
   onChange: (value: string) => void;
   onSearch?: (search: string) => void;
 };
@@ -29,12 +31,27 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   isSearchable,
   isClearable,
   isLoading,
+  noOptionsMessage,
   onChange,
   onSearch,
 }) => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const [selectedLabel, setSelectedLabel] = useState<string>(value);
 
-  const valueLabel = options.find((option) => option.value === value)?.label;
+  // Handle prop value changes
+  useEffect(() => {
+    if (!value) {
+      setSelectedLabel('');
+      return;
+    }
+
+    const option = options.find((opt) => opt.value === value);
+    if (option) {
+      setSelectedLabel(option.label);
+    }
+  }, [value, options]);
+
+  const debouncedSearch = useMemo(() => (onSearch ? debounce(onSearch) : undefined), [onSearch]);
 
   const displayOptions =
     isSearchable && !onSearch
@@ -45,11 +62,18 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
     setSearchValue('');
     onChange(newValue ?? '');
     onSearch?.('');
+
+    if (newValue === '') {
+      setSelectedLabel('');
+    } else {
+      const option = options.find((opt) => opt.value === newValue);
+      if (option) setSelectedLabel(option.label);
+    }
   };
 
   const handleSearch = (newSearch: string) => {
     setSearchValue(newSearch);
-    onSearch?.(newSearch);
+    debouncedSearch?.(newSearch);
   };
 
   return (
@@ -57,9 +81,10 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       disabled={disabled}
       triggerComponent={
         <SelectButton
+          aria-label="Select option"
           placeholder={placeholder}
           disabled={disabled}
-          valueLabel={valueLabel}
+          valueLabel={selectedLabel} // ✅ use stored label
           onClear={() => handleChange('')}
           isClearable={isClearable}
           isLoading={isLoading}
@@ -69,13 +94,14 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       <SelectList autoFocus>
         {isSearchable && (
           <TextField
+            aria-label="Search options"
             role="searchbox"
             value={searchValue}
             onKeyDown={(e) => e.stopPropagation()}
-            onChange={(newSearch) => handleSearch(newSearch)}
+            onChange={handleSearch}
           />
         )}
-        <SelectListOptions>
+        <SelectListOptions disabled={isLoading}>
           {displayOptions.map((option) => (
             <SelectListOption
               key={option?.value ?? option.label}
@@ -83,6 +109,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
               {...option}
             />
           ))}
+          {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
         </SelectListOptions>
       </SelectList>
     </Dropdown>
