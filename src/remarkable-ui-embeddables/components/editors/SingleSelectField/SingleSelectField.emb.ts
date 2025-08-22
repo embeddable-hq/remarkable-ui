@@ -1,4 +1,3 @@
-// Embeddable Libraries
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 import { Value, loadData } from '@embeddable.com/core';
 import { dataset, description, dimension, placeholder, title } from '../../component.constants';
