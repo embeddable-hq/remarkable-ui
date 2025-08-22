@@ -85,7 +85,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
           aria-label="Select option"
           placeholder={placeholder}
           disabled={disabled}
-          valueLabel={selectedLabel} // ✅ use stored label
+          valueLabel={selectedLabel}
           onClear={() => handleChange('')}
           isClearable={isClearable}
           isLoading={isLoading}
