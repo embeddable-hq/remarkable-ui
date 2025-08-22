@@ -9,6 +9,7 @@ import {
   SelectListOptionProps,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { debounce } from '../../../utils/debounce.utils';
+import { IconSearch } from '@tabler/icons-react';
 
 export type SingleSelectFieldProps = {
   options: SelectListOptionProps[];
@@ -94,7 +95,9 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       <SelectList autoFocus>
         {isSearchable && (
           <TextField
+            startIcon={IconSearch}
             aria-label="Search options"
+            placeholder="Search…"
             role="searchbox"
             value={searchValue}
             onKeyDown={(e) => e.stopPropagation()}
