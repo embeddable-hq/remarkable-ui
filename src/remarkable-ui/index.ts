@@ -5,13 +5,13 @@ export { CardContentInfo } from './shared/Card/CardContentInfo/CardContentInfo';
 export { Typography } from './shared/Typography/Typography';
 export { IconButton } from './shared/IconButton/IconButton';
 export { Dropdown } from './shared/Dropdown/Dropdown';
+export { SelectListOption } from './editors/select/shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+export { SelectListOptions } from './editors/select/shared/SelectList/SelectListOptions/SelectListOptions';
 
 // Editors
 export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';
 export { SelectList } from './editors/select/shared/SelectList/SelectList';
-export { SelectListItem } from './editors/select/shared/SelectList/SelectListItem/SelectListItem';
 export { SingleSelectField } from './editors/select/SingleSelectField/SingleSelectField';
-
 // Charts
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';

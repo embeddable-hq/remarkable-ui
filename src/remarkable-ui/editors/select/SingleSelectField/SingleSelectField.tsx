@@ -1,15 +1,16 @@
 import { FC, useState } from 'react';
 import { TextField } from '../../TextField/TextField';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
-import {
-  SelectListItem,
-  SelectListItemProps,
-} from '../shared/SelectList/SelectListItem/SelectListItem';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectList } from '../shared/SelectList/SelectList';
+import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
+import {
+  SelectListOption,
+  SelectListOptionProps,
+} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 
 export type SingleSelectFieldProps = {
-  options: SelectListItemProps[];
+  options: SelectListOptionProps[];
   value?: string;
   disabled?: boolean;
   placeholder?: string;
@@ -74,15 +75,15 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             onChange={(newSearch) => handleSearch(newSearch)}
           />
         )}
-        <div>
+        <SelectListOptions>
           {displayOptions.map((option) => (
-            <SelectListItem
+            <SelectListOption
               key={option?.value ?? option.label}
               onClick={() => handleChange(option?.value)}
               {...option}
             />
           ))}
-        </div>
+        </SelectListOptions>
       </SelectList>
     </Dropdown>
   );

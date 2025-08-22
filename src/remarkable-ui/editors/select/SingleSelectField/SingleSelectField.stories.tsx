@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 import { SingleSelectField } from './SingleSelectField';
-import { SelectListItemProps } from '../shared/SelectList/SelectListItem/SelectListItem';
+import { SelectListOptionProps } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 
 const meta = {
   component: SingleSelectField,
@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const mockOptions: SelectListItemProps[] = [
+const mockOptions: SelectListOptionProps[] = [
   { value: 'red', label: 'Red' },
   { value: 'green', label: 'Green' },
   { value: 'blue', label: 'Blue' },

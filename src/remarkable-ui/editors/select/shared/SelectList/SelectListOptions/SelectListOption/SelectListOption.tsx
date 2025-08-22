@@ -1,9 +1,9 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FC, ImgHTMLAttributes, SVGProps } from 'react';
-import { Typography } from '../../../../../shared/Typography/Typography';
-import styles from './SelectListItem.module.css';
+import styles from './SelectListOption.module.css';
+import { Typography } from '../../../../../../shared/Typography/Typography';
 
-export type SelectListItemProps = {
+export type SelectListOptionProps = {
   value?: string;
   label: string;
   startIcon?:
@@ -12,7 +12,12 @@ export type SelectListItemProps = {
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-export const SelectListItem: FC<SelectListItemProps> = ({ value, label, startIcon, ...props }) => {
+export const SelectListOption: FC<SelectListOptionProps> = ({
+  value,
+  label,
+  startIcon,
+  ...props
+}) => {
   return (
     <DropdownMenu.Item className={styles.listItem} data-value={value} {...props}>
       {startIcon}
