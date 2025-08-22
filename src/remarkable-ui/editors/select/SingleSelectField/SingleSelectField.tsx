@@ -9,12 +9,14 @@ import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectList } from '../shared/SelectList/SelectList';
 
 export type SingleSelectFieldProps = {
-  value?: string;
-  onChange: (value: string) => void;
   options: SelectListItemProps[];
+  value?: string;
+  disabled?: boolean;
   isSearchable?: boolean;
   isClearable?: boolean;
-  disabled?: boolean;
+  isLoading?: boolean;
+  onChange: (value: string) => void;
+  onSearch?: (search: string) => void;
 };
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
@@ -23,19 +25,28 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   disabled,
   isSearchable,
   isClearable,
+  isLoading,
   onChange,
+  onSearch,
 }) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
   const valueLabel = options.find((option) => option.value === value)?.label;
 
-  const displayOptions = isSearchable
-    ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
-    : options;
+  const displayOptions =
+    isSearchable && !onSearch
+      ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
+      : options;
 
   const handleChange = (newValue?: string) => {
     setSearchValue('');
     onChange(newValue ?? '');
+    onSearch?.('');
+  };
+
+  const handleSearch = (newSearch: string) => {
+    setSearchValue(newSearch);
+    onSearch?.(newSearch);
   };
 
   return (
@@ -47,6 +58,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
           valueLabel={valueLabel}
           onClear={() => handleChange('')}
           isClearable={isClearable}
+          isLoading={isLoading}
         />
       }
     >
@@ -56,7 +68,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             role="searchbox"
             value={searchValue}
             onKeyDown={(e) => e.stopPropagation()}
-            onChange={(newSearch) => setSearchValue(newSearch)}
+            onChange={(newSearch) => handleSearch(newSearch)}
           />
         )}
         <div>

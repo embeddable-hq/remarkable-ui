@@ -55,3 +55,16 @@
   font-weight: var(--em-select-menu-label-font-weight, 500);
   line-height: var(--em-select-menu-label-font-line-height, 0.875rem);
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  animation: spin 1s linear infinite;
+}
