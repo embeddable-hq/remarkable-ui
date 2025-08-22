@@ -6,14 +6,14 @@ import { Theme } from '../../../../theme/theme.types';
 import { Card, CardContent, CardContentInfo, CardHeader } from '../../../../../remarkable-ui';
 import { IconAlertCircle } from '@tabler/icons-react';
 
-type ChartCardProps = {
+type EditorCardProps = {
   title?: string;
   subtitle?: string;
   children: React.ReactNode;
   errorMessage?: string;
 };
 
-export const EditorCard: FC<ChartCardProps> = ({
+export const EditorCard: FC<EditorCardProps> = ({
   title,
   subtitle,
   children,

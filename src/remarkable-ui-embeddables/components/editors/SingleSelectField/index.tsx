@@ -26,7 +26,7 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
 
   const options =
     results.data?.map((data) => ({
-      value: data[props.dimension.name],
+      value: data[dimension.name],
       label: themeFormatter.data(dimension, data[dimension.name]),
     })) ?? [];
 
