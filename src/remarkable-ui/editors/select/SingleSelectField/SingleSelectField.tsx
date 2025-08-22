@@ -12,6 +12,7 @@ export type SingleSelectFieldProps = {
   options: SelectListItemProps[];
   value?: string;
   disabled?: boolean;
+  placeholder?: string;
   isSearchable?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
@@ -23,6 +24,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   value = '',
   options,
   disabled,
+  placeholder,
   isSearchable,
   isClearable,
   isLoading,
@@ -54,6 +56,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       disabled={disabled}
       triggerComponent={
         <SelectButton
+          placeholder={placeholder}
           disabled={disabled}
           valueLabel={valueLabel}
           onClear={() => handleChange('')}

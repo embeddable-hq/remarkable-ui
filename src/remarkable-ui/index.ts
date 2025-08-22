@@ -1,6 +1,7 @@
 // Components
 export { Skeleton } from './shared/Skeleton/Skeleton';
 export { Card, CardContent, CardHeader } from './shared/Card/Card';
+export { CardContentInfo } from './shared/Card/CardContentInfo/CardContentInfo';
 export { Typography } from './shared/Typography/Typography';
 export { IconButton } from './shared/IconButton/IconButton';
 export { Dropdown } from './shared/Dropdown/Dropdown';

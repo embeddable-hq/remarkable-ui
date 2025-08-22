@@ -3,6 +3,8 @@ import { SingleSelectField } from '../../../../remarkable-ui/editors/select/Sing
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme/theme.types';
+import { EditorCard } from '../shared/EditorCard/EditorCard';
+import { resolveI18nProps } from '../../component.utils';
 
 type SingleSelectFieldProProps = {
   title?: string;
@@ -19,22 +21,28 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const themeFormatter = getThemeFormatter(theme);
 
+  const { title, description, dimension, placeholder, results, value, setSearchValue, onChange } =
+    resolveI18nProps(props);
+
   const options =
-    props.results.data?.map((data) => ({
+    results.data?.map((data) => ({
       value: data[props.dimension.name],
-      label: themeFormatter.data(props.dimension, data[props.dimension.name]),
+      label: themeFormatter.data(dimension, data[dimension.name]),
     })) ?? [];
 
   return (
-    <SingleSelectField
-      isLoading={props.results.isLoading}
-      isClearable
-      isSearchable
-      value={props.value}
-      options={options}
-      onChange={(newValue) => props.onChange?.(newValue)}
-      onSearch={props.setSearchValue}
-    />
+    <EditorCard title={title} subtitle={description}>
+      <SingleSelectField
+        placeholder={placeholder}
+        isLoading={results.isLoading}
+        isClearable
+        isSearchable
+        value={value}
+        options={options}
+        onChange={(newValue) => onChange?.(newValue)}
+        onSearch={setSearchValue}
+      />
+    </EditorCard>
   );
 };
 
