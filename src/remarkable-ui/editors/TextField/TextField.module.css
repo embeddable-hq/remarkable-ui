@@ -67,3 +67,7 @@
 .input div {
   display: flex;
 }
+
+.clearIcon {
+  cursor: pointer;
+}

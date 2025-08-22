@@ -41,7 +41,7 @@ const numberFormatter = (
   if (currency && !isValidCurrency(locale, currency)) {
     return {
       format: (value: number | bigint): string =>
-        `${Intl.NumberFormat(locale, { ...options, currency: undefined, style: undefined }).format(value)} ${currency}`,
+        `${currency} ${Intl.NumberFormat(locale, { ...options, currency: undefined, style: undefined }).format(value)}`,
     };
   }
 

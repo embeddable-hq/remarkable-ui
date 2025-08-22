@@ -34,7 +34,7 @@ export const TextField: FC<TextFieldProps> = ({
         {...props}
       />
       <div>
-        {value && <IconX onClick={() => onChange('')} />}
+        {value && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
         {EndIcon && <EndIcon />}
       </div>
     </div>
