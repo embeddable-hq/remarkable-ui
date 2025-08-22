@@ -12,11 +12,19 @@ export const meta = {
   inputs: [
     dataset,
     { ...dimension, label: 'Dimension (to load Dropdown values)' },
+    {
+      ...dimension,
+      required: false,
+      name: 'optionalSecondDimension',
+      label: 'Optional second dimension for filtering',
+      description:
+        'A hidden dimension applied for filtering instead of the main dimension. Must be unique.',
+    },
     title,
     description,
     { ...placeholder, defaultValue: 'Select value...' },
     {
-      name: 'value',
+      name: 'selectedValue',
       type: 'string',
       label: 'Selected Value',
       category: 'Pre-configured variables',
@@ -39,7 +47,7 @@ export const meta = {
       name: 'Single-select value',
       type: 'string',
       defaultValue: Value.noFilter(),
-      inputs: ['value'],
+      inputs: ['selectedValue'],
       events: [{ name: 'onChange', property: 'value' }],
     },
   ],
@@ -54,19 +62,20 @@ export default defineComponent(SingleSelectFieldPro, meta, {
     inputs: Inputs<typeof meta>,
     [state, setState]: [SingleSelectDropdownState, (state: SingleSelectDropdownState) => void],
   ) => {
+    const operator = inputs.dimension.nativeType === 'string' ? 'contains' : 'equals';
     return {
       ...inputs,
       setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
       results: loadData({
         limit: 200,
         from: inputs.dataset,
-        select: [inputs.dimension],
+        select: [inputs.dimension, inputs.optionalSecondDimension],
         filters: state?.searchValue
           ? [
               {
-                operator: 'contains',
+                operator,
                 property: inputs.dimension,
-                value: state?.searchValue,
+                value: state.searchValue,
               },
             ]
           : undefined,

@@ -10,9 +10,10 @@ type SingleSelectFieldProProps = {
   title?: string;
   description?: string;
   dimension: Dimension;
+  optionalSecondDimension?: Dimension;
   placeholder?: string;
   results: DataResponse;
-  value: string;
+  selectedValue: string;
   setSearchValue: (search: string) => void;
   onChange?: (selectedValue: string) => void;
 };
@@ -21,14 +22,25 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const themeFormatter = getThemeFormatter(theme);
 
-  const { title, description, dimension, placeholder, results, value, setSearchValue, onChange } =
-    resolveI18nProps(props);
+  const {
+    title,
+    description,
+    dimension,
+    optionalSecondDimension,
+    placeholder,
+    results,
+    selectedValue,
+    setSearchValue,
+    onChange,
+  } = resolveI18nProps(props);
 
   const options =
-    results.data?.map((data) => ({
-      value: data[dimension.name],
-      label: themeFormatter.data(dimension, data[dimension.name]),
-    })) ?? [];
+    results.data?.map((data) => {
+      return {
+        value: optionalSecondDimension ? data[optionalSecondDimension.name] : data[dimension.name],
+        label: themeFormatter.data(dimension, data[dimension.name]),
+      };
+    }) ?? [];
 
   return (
     <EditorCard title={title} subtitle={description}>
@@ -37,7 +49,7 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
         isLoading={results.isLoading}
         isClearable
         isSearchable
-        value={value}
+        value={selectedValue}
         options={options}
         onChange={(newValue) => onChange?.(newValue)}
         onSearch={setSearchValue}
