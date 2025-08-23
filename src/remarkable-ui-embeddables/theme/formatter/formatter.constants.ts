@@ -126,19 +126,21 @@ const dataOthersFormatter = (theme: Theme, key: DimensionOrMeasure): StringForma
   const prefix = isDimension(key) ? 'dimension' : 'measure';
 
   return {
-    format: (value: string) =>
-      i18n.t(
+    format: (value: string) => {
+      const stringValue = value.toString();
+      return i18n.t(
         [
-          `${prefix}.${name}.${value}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
-          `${prefix}.${value}`, // e.g. 'Dimension.Germany': 'Germany',
-          value, // e.g. 'Germany'
+          `${prefix}.${name}.${stringValue}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
+          `${prefix}.${stringValue}`, // e.g. 'Dimension.Germany': 'Germany',
+          stringValue, // e.g. 'Germany'
         ],
         {
-          value: value,
+          value: stringValue,
           type: key.nativeType,
           name: name,
         },
-      ),
+      );
+    },
   };
 };
 

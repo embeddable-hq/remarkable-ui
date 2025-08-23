@@ -1,5 +1,5 @@
 import styles from './SelectButton.module.css';
-import { IconCaretDownFilled, IconX } from '@tabler/icons-react';
+import { IconCaretDownFilled, IconLoader2, IconX } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { Typography } from '../../../../shared/Typography/Typography';
@@ -8,11 +8,12 @@ type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   valueLabel?: string;
   placeholder?: string;
   isClearable?: boolean;
+  isLoading?: boolean;
   onClear: () => void;
 };
 
 export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
-  ({ valueLabel, placeholder = 'Select', isClearable, onClear, ...props }, ref) => {
+  ({ valueLabel, placeholder = 'Select', isClearable, isLoading, onClear, ...props }, ref) => {
     const displayValue = valueLabel || placeholder;
 
     const showClearButton = valueLabel && isClearable;
@@ -32,7 +33,7 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
         <Typography>{displayValue}</Typography>
         <div>
           {showClearButton && <IconX onPointerDown={handleClear} />}
-          <IconCaretDownFilled />
+          {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}
         </div>
       </button>
     );

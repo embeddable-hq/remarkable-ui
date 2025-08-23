@@ -1,9 +1,14 @@
 import React, { CSSProperties, FC, useRef } from 'react';
 import { IconAlertCircle } from '@tabler/icons-react';
-import { Card, CardContent, CardHeader, Skeleton } from '../../../../../remarkable-ui';
+import {
+  Card,
+  CardContent,
+  CardContentInfo,
+  CardHeader,
+  Skeleton,
+} from '../../../../../remarkable-ui';
 import styles from './ChartCard.module.css';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { ChartCardInfo } from './ChartCardInfo/ChartCardInfo';
 import { useTheme } from '@embeddable.com/react';
 import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
 import { ChartCardMenu } from './ChartCardMenu/ChartCardMenu';
@@ -44,7 +49,7 @@ export const ChartCard: FC<ChartCardProps> = ({
 
     if (errorMessage) {
       return (
-        <ChartCardInfo
+        <CardContentInfo
           className={styles.error}
           icon={IconAlertCircle}
           title={i18n.t('charts.errorTitle')}
@@ -55,7 +60,7 @@ export const ChartCard: FC<ChartCardProps> = ({
 
     if (!hasData) {
       return (
-        <ChartCardInfo
+        <CardContentInfo
           title={i18n.t('charts.emptyTitle')}
           message={i18n.t('charts.emptyMessage')}
         />

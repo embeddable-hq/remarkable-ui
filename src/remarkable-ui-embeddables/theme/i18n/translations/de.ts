@@ -2,6 +2,9 @@ import { ResourceLanguage } from 'i18next';
 
 export const de: ResourceLanguage = {
   translation: {
+    common: {
+      noOptionsFound: 'Keine Optionen gefunden',
+    },
     dimension: {
       'customers.country.United States': 'Vereinigte Staaten',
       'customers.country.Germany': 'Deutschland',

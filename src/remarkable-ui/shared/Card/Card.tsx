@@ -1,30 +1,35 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import styles from './Card.module.css';
 import clsx from 'clsx';
 import { Typography } from '../Typography/Typography';
 
-type CardProps = {
+type CardProps = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
-  style?: CSSProperties;
 };
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(({ children, ...props }, ref) => {
-  return (
-    <div className={clsx(styles.card)} ref={ref} {...props}>
-      {children}
-    </div>
-  );
-});
+export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ children, className, ...props }, ref) => {
+    return (
+      <div className={clsx(styles.card, className)} ref={ref} {...props}>
+        {children}
+      </div>
+    );
+  },
+);
 
 Card.displayName = 'Card';
 
 type CardHeaderProps = {
-  title: string;
+  title?: string;
   subtitle?: string;
   rightContent?: React.ReactNode;
 };
 
 export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightContent }) => {
+  if (!title && !subtitle) {
+    return null;
+  }
+
   return (
     <div className={styles.header}>
       <div className={styles.titles}>

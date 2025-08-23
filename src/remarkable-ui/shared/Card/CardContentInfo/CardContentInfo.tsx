@@ -1,16 +1,16 @@
 import { TablerIcon } from '@tabler/icons-react';
 import clsx from 'clsx';
-import styles from './ChartCardInfo.module.css';
-import { Typography } from '../../../../../../remarkable-ui';
+import styles from './CardContentInfo.module.css';
+import { Typography } from '../../Typography/Typography';
 
-type ChartCardInfoProps = {
+type CardContentInfoProps = {
   className?: string;
   icon?: TablerIcon;
   title: string;
   message: string;
 };
 
-export const ChartCardInfo: React.FC<ChartCardInfoProps> = ({
+export const CardContentInfo: React.FC<CardContentInfoProps> = ({
   icon: Icon,
   title,
   message,

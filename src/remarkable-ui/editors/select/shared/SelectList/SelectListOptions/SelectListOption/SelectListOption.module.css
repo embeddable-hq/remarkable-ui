@@ -20,8 +20,10 @@
   background: var(--em-select-list-item-background-color-pressed, #ededf1);
 }
 
-.listItem:disabled {
+.listItem.disabled {
   color: var(--em-select-list-item-label-color-disabled, #b8b8bd);
+  pointer-events: none;
+  user-select: none;
 }
 
 .listItem p {

@@ -1,0 +1,10 @@
+.error svg,
+.error h2,
+.error p {
+  color: var(--em-card-error-subtitle-color-default, #d03109);
+}
+
+.card {
+  background: unset;
+  padding: unset;
+}
