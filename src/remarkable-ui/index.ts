@@ -4,6 +4,7 @@ export { Card, CardContent, CardHeader } from './shared/Card/Card';
 export { Typography } from './shared/Typography/Typography';
 export { IconButton } from './shared/IconButton/IconButton';
 export { Dropdown } from './shared/Dropdown/Dropdown';
+export { Button } from './shared/Button/Button';
 
 // Editors
 export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';
