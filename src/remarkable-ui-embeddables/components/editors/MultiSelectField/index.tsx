@@ -22,7 +22,7 @@ type MultiSelectFieldProProps = {
   onChange?: (newValues: string[]) => void;
 };
 
-const MuiltiSelectFieldPro = (props: MultiSelectFieldProProps) => {
+const MultiSelectFieldPro = (props: MultiSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const themeFormatter = getThemeFormatter(theme);
   const {
@@ -64,4 +64,4 @@ const MuiltiSelectFieldPro = (props: MultiSelectFieldProProps) => {
   );
 };
 
-export default MuiltiSelectFieldPro;
+export default MultiSelectFieldPro;

@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 
-export const useSelectSearchFocus = (isOpen: boolean, searchFieldRef: React.RefObject<null>) => {
+export const useSelectSearchFocus = (
+  isOpen: boolean,
+  searchFieldRef: React.RefObject<HTMLInputElement | null>,
+) => {
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => {

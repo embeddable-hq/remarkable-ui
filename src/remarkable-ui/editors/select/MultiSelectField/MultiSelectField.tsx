@@ -46,7 +46,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   const [preValues, setPreValues] = useState<string[]>(values);
   const [selectedLabel, setSelectedLabel] = useState<string>('');
 
-  const searchFieldRef = useRef(null);
+  const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {
@@ -111,7 +111,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     onSearch?.('');
   };
 
-  const handleClearSearch = () => {
+  const handleClearAll = () => {
     setSearchValue('');
     onSearch?.('');
     onChange([]);
@@ -128,7 +128,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           placeholder={placeholder}
           disabled={disabled}
           valueLabel={selectedLabel}
-          onClear={handleClearSearch}
+          onClear={handleClearAll}
           isClearable={isClearable}
           isLoading={isLoading}
         />

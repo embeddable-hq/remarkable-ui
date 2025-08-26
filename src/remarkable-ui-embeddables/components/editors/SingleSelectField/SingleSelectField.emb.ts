@@ -76,7 +76,7 @@ export default defineComponent(SingleSelectFieldPro, meta, {
       results: loadData({
         limit: inputs.maxOptions,
         from: inputs.dataset,
-        select: [inputs.dimension, inputs.optionalSecondDimension],
+        select: [inputs.dimension, inputs.optionalSecondDimension].filter(Boolean),
         filters: state?.searchValue
           ? [
               {

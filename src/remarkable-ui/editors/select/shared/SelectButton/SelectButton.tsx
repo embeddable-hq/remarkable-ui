@@ -30,7 +30,7 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
         className={clsx(styles.button, showClearButton && styles.hasValue)}
         {...props}
       >
-        <Typography>{displayValue}</Typography>
+        <Typography as="span">{displayValue}</Typography>
         <div>
           {showClearButton && <IconX onPointerDown={handleClear} />}
           {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}

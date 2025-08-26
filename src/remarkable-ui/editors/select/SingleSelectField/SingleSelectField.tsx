@@ -41,7 +41,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   const [searchValue, setSearchValue] = useState<string>('');
   const [selectedLabel, setSelectedLabel] = useState<string>(value);
 
-  const searchFieldRef = useRef(null);
+  const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {

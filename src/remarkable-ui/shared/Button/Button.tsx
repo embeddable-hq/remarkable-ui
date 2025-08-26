@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button {...props} className={clsx(styles.button, styles[variant], styles[size], className)}>
       {StartIcon && <StartIcon />}
-      <Typography>{children}</Typography>
+      <Typography as="span">{children}</Typography>
       {EndIcon && <EndIcon />}
     </button>
   );

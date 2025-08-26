@@ -44,7 +44,7 @@
   height: var(--em-select-menu-icon-size-height, 1rem);
 }
 
-.button p {
+.button span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
