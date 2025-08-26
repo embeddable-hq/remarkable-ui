@@ -10,6 +10,8 @@ import { SelectList } from '../shared/SelectList/SelectList';
 import { TextField } from '../../TextField/TextField';
 import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
 import { IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
+import { Button } from '../../../shared/Button/Button';
+import styles from './MultiSelectField.module.css';
 
 export type MultiSelectFieldProps = {
   options: SelectListOptionProps[];
@@ -20,12 +22,14 @@ export type MultiSelectFieldProps = {
   isClearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
+  submitLabel?: string;
   onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
 };
 
 export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   values = [],
+  submitLabel = 'Apply',
   options,
   disabled,
   placeholder,
@@ -122,9 +126,15 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           ))}
           {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
         </SelectListOptions>
-        <button disabled={isSumitDisabled} onClick={() => handleSave(preValues)}>
-          submit
-        </button>
+        <Button
+          className={styles.submitButton}
+          disabled={isSumitDisabled}
+          variant="primary"
+          size="medium"
+          onClick={() => handleSave(preValues)}
+        >
+          {submitLabel}
+        </Button>
       </SelectList>
     </Dropdown>
   );
