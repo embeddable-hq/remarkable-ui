@@ -1,0 +1,32 @@
+name: Deploy Story book to Github pages
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+
+jobs:
+  build-and-deploy-storybook:
+    name: Build and Deploy Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v5
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.BUILD_NODE_VERSION }}
+      - name: Deploy with gh-pages
+        # See https://github.com/tschaub/gh-pages for details
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npm ci && npm run build-storybook 
+          echo ${STORYBOOK_DOMAIN} > ./storybook-static/CNAME
+          npm run deploy-storybook -- -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STORYBOOK_DOMAIN: ${{ vars.STORYBOOK_DOMAIN }}

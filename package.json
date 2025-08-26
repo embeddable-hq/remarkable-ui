@@ -13,6 +13,7 @@
     "build": "tsc",
     "build-storybook": "storybook build",
     "circular:check": "madge --circular .",
+    "deploy-storybook": "gh-pages -d storybook-static",
     "embeddable:build": "embeddable build",
     "embeddable:dev": "embeddable dev",
     "embeddable:login": "embeddable login",
