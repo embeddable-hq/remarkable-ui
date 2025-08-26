@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
@@ -85,6 +85,10 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     onChange(newValues);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    setPreValues(values);
+  }, [values]);
 
   return (
     <Dropdown
