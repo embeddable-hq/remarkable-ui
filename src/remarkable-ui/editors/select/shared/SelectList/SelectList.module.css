@@ -5,7 +5,8 @@
   box-sizing: border-box;
   width: var(--radix-dropdown-menu-trigger-width);
   padding: var(--em-padding-200, 0.5rem);
-  max-height: var(--em-select-menu-list-size-max-height, 20rem);
+  /* max-height: var(--em-select-menu-list-size-max-height, 20rem); */
+  max-height: 50%;
   gap: var(--em-select-menu-list-gap-default, 0.5rem);
   border-radius: var(--em-border-radius-300, 0.75rem);
   background: var(--em-background-color-neutral, #fff);

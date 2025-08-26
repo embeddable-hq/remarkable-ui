@@ -5,11 +5,19 @@ export type DropdownProps = {
   triggerComponent: React.ReactNode;
   children: React.ReactNode;
   disabled?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
-export const Dropdown: FC<DropdownProps> = ({ triggerComponent, children, disabled }) => {
+export const Dropdown: FC<DropdownProps> = ({
+  triggerComponent,
+  children,
+  disabled,
+  open,
+  onOpenChange,
+}) => {
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root open={open} onOpenChange={onOpenChange}>
       <DropdownMenu.Trigger asChild disabled={disabled}>
         {triggerComponent}
       </DropdownMenu.Trigger>

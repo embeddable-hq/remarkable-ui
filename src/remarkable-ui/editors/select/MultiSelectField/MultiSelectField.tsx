@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
@@ -9,11 +9,11 @@ import { SelectButton } from '../shared/SelectButton/SelectButton';
 import { SelectList } from '../shared/SelectList/SelectList';
 import { TextField } from '../../TextField/TextField';
 import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
-import { IconSquare, IconSquareCheck } from '@tabler/icons-react';
+import { IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
 
 export type MultiSelectFieldProps = {
   options: SelectListOptionProps[];
-  value?: string[];
+  values?: string[];
   disabled?: boolean;
   placeholder?: string;
   isSearchable?: boolean;
@@ -25,7 +25,7 @@ export type MultiSelectFieldProps = {
 };
 
 export const MultiSelectField: FC<MultiSelectFieldProps> = ({
-  value = [],
+  values = [],
   options,
   disabled,
   placeholder,
@@ -36,8 +36,9 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   onChange,
   onSearch,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [selectedLabel, setSelectedLabel] = useState<string[]>(value);
+  const [preValues, setPreValues] = useState<string[]>(values);
 
   const debouncedSearch = useMemo(() => (onSearch ? debounce(onSearch) : undefined), [onSearch]);
 
@@ -46,23 +47,44 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
-  const handleSelect = (newValue: string) => {
-    if (value.includes(newValue)) {
-      onChange(value.filter((v) => v !== newValue));
-    } else {
-      onChange([...value, newValue]);
-    }
-  };
-
   const handleSearch = (newSearch: string) => {
     setSearchValue(newSearch);
     debouncedSearch?.(newSearch);
   };
 
-  const valueLabel = value.length === 0 ? undefined : `(${value.length})`;
+  const valueLabel = values.length === 0 ? undefined : `(${values.length}) ${values.join(', ')}`;
+
+  const handleSelectOption = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    newValue?: string,
+  ) => {
+    e.preventDefault();
+
+    if (!newValue) return;
+
+    if (preValues.includes(newValue)) {
+      setPreValues(preValues.filter((v) => v !== newValue));
+    } else {
+      setPreValues([...preValues, newValue]);
+    }
+  };
+
+  const isSumitDisabled =
+    preValues.every((p) => values.includes(p)) && values.every((p) => preValues.includes(p));
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+  };
+
+  const handleSave = (newValues: string[]) => {
+    onChange(newValues);
+    setIsOpen(false);
+  };
 
   return (
     <Dropdown
+      open={isOpen}
+      onOpenChange={handleOpenChange}
       disabled={disabled}
       triggerComponent={
         <SelectButton
@@ -70,7 +92,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           placeholder={placeholder}
           disabled={disabled}
           valueLabel={valueLabel}
-          onClear={() => handleSelect('')}
+          onClear={() => handleSave([])}
           isClearable={isClearable}
           isLoading={isLoading}
         />
@@ -91,16 +113,18 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           {displayOptions.map((option) => (
             <SelectListOption
               key={option?.value ?? option.label}
-              onClick={(e) => {
-                e.preventDefault();
-                handleSelect(option.value!);
-              }}
-              startIcon={value.includes(option.value!) ? <IconSquareCheck /> : <IconSquare />}
+              onClick={(e) => handleSelectOption(e, option.value)}
+              startIcon={
+                preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
+              }
               {...option}
             />
           ))}
           {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
         </SelectListOptions>
+        <button disabled={isSumitDisabled} onClick={() => handleSave(preValues)}>
+          submit
+        </button>
       </SelectList>
     </Dropdown>
   );

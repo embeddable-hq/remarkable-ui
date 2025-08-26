@@ -26,7 +26,7 @@ const mockOptions: SelectListOptionProps[] = [
 
 export const Empty: Story = {
   args: {
-    value: '',
+    values: [],
     isSearchable: true,
     options: mockOptions,
     onChange: (value) => console.log('onChange', value),
@@ -35,7 +35,7 @@ export const Empty: Story = {
 
 export const Filled: Story = {
   args: {
-    value: mockOptions[0]!.value,
+    values: [mockOptions[0]!.value!],
     options: mockOptions,
     isSearchable: true,
     onChange: (value) => console.log('onChange', value),
@@ -45,7 +45,7 @@ export const Filled: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
-    value: '',
+    values: [],
     options: mockOptions,
     onChange: (value) => console.log('onChange', value),
   },
@@ -53,18 +53,18 @@ export const Disabled: Story = {
 
 export const WithState: Story = {
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
+    const [{ values }, updateArgs] = useArgs();
 
     return (
       <MultiSelectField
         {...args}
-        value={value}
-        onChange={(newValue) => updateArgs({ value: newValue })}
+        values={values}
+        onChange={(newValues) => updateArgs({ values: newValues })}
       />
     );
   },
   args: {
-    value: [mockOptions[0]!.value!, mockOptions[1]!.value!],
+    values: [],
     isClearable: true,
     isSearchable: true,
     options: mockOptions,
