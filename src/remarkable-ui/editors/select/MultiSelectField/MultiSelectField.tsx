@@ -14,29 +14,29 @@ import { Button } from '../../../shared/Button/Button';
 import styles from './MultiSelectField.module.css';
 
 export type MultiSelectFieldProps = {
-  options: SelectListOptionProps[];
-  values?: string[];
   disabled?: boolean;
-  placeholder?: string;
-  isSearchable?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
+  isSearchable?: boolean;
   noOptionsMessage?: string;
+  options: SelectListOptionProps[];
+  placeholder?: string;
   submitLabel?: string;
+  values?: string[];
   onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
 };
 
 export const MultiSelectField: FC<MultiSelectFieldProps> = ({
-  values = [],
-  submitLabel = 'Apply',
-  options,
   disabled,
-  placeholder,
-  isSearchable,
   isClearable,
   isLoading,
+  isSearchable,
   noOptionsMessage,
+  options,
+  placeholder,
+  submitLabel = 'Apply',
+  values = [],
   onChange,
   onSearch,
 }) => {
@@ -50,6 +50,10 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     isSearchable && !onSearch
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
+
+  const isSumitDisabled =
+    preValues.every((preValue) => values.includes(preValue)) &&
+    values.every((value) => preValues.includes(value));
 
   const handleSearch = (newSearch: string) => {
     setSearchValue(newSearch);
@@ -72,9 +76,6 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       setPreValues([...preValues, newValue]);
     }
   };
-
-  const isSumitDisabled =
-    preValues.every((p) => values.includes(p)) && values.every((p) => preValues.includes(p));
 
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
