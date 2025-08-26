@@ -50,6 +50,11 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {
+    setPreValues(values);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(values)]);
+
+  useEffect(() => {
     if (isLoading) {
       return;
     }
@@ -58,18 +63,15 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       setSelectedLabel('');
       return;
     }
-
-    const selectedOptions = options.filter((o) => values.includes(o.value!)) ?? [];
+    const selectedOptions = values.map(
+      (value) => options.find((o) => o.value === value)?.label ?? value,
+    );
 
     if (selectedOptions.length > 0) {
-      const newLabel = selectedOptions.map((o) => o.label).join(', ');
+      const newLabel = selectedOptions.join(', ');
       setSelectedLabel(`(${selectedOptions.length}) ${newLabel}`);
     }
   }, [values, options, isLoading]);
-
-  useEffect(() => {
-    setPreValues(values);
-  }, [values]);
 
   const debouncedSearch = useMemo(() => (onSearch ? debounce(onSearch) : undefined), [onSearch]);
 
@@ -160,7 +162,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         </SelectListOptions>
         <Button
           className={styles.submitButton}
-          disabled={isSubmitDisabled}
+          disabled={isSubmitDisabled || isLoading}
           variant="primary"
           size="medium"
           onClick={() => handleSave(preValues)}
