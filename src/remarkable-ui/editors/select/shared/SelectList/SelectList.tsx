@@ -26,7 +26,6 @@ export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, aut
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
-      console.log('currentIndex:', currentIndex.current);
       if (items.length === 0) return;
       switch (e.key) {
         case 'ArrowDown':

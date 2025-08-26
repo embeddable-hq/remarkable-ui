@@ -51,7 +51,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
-  const isSumitDisabled =
+  const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
 
@@ -133,7 +133,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         </SelectListOptions>
         <Button
           className={styles.submitButton}
-          disabled={isSumitDisabled}
+          disabled={isSubmitDisabled}
           variant="primary"
           size="medium"
           onClick={() => handleSave(preValues)}
