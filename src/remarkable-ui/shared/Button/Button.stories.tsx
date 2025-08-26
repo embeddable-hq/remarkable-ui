@@ -25,7 +25,7 @@ export const PrimaryMedium: Story = {
 
 export const PrimarySmall: Story = {
   args: {
-    children: 'Primary Medium Button',
+    children: 'Primary Small Button',
     variant: 'primary',
     size: 'small',
     startIcon: IconBoltFilled,
