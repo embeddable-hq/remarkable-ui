@@ -390,6 +390,7 @@ const stylesComponents = {
   '--em-select-menu-list-border-radius-default': 'var(--em-border-radius-300)',
   '--em-select-menu-list-gap-default': 'var(--em-padding-200)',
   '--em-select-menu-list-padding-default': 'var(--em-padding-200)',
+  '--em-select-menu-list-size-max-height': '20rem',
   '--em-select-menu-padding-default': 'var(--em-padding-300)',
   '--em-select-menu-size-height-default': 'var(--em-height-800)',
   '--em-select-menu-size-width-max-width': '400px',

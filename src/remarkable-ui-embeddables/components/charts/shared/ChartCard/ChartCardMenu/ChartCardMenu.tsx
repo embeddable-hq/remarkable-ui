@@ -4,7 +4,12 @@ import { useTheme } from '@embeddable.com/react';
 import { ChartCardLoading } from '../ChartCardLoading/ChartCardLoading';
 import { i18n, i18nSetup } from '../../../../../theme/i18n/i18n';
 import { Theme, ThemeChartsMenuOptionActionProps } from '../../../../../theme/theme.types';
-import { Dropdown, IconButton, SelectList, SelectListItem } from '../../../../../../remarkable-ui';
+import {
+  Dropdown,
+  IconButton,
+  SelectList,
+  SelectListOption,
+} from '../../../../../../remarkable-ui';
 
 type ChartCardMenuProps = Omit<ThemeChartsMenuOptionActionProps, 'theme'>;
 
@@ -34,7 +39,7 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
           const label = i18n.t(option.labelKey);
 
           return (
-            <SelectListItem
+            <SelectListOption
               key={index}
               label={label}
               onClick={() => handleExport(option.onClick)}

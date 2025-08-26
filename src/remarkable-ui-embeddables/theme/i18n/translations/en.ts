@@ -2,6 +2,9 @@ import { ResourceLanguage } from 'i18next';
 
 export const en: ResourceLanguage = {
   translation: {
+    common: {
+      noOptionsFound: 'No options found',
+    },
     charts: {
       'menuOptions.downloadCSV': 'Download CSV',
       'menuOptions.downloadPNG': 'Download PNG',
