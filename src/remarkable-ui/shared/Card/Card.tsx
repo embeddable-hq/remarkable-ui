@@ -26,16 +26,18 @@ type CardHeaderProps = {
 };
 
 export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightContent }) => {
-  if (!title && !subtitle) {
+  if (!title && !subtitle && !rightContent) {
     return null;
   }
 
   return (
     <div className={styles.header}>
       <div className={styles.titles}>
-        <Typography as="h1" className={styles.title}>
-          {title}
-        </Typography>
+        {title && (
+          <Typography as="h1" className={styles.title}>
+            {title}
+          </Typography>
+        )}
         {subtitle && (
           <Typography as="p" className={styles.subtitle}>
             {subtitle}

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
@@ -9,9 +9,10 @@ import { SelectButton } from '../shared/SelectButton/SelectButton';
 import { SelectList } from '../shared/SelectList/SelectList';
 import { TextField } from '../../TextField/TextField';
 import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
-import { IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
+import { IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
 import { Button } from '../../../shared/Button/Button';
 import styles from './MultiSelectField.module.css';
+import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
 
 export type MultiSelectFieldProps = {
   disabled?: boolean;
@@ -43,6 +44,32 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [preValues, setPreValues] = useState<string[]>(values);
+  const [selectedLabel, setSelectedLabel] = useState<string>('');
+
+  const searchFieldRef = useRef(null);
+  useSelectSearchFocus(isOpen, searchFieldRef);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    if (!values || values.length === 0) {
+      setSelectedLabel('');
+      return;
+    }
+
+    const selectedOptions = options.filter((o) => values.includes(o.value!)) ?? [];
+
+    if (selectedOptions.length > 0) {
+      const newLabel = selectedOptions.map((o) => o.label).join(', ');
+      setSelectedLabel(`(${selectedOptions.length}) ${newLabel}`);
+    }
+  }, [values, options, isLoading]);
+
+  useEffect(() => {
+    setPreValues(values);
+  }, [values]);
 
   const debouncedSearch = useMemo(() => (onSearch ? debounce(onSearch) : undefined), [onSearch]);
 
@@ -51,16 +78,9 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
-  const isSumitDisabled =
+  const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
-
-  const handleSearch = (newSearch: string) => {
-    setSearchValue(newSearch);
-    debouncedSearch?.(newSearch);
-  };
-
-  const valueLabel = values.length === 0 ? undefined : `(${values.length}) ${values.join(', ')}`;
 
   const handleSelectOption = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -77,31 +97,36 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     }
   };
 
-  const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
+  const handleSearch = (newSearch: string) => {
+    setSearchValue(newSearch);
+    debouncedSearch?.(newSearch);
   };
 
   const handleSave = (newValues: string[]) => {
     onChange(newValues);
     setIsOpen(false);
+    setSearchValue('');
+    onSearch?.('');
   };
 
-  useEffect(() => {
-    setPreValues(values);
-  }, [values]);
+  const handleClearSearch = () => {
+    setSearchValue('');
+    onSearch?.('');
+    onChange([]);
+  };
 
   return (
     <Dropdown
       open={isOpen}
-      onOpenChange={handleOpenChange}
+      onOpenChange={setIsOpen}
       disabled={disabled}
       triggerComponent={
         <SelectButton
-          aria-label="Select option"
+          aria-label="Select options"
           placeholder={placeholder}
           disabled={disabled}
-          valueLabel={valueLabel}
-          onClear={() => handleSave([])}
+          valueLabel={selectedLabel}
+          onClear={handleClearSearch}
           isClearable={isClearable}
           isLoading={isLoading}
         />
@@ -110,9 +135,11 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       <SelectList>
         {isSearchable && (
           <TextField
-            autoFocus
+            ref={searchFieldRef}
+            startIcon={IconSearch}
             aria-label="Search options"
-            role="menuitem"
+            placeholder="Search…"
+            role="searchbox"
             value={searchValue}
             onKeyDown={(e) => e.stopPropagation()}
             onChange={handleSearch}
@@ -133,10 +160,11 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         </SelectListOptions>
         <Button
           className={styles.submitButton}
-          disabled={isSumitDisabled}
+          disabled={isSubmitDisabled}
           variant="primary"
           size="medium"
           onClick={() => handleSave(preValues)}
+          role="button"
         >
           {submitLabel}
         </Button>

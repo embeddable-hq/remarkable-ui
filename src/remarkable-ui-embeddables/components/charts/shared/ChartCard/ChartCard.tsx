@@ -69,6 +69,7 @@ export const ChartCard: FC<ChartCardProps> = ({
 
     return children;
   };
+  console.log('loading', data.isLoading);
 
   return (
     <Card ref={chartRef} {...props}>

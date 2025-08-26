@@ -14,6 +14,7 @@ type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
   ({ valueLabel, placeholder = 'Select', isClearable, isLoading, onClear, ...props }, ref) => {
+    console.log('valueLabel', valueLabel);
     const displayValue = valueLabel || placeholder;
 
     const showClearButton = valueLabel && isClearable;
