@@ -4,7 +4,7 @@
   box-sizing: border-box;
 
   height: var(--em-text-input-size-height, 2rem);
-  max-width: var(--em-text-input-size-max-width, 25rem);
+  width: 100%;
   padding: var(--em-text-input-padding-default, 0.5rem);
   border-radius: var(--em-text-input-border-radius-default, 0.5rem);
   border: var(--em-text-input-border-width-default, 1px) solid

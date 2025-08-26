@@ -10,15 +10,13 @@ type SelectListProps = {
 
 export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, autoWidth }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const currentIndex = useRef(-1);
+  const currentIndex = useRef(0);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const items = Array.from(
-      container.querySelectorAll('[role="searchbox"], [role="menuitem"]'),
-    ) as HTMLElement[];
+    const items = Array.from(container.querySelectorAll('[role="menuitem"]')) as HTMLElement[];
 
     const focusItem = (index: number) => {
       if (index >= 0 && index < items.length) {
@@ -60,7 +58,6 @@ export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, aut
 
     return () => {
       container.removeEventListener('keydown', onKeyDown);
-      currentIndex.current = -1;
     };
   }, [autoFocus, children]);
 

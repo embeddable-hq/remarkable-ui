@@ -8,6 +8,7 @@ export { Dropdown } from './shared/Dropdown/Dropdown';
 export { SelectListOption } from './editors/select/shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 export { SelectListOptions } from './editors/select/shared/SelectList/SelectListOptions/SelectListOptions';
 export { Button } from './shared/Button/Button';
+export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectField';
 
 // Editors
 export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';

@@ -9,7 +9,7 @@ type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   placeholder?: string;
   isClearable?: boolean;
   isLoading?: boolean;
-  onClear: () => void;
+  onClear?: () => void;
 };
 
 export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
@@ -21,7 +21,7 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
     const handleClear = (e: React.MouseEvent) => {
       e.stopPropagation();
       e.preventDefault();
-      onClear();
+      onClear?.();
     };
 
     return (

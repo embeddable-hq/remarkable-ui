@@ -12,7 +12,7 @@
   height: var(--em-select-menu-size-height-default, 2rem);
   max-height: var(--em-select-menu-size-height-default, 2rem);
   min-width: var(--em-select-menu-size-width-min-width, 10rem);
-  max-width: var(--em-select-menu-size-width-max-width, 25rem);
+  width: 100%;
   outline: none;
 }
 
