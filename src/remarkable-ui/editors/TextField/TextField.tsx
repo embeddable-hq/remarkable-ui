@@ -4,9 +4,10 @@ import { FC } from 'react';
 import clsx from 'clsx';
 
 type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
+  value?: string;
+  placeholder?: string;
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
-  value?: string;
   onChange: (value: string) => void;
 };
 
