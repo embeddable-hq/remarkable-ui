@@ -49,7 +49,7 @@ export const SecondaryMedium: Story = {
 
 export const SecondarySmall: Story = {
   args: {
-    children: 'Secondary Medium Button',
+    children: 'Secondary Small Button',
     variant: 'secondary',
     size: 'small',
     startIcon: IconBoltFilled,
