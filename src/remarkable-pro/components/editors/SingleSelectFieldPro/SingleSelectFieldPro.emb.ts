@@ -1,11 +1,11 @@
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 import { Value, loadData } from '@embeddable.com/core';
 import { dataset, description, dimension, placeholder, title } from '../../component.constants';
-import MultiSelectFieldPro, { MAX_OPTIONS } from '.';
+import SingleSelectFieldPro, { MAX_OPTIONS } from '.';
 
 export const meta = {
-  name: 'MultiSelectField',
-  label: 'Multi Select Field',
+  name: 'SingleSelectFieldPro',
+  label: 'Single Select Field',
   category: 'Dropdowns',
   defaultWidth: 200,
   defaultHeight: 40,
@@ -24,10 +24,9 @@ export const meta = {
     description,
     { ...placeholder, defaultValue: 'Select value...' },
     {
-      name: 'selectedValues',
+      name: 'selectedValue',
       type: 'string',
-      array: true,
-      label: 'Selected Values',
+      label: 'Selected Value',
       category: 'Pre-configured variables',
     },
     {
@@ -35,6 +34,7 @@ export const meta = {
       type: 'number',
       label: 'Maximum options',
       category: 'Pre-configured variables',
+      defaultValue: MAX_OPTIONS,
     },
   ],
   events: [
@@ -45,37 +45,35 @@ export const meta = {
         {
           name: 'value',
           type: 'string',
-          array: true,
         },
       ],
     },
   ],
   variables: [
     {
-      name: 'Multi-select values',
+      name: 'Single-select value',
       type: 'string',
-      array: true,
       defaultValue: Value.noFilter(),
-      inputs: ['selectedValues'],
+      inputs: ['selectedValue'],
       events: [{ name: 'onChange', property: 'value' }],
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-type MultiSelectDropdownState = {
+type SingleSelectDropdownState = {
   searchValue?: string;
 };
 
-export default defineComponent(MultiSelectFieldPro, meta, {
+export default defineComponent(SingleSelectFieldPro, meta, {
   props: (
     inputs: Inputs<typeof meta>,
-    [state, setState]: [MultiSelectDropdownState, (state: MultiSelectDropdownState) => void],
+    [state, setState]: [SingleSelectDropdownState, (state: SingleSelectDropdownState) => void],
   ) => {
     const operator = inputs.dimension.nativeType === 'string' ? 'contains' : 'equals';
     return {
       ...inputs,
-      maxOptions: inputs.maxOptions ?? MAX_OPTIONS,
-      setSearchValue: (searchValue: string) => setState({ searchValue }),
+      maxOptions: inputs.maxOptions,
+      setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
       results: loadData({
         limit: inputs.maxOptions,
         from: inputs.dataset,
@@ -93,9 +91,9 @@ export default defineComponent(MultiSelectFieldPro, meta, {
     };
   },
   events: {
-    onChange: (selectedValues: string[]) => {
+    onChange: (selectedValue: string) => {
       return {
-        value: selectedValues.length ? selectedValues : Value.noFilter(),
+        value: selectedValue || Value.noFilter(),
       };
     },
   },

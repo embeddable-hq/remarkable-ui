@@ -2,15 +2,15 @@ import { useTheme } from '@embeddable.com/react';
 import { PieChart } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
 import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
-import { DefaultReadyMadePieChartProps } from '../pies.types';
+import { DefaultPieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { mergician } from 'mergician';
 import { resolveI18nProps } from '../../../component.utils';
 
-type ReadyMadePieChartProps = DefaultReadyMadePieChartProps;
+type PieChartProProps = DefaultPieChartProps;
 
-const ReadyMadePieChart = (props: ReadyMadePieChartProps) => {
+const PieChartPro = (props: PieChartProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -61,4 +61,4 @@ const ReadyMadePieChart = (props: ReadyMadePieChartProps) => {
   );
 };
 
-export default ReadyMadePieChart;
+export default PieChartPro;
