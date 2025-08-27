@@ -1,6 +1,6 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
-export interface DefaultReadyMadePieChartProps {
+export type DefaultPieChartProps = {
   description: string;
   dimension: Dimension;
   maxLegendItems: number;
@@ -11,4 +11,4 @@ export interface DefaultReadyMadePieChartProps {
   showValueLabels: boolean;
   title: string;
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
-}
+};

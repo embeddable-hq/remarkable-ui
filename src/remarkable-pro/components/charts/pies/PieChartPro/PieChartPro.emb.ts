@@ -1,6 +1,7 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import ReadyMadeDonutChart from './index';
+
+import ReadyMadePieChart from './index';
 import {
   dimension,
   dataset,
@@ -14,8 +15,8 @@ import {
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'DonutChart',
-  label: 'Donut Chart',
+  name: 'PieChartPro',
+  label: 'Pie Chart',
   category: 'Pie Charts',
   inputs: [
     dataset,
@@ -43,7 +44,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(ReadyMadeDonutChart, meta, {
+export default defineComponent(ReadyMadePieChart, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,

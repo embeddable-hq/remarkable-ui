@@ -1,7 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-
-import PieChart from './index';
+import ReadyMadeDonutChart from './index';
 import {
   dimension,
   dataset,
@@ -15,22 +14,13 @@ import {
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'DonutLabelChart',
-  label: 'Donut Label Chart',
+  name: 'DonutChartPro',
+  label: 'Donut Chart',
   category: 'Pie Charts',
   inputs: [
     dataset,
     measure,
     dimension,
-    { ...measure, name: 'innerLabelMeasure', label: 'Inner Label Measure' },
-    {
-      name: 'innerLabelText',
-      type: 'string',
-      label: 'Inner Label Text',
-      description: 'Text to display inside the donut chart',
-      required: false,
-      category: 'Component Data',
-    },
     title,
     description,
     showLegend,
@@ -53,17 +43,13 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(PieChart, meta, {
+export default defineComponent(ReadyMadeDonutChart, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
       results: loadData({
         from: inputs.dataset,
         select: [inputs.measure, inputs.dimension],
-      }),
-      resultsInnerLabel: loadData({
-        from: inputs.dataset,
-        select: [inputs.innerLabelMeasure],
       }),
     };
   },
