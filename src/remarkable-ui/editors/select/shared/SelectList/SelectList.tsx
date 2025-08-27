@@ -16,7 +16,9 @@ export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, aut
     const container = containerRef.current;
     if (!container) return;
 
-    const items = Array.from(container.querySelectorAll('[role="menuitem"]')) as HTMLElement[];
+    const items = Array.from(
+      container.querySelectorAll('[role="menuitem"], [role="searchbox"], button'),
+    ) as HTMLElement[];
 
     const focusItem = (index: number) => {
       if (index >= 0 && index < items.length) {

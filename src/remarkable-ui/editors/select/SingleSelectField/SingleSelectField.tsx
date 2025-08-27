@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { TextField } from '../../TextField/TextField';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
@@ -10,6 +10,7 @@ import {
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { debounce } from '../../../utils/debounce.utils';
 import { IconSearch } from '@tabler/icons-react';
+import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
 
 export type SingleSelectFieldProps = {
   options: SelectListOptionProps[];
@@ -36,10 +37,13 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   onChange,
   onSearch,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [selectedLabel, setSelectedLabel] = useState<string>(value);
 
-  // Handle prop value changes
+  const searchFieldRef = useRef<HTMLInputElement>(null);
+  useSelectSearchFocus(isOpen, searchFieldRef);
+
   useEffect(() => {
     if (!value) {
       setSelectedLabel('');
@@ -79,6 +83,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   return (
     <Dropdown
+      open={isOpen}
+      onOpenChange={setIsOpen}
       disabled={disabled}
       triggerComponent={
         <SelectButton
@@ -92,9 +98,10 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         />
       }
     >
-      <SelectList autoFocus>
+      <SelectList>
         {isSearchable && (
           <TextField
+            ref={searchFieldRef}
             startIcon={IconSearch}
             aria-label="Search options"
             placeholder="Search…"
