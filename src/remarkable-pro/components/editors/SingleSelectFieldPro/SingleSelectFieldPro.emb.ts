@@ -34,6 +34,7 @@ export const meta = {
       type: 'number',
       label: 'Maximum options',
       category: 'Pre-configured variables',
+      defaultValue: MAX_OPTIONS,
     },
   ],
   events: [
@@ -71,7 +72,7 @@ export default defineComponent(SingleSelectFieldPro, meta, {
     const operator = inputs.dimension.nativeType === 'string' ? 'contains' : 'equals';
     return {
       ...inputs,
-      maxOptions: inputs.maxOptions ?? MAX_OPTIONS,
+      maxOptions: inputs.maxOptions,
       setSearchValue: (searchValue: string) => setState({ searchValue: searchValue }),
       results: loadData({
         limit: inputs.maxOptions,
