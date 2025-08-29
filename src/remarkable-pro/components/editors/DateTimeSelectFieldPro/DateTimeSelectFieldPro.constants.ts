@@ -35,9 +35,9 @@ const getQuarterBounds = (
   };
 };
 
-export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] = [
+export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[] = [
   {
-    value: 'today',
+    value: 'Today',
     label: 'Today',
     getRange: () => {
       const now = new Date();
@@ -52,7 +52,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'yesterday',
+    value: 'Yesterday',
     label: 'Yesterday',
     getRange: () => {
       const now = new Date();
@@ -69,19 +69,19 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'thisWeek',
+    value: 'This week',
     label: 'This week',
     getRange: () => getWeekBounds(new Date(), 0),
     dateFormat: 'MMM DD',
   },
   {
-    value: 'lastWeek',
+    value: 'Last week',
     label: 'Last week',
     getRange: () => getWeekBounds(new Date(), -1),
     dateFormat: 'MMM DD',
   },
   {
-    value: 'weekToDate',
+    value: 'Week to date',
     label: 'Week to date',
     getRange: () => {
       const now = new Date();
@@ -97,7 +97,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'last7Days',
+    value: 'Last 7 days',
     label: 'Last 7 days',
     getRange: () => {
       const to = new Date();
@@ -113,7 +113,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'next7Days',
+    value: 'Next 7 days',
     label: 'Next 7 days',
     getRange: () => {
       const from = new Date();
@@ -129,7 +129,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'last30Days',
+    value: 'Last 30 days',
     label: 'Last 30 days',
     getRange: () => {
       const to = new Date();
@@ -145,7 +145,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'next30Days',
+    value: 'Next 30 days',
     label: 'Next 30 days',
     getRange: () => {
       const from = new Date();
@@ -161,7 +161,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM DD',
   },
   {
-    value: 'thisMonth',
+    value: 'This month',
     label: 'This month',
     getRange: () => {
       const now = new Date();
@@ -175,7 +175,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM YY',
   },
   {
-    value: 'lastMonth',
+    value: 'Last month',
     label: 'Last month',
     getRange: () => {
       const now = new Date();
@@ -189,7 +189,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM YY',
   },
   {
-    value: 'nextMonth',
+    value: 'Next month',
     label: 'Next month',
     getRange: () => {
       const now = new Date();
@@ -200,25 +200,25 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM YY',
   },
   {
-    value: 'thisQuarter',
+    value: 'This quarter',
     label: 'This quarter',
     getRange: () => getQuarterBounds(new Date(), 0),
     dateFormat: 'MMM YY',
   },
   {
-    value: 'lastQuarter',
+    value: 'Last quarter',
     label: 'Last quarter',
     getRange: () => getQuarterBounds(new Date(), -1),
     dateFormat: 'MMM YY',
   },
   {
-    value: 'nextQuarter',
+    value: 'Next quarter',
     label: 'Next quarter',
     getRange: () => getQuarterBounds(new Date(), +1),
     dateFormat: 'MMM YY',
   },
   {
-    value: 'quarterToDate',
+    value: 'Quarter to date',
     label: 'Quarter to date',
     getRange: () => {
       const now = new Date();
@@ -230,7 +230,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM YY',
   },
   {
-    value: 'last6Months',
+    value: 'Last 6 months',
     label: 'Last 6 months',
     getRange: () => {
       const to = new Date();
@@ -243,7 +243,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM YY',
   },
   {
-    value: 'last12Months',
+    value: 'Last 12 months',
     label: 'Last 12 months',
     getRange: () => {
       const to = new Date();
@@ -256,7 +256,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'MMM YY',
   },
   {
-    value: 'thisYear',
+    value: 'This year',
     label: 'This year',
     getRange: () => {
       const now = new Date();
@@ -267,7 +267,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'YYYY',
   },
   {
-    value: 'lastYear',
+    value: 'Last year',
     label: 'Last year',
     getRange: () => {
       const now = new Date();
@@ -279,7 +279,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'YYYY',
   },
   {
-    value: 'nextYear',
+    value: 'Next year',
     label: 'Next year',
     getRange: () => {
       const now = new Date();
@@ -291,7 +291,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] =
     dateFormat: 'YYYY',
   },
   {
-    value: 'yearToDate',
+    value: 'Year to date',
     label: 'Year to date',
     getRange: () => {
       const now = new Date();

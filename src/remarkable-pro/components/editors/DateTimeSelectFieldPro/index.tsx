@@ -9,7 +9,6 @@ import {
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
-import { dateTimeSelectFieldDefaultOptions } from './DateTimeSelectFieldPro.constants';
 import { IconCalendarFilled } from '@tabler/icons-react';
 
 type DateTimeSelectFieldProProps = {
@@ -30,8 +29,7 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
 
   const { onChange, selectedValue, description, placeholder, title } = resolveI18nProps(props);
 
-  const dateTimeOptions =
-    theme.editors?.dateTimeSelectFieldOverrides?.options ?? dateTimeSelectFieldDefaultOptions;
+  const dateTimeOptions = theme.editors.dateTimeSelectFieldPro.options;
 
   const options = getDateTimeSelectFieldProOptions(dateTimeOptions);
 
@@ -40,8 +38,8 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
       return onChange(undefined);
     }
 
-    const selectedOption = dateTimeOptions.find((option) => option.value === value);
-    onChange(selectedOption.getRange());
+    const selectedOption = dateTimeOptions.find((option) => option.value === value)!;
+    onChange(selectedOption.getRange() as TimeRange);
   };
 
   const value =

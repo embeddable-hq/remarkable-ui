@@ -1,4 +1,3 @@
-export { defaultChartsMenuOptions } from './remarkable-pro/theme/theme.constants';
 export * from './remarkable-pro/theme/theme.types';
 export * from './remarkable-pro/theme/theme.constants';
 export type {

@@ -1,8 +1,9 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import * as XLSX from 'xlsx';
 import domtoimage from 'dom-to-image-more';
-import { Theme, ThemeChartsMenuOptionActionProps } from '../theme.types';
+import { Theme } from '../theme.types';
 import { getThemeFormatter } from '../formatter/formatter.utils';
+import { ChartCardMenuProOptionOnClickProps } from '../../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 
 // RFC4180 cell-escaping: wrap in quotes and double any inner quotes
 const escapeCell = (val: unknown): string => {
@@ -48,7 +49,7 @@ export function exportCSV({
   dimensionsAndMeasures = [],
   title,
   theme,
-}: ThemeChartsMenuOptionActionProps) {
+}: ChartCardMenuProOptionOnClickProps) {
   const csvData = formatData(data, dimensionsAndMeasures, theme)
     .map((row) => row.map(escapeCell).join(','))
     .join('\r\n');
@@ -62,7 +63,7 @@ export function exportXLSX({
   dimensionsAndMeasures = [],
   title,
   theme,
-}: ThemeChartsMenuOptionActionProps) {
+}: ChartCardMenuProOptionOnClickProps) {
   const xlsxData = formatData(data, dimensionsAndMeasures, theme);
 
   const worksheet = XLSX.utils.aoa_to_sheet(xlsxData);
@@ -75,7 +76,7 @@ export function exportXLSX({
 export async function exportPNG({
   title,
   containerRef,
-}: ThemeChartsMenuOptionActionProps): Promise<void> {
+}: ChartCardMenuProOptionOnClickProps): Promise<void> {
   const element = containerRef?.current;
   if (!element) {
     throw new Error('exportPNG: element is undefined');

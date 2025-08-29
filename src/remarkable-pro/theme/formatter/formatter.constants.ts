@@ -144,7 +144,7 @@ const dataOthersFormatter = (theme: Theme, key: DimensionOrMeasure): StringForma
   };
 };
 
-export const defaultThemeFormatter: ThemeFormatter = {
+export const remarkableThemeFormatter: ThemeFormatter = {
   locale: navigator.language,
 
   defaultNumberFormatterOptions,

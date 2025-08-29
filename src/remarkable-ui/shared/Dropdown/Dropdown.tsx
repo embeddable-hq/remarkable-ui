@@ -6,6 +6,8 @@ export type DropdownProps = {
   children: React.ReactNode;
   disabled?: boolean;
   open?: boolean;
+  side?: React.ComponentProps<typeof DropdownMenu.Content>['side'];
+  align?: React.ComponentProps<typeof DropdownMenu.Content>['align'];
   onOpenChange?: (open: boolean) => void;
 };
 
@@ -14,6 +16,8 @@ export const Dropdown: FC<DropdownProps> = ({
   children,
   disabled,
   open,
+  side = 'bottom',
+  align = 'center',
   onOpenChange,
 }) => {
   return (
@@ -21,7 +25,7 @@ export const Dropdown: FC<DropdownProps> = ({
       <DropdownMenu.Trigger asChild disabled={disabled}>
         {triggerComponent}
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content side="bottom" align="center">
+      <DropdownMenu.Content side={side} align={align}>
         {children}
       </DropdownMenu.Content>
     </DropdownMenu.Root>

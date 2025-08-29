@@ -11,7 +11,7 @@ import styles from './ChartCard.module.css';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { useTheme } from '@embeddable.com/react';
 import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
-import { ChartCardMenu } from './ChartCardMenu/ChartCardMenu';
+import { ChartCardMenuPro } from './ChartCardMenuPro/ChartCardMenuPro';
 import { Theme } from '../../../../theme/theme.types';
 import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 
@@ -80,7 +80,7 @@ export const ChartCard: FC<ChartCardProps> = ({
             {data.isLoading ? (
               <ChartCardLoading />
             ) : (
-              <ChartCardMenu
+              <ChartCardMenuPro
                 title={title}
                 containerRef={chartRef}
                 data={data.data}

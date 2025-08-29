@@ -3,17 +3,18 @@ import React from 'react';
 import { useTheme } from '@embeddable.com/react';
 import { ChartCardLoading } from '../ChartCardLoading/ChartCardLoading';
 import { i18n, i18nSetup } from '../../../../../theme/i18n/i18n';
-import { Theme, ThemeChartsMenuOptionActionProps } from '../../../../../theme/theme.types';
+import { Theme } from '../../../../../theme/theme.types';
 import {
   Dropdown,
   IconButton,
   SelectList,
   SelectListOption,
 } from '../../../../../../remarkable-ui';
+import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro.types';
 
-type ChartCardMenuProps = Omit<ThemeChartsMenuOptionActionProps, 'theme'>;
+type ChartCardMenuProProps = Omit<ChartCardMenuProOptionOnClickProps, 'theme'>;
 
-export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
+export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
   const theme: Theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -26,16 +27,20 @@ export const ChartCardMenu: React.FC<ChartCardMenuProps> = (props) => {
     }, 100);
   };
 
-  const handleExport = (onClick: (props: ThemeChartsMenuOptionActionProps) => void) => {
+  const handleExport = (onClick: (props: ChartCardMenuProOptionOnClickProps) => void) => {
     startAction(() => onClick({ ...props, theme }));
   };
 
+  const options = theme.charts.chartCardMenuPro.options;
+
   return (
     <Dropdown
+      side="bottom"
+      align="end"
       triggerComponent={isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
     >
       <SelectList autoFocus autoWidth>
-        {theme.charts.menuOptions?.map((option, index) => {
+        {options.map((option, index) => {
           const label = i18n.t(option.labelKey);
 
           return (
