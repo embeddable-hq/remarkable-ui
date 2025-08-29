@@ -21,11 +21,13 @@
   flex: 1 1 auto;
   min-width: 0;
   overflow: hidden;
+  display: flex;
 }
 
 .listItem .rightContent {
   flex: 0 0 auto;
   max-width: 50%;
+  display: flex;
 }
 
 .listItem .leftContent p,
