@@ -10,9 +10,9 @@ export type ThemeI18n = { language: string; translations: Resource };
 export type ThemeChartsLegendPosition = 'top' | 'right' | 'bottom' | 'left';
 
 export type ThemeCharts = {
-  pieChartOverrides?: Partial<ChartOptions<'pie'>>;
-  donutChartOverrides?: Partial<ChartOptions<'pie'>>;
-  donutLabelChartOverrides?: Partial<ChartOptions<'pie'>>;
+  pieChartPro?: { options: Partial<ChartOptions<'pie'>> };
+  donutChartPro?: { options: Partial<ChartOptions<'pie'>> };
+  donutLabelChartPro?: { options: Partial<ChartOptions<'pie'>> };
   backgroundColors?: string[];
   borderColors?: string[];
   legendPosition: ThemeChartsLegendPosition;
@@ -20,7 +20,7 @@ export type ThemeCharts = {
 };
 
 export type ThemeEditors = {
-  dateRangeSelectFieldProOptions: {
+  dateRangeSelectFieldPro: {
     options: DateTimeSelectFieldProOption[];
   };
 };

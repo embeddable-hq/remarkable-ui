@@ -39,7 +39,7 @@ const DonutChartPro = (props: DonutChartProProps) => {
       } as DefaultPieChartOptions,
       theme,
     ),
-    theme.charts.donutChartOverrides ?? {},
+    theme.charts.donutChartPro?.options ?? {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {

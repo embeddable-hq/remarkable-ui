@@ -39,7 +39,7 @@ const PieChartPro = (props: PieChartProProps) => {
       } as DefaultPieChartOptions,
       theme,
     ),
-    theme.charts.pieChartOverrides ?? {},
+    theme.charts.pieChartPro?.options ?? {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {

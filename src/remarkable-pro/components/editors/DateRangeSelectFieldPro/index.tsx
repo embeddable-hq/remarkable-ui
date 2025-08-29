@@ -29,7 +29,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
 
   const { onChange, selectedValue, description, placeholder, title } = resolveI18nProps(props);
 
-  const dateRangeOptions = theme.editors.dateRangeSelectFieldProOptions.options;
+  const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
 
   const options = getDateTimeSelectFieldProOptions(dateRangeOptions);
 

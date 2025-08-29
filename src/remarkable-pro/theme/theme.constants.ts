@@ -22,7 +22,7 @@ const remarkableThemeCharts: ThemeCharts = {
 };
 
 const remarkableThemeEditors = {
-  dateRangeSelectFieldProOptions: {
+  dateRangeSelectFieldPro: {
     options: defaultDateTimeSelectFieldProOptions,
   },
 };
