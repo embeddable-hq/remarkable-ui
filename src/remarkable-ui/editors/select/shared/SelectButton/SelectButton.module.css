@@ -16,6 +16,24 @@
   outline: none;
 }
 
+.button .leftContent {
+  display: flex;
+  align-items: center;
+}
+
+.button .leftContent span {
+  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
+  /* font-family: var(--em-select-menu-label-font-font-family, Inter); */
+  font-size: var(--em-select-menu-label-font-size, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-select-menu-label-font-weight, 500);
+  line-height: var(--em-select-menu-label-font-line-height, 0.875rem);
+}
+
 .button:hover,
 .button:focus {
   background: var(--em-select-menu-background-color-hover, #f7f7f8);
@@ -36,24 +54,9 @@
   cursor: unset;
 }
 
-.button div {
-  display: flex;
-}
-.button div svg {
+.button span svg {
   width: var(--em-select-menu-icon-size-width, 1rem);
   height: var(--em-select-menu-icon-size-height, 1rem);
-}
-
-.button span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
-  /* font-family: var(--em-select-menu-label-font-font-family, Inter); */
-  font-size: var(--em-select-menu-label-font-size, 0.75rem);
-  font-style: normal;
-  font-weight: var(--em-select-menu-label-font-weight, 500);
-  line-height: var(--em-select-menu-label-font-line-height, 0.875rem);
 }
 
 @keyframes spin {

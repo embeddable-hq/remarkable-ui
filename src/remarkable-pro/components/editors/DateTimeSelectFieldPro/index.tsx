@@ -10,6 +10,7 @@ import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { dateTimeSelectFieldDefaultOptions } from './DateTimeSelectFieldPro.constants';
+import { IconCalendarFilled } from '@tabler/icons-react';
 
 type DateTimeSelectFieldProProps = {
   description?: string;
@@ -50,6 +51,7 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
   return (
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
+        startIcon={IconCalendarFilled}
         isClearable
         placeholder={placeholder}
         value={value}

@@ -35,7 +35,7 @@
   user-select: none;
 }
 
-.listItem .startContent p {
+.listItem .leftContent p {
   padding: 0 var(--em-select-list-item-label-padding-default, 0.5rem);
   /* font-family: Inter; */
   font-size: var(--em-select-list-item-left-label-font-size, 0.75rem);
@@ -43,7 +43,7 @@
   line-height: var(--em-select-list-item-left-label-font-line-height, 0.875rem);
 }
 
-.listItem .endContent p {
+.listItem .rightContent p {
   color: var(--em-select-list-item-right-label-color-default, #5c5c66);
   padding: 0 var(--em-select-list-item-label-padding-default, 0.5rem);
   /* font-family: var(--em-select-list-item-right-label-font-font-family, Inter); */
@@ -51,6 +51,17 @@
   font-weight: var(--em-select-list-item-right-label-font-weight, 400);
   line-height: var(--em-select-list-item-right-label-font-line-height, 0.875rem);
 }
+
+.listItem.selected {
+  background: var(--em-select-list-item-background-color-selected, #212129);
+  color: var(--em-select-list-item-left-label-color-selected, #fff);
+}
+
+.listItem.selected .leftContent p,
+.listItem.selected .rightContent p {
+  color: inherit;
+}
+
 .listItem svg,
 .listItem img {
   width: var(--em-select-list-item-icon-size-width, 1rem);

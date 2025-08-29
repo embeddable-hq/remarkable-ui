@@ -9,11 +9,11 @@ export const meta = {
   label: 'Date Time Select Field',
   category: 'Dropdowns',
   defaultWidth: 200,
-  defaultHeight: 40,
+  defaultHeight: 120,
   inputs: [
     { ...title },
     { ...description },
-    { ...placeholder, defaultValue: 'Select value...' },
+    { ...placeholder, defaultValue: 'Pick a date' },
     {
       name: 'selectedValue',
       type: 'timeRange',

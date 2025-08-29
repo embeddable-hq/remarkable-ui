@@ -9,11 +9,12 @@ import {
   SelectListOptionProps,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { debounce } from '../../../utils/debounce.utils';
-import { IconSearch } from '@tabler/icons-react';
+import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
 
 export type SingleSelectFieldProps = {
   options: SelectListOptionProps[];
+  startIcon?: TablerIcon;
   value?: string;
   disabled?: boolean;
   placeholder?: string;
@@ -27,6 +28,7 @@ export type SingleSelectFieldProps = {
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   value = '',
+  startIcon,
   options,
   disabled,
   placeholder,
@@ -43,7 +45,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
-  console.log('single select field value', value);
+
   useEffect(() => {
     if (!value) {
       setSelectedLabel('');
@@ -88,6 +90,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       disabled={disabled}
       triggerComponent={
         <SelectButton
+          startIcon={startIcon}
           aria-label="Select option"
           placeholder={placeholder}
           disabled={disabled}
@@ -113,11 +116,14 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         )}
         <SelectListOptions disabled={isLoading}>
           {displayOptions.map((option) => (
-            <SelectListOption
-              key={option?.value ?? option.label}
-              onClick={() => handleChange(option?.value)}
-              {...option}
-            />
+            <>
+              <SelectListOption
+                key={option?.value ?? option.label}
+                onClick={() => handleChange(option?.value)}
+                isSelected={option.value === value}
+                {...option}
+              />
+            </>
           ))}
           {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
         </SelectListOptions>

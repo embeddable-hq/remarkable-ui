@@ -10,6 +10,7 @@ type SelectListOptionIcon =
 
 export type SelectListOptionProps = {
   value?: string;
+  isSelected?: boolean;
   label: string;
   rightLabel?: string;
   startIcon?: SelectListOptionIcon;
@@ -20,6 +21,7 @@ export type SelectListOptionProps = {
 
 export const SelectListOption: FC<SelectListOptionProps> = ({
   value,
+  isSelected,
   label,
   rightLabel,
   startIcon,
@@ -29,15 +31,15 @@ export const SelectListOption: FC<SelectListOptionProps> = ({
 }) => {
   return (
     <DropdownMenu.Item
-      className={clsx(styles.listItem, disabled && styles.disabled)}
+      className={clsx(styles.listItem, disabled && styles.disabled, isSelected && styles.selected)}
       data-value={value}
       {...props}
     >
-      <span className={styles.startContent}>
+      <span className={styles.leftContent}>
         {startIcon}
         <Typography>{label}</Typography>
       </span>
-      <span className={styles.endContent}>
+      <span className={styles.rightContent}>
         <Typography>{rightLabel}</Typography>
         {endIcon}
       </span>
