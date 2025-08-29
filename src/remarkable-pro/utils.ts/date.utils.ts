@@ -13,21 +13,25 @@ export const loadDayjsLocale = async (locale: string) => {
   }
 };
 
-export const useLoadDayjsLocale = () => {
+type UseLoadDayjsLocaleProps = {
+  dayjsLocaleReady: boolean;
+};
+
+export const useLoadDayjsLocale = (): UseLoadDayjsLocaleProps => {
   const theme: Theme = useTheme() as Theme;
-  const [dayjsLocalReady, setDayjsLocaleReady] = useState(false);
+  const [dayjsLocaleReady, setDayjsLocaleReady] = useState(false);
 
   useEffect(() => {
     const loadLocale = async () => {
       setDayjsLocaleReady(false);
-      loadDayjsLocale(theme.formatter.locale);
+      await loadDayjsLocale(theme.formatter.locale);
       setDayjsLocaleReady(true);
     };
 
     loadLocale();
   }, [theme.formatter.locale]);
 
-  return { dayjsLocalReady };
+  return { dayjsLocaleReady };
 };
 
 export const localToUtcDate = (date: Date): Date => {

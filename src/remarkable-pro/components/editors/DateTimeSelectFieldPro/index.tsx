@@ -21,9 +21,9 @@ type DateTimeSelectFieldProProps = {
 
 const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
-  const { dayjsLocalReady } = useLoadDayjsLocale();
+  const { dayjsLocaleReady } = useLoadDayjsLocale();
 
-  if (!dayjsLocalReady) {
+  if (!dayjsLocaleReady) {
     return null;
   }
 
@@ -38,7 +38,10 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
       return onChange(undefined);
     }
 
-    const selectedOption = dateTimeOptions.find((option) => option.value === value)!;
+    const selectedOption = dateTimeOptions.find((option) => option.value === value);
+
+    if (!selectedOption) return;
+
     onChange(selectedOption.getRange() as TimeRange);
   };
 

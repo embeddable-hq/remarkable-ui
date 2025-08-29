@@ -86,7 +86,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
     getRange: () => {
       const now = new Date();
       const { from } = getWeekBounds(now, 0)!;
-      const to = now;
+      const to = new Date(now);
       to.setHours(23, 59, 59, 999);
 
       return {
@@ -223,7 +223,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
     getRange: () => {
       const now = new Date();
       const { from } = getQuarterBounds(now, 0)!;
-      const to = now;
+      const to = new Date(now);
       to.setHours(23, 59, 59, 999);
       return { from, to };
     },

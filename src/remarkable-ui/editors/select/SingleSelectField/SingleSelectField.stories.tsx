@@ -12,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockOptions: SelectListOptionProps[] = [
-  { value: 'red', label: 'Red', rightLabel: 'This is color Reds' },
+  { value: 'red', label: 'Red', rightLabel: 'This is color Red' },
   { value: 'green', label: 'Green', rightLabel: 'This is color Green' },
   { value: 'blue', label: 'Blue', rightLabel: 'This is color Blue' },
   { value: 'yellow', label: 'Yellow', rightLabel: 'This is color Yellow' },

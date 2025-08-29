@@ -116,14 +116,12 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         )}
         <SelectListOptions disabled={isLoading}>
           {displayOptions.map((option) => (
-            <>
-              <SelectListOption
-                key={option?.value ?? option.label}
-                onClick={() => handleChange(option?.value)}
-                isSelected={option.value === value}
-                {...option}
-              />
-            </>
+            <SelectListOption
+              key={option?.value ?? option.label}
+              onClick={() => handleChange(option?.value)}
+              isSelected={option.value === value}
+              {...option}
+            />
           ))}
           {options.length === 0 && (
             <SelectListOption disabled value="empty" label={noOptionsMessage} />

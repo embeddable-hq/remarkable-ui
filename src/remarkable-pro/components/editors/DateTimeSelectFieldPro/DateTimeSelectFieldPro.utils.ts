@@ -44,8 +44,6 @@ export const compareDateTimeFieldOptionWithTimeRange = (
   timeRange: TimeRange,
 ) => {
   if (timeRange?.relativeTimeString) {
-    console.log('comparing', timeRange.relativeTimeString, dateTimeFieldOption.value);
-
     return (
       timeRange.relativeTimeString.toLocaleLowerCase() ===
       dateTimeFieldOption.value.toLocaleLowerCase()

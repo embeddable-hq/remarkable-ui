@@ -19,7 +19,7 @@ export type ThemeCharts = {
   chartCardMenuPro: { options: ChartCardMenuProOption[] };
 };
 
-type ThemeEditors = {
+export type ThemeEditors = {
   dateTimeSelectFieldPro: {
     options: DateTimeSelectFieldProOption[];
   };

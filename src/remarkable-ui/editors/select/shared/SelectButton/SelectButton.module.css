@@ -22,12 +22,11 @@
 }
 
 .button .leftContent span {
-  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
   /* font-family: var(--em-select-menu-label-font-font-family, Inter); */
+  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
   font-size: var(--em-select-menu-label-font-size, 0.75rem);
   font-style: normal;
   font-weight: var(--em-select-menu-label-font-weight, 500);
