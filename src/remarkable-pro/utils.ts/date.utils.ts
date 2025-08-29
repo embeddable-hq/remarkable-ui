@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Theme } from '../theme/theme.types';
 import { useTheme } from '@embeddable.com/react';
 
-// Static map of supported locales
+// Dayjs locales dynamic imports
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const locales: Record<string, () => Promise<any>> = {
   en: () => import('dayjs/locale/en'),
