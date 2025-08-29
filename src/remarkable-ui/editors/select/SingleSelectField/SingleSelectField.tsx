@@ -43,7 +43,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
-
+  console.log('single select field value', value);
   useEffect(() => {
     if (!value) {
       setSelectedLabel('');

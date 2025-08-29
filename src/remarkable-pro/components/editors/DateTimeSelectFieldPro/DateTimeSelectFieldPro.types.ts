@@ -1,11 +1,8 @@
-export type DateTimeSelectFieldOptionGetRangeReturn = {
-  from: Date;
-  to: Date;
-};
+import { TimeRangeDeserializedValue } from '@embeddable.com/core';
 
-export type DateTimeSelectFieldOption = {
+export type DateTimeSelectFieldProOption = {
   label: string;
   value: string;
-  dateFormat?: string;
-  getRange?: () => DateTimeSelectFieldOptionGetRangeReturn;
+  dateFormat: string;
+  getRange: () => Omit<TimeRangeDeserializedValue, 'relativeTimeString'>;
 };

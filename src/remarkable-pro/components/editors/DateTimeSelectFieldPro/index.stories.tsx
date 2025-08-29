@@ -10,4 +10,9 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    selectedValue: undefined,
+    onChange: (value) => console.log('onChange', value),
+  },
+};

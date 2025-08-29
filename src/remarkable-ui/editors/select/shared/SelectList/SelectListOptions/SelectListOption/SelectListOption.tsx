@@ -4,12 +4,16 @@ import styles from './SelectListOption.module.css';
 import { Typography } from '../../../../../../shared/Typography/Typography';
 import clsx from 'clsx';
 
+type SelectListOptionIcon =
+  | React.ReactElement<SVGProps<SVGSVGElement>>
+  | React.ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
+
 export type SelectListOptionProps = {
   value?: string;
   label: string;
-  startIcon?:
-    | React.ReactElement<SVGProps<SVGSVGElement>>
-    | React.ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
+  rightLabel?: string;
+  startIcon?: SelectListOptionIcon;
+  endIcon?: SelectListOptionIcon;
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
@@ -17,7 +21,9 @@ export type SelectListOptionProps = {
 export const SelectListOption: FC<SelectListOptionProps> = ({
   value,
   label,
+  rightLabel,
   startIcon,
+  endIcon,
   disabled,
   ...props
 }) => {
@@ -27,8 +33,14 @@ export const SelectListOption: FC<SelectListOptionProps> = ({
       data-value={value}
       {...props}
     >
-      {startIcon}
-      <Typography>{label}</Typography>
+      <span className={styles.startContent}>
+        {startIcon}
+        <Typography>{label}</Typography>
+      </span>
+      <span className={styles.endContent}>
+        <Typography>{rightLabel}</Typography>
+        {endIcon}
+      </span>
     </DropdownMenu.Item>
   );
 };

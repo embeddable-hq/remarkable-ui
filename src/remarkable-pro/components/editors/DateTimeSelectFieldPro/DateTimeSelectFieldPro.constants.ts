@@ -1,9 +1,10 @@
-import {
-  DateTimeSelectFieldOption,
-  DateTimeSelectFieldOptionGetRangeReturn,
-} from './DateTimeSelectFieldPro.types';
+import { TimeRangeDeserializedValue } from '@embeddable.com/core';
+import { DateTimeSelectFieldProOption } from './DateTimeSelectFieldPro.types';
 
-const getWeekBounds = (date: Date, offset = 0): DateTimeSelectFieldOptionGetRangeReturn => {
+const getWeekBounds = (
+  date: Date,
+  offset = 0,
+): Omit<TimeRangeDeserializedValue, 'relativeTimeString'> => {
   const d = new Date(date);
   const day = (d.getDay() + 6) % 7; // Mon=0…Sun=6
   d.setDate(d.getDate() - day + offset * 7);
@@ -17,21 +18,24 @@ const getWeekBounds = (date: Date, offset = 0): DateTimeSelectFieldOptionGetRang
   };
 };
 
-const getQuarterBounds = (date: Date, offset = 0): DateTimeSelectFieldOptionGetRangeReturn => {
+const getQuarterBounds = (
+  date: Date,
+  offset = 0,
+): Omit<TimeRangeDeserializedValue, 'relativeTimeString'> => {
   const currentQuarter = Math.floor(date.getMonth() / 3);
   const targetQuarter = currentQuarter + offset;
   const yearShift = Math.floor(targetQuarter / 4);
   const quarterIndex = ((targetQuarter % 4) + 4) % 4;
   const year = date.getFullYear() + yearShift;
-  const start = new Date(year, quarterIndex * 3, 1);
-  const end = new Date(year, quarterIndex * 3 + 3, 0, 23, 59, 59, 999);
+  const from = new Date(year, quarterIndex * 3, 1);
+  const to = new Date(year, quarterIndex * 3 + 3, 0, 23, 59, 59, 999);
   return {
-    from: start,
-    to: end,
+    from,
+    to,
   };
 };
 
-export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldOption[] = [
+export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldProOption[] = [
   {
     value: 'today',
     label: 'Today',
@@ -83,6 +87,8 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldOption[] = [
       const now = new Date();
       const { from } = getWeekBounds(now, 0)!;
       const to = now;
+      to.setHours(23, 59, 59, 999);
+
       return {
         from,
         to,
@@ -218,6 +224,7 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldOption[] = [
       const now = new Date();
       const { from } = getQuarterBounds(now, 0)!;
       const to = now;
+      to.setHours(23, 59, 59, 999);
       return { from, to };
     },
     dateFormat: 'MMM YY',
@@ -289,13 +296,10 @@ export const dateTimeSelectFieldDefaultOptions: DateTimeSelectFieldOption[] = [
     getRange: () => {
       const now = new Date();
       const from = new Date(now.getFullYear(), 0, 1);
-      const to = now;
+      const to = new Date(now);
+      to.setHours(23, 59, 59, 999);
       return { from, to };
     },
     dateFormat: 'MMM YY',
-  },
-  {
-    value: 'allTime',
-    label: 'All time',
   },
 ];

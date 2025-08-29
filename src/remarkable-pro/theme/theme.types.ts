@@ -22,7 +22,7 @@ export type ThemeChartsLegendPosition = 'top' | 'right' | 'bottom' | 'left';
 
 export type Theme = {
   i18n: { language: string; translations: Resource };
-  charts?: {
+  charts: {
     pieChartOverrides?: Partial<ChartOptions<'pie'>>;
     donutChartOverrides?: Partial<ChartOptions<'pie'>>;
     donutLabelChartOverrides?: Partial<ChartOptions<'pie'>>;
@@ -36,6 +36,7 @@ export type Theme = {
   editors?: {
     // TODO: add proper types
     dateTimeSelectFieldOverrides?: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       options?: any[];
     };
   };
