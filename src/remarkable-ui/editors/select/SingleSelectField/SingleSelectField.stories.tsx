@@ -51,6 +51,18 @@ export const Disabled: Story = {
   },
 };
 
+export const Small = () => (
+  <div style={{ width: 200 }}>
+    <SingleSelectField
+      autoWidth
+      value={mockOptions[0]!.value}
+      options={mockOptions}
+      isSearchable
+      onChange={(value) => console.log('onChange', value)}
+    />
+  </div>
+);
+
 export const WithState: Story = {
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();

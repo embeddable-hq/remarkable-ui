@@ -17,7 +17,7 @@ export const Dropdown: FC<DropdownProps> = ({
   disabled,
   open,
   side = 'bottom',
-  align = 'center',
+  align = 'start',
   onOpenChange,
 }) => {
   return (

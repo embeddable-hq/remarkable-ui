@@ -16,3 +16,11 @@ export const Default: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+export const Small = () => {
+  return (
+    <div style={{ width: 170 }}>
+      <Index selectedValue={undefined} onChange={(value) => console.log('onChange', value)} />
+    </div>
+  );
+};

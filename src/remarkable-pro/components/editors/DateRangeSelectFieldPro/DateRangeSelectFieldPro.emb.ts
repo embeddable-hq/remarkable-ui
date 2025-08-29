@@ -5,8 +5,8 @@ import { description, placeholder, title } from '../../component.constants';
 import { localToUtcDate } from '../../../utils.ts/date.utils';
 
 export const meta = {
-  name: 'DateTimeSelectFieldPro',
-  label: 'Date Time Select Field',
+  name: 'DateRangeSelectFieldPro',
+  label: 'Date Range Select Field',
   category: 'Dropdowns',
   defaultWidth: 200,
   defaultHeight: 120,
@@ -35,7 +35,7 @@ export const meta = {
   ],
   variables: [
     {
-      name: 'Date-time-select value',
+      name: 'Date-range-select value',
       type: 'timeRange',
       defaultValue: Value.noFilter(),
       inputs: ['selectedValue'],

@@ -22,6 +22,7 @@ export type SingleSelectFieldProps = {
   isClearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
+  autoWidth?: boolean;
   onChange: (value: string) => void;
   onSearch?: (search: string) => void;
 };
@@ -36,6 +37,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   isClearable,
   isLoading,
   noOptionsMessage = 'No options available',
+  autoWidth,
   onChange,
   onSearch,
 }) => {
@@ -101,7 +103,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         />
       }
     >
-      <SelectList>
+      <SelectList autoWidth={autoWidth}>
         {isSearchable && (
           <TextField
             ref={searchFieldRef}

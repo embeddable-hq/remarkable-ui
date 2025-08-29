@@ -13,11 +13,26 @@
   cursor: pointer;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
 }
 
-.listItem span {
-  display: flex;
-  align-items: center;
+.listItem .leftContent {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.listItem .rightContent {
+  flex: 0 0 auto;
+  max-width: 50%;
+}
+
+.listItem .leftContent p,
+.listItem .rightContent p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .listItem:hover,

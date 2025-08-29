@@ -4,6 +4,10 @@
   outline: none;
   box-sizing: border-box;
   width: var(--radix-dropdown-menu-trigger-width);
+  max-width: max(
+    var(--radix-dropdown-menu-trigger-width),
+    var(--em-select-menu-size-width-max-width, 25rem)
+  );
   padding: var(--em-padding-200, 0.5rem);
   max-height: var(--em-select-menu-list-size-max-height, 20rem);
   gap: var(--em-select-menu-list-gap-default, 0.5rem);

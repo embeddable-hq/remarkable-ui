@@ -37,10 +37,10 @@ export const SelectListOption: FC<SelectListOptionProps> = ({
     >
       <span className={styles.leftContent}>
         {startIcon}
-        <Typography>{label}</Typography>
+        <Typography title={label}>{label}</Typography>
       </span>
       <span className={styles.rightContent}>
-        <Typography>{rightLabel}</Typography>
+        <Typography title={rightLabel}>{rightLabel}</Typography>
         {endIcon}
       </span>
     </DropdownMenu.Item>

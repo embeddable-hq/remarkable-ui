@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { DateTimeSelectFieldProOption } from './DateTimeSelectFieldPro.types';
+import { DateTimeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
 import { SelectListOptionProps } from '../../../../remarkable-ui';
 import { TimeRange, TimeRangeDeserializedValue } from '@embeddable.com/core';
 import { utcToLocalDate } from '../../../utils.ts/date.utils';
@@ -28,9 +28,9 @@ export const getDateTimeSelectFieldProRangeLabel = (
 };
 
 export const getDateTimeSelectFieldProOptions = (
-  dateTimeSelectFieldOptions: DateTimeSelectFieldProOption[],
+  dateRangeSelectFieldProOptions: DateTimeSelectFieldProOption[],
 ): SelectListOptionProps[] => {
-  return dateTimeSelectFieldOptions.map((option) => {
+  return dateRangeSelectFieldProOptions.map((option) => {
     return {
       rightLabel: getDateTimeSelectFieldProRangeLabel(option.getRange(), option.dateFormat),
       value: option.value,
@@ -40,17 +40,17 @@ export const getDateTimeSelectFieldProOptions = (
 };
 
 export const compareDateTimeFieldOptionWithTimeRange = (
-  dateTimeFieldOption: DateTimeSelectFieldProOption,
+  dateRangeSelectFieldProOption: DateTimeSelectFieldProOption,
   timeRange: TimeRange,
 ) => {
   if (timeRange?.relativeTimeString) {
     return (
       timeRange.relativeTimeString.toLocaleLowerCase() ===
-      dateTimeFieldOption.value.toLocaleLowerCase()
+      dateRangeSelectFieldProOption.value.toLocaleLowerCase()
     );
   }
 
-  const range = dateTimeFieldOption?.getRange?.();
+  const range = dateRangeSelectFieldProOption?.getRange?.();
 
   return (
     range?.from?.getTime() ===

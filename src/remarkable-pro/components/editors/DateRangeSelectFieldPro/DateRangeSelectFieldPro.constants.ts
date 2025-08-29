@@ -1,5 +1,5 @@
 import { TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { DateTimeSelectFieldProOption } from './DateTimeSelectFieldPro.types';
+import { DateTimeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
 
 const getWeekBounds = (
   date: Date,

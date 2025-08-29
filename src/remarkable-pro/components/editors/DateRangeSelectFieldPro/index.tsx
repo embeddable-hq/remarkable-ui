@@ -5,13 +5,13 @@ import { useLoadDayjsLocale } from '../../../utils.ts/date.utils';
 import {
   compareDateTimeFieldOptionWithTimeRange,
   getDateTimeSelectFieldProOptions,
-} from './DateTimeSelectFieldPro.utils';
+} from './DateRangeSelectFieldPro.utils';
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
 
-type DateTimeSelectFieldProProps = {
+type DateRangeSelectFieldProProps = {
   description?: string;
   onChange: (selectedTimeRange: TimeRange) => void;
   placeholder?: string;
@@ -19,7 +19,7 @@ type DateTimeSelectFieldProProps = {
   title?: string;
 };
 
-const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
+const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
@@ -29,16 +29,16 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
 
   const { onChange, selectedValue, description, placeholder, title } = resolveI18nProps(props);
 
-  const dateTimeOptions = theme.editors.dateTimeSelectFieldPro.options;
+  const dateRangeOptions = theme.editors.dateRangeSelectFieldProOptions.options;
 
-  const options = getDateTimeSelectFieldProOptions(dateTimeOptions);
+  const options = getDateTimeSelectFieldProOptions(dateRangeOptions);
 
   const handleChange = (value: string) => {
     if (!value) {
       return onChange(undefined);
     }
 
-    const selectedOption = dateTimeOptions.find((option) => option.value === value);
+    const selectedOption = dateRangeOptions.find((option) => option.value === value);
 
     if (!selectedOption) return;
 
@@ -46,12 +46,13 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
   };
 
   const value =
-    dateTimeOptions.find((dto) => compareDateTimeFieldOptionWithTimeRange(dto, selectedValue))
+    dateRangeOptions.find((dto) => compareDateTimeFieldOptionWithTimeRange(dto, selectedValue))
       ?.value ?? '';
 
   return (
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
+        autoWidth
         startIcon={IconCalendarFilled}
         isClearable
         placeholder={placeholder}
@@ -63,4 +64,4 @@ const DateTimeSelectFieldPro = (props: DateTimeSelectFieldProProps) => {
   );
 };
 
-export default DateTimeSelectFieldPro;
+export default DateRangeSelectFieldPro;

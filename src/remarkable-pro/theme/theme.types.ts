@@ -3,7 +3,7 @@ import { ThemeFormatter } from './formatter/formatter.types';
 import { ThemeStyles } from './styles/styles.types';
 import { ChartOptions } from 'chart.js';
 import { ChartCardMenuProOption } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
-import { DateTimeSelectFieldProOption } from '../components/editors/DateTimeSelectFieldPro/DateTimeSelectFieldPro.types';
+import { DateTimeSelectFieldProOption } from '../components/editors/DateRangeSelectFieldPro/DateRangeSelectFieldPro.types';
 
 export type ThemeI18n = { language: string; translations: Resource };
 
@@ -20,7 +20,7 @@ export type ThemeCharts = {
 };
 
 export type ThemeEditors = {
-  dateTimeSelectFieldPro: {
+  dateRangeSelectFieldProOptions: {
     options: DateTimeSelectFieldProOption[];
   };
 };
