@@ -6,3 +6,4 @@ export type {
   StringFormatter,
   ThemeFormatter,
 } from './remarkable-pro/theme/formatter/formatter.types';
+export * from './remarkable-pro/types/deep-partial';

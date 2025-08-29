@@ -13,9 +13,9 @@ export type ThemeCharts = {
   pieChartOverrides?: Partial<ChartOptions<'pie'>>;
   donutChartOverrides?: Partial<ChartOptions<'pie'>>;
   donutLabelChartOverrides?: Partial<ChartOptions<'pie'>>;
-  legendPosition: ThemeChartsLegendPosition;
   backgroundColors?: string[];
   borderColors?: string[];
+  legendPosition: ThemeChartsLegendPosition;
   chartCardMenuPro: { options: ChartCardMenuProOption[] };
 };
 

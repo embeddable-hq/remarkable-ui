@@ -35,7 +35,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   isSearchable,
   isClearable,
   isLoading,
-  noOptionsMessage,
+  noOptionsMessage = 'No options available',
   onChange,
   onSearch,
 }) => {
@@ -125,7 +125,9 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
               />
             </>
           ))}
-          {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
+          {options.length === 0 && (
+            <SelectListOption disabled value="empty" label={noOptionsMessage} />
+          )}
         </SelectListOptions>
       </SelectList>
     </Dropdown>

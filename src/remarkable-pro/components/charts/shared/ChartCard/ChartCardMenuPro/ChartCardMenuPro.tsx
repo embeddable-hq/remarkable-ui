@@ -33,6 +33,10 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
 
   const options = theme.charts.chartCardMenuPro.options;
 
+  if (!options) {
+    return null;
+  }
+
   return (
     <Dropdown
       side="bottom"
