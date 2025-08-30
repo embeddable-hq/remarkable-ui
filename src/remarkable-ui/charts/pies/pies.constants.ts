@@ -3,7 +3,7 @@ import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { chartColors } from '../charts.constants';
 import { AnnotationOptions } from 'chartjs-plugin-annotation';
 
-export const defaultData: ChartData<'pie'> = {
+export const defaultPieData: ChartData<'pie'> = {
   datasets: [
     {
       data: [],

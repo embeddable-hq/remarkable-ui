@@ -18,3 +18,11 @@ export const Default: Story = {
     options: defaultPieChartOptions,
   },
 };
+
+export const Large = () => {
+  return (
+    <div style={{ width: 400, height: 400 }}>
+      <PieChart data={pieDataMock} options={defaultPieChartOptions} />
+    </div>
+  );
+};
