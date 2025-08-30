@@ -4,6 +4,7 @@ export const en: ResourceLanguage = {
   translation: {
     common: {
       noOptionsFound: 'No options found',
+      noOptionsAvailable: 'No options available',
     },
     charts: {
       'menuOptions.downloadCSV': 'Download CSV',
