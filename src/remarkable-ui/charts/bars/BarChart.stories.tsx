@@ -27,17 +27,34 @@ const barChartData: ChartData<'bar'> = {
 
 const barChartOptions = {};
 
-export const Default: Story = {
+export const Vertical: Story = {
   args: {
     data: barChartData,
     options: barChartOptions,
+    horizontal: false,
   },
 };
 
-export const Large = () => {
+export const Horizontal: Story = {
+  args: {
+    data: barChartData,
+    options: barChartOptions,
+    horizontal: true,
+  },
+};
+
+export const LargeVertical = () => {
   return (
     <div style={{ width: 400, height: 400 }}>
       <BarChart data={barChartData} options={barChartOptions} />
+    </div>
+  );
+};
+
+export const LargeHorizontal = () => {
+  return (
+    <div style={{ width: 400, height: 400 }}>
+      <BarChart horizontal data={barChartData} options={barChartOptions} />
     </div>
   );
 };
