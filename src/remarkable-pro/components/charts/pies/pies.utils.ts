@@ -32,9 +32,11 @@ export const getPieChartData = (
     props.maxLegendItems,
   );
 
+  const themeUniqueId = JSON.stringify(theme);
+
   const backgroundColor = groupedData.map((item, i) =>
     getColor(
-      `${props.dimension.name}.${item[props.dimension.name]}.backgroundColor`,
+      `${themeUniqueId}.${props.dimension.name}.${item[props.dimension.name]}.backgroundColor`,
       theme.charts.backgroundColors ?? chartColors,
       i,
       'chartBackgroundColors',
@@ -43,7 +45,7 @@ export const getPieChartData = (
 
   const borderColor = groupedData.map((item, i) =>
     getColor(
-      `${props.dimension.name}.${item[props.dimension.name]}.borderColor`,
+      `${themeUniqueId}.${props.dimension.name}.${item[props.dimension.name]}.borderColor`,
       theme.charts.borderColors ?? chartColors,
       i,
       'chartBorderColors',
