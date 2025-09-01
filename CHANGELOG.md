@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.9
+
+### Patch Changes
+
+- 39aea73: Fix unique theme id for color assign
+
 ## 0.0.8
 
 ### Patch Changes
