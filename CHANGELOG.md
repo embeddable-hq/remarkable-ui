@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.2
+
+### Patch Changes
+
+- 628c97f: Update package name
+
 ## 0.0.1
 
 ### Patch Changes
