@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.16
+
+### Patch Changes
+
+- 771f886: New BarHorizontalChartPro
+
 ## 0.0.15
 
 ### Patch Changes
