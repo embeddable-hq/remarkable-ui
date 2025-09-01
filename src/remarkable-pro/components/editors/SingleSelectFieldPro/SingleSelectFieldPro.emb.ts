@@ -7,43 +7,47 @@ export const meta = {
   name: 'SingleSelectFieldPro',
   label: 'Single Select Field',
   category: 'Dropdowns',
-  defaultWidth: 200,
+  defaultWidth: 300,
   defaultHeight: 120,
   inputs: [
     dataset,
     { ...dimension, label: 'Dimension (to load Dropdown values)' },
-    {
-      ...dimension,
-      required: false,
-      name: 'optionalSecondDimension',
-      label: 'Optional second dimension for filtering',
-      description:
-        'A hidden dimension applied for filtering instead of the main dimension. Must be unique.',
-    },
     title,
     description,
     { ...placeholder, defaultValue: 'Select value...' },
     {
-      name: 'selectedValue',
-      type: 'string',
-      label: 'Selected Value',
-      category: 'Pre-configured variables',
-    },
-    {
       name: 'maxOptions',
       type: 'number',
       label: 'Maximum options',
-      category: 'Pre-configured variables',
+      category: 'Component Settings',
       defaultValue: MAX_OPTIONS,
+    },
+    {
+      name: 'selectedValue',
+      type: 'string',
+      label: 'Selected Value',
+      category: 'Pre-configured Variables',
+    },
+    {
+      type: 'dimension',
+      config: {
+        dataset: 'dataset',
+      },
+      required: false,
+      name: 'optionalSecondDimension',
+      label: 'Optional secondary dimension',
+      category: 'Data Mapping for Interactions',
+      description: 'Send a different dimension to embeddable when the user clicks. Must be unique.',
     },
   ],
   events: [
     {
       name: 'onChange',
-      label: 'Change',
+      label: 'selected value updated',
       properties: [
         {
           name: 'value',
+          label: 'selected Value',
           type: 'string',
         },
       ],
@@ -51,7 +55,7 @@ export const meta = {
   ],
   variables: [
     {
-      name: 'Single-select value',
+      name: 'single-select value',
       type: 'string',
       defaultValue: Value.noFilter(),
       inputs: ['selectedValue'],
