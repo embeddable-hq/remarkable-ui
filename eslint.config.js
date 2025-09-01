@@ -88,6 +88,7 @@ export default defineConfig([
     '.embeddable-dev-tmp',
     '.embeddable-build',
     '.embeddable-tmp',
+    'storybook-static',
     'dist',
     'node_modules',
     '**/*.d.ts',
