@@ -2,7 +2,12 @@ import i18n from 'i18next';
 import { Theme } from '../theme.types';
 
 const i18nSetup = (theme: Theme) => {
-  if (i18n.language === theme.i18n.language && i18n.isInitialized) return;
+  if (
+    !theme?.i18n?.language ||
+    !theme?.i18n?.translations ||
+    (i18n.language === theme.i18n.language && i18n.isInitialized)
+  )
+    return;
 
   i18n.init({
     lng: theme.i18n.language,
