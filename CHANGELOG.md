@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.6
+
+### Patch Changes
+
+- eac79f6: Export DeepPartial
+
 ## 0.0.5
 
 ### Patch Changes
