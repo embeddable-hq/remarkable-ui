@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.2
+
+### Patch Changes
+
+- b5d4cb9: Add swc to dev deps
+
 ## 0.0.1
 
 ### Patch Changes
