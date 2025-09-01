@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.4
+
+### Patch Changes
+
+- ede432e: Update exports
+
 ## 0.0.3
 
 ### Patch Changes
