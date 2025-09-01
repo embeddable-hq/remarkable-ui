@@ -5,10 +5,9 @@ import clsx from 'clsx';
 type SelectListProps = {
   children: React.ReactNode;
   autoFocus?: boolean;
-  autoWidth?: boolean;
 };
 
-export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, autoWidth }) => {
+export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
 
@@ -64,11 +63,7 @@ export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, aut
   }, [autoFocus, children]);
 
   return (
-    <div
-      ref={containerRef}
-      tabIndex={-1}
-      className={clsx(styles.list, autoWidth && styles.autoWidth)}
-    >
+    <div ref={containerRef} tabIndex={-1} className={clsx(styles.list)}>
       {children}
     </div>
   );

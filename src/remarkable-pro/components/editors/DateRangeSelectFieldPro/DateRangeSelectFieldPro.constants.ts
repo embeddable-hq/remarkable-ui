@@ -172,7 +172,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
         to,
       };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Last month',
@@ -186,7 +186,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
         to,
       };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Next month',
@@ -197,25 +197,25 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const to = new Date(now.getFullYear(), now.getMonth() + 2, 0, 23, 59, 59, 999);
       return { from, to };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'This quarter',
     label: 'This quarter',
     getRange: () => getQuarterBounds(new Date(), 0),
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Last quarter',
     label: 'Last quarter',
     getRange: () => getQuarterBounds(new Date(), -1),
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Next quarter',
     label: 'Next quarter',
     getRange: () => getQuarterBounds(new Date(), +1),
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Quarter to date',
@@ -227,7 +227,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       to.setHours(23, 59, 59, 999);
       return { from, to };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Last 6 months',
@@ -240,7 +240,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       from.setHours(0, 0, 0, 0);
       return { from, to };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Last 12 months',
@@ -253,7 +253,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       from.setHours(0, 0, 0, 0);
       return { from, to };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
   {
     value: 'This year',
@@ -300,6 +300,6 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       to.setHours(23, 59, 59, 999);
       return { from, to };
     },
-    dateFormat: 'MMM YY',
+    dateFormat: 'MMM YYYY',
   },
 ];

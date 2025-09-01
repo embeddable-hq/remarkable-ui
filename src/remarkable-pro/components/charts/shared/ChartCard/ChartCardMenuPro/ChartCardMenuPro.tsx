@@ -43,7 +43,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
       align="end"
       triggerComponent={isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
     >
-      <SelectList autoFocus autoWidth>
+      <SelectList autoFocus>
         {theme.charts?.chartCardMenuPro?.options?.map((option, index) => {
           const label = i18n.t(option.labelKey);
 
