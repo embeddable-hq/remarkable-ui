@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.7
+
+### Patch Changes
+
+- 421ac0e: Include embeddable.config file
+
 ## 0.0.6
 
 ### Patch Changes
