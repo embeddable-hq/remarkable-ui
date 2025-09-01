@@ -3,13 +3,14 @@ import { SingleSelectField } from '../../../../remarkable-ui';
 import { Theme } from '../../../theme/theme.types';
 import { useLoadDayjsLocale } from '../../../utils.ts/date.utils';
 import {
-  compareDateTimeFieldOptionWithTimeRange,
+  compareDateRangeFieldProOptionWithTimeRange,
   getDateTimeSelectFieldProOptions,
 } from './DateRangeSelectFieldPro.utils';
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
+import { i18n } from '../../../theme/i18n/i18n';
 
 type DateRangeSelectFieldProProps = {
   description?: string;
@@ -46,7 +47,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   };
 
   const value =
-    dateRangeOptions.find((dto) => compareDateTimeFieldOptionWithTimeRange(dto, selectedValue))
+    dateRangeOptions.find((dto) => compareDateRangeFieldProOptionWithTimeRange(dto, selectedValue))
       ?.value ?? '';
 
   return (
@@ -59,6 +60,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
         value={value}
         onChange={handleChange}
         options={options}
+        noOptionsMessage={i18n.t('common.noOptionsAvailable')}
       />
     </EditorCard>
   );
