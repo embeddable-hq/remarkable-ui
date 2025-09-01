@@ -1,7 +1,7 @@
 {
   "name": "@embeddable/remarkable-ui",
   "author": "embeddable (https://embeddable.com)",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -98,5 +98,8 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+  "optionalDependencies": {
+    "@swc/core-linux-x64-gnu": "^1.13.5"
   }
 }
