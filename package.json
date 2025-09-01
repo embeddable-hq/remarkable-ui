@@ -67,10 +67,10 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@embeddable.com/core": "^2.10.7-next.0",
-    "@embeddable.com/react": "^2.10.9-next.0",
-    "@embeddable.com/sdk-core": "^4.0.2-next.1",
-    "@embeddable.com/sdk-react": "^4.0.2-next.1",
+    "@embeddable.com/core": "^2.10.7",
+    "@embeddable.com/react": "^2.10.8",
+    "@embeddable.com/sdk-core": "^4.0.2",
+    "@embeddable.com/sdk-react": "^4.0.2",
     "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.31.0",
     "@storybook/react": "^9.0.18",
