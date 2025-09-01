@@ -17,12 +17,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Instal SWC
-        run: npm install -D @swc/cli @swc/core
+        run: npm ci
 
       - name: Create Release PR if needed
         uses: changesets/action@v1
