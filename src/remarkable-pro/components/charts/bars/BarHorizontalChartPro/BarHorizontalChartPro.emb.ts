@@ -43,11 +43,11 @@ export const meta = {
   events: [
     {
       name: 'onSegmentClick',
-      label: 'A segment is clicked',
+      label: 'A bar is clicked',
       properties: [
         {
           name: 'dimensionValue',
-          label: 'Clicked Dimension',
+          label: 'Clicked Dimension value',
           type: 'string',
         },
       ],

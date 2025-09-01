@@ -27,14 +27,8 @@ export const getBarChartProData = (
     };
   }
 
-  const groupedData = groupTailAsOther(
-    props.data,
-    props.dimension,
-    props.measures[0]!,
-    props.maxItems,
-  );
-
   const themeKey = getObjectStableKey(theme);
+  const groupedData = groupTailAsOther(props.data, props.dimension, props.measures, props.maxItems);
 
   return {
     labels: groupedData.map((item) => {
