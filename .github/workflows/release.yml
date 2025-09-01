@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Rebuild SWC
+        run: npm rebuild @swc/core
+
       - name: Create Release PR if needed
         uses: changesets/action@v1
         env:
