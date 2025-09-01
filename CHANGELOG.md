@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.3
+
+### Patch Changes
+
+- 96a12f0: Export emb input constants
+
 ## 0.0.2
 
 ### Patch Changes
