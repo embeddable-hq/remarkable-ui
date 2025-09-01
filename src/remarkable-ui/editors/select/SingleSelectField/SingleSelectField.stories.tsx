@@ -12,16 +12,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockOptions: SelectListOptionProps[] = [
-  { value: 'red', label: 'Red' },
-  { value: 'green', label: 'Green' },
-  { value: 'blue', label: 'Blue' },
-  { value: 'yellow', label: 'Yellow' },
-  { value: 'orange', label: 'Orange' },
-  { value: 'purple', label: 'Purple' },
-  { value: 'pink', label: 'Pink' },
-  { value: 'brown', label: 'Brown' },
-  { value: 'gray', label: 'Gray' },
-  { value: 'black', label: 'Black' },
+  { value: 'red', label: 'Red', rightLabel: 'This is color Red' },
+  { value: 'green', label: 'Green', rightLabel: 'This is color Green' },
+  { value: 'blue', label: 'Blue', rightLabel: 'This is color Blue' },
+  { value: 'yellow', label: 'Yellow', rightLabel: 'This is color Yellow' },
+  { value: 'orange', label: 'Orange', rightLabel: 'This is color Orange' },
+  { value: 'purple', label: 'Purple', rightLabel: 'This is color Purple' },
+  { value: 'pink', label: 'Pink', rightLabel: 'This is color Pink' },
+  { value: 'brown', label: 'Brown', rightLabel: 'This is color Brown' },
+  { value: 'gray', label: 'Gray', rightLabel: 'This is color Gray' },
+  { value: 'black', label: 'Black', rightLabel: 'This is color Black' },
 ];
 
 export const Empty: Story = {
@@ -50,6 +50,18 @@ export const Disabled: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+export const Small = () => (
+  <div style={{ width: 200 }}>
+    <SingleSelectField
+      autoWidth
+      value={mockOptions[0]!.value}
+      options={mockOptions}
+      isSearchable
+      onChange={(value) => console.log('onChange', value)}
+    />
+  </div>
+);
 
 export const WithState: Story = {
   render: (args) => {

@@ -8,7 +8,7 @@ export const meta = {
   label: 'Multi Select Field',
   category: 'Dropdowns',
   defaultWidth: 200,
-  defaultHeight: 40,
+  defaultHeight: 120,
   inputs: [
     dataset,
     { ...dimension, label: 'Dimension (to load Dropdown values)' },

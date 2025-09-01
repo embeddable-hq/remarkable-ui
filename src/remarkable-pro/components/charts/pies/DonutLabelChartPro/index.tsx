@@ -60,7 +60,7 @@ const DonutChartPro = (props: DonutLabelChartProProps) => {
       } as DefaultPieChartOptions,
       theme,
     ),
-    theme.charts.donutLabelChartOverrides ?? {},
+    theme.charts.donutLabelChartPro?.options ?? {},
   );
 
   return (

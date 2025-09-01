@@ -2,7 +2,6 @@
 export { i18n, i18nSetup } from './theme/i18n/i18n';
 
 // Theme theme
-export { defaultChartsMenuOptions } from './theme/theme.constants';
 export * from './theme/theme.types';
 export * from './theme/theme.constants';
 

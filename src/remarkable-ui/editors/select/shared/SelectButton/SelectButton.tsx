@@ -1,10 +1,11 @@
 import styles from './SelectButton.module.css';
-import { IconCaretDownFilled, IconLoader2, IconX } from '@tabler/icons-react';
+import { IconCaretDownFilled, IconLoader2, IconX, TablerIcon } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { Typography } from '../../../../shared/Typography/Typography';
 
 type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  startIcon?: TablerIcon;
   valueLabel?: string;
   placeholder?: string;
   isClearable?: boolean;
@@ -13,7 +14,18 @@ type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
-  ({ valueLabel, placeholder = 'Select', isClearable, isLoading, onClear, ...props }, ref) => {
+  (
+    {
+      startIcon: StartIcon,
+      valueLabel,
+      placeholder = 'Select',
+      isClearable,
+      isLoading,
+      onClear,
+      ...props
+    },
+    ref,
+  ) => {
     const displayValue = valueLabel || placeholder;
 
     const showClearButton = valueLabel && isClearable;
@@ -30,11 +42,14 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
         className={clsx(styles.button, showClearButton && styles.hasValue)}
         {...props}
       >
-        <Typography as="span">{displayValue}</Typography>
-        <div>
+        <span className={styles.leftContent}>
+          {StartIcon && <StartIcon />}
+          <Typography as="span">{displayValue}</Typography>
+        </span>
+        <span className={styles.rightContent}>
           {showClearButton && <IconX onPointerDown={handleClear} />}
           {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}
-        </div>
+        </span>
       </button>
     );
   },
