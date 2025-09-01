@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- 6175964: Fix release
+
+## 0.0.1
+
+### Patch Changes
+
 - e7d80d0: Release fix
 
 ## 0.0.1
