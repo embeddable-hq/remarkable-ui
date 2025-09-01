@@ -1,3 +1,6 @@
+// Types
+export type { DeepPartial } from './types/deep-partial';
+
 // Theme i18n
 export { i18n, i18nSetup } from './theme/i18n/i18n';
 
@@ -29,3 +32,4 @@ export * as DonutLabelChartPro from './components/charts/pies/DonutLabelChartPro
 export { EditorCard } from './components/editors/shared/EditorCard/EditorCard';
 export * as MultiSelectFieldPro from './components/editors/MultiSelectFieldPro';
 export * as SingleSelectFieldPro from './components/editors/SingleSelectFieldPro';
+export * as DateRangeSelectFieldPro from './components/editors/DateRangeSelectFieldPro';
