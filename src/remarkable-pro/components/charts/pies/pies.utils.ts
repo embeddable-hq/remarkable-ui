@@ -32,6 +32,7 @@ export const getPieChartData = (
     props.maxLegendItems,
   );
 
+  // TODO: user unique id per theme later
   const themeUniqueId = JSON.stringify(theme);
 
   const backgroundColor = groupedData.map((item, i) =>
