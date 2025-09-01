@@ -1,5 +1,5 @@
 // Types
-export type { DeepPartial } from './types/deep-partial';
+export { type DeepPartial } from './types/deep-partial';
 
 // Theme i18n
 export { i18n, i18nSetup } from './theme/i18n/i18n';
