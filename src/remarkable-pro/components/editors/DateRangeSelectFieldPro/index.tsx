@@ -53,7 +53,6 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   return (
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
-        autoWidth
         startIcon={IconCalendarFilled}
         isClearable
         placeholder={placeholder}

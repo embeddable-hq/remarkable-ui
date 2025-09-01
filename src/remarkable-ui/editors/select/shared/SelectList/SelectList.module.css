@@ -3,8 +3,7 @@
   flex-direction: column;
   outline: none;
   box-sizing: border-box;
-  width: var(--radix-dropdown-menu-trigger-width);
-  max-width: max(
+  width: max(
     var(--radix-dropdown-menu-trigger-width),
     var(--em-select-menu-size-width-max-width, 25rem)
   );
@@ -17,8 +16,4 @@
     var(--em-box-shadow-default-position-y, 1px) var(--em-box-shadow-default-blur, 40px)
     var(--em-box-shadow-default-spread, 0)
     var(--em-box-shadow-default-color, rgba(33, 33, 41, 0.25));
-}
-
-.autoWidth {
-  width: auto;
 }

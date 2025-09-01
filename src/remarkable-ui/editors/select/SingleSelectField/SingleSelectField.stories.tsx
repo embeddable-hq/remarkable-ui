@@ -54,7 +54,6 @@ export const Disabled: Story = {
 export const Small = () => (
   <div style={{ width: 200 }}>
     <SingleSelectField
-      autoWidth
       value={mockOptions[0]!.value}
       options={mockOptions}
       isSearchable
