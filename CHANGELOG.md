@@ -4,6 +4,12 @@
 
 ### Patch Changes
 
+- ec1aa31: Add Swc
+
+## 0.0.1
+
+### Patch Changes
+
 - 398dc2a: Add SWC dependency
 
 ## 0.0.2
