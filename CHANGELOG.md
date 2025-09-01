@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.1
+
+### Patch Changes
+
+- 398dc2a: Add SWC dependency
+
 ## 0.0.2
 
 ### Patch Changes
