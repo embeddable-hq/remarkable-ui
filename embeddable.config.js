@@ -5,4 +5,5 @@ export default defineConfig({
   plugins: [react],
   lifecycleHooksFile: './embeddable.lifecycle.ts',
   pushModels: false,
+  region: 'US',
 });
