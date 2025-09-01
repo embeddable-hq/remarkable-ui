@@ -29,3 +29,4 @@ export * as DonutLabelChartPro from './components/charts/pies/DonutLabelChartPro
 export { EditorCard } from './components/editors/shared/EditorCard/EditorCard';
 export * as MultiSelectFieldPro from './components/editors/MultiSelectFieldPro';
 export * as SingleSelectFieldPro from './components/editors/SingleSelectFieldPro';
+export * as DateRangeSelectFieldPro from './components/editors/DateRangeSelectFieldPro';
