@@ -4,6 +4,13 @@
 
 ### Patch Changes
 
+- a921c30: Add SWC as optional dependency
+- a921c30: Add Swc
+
+## 0.0.1
+
+### Patch Changes
+
 - ec1aa31: Add Swc
 
 ## 0.0.1
