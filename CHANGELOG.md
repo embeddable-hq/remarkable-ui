@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.8
+
+### Patch Changes
+
+- 1e8d600: Select content width rules
+
 ## 0.0.7
 
 ### Patch Changes
