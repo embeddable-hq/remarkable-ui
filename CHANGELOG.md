@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.10
+
+### Patch Changes
+
+- 8e1290e: Improve chart card content display
+
 ## 0.0.9
 
 ### Patch Changes
