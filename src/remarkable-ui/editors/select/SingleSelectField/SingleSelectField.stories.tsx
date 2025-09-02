@@ -11,7 +11,42 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const mockLongOptions: SelectListOptionProps[] = [
+  {
+    value: 'red',
+    label:
+      'Red - The color of passion and energy, often associated with excitement, love, and intensity.',
+  },
+  {
+    value: 'green',
+    label: 'Green - The color of nature and growth, symbolizing renewal, harmony, and freshness.',
+  },
+  { value: 'yellow', label: 'Yellow - The color of sunshine, happiness, and optimism.' },
+  {
+    value: 'orange',
+    label: 'Orange - A vibrant color representing enthusiasm, creativity, and encouragement.',
+  },
+  { value: 'purple', label: 'Purple - Associated with royalty, luxury, and ambition.' },
+  { value: 'pink', label: 'Pink - The color of compassion, nurturing, and love.' },
+  { value: 'brown', label: 'Brown - The color of stability, reliability, and comfort.' },
+  { value: 'gray', label: 'Gray - A neutral color representing balance and calm.' },
+  { value: 'black', label: 'Black - The color of elegance, mystery, and sophistication.' },
+];
+
 const mockOptions: SelectListOptionProps[] = [
+  { value: 'red', label: 'Red' },
+  { value: 'green', label: 'Green' },
+  { value: 'blue', label: 'Blue' },
+  { value: 'yellow', label: 'Yellow' },
+  { value: 'orange', label: 'Orange' },
+  { value: 'purple', label: 'Purple' },
+  { value: 'pink', label: 'Pink' },
+  { value: 'brown', label: 'Brown' },
+  { value: 'gray', label: 'Gray' },
+  { value: 'black', label: 'Black' },
+];
+
+const mockOptionsWithRightLabel: SelectListOptionProps[] = [
   { value: 'red', label: 'Red', rightLabel: 'This is color Red' },
   { value: 'green', label: 'Green', rightLabel: 'This is color Green' },
   { value: 'blue', label: 'Blue', rightLabel: 'This is color Blue' },
@@ -51,11 +86,36 @@ export const Disabled: Story = {
   },
 };
 
-export const Small = () => (
+export const SmallButtonLongText = () => (
   <div style={{ width: 200 }}>
     <SingleSelectField
+      isClearable
+      value={mockLongOptions[0]!.value}
+      options={mockLongOptions}
+      isSearchable
+      onChange={(value) => console.log('onChange', value)}
+    />
+  </div>
+);
+
+export const SmallButtonSmallText = () => (
+  <div style={{ width: 200 }}>
+    <SingleSelectField
+      isClearable
       value={mockOptions[0]!.value}
       options={mockOptions}
+      isSearchable
+      onChange={(value) => console.log('onChange', value)}
+    />
+  </div>
+);
+
+export const SmallButtonRightSideLabel = () => (
+  <div style={{ width: 200 }}>
+    <SingleSelectField
+      isClearable
+      value={mockOptionsWithRightLabel[0]!.value}
+      options={mockOptionsWithRightLabel}
       isSearchable
       onChange={(value) => console.log('onChange', value)}
     />

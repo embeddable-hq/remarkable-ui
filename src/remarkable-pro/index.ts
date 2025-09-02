@@ -15,6 +15,7 @@ export type {
   StringFormatter,
   ThemeFormatter,
 } from './theme/formatter/formatter.types';
+export { getThemeFormatter } from './theme/formatter/formatter.utils';
 
 // Components utils
 export { resolveI18nProps } from './components/component.utils';

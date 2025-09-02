@@ -25,7 +25,7 @@ export const Dropdown: FC<DropdownProps> = ({
       <DropdownMenu.Trigger asChild disabled={disabled}>
         {triggerComponent}
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content side={side} align={align}>
+      <DropdownMenu.Content side={side} align={align} style={{ zIndex: 5 }}>
         {children}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
