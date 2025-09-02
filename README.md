@@ -2,7 +2,7 @@
 
 **Remarkable UI** is an open-source library of **beautiful components** for analytics – charts, controls, tables, and more – designed to be styled with **granular CSS variables**.  
 
-👉 Remarkable UI is forms a art of the [Embeddable](https://embeddable.com) ecosystem but can also be used independently. 
+👉 Remarkable UI forms part of the [Embeddable](https://embeddable.com) ecosystem but can also be used independently.
 
 ## 🎨 Styling with CSS Variables
 
