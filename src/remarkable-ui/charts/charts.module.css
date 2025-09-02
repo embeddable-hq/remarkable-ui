@@ -1,0 +1,5 @@
+.chartContainer {
+  flex-grow: 1; /* allow it to take remaining space */
+  min-height: 0; /* prevent overflow issues */
+  position: relative; /* needed for Chart.js responsive sizing */
+}

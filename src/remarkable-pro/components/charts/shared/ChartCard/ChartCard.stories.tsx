@@ -2,7 +2,7 @@ import type { Meta } from '@storybook/react-webpack5';
 import { ChartCard } from './ChartCard';
 import { PieChart } from '../../../../../remarkable-ui';
 import { ChartData } from 'chart.js';
-import { defaultPieChartOptions } from '../../../../../remarkable-ui/charts/pies/pies.constants';
+import { defaultPieChartOptions } from '../../../../../remarkable-ui';
 
 const meta = {
   component: ChartCard,
