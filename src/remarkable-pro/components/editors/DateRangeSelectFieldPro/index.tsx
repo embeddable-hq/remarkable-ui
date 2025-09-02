@@ -11,6 +11,7 @@ import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
 import { i18n } from '../../../theme/i18n/i18n';
+import { useEffect } from 'react';
 
 type DateRangeSelectFieldProProps = {
   description?: string;
@@ -23,6 +24,22 @@ type DateRangeSelectFieldProProps = {
 const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const { dayjsLocaleReady } = useLoadDayjsLocale();
+
+  // When updation the selectedValue in the builder, the defined value value can:
+  // 1. exist in the options: relativeTimeString converted into TimeRange and onChange is called with the TimeRange
+  // 2. not exist in the options: onChange is called with undefined (resets)
+
+  useEffect(() => {
+    if (!dayjsLocaleReady || !props.selectedValue?.relativeTimeString) {
+      return;
+    }
+
+    const selectedOption = theme.editors.dateRangeSelectFieldPro.options.find(
+      (o) => o.value === props.selectedValue!.relativeTimeString,
+    );
+
+    props.onChange(selectedOption ? (selectedOption.getRange() as TimeRange) : undefined);
+  }, [dayjsLocaleReady, props, props.selectedValue, theme.editors.dateRangeSelectFieldPro.options]);
 
   if (!dayjsLocaleReady) {
     return null;
