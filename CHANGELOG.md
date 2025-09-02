@@ -1,11 +1,5 @@
 # @embeddable/remarkable-ui
 
-## 0.0.10
-
-### Patch Changes
-
-- a694bca: Handle builder variable change for the DateRangeSelectFieldPro
-
 ## 0.0.9
 
 ### Patch Changes

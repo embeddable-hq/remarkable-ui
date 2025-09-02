@@ -1,11 +1,10 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-
-import ReadyMadePieChart from './index';
+import PieChartPro from './index';
 import {
-  dimension,
   dataset,
   description,
+  dimension,
   measure,
   maxLegendItems,
   showLegend,
@@ -44,7 +43,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(ReadyMadePieChart, meta, {
+export default defineComponent(PieChartPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,

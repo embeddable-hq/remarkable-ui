@@ -21,6 +21,7 @@ export { SingleSelectField } from './editors/select/SingleSelectField/SingleSele
 // Charts
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
+export { defaultPieChartOptions } from './charts/pies/pies.constants';
 
 // Constants
 export { chartColors } from './charts/charts.constants';
