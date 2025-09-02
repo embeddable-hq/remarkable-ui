@@ -17,6 +17,7 @@ export type ThemeFormatter = {
   defaultDateTimeFormatOptions: Intl.DateTimeFormatOptions;
 
   // Default formatters
+  stringFormatter: () => StringFormatter;
   numberFormatter: (theme: Theme, options?: Intl.NumberFormatOptions) => NumberFormatter;
   dateTimeFormatter: (theme: Theme, options?: Intl.DateTimeFormatOptions) => DateTimeFormatter;
 

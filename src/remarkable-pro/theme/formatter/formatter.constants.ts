@@ -28,6 +28,12 @@ const isValidCurrency = (locale: Intl.LocalesArgument, code: string): boolean =>
   }
 };
 
+const stringFormatter = (): StringFormatter => {
+  return {
+    format: (key: string): string => i18n.t(key),
+  };
+};
+
 const defaultNumberFormatterOptions: Intl.NumberFormatOptions = {};
 
 const numberFormatter = (
@@ -73,9 +79,13 @@ const defaultDateTimeFormatOptions: Intl.DateTimeFormatOptions = {
   second: 'numeric',
 };
 
-const dateTimeFormatter = (theme: Theme): DateTimeFormatter => {
+const dateTimeFormatter = (
+  theme: Theme,
+  options?: Intl.DateTimeFormatOptions,
+): DateTimeFormatter => {
   const locale = getLocale(theme.formatter.locale);
-  const { year, month, day, hour, minute, second } = theme.formatter.defaultDateTimeFormatOptions;
+  const { year, month, day, hour, minute, second } =
+    options ?? theme.formatter.defaultDateTimeFormatOptions;
   return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute, second });
 };
 
@@ -127,7 +137,12 @@ const dataOthersFormatter = (theme: Theme, key: DimensionOrMeasure): StringForma
 
   return {
     format: (value: string) => {
+      if (!value) {
+        return '';
+      }
+
       const stringValue = value.toString();
+
       return i18n.t(
         [
           `${prefix}.${name}.${stringValue}`, // e.g. 'Dimension.customers.country.Germany': 'Deutschland',
@@ -150,6 +165,7 @@ export const remarkableThemeFormatter: ThemeFormatter = {
   defaultNumberFormatterOptions,
   defaultDateTimeFormatOptions,
 
+  stringFormatter,
   numberFormatter,
   dateTimeFormatter,
 

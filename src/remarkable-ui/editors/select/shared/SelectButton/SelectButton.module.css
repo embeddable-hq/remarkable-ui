@@ -16,12 +16,21 @@
   outline: none;
 }
 
+.button .rightContent {
+  flex-shrink: 0;
+}
+
 .button .leftContent {
-  display: flex;
-  align-items: center;
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .button .leftContent span {
+  text-align: left;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

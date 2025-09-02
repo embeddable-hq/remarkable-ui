@@ -5,6 +5,7 @@ import { cache } from '../../utils.ts/cache.utils';
 import { isValidISODate } from '../../utils.ts/data.utils';
 
 export type GetThemeFormatter = {
+  string: (key: string) => string;
   number: (value: number | bigint, options?: Intl.NumberFormatOptions) => string;
   dateTime: (value: Date, options?: Intl.DateTimeFormatOptions) => string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +34,7 @@ export const getThemeFormatter = (theme: Theme): GetThemeFormatter => {
   );
 
   return {
+    string: (key: string) => theme.formatter.stringFormatter().format(key),
     number: (value: number | bigint, options?: Intl.NumberFormatOptions): string => {
       return cachedNumberFormatter(options).format(value);
     },
