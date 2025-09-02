@@ -39,7 +39,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
     );
 
     props.onChange(selectedOption ? (selectedOption.getRange() as TimeRange) : undefined);
-  }, [dayjsLocaleReady, props, props.selectedValue, theme.editors.dateRangeSelectFieldPro.options]);
+  }, [dayjsLocaleReady, props, theme.editors.dateRangeSelectFieldPro.options]);
 
   if (!dayjsLocaleReady) {
     return null;
