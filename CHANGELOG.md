@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.11
+
+### Patch Changes
+
+- bee2bee: Handle chart size inside ChartCard
+
 ## 0.0.10
 
 ### Patch Changes
