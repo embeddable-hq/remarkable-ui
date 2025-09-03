@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 const barChartData: ChartData<'bar'> = {
-  labels: labels,
+  labels,
   datasets: [
     {
       label: 'Sales',
