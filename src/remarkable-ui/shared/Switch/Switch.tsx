@@ -61,7 +61,6 @@ export const Switch: React.FC<SwitchProps> = ({
   };
 
   const switchId = id || `switch-${Math.random().toString(36).substr(2, 9)}`;
-  const labelId = `${switchId}-label`;
 
   // Ensure accessibility: either label or aria-label must be provided
   const accessibleLabel = label || ariaLabel;
@@ -84,7 +83,6 @@ export const Switch: React.FC<SwitchProps> = ({
           className={styles.switchInput}
           role="switch"
           aria-checked={checked}
-          aria-labelledby={label ? labelId : undefined}
           aria-label={!label ? ariaLabel : undefined}
           aria-describedby={ariaDescribedby}
           aria-disabled={disabled}
@@ -107,12 +105,10 @@ export const Switch: React.FC<SwitchProps> = ({
             aria-hidden="true"
           />
         </span>
+        {label && (
+          <span className={clsx(styles.labelText, disabled && styles.disabled)}>{label}</span>
+        )}
       </label>
-      {label && (
-        <span id={labelId} className={clsx(styles.labelText, disabled && styles.disabled)}>
-          {label}
-        </span>
-      )}
     </div>
   );
 };
