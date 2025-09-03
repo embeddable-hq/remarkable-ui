@@ -141,26 +141,33 @@ const getBarHorizontalChartOptions = (
 export const getBarChartOptions = (
   props: BarChartConfigurationProps,
 ): Partial<ChartOptions<'bar'>> => {
-  const getOptions = props.horizontal ? getBarHorizontalChartOptions : getBarVerticalChartOptions;
+  const {
+    horizontal = false,
+    showLegend = false,
+    showTooltips = true,
+    showValueLabels = false,
+  } = props;
+
+  const getOptions = horizontal ? getBarHorizontalChartOptions : getBarVerticalChartOptions;
   const options = getOptions(props);
 
   return mergician(options, {
     layout: {
       padding: {
         // Hack: dataLabels can get cut off if they are at the edge of the chart
-        top: !props.horizontal && props.showValueLabels ? 30 : 0,
-        right: props.horizontal && props.showValueLabels ? 30 : 0,
+        top: !horizontal && showValueLabels ? 30 : 0,
+        right: horizontal && showValueLabels ? 30 : 0,
       },
     },
     plugins: {
-      legend: { display: props.showLegend },
+      legend: { display: showLegend },
       datalabels: {
-        display: props.showValueLabels,
+        display: showValueLabels,
         anchor: 'end',
         align: 'end',
       },
       tooltip: {
-        enabled: props.showTooltips,
+        enabled: showTooltips,
       },
     },
   });
