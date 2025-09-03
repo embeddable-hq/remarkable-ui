@@ -39,7 +39,6 @@ export const Switch: React.FC<SwitchProps> = ({
   disabled = false,
   className,
   label,
-  id,
   ...props
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,8 +57,6 @@ export const Switch: React.FC<SwitchProps> = ({
     }
   };
 
-  const switchId = id || `switch-${Math.random().toString(36).substr(2, 9)}`;
-
   // Ensure accessibility: either aria-label must be provided
   if (!props['aria-label']) {
     console.warn(
@@ -70,12 +67,10 @@ export const Switch: React.FC<SwitchProps> = ({
   return (
     <div className={clsx(styles.switchContainer, className)}>
       <label
-        htmlFor={switchId}
         className={clsx(styles.switchLabel, checked && styles.checked, disabled && styles.disabled)}
       >
         <input
           type="checkbox"
-          id={switchId}
           checked={checked}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

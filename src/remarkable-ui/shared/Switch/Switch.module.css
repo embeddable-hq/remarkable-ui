@@ -48,7 +48,6 @@
   background: var(--em-switch-background-color-off, #e4e4ea);
   transition: all 0.2s ease-in-out;
   vertical-align: middle;
-  
 }
 
 /* Respect user's motion preferences */
@@ -121,7 +120,6 @@
   display: inline-block;
   vertical-align: middle;
   margin-left: var(--em-form-padding-small, 0.5rem);
-
 }
 
 .labelText.disabled {
