@@ -56,20 +56,15 @@ const loadColorMap = () => {
 
 loadColorMap();
 
-export const getColor = (
-  value: string,
-  palette: string[],
-  idx: number,
-  category = 'global',
-): string => {
+export const getColor = (key: string, value: string, palette: string[], idx: number): string => {
   // Initialize structures if needed
-  if (!colorsMap.has(category)) {
-    colorsMap.set(category, new Map());
-    colorsInUse.set(category, new Set());
+  if (!colorsMap.has(key)) {
+    colorsMap.set(key, new Map());
+    colorsInUse.set(key, new Set());
   }
 
-  const catMap = colorsMap.get(category)!;
-  const catcolorsInUse = colorsInUse.get(category)!;
+  const catMap = colorsMap.get(key)!;
+  const catcolorsInUse = colorsInUse.get(key)!;
 
   // Return existing color if already assigned
   if (catMap.has(value)) return catMap.get(value)!;

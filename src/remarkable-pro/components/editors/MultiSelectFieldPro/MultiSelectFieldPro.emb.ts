@@ -7,44 +7,48 @@ export const meta = {
   name: 'MultiSelectFieldPro',
   label: 'Multi Select Field',
   category: 'Dropdowns',
-  defaultWidth: 200,
+  defaultWidth: 300,
   defaultHeight: 120,
   inputs: [
     dataset,
     { ...dimension, label: 'Dimension (to load Dropdown values)' },
-    {
-      ...dimension,
-      required: false,
-      name: 'optionalSecondDimension',
-      label: 'Optional second dimension for filtering',
-      description:
-        'A hidden dimension applied for filtering instead of the main dimension. Must be unique.',
-    },
     title,
     description,
-    { ...placeholder, defaultValue: 'Select value...' },
+    { ...placeholder, defaultValue: 'Select values...' },
+    {
+      name: 'maxOptions',
+      type: 'number',
+      label: 'Maximum options',
+      category: 'Component Settings',
+      defaultValue: MAX_OPTIONS,
+    },
     {
       name: 'selectedValues',
       type: 'string',
       array: true,
       label: 'Selected Values',
-      category: 'Pre-configured variables',
+      category: 'Pre-configured Variables',
     },
     {
-      name: 'maxOptions',
-      type: 'number',
-      label: 'Maximum options',
-      category: 'Pre-configured variables',
-      defaultValue: MAX_OPTIONS,
+      type: 'dimension',
+      config: {
+        dataset: 'dataset',
+      },
+      required: false,
+      name: 'optionalSecondDimension',
+      label: 'Optional secondary dimension',
+      category: 'Data Mapping for Interactions',
+      description: 'Send a different dimension to embeddable when the user clicks. Must be unique.',
     },
   ],
   events: [
     {
       name: 'onChange',
-      label: 'Change',
+      label: 'selected values updated',
       properties: [
         {
           name: 'value',
+          label: 'selected values',
           type: 'string',
           array: true,
         },
@@ -53,7 +57,7 @@ export const meta = {
   ],
   variables: [
     {
-      name: 'Multi-select values',
+      name: 'multi-select values',
       type: 'string',
       array: true,
       defaultValue: Value.noFilter(),

@@ -8,12 +8,12 @@ export const meta = {
   name: 'DateRangeSelectFieldPro',
   label: 'Date Range Select Field',
   category: 'Dropdowns',
-  defaultWidth: 200,
+  defaultWidth: 300,
   defaultHeight: 120,
   inputs: [
     { ...title },
     { ...description },
-    { ...placeholder, defaultValue: 'Pick a date' },
+    { ...placeholder, defaultValue: 'Select a date-range' },
     {
       name: 'selectedValue',
       type: 'timeRange',
@@ -24,10 +24,11 @@ export const meta = {
   events: [
     {
       name: 'onChange',
-      label: 'Change',
+      label: 'selected date-range updated',
       properties: [
         {
           name: 'value',
+          label: 'selected date-range',
           type: 'timeRange',
         },
       ],
@@ -35,7 +36,7 @@ export const meta = {
   ],
   variables: [
     {
-      name: 'Date-range-select value',
+      name: 'date-range value',
       type: 'timeRange',
       defaultValue: Value.noFilter(),
       inputs: ['selectedValue'],

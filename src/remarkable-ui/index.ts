@@ -17,9 +17,11 @@ export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectF
 export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';
 export { SelectList } from './editors/select/shared/SelectList/SelectList';
 export { SingleSelectField } from './editors/select/SingleSelectField/SingleSelectField';
+
 // Charts
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
+export { defaultPieChartOptions } from './charts/pies/pies.constants';
 
 // Constants
 export { chartColors } from './charts/charts.constants';

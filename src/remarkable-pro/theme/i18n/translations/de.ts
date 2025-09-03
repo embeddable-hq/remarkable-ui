@@ -4,6 +4,7 @@ export const de: ResourceLanguage = {
   translation: {
     common: {
       noOptionsFound: 'Keine Optionen gefunden',
+      noOptionsAvailable: 'Keine Optionen verfügbar',
     },
     dimension: {
       'customers.country.United States': 'Vereinigte Staaten',

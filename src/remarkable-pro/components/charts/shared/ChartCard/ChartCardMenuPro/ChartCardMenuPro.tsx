@@ -11,6 +11,7 @@ import {
   SelectListOption,
 } from '../../../../../../remarkable-ui';
 import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro.types';
+import styles from './ChartCardMenuPro.module.css';
 
 type ChartCardMenuProProps = Omit<ChartCardMenuProOptionOnClickProps, 'theme'>;
 
@@ -31,9 +32,9 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
     startAction(() => onClick({ ...props, theme }));
   };
 
-  const options = theme.charts.chartCardMenuPro.options;
+  const options = theme.charts?.chartCardMenuPro?.options ?? [];
 
-  if (!options) {
+  if (options.length === 0) {
     return null;
   }
 
@@ -43,7 +44,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
       align="end"
       triggerComponent={isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
     >
-      <SelectList autoFocus autoWidth>
+      <SelectList className={styles.list} autoFocus>
         {options.map((option, index) => {
           const label = i18n.t(option.labelKey);
 

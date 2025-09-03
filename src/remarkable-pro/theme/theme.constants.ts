@@ -28,6 +28,7 @@ const remarkableThemeEditors = {
 };
 
 export const remarkableTheme: Theme = {
+  id: 'remarkableTheme',
   i18n: remarkableThemeI18n,
   charts: remarkableThemeCharts,
   editors: remarkableThemeEditors,

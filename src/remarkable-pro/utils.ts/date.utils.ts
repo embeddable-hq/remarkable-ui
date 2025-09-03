@@ -109,14 +109,14 @@ const locales: Record<string, () => Promise<any>> = {
   zh_hk: () => import('dayjs/locale/zh-hk'),
   zh_tw: () => import('dayjs/locale/zh-tw'),
 };
-export async function loadDayjsLocale(language: string): Promise<void> {
-  const loader = locales[language.toLowerCase()];
+export async function loadDayjsLocale(locale: string): Promise<void> {
+  const loader = locales[locale.toLowerCase()];
   if (!loader) return;
   try {
     await loader();
-    dayjs.locale(language);
+    dayjs.locale(locale);
   } catch {
-    console.warn(`Locale "${language}" not supported, falling back to "en".`);
+    console.warn(`Locale "${locale}" not supported, falling back to "en".`);
     dayjs.locale('en');
   }
 }

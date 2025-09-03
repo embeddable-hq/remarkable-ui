@@ -34,19 +34,19 @@ export const getPieChartData = (
 
   const backgroundColor = groupedData.map((item, i) =>
     getColor(
-      `${props.dimension.name}.${item[props.dimension.name]}.backgroundColor`,
+      `${theme.id}.charts.backgroundColors`,
+      `${props.dimension.name}.${item[props.dimension.name]}`,
       theme.charts.backgroundColors ?? chartColors,
       i,
-      'chartBackgroundColors',
     ),
   );
 
   const borderColor = groupedData.map((item, i) =>
     getColor(
-      `${props.dimension.name}.${item[props.dimension.name]}.borderColor`,
+      `${theme.id}.charts.borderColors`,
+      `${props.dimension.name}.${item[props.dimension.name]}`,
       theme.charts.borderColors ?? chartColors,
       i,
-      'chartBorderColors',
     ),
   );
 

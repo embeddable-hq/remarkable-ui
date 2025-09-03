@@ -39,7 +39,7 @@ export const getDateTimeSelectFieldProOptions = (
   });
 };
 
-export const compareDateTimeFieldOptionWithTimeRange = (
+export const compareDateRangeFieldProOptionWithTimeRange = (
   dateRangeSelectFieldProOption: DateTimeSelectFieldProOption,
   timeRange: TimeRange,
 ) => {
