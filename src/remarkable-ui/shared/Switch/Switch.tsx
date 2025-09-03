@@ -40,8 +40,6 @@ export const Switch: React.FC<SwitchProps> = ({
   className,
   label,
   id,
-  'aria-label': ariaLabel,
-  'aria-describedby': ariaDescribedby,
   ...props
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,9 +60,8 @@ export const Switch: React.FC<SwitchProps> = ({
 
   const switchId = id || `switch-${Math.random().toString(36).substr(2, 9)}`;
 
-  // Ensure accessibility: either label or aria-label must be provided
-  const accessibleLabel = label || ariaLabel;
-  if (!accessibleLabel) {
+  // Ensure accessibility: either aria-label must be provided
+  if (!props['aria-label']) {
     console.warn(
       'Switch component requires either a label prop or aria-label prop for accessibility',
     );
@@ -83,8 +80,6 @@ export const Switch: React.FC<SwitchProps> = ({
           className={styles.switchInput}
           role="switch"
           aria-checked={checked}
-          aria-label={!label ? ariaLabel : undefined}
-          aria-describedby={ariaDescribedby}
           aria-disabled={disabled}
           {...props}
         />
