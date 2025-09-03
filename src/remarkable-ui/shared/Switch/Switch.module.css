@@ -39,7 +39,7 @@
 
 .switchTrack {
   position: relative;
-  display: flex;
+  display: inline-flex;
   justify-content: flex-end;
   align-items: center;
   width: var(--em-width-800, 2rem);
@@ -47,7 +47,8 @@
   border-radius: var(--em-border-radius-500, 624.9375rem);
   background: var(--em-switch-background-color-off, #e4e4ea);
   transition: all 0.2s ease-in-out;
-  margin: 0 auto;
+  vertical-align: middle;
+  
 }
 
 /* Respect user's motion preferences */
@@ -58,11 +59,13 @@
   }
 }
 
-.switchTrack.checked {
+/* Checked state - track */
+.switchLabel.checked .switchTrack {
   background: var(--em-switch-background-color-on, #212129);
 }
 
-.switchTrack.disabled {
+/* Disabled state - track */
+.switchLabel.disabled .switchTrack {
   background: var(--em-switch-track-background-color-disabled, #f5f5f6);
   cursor: not-allowed;
 }
@@ -78,12 +81,14 @@
   box-shadow: var(--em-switch-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.switchThumb.checked {
+/* Checked state - thumb */
+.switchLabel.checked .switchThumb {
   left: calc(100% - var(--em-padding-050, 0.125rem));
   transform: translate(-100%, -50%);
 }
 
-.switchThumb.disabled {
+/* Disabled state - thumb */
+.switchLabel.disabled .switchThumb {
   background: var(--em-switch-thumb-background-color-disabled, #d2d2d5);
   box-shadow: none;
 }
@@ -96,11 +101,11 @@
 }
 
 /* Hover states */
-.switchLabel:not(.disabled):hover .switchTrack:not(.checked) {
+.switchLabel:not(.disabled):hover .switchTrack {
   background: var(--em-switch-track-background-color-hover, #e4e4ea);
 }
 
-.switchLabel:not(.disabled):hover .switchTrack.checked {
+.switchLabel:not(.disabled).checked:hover .switchTrack {
   background: var(--em-switch-track-background-color-hover-checked, #212129);
 }
 
@@ -113,6 +118,10 @@
   font-style: normal;
   font-weight: var(--em-form-form-font-font-weight, 400);
   line-height: var(--em-form-form-font-line-height, 1rem);
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: var(--em-form-padding-small, 0.5rem);
+
 }
 
 .labelText.disabled {

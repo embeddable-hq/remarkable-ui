@@ -69,7 +69,10 @@ export const Switch: React.FC<SwitchProps> = ({
 
   return (
     <div className={clsx(styles.switchContainer, className)}>
-      <label htmlFor={switchId} className={clsx(styles.switchLabel, disabled && styles.disabled)}>
+      <label
+        htmlFor={switchId}
+        className={clsx(styles.switchLabel, checked && styles.checked, disabled && styles.disabled)}
+      >
         <input
           type="checkbox"
           id={switchId}
@@ -83,22 +86,8 @@ export const Switch: React.FC<SwitchProps> = ({
           aria-disabled={disabled}
           {...props}
         />
-        <span
-          className={clsx(
-            styles.switchTrack,
-            checked && styles.checked,
-            disabled && styles.disabled,
-          )}
-          aria-hidden="true"
-        >
-          <span
-            className={clsx(
-              styles.switchThumb,
-              checked && styles.checked,
-              disabled && styles.disabled,
-            )}
-            aria-hidden="true"
-          />
+        <span className={styles.switchTrack} aria-hidden="true">
+          <span className={styles.switchThumb} aria-hidden="true" />
         </span>
         {label && (
           <span className={clsx(styles.labelText, disabled && styles.disabled)}>{label}</span>
