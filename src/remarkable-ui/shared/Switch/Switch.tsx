@@ -10,7 +10,7 @@ type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' 
   /**
    * Callback fired when the switch state changes
    */
-  onCheckedChange?: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
   /**
    * Whether the switch is disabled
    */
@@ -35,7 +35,7 @@ type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' 
 
 export const Switch: React.FC<SwitchProps> = ({
   checked,
-  onCheckedChange,
+  onChange,
   disabled = false,
   className,
   label,
@@ -45,8 +45,8 @@ export const Switch: React.FC<SwitchProps> = ({
   ...props
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!disabled && onCheckedChange) {
-      onCheckedChange(event.target.checked);
+    if (!disabled && onChange) {
+      onChange(event.target.checked);
     }
   };
 
@@ -54,8 +54,8 @@ export const Switch: React.FC<SwitchProps> = ({
     // Allow space and enter to toggle the switch
     if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
-      if (!disabled && onCheckedChange) {
-        onCheckedChange(!checked);
+      if (!disabled && onChange) {
+        onChange(!checked);
       }
     }
   };

@@ -32,13 +32,13 @@ type Story = StoryObj<typeof meta>;
 // Interactive Switch with state management
 const InteractiveSwitch = ({
   checked: initialChecked,
-  onCheckedChange,
+  onChange,
   ...props
 }: React.ComponentProps<typeof Switch>) => {
   const [checked, setChecked] = useState(initialChecked);
-  const handleChange = onCheckedChange || setChecked;
+  const handleChange = onChange || setChecked;
 
-  return <Switch {...props} checked={checked} onCheckedChange={handleChange} />;
+  return <Switch {...props} checked={checked} onChange={handleChange} />;
 };
 
 export const Default: Story = {
@@ -47,7 +47,7 @@ export const Default: Story = {
     checked: false,
     disabled: false,
     label: 'Enable notifications',
-    onCheckedChange: undefined,
+    onChange: undefined,
   },
 };
 
@@ -57,7 +57,7 @@ export const Checked: Story = {
     checked: true,
     disabled: false,
     label: 'Dark mode enabled',
-    onCheckedChange: undefined,
+    onChange: undefined,
   },
 };
 
@@ -66,7 +66,7 @@ export const WithoutLabel: Story = {
   args: {
     checked: false,
     disabled: false,
-    onCheckedChange: undefined,
+    onChange: undefined,
   },
 };
 
@@ -76,7 +76,7 @@ export const Disabled: Story = {
     checked: false,
     disabled: true,
     label: 'Disabled switch',
-    onCheckedChange: undefined,
+    onChange: undefined,
   },
 };
 
@@ -86,7 +86,7 @@ export const DisabledChecked: Story = {
     checked: true,
     disabled: true,
     label: 'Disabled checked switch',
-    onCheckedChange: undefined,
+    onChange: undefined,
   },
 };
 
@@ -95,25 +95,25 @@ export const AllVariants: Story = {
     <div
       style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}
     >
-      <InteractiveSwitch checked={false} label="Switch (off)" onCheckedChange={undefined} />
-      <InteractiveSwitch checked={true} label="Switch (on)" onCheckedChange={undefined} />
+      <InteractiveSwitch checked={false} label="Switch (off)" onChange={undefined} />
+      <InteractiveSwitch checked={true} label="Switch (on)" onChange={undefined} />
       <InteractiveSwitch
         checked={false}
         disabled={true}
         label="Disabled switch (off)"
-        onCheckedChange={undefined}
+        onChange={undefined}
       />
       <InteractiveSwitch
         checked={true}
         disabled={true}
         label="Disabled switch (on)"
-        onCheckedChange={undefined}
+        onChange={undefined}
       />
     </div>
   ),
   args: {
     checked: false,
-    onCheckedChange: undefined,
+    onChange: undefined,
   },
   parameters: {
     docs: {
