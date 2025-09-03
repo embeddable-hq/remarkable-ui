@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.12
+
+### Patch Changes
+
+- d9da59e: Fix select content width behavior. Export the getThemeFormatter. Make stringFormatter available from the getThemeFormatter.
+
 ## 0.0.11
 
 ### Patch Changes
