@@ -113,9 +113,7 @@ export const Switch: React.FC<SwitchProps> = ({
         </span>
       </label>
       {label && (
-        <span id={labelId} className={clsx(styles.labelText, disabled && styles.disabled)}>
-          {label}
-        </span>
+        <span className={clsx(styles.labelText, disabled && styles.disabled)}>{label}</span>
       )}
     </div>
   );
