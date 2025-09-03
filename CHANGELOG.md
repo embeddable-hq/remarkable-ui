@@ -1,5 +1,12 @@
 # @embeddable/remarkable-ui
 
+## 0.0.13
+
+### Patch Changes
+
+- 2da2edd: Fix select content width behavior. Export the getThemeFormatter. Make stringFormatter available from the getThemeFormatter.
+- 2da2edd: Fix session storage bug (store assigned colors)
+
 ## 0.0.12
 
 ### Patch Changes
