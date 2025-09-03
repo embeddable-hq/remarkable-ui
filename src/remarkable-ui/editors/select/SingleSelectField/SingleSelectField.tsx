@@ -22,7 +22,6 @@ export type SingleSelectFieldProps = {
   isClearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
-  autoWidth?: boolean;
   onChange: (value: string) => void;
   onSearch?: (search: string) => void;
 };

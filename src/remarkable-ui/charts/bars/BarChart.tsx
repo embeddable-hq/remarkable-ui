@@ -14,6 +14,7 @@ import { BaseBarChartProps } from './bars.types';
 import { getSegmentIndexClicked } from '../chartjs.utils';
 import { getBarChartOptions } from './bars.constants';
 import { getBarChartData } from './bars.utils';
+import styles from '../charts.module.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LogarithmicScale, Title, Tooltip, Legend);
 
@@ -30,11 +31,13 @@ export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, ...props }) 
   };
 
   return (
-    <Bar
-      ref={chartRef}
-      data={getBarChartData(data)}
-      options={barChartOptions}
-      onClick={handleSegmentClick}
-    />
+    <div className={styles.chartContainer}>
+      <Bar
+        ref={chartRef}
+        data={getBarChartData(data)}
+        options={barChartOptions}
+        onClick={handleSegmentClick}
+      />
+    </div>
   );
 };
