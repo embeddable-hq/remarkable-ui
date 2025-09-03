@@ -41,7 +41,7 @@
   position: relative;
   display: block;
   border-radius: var(--em-border-radius-500, 624.9375rem);
-  background: var(--em-switch-background-color-off, #E4E4EA);
+  background: var(--em-switch-background-color-off, #e4e4ea);
   transition: all 0.2s ease-in-out;
   margin: 0 auto;
 }
@@ -55,7 +55,8 @@
 }
 
 .switchTrack.checked {
-  background: var(--em-switch-background-color-on, #212129);}
+  background: var(--em-switch-background-color-on, #212129);
+}
 
 .switchTrack.disabled {
   background: var(--em-switch-track-background-color-disabled, #f5f5f6);
@@ -105,7 +106,6 @@
 .switchLabel:not(.disabled):hover .switchTrack.checked {
   background: var(--em-switch-track-background-color-hover-checked, #212129);
 }
-
 
 /* Label styling */
 .labelText {
