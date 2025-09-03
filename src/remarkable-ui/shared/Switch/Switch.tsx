@@ -73,11 +73,7 @@ export const Switch: React.FC<SwitchProps> = ({
 
   return (
     <div className={clsx(styles.switchContainer, className)}>
-      <label
-        htmlFor={switchId}
-        id={labelId}
-        className={clsx(styles.switchLabel, disabled && styles.disabled)}
-      >
+      <label htmlFor={switchId} className={clsx(styles.switchLabel, disabled && styles.disabled)}>
         <input
           type="checkbox"
           id={switchId}
@@ -113,7 +109,9 @@ export const Switch: React.FC<SwitchProps> = ({
         </span>
       </label>
       {label && (
-        <span className={clsx(styles.labelText, disabled && styles.disabled)}>{label}</span>
+        <span id={labelId} className={clsx(styles.labelText, disabled && styles.disabled)}>
+          {label}
+        </span>
       )}
     </div>
   );
