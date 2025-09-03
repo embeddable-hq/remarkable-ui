@@ -39,7 +39,11 @@
 
 .switchTrack {
   position: relative;
-  display: block;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: var(--em-width-800, 2rem);
+  height: var(--em-height-400, 1rem);
   border-radius: var(--em-border-radius-500, 624.9375rem);
   background: var(--em-switch-background-color-off, #e4e4ea);
   transition: all 0.2s ease-in-out;
@@ -85,13 +89,6 @@
 }
 
 /* Switch dimensions */
-.switchTrack {
-  display: flex;
-  width: var(--em-width-800, 2rem);
-  justify-content: flex-end;
-  align-items: center;
-  height: var(--em-height-400, 1rem);
-}
 
 .switchThumb {
   width: var(--em-switch-slider-size-width, 0.75rem);
