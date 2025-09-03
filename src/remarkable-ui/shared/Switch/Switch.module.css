@@ -21,8 +21,8 @@
 
 /* Focus styles for keyboard navigation */
 .switchInput:focus + .switchTrack {
-  outline: 2px solid var(--em-switch-focus-color, #0066cc);
-  outline-offset: 2px;
+  outline: var(--em-border-width-default) solid var(--em-switch-focus-color, #0066cc);
+  outline-offset: var(--em-border-width-default);
 }
 
 .switchInput:focus:not(:focus-visible) + .switchTrack {
@@ -32,8 +32,8 @@
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .switchInput:focus + .switchTrack {
-    outline: 3px solid;
-    outline-offset: 2px;
+    outline: var(--em-border-width-default, 0.0625rem) solid;
+    outline-offset: var(--em-border-width-default, 0.0625rem);
   }
 }
 
@@ -70,7 +70,7 @@
 .switchThumb {
   position: absolute;
   top: 50%;
-  left: 2px;
+  left: var(--em-padding-050, 0.125rem);
   transform: translateY(-50%);
   background: var(--em-switch-thumb-background-color, #ffffff);
   border-radius: 50%;
@@ -79,7 +79,7 @@
 }
 
 .switchThumb.checked {
-  left: calc(100% - 2px);
+  left: calc(100% - var(--em-padding-050, 0.125rem));
   transform: translate(-100%, -50%);
 }
 
