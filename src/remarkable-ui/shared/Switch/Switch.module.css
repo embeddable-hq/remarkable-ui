@@ -1,0 +1,133 @@
+.switchContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.switchLabel {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switchInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Focus styles for keyboard navigation */
+.switchInput:focus + .switchTrack {
+  outline: 2px solid var(--em-switch-focus-color, #0066cc);
+  outline-offset: 2px;
+}
+
+.switchInput:focus:not(:focus-visible) + .switchTrack {
+  outline: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .switchInput:focus + .switchTrack {
+    outline: 3px solid;
+    outline-offset: 2px;
+  }
+}
+
+.switchTrack {
+  position: relative;
+  display: block;
+  border-radius: var(--em-border-radius-500, 624.9375rem);
+  background: var(--em-switch-background-color-off, #E4E4EA);
+  transition: all 0.2s ease-in-out;
+  margin: 0 auto;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .switchTrack,
+  .switchThumb {
+    transition: none;
+  }
+}
+
+.switchTrack.checked {
+  background: var(--em-switch-background-color-on, #212129);}
+
+.switchTrack.disabled {
+  background: var(--em-switch-track-background-color-disabled, #f5f5f6);
+  cursor: not-allowed;
+}
+
+.switchThumb {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);
+  background: var(--em-switch-thumb-background-color, #ffffff);
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--em-switch-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.switchThumb.checked {
+  left: calc(100% - 2px);
+  transform: translate(-100%, -50%);
+}
+
+.switchThumb.disabled {
+  background: var(--em-switch-thumb-background-color-disabled, #d2d2d5);
+  box-shadow: none;
+}
+
+/* Switch dimensions */
+.switchTrack {
+  display: flex;
+  width: var(--em-width-800, 2rem);
+  justify-content: flex-end;
+  align-items: center;
+  height: var(--em-height-400, 1rem);
+}
+
+.switchThumb {
+  width: var(--em-switch-slider-size-width, 0.75rem);
+  height: var(--em-switch-slider-size-height, 0.75rem);
+}
+
+/* Hover states */
+.switchLabel:not(.disabled):hover .switchTrack:not(.checked) {
+  background: var(--em-switch-track-background-color-hover, #e4e4ea);
+}
+
+.switchLabel:not(.disabled):hover .switchTrack.checked {
+  background: var(--em-switch-track-background-color-hover-checked, #212129);
+}
+
+
+/* Label styling */
+.labelText {
+  /* TODO: To enable once we have a font family */
+  /* font-family: var(--em-form-section-font-font-family, Inter); */
+  color: var(--em-form-section-font-font-color, #212129);
+  font-size: var(--em-form-form-font-font-size-title, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-form-form-font-font-weight, 400);
+  line-height: var(--em-form-form-font-line-height, 1rem);
+}
+
+.labelText.disabled {
+  color: var(--em-switch-label-color-disabled, #b8b8bd);
+  cursor: not-allowed;
+}
+
+/* Disabled state */
+.switchLabel.disabled {
+  cursor: not-allowed;
+}
+
+.switchLabel.disabled .switchTrack {
+  cursor: not-allowed;
+}
