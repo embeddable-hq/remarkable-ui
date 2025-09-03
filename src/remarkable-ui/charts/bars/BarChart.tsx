@@ -19,10 +19,36 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, LogarithmicScale, Title
 
 export type BarChartProps = BaseBarChartProps;
 
-export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, ...props }) => {
+export const BarChart: FC<BarChartProps> = ({
+  data,
+  onSegmentClick,
+  horizontal = false,
+  showLegend = false,
+  showTooltips = true,
+  showValueLabels = false,
+  showLogarithmicScale = false,
+  xAxisLabel,
+  yAxisLabel,
+  reverseXAxis = false,
+  reverseYAxis = false,
+  yAxisRange = undefined,
+  xAxisRange = undefined,
+}) => {
   const chartRef = useRef(null);
 
-  const barChartOptions = getBarChartOptions(props);
+  const barChartOptions = getBarChartOptions({
+    horizontal,
+    showLegend,
+    showTooltips,
+    showValueLabels,
+    showLogarithmicScale,
+    xAxisLabel,
+    yAxisLabel,
+    reverseXAxis,
+    reverseYAxis,
+    yAxisRange,
+    xAxisRange,
+  });
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const indexClicked = getSegmentIndexClicked(event, chartRef);

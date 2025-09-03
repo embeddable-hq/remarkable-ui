@@ -145,10 +145,19 @@ export const getBarChartOptions = (
   const options = getOptions(props);
 
   return mergician(options, {
+    layout: {
+      padding: {
+        // Hack: dataLabels can get cut off if they are at the edge of the chart
+        top: !props.horizontal && props.showValueLabels ? 30 : 0,
+        right: props.horizontal && props.showValueLabels ? 30 : 0,
+      },
+    },
     plugins: {
       legend: { display: props.showLegend },
       datalabels: {
         display: props.showValueLabels,
+        anchor: 'end',
+        align: 'end',
       },
       tooltip: {
         enabled: props.showTooltips,

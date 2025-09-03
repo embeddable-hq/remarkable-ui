@@ -16,55 +16,60 @@ const barChartData: ChartData<'bar'> = {
   labels: labels,
   datasets: [
     {
-      label: 'Number of sales',
-      data: [65, 59, 80, 200, 56, 55, 40],
+      label: 'Sales',
+      data: [100, 50, 50, 20, 80, 60, 70],
     },
     {
-      label: 'Number of visitors',
-      data: [43, 10, 12, 102, 66, 200, 200],
+      label: 'Active Users',
+      data: [20, 30, 50, 90, 60, 30, 60],
     },
   ],
 };
 
 export const Vertical: Story = {
+  render: (args) => {
+    return (
+      <div style={{ width: 400, height: 400 }}>
+        <BarChart {...args} />
+      </div>
+    );
+  },
   args: {
     data: barChartData,
     horizontal: false,
+    showLegend: false,
+    showTooltips: true,
+    showValueLabels: false,
+    showLogarithmicScale: false,
+    xAxisLabel: '',
+    yAxisLabel: '',
+    reverseXAxis: false,
+    reverseYAxis: false,
+    yAxisRange: undefined,
+    xAxisRange: undefined,
   },
 };
 
 export const Horizontal: Story = {
+  render: (args) => {
+    return (
+      <div style={{ width: 400, height: 400 }}>
+        <BarChart {...args} />
+      </div>
+    );
+  },
   args: {
     data: barChartData,
     horizontal: true,
+    showLegend: false,
+    showTooltips: true,
+    showValueLabels: false,
+    showLogarithmicScale: false,
+    xAxisLabel: '',
+    yAxisLabel: '',
+    reverseXAxis: false,
+    reverseYAxis: false,
+    yAxisRange: undefined,
+    xAxisRange: undefined,
   },
-};
-
-export const SquareVertical = () => {
-  return (
-    <div style={{ width: 400, height: 400 }}>
-      <BarChart data={barChartData} />
-    </div>
-  );
-};
-
-export const SquareHorizontal = () => {
-  return (
-    <div style={{ width: 400, height: 400 }}>
-      <BarChart horizontal data={barChartData} />
-    </div>
-  );
-};
-
-export const SquareVerticalHorizontal = () => {
-  return (
-    <div style={{ display: 'flex', gap: 20 }}>
-      <div style={{ width: 400, height: 400 }}>
-        <BarChart horizontal data={barChartData} />
-      </div>
-      <div style={{ width: 400, height: 400 }}>
-        <BarChart data={barChartData} />
-      </div>
-    </div>
-  );
 };
