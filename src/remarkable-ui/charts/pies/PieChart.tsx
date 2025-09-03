@@ -1,7 +1,7 @@
 import { FC, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
-import { getPieData } from './pies.utils';
+import { getPieChartData } from './pies.utils';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { getSegmentIndexClicked } from '../chartjs.utils';
 import { mergician } from 'mergician';
@@ -27,7 +27,7 @@ export const PieChart: FC<PieChartProps> = ({ data, options = {}, onSegmentClick
     <div className={styles.chartContainer}>
       <Pie
         ref={chartRef}
-        data={getPieData(data)}
+        data={getPieChartData(data)}
         options={pieOptions}
         onClick={handleSegmentClick}
       />

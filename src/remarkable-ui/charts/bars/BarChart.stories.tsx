@@ -11,26 +11,24 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 const barChartData: ChartData<'bar'> = {
-  labels: ['Orange 1', 'Orange 2', 'Orange 3', 'Orange 4', 'Orange 5'],
+  labels: labels,
   datasets: [
     {
-      label: 'Sales',
-      data: [12, 19, 3, 5, 2],
+      label: 'Number of sales',
+      data: [65, 59, 80, 200, 56, 55, 40],
     },
     {
-      label: 'Orders',
-      data: [2, 4, 3, 5, 1],
+      label: 'Number of visitors',
+      data: [43, 10, 12, 102, 66, 200, 200],
     },
   ],
 };
 
-const barChartOptions = {};
-
 export const Vertical: Story = {
   args: {
     data: barChartData,
-    options: barChartOptions,
     horizontal: false,
   },
 };
@@ -38,23 +36,35 @@ export const Vertical: Story = {
 export const Horizontal: Story = {
   args: {
     data: barChartData,
-    options: barChartOptions,
     horizontal: true,
   },
 };
 
-export const LargeVertical = () => {
+export const SquareVertical = () => {
   return (
     <div style={{ width: 400, height: 400 }}>
-      <BarChart data={barChartData} options={barChartOptions} />
+      <BarChart data={barChartData} />
     </div>
   );
 };
 
-export const LargeHorizontal = () => {
+export const SquareHorizontal = () => {
   return (
     <div style={{ width: 400, height: 400 }}>
-      <BarChart horizontal data={barChartData} options={barChartOptions} />
+      <BarChart horizontal data={barChartData} />
+    </div>
+  );
+};
+
+export const SquareVerticalHorizontal = () => {
+  return (
+    <div style={{ display: 'flex', gap: 20 }}>
+      <div style={{ width: 400, height: 400 }}>
+        <BarChart horizontal data={barChartData} />
+      </div>
+      <div style={{ width: 400, height: 400 }}>
+        <BarChart data={barChartData} />
+      </div>
     </div>
   );
 };

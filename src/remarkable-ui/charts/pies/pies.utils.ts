@@ -1,13 +1,17 @@
 import { ChartData, ChartDataset } from 'chart.js';
 import { mergician } from 'mergician';
-import { defaultPieData } from './pies.constants';
+import { chartColors } from '../charts.constants';
 
-export const getPieData = (data: ChartData<'pie'>) => {
+export const getPieChartData = (data: ChartData<'pie'>) => {
   const mergedData: ChartData<'pie', number[], unknown> = {
     ...data,
     datasets:
       data.datasets?.map((dataset, index) => {
-        const defaultDataset = defaultPieData.datasets?.[index] || { data: [] };
+        const colors = chartColors[index];
+        const defaultDataset = {
+          backgroundColor: colors,
+          borderColor: colors,
+        };
         const merged = mergician(defaultDataset, dataset) as ChartDataset<'pie'>;
         return merged;
       }) || [],

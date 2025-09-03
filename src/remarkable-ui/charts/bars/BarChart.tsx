@@ -8,29 +8,21 @@ import {
   Title,
   Tooltip,
   Legend,
+  LogarithmicScale,
 } from 'chart.js';
-import { mergician } from 'mergician';
 import { BaseBarChartProps } from './bars.types';
 import { getSegmentIndexClicked } from '../chartjs.utils';
-import { getBarData } from './bars.utils';
-import { defaultBarHorizontalChartOptions, defaultBarVerticalChartOptions } from './bars.constants';
+import { getBarChartOptions } from './bars.constants';
+import { getBarChartData } from './bars.utils';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LogarithmicScale, Title, Tooltip, Legend);
 
 export type BarChartProps = BaseBarChartProps;
 
-export const BarChart: FC<BarChartProps> = ({
-  horizontal = false,
-  data,
-  options = {},
-  onSegmentClick,
-}) => {
+export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, ...props }) => {
   const chartRef = useRef(null);
 
-  const barOptions = mergician(
-    horizontal ? defaultBarHorizontalChartOptions : defaultBarVerticalChartOptions,
-    options,
-  );
+  const barChartOptions = getBarChartOptions(props);
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const indexClicked = getSegmentIndexClicked(event, chartRef);
@@ -38,6 +30,11 @@ export const BarChart: FC<BarChartProps> = ({
   };
 
   return (
-    <Bar ref={chartRef} data={getBarData(data)} options={barOptions} onClick={handleSegmentClick} />
+    <Bar
+      ref={chartRef}
+      data={getBarChartData(data)}
+      options={barChartOptions}
+      onClick={handleSegmentClick}
+    />
   );
 };
