@@ -1,9 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './Switch.module.css';
+import { Typography } from '../Typography/Typography';
 
-type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'checked'> & {
-  checked: boolean;
+type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   className?: string;
@@ -51,7 +51,9 @@ export const Switch: React.FC<SwitchProps> = ({
           <span className={styles.switchThumb} aria-hidden="true" />
         </span>
         {label && (
-          <span className={clsx(styles.labelText, disabled && styles.disabled)}>{label}</span>
+          <Typography as="span" className={clsx(styles.labelText, disabled && styles.disabled)}>
+            {label}
+          </Typography>
         )}
       </label>
     </div>
