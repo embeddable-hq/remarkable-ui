@@ -111,7 +111,6 @@ export const getBarChartOptions = (
         display: showValueLabels,
         anchor: 'end',
         align: 'end',
-        // backgroundColor: null,
       },
       tooltip: {
         enabled: showTooltips,

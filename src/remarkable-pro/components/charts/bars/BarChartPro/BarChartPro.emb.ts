@@ -1,6 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import PieChartPro from './index';
+import BarChartPro from './index';
 import {
   dataset,
   description,
@@ -55,7 +55,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(PieChartPro, meta, {
+export default defineComponent(BarChartPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,

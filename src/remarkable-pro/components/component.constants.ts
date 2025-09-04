@@ -164,7 +164,7 @@ export const showValueLabels = {
 export const showLogarithmicScale = {
   name: 'showLogarithmicScale',
   type: 'boolean',
-  label: 'Show Logarithmic Labels',
+  label: 'Show Logarithmic Scale',
   defaultValue: false,
   category: 'Component Settings',
 } as const;
