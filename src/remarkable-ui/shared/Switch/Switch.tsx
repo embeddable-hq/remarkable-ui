@@ -3,34 +3,11 @@ import clsx from 'clsx';
 import styles from './Switch.module.css';
 
 type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'checked'> & {
-  /**
-   * The current state of the switch
-   */
   checked: boolean;
-  /**
-   * Callback fired when the switch state changes
-   */
   onChange?: (checked: boolean) => void;
-  /**
-   * Whether the switch is disabled
-   */
   disabled?: boolean;
-  /**
-   * Additional CSS class name
-   */
   className?: string;
-  /**
-   * Label for the switch (optional)
-   */
   label?: string;
-  /**
-   * Accessible label for screen readers (required if no label is provided)
-   */
-  'aria-label'?: string;
-  /**
-   * Additional description for screen readers
-   */
-  'aria-describedby'?: string;
 };
 
 export const Switch: React.FC<SwitchProps> = ({
@@ -44,16 +21,6 @@ export const Switch: React.FC<SwitchProps> = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!disabled && onChange) {
       onChange(event.target.checked);
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    // Allow space and enter to toggle the switch
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
-      if (!disabled && onChange) {
-        onChange(!checked);
-      }
     }
   };
 
@@ -73,7 +40,6 @@ export const Switch: React.FC<SwitchProps> = ({
           type="checkbox"
           checked={checked}
           onChange={handleChange}
-          onKeyDown={handleKeyDown}
           disabled={disabled}
           className={styles.switchInput}
           role="switch"
