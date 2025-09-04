@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 import { SingleSelectField } from './SingleSelectField';
 import { SelectListOptionProps } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import { IconPalette } from '@tabler/icons-react';
 
 const meta = {
   component: SingleSelectField,
@@ -121,6 +122,18 @@ export const SmallButtonRightSideLabel = () => (
     />
   </div>
 );
+
+export const WithStartIcon: Story = {
+  args: {
+    value: '',
+    startIcon: IconPalette,
+    isSearchable: true,
+    isClearable: true,
+    options: mockOptions,
+    placeholder: 'Select a color',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
 
 export const WithState: Story = {
   render: (args) => {
