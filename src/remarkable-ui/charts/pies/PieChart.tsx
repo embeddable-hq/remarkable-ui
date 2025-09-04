@@ -1,11 +1,12 @@
 import { FC, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import { getPieChartData } from './pies.utils';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { getSegmentIndexClicked } from '../chartjs.utils';
 import { mergician } from 'mergician';
 import { BasePieChartProps } from './pies.types';
 import { defaultPieChartOptions } from './pies.constants';
-import { getPieData, getPieSegmentIndexClicked } from './pies.utils';
 import styles from '../charts.module.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
@@ -18,7 +19,7 @@ export const PieChart: FC<PieChartProps> = ({ data, options = {}, onSegmentClick
   const pieOptions = mergician(defaultPieChartOptions, options);
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const indexClicked = getPieSegmentIndexClicked(event, chartRef);
+    const indexClicked = getSegmentIndexClicked(event, chartRef);
     onSegmentClick?.(indexClicked);
   };
 
@@ -26,7 +27,7 @@ export const PieChart: FC<PieChartProps> = ({ data, options = {}, onSegmentClick
     <div className={styles.chartContainer}>
       <Pie
         ref={chartRef}
-        data={getPieData(data)}
+        data={getPieChartData(data)}
         options={pieOptions}
         onClick={handleSegmentClick}
       />

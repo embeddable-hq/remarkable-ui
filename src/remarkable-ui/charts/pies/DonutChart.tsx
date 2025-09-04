@@ -3,10 +3,11 @@ import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
+import { getPieChartData } from './pies.utils';
+import { getSegmentIndexClicked } from '../chartjs.utils';
 import { mergician } from 'mergician';
 import { BasePieChartProps } from './pies.types';
 import { defaultDonutChartOptions, defaultDonutLabelChartOptions } from './pies.constants';
-import { getPieData, getPieSegmentIndexClicked } from './pies.utils';
 import styles from '../charts.module.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
@@ -43,7 +44,7 @@ export const DonutChart: FC<DonutLabelChartProps> = ({
   );
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const indexClicked = getPieSegmentIndexClicked(event, chartRef);
+    const indexClicked = getSegmentIndexClicked(event, chartRef);
     onSegmentClick?.(indexClicked);
   };
 
@@ -51,7 +52,7 @@ export const DonutChart: FC<DonutLabelChartProps> = ({
     <div className={styles.chartContainer}>
       <Pie
         ref={chartRef}
-        data={getPieData(data)}
+        data={getPieChartData(data)}
         options={donutLabelOptions}
         onClick={handleSegmentClick}
       />
