@@ -12,6 +12,7 @@ export {
 export { SelectListOptions } from './editors/select/shared/SelectList/SelectListOptions/SelectListOptions';
 export { Button } from './shared/Button/Button';
 export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectField';
+export { Switch } from './shared/Switch/Switch';
 
 // Editors
 export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';
