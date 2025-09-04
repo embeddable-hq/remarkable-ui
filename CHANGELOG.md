@@ -1,5 +1,12 @@
 # @embeddable/remarkable-ui
 
+## 0.0.14
+
+### Patch Changes
+
+- cac6f9f: Create new BarChart component
+- be3d931: Fix the select field with Icon layout
+
 ## 0.0.13
 
 ### Patch Changes
