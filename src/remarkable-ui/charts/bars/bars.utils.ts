@@ -2,7 +2,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { chartColors } from '../charts.constants';
 import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { mergician } from 'mergician';
-import { BarChartConfigurationProps } from './bars.types';
+import { BarChartConfigurationProps, BarChartHorizontalConfigurationProps } from './bars.types';
 import { defaultBarChartOptions } from './bars.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
@@ -33,12 +33,11 @@ const getBarVerticalChartOptions = (
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
         },
-        ...(config.yAxisRange?.min !== undefined ? { min: config.yAxisRange.min } : {}),
-        ...(config.yAxisRange?.max !== undefined ? { max: config.yAxisRange.max } : {}),
-        reverse: config.reverseYAxis,
+        min: config.yAxisRangeMin,
+        max: config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
-          text: config.yAxisLabel,
+          text: config.yAxisLabel ?? '',
         },
       },
       x: {
@@ -47,7 +46,7 @@ const getBarVerticalChartOptions = (
         },
         reverse: config.reverseXAxis,
         title: {
-          text: config.xAxisLabel,
+          text: config.xAxisLabel ?? '',
         },
       },
     },
@@ -55,7 +54,7 @@ const getBarVerticalChartOptions = (
 };
 
 const getBarHorizontalChartOptions = (
-  config: BarChartConfigurationProps,
+  config: BarChartHorizontalConfigurationProps,
 ): Partial<ChartOptions<'bar'>> => {
   return mergician(defaultBarChartOptions, {
     indexAxis: 'y',
@@ -65,12 +64,11 @@ const getBarHorizontalChartOptions = (
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
         },
-        ...(config.xAxisRange?.min !== undefined ? { min: config.xAxisRange.min } : {}),
-        ...(config.xAxisRange?.max !== undefined ? { max: config.xAxisRange.max } : {}),
-        reverse: config.reverseXAxis,
+        min: config.xAxisRangeMin,
+        max: config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
-          text: config.xAxisLabel,
+          text: config.xAxisLabel ?? '',
         },
       },
       y: {
@@ -79,7 +77,7 @@ const getBarHorizontalChartOptions = (
         },
         reverse: config.reverseYAxis,
         title: {
-          text: config.yAxisLabel,
+          text: config.yAxisLabel ?? '',
         },
       },
     },
@@ -113,6 +111,7 @@ export const getBarChartOptions = (
         display: showValueLabels,
         anchor: 'end',
         align: 'end',
+        // backgroundColor: null,
       },
       tooltip: {
         enabled: showTooltips,
