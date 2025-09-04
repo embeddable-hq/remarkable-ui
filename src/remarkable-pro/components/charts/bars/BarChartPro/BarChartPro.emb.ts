@@ -5,7 +5,6 @@ import {
   dataset,
   description,
   dimension,
-  maxLegendItems,
   showLegend,
   showTooltips,
   showValueLabels,
@@ -17,6 +16,7 @@ import {
   reverseXAxis,
   yAxisRangeMin,
   yAxisRangeMax,
+  xAxisMaxItems,
 } from '../../../component.constants';
 
 export const meta = {
@@ -38,7 +38,7 @@ export const meta = {
     reverseXAxis,
     yAxisRangeMin,
     yAxisRangeMax,
-    maxLegendItems,
+    xAxisMaxItems,
   ],
   events: [
     {

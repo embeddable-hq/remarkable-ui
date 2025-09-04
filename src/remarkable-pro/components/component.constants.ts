@@ -213,6 +213,22 @@ export const yAxisRangeMax = {
   category: 'Component Settings',
 } as const;
 
+export const xAxisMaxItems = {
+  name: 'xAxisMaxItems',
+  type: 'number',
+  label: 'Max X-axis Items',
+  defaultValue: 10,
+  category: 'Component Settings',
+} as const;
+
+export const yAxisMaxItems = {
+  name: 'maxLegendItems',
+  type: 'number',
+  label: 'Max Y-axis Items',
+  defaultValue: 10,
+  category: 'Component Settings',
+} as const;
+
 export const maxLegendItems = {
   name: 'maxLegendItems',
   type: 'number',

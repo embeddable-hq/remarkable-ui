@@ -13,7 +13,7 @@ export const getBarChartProData = (
     data: DataResponse['data'];
     dimension: Dimension;
     measures: Measure[];
-    maxLegendItems?: number;
+    xAxisMaxItems?: number;
   },
   theme: Theme = remarkableTheme,
 ): ChartData<'bar'> => {
@@ -30,7 +30,7 @@ export const getBarChartProData = (
     props.data,
     props.dimension,
     props.measures[0]!,
-    props.maxLegendItems,
+    props.xAxisMaxItems,
   );
 
   return {

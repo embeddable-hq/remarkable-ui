@@ -11,7 +11,7 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 type BarChartProProps = {
   description: string;
   dimension: Dimension;
-  maxLegendItems: number;
+  xAxisMaxItems: number;
   measures: Measure[];
   results: DataResponse;
   showLegend: boolean;
@@ -34,7 +34,7 @@ const BarChartPro = (props: BarChartProProps) => {
   const {
     description,
     dimension,
-    maxLegendItems,
+    xAxisMaxItems,
     measures,
     results,
     showLegend,
@@ -51,7 +51,7 @@ const BarChartPro = (props: BarChartProProps) => {
   } = resolveI18nProps(props);
 
   const data = getBarChartProData(
-    { data: results.data, dimension, measures, maxLegendItems },
+    { data: results.data, dimension, measures, xAxisMaxItems },
     theme,
   );
 
