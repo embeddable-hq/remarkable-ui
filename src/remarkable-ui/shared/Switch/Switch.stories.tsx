@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { useState } from 'react';
 
 import { Switch } from './Switch';
+import { useArgs } from 'storybook/internal/preview-api';
 
 const meta = {
   component: Switch,
@@ -29,91 +29,111 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Interactive Switch with state management
-const InteractiveSwitch = ({
-  checked: initialChecked,
-  onChange,
-  ...props
-}: React.ComponentProps<typeof Switch>) => {
-  const [checked, setChecked] = useState(initialChecked);
-  const handleChange = onChange || setChecked;
-
-  return <Switch {...props} checked={checked} onChange={handleChange} />;
-};
-
 export const Default: Story = {
-  render: (args) => <InteractiveSwitch {...args} />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const handleChange = (checked: boolean) => {
+      updateArgs({ checked });
+    };
+
+    return <Switch {...args} onChange={handleChange} />;
+  },
   args: {
     checked: false,
     disabled: false,
     label: 'Enable notifications',
-    onChange: undefined,
   },
 };
 
 export const Checked: Story = {
-  render: (args) => <InteractiveSwitch {...args} />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const handleChange = (checked: boolean) => {
+      updateArgs({ checked });
+    };
+
+    return <Switch {...args} onChange={handleChange} />;
+  },
   args: {
     checked: true,
     disabled: false,
     label: 'Dark mode enabled',
-    onChange: undefined,
   },
 };
 
 export const WithoutLabel: Story = {
-  render: (args) => <InteractiveSwitch {...args} />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const handleChange = (checked: boolean) => {
+      updateArgs({ checked });
+    };
+
+    return <Switch {...args} onChange={handleChange} />;
+  },
   args: {
     checked: false,
     disabled: false,
-    onChange: undefined,
   },
 };
 
 export const Disabled: Story = {
-  render: (args) => <InteractiveSwitch {...args} />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const handleChange = (checked: boolean) => {
+      updateArgs({ checked });
+    };
+
+    return <Switch {...args} onChange={handleChange} />;
+  },
   args: {
     checked: false,
     disabled: true,
     label: 'Disabled switch',
-    onChange: undefined,
   },
 };
 
 export const DisabledChecked: Story = {
-  render: (args) => <InteractiveSwitch {...args} />,
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const handleChange = (checked: boolean) => {
+      updateArgs({ checked });
+    };
+
+    return <Switch {...args} onChange={handleChange} />;
+  },
   args: {
     checked: true,
     disabled: true,
     label: 'Disabled checked switch',
-    onChange: undefined,
   },
 };
 
 export const AllVariants: Story = {
-  render: () => (
-    <div
-      style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}
-    >
-      <InteractiveSwitch checked={false} label="Switch (off)" onChange={undefined} />
-      <InteractiveSwitch checked={true} label="Switch (on)" onChange={undefined} />
-      <InteractiveSwitch
-        checked={false}
-        disabled={true}
-        label="Disabled switch (off)"
-        onChange={undefined}
-      />
-      <InteractiveSwitch
-        checked={true}
-        disabled={true}
-        label="Disabled switch (on)"
-        onChange={undefined}
-      />
-    </div>
-  ),
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const handleChange = (checked: boolean) => {
+      updateArgs({ checked });
+    };
+
+    return (
+      <div
+        style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}
+      >
+        <Switch {...args} label="Interactive Switch" onChange={handleChange} />
+        <Switch checked={false} disabled={true} label="Disabled switch (off)" />
+        <Switch checked={true} disabled={true} label="Disabled switch (on)" />
+      </div>
+    );
+  },
   args: {
     checked: false,
-    onChange: undefined,
+    disabled: false,
   },
   parameters: {
     docs: {
