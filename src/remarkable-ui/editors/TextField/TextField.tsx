@@ -9,6 +9,7 @@ type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChang
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
+  hideClearIcon?: boolean;
 };
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -22,6 +23,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       endIcon: EndIcon,
       onChange,
       className,
+      hideClearIcon = false,
       ...props
     },
     ref,
@@ -30,7 +32,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       <div className={clsx(styles.input, className)}>
         {StartIcon && <StartIcon />}
         <input
-          type="text"
+          type={props.type || 'text'}
           role={role}
           value={value}
           disabled={disabled}
@@ -40,7 +42,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           {...props}
         />
         <div>
-          {value && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
+          {value && !hideClearIcon && (
+            <IconX className={styles.clearIcon} onClick={() => onChange('')} />
+          )}
           {EndIcon && <EndIcon />}
         </div>
       </div>
