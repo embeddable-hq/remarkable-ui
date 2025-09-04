@@ -81,6 +81,16 @@ export const getBarChartProOptions = (
 ): Partial<ChartOptions<'bar'>> => {
   const themeFormatter = getThemeFormatter(theme);
   return {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label(context) {
+            const raw = context.raw as number;
+            return `${context.dataset.label || ''}: ${themeFormatter.data(measure, raw)}`;
+          },
+        },
+      },
+    },
     scales: {
       y: {
         ticks: {
