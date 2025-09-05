@@ -1,11 +1,11 @@
 import { InputField } from '../InputField/InputField';
-import { forwardRef, useState, useCallback } from 'react';
+import { forwardRef, useCallback } from 'react';
 
 type NumberFieldProps = Omit<
   React.ComponentProps<typeof InputField>,
   'onChange' | 'type' | 'value'
 > & {
-  defaultValue?: number;
+  value?: number;
   step?: number;
   min?: number;
   max?: number;
@@ -15,7 +15,7 @@ type NumberFieldProps = Omit<
 export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
     {
-      defaultValue = 0,
+      value = 0,
       disabled,
       placeholder = 'Enter number',
       step = 1,
@@ -27,13 +27,10 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
     },
     ref,
   ) => {
-    const [value, setValue] = useState(defaultValue);
-
     const handleInputChange = useCallback(
       (inputVal: string) => {
         const numValue = parseFloat(inputVal);
         if (!isNaN(numValue)) {
-          setValue(numValue);
           onChange?.(numValue);
         }
       },

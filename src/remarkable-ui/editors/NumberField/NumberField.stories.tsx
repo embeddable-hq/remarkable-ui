@@ -19,7 +19,7 @@ export const Empty: Story = {
 
 export const Filled: Story = {
   args: {
-    defaultValue: 42,
+    value: 42,
     onChange: (value) => console.log('onChange', value),
   },
 };
@@ -27,14 +27,14 @@ export const Filled: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
-    defaultValue: 10,
+    value: 10,
     onChange: (value) => console.log('onChange', value),
   },
 };
 
 export const WithMinMax: Story = {
   args: {
-    defaultValue: 5,
+    value: 5,
     min: 0,
     max: 10,
     step: 1,
@@ -44,7 +44,7 @@ export const WithMinMax: Story = {
 
 export const WithStep: Story = {
   args: {
-    defaultValue: 0,
+    value: 0,
     step: 0.5,
     onChange: (value) => console.log('onChange', value),
   },
@@ -53,7 +53,7 @@ export const WithStep: Story = {
 export const WithStartIcon: Story = {
   args: {
     startIcon: IconBoltFilled,
-    defaultValue: 25,
+    value: 25,
     onChange: (value) => console.log('onChange', value),
   },
 };
