@@ -71,3 +71,20 @@
 .clearIcon {
   cursor: pointer;
 }
+
+.inputContainer {
+  position: relative;
+}
+
+.requiredText {
+  padding-bottom: var(--em-form-padding-small, 0.5rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  right: 0;
+  font-size: var(--em-form-form-font-font-size-required, 0.75rem);
+  font-weight: var(--em-form-form-font-font-weight, 400);
+  line-height: var(--em-form-form-font-line-height, 1rem);
+  color: var(--em-form-section-font-font-color, #212129);
+}
