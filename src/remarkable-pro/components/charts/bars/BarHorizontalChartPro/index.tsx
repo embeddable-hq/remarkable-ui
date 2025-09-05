@@ -8,7 +8,7 @@ import { getBarChartProData, getBarChartProOptions } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
-type BarChartProProps = {
+type BarHorizontalChartProProps = {
   description: string;
   dimension: Dimension;
   measures: Measure[];
@@ -27,7 +27,7 @@ type BarChartProProps = {
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
-const BarHorizontalChartPro = (props: BarChartProProps) => {
+const BarHorizontalChartPro = (props: BarHorizontalChartProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
