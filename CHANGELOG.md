@@ -1,5 +1,12 @@
 # @embeddable/remarkable-ui
 
+## 0.0.17
+
+### Patch Changes
+
+- 5e97242: BarChartPro
+- 5e97242: Color assign on sessionStorage with theme uniqueId
+
 ## 0.0.16
 
 ### Patch Changes
