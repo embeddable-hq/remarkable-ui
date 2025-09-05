@@ -22,7 +22,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       endIcon: EndIcon,
       onChange,
       className,
-      hideClearIcon = false,
       ...props
     },
     ref,
@@ -37,7 +36,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         endIcon={EndIcon}
         onChange={onChange}
         className={className}
-        hideClearIcon={hideClearIcon}
         ref={ref}
         {...props}
       />

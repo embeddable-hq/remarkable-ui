@@ -24,6 +24,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       onChange,
       className,
       hideClearIcon = false,
+      type = 'text',
       ...props
     },
     ref,
@@ -32,7 +33,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       <div className={clsx(styles.input, className)}>
         {StartIcon && <StartIcon />}
         <input
-          type={props.type || 'text'}
+          type={type}
           role={role}
           value={value}
           disabled={disabled}
