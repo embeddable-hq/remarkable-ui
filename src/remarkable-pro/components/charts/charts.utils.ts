@@ -1,4 +1,5 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { i18n } from '../../theme/i18n/i18n';
 
 export const groupTailAsOther = (
   data: DataResponse['data'] = [],
@@ -12,7 +13,7 @@ export const groupTailAsOther = (
   const tail = data.slice(maxItems - 1);
 
   const aggregatedRow: Record<string, unknown> = {
-    [dimension.name]: 'Other',
+    [dimension.name]: i18n.t('common.other'),
   };
 
   for (const measure of measures) {
