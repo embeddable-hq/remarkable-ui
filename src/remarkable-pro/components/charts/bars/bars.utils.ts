@@ -14,7 +14,6 @@ export const getBarChartProData = (
     dimension: Dimension;
     measures: Measure[];
     maxItems?: number;
-    horizontal?: boolean;
   },
   theme: Theme = remarkableTheme,
 ): ChartData<'bar'> => {
@@ -66,8 +65,6 @@ export const getBarChartProData = (
         backgroundColor,
         borderColor,
         datalabels: {
-          anchor: 'end',
-          align: props.horizontal ? 'right' : 'top',
           formatter: (value) => themeFormatter.data(measure, value),
         },
       };

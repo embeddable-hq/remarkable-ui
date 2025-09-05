@@ -27,6 +27,12 @@ const getBarVerticalChartOptions = (
 ): Partial<ChartOptions<'bar'>> => {
   return mergician(defaultBarChartOptions, {
     indexAxis: 'x',
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'top',
+      },
+    },
     scales: {
       y: {
         grid: { display: true },
@@ -58,6 +64,12 @@ const getBarHorizontalChartOptions = (
 ): Partial<ChartOptions<'bar'>> => {
   return mergician(defaultBarChartOptions, {
     indexAxis: 'y',
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'right',
+      },
+    },
     scales: {
       x: {
         grid: { display: true },

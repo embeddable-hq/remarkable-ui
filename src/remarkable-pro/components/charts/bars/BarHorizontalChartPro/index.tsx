@@ -51,7 +51,7 @@ const BarHorizontalChartPro = (props: BarChartProProps) => {
   } = resolveI18nProps(props);
 
   const data = getBarChartProData(
-    { data: results.data, dimension, measures, maxItems: yAxisMaxItems, horizontal: true },
+    { data: results.data, dimension, measures, maxItems: yAxisMaxItems },
     theme,
   );
 
