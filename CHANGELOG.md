@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.0.15
+
+### Patch Changes
+
+- fba9565: BarChartPro
+
 ## 0.0.14
 
 ### Patch Changes
