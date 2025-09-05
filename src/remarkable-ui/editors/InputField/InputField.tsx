@@ -10,6 +10,7 @@ type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChan
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
   hideClearIcon?: boolean;
+  type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
 };
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
