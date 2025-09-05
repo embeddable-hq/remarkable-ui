@@ -56,7 +56,7 @@ const BarHorizontalChartPro = (props: BarChartProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measures[0]!, true), // Format Y axis based on first measure
+    getBarChartProOptions(theme, measures[0]!, true), // Format X axis based on first measure
     theme.charts?.barChartPro?.options || {},
   );
 
