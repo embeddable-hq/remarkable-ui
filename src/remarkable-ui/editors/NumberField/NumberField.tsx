@@ -1,8 +1,8 @@
-import { TextField } from '../TextField/TextField';
+import { InputField } from '../InputField/InputField';
 import { forwardRef, useState, useCallback } from 'react';
 
 type NumberFieldProps = Omit<
-  React.ComponentProps<typeof TextField>,
+  React.ComponentProps<typeof InputField>,
   'onChange' | 'type' | 'value'
 > & {
   defaultValue?: number;
@@ -23,7 +23,7 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
       max,
       onChange,
       className,
-      ...textFieldProps
+      ...inputFieldProps
     },
     ref,
   ) => {
@@ -41,8 +41,8 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
     );
 
     return (
-      <TextField
-        {...textFieldProps}
+      <InputField
+        {...inputFieldProps}
         value={value.toString()}
         disabled={disabled}
         placeholder={placeholder}
