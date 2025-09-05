@@ -28,7 +28,7 @@ export const getPieChartData = (
   const groupedData = groupTailAsOther(
     props.data,
     props.dimension,
-    props.measure,
+    [props.measure],
     props.maxLegendItems,
   );
 

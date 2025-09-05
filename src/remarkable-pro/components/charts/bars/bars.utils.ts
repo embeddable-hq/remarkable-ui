@@ -13,7 +13,7 @@ export const getBarChartProData = (
     data: DataResponse['data'];
     dimension: Dimension;
     measures: Measure[];
-    xAxisMaxItems?: number;
+    maxItems?: number;
   },
   theme: Theme = remarkableTheme,
 ): ChartData<'bar'> => {
@@ -26,12 +26,7 @@ export const getBarChartProData = (
     };
   }
 
-  const groupedData = groupTailAsOther(
-    props.data,
-    props.dimension,
-    props.measures[0]!,
-    props.xAxisMaxItems,
-  );
+  const groupedData = groupTailAsOther(props.data, props.dimension, props.measures, props.maxItems);
 
   return {
     labels: groupedData.map((item) => {
@@ -60,14 +55,11 @@ export const getBarChartProData = (
       );
 
       return {
-        label: measure.title,
+        label: measure.inputs?.displayName || measure.title,
         data: groupedData.map((item) => item[measure.name]),
         backgroundColor,
         borderColor,
         datalabels: {
-          color: 'black',
-          anchor: 'end',
-          align: 'top',
           formatter: (value) => themeFormatter.data(measure, value),
         },
       };
@@ -78,6 +70,7 @@ export const getBarChartProData = (
 export const getBarChartProOptions = (
   theme: Theme,
   measure: Measure,
+  horizontal: boolean = false,
 ): Partial<ChartOptions<'bar'>> => {
   const themeFormatter = getThemeFormatter(theme);
   return {
@@ -92,9 +85,18 @@ export const getBarChartProOptions = (
       },
     },
     scales: {
+      x: {
+        ticks: {
+          ...(horizontal && {
+            callback: (value) => themeFormatter.data(measure, value),
+          }),
+        },
+      },
       y: {
         ticks: {
-          callback: (value) => themeFormatter.data(measure, value),
+          ...(!horizontal && {
+            callback: (value) => themeFormatter.data(measure, value),
+          }),
         },
       },
     },

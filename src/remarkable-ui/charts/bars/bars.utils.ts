@@ -4,6 +4,7 @@ import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { mergician } from 'mergician';
 import { BarChartConfigurationProps, BarChartHorizontalConfigurationProps } from './bars.types';
 import { defaultBarChartOptions } from './bars.constants';
+import { Context } from 'chartjs-plugin-datalabels';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   return {
@@ -27,6 +28,18 @@ const getBarVerticalChartOptions = (
 ): Partial<ChartOptions<'bar'>> => {
   return mergician(defaultBarChartOptions, {
     indexAxis: 'x',
+    plugins: {
+      datalabels: {
+        anchor: (context: Context) => {
+          const value = context.dataset.data[context.dataIndex] as number;
+          return value >= 0 ? 'end' : 'start';
+        },
+        align: (context: Context) => {
+          const value = context.dataset.data[context.dataIndex] as number;
+          return value >= 0 ? 'top' : 'bottom';
+        },
+      },
+    },
     scales: {
       y: {
         grid: { display: true },
@@ -58,6 +71,18 @@ const getBarHorizontalChartOptions = (
 ): Partial<ChartOptions<'bar'>> => {
   return mergician(defaultBarChartOptions, {
     indexAxis: 'y',
+    plugins: {
+      datalabels: {
+        anchor: (context: Context) => {
+          const value = context.dataset.data[context.dataIndex] as number;
+          return value >= 0 ? 'end' : 'start';
+        },
+        align: (context: Context) => {
+          const value = context.dataset.data[context.dataIndex] as number;
+          return value >= 0 ? 'right' : 'left';
+        },
+      },
+    },
     scales: {
       x: {
         grid: { display: true },
@@ -108,9 +133,7 @@ export const getBarChartOptions = (
     plugins: {
       legend: { display: showLegend },
       datalabels: {
-        display: showValueLabels,
-        anchor: 'end',
-        align: 'end',
+        display: showValueLabels ? 'auto' : false,
       },
       tooltip: {
         enabled: showTooltips,

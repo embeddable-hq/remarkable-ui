@@ -1,6 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartPro from './index';
+import BarHorizontalChartPro from './index';
 import {
   dataset,
   description,
@@ -13,15 +13,15 @@ import {
   showLogarithmicScale,
   xAxisLabel,
   yAxisLabel,
-  reverseXAxis,
-  yAxisRangeMin,
-  yAxisRangeMax,
-  xAxisMaxItems,
+  reverseYAxis,
+  xAxisRangeMin,
+  xAxisRangeMax,
+  yAxisMaxItems,
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartPro',
-  label: 'Bar Chart',
+  name: 'BarHorizontalChartPro',
+  label: 'Bar Horizontal Chart',
   category: 'Bar Charts',
   inputs: [
     dataset,
@@ -35,10 +35,10 @@ export const meta = {
     showLogarithmicScale,
     xAxisLabel,
     yAxisLabel,
-    reverseXAxis,
-    yAxisRangeMin,
-    yAxisRangeMax,
-    xAxisMaxItems,
+    reverseYAxis,
+    xAxisRangeMin,
+    xAxisRangeMax,
+    yAxisMaxItems,
   ],
   events: [
     {
@@ -55,7 +55,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartPro, meta, {
+export default defineComponent(BarHorizontalChartPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
