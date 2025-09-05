@@ -1,7 +1,8 @@
-import { IconX, TablerIcon } from '@tabler/icons-react';
-import styles from './TextField.module.css';
-import clsx from 'clsx';
+import { TablerIcon } from '@tabler/icons-react';
 import { forwardRef } from 'react';
+import { InputField } from '../InputField/InputField';
+import styles from './TextField.module.css';
+import { Typography } from '../../shared/Typography/Typography';
 
 type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
@@ -9,6 +10,7 @@ type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChang
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
+  characterLimit?: number;
 };
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -22,27 +24,40 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       endIcon: EndIcon,
       onChange,
       className,
+      characterLimit,
       ...props
     },
     ref,
   ) => {
+    const currentLength = value?.length || 0;
+
+    const handleChange = (newValue: string) => {
+      if (characterLimit && newValue.length > characterLimit) {
+        return; // Prevent typing beyond the limit
+      }
+      onChange(newValue);
+    };
+
     return (
-      <div className={clsx(styles.input, className)}>
-        {StartIcon && <StartIcon />}
-        <input
-          type="text"
-          role={role}
+      <div className={styles.textField}>
+        <InputField
           value={value}
           disabled={disabled}
           placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
+          role={role}
+          startIcon={StartIcon}
+          endIcon={EndIcon}
+          onChange={handleChange}
+          className={className}
           ref={ref}
+          clearable
           {...props}
         />
-        <div>
-          {value && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
-          {EndIcon && <EndIcon />}
-        </div>
+        {characterLimit && (
+          <Typography as="span" className={styles.characterCount}>
+            {currentLength}/{characterLimit} Characters
+          </Typography>
+        )}
       </div>
     );
   },
