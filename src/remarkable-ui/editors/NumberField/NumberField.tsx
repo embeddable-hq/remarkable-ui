@@ -27,13 +27,10 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
     },
     ref,
   ) => {
-    // Convert value to string for display, handling null/undefined
-    const displayValue = value === null || value === undefined ? '' : value.toString();
-
     return (
       <InputField
         {...inputFieldProps}
-        value={displayValue}
+        value={value?.toString() || ''}
         disabled={disabled}
         placeholder={placeholder}
         onChange={(value) => onChange?.(+value)}
