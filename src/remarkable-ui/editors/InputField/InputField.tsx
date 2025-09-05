@@ -3,7 +3,7 @@ import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
-type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
+export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
   placeholder?: string;
   startIcon?: TablerIcon;

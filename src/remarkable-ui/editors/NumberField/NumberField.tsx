@@ -1,10 +1,7 @@
-import { InputField } from '../InputField/InputField';
+import { InputField, InputFieldProps } from '../InputField/InputField';
 import { forwardRef } from 'react';
 
-type NumberFieldProps = Omit<
-  React.ComponentProps<typeof InputField>,
-  'onChange' | 'type' | 'value'
-> & {
+type NumberFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
   value?: number | null;
   step?: number;
   min?: number;

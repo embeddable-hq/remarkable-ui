@@ -1,12 +1,10 @@
-import { TablerIcon } from '@tabler/icons-react';
 import { forwardRef } from 'react';
 import { InputField } from '../InputField/InputField';
+import { InputFieldProps } from '../InputField/InputField';
 
-type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
+type TextFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
+  characterLimit?: number;
   value?: string;
-  placeholder?: string;
-  startIcon?: TablerIcon;
-  endIcon?: TablerIcon;
   onChange: (value: string) => void;
 };
 
