@@ -1,0 +1,126 @@
+.switchContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--em-secondary-btn-padding-medium-left, 0.75rem);
+}
+
+.switchLabel {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+
+  .switchInput {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    /* Focus styles for keyboard navigation */
+    &:focus + .switchTrack {
+      outline: var(--em-border-width-default) solid var(--em-switch-focus-color, #0066cc);
+      outline-offset: var(--em-border-width-default);
+    }
+
+    &:focus:not(:focus-visible) + .switchTrack {
+      outline: none;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      &:focus + .switchTrack {
+        outline: var(--em-border-width-default, 0.0625rem) solid;
+        outline-offset: var(--em-border-width-default, 0.0625rem);
+      }
+    }
+  }
+
+  .switchTrack {
+    position: relative;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: var(--em-width-800, 2rem);
+    height: var(--em-height-400, 1rem);
+    border-radius: var(--em-border-radius-500, 624.9375rem);
+    background: var(--em-switch-background-color-off, #e4e4ea);
+    transition: all 0.2s ease-in-out;
+    vertical-align: middle;
+
+    .switchThumb {
+      position: absolute;
+      top: 50%;
+      left: var(--em-padding-050, 0.125rem);
+      transform: translateY(-50%);
+      background: var(--em-switch-thumb-background-color, #ffffff);
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+      box-shadow: var(--em-switch-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+      width: var(--em-switch-slider-size-width, 0.75rem);
+      height: var(--em-switch-slider-size-height, 0.75rem);
+    }
+  }
+
+  /* Checked state */
+  &.checked {
+    .switchTrack {
+      background: var(--em-switch-background-color-on, #212129);
+    }
+
+    .switchThumb {
+      left: calc(100% - var(--em-padding-050, 0.125rem));
+      transform: translate(-100%, -50%);
+    }
+  }
+
+  /* Hover states */
+  &:not(.disabled):hover .switchTrack {
+    background: var(--em-switch-track-background-color-hover, #e4e4ea);
+  }
+
+  &:not(.disabled).checked:hover .switchTrack {
+    background: var(--em-switch-track-background-color-hover-checked, #212129);
+  }
+
+  /* Disabled state */
+  &.disabled {
+    cursor: not-allowed;
+
+    .switchTrack {
+      background: var(--em-switch-track-background-color-disabled, #f5f5f6);
+      cursor: not-allowed;
+    }
+
+    .switchThumb {
+      background: var(--em-switch-thumb-background-color-disabled, #d2d2d5);
+      box-shadow: none;
+    }
+
+    .labelText {
+      color: var(--em-switch-label-color-disabled, #b8b8bd);
+      cursor: not-allowed;
+    }
+  }
+
+  .labelText {
+    /* TODO: To enable once we have a font family */
+    /* font-family: var(--em-form-section-font-font-family, Inter); */
+    color: var(--em-form-section-font-font-color, #212129);
+    font-size: var(--em-form-form-font-font-size-title, 0.875rem);
+    font-style: normal;
+    font-weight: var(--em-form-form-font-font-weight, 400);
+    line-height: var(--em-form-form-font-line-height, 1rem);
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: var(--em-form-padding-small, 0.5rem);
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .switchTrack,
+  .switchThumb {
+    transition: none;
+  }
+}
