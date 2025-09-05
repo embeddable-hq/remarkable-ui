@@ -14,15 +14,16 @@ import { BaseBarChartProps } from './bars.types';
 import { getSegmentIndexClicked } from '../chartjs.utils';
 import { getBarChartData, getBarChartOptions } from './bars.utils';
 import styles from '../charts.module.css';
+import { mergician } from 'mergician';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LogarithmicScale, Title, Tooltip, Legend);
 
 export type BarChartProps = BaseBarChartProps;
 
-export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, ...props }) => {
+export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, options = {}, ...props }) => {
   const chartRef = useRef(null);
 
-  const barChartOptions = getBarChartOptions(props);
+  const barChartOptions = mergician(getBarChartOptions(props), options);
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const indexClicked = getSegmentIndexClicked(event, chartRef);

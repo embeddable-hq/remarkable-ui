@@ -1,8 +1,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
 
-type BarChartAxisRange = { min: number; max: number } | undefined;
-
-export type BarChartConfigurationProps = {
+export type BarChartDefaultConfigurationProps = {
   horizontal?: boolean;
   showLegend?: boolean;
   showTooltips?: boolean;
@@ -10,14 +8,22 @@ export type BarChartConfigurationProps = {
   showLogarithmicScale?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
+};
+
+export type BarChartConfigurationProps = BarChartDefaultConfigurationProps & {
+  yAxisRangeMin?: number;
+  yAxisRangeMax?: number;
   reverseXAxis?: boolean;
+};
+
+export type BarChartHorizontalConfigurationProps = BarChartDefaultConfigurationProps & {
+  xAxisRangeMin?: number;
+  xAxisRangeMax?: number;
   reverseYAxis?: boolean;
-  yAxisRange?: BarChartAxisRange;
-  xAxisRange?: BarChartAxisRange;
 };
 
 export type BaseBarChartProps = {
   data: ChartData<'bar'>;
   options?: Partial<ChartOptions<'bar'>>;
   onSegmentClick?: (index: number | undefined) => void;
-} & BarChartConfigurationProps;
+} & (BarChartConfigurationProps | BarChartHorizontalConfigurationProps);

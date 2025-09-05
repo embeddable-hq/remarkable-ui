@@ -13,6 +13,7 @@ export type ThemeCharts = {
   pieChartPro?: { options: Partial<ChartOptions<'pie'>> };
   donutChartPro?: { options: Partial<ChartOptions<'pie'>> };
   donutLabelChartPro?: { options: Partial<ChartOptions<'pie'>> };
+  barChartPro?: { options: Partial<ChartOptions<'bar'>> };
   backgroundColors?: string[];
   borderColors?: string[];
   legendPosition: ThemeChartsLegendPosition;

@@ -86,10 +86,35 @@ export const dimension = {
   inputs: subInputs,
 } as const;
 
+export const dimensions = {
+  name: 'dimensions',
+  type: 'dimension',
+  label: 'Dimensions',
+  config: {
+    dataset: 'dataset',
+  },
+  required: true,
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
 export const measure = {
   name: 'measure',
   type: 'measure',
   label: 'Measure',
+  config: {
+    dataset: 'dataset',
+  },
+  required: true,
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
+export const measures = {
+  name: 'measures',
+  type: 'measure',
+  label: 'Measures',
+  array: true,
   config: {
     dataset: 'dataset',
   },
@@ -133,6 +158,74 @@ export const showValueLabels = {
   type: 'boolean',
   label: 'Show Value Labels',
   defaultValue: true,
+  category: 'Component Settings',
+} as const;
+
+export const showLogarithmicScale = {
+  name: 'showLogarithmicScale',
+  type: 'boolean',
+  label: 'Show Logarithmic Scale',
+  defaultValue: false,
+  category: 'Component Settings',
+} as const;
+
+export const xAxisLabel = {
+  name: 'xAxisLabel',
+  type: 'string',
+  label: 'X-axis Label',
+  category: 'Component Settings',
+} as const;
+
+export const yAxisLabel = {
+  name: 'yAxisLabel',
+  type: 'string',
+  label: 'Y-axis Label',
+  category: 'Component Settings',
+} as const;
+
+export const reverseXAxis = {
+  name: 'reverseXAxis',
+  type: 'boolean',
+  label: 'Reverse X-axis',
+  defaultValue: false,
+  category: 'Component Settings',
+} as const;
+
+export const reverseYAxis = {
+  name: 'reverseYAxis',
+  type: 'boolean',
+  label: 'Reverse Y-axis',
+  defaultValue: false,
+  category: 'Component Settings',
+} as const;
+
+export const yAxisRangeMin = {
+  name: 'yAxisRangeMin',
+  type: 'number',
+  label: 'Y-axis Range Min',
+  category: 'Component Settings',
+} as const;
+
+export const yAxisRangeMax = {
+  name: 'yAxisRangeMax',
+  type: 'number',
+  label: 'Y-axis Range Max',
+  category: 'Component Settings',
+} as const;
+
+export const xAxisMaxItems = {
+  name: 'xAxisMaxItems',
+  type: 'number',
+  label: 'Max X-axis Items',
+  defaultValue: 10,
+  category: 'Component Settings',
+} as const;
+
+export const yAxisMaxItems = {
+  name: 'maxLegendItems',
+  type: 'number',
+  label: 'Max Y-axis Items',
+  defaultValue: 10,
   category: 'Component Settings',
 } as const;
 
