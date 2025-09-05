@@ -27,7 +27,6 @@ export type ThemeEditors = {
 };
 
 export type Theme = {
-  id: string;
   i18n: ThemeI18n;
   charts: ThemeCharts;
   styles: ThemeStyles;
