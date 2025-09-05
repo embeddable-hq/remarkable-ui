@@ -9,7 +9,7 @@ type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChan
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
-  hideClearIcon?: boolean;
+  clearable?: boolean;
   type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
 };
 
@@ -24,7 +24,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       endIcon: EndIcon,
       onChange,
       className,
-      hideClearIcon = false,
+      clearable = false,
       type = 'text',
       ...props
     },
@@ -44,7 +44,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           {...props}
         />
         <div>
-          {value && !hideClearIcon && (
+          {value && !clearable && (
             <IconX className={styles.clearIcon} onClick={() => onChange('')} />
           )}
           {EndIcon && <EndIcon />}

@@ -34,7 +34,6 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
         disabled={disabled}
         placeholder={placeholder}
         onChange={(value) => onChange?.(+value)}
-        hideClearIcon={true}
         type="number"
         step={step}
         min={min}

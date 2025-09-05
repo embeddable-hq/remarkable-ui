@@ -8,7 +8,6 @@ type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChang
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
-  hideClearIcon?: boolean;
 };
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -37,6 +36,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         onChange={onChange}
         className={className}
         ref={ref}
+        clearable
         {...props}
       />
     );
