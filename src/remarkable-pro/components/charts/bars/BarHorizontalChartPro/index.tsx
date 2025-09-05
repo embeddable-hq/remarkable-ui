@@ -13,21 +13,21 @@ type BarChartProProps = {
   dimension: Dimension;
   measures: Measure[];
   results: DataResponse;
-  title: string;
-  xAxisLabel: string;
-  xAxisMaxItems: number;
-  yAxisLabel: string;
-  yAxisRangeMin?: number;
-  yAxisRangeMax?: number;
+  reverseYAxis: boolean;
   showLegend: boolean;
   showLogarithmicScale: boolean;
   showTooltips: boolean;
   showValueLabels: boolean;
-  reverseXAxis: boolean;
+  title: string;
+  xAxisLabel: string;
+  xAxisRangeMax?: number;
+  xAxisRangeMin?: number;
+  yAxisLabel: string;
+  yAxisMaxItems: number;
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
-const BarChartPro = (props: BarChartProProps) => {
+const BarHorizontalChartPro = (props: BarChartProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -36,27 +36,27 @@ const BarChartPro = (props: BarChartProProps) => {
     dimension,
     measures,
     results,
-    title,
-    xAxisLabel,
-    xAxisMaxItems,
-    yAxisLabel,
-    yAxisRangeMin,
-    yAxisRangeMax,
+    reverseYAxis,
     showLegend,
     showLogarithmicScale,
     showTooltips,
     showValueLabels,
-    reverseXAxis,
+    title,
+    xAxisLabel,
+    xAxisRangeMax,
+    xAxisRangeMin,
+    yAxisLabel,
+    yAxisMaxItems,
     onSegmentClick,
   } = resolveI18nProps(props);
 
   const data = getBarChartProData(
-    { data: results.data, dimension, measures, maxItems: xAxisMaxItems },
+    { data: results.data, dimension, measures, maxItems: yAxisMaxItems, horizontal: true },
     theme,
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measures[0]!), // Format Y axis based on first measure
+    getBarChartProOptions(theme, measures[0]!, true), // Format Y axis based on first measure
     theme.charts?.barChartPro?.options || {},
   );
 
@@ -75,21 +75,22 @@ const BarChartPro = (props: BarChartProProps) => {
       title={title}
     >
       <BarChart
+        horizontal
         data={data}
-        onSegmentClick={handleSegmentClick}
+        options={options}
+        reverseYAxis={reverseYAxis}
         showLegend={showLegend}
+        showLogarithmicScale={showLogarithmicScale}
         showTooltips={showTooltips}
         showValueLabels={showValueLabels}
-        showLogarithmicScale={showLogarithmicScale}
         xAxisLabel={xAxisLabel}
+        xAxisRangeMax={xAxisRangeMax}
+        xAxisRangeMin={xAxisRangeMin}
         yAxisLabel={yAxisLabel}
-        reverseXAxis={reverseXAxis}
-        yAxisRangeMin={yAxisRangeMin}
-        yAxisRangeMax={yAxisRangeMax}
-        options={options}
+        onSegmentClick={handleSegmentClick}
       />
     </ChartCard>
   );
 };
 
-export default BarChartPro;
+export default BarHorizontalChartPro;

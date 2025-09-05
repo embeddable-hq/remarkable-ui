@@ -13,7 +13,8 @@ export const getBarChartProData = (
     data: DataResponse['data'];
     dimension: Dimension;
     measures: Measure[];
-    xAxisMaxItems?: number;
+    maxItems?: number;
+    horizontal?: boolean;
   },
   theme: Theme = remarkableTheme,
 ): ChartData<'bar'> => {
@@ -30,7 +31,7 @@ export const getBarChartProData = (
     props.data,
     props.dimension,
     props.measures[0]!,
-    props.xAxisMaxItems,
+    props.maxItems,
   );
 
   return {
@@ -65,9 +66,8 @@ export const getBarChartProData = (
         backgroundColor,
         borderColor,
         datalabels: {
-          color: 'black',
           anchor: 'end',
-          align: 'top',
+          align: props.horizontal ? 'right' : 'top',
           formatter: (value) => themeFormatter.data(measure, value),
         },
       };
@@ -78,6 +78,7 @@ export const getBarChartProData = (
 export const getBarChartProOptions = (
   theme: Theme,
   measure: Measure,
+  horizontal: boolean = false,
 ): Partial<ChartOptions<'bar'>> => {
   const themeFormatter = getThemeFormatter(theme);
   return {
@@ -92,9 +93,18 @@ export const getBarChartProOptions = (
       },
     },
     scales: {
+      x: {
+        ticks: {
+          ...(horizontal && {
+            callback: (value) => themeFormatter.data(measure, value),
+          }),
+        },
+      },
       y: {
         ticks: {
-          callback: (value) => themeFormatter.data(measure, value),
+          ...(!horizontal && {
+            callback: (value) => themeFormatter.data(measure, value),
+          }),
         },
       },
     },
