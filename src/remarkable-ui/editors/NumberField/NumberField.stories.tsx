@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { NumberField } from './NumberField';
 import { IconBoltFilled } from '@tabler/icons-react';
+import { useArgs } from 'storybook/internal/preview-api';
 
 const meta = {
   component: NumberField,
@@ -12,6 +13,17 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
   args: {
     onChange: (value) => console.log('onChange', value),
   },
@@ -25,6 +37,17 @@ export const Filled: Story = {
 };
 
 export const Disabled: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
   args: {
     disabled: true,
     value: 10,
@@ -33,6 +56,17 @@ export const Disabled: Story = {
 };
 
 export const WithMinMax: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
   args: {
     value: 5,
     min: 0,
@@ -43,6 +77,17 @@ export const WithMinMax: Story = {
 };
 
 export const WithStep: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
   args: {
     value: 0,
     step: 0.5,
@@ -51,6 +96,17 @@ export const WithStep: Story = {
 };
 
 export const WithStartIcon: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
   args: {
     startIcon: IconBoltFilled,
     value: 25,
