@@ -1,15 +1,15 @@
 import { InputField } from '../InputField/InputField';
-import { forwardRef, useCallback } from 'react';
+import { forwardRef } from 'react';
 
 type NumberFieldProps = Omit<
   React.ComponentProps<typeof InputField>,
   'onChange' | 'type' | 'value'
 > & {
-  value?: number;
+  value?: number | null;
   step?: number;
   min?: number;
   max?: number;
-  onChange?: (value: number) => void;
+  onChange?: (value: number | null) => void;
 };
 
 export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
@@ -27,23 +27,16 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
     },
     ref,
   ) => {
-    const handleInputChange = useCallback(
-      (inputVal: string) => {
-        const numValue = parseFloat(inputVal);
-        if (!isNaN(numValue)) {
-          onChange?.(numValue);
-        }
-      },
-      [onChange],
-    );
+    // Convert value to string for display, handling null/undefined
+    const displayValue = value === null || value === undefined ? '' : value.toString();
 
     return (
       <InputField
         {...inputFieldProps}
-        value={value.toString()}
+        value={displayValue}
         disabled={disabled}
         placeholder={placeholder}
-        onChange={handleInputChange}
+        onChange={(value) => onChange?.(+value)}
         hideClearIcon={true}
         type="number"
         step={step}

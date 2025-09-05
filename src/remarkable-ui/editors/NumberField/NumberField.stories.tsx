@@ -25,11 +25,23 @@ export const Empty: Story = {
     );
   },
   args: {
+    value: null,
     onChange: (value) => console.log('onChange', value),
   },
 };
 
 export const Filled: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
   args: {
     value: 42,
     onChange: (value) => console.log('onChange', value),
