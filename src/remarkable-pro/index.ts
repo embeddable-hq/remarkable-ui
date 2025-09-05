@@ -1,3 +1,6 @@
+// Utils
+export { getObjectStableKey } from './utils.ts/object.utils';
+
 // Types
 export { type DeepPartial } from './types/deep-partial';
 

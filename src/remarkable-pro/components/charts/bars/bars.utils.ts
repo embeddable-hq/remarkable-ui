@@ -7,6 +7,7 @@ import { groupTailAsOther } from '../charts.utils';
 import { i18n } from '../../../theme/i18n/i18n';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
+import { getObjectStableKey } from '../../../utils.ts/object.utils';
 
 export const getBarChartProData = (
   props: {
@@ -26,6 +27,7 @@ export const getBarChartProData = (
     };
   }
 
+  const themeKey = getObjectStableKey(theme);
   const groupedData = groupTailAsOther(props.data, props.dimension, props.measures, props.maxItems);
 
   return {
@@ -41,21 +43,21 @@ export const getBarChartProData = (
     }),
     datasets: props.measures.map((measure, index) => {
       const backgroundColor = getColor(
-        `${theme.id}.charts.backgroundColors`,
+        `${themeKey}.charts.backgroundColors`,
         measure.name,
         theme.charts.backgroundColors ?? chartColors,
         index,
       );
 
       const borderColor = getColor(
-        `${theme.id}.charts.borderColors`,
+        `${themeKey}.charts.borderColors`,
         measure.name,
         theme.charts.borderColors ?? chartColors,
         index,
       );
 
       return {
-        label: measure.inputs?.displayName || measure.title,
+        label: measure.title,
         data: groupedData.map((item) => item[measure.name]),
         backgroundColor,
         borderColor,

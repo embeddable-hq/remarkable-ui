@@ -7,6 +7,7 @@ import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
 import { i18n } from '../../../theme/i18n/i18n';
+import { getObjectStableKey } from '../../../utils.ts/object.utils';
 
 export const getPieChartData = (
   props: {
@@ -32,9 +33,11 @@ export const getPieChartData = (
     props.maxLegendItems,
   );
 
+  const themeKey = getObjectStableKey(theme);
+
   const backgroundColor = groupedData.map((item, i) =>
     getColor(
-      `${theme.id}.charts.backgroundColors`,
+      `${themeKey}.charts.backgroundColors`,
       `${props.dimension.name}.${item[props.dimension.name]}`,
       theme.charts.backgroundColors ?? chartColors,
       i,
@@ -43,7 +46,7 @@ export const getPieChartData = (
 
   const borderColor = groupedData.map((item, i) =>
     getColor(
-      `${theme.id}.charts.borderColors`,
+      `${themeKey}.charts.borderColors`,
       `${props.dimension.name}.${item[props.dimension.name]}`,
       theme.charts.borderColors ?? chartColors,
       i,
