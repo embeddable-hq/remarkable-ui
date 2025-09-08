@@ -24,3 +24,22 @@ export const Small = () => {
     </div>
   );
 };
+
+export const DefaultValue = () => {
+  return (
+    <div style={{ width: 500 }}>
+      <Index
+        selectedValue={{ relativeTimeString: 'Last 7 days', from: undefined, to: undefined }}
+        onChange={(value) => console.log('onChange', value)}
+      />
+    </div>
+  );
+};
+
+export const NoDefaultValue = () => {
+  return (
+    <div style={{ width: 500 }}>
+      <Index selectedValue={undefined} onChange={(value) => console.log('onChange', value)} />
+    </div>
+  );
+};

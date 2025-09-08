@@ -148,10 +148,3 @@ export const localToUtcDate = (date: Date): Date => {
   // subtracting that offset “undoes” the browser’s shift
   return new Date(date.getTime() - offsetMs);
 };
-
-export const utcToLocalDate = (date: Date): Date => {
-  // getTimezoneOffset() is “minutes to add to local → UTC”
-  const offsetMs = date.getTimezoneOffset() * 60_000;
-  // adding the offset “restores” local time
-  return new Date(date.getTime() + offsetMs);
-};
