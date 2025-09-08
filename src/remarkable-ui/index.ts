@@ -18,6 +18,8 @@ export { Switch } from './shared/Switch/Switch';
 export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';
 export { SelectList } from './editors/select/shared/SelectList/SelectList';
 export { SingleSelectField } from './editors/select/SingleSelectField/SingleSelectField';
+export { TextField } from './editors/TextField/TextField';
+export { NumberField } from './editors/NumberField/NumberField';
 
 // Charts
 export { DonutChart } from './charts/pies/DonutChart';
