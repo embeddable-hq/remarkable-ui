@@ -30,6 +30,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     },
     ref,
   ) => {
+    const showClearButton = value && clearable;
     return (
       <div className={clsx(styles.input, className)}>
         {StartIcon && <StartIcon />}
@@ -44,9 +45,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           {...props}
         />
         <div>
-          {value && !clearable && (
-            <IconX className={styles.clearIcon} onClick={() => onChange('')} />
-          )}
+          {showClearButton && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
           {EndIcon && <EndIcon />}
         </div>
       </div>
