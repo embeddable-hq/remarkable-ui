@@ -4,7 +4,7 @@ import styles from './TextField.module.css';
 import { Typography } from '../../shared/Typography/Typography';
 import { InputFieldProps } from '../InputField/InputField';
 
-type TextFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
+type TextFieldProps = InputFieldProps & {
   maxLength?: number;
   value?: string;
   onChange: (value: string) => void;
