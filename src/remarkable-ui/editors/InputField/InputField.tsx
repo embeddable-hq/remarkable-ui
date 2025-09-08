@@ -11,7 +11,6 @@ export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
   clearable?: boolean;
-  type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
 };
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
