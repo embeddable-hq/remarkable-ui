@@ -18,6 +18,7 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
         placeholder={placeholder}
         onChange={(value) => onChange?.(+value)}
         type="number"
+        clearable={false}
         ref={ref}
       />
     );
