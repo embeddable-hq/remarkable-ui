@@ -14,13 +14,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       value = '',
-      disabled,
       placeholder = 'Enter text',
-      role,
       startIcon: StartIcon,
       endIcon: EndIcon,
       onChange,
-      className,
       maxLength,
       ...props
     },
@@ -39,13 +36,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       <div className={styles.textField}>
         <InputField
           value={value}
-          disabled={disabled}
           placeholder={placeholder}
-          role={role}
           startIcon={StartIcon}
           endIcon={EndIcon}
           onChange={handleChange}
-          className={className}
           ref={ref}
           clearable
           {...props}
