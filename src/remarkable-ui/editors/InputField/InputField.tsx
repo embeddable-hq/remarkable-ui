@@ -53,7 +53,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {...props}
           />
           <div>
-            {value && !clearable && (
+            {value && clearable && (
               <IconX className={styles.clearIcon} onClick={() => onChange('')} />
             )}
             {EndIcon && <EndIcon />}
