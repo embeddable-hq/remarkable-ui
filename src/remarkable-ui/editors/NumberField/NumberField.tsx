@@ -10,32 +10,14 @@ type NumberFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
 };
 
 export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
-  (
-    {
-      value = 0,
-      disabled,
-      placeholder = 'Enter number',
-      step = 1,
-      min,
-      max,
-      onChange,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ value = 0, placeholder = 'Enter number', onChange, ...props }, ref) => {
     return (
       <InputField
         {...props}
         value={value?.toString() || ''}
-        disabled={disabled}
         placeholder={placeholder}
         onChange={(value) => onChange?.(+value)}
         type="number"
-        step={step}
-        min={min}
-        max={max}
-        className={className}
         ref={ref}
       />
     );
