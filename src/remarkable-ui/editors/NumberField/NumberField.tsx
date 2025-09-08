@@ -20,13 +20,13 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
       max,
       onChange,
       className,
-      ...inputFieldProps
+      ...props
     },
     ref,
   ) => {
     return (
       <InputField
-        {...inputFieldProps}
+        {...props}
         value={value?.toString() || ''}
         disabled={disabled}
         placeholder={placeholder}
