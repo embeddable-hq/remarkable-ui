@@ -6,8 +6,6 @@ import { InputFieldProps } from '../InputField/InputField';
 
 export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(
   ({ value = '', placeholder = 'Enter text', maxLength, ...props }, ref) => {
-    const currentLength = value?.length || 0;
-
     return (
       <div className={styles.textField}>
         <InputField
@@ -20,7 +18,7 @@ export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(
         />
         {maxLength && (
           <Typography as="span" className={styles.characterCount}>
-            {currentLength}/{maxLength} Characters
+            {value?.length}/{maxLength} Characters
           </Typography>
         )}
       </div>
