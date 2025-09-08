@@ -11,18 +11,7 @@ type TextFieldProps = InputFieldProps & {
 };
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  (
-    {
-      value = '',
-      placeholder = 'Enter text',
-      startIcon: StartIcon,
-      endIcon: EndIcon,
-      onChange,
-      maxLength,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ value = '', placeholder = 'Enter text', maxLength, ...props }, ref) => {
     const currentLength = value?.length || 0;
 
     return (
@@ -30,9 +19,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <InputField
           value={value}
           placeholder={placeholder}
-          startIcon={StartIcon}
-          endIcon={EndIcon}
-          onChange={onChange}
           ref={ref}
           maxLength={maxLength}
           clearable
