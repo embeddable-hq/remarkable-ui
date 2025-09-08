@@ -25,13 +25,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   ) => {
     const currentLength = value?.length || 0;
 
-    const handleChange = (newValue: string) => {
-      if (maxLength && newValue.length > maxLength) {
-        return; // Prevent typing beyond the limit
-      }
-      onChange(newValue);
-    };
-
     return (
       <div className={styles.textField}>
         <InputField
@@ -39,8 +32,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           placeholder={placeholder}
           startIcon={StartIcon}
           endIcon={EndIcon}
-          onChange={handleChange}
+          onChange={onChange}
           ref={ref}
+          maxLength={maxLength}
           clearable
           {...props}
         />
