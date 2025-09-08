@@ -79,7 +79,7 @@ export const WithMaxLengthMaxed: Story = {
     );
   },
   args: {
-    maxLength: 20,
+    maxLength: 25,
     value: 'This text is at the limit',
     placeholder: 'Enter text with character limit',
     onChange: (value) => console.log('onChange', value),
