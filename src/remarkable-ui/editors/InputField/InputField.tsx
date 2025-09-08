@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { Typography } from '../../shared/Typography/Typography';
 
-type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
+export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
   placeholder?: string;
   startIcon?: TablerIcon;
@@ -32,6 +32,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     },
     ref,
   ) => {
+    const showClearButton = value && clearable;
     return (
       <div className={styles.inputContainer}>
         {required && (
@@ -47,15 +48,13 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             value={value}
             disabled={disabled}
             placeholder={placeholder}
-            required={required}
             onChange={(e) => onChange(e.target.value)}
             ref={ref}
             {...props}
           />
           <div>
-            {value && !clearable && (
-              <IconX className={styles.clearIcon} onClick={() => onChange('')} />
-            )}
+            {showClearButton && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
+
             {EndIcon && <EndIcon />}
           </div>
         </div>

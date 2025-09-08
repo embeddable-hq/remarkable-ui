@@ -1,10 +1,7 @@
-import { InputField } from '../InputField/InputField';
+import { InputField, InputFieldProps } from '../InputField/InputField';
 import { forwardRef } from 'react';
 
-type NumberFieldProps = Omit<
-  React.ComponentProps<typeof InputField>,
-  'onChange' | 'type' | 'value'
-> & {
+type NumberFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
   value?: number | null;
   step?: number;
   min?: number;
@@ -13,32 +10,15 @@ type NumberFieldProps = Omit<
 };
 
 export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
-  (
-    {
-      value = 0,
-      disabled,
-      placeholder = 'Enter number',
-      step = 1,
-      min,
-      max,
-      onChange,
-      className,
-      ...inputFieldProps
-    },
-    ref,
-  ) => {
+  ({ value = 0, placeholder = 'Enter number', onChange, ...props }, ref) => {
     return (
       <InputField
-        {...inputFieldProps}
+        {...props}
         value={value?.toString() || ''}
-        disabled={disabled}
         placeholder={placeholder}
         onChange={(value) => onChange?.(+value)}
         type="number"
-        step={step}
-        min={min}
-        max={max}
-        className={className}
+        clearable={false}
         ref={ref}
       />
     );

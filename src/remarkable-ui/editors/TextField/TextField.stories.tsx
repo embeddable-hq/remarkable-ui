@@ -55,7 +55,7 @@ export const WithState: Story = {
   },
 };
 
-export const WithCharacterLimit: Story = {
+export const WithMaxLength: Story = {
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
 
@@ -64,13 +64,13 @@ export const WithCharacterLimit: Story = {
     );
   },
   args: {
-    characterLimit: 50,
+    maxLength: 50,
     placeholder: 'Enter text with character limit',
     onChange: (value) => console.log('onChange', value),
   },
 };
 
-export const WithCharacterLimitMaxed: Story = {
+export const WithMaxLengthMaxed: Story = {
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
 
@@ -79,7 +79,7 @@ export const WithCharacterLimitMaxed: Story = {
     );
   },
   args: {
-    characterLimit: 20,
+    maxLength: 20,
     value: 'This text is at the limit',
     placeholder: 'Enter text with character limit',
     onChange: (value) => console.log('onChange', value),
@@ -94,7 +94,7 @@ export const Required: Story = {
   },
 };
 
-export const RequiredWithCharacterLimit: Story = {
+export const RequiredWithMaxLength: Story = {
   render: (args) => {
     const [{ value }, updateArgs] = useArgs();
 
@@ -104,7 +104,7 @@ export const RequiredWithCharacterLimit: Story = {
   },
   args: {
     required: true,
-    characterLimit: 30,
+    maxLength: 30,
     placeholder: 'Required field with character limit',
     onChange: (value) => console.log('onChange', value),
   },

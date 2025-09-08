@@ -1,16 +1,13 @@
-import { TablerIcon } from '@tabler/icons-react';
 import { forwardRef } from 'react';
 import { InputField } from '../InputField/InputField';
 import styles from './TextField.module.css';
 import { Typography } from '../../shared/Typography/Typography';
+import { InputFieldProps } from '../InputField/InputField';
 
-type TextFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
+type TextFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
+  maxLength?: number;
   value?: string;
-  placeholder?: string;
-  startIcon?: TablerIcon;
-  endIcon?: TablerIcon;
   onChange: (value: string) => void;
-  characterLimit?: number;
 };
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
@@ -24,7 +21,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       endIcon: EndIcon,
       onChange,
       className,
-      characterLimit,
+      maxLength,
       ...props
     },
     ref,
@@ -32,7 +29,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     const currentLength = value?.length || 0;
 
     const handleChange = (newValue: string) => {
-      if (characterLimit && newValue.length > characterLimit) {
+      if (maxLength && newValue.length > maxLength) {
         return; // Prevent typing beyond the limit
       }
       onChange(newValue);
@@ -53,9 +50,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           clearable
           {...props}
         />
-        {characterLimit && (
+        {maxLength && (
           <Typography as="span" className={styles.characterCount}>
-            {currentLength}/{characterLimit} Characters
+            {currentLength}/{maxLength} Characters
           </Typography>
         )}
       </div>
