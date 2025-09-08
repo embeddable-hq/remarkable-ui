@@ -9,30 +9,12 @@ type TextFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
 };
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
-  (
-    {
-      value = '',
-      disabled,
-      placeholder = 'Enter text',
-      role,
-      startIcon: StartIcon,
-      endIcon: EndIcon,
-      onChange,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ value = '', placeholder = 'Enter text', onChange, ...props }, ref) => {
     return (
       <InputField
         value={value}
-        disabled={disabled}
         placeholder={placeholder}
-        role={role}
-        startIcon={StartIcon}
-        endIcon={EndIcon}
         onChange={onChange}
-        className={className}
         ref={ref}
         clearable
         {...props}
