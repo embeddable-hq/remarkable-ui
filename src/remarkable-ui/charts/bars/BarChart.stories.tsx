@@ -43,10 +43,9 @@ export const Vertical: Story = {
     showLogarithmicScale: false,
     xAxisLabel: '',
     yAxisLabel: '',
-    reverseXAxis: false,
     reverseYAxis: false,
-    yAxisRange: undefined,
-    xAxisRange: undefined,
+    xAxisRangeMin: undefined,
+    xAxisRangeMax: undefined,
   },
 };
 
@@ -68,8 +67,7 @@ export const Horizontal: Story = {
     xAxisLabel: '',
     yAxisLabel: '',
     reverseXAxis: false,
-    reverseYAxis: false,
-    yAxisRange: undefined,
-    xAxisRange: undefined,
+    yAxisRangeMin: undefined,
+    yAxisRangeMax: undefined,
   },
 };

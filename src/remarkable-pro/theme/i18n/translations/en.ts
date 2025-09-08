@@ -3,6 +3,7 @@ import { ResourceLanguage } from 'i18next';
 export const en: ResourceLanguage = {
   translation: {
     common: {
+      other: 'Other',
       noOptionsFound: 'No options found',
       noOptionsAvailable: 'No options available',
     },
