@@ -11,13 +11,13 @@ type NumberFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
 
 export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
   ({ value = null, placeholder = 'Enter number', onChange, ...props }, ref) => {
-    const handleChange = (stringValue: string) => {
-      if (stringValue === '' || stringValue === null || stringValue === undefined) {
+    const handleChange = (value: string) => {
+      if (value === '') {
         onChange?.(null);
         return;
       }
 
-      const numericValue = Number(stringValue);
+      const numericValue = Number(value);
       if (!isNaN(numericValue) && isFinite(numericValue)) {
         onChange?.(numericValue);
       }

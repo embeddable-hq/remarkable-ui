@@ -4,13 +4,7 @@ import styles from './TextField.module.css';
 import { Typography } from '../../shared/Typography/Typography';
 import { InputFieldProps } from '../InputField/InputField';
 
-type TextFieldProps = InputFieldProps & {
-  maxLength?: number;
-  value?: string;
-  onChange: (value: string) => void;
-};
-
-export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(
   ({ value = '', placeholder = 'Enter text', maxLength, ...props }, ref) => {
     const currentLength = value?.length || 0;
 
