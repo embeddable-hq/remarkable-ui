@@ -61,7 +61,6 @@ export const getBarStackedChartProData = (
     };
   });
 
-  // show the top number
   return {
     labels: axis.map((axisItem) => themeFormatter.data(dimension, axisItem)),
     datasets,
@@ -119,9 +118,6 @@ export const getBarChartProData = (
         data: groupedData.map((item) => item[measure.name]),
         backgroundColor,
         borderColor,
-        datalabels: {
-          formatter: (value) => themeFormatter.data(measure, value),
-        },
       };
     }),
   };
