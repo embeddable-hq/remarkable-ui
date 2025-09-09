@@ -41,7 +41,7 @@ const getBarVerticalChartOptions = (
     },
     scales: {
       y: {
-        stacked: config.stacked !== 'none',
+        stacked: config.stacked,
         grid: { display: true },
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
@@ -57,7 +57,7 @@ const getBarVerticalChartOptions = (
         },
       },
       x: {
-        stacked: config.stacked !== 'none',
+        stacked: config.stacked,
         ticks: {
           color: getStyle('--em-chart-grid-font-color-default'),
         },
@@ -89,7 +89,7 @@ const getBarHorizontalChartOptions = (
     },
     scales: {
       x: {
-        stacked: config.stacked !== 'none',
+        stacked: config.stacked,
         grid: { display: true },
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
@@ -105,7 +105,7 @@ const getBarHorizontalChartOptions = (
         },
       },
       y: {
-        stacked: config.stacked !== 'none',
+        stacked: config.stacked,
         ticks: {
           color: getStyle('--em-chart-grid-font-color-default'),
         },
@@ -126,7 +126,7 @@ export const getBarChartOptions = (
     showLegend = false,
     showTooltips = true,
     showValueLabels = false,
-    stacked = 'none',
+    stacked,
   } = props;
 
   const getOptions = horizontal ? getBarHorizontalChartOptions : getBarVerticalChartOptions;
