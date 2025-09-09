@@ -22,6 +22,22 @@ export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   };
 };
 
+const getDatalabelTotalDisplay = (context: Context) =>
+  context.datasetIndex === context.chart.data.datasets.length - 1 ? 'auto' : false;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getDatalabelTotalFormatter = (_value: any, context: Context) => {
+  const { datasets } = context.chart.data;
+  const i = context.dataIndex;
+
+  const total = datasets.reduce((sum, ds) => {
+    const val = ds.data[i] as number;
+    return sum + (val || 0);
+  }, 0);
+
+  return total > 0 ? total : '';
+};
+
 const getBarVerticalChartOptions = (
   config: BarChartConfigurationProps,
 ): Partial<ChartOptions<'bar'>> => {
@@ -29,13 +45,35 @@ const getBarVerticalChartOptions = (
     indexAxis: 'x',
     plugins: {
       datalabels: {
-        anchor: (context: Context) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value >= 0 ? 'end' : 'start';
-        },
-        align: (context: Context) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value >= 0 ? 'top' : 'bottom';
+        labels: {
+          total: {
+            anchor: (context) => {
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'end' : 'start';
+            },
+            align: (context) => {
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'top' : 'bottom';
+            },
+            display: getDatalabelTotalDisplay,
+            formatter: getDatalabelTotalFormatter,
+          },
+          value: {
+            anchor: (context) => {
+              if (config.stacked) {
+                return 'center';
+              }
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'end' : 'start';
+            },
+            align: (context) => {
+              if (config.stacked) {
+                return 'center';
+              }
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'top' : 'bottom';
+            },
+          },
         },
       },
     },
@@ -50,7 +88,7 @@ const getBarVerticalChartOptions = (
           }),
         },
         min: config.yAxisRangeMin,
-        max: config.yAxisRangeMax,
+        max: config.stacked === 'percentage' ? 100 : config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
           text: config.yAxisLabel ?? '',
@@ -67,7 +105,7 @@ const getBarVerticalChartOptions = (
         },
       },
     },
-  });
+  } as Partial<ChartOptions<'bar'>>);
 };
 
 const getBarHorizontalChartOptions = (
@@ -77,13 +115,35 @@ const getBarHorizontalChartOptions = (
     indexAxis: 'y',
     plugins: {
       datalabels: {
-        anchor: (context: Context) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value >= 0 ? 'end' : 'start';
-        },
-        align: (context: Context) => {
-          const value = context.dataset.data[context.dataIndex] as number;
-          return value >= 0 ? 'right' : 'left';
+        labels: {
+          total: {
+            anchor: (context) => {
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'end' : 'start';
+            },
+            align: (context) => {
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'right' : 'left';
+            },
+            display: getDatalabelTotalDisplay,
+            formatter: getDatalabelTotalFormatter,
+          },
+          value: {
+            anchor: (context) => {
+              if (config.stacked) {
+                return 'center';
+              }
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'end' : 'start';
+            },
+            align: (context) => {
+              if (config.stacked) {
+                return 'center';
+              }
+              const value = context.dataset.data[context.dataIndex] as number;
+              return value >= 0 ? 'right' : 'left';
+            },
+          },
         },
       },
     },
@@ -98,7 +158,7 @@ const getBarHorizontalChartOptions = (
           }),
         },
         min: config.xAxisRangeMin,
-        max: config.xAxisRangeMax,
+        max: config.stacked === 'percentage' ? 100 : config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
           text: config.xAxisLabel ?? '',
@@ -115,7 +175,7 @@ const getBarHorizontalChartOptions = (
         },
       },
     },
-  });
+  } as Partial<ChartOptions<'bar'>>);
 };
 
 export const getBarChartOptions = (
@@ -150,11 +210,13 @@ export const getBarChartOptions = (
       stacked100: { enable: stacked === 'percentage' },
       legend: { display: showLegend },
       datalabels: {
-        display: showValueLabels ? 'auto' : false,
+        display: (context) => {
+          return showValueLabels && context.dataset.data[context.dataIndex] !== 0 ? 'auto' : false;
+        },
       },
       tooltip: {
         enabled: showTooltips,
       },
     },
-  });
+  } as Partial<ChartOptions<'bar'>>);
 };

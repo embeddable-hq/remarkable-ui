@@ -191,6 +191,14 @@ export const reverseXAxis = {
   category: 'Component Settings',
 } as const;
 
+export const displayPercentages = {
+  name: 'displayPercentages',
+  type: 'boolean',
+  label: 'Display Percentages',
+  defaultValue: false,
+  category: 'Component Settings',
+} as const;
+
 export const reverseYAxis = {
   name: 'reverseYAxis',
   type: 'boolean',

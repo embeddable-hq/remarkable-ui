@@ -8,7 +8,65 @@ import { i18n } from '../../../theme/i18n/i18n';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
+import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
 
+export const getBarStackedChartProData = (
+  props: {
+    data: DataResponse['data'];
+    dimension: Dimension;
+    groupDimension: Dimension;
+    measure: Measure;
+  },
+  theme: Theme,
+): ChartData<'bar'> => {
+  const themeFormatter = getThemeFormatter(theme);
+  const { data = [], dimension, groupDimension, measure } = props;
+  // 1. Axis
+  const axis = [
+    ...new Set(
+      data.map((d) => d[dimension.name]).filter(Boolean), // remove nulls
+    ),
+  ].sort(); // sort ascending
+
+  // 2. Collect unique countries (groupBy)
+  const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))];
+
+  const themeKey = getObjectStableKey(theme);
+
+  const datasets = groupBy.map((groupByItem, index) => {
+    const backgroundColor = getColor(
+      `${themeKey}.charts.backgroundColors`,
+      groupByItem,
+      theme.charts.backgroundColors ?? chartContrastColors,
+      index,
+    );
+
+    const borderColor = getColor(
+      `${themeKey}.charts.borderColors`,
+      groupByItem,
+      theme.charts.borderColors ?? chartContrastColors,
+      index,
+    );
+
+    return {
+      label: themeFormatter.data(groupDimension, groupByItem),
+      backgroundColor,
+      borderColor,
+      data: axis.map((axisItem) => {
+        const record = data.find(
+          (d) => d[groupDimension.name] === groupByItem && d[dimension.name] === axisItem,
+        );
+        return record ? Number(record[measure.name]) : 0;
+      }),
+    };
+  });
+
+  // show the top number
+  return {
+    labels: axis.map((axisItem) => themeFormatter.data(dimension, axisItem)),
+    datasets,
+  };
+};
 export const getBarChartProData = (
   props: {
     data: DataResponse['data'];
@@ -73,6 +131,7 @@ export const getBarChartProOptions = (
   theme: Theme,
   measure: Measure,
   horizontal: boolean = false,
+  stacked100: boolean = false,
 ): Partial<ChartOptions<'bar'>> => {
   const themeFormatter = getThemeFormatter(theme);
   return {
@@ -89,16 +148,18 @@ export const getBarChartProOptions = (
     scales: {
       x: {
         ticks: {
-          ...(horizontal && {
-            callback: (value) => themeFormatter.data(measure, value),
-          }),
+          ...(horizontal &&
+            !stacked100 && {
+              callback: (value) => themeFormatter.data(measure, value),
+            }),
         },
       },
       y: {
         ticks: {
-          ...(!horizontal && {
-            callback: (value) => themeFormatter.data(measure, value),
-          }),
+          ...(!horizontal &&
+            !stacked100 && {
+              callback: (value) => themeFormatter.data(measure, value),
+            }),
         },
       },
     },
