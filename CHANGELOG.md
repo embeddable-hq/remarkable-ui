@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.0
+
+### Minor Changes
+
+- 020c651: Support react 19
+
 ## 0.0.17
 
 ### Patch Changes
