@@ -5,6 +5,12 @@ import { ChartData } from 'chart.js';
 
 const meta = {
   component: BarChart,
+  argTypes: {
+    stacked: {
+      options: ['none', 'stacked', 'percentage'],
+      control: { type: 'radio' },
+    },
+  },
 } satisfies Meta<typeof BarChart>;
 
 export default meta;
@@ -41,6 +47,7 @@ export const Vertical: Story = {
     showTooltips: true,
     showValueLabels: false,
     showLogarithmicScale: false,
+    stacked: 'none',
     xAxisLabel: '',
     yAxisLabel: '',
     reverseYAxis: false,
@@ -64,6 +71,7 @@ export const Horizontal: Story = {
     showTooltips: true,
     showValueLabels: false,
     showLogarithmicScale: false,
+    stacked: 'none',
     xAxisLabel: '',
     yAxisLabel: '',
     reverseXAxis: false,
