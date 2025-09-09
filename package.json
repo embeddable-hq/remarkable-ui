@@ -68,10 +68,10 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@embeddable.com/core": "^2.10.7",
-    "@embeddable.com/react": "^2.10.8",
-    "@embeddable.com/sdk-core": "^4.0.2",
-    "@embeddable.com/sdk-react": "^4.0.2",
+    "@embeddable.com/core": "^2.11.1",
+    "@embeddable.com/react": "^2.11.0",
+    "@embeddable.com/sdk-core": "^4.1.2",
+    "@embeddable.com/sdk-react": "^4.0.6",
     "@eslint/css": "^0.10.0",
     "@eslint/js": "^9.31.0",
     "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
@@ -98,8 +98,8 @@
     "typescript-eslint": "^8.37.0"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "18.2.0 || ^19.0.0",
+    "react-dom": "18.2.0 || ^19.0.0"
   },
   "optionalDependencies": {
     "@swc/core-linux-x64-gnu": "^1.13.5"
