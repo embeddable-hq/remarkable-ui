@@ -1,5 +1,5 @@
 import { ChartData, ChartOptions } from 'chart.js';
-import { chartColors } from '../charts.constants';
+import { chartContrastColors } from '../charts.constants';
 import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { mergician } from 'mergician';
 import { BarChartConfigurationProps, BarChartHorizontalConfigurationProps } from './bars.types';
@@ -10,12 +10,11 @@ export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   return {
     ...data,
     datasets: data.datasets?.map((dataset, index) => {
-      const colors = chartColors[index % chartColors.length];
+      const colors = chartContrastColors[index % chartContrastColors.length];
       const defaultDataset = {
         ...dataset,
         backgroundColor: colors,
         borderColor: colors,
-        borderRadius: getStyleNumber('--em-chart-style-border-radius-default'),
       };
 
       return mergician(defaultDataset, dataset) as typeof dataset;
@@ -42,9 +41,13 @@ const getBarVerticalChartOptions = (
     },
     scales: {
       y: {
+        stacked: config.stacked,
         grid: { display: true },
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
+          ...(config.stacked === 'percentage' && {
+            callback: (value: number | string) => value + '%',
+          }),
         },
         min: config.yAxisRangeMin,
         max: config.yAxisRangeMax,
@@ -54,6 +57,7 @@ const getBarVerticalChartOptions = (
         },
       },
       x: {
+        stacked: config.stacked,
         ticks: {
           color: getStyle('--em-chart-grid-font-color-default'),
         },
@@ -85,9 +89,13 @@ const getBarHorizontalChartOptions = (
     },
     scales: {
       x: {
+        stacked: config.stacked,
         grid: { display: true },
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
+          ...(config.stacked === 'percentage' && {
+            callback: (value: number | string) => value + '%',
+          }),
         },
         min: config.xAxisRangeMin,
         max: config.xAxisRangeMax,
@@ -97,6 +105,7 @@ const getBarHorizontalChartOptions = (
         },
       },
       y: {
+        stacked: config.stacked,
         ticks: {
           color: getStyle('--em-chart-grid-font-color-default'),
         },
@@ -117,6 +126,7 @@ export const getBarChartOptions = (
     showLegend = false,
     showTooltips = true,
     showValueLabels = false,
+    stacked,
   } = props;
 
   const getOptions = horizontal ? getBarHorizontalChartOptions : getBarVerticalChartOptions;
@@ -130,7 +140,14 @@ export const getBarChartOptions = (
         right: horizontal && showValueLabels ? 30 : 0,
       },
     },
+    elements: {
+      bar: {
+        borderRadius:
+          stacked === 'percentage' ? 0 : getStyleNumber('--em-chart-style-border-radius-default'),
+      },
+    },
     plugins: {
+      stacked100: { enable: stacked === 'percentage' },
       legend: { display: showLegend },
       datalabels: {
         display: showValueLabels ? 'auto' : false,
