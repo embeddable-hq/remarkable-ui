@@ -1,5 +1,17 @@
 # @embeddable/remarkable-ui
 
+## 0.1.1
+
+### Patch Changes
+
+- 3458726: Add the embeddable sdks to NPM bundle
+
+## 0.1.0
+
+### Minor Changes
+
+- 020c651: Support react 19
+
 ## 0.0.17
 
 ### Patch Changes
