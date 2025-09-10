@@ -17,7 +17,7 @@ import {
   yAxisRangeMin,
   yAxisRangeMax,
   xAxisMaxItems,
-  displayPercentages,
+  // displayPercentages,
 } from '../../../component.constants';
 
 export const meta = {
@@ -41,7 +41,7 @@ export const meta = {
     yAxisRangeMin,
     yAxisRangeMax,
     xAxisMaxItems,
-    displayPercentages,
+    // displayPercentages,
   ],
   events: [
     {

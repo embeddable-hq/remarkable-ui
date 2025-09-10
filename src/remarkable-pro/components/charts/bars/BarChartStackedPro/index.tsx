@@ -29,7 +29,7 @@ type BarChartStackedProProps = {
   showTooltips: boolean;
   showValueLabels: boolean;
   reverseXAxis: boolean;
-  displayPercentages: boolean;
+  // displayPercentages: boolean;
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
