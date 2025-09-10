@@ -161,6 +161,14 @@ export const showValueLabels = {
   category: 'Component Settings',
 } as const;
 
+export const showTotalLabels = {
+  name: 'showTotalLabels',
+  type: 'boolean',
+  label: 'Show Total Labels',
+  defaultValue: false,
+  category: 'Component Settings',
+} as const;
+
 export const showLogarithmicScale = {
   name: 'showLogarithmicScale',
   type: 'boolean',
@@ -173,14 +181,14 @@ export const xAxisLabel = {
   name: 'xAxisLabel',
   type: 'string',
   label: 'X-axis Label',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const yAxisLabel = {
   name: 'yAxisLabel',
   type: 'string',
   label: 'Y-axis Label',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const reverseXAxis = {
@@ -188,7 +196,7 @@ export const reverseXAxis = {
   type: 'boolean',
   label: 'Reverse X-axis',
   defaultValue: false,
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const displayPercentages = {
@@ -204,49 +212,50 @@ export const reverseYAxis = {
   type: 'boolean',
   label: 'Reverse Y-axis',
   defaultValue: false,
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const yAxisRangeMin = {
   name: 'yAxisRangeMin',
   type: 'number',
   label: 'Y-axis Range Min',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const yAxisRangeMax = {
   name: 'yAxisRangeMax',
   type: 'number',
   label: 'Y-axis Range Max',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const xAxisRangeMin = {
   name: 'xAxisRangeMin',
   type: 'number',
   label: 'X-axis Range Min',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const xAxisRangeMax = {
   name: 'xAxisRangeMax',
   type: 'number',
   label: 'X-axis Range Max',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
+// TODO: check where this is used
 export const xAxisMaxItems = {
   name: 'xAxisMaxItems',
   type: 'number',
   label: 'Max X-axis Items',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const yAxisMaxItems = {
   name: 'yAxisMaxItems',
   type: 'number',
   label: 'Max Y-axis Items',
-  category: 'Component Settings',
+  category: 'Axes Settings',
 } as const;
 
 export const maxLegendItems = {

@@ -16,7 +16,8 @@ import {
   reverseXAxis,
   yAxisRangeMin,
   yAxisRangeMax,
-  xAxisMaxItems,
+  maxLegendItems,
+  showTotalLabels,
   // displayPercentages,
 } from '../../../component.constants';
 
@@ -33,14 +34,15 @@ export const meta = {
     description,
     showLegend,
     showTooltips,
-    showValueLabels,
+    { ...showValueLabels, defaultValue: false },
     showLogarithmicScale,
     xAxisLabel,
     yAxisLabel,
     reverseXAxis,
     yAxisRangeMin,
     yAxisRangeMax,
-    xAxisMaxItems,
+    maxLegendItems,
+    showTotalLabels,
     // displayPercentages,
   ],
   events: [

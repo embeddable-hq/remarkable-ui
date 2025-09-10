@@ -4,33 +4,30 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { BarChart } from '../../../../../remarkable-ui/charts/bars/BarChart';
-import {
-  // getBarChartProData,
-  getBarChartProOptions,
-  getBarStackedChartProData,
-} from '../bars.utils';
+import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
 type BarChartStackedProProps = {
   description: string;
-  measure: Measure;
-  xAxis: Dimension;
   groupBy: Dimension;
+  maxLegendItems?: number;
+  measure: Measure;
+  onSegmentClick: (args: { dimensionValue: string | null }) => void;
   results: DataResponse;
-  title: string;
-  xAxisLabel: string;
-  xAxisMaxItems: number;
-  yAxisLabel: string;
-  yAxisRangeMin?: number;
-  yAxisRangeMax?: number;
+  reverseXAxis: boolean;
   showLegend: boolean;
   showLogarithmicScale: boolean;
   showTooltips: boolean;
+  showTotalLabels?: boolean;
   showValueLabels: boolean;
-  reverseXAxis: boolean;
+  title: string;
+  xAxis: Dimension;
+  xAxisLabel: string;
+  yAxisLabel: string;
+  yAxisRangeMax?: number;
+  yAxisRangeMin?: number;
   // displayPercentages: boolean;
-  onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
 const BarChartStackedPro = (props: BarChartStackedProProps) => {
@@ -54,6 +51,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     showTooltips,
     showValueLabels,
     reverseXAxis,
+    showTotalLabels,
     // displayPercentages,
     onSegmentClick,
   } = resolveI18nProps(props);
@@ -99,6 +97,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
         reverseXAxis={reverseXAxis}
         yAxisRangeMin={yAxisRangeMin}
         yAxisRangeMax={yAxisRangeMax}
+        showTotalLabels={showTotalLabels}
         options={options}
         stacked="stacked"
       />

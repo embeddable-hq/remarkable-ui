@@ -22,8 +22,10 @@ export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   };
 };
 
-const getDatalabelTotalDisplay = (context: Context) =>
-  context.datasetIndex === context.chart.data.datasets.length - 1 ? 'auto' : false;
+const getDatalabelTotalDisplay = (context: Context, showTotalLabels: boolean | undefined) =>
+  showTotalLabels && context.datasetIndex === context.chart.data.datasets.length - 1
+    ? 'auto'
+    : false;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDatalabelTotalFormatter = (_value: any, context: Context) => {
@@ -55,7 +57,7 @@ const getBarVerticalChartOptions = (
               const value = context.dataset.data[context.dataIndex] as number;
               return value >= 0 ? 'top' : 'bottom';
             },
-            display: getDatalabelTotalDisplay,
+            display: (context) => getDatalabelTotalDisplay(context, config.showTotalLabels),
             formatter: getDatalabelTotalFormatter,
           },
           value: {
@@ -126,7 +128,7 @@ const getBarHorizontalChartOptions = (
               const value = context.dataset.data[context.dataIndex] as number;
               return value >= 0 ? 'right' : 'left';
             },
-            display: getDatalabelTotalDisplay,
+            display: (context) => getDatalabelTotalDisplay(context, config.showTotalLabels),
             formatter: getDatalabelTotalFormatter,
           },
           value: {
