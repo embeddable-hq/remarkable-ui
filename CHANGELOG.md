@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.2
+
+### Patch Changes
+
+- c0fa8ec: Bug fix on the DateRangeSelectorField
+
 ## 0.1.1
 
 ### Patch Changes
