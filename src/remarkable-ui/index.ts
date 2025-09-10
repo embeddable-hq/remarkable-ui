@@ -11,6 +11,8 @@ export {
 } from './editors/select/shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 export { SelectListOptions } from './editors/select/shared/SelectList/SelectListOptions/SelectListOptions';
 export { Button } from './shared/Button/Button';
+export { PageOverlay } from './shared/PageOverlay';
+export type { PageOverlayProps } from './shared/PageOverlay';
 export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectField';
 export { Switch } from './shared/Switch/Switch';
 
