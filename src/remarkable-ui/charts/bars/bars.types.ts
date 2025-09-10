@@ -8,7 +8,7 @@ export type BarChartDefaultConfigurationProps = {
   showLogarithmicScale?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
-  stacked?: 'stacked' | 'percentage';
+  stacked?: 'stacked'; // TODO: Add the stacked option "percentage"
 };
 
 export type BarChartConfigurationProps = BarChartDefaultConfigurationProps & {

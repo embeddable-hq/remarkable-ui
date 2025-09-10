@@ -54,7 +54,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     showTooltips,
     showValueLabels,
     reverseXAxis,
-    displayPercentages,
+    // displayPercentages,
     onSegmentClick,
   } = resolveI18nProps(props);
 
@@ -100,7 +100,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
         yAxisRangeMin={yAxisRangeMin}
         yAxisRangeMax={yAxisRangeMax}
         options={options}
-        stacked={displayPercentages ? 'percentage' : 'stacked'}
+        stacked="stacked"
       />
     </ChartCard>
   );

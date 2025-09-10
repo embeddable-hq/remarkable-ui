@@ -83,12 +83,13 @@ const getBarVerticalChartOptions = (
         grid: { display: true },
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
-          ...(config.stacked === 'percentage' && {
-            callback: (value: number | string) => value + '%',
-          }),
+          // ...(config.stacked === 'percentage' && {
+          //   callback: (value: number | string) => value + '%',
+          // }),
         },
         min: config.yAxisRangeMin,
-        max: config.stacked === 'percentage' ? 100 : config.yAxisRangeMax,
+        // max: config.stacked === 'percentage' ? 100 : config.yAxisRangeMax,
+        max: config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
           text: config.yAxisLabel ?? '',
@@ -153,12 +154,13 @@ const getBarHorizontalChartOptions = (
         grid: { display: true },
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
-          ...(config.stacked === 'percentage' && {
-            callback: (value: number | string) => value + '%',
-          }),
+          // ...(config.stacked === 'percentage' && {
+          //   callback: (value: number | string) => value + '%',
+          // }),
         },
         min: config.xAxisRangeMin,
-        max: config.stacked === 'percentage' ? 100 : config.xAxisRangeMax,
+        // max: config.stacked === 'percentage' ? 100 : config.xAxisRangeMax,
+        max: config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
           text: config.xAxisLabel ?? '',
@@ -186,7 +188,6 @@ export const getBarChartOptions = (
     showLegend = false,
     showTooltips = true,
     showValueLabels = false,
-    stacked,
   } = props;
 
   const getOptions = horizontal ? getBarHorizontalChartOptions : getBarVerticalChartOptions;
@@ -202,12 +203,11 @@ export const getBarChartOptions = (
     },
     elements: {
       bar: {
-        borderRadius:
-          stacked === 'percentage' ? 0 : getStyleNumber('--em-chart-style-border-radius-default'),
+        borderRadius: getStyleNumber('--em-chart-style-border-radius-default'),
+        // stacked === 'percentage' ? 0 : getStyleNumber('--em-chart-style-border-radius-default'),
       },
     },
     plugins: {
-      stacked100: { enable: stacked === 'percentage' },
       legend: { display: showLegend },
       datalabels: {
         display: (context) => {

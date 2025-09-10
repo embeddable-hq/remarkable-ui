@@ -5,12 +5,6 @@ import { ChartData } from 'chart.js';
 
 const meta = {
   component: BarChart,
-  argTypes: {
-    stacked: {
-      options: ['stacked', 'percentage'],
-      control: { type: 'radio' },
-    },
-  },
 } satisfies Meta<typeof BarChart>;
 
 export default meta;
