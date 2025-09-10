@@ -1,8 +1,7 @@
 import dayjs from 'dayjs';
 import { DateTimeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
 import { SelectListOptionProps } from '../../../../remarkable-ui';
-import { TimeRange, TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { utcToLocalDate } from '../../../utils.ts/date.utils';
+import { TimeRangeDeserializedValue } from '@embeddable.com/core';
 
 export const getDateTimeSelectFieldProRangeLabel = (
   range: Omit<TimeRangeDeserializedValue, 'relativeTimeString'>,
@@ -37,24 +36,4 @@ export const getDateTimeSelectFieldProOptions = (
       label: option.label,
     };
   });
-};
-
-export const compareDateRangeFieldProOptionWithTimeRange = (
-  dateRangeSelectFieldProOption: DateTimeSelectFieldProOption,
-  timeRange: TimeRange,
-) => {
-  if (timeRange?.relativeTimeString) {
-    return (
-      timeRange.relativeTimeString.toLocaleLowerCase() ===
-      dateRangeSelectFieldProOption.value.toLocaleLowerCase()
-    );
-  }
-
-  const range = dateRangeSelectFieldProOption?.getRange?.();
-
-  return (
-    range?.from?.getTime() ===
-      (timeRange?.from ? utcToLocalDate(timeRange?.from)?.getTime() : undefined) &&
-    range?.to?.getTime() === (timeRange?.to ? utcToLocalDate(timeRange?.to)?.getTime() : undefined)
-  );
 };

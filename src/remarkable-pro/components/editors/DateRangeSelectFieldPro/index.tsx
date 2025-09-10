@@ -2,16 +2,13 @@ import { useTheme } from '@embeddable.com/react';
 import { SingleSelectField } from '../../../../remarkable-ui';
 import { Theme } from '../../../theme/theme.types';
 import { useLoadDayjsLocale } from '../../../utils.ts/date.utils';
-import {
-  compareDateRangeFieldProOptionWithTimeRange,
-  getDateTimeSelectFieldProOptions,
-} from './DateRangeSelectFieldPro.utils';
+import { getDateTimeSelectFieldProOptions } from './DateRangeSelectFieldPro.utils';
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
 import { i18n } from '../../../theme/i18n/i18n';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type DateRangeSelectFieldProProps = {
   description?: string;
@@ -25,47 +22,42 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
+  const { selectedValue, onChange } = props;
+  const [internalValue, setInternalValue] = useState<string | undefined>(
+    selectedValue?.relativeTimeString,
+  );
+
   // When updation the selectedValue in the builder, the defined value value can:
   // 1. exist in the options: relativeTimeString converted into TimeRange and onChange is called with the TimeRange
   // 2. not exist in the options: onChange is called with undefined (resets)
 
+  const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
+
   useEffect(() => {
-    if (!dayjsLocaleReady || !props.selectedValue?.relativeTimeString) {
-      return;
-    }
+    const relativeTimeString = selectedValue?.relativeTimeString;
+    if (relativeTimeString === '') return;
 
-    const selectedOption = theme.editors.dateRangeSelectFieldPro.options.find(
-      (o) => o.value === props.selectedValue!.relativeTimeString,
-    );
+    const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
 
-    props.onChange(selectedOption ? (selectedOption.getRange() as TimeRange) : undefined);
-  }, [dayjsLocaleReady, props, theme.editors.dateRangeSelectFieldPro.options]);
+    setInternalValue(matchedOption ? matchedOption.value : undefined);
+  }, [selectedValue, dateRangeOptions]);
+
+  useEffect(() => {
+    if (!selectedValue && !internalValue) return;
+
+    const matchedOption = dateRangeOptions.find((option) => option.value === internalValue);
+
+    onChange(matchedOption ? { ...matchedOption.getRange(), relativeTimeString: '' } : undefined);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [internalValue, dateRangeOptions]);
 
   if (!dayjsLocaleReady) {
     return null;
   }
 
-  const { onChange, selectedValue, description, placeholder, title } = resolveI18nProps(props);
-
-  const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
+  const { description, placeholder, title } = resolveI18nProps(props);
 
   const options = getDateTimeSelectFieldProOptions(dateRangeOptions);
-
-  const handleChange = (value: string) => {
-    if (!value) {
-      return onChange(undefined);
-    }
-
-    const selectedOption = dateRangeOptions.find((option) => option.value === value);
-
-    if (!selectedOption) return;
-
-    onChange(selectedOption.getRange() as TimeRange);
-  };
-
-  const value =
-    dateRangeOptions.find((dto) => compareDateRangeFieldProOptionWithTimeRange(dto, selectedValue))
-      ?.value ?? '';
 
   return (
     <EditorCard title={title} subtitle={description}>
@@ -73,8 +65,8 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
         startIcon={IconCalendarFilled}
         isClearable
         placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
+        value={internalValue}
+        onChange={(value) => setInternalValue(value || undefined)}
         options={options}
         noOptionsMessage={i18n.t('common.noOptionsAvailable')}
       />
