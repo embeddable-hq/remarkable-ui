@@ -16,14 +16,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const OverlayWithContent = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean;
-  onClose: () => void;
-}) => (
-  <PageOverlay isVisible={isVisible}>
+const OverlayWithContent = ({ onClose }: { onClose: () => void }) => (
+  <PageOverlay>
     <Card style={{ padding: '2rem', maxWidth: '400px', margin: '1rem' }}>
       <h2 style={{ margin: '0 0 1rem 0', color: '#212129' }}>Modal Content</h2>
       <p style={{ margin: '0 0 1.5rem 0', color: '#5c5c66' }}>
@@ -37,9 +31,6 @@ const OverlayWithContent = ({
 );
 
 export const Default: Story = {
-  args: {
-    isVisible: true,
-  },
   render: () => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -50,16 +41,13 @@ export const Default: Story = {
         <Button variant="primary" size="medium" onClick={() => setIsVisible(true)}>
           Show Overlay
         </Button>
-        <OverlayWithContent isVisible={isVisible} onClose={() => setIsVisible(false)} />
+        {isVisible && <OverlayWithContent onClose={() => setIsVisible(false)} />}
       </div>
     );
   },
 };
 
 export const WithCustomContent: Story = {
-  args: {
-    isVisible: true,
-  },
   render: () => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -70,34 +58,33 @@ export const WithCustomContent: Story = {
         <Button variant="secondary" size="medium" onClick={() => setIsVisible(true)}>
           Show Custom Overlay
         </Button>
-        <PageOverlay isVisible={isVisible}>
-          <div
-            style={{
-              background: 'white',
-              padding: '3rem',
-              borderRadius: '8px',
-              textAlign: 'center',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-            }}
-          >
-            <h2 style={{ color: '#212129', marginBottom: '1rem' }}>Custom Modal</h2>
-            <p style={{ color: '#5c5c66', marginBottom: '2rem' }}>
-              This is a custom modal with different styling.
-            </p>
-            <Button variant="primary" size="medium" onClick={() => setIsVisible(false)}>
-              Close
-            </Button>
-          </div>
-        </PageOverlay>
+        {isVisible && (
+          <PageOverlay>
+            <div
+              style={{
+                background: 'white',
+                padding: '3rem',
+                borderRadius: '8px',
+                textAlign: 'center',
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+              }}
+            >
+              <h2 style={{ color: '#212129', marginBottom: '1rem' }}>Custom Modal</h2>
+              <p style={{ color: '#5c5c66', marginBottom: '2rem' }}>
+                This is a custom modal with different styling.
+              </p>
+              <Button variant="primary" size="medium" onClick={() => setIsVisible(false)}>
+                Close
+              </Button>
+            </div>
+          </PageOverlay>
+        )}
       </div>
     );
   },
 };
 
 export const SimpleOverlay: Story = {
-  args: {
-    isVisible: true,
-  },
   render: () => {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -108,17 +95,19 @@ export const SimpleOverlay: Story = {
         <Button variant="primary" size="medium" onClick={() => setIsVisible(true)}>
           Show Simple Overlay
         </Button>
-        <PageOverlay isVisible={isVisible}>
-          <Card style={{ padding: '2rem', maxWidth: '400px', margin: '1rem' }}>
-            <h2 style={{ margin: '0 0 1rem 0', color: '#212129' }}>Simple Modal</h2>
-            <p style={{ margin: '0 0 1.5rem 0', color: '#5c5c66' }}>
-              This overlay cannot be closed by clicking outside. You must use the button.
-            </p>
-            <Button variant="primary" size="medium" onClick={() => setIsVisible(false)}>
-              Close Modal
-            </Button>
-          </Card>
-        </PageOverlay>
+        {isVisible && (
+          <PageOverlay>
+            <Card style={{ padding: '2rem', maxWidth: '400px', margin: '1rem' }}>
+              <h2 style={{ margin: '0 0 1rem 0', color: '#212129' }}>Simple Modal</h2>
+              <p style={{ margin: '0 0 1.5rem 0', color: '#5c5c66' }}>
+                This overlay cannot be closed by clicking outside. You must use the button.
+              </p>
+              <Button variant="primary" size="medium" onClick={() => setIsVisible(false)}>
+                Close Modal
+              </Button>
+            </Card>
+          </PageOverlay>
+        )}
       </div>
     );
   },
