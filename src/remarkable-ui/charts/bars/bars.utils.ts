@@ -46,7 +46,7 @@ const getBarVerticalChartOptions = (
         ticks: {
           color: getStyle('--em-chart-grid-font-color-muted'),
           ...(config.stacked === 'percentage' && {
-            callback: (value: string) => value + '%',
+            callback: (value: number | string) => value + '%',
           }),
         },
         min: config.yAxisRangeMin,
