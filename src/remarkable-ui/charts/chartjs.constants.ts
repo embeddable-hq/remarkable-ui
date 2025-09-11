@@ -14,6 +14,7 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     },
     color: getStyle('--em-label-label-font-color-default'),
     font: {
+      // TODO: replace later
       family: 'Inter, sans-serif',
       size: getStyleNumber('--em-label-label-font-size'),
       weight: getStyleNumber('--em-label-label-font-weight'),

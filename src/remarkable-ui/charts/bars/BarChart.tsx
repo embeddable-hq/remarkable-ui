@@ -15,18 +15,8 @@ import { getSegmentIndexClicked } from '../chartjs.utils';
 import { getBarChartData, getBarChartOptions } from './bars.utils';
 import styles from '../charts.module.css';
 import { mergician } from 'mergician';
-import ChartjsPluginStacked100 from 'chartjs-plugin-stacked100';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LogarithmicScale,
-  ChartjsPluginStacked100,
-  Title,
-  Tooltip,
-  Legend,
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LogarithmicScale, Title, Tooltip, Legend);
 
 export type BarChartProps = BaseBarChartProps;
 
