@@ -13,6 +13,8 @@ export { SelectListOptions } from './editors/select/shared/SelectList/SelectList
 export { Button } from './shared/Button/Button';
 export { PageOverlay } from './shared/PageOverlay';
 export type { PageOverlayProps } from './shared/PageOverlay';
+export { ConfirmCancelModal } from './shared/ConfirmCancelModal';
+export type { ConfirmCancelModalProps } from './shared/ConfirmCancelModal';
 export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectField';
 export { Switch } from './shared/Switch/Switch';
 

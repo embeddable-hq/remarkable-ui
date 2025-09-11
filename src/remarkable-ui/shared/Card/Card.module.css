@@ -24,6 +24,7 @@
   gap: var(--em-card-title-padding-default, 1rem);
   justify-content: space-between;
   position: relative;
+  align-items: center;
 }
 
 .titles {
