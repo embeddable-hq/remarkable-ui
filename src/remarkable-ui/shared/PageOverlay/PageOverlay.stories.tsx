@@ -7,9 +7,6 @@ import { Card } from '../Card/Card';
 
 const meta = {
   component: PageOverlay,
-  parameters: {
-    layout: 'fullscreen',
-  },
 } satisfies Meta<typeof PageOverlay>;
 
 export default meta;
