@@ -36,11 +36,13 @@ export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
 
   // Prevent body scroll when modal is open
   useEffect(() => {
+    // Store the original overflow value before setting it to hidden
+    const originalOverflow = document.body.style.overflow;
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = originalOverflow;
     };
   }, [isOpen]);
 
