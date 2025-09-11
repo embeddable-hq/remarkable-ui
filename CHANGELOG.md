@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.3
+
+### Patch Changes
+
+- 71de854: Add PageOverlay component
+
 ## 0.1.2
 
 ### Patch Changes
