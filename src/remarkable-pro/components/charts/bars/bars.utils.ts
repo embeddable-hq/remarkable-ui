@@ -21,14 +21,13 @@ export const getBarStackedChartProData = (
 ): ChartData<'bar'> => {
   const themeFormatter = getThemeFormatter(theme);
   const { data = [], dimension, groupDimension, measure } = props;
-  // 1. Axis
+
   const axis = [
     ...new Set(
       data.map((d) => d[dimension.name]).filter(Boolean), // remove nulls
     ),
   ].sort(); // sort ascending
 
-  // 2. Collect unique countries (groupBy)
   const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))];
 
   const themeKey = getObjectStableKey(theme);
