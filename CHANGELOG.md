@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.4
+
+### Patch Changes
+
+- 5797a63: Fix display name of measure in BarChartPro
+
 ## 0.1.3
 
 ### Patch Changes
