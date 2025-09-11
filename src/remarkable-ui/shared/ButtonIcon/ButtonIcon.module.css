@@ -17,16 +17,16 @@
 }
 
 .primary .icon {
-  color: var(--em-primary-btn-icon-color-default);
+  color: var(--em-primary-btn-icon-color-default, #FFFFFF);
 }
 
 .secondary {
-  border-radius: var(--em-border-radius-500, 624.9375rem);
+  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
   background: var(--em-secondary-btn-background-color-default, #ededf1);
 }
 
 .secondary .icon {
-  color: var(--em-secondary-btn-icon-color-default);
+  color: var(--em-secondary-btn-icon-color-default, #212129);
 }
 
 .icon {
