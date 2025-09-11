@@ -22,11 +22,7 @@ export const getBarStackedChartProData = (
   const themeFormatter = getThemeFormatter(theme);
   const { data = [], dimension, groupDimension, measure } = props;
 
-  const axis = [
-    ...new Set(
-      data.map((d) => d[dimension.name]).filter(Boolean), // remove nulls
-    ),
-  ].sort(); // sort ascending
+  const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
 
   const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))];
 
