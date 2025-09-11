@@ -8,28 +8,27 @@ import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils'
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
-type BarChartStackedProProps = {
+type BarChartHorizontalGroupedProProps = {
   description: string;
   groupBy: Dimension;
-  maxLegendItems?: number;
   measure: Measure;
   results: DataResponse;
-  reverseXAxis: boolean;
+  reverseYAxis: boolean;
   showLegend: boolean;
   showLogarithmicScale: boolean;
-  showTotalLabels?: boolean;
   showTooltips: boolean;
+  showTotalLabels?: boolean;
   showValueLabels: boolean;
   title: string;
-  xAxis: Dimension;
+  yAxis: Dimension;
   xAxisLabel: string;
   yAxisLabel: string;
-  yAxisRangeMax?: number;
-  yAxisRangeMin?: number;
+  xAxisRangeMax?: number;
+  xAxisRangeMin?: number;
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
-const BarChartStackedPro = (props: BarChartStackedProProps) => {
+const BarChartHorizontalGroupedPro = (props: BarChartHorizontalGroupedProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -38,25 +37,25 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     groupBy,
     measure,
     results,
-    reverseXAxis,
+    reverseYAxis,
     showLegend,
     showLogarithmicScale,
     showTooltips,
     showTotalLabels,
     showValueLabels,
     title,
-    xAxis,
+    yAxis,
     xAxisLabel,
     yAxisLabel,
-    yAxisRangeMax,
-    yAxisRangeMin,
+    xAxisRangeMax,
+    xAxisRangeMin,
     onSegmentClick,
   } = resolveI18nProps(props);
 
   const data = getBarStackedChartProData(
     {
       data: results.data,
-      dimension: xAxis,
+      dimension: yAxis,
       groupDimension: groupBy,
       measure,
     },
@@ -64,7 +63,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measure), // Format Y axis based on first measure
+    getBarChartProOptions(theme, measure, true), // Format Y axis based on first measure
     theme.charts?.barChartPro?.options || {},
   );
 
@@ -77,7 +76,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
   return (
     <ChartCard
       data={results}
-      dimensionsAndMeasures={[measure, xAxis, groupBy]}
+      dimensionsAndMeasures={[measure, yAxis, groupBy]}
       errorMessage={results.error}
       subtitle={description}
       title={title}
@@ -91,15 +90,15 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
         showLogarithmicScale={showLogarithmicScale}
         xAxisLabel={xAxisLabel}
         yAxisLabel={yAxisLabel}
-        reverseXAxis={reverseXAxis}
-        yAxisRangeMin={yAxisRangeMin}
-        yAxisRangeMax={yAxisRangeMax}
+        reverseYAxis={reverseYAxis}
+        xAxisRangeMin={xAxisRangeMin}
+        xAxisRangeMax={xAxisRangeMax}
         showTotalLabels={showTotalLabels}
         options={options}
-        stacked="stacked"
+        horizontal
       />
     </ChartCard>
   );
 };
 
-export default BarChartStackedPro;
+export default BarChartHorizontalGroupedPro;

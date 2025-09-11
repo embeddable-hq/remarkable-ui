@@ -190,6 +190,7 @@ export const getBarChartOptions = (
     showLegend = false,
     showTooltips = true,
     showValueLabels = false,
+    showTotalLabels = false,
   } = props;
 
   const getOptions = horizontal ? getBarHorizontalChartOptions : getBarVerticalChartOptions;
@@ -199,8 +200,8 @@ export const getBarChartOptions = (
     layout: {
       padding: {
         // Hack: dataLabels can get cut off if they are at the edge of the chart
-        top: !horizontal && showValueLabels ? 30 : 0,
-        right: horizontal && showValueLabels ? 30 : 0,
+        top: !horizontal && (showValueLabels || showTotalLabels) ? 30 : 0,
+        right: horizontal && (showValueLabels || showTotalLabels) ? 30 : 0,
       },
     },
     elements: {

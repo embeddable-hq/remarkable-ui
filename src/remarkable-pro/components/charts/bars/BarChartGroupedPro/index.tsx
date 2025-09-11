@@ -8,17 +8,16 @@ import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils'
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
-type BarChartStackedProProps = {
+type BarChartGroupedProProps = {
   description: string;
   groupBy: Dimension;
-  maxLegendItems?: number;
   measure: Measure;
   results: DataResponse;
   reverseXAxis: boolean;
   showLegend: boolean;
   showLogarithmicScale: boolean;
-  showTotalLabels?: boolean;
   showTooltips: boolean;
+  showTotalLabels?: boolean;
   showValueLabels: boolean;
   title: string;
   xAxis: Dimension;
@@ -29,7 +28,7 @@ type BarChartStackedProProps = {
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
-const BarChartStackedPro = (props: BarChartStackedProProps) => {
+const BarChartGroupedPro = (props: BarChartGroupedProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -96,10 +95,9 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
         yAxisRangeMax={yAxisRangeMax}
         showTotalLabels={showTotalLabels}
         options={options}
-        stacked="stacked"
       />
     </ChartCard>
   );
 };
 
-export default BarChartStackedPro;
+export default BarChartGroupedPro;

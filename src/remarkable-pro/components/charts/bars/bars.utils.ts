@@ -127,7 +127,6 @@ export const getBarChartProOptions = (
   theme: Theme,
   measure: Measure,
   horizontal: boolean = false,
-  stacked100: boolean = false,
 ): Partial<ChartOptions<'bar'>> => {
   const themeFormatter = getThemeFormatter(theme);
   return {
@@ -144,18 +143,16 @@ export const getBarChartProOptions = (
     scales: {
       x: {
         ticks: {
-          ...(horizontal &&
-            !stacked100 && {
-              callback: (value) => themeFormatter.data(measure, value),
-            }),
+          ...(horizontal && {
+            callback: (value) => themeFormatter.data(measure, value),
+          }),
         },
       },
       y: {
         ticks: {
-          ...(!horizontal &&
-            !stacked100 && {
-              callback: (value) => themeFormatter.data(measure, value),
-            }),
+          ...(!horizontal && {
+            callback: (value) => themeFormatter.data(measure, value),
+          }),
         },
       },
     },

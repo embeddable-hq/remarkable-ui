@@ -1,6 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartStackedPro from './index';
+import BarChartGroupedPro from './index';
 import {
   dataset,
   description,
@@ -20,8 +20,8 @@ import {
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartStackedPro',
-  label: 'Bar Chart Stacked',
+  name: 'BarChartGroupedPro',
+  label: 'Bar Chart Grouped',
   category: 'Bar Charts',
   inputs: [
     dataset,
@@ -56,7 +56,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartStackedPro, meta, {
+export default defineComponent(BarChartGroupedPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,

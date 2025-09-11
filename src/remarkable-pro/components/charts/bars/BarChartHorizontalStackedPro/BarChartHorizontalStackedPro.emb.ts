@@ -1,6 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartStackedPro from './index';
+import BarChartHorizontalStackedPro from './index';
 import {
   dataset,
   description,
@@ -13,20 +13,20 @@ import {
   showLogarithmicScale,
   xAxisLabel,
   yAxisLabel,
-  reverseXAxis,
-  yAxisRangeMin,
-  yAxisRangeMax,
   showTotalLabels,
+  reverseYAxis,
+  xAxisRangeMin,
+  xAxisRangeMax,
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartStackedPro',
-  label: 'Bar Chart Stacked',
+  name: 'BarChartHorizontalStackedPro',
+  label: 'Bar Chart Horizontal Stacked',
   category: 'Bar Charts',
   inputs: [
     dataset,
     measure,
-    { ...dimension, name: 'xAxis', label: 'X-axis' },
+    { ...dimension, name: 'yAxis', label: 'Y-axis' },
     { ...dimension, name: 'groupBy', label: 'Group by' },
     title,
     description,
@@ -36,9 +36,9 @@ export const meta = {
     showLogarithmicScale,
     xAxisLabel,
     yAxisLabel,
-    reverseXAxis,
-    yAxisRangeMin,
-    yAxisRangeMax,
+    reverseYAxis,
+    xAxisRangeMin,
+    xAxisRangeMax,
     showTotalLabels,
   ],
   events: [
@@ -56,13 +56,13 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartStackedPro, meta, {
+export default defineComponent(BarChartHorizontalStackedPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
       results: loadData({
         from: inputs.dataset,
-        select: [inputs.xAxis, inputs.groupBy, inputs.measure],
+        select: [inputs.yAxis, inputs.groupBy, inputs.measure],
       }),
     };
   },

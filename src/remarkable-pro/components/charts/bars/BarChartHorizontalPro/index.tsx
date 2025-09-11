@@ -4,102 +4,93 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { BarChart } from '../../../../../remarkable-ui/charts/bars/BarChart';
-import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils';
+import { getBarChartProData, getBarChartProOptions } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
-type BarChartStackedProProps = {
+type BarChartHorizontalProProps = {
   description: string;
-  groupBy: Dimension;
-  maxLegendItems?: number;
-  measure: Measure;
+  dimension: Dimension;
+  measures: Measure[];
   results: DataResponse;
-  reverseXAxis: boolean;
+  reverseYAxis: boolean;
   showLegend: boolean;
   showLogarithmicScale: boolean;
-  showTotalLabels?: boolean;
   showTooltips: boolean;
   showValueLabels: boolean;
   title: string;
-  xAxis: Dimension;
   xAxisLabel: string;
+  xAxisRangeMax?: number;
+  xAxisRangeMin?: number;
   yAxisLabel: string;
-  yAxisRangeMax?: number;
-  yAxisRangeMin?: number;
+  yAxisMaxItems: number;
   onSegmentClick: (args: { dimensionValue: string | null }) => void;
 };
 
-const BarChartStackedPro = (props: BarChartStackedProProps) => {
+const BarChartHorizontalPro = (props: BarChartHorizontalProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
   const {
     description,
-    groupBy,
-    measure,
+    dimension,
+    measures,
     results,
-    reverseXAxis,
+    reverseYAxis,
     showLegend,
     showLogarithmicScale,
     showTooltips,
-    showTotalLabels,
     showValueLabels,
     title,
-    xAxis,
     xAxisLabel,
+    xAxisRangeMax,
+    xAxisRangeMin,
     yAxisLabel,
-    yAxisRangeMax,
-    yAxisRangeMin,
+    yAxisMaxItems,
     onSegmentClick,
   } = resolveI18nProps(props);
 
-  const data = getBarStackedChartProData(
-    {
-      data: results.data,
-      dimension: xAxis,
-      groupDimension: groupBy,
-      measure,
-    },
+  const data = getBarChartProData(
+    { data: results.data, dimension, measures, maxItems: yAxisMaxItems },
     theme,
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measure), // Format Y axis based on first measure
+    getBarChartProOptions(theme, measures[0]!, true), // Format X axis based on first measure
     theme.charts?.barChartPro?.options || {},
   );
 
   const handleSegmentClick = (index: number | undefined) => {
     onSegmentClick({
-      dimensionValue: index === undefined ? undefined : results.data?.[index]?.[groupBy.name],
+      dimensionValue: index === undefined ? undefined : results.data?.[index]?.[dimension.name],
     });
   };
 
   return (
     <ChartCard
       data={results}
-      dimensionsAndMeasures={[measure, xAxis, groupBy]}
+      dimensionsAndMeasures={[dimension, ...measures]}
       errorMessage={results.error}
       subtitle={description}
       title={title}
     >
       <BarChart
+        horizontal
         data={data}
-        onSegmentClick={handleSegmentClick}
+        options={options}
+        reverseYAxis={reverseYAxis}
         showLegend={showLegend}
+        showLogarithmicScale={showLogarithmicScale}
         showTooltips={showTooltips}
         showValueLabels={showValueLabels}
-        showLogarithmicScale={showLogarithmicScale}
         xAxisLabel={xAxisLabel}
+        xAxisRangeMax={xAxisRangeMax}
+        xAxisRangeMin={xAxisRangeMin}
         yAxisLabel={yAxisLabel}
-        reverseXAxis={reverseXAxis}
-        yAxisRangeMin={yAxisRangeMin}
-        yAxisRangeMax={yAxisRangeMax}
-        showTotalLabels={showTotalLabels}
-        options={options}
-        stacked="stacked"
+        onSegmentClick={handleSegmentClick}
       />
     </ChartCard>
   );
 };
 
-export default BarChartStackedPro;
+export default BarChartHorizontalPro;
