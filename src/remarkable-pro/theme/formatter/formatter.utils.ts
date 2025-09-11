@@ -3,11 +3,13 @@ import { DateTimeFormatter, NumberFormatter, StringFormatter } from './formatter
 import { Theme } from '../theme.types';
 import { cache } from '../../utils.ts/cache.utils';
 import { isValidISODate } from '../../utils.ts/data.utils';
+import { resolveI18nString } from '../../components/component.utils';
 
 export type GetThemeFormatter = {
   string: (key: string) => string;
   number: (value: number | bigint, options?: Intl.NumberFormatOptions) => string;
   dateTime: (value: Date, options?: Intl.DateTimeFormatOptions) => string;
+  dimensionOrMeasureTitle: (key: DimensionOrMeasure) => string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: (key: DimensionOrMeasure, value: any) => string;
 };
@@ -40,6 +42,18 @@ export const getThemeFormatter = (theme: Theme): GetThemeFormatter => {
     },
     dateTime: (value: Date, options?: Intl.DateTimeFormatOptions): string => {
       return cachedDateTimeFormatter(options).format(value);
+    },
+    dimensionOrMeasureTitle: (key: DimensionOrMeasure): string => {
+      const displayName = key.inputs?.displayName;
+      if (displayName) {
+        if (displayName.includes('|')) {
+          return resolveI18nString(displayName);
+        }
+        return displayName;
+      }
+
+      const resolved = cachedDataOthersFormatter(key).format(key.name);
+      return resolved === key.name ? key.title : resolved;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: (key: DimensionOrMeasure, value: any): string => {
