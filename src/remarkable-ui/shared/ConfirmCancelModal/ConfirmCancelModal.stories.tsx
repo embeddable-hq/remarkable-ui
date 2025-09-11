@@ -9,9 +9,6 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    isOpen: {
-      control: 'boolean',
-    },
     title: {
       control: 'text',
     },
@@ -31,9 +28,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Helper component to demonstrate modal state management
-const ConfirmCancelModalDemo = (
-  args: Omit<React.ComponentProps<typeof ConfirmCancelModal>, 'isOpen' | 'onClose'>,
-) => {
+const ConfirmCancelModalDemo = (args: React.ComponentProps<typeof ConfirmCancelModal>) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,7 +36,19 @@ const ConfirmCancelModalDemo = (
       <Button variant="primary" size="medium" onClick={() => setIsOpen(true)}>
         Open Confirm Modal
       </Button>
-      <ConfirmCancelModal {...args} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {isOpen && (
+        <ConfirmCancelModal
+          {...args}
+          onConfirm={() => {
+            args.onConfirm();
+            setIsOpen(false);
+          }}
+          onCancel={() => {
+            args.onCancel?.();
+            setIsOpen(false);
+          }}
+        />
+      )}
     </>
   );
 };
@@ -49,8 +56,6 @@ const ConfirmCancelModalDemo = (
 export const Default: Story = {
   render: (args) => <ConfirmCancelModalDemo {...args} />,
   args: {
-    isOpen: true,
-    onClose: () => console.log('Closed'),
     title: 'Confirm Action',
     message: 'Are you sure you want to delete this chart?',
     confirmLabel: 'Confirm',

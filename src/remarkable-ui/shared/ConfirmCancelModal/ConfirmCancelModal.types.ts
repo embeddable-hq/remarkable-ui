@@ -1,8 +1,4 @@
 export type ConfirmCancelModalProps = {
-  /** Whether the modal is open */
-  isOpen: boolean;
-  /** Function to call when the modal should be closed */
-  onClose: () => void;
   /** Title of the modal */
   title: string;
   /** Message content of the modal */
