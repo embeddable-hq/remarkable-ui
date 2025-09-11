@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Card, CardHeader, CardContent } from '../Card/Card';
 import { Button } from '../Button/Button';
 import { Typography } from '../Typography/Typography';
@@ -18,13 +18,6 @@ export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
   onCancel,
   className,
 }) => {
-  // Handle cancel button click
-  const handleCancel = useCallback(() => {
-    if (onCancel) {
-      onCancel();
-    }
-  }, [onCancel]);
-
   return (
     <PageOverlay>
       <Card className={clsx(styles.modal, className)}>
@@ -32,7 +25,7 @@ export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
         <CardContent>
           <Typography as="span">{message}</Typography>
           <div className={styles.actions}>
-            <Button variant="secondary" size="medium" onClick={handleCancel}>
+            <Button variant="secondary" size="medium" onClick={onCancel}>
               {cancelLabel}
             </Button>
             <Button variant="primary" size="medium" onClick={onConfirm}>
