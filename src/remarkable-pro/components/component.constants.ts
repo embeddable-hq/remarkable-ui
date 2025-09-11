@@ -258,12 +258,20 @@ export const yAxisMaxItems = {
   category: 'Axes Settings',
 } as const;
 
+export const showTopItems = {
+  name: 'showTopItems',
+  type: 'number',
+  label: 'Show Top Items',
+  defaultValue: 10,
+  category: 'Component Data',
+} as const;
+
 export const maxLegendItems = {
   name: 'maxLegendItems',
   type: 'number',
   label: 'Max Legend Items',
   defaultValue: 10,
-  category: 'Component Settings',
+  category: 'Component Data',
 } as const;
 
 export const placeholder = {
