@@ -27,7 +27,9 @@ const formatData = (
 ): Array<Array<string>> => {
   const themeFormatter = getThemeFormatter(theme);
 
-  const headers = dimensionsAndMeasures.map((dm) => dm.inputs?.displayName ?? dm.title ?? dm.name);
+  const headers = dimensionsAndMeasures.map((dm) => {
+    return themeFormatter.dimensionOrMeasureTitle(dm);
+  });
   const body = data!.map((dataRow) => {
     const row: Array<string> = [];
     dimensionsAndMeasures.forEach((dimensionOrMeasure) => {

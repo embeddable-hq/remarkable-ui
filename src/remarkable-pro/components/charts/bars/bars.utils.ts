@@ -57,7 +57,7 @@ export const getBarChartProData = (
       );
 
       return {
-        label: measure.title,
+        label: themeFormatter.dimensionOrMeasureTitle(measure),
         data: groupedData.map((item) => item[measure.name]),
         backgroundColor,
         borderColor,
