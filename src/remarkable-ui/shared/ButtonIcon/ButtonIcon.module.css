@@ -1,0 +1,35 @@
+.buttonIcon {
+  display: flex;
+  height: var(--em-primary-btn-size-medium-height, 2.5rem);
+  padding: var(--em-primary-btn-padding-medium-top, 0.75rem) 
+    var(--em-primary-btn-padding-medium-right, 0.75rem) 
+    var(--em-primary-btn-padding-medium-bottom, 0.75rem) 
+    var(--em-primary-btn-padding-medium-left, 0.75rem);
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.primary {
+  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
+  background: var(--em-primary-btn-background-color-default, #5C5C66);
+}
+
+.primary .icon {
+  color: var(--em-primary-btn-icon-color-default);
+}
+
+.secondary {
+  border-radius: var(--em-border-radius-500, 624.9375rem);
+  background: var(--em-secondary-btn-background-color-default, #EDEDF1);
+}
+
+.secondary .icon {
+  color: var(--em-secondary-btn-icon-color-default);
+}
+
+.icon {
+  width: var(--em-icon-btn-icon-size-width, 1rem);
+  height: var(--em-icon-btn-icon-size-height, 1rem);
+}
