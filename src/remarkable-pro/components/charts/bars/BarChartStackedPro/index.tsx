@@ -69,8 +69,10 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
   );
 
   const handleSegmentClick = (index: number | undefined) => {
+    if (!data || !data.labels || data.labels.length === 0) return;
+
     onSegmentClick({
-      dimensionValue: index === undefined ? undefined : results.data?.[index]?.[groupBy.name],
+      dimensionValue: index === undefined ? null : (data.labels[index] as string),
     });
   };
 
