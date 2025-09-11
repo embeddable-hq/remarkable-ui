@@ -8,6 +8,7 @@ import { i18n } from '../../../theme/i18n/i18n';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
+import { resolveI18nString } from '../../component.utils';
 
 export const getBarChartProData = (
   props: {
@@ -57,7 +58,9 @@ export const getBarChartProData = (
       );
 
       return {
-        label: measure.inputs?.displayName ?? measure.name,
+        label:
+          resolveI18nString(measure.inputs?.displayName) ??
+          themeFormatter.data({ ...measure, nativeType: 'string' }, measure.name),
         data: groupedData.map((item) => item[measure.name]),
         backgroundColor,
         borderColor,
