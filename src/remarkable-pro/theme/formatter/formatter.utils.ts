@@ -53,7 +53,7 @@ export const getThemeFormatter = (theme: Theme): GetThemeFormatter => {
       }
 
       const resolved = cachedDataOthersFormatter(key).format(key.name);
-      return resolved === key.name ? key.title : resolved;
+      return resolved === key.name ? (key.title ?? key.name) : resolved;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: (key: DimensionOrMeasure, value: any): string => {
