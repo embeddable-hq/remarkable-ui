@@ -1,13 +1,13 @@
 import { TablerIcon } from '@tabler/icons-react';
-import clsx from 'clsx';
 import styles from './Button.module.css';
+import { BaseButton, type BaseButtonProps } from '../BaseButton';
 import { Typography } from '../Typography/Typography';
+import clsx from 'clsx';
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = BaseButtonProps & {
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   children: string;
-  variant: 'primary' | 'secondary';
   size: 'small' | 'medium';
 };
 
@@ -15,16 +15,28 @@ export const Button: React.FC<ButtonProps> = ({
   variant,
   startIcon: StartIcon,
   endIcon: EndIcon,
-  size,
-  className,
   children,
+  size,
   ...props
 }) => {
   return (
-    <button {...props} className={clsx(styles.button, styles[variant], styles[size], className)}>
-      {StartIcon && <StartIcon />}
-      <Typography as="span">{children}</Typography>
-      {EndIcon && <EndIcon />}
-    </button>
+    <BaseButton
+      variant={variant}
+      className={size === 'medium' ? styles.buttonMedium : styles.buttonSmall}
+      {...props}
+      size={size}
+    >
+      {StartIcon && <StartIcon className={styles.icon} />}
+      <Typography
+        as="span"
+        className={clsx(
+          styles.buttonText,
+          styles[`buttonText${size.charAt(0).toUpperCase() + size.slice(1)}`],
+        )}
+      >
+        {children}
+      </Typography>
+      {EndIcon && <EndIcon className={styles.icon} />}
+    </BaseButton>
   );
 };

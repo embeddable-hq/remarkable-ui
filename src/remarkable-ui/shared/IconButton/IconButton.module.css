@@ -1,30 +1,9 @@
 .iconButton {
-  cursor: pointer;
-  padding: var(--em-icon-btn-padding-top, 0.5rem) var(--em-icon-btn-padding-right, 0.125rem)
-    var(--em-icon-btn-padding-bottom, 0.5rem) var(--em-icon-btn-padding-left, 0.125rem);
-  border-radius: var(--em-icon-btn-border-radius-default, 9999px);
-  background: var(--em-icon-btn-bg-color-default, #ededf1);
-  border: none;
   width: var(--em-icon-btn-size-width, 1.25rem);
   height: var(--em-icon-btn-size-height, 2rem);
-  display: flex;
-  outline: none;
+  padding: var(--em-icon-btn-padding-top, 0.5rem) var(--em-icon-btn-padding-right, 0.125rem)
+    var(--em-icon-btn-padding-bottom, 0.5rem) var(--em-icon-btn-padding-left, 0.125rem);
 }
-
-.iconButton:hover,
-.iconButton:focus {
-  background: var(--em-icon-btn-bg-color-hover, #e4e4ea);
-}
-
-.iconButton:active {
-  background: var(--em-icon-btn-bg-color-pressed, #d2d2d5);
-}
-
-.iconButton:disabled {
-  pointer-events: none;
-  background: var(--em-icon-btn-bg-color-disabled, #ededf1);
-}
-
 .icon {
   width: var(--em-icon-btn-icon-size-width, 1rem);
   height: var(--em-icon-btn-icon-size-height, 1rem);
