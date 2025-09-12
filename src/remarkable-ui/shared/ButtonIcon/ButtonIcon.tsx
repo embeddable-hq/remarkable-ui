@@ -1,19 +1,24 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 import styles from './ButtonIcon.module.css';
+import { BaseButton, type BaseButtonProps } from '../BaseButton';
 import { TablerIcon } from '@tabler/icons-react';
 
-type ButtonIconProps = {
+type ButtonIconProps = BaseButtonProps & {
   icon: TablerIcon;
-  variant?: 'primary' | 'secondary';
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+};
 
 export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
-  ({ icon: Icon, className, variant = 'primary', ...props }, ref) => {
+  ({ icon: Icon, variant = 'primary', ...props }, ref) => {
     return (
-      <button ref={ref} className={clsx(styles.buttonIcon, styles[variant], className)} {...props}>
-        <Icon className={styles.icon} />
-      </button>
+      <BaseButton ref={ref} variant={variant} size="medium" {...props}>
+        <Icon
+          className={clsx(
+            styles.icon,
+            styles[`icon${variant.charAt(0).toUpperCase() + variant.slice(1)}`],
+          )}
+        />
+      </BaseButton>
     );
   },
 );
