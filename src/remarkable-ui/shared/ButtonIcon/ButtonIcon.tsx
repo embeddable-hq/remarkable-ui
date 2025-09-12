@@ -11,7 +11,13 @@ type ButtonIconProps = BaseButtonProps & {
 export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonIconProps>(
   ({ icon: Icon, variant = 'primary', ...props }, ref) => {
     return (
-      <BaseButton ref={ref} variant={variant} size="medium" {...props}>
+      <BaseButton
+        ref={ref}
+        variant={variant}
+        size="medium"
+        className={styles.buttonIcon}
+        {...props}
+      >
         <Icon
           className={clsx(
             styles.icon,

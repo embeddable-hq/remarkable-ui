@@ -20,7 +20,12 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   return (
-    <BaseButton variant={variant} {...props} size={size}>
+    <BaseButton
+      variant={variant}
+      className={size === 'medium' ? styles.buttonMedium : styles.buttonSmall}
+      {...props}
+      size={size}
+    >
       {StartIcon && <StartIcon className={styles.icon} />}
       <Typography
         as="span"
