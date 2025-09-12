@@ -1,0 +1,78 @@
+/* Base button styles - common across all button components */
+.baseButton {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.baseButton:disabled {
+  cursor: unset;
+  pointer-events: none;
+}
+
+/* Common variant styles */
+.primary {
+  background: var(--em-primary-btn-background-color-default, #5c5c66);
+  color: var(--em-primary-btn-label-color-default, #fff);
+  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
+}
+
+.primary:hover,
+.primary:focus {
+  background: var(--em-primary-btn-background-color-hover, #212129);
+}
+
+.primary:active {
+  background: var(--em-primary-btn-background-color-pressed, #000);
+}
+
+.primary:disabled {
+  background: var(--em-primary-btn-background-color-disabled, #ededf1);
+  color: var(--em-primary-btn-label-color-disabled, #b8b8bd);
+}
+
+.secondary {
+  background: var(--em-secondary-btn-background-color-default, #ededf1);
+  color: var(--em-secondary-btn-label-color-default, #212129);
+  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
+}
+
+.secondary:hover,
+.secondary:focus {
+  background: var(--em-secondary-btn-background-color-hover, #e4e4ea);
+}
+
+.secondary:active {
+  background: var(--em-secondary-btn-background-color-pressed, #d2d2d5);
+}
+
+.secondary:disabled {
+  background: var(--em-secondary-btn-background-color-disabled, #ededf1);
+  color: var(--em-secondary-btn-label-color-disabled, #b8b8bd);
+}
+
+/* Common size styles */
+.medium {
+  height: var(--em-primary-btn-size-default-height, 2.5rem);
+  padding: var(--em-primary-btn-padding-default-top, 0.75rem)
+    var(--em-primary-btn-padding-default-right, 0.75rem)
+    var(--em-primary-btn-padding-default-bottom, 0.75rem)
+    var(--em-primary-btn-padding-default-left, 0.75rem);
+}
+
+.small {
+  height: var(--em-primary-btn-size-small-height, 2rem);
+  padding: var(--em-primary-btn-padding-small-top, 0.375rem)
+    var(--em-primary-btn-padding-small-right, 0.375rem)
+    var(--em-primary-btn-padding-small-bottom, 0.375rem)
+    var(--em-primary-btn-padding-small-left, 0.375rem);
+}
+
+/* Common icon styles */
+.icon {
+  width: var(--em-primary-btn-icon-size-width, 1rem);
+  height: var(--em-primary-btn-icon-size-height, 1rem);
+}
