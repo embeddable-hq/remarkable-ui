@@ -4,7 +4,7 @@ import styles from './ButtonIcon.module.css';
 import { BaseButton, type BaseButtonProps } from '../BaseButton';
 import { TablerIcon } from '@tabler/icons-react';
 
-type ButtonIconProps = BaseButtonProps & {
+type ButtonIconProps = Omit<BaseButtonProps, 'size'> & {
   icon: TablerIcon;
 };
 
