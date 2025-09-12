@@ -1,65 +1,14 @@
-.button {
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  outline: none;
-  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
-}
-
-.button:disabled {
-  cursor: unset;
-  pointer-events: none;
-  background: var(--em-primary-btn-background-color-disabled, #ededf1);
-  color: var(--em-primary-btn-label-color-disabled, #b8b8bd);
-}
-
-.button span {
-  padding: 0 var(--em-primary-btn-label-padding-default, 0.5rem);
-}
-
-.button svg {
+/* Button-specific styles - inherits from BaseButton */
+.icon {
   width: var(--em-primary-btn-icon-size-width, 1rem);
   height: var(--em-primary-btn-icon-size-height, 1rem);
 }
 
-.primary {
-  background: var(--em-primary-btn-background-color-default, #5c5c66);
-  color: var(--em-primary-btn-label-color-default, #fff);
+.buttonText {
+  padding: 0 var(--em-primary-btn-label-padding-default, 0.5rem);
 }
 
-.primary:hover,
-.primary:focus {
-  background: var(--em-primary-btn-background-color-hover, #212129);
-}
-
-.primary:active {
-  background: var(--em-primary-btn-background-color-pressed, #000);
-}
-
-.secondary {
-  background: var(--em-secondary-btn-background-color-default, #ededf1);
-  color: var(--em-secondary-btn-label-color-default, #212129);
-}
-
-.secondary:hover,
-.secondary:focus {
-  background: var(--em-secondary-btn-background-color-hover, #e4e4ea);
-}
-
-.secondary:active {
-  background: var(--em-secondary-btn-background-color-pressed, #d2d2d5);
-}
-
-.medium {
-  height: var(--em-primary-btn-size-default-height, 2.5rem);
-  padding: var(--em-primary-btn-padding-default-top, 0.75rem)
-    var(--em-primary-btn-padding-default-right, 0.75rem)
-    var(--em-primary-btn-padding-default-bottom, 0.75rem)
-    var(--em-primary-btn-padding-default-left, 0.75rem);
-}
-
-.medium span {
+.buttonTextMedium {
   /* TODO: on specify font family ticket */
   /* font-family: var(--em-primary-btn-label-font-default-font-family, Inter); */
   font-size: var(--em-primary-btn-label-font-default-size, 0.875rem);
@@ -68,15 +17,7 @@
   line-height: var(--em-primary-btn-label-font-default-line-height, 1rem); /* 114.286% */
 }
 
-.small {
-  height: var(--em-primary-btn-size-small-height, 2rem);
-  padding: var(--em-primary-btn-padding-small-top, 0.375rem)
-    var(--em-primary-btn-padding-small-right, 0.375rem)
-    var(--em-primary-btn-padding-small-bottom, 0.375rem)
-    var(--em-primary-btn-padding-small-left, 0.375rem);
-}
-
-.small span {
+.buttonTextSmall {
   /* TODO: on specify font family ticket */
   /* font-family: var(--em-primary-btn-label-font-default-font-family, Inter); */
   font-size: var(--em-primary-btn-label-font-small-size, 0.75rem);
