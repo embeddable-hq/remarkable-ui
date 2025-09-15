@@ -9,19 +9,10 @@ type IconButtonProps = Omit<BaseButtonProps, 'variant'> & {
   icon: TablerIcon;
 };
 
-export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon: Icon, className, ...props }, ref) => {
-    return (
-      <BaseButton
-        ref={ref}
-        variant="secondary"
-        className={clsx(styles.iconButton, className)}
-        {...props}
-      >
-        <Icon className={styles.icon} />
-      </BaseButton>
-    );
-  },
-);
-
-IconButton.displayName = 'IconButton';
+export const IconButton: React.FC<IconButtonProps> = ({ icon: Icon, className, ...props }) => {
+  return (
+    <BaseButton variant="secondary" className={clsx(styles.iconButton, className)} {...props}>
+      <Icon className={styles.icon} />
+    </BaseButton>
+  );
+};
