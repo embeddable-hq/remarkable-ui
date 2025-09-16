@@ -7,8 +7,6 @@
   border-radius: var(--em-card-border-radius-default, 2rem);
   background: var(--em-background-color-default, #f7f7f8);
   box-sizing: border-box;
-  height: 100%;
-  width: 100%;
 }
 
 .content {

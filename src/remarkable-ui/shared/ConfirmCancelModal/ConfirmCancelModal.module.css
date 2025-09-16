@@ -1,9 +1,3 @@
-.modal {
-  max-width: 30rem;
-  width: 100%;
-  height: 13.6875rem;
-}
-
 .actions {
   display: flex;
   gap: var(--em-form-padding-small, 0.5rem);
