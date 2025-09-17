@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import process from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,11 +63,11 @@ try {
   // Generate CSS variables
   const generateCssVariables = (variables) => {
     let cssContent = ':root {\n';
-    
+
     Object.entries(variables).forEach(([key, value]) => {
       cssContent += `  ${key}: ${value};\n`;
     });
-    
+
     cssContent += '}\n';
     return cssContent;
   };
@@ -86,14 +87,15 @@ try {
 
   console.log('✅ Generated remarkable-ui-variables.css');
   console.log(`📁 Location: ${cssFilePath}`);
-
 } catch (error) {
   console.error('❌ Error generating CSS variables:');
   console.error(`   ${error.message}`);
   console.error('');
   console.error('Please check:');
   console.error('   1. The constants file exists at: src/remarkable-ui/styles/styles.constants.ts');
-  console.error('   2. The file contains the required style objects (stylesColors, stylesSpacingAndSizes, etc.)');
+  console.error(
+    '   2. The file contains the required style objects (stylesColors, stylesSpacingAndSizes, etc.)',
+  );
   console.error('   3. The file syntax is valid TypeScript');
   console.error('   4. You have write permissions to the dist directory');
   process.exit(1);
