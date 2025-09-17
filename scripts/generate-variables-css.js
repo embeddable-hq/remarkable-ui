@@ -76,7 +76,7 @@ try {
   const cssContent = generateCssVariables(styles);
 
   // Ensure the dist directory exists
-  const distDir = path.join(__dirname, '../dist/remarkable-ui/styles');
+  const distDir = path.join(__dirname, '../dist');
   if (!fs.existsSync(distDir)) {
     fs.mkdirSync(distDir, { recursive: true });
   }
