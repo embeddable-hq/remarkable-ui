@@ -1,66 +1,38 @@
-.wrapper {
+.container {
+  width: 100%;
+  height: 100%;
   display: flex;
   gap: var(--em-empty-state-padding-default, 1rem);
-  margin: 0 auto;
   overflow: hidden;
-  justify-content: center;
-}
-
-/* Breakpoint styles */
-@media (min-width: 1440px) {
-  .wrapper {
-    width: 69.8125rem;
-    height: 43.9375rem;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1439px) {
-  .wrapper {
-    width: 32.5rem;
-    height: 43.9375rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .wrapper {
-    width: 22.375rem;
-    height: 43.9375rem;
-  }
+  box-sizing: border-box;
 }
 
 .column {
   display: flex;
   flex-direction: column;
   gap: var(--em-empty-state-padding-default, 1rem);
+  min-width: var(--em-empty-state-skeleton-size-min-width, 8rem);
+  max-width: var(--em-empty-state-skeleton-size-max-width, 16rem);
+  flex: 1;
+  height: 100%;
+}
+
+.box {
+  background-color: var(--em-empty-state-background-color-default, #F7F7F8);
+  border-radius: var(--em-empty-state-Number, 2rem);
+  opacity: var(--em-empty-state-opacity-default, 0.6);
 }
 
 .short {
-  display: flex;
-  height: 8rem;
-  min-width: var(--em-empty-state-skeleton-size-min-width, 8rem);
-  min-height: var(--em-empty-state-skeleton-size-min-height, 8rem);
-  padding: 0.5rem;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: var(--em-empty-state-skeleton-size-min-width, 8rem);
+  max-height: var(--em-empty-state-skeleton-size-max-width, 16rem);
   flex-shrink: 0;
-  align-self: stretch;
-  border-radius: var(--em-border-radius-400, 2rem);
-  opacity: var(--em-empty-state-opacity-default, 0.6);
-  background: var(--em-empty-state-background-color-default, #f7f7f8);
 }
 
 .tall {
-  display: flex;
-  min-width: var(--em-empty-state-skeleton-size-min-width, 8rem);
-  min-height: var(--em-empty-state-skeleton-size-min-height, 8rem);
-  padding: 0.5rem;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-  flex: 1 0 0;
-  align-self: stretch;
-  border-radius: var(--em-border-radius-400, 2rem);
-  opacity: var(--em-empty-state-opacity-default, 0.6);
-  background: var(--em-empty-state-background-color-default, #f7f7f8);
+  width: 100%;
+  flex: 1;
+  min-height: var(--em-empty-state-skeleton-size-min-width, 8rem);
 }

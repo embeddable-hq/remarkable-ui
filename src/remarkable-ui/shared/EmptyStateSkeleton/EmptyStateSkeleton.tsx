@@ -1,58 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './EmptyStateSkeleton.module.css';
 
-export const EmptyStateSkeleton: React.FC = () => {
-  const [dimensions, setDimensions] = useState({ columns: 4 });
+interface EmptyStateSkeletonProps {
+  className?: string;
+}
 
-  const calculateColumns = () => {
-    const width = window.innerWidth;
-    let wrapperWidth: number;
-
-    if (width >= 1440) {
-      wrapperWidth = 69.8125 * 16; // Convert rem to px
-    } else if (width >= 768) {
-      wrapperWidth = 32.5 * 16;
-    } else {
-      wrapperWidth = 22.375 * 16;
-    }
-
-    const columnWidth = 8 * 16; // 8rem in px
-    const gap = 16; // 1rem in px
-    const columnsCount = Math.floor((wrapperWidth + gap) / (columnWidth + gap));
-
-    setDimensions({
-      columns: Math.max(1, columnsCount),
-    });
-  };
+export const EmptyStateSkeleton: React.FC<EmptyStateSkeletonProps> = ({ className }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleColumns, setVisibleColumns] = useState(2);
 
   useEffect(() => {
+    const calculateColumns = () => {
+      if (!containerRef.current) return;
+
+      const containerWidth = containerRef.current.offsetWidth;
+      const padding = 32; // 2rem total padding (1rem each side)
+      const gap = 16; // 1rem gap between columns
+      const minColumnWidth = 128; // 8rem
+      const maxColumnWidth = 256; // 16rem
+
+      const availableWidth = containerWidth - padding;
+
+      // Calculate how many columns can fit at minimum width
+      const maxPossibleColumns = Math.floor((availableWidth + gap) / (minColumnWidth + gap));
+
+      // Calculate actual column width if we use maxPossibleColumns
+      const actualColumnWidth =
+        (availableWidth - (maxPossibleColumns - 1) * gap) / maxPossibleColumns;
+
+      // If columns would be wider than max width, reduce column count
+      let finalColumns = maxPossibleColumns;
+      if (actualColumnWidth > maxColumnWidth) {
+        finalColumns = Math.floor((availableWidth + gap) / (maxColumnWidth + gap));
+      }
+
+      setVisibleColumns(Math.max(2, finalColumns)); // Minimum 2 columns
+    };
+
     calculateColumns();
-    const handleResize = () => calculateColumns();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
-  const renderColumn = (columnIndex: number) => {
-    const isEvenColumn = columnIndex % 2 === 1; // 0-indexed, so second column is index 1
-    const elements: React.ReactNode[] = [];
-
-    // Create the alternating pattern: short-tall-short-tall...
-    const patternLength = 4; // Basic repeating unit
-    for (let i = 0; i < patternLength; i++) {
-      const shouldBeShort = isEvenColumn ? i % 2 === 1 : i % 2 === 0;
-      elements.push(<div key={i} className={shouldBeShort ? styles.short : styles.tall} />);
+    const resizeObserver = new ResizeObserver(calculateColumns);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
     }
 
-    return elements;
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  const renderColumn = (index: number) => {
+    const isEvenColumn = index % 2 === 0;
+    return (
+      <div key={index} className={styles.column}>
+        {isEvenColumn ? (
+          <>
+            <div className={`${styles.box} ${styles.short}`}></div>
+            <div className={`${styles.box} ${styles.tall}`}></div>
+            <div className={`${styles.box} ${styles.short}`}></div>
+            <div className={`${styles.box} ${styles.tall}`}></div>
+          </>
+        ) : (
+          <>
+            <div className={`${styles.box} ${styles.tall}`}></div>
+            <div className={`${styles.box} ${styles.short}`}></div>
+            <div className={`${styles.box} ${styles.tall}`}></div>
+            <div className={`${styles.box} ${styles.short}`}></div>
+          </>
+        )}
+      </div>
+    );
   };
 
   return (
-    <div className={styles.wrapper}>
-      {Array.from({ length: dimensions.columns }, (_, columnIndex) => (
-        <div key={columnIndex} className={styles.column}>
-          {renderColumn(columnIndex)}
-        </div>
-      ))}
+    <div ref={containerRef} className={`${styles.container} ${className || ''}`}>
+      {Array.from({ length: visibleColumns }, (_, index) => renderColumn(index))}
     </div>
   );
 };
