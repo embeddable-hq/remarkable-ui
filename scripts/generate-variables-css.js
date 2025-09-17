@@ -17,14 +17,27 @@ try {
 
   const constantsContent = fs.readFileSync(constantsPath, 'utf8');
 
-  // Extract all the individual style objects
+  // Extract and parse style objects safely
   const extractObject = (content, objectName) => {
     const regex = new RegExp(`const ${objectName} = ({[\\s\\S]*?});`, 'g');
     const match = regex.exec(content);
     if (!match) {
       throw new Error(`Could not find ${objectName} in constants file`);
     }
-    return match[1];
+    
+    // Parse the object literal safely by converting to JSON-like format
+    const objectContent = match[1];
+    const parsedObject = {};
+    
+    // Extract key-value pairs using regex
+    const keyValueRegex = /'([^']+)':\s*'([^']+)'/g;
+    let keyValueMatch;
+    while ((keyValueMatch = keyValueRegex.exec(objectContent)) !== null) {
+      const [, key, value] = keyValueMatch;
+      parsedObject[key] = value;
+    }
+    
+    return parsedObject;
   };
 
   // Extract all style objects
@@ -36,16 +49,14 @@ try {
   const stylesShadow = extractObject(constantsContent, 'stylesShadow');
 
   // Combine all styles into one object
-  const stylesCode = `{
-    ...${stylesColors},
-    ...${stylesSpacingAndSizes},
-    ...${stylesBorders},
-    ...${stylesComponents},
-    ...${stylesTypography},
-    ...${stylesShadow}
-  }`;
-
-  const styles = eval(`(${stylesCode})`);
+  const styles = {
+    ...stylesColors,
+    ...stylesSpacingAndSizes,
+    ...stylesBorders,
+    ...stylesComponents,
+    ...stylesTypography,
+    ...stylesShadow
+  };
 
   // Validate that styles object was created successfully
   if (!styles || typeof styles !== 'object') {
