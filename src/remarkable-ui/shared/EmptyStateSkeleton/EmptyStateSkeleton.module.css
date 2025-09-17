@@ -19,7 +19,7 @@
 
 .box {
   background-color: var(--em-empty-state-background-color-default, #f7f7f8);
-  border-radius: var(--em-empty-state-Number, 2rem);
+  border-radius: var(--em-card-border-radius-default, 2rem);
   opacity: var(--em-empty-state-opacity-default, 0.6);
 }
 
