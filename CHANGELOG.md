@@ -1,5 +1,13 @@
 # @embeddable/remarkable-ui
 
+## 0.1.5
+
+### Patch Changes
+
+- d34c536: Add ButtonIcon component
+- 9859ce7: Add confirm cancel modal
+- 6d8107e: Add empty state skeleton
+
 ## 0.1.4
 
 ### Patch Changes
