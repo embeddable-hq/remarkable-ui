@@ -6,9 +6,10 @@ export type BarChartDefaultConfigurationProps = {
   showTooltips?: boolean;
   showValueLabels?: boolean;
   showLogarithmicScale?: boolean;
+  showTotalLabels?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
-  stacked?: 'stacked' | 'percentage';
+  stacked?: 'stacked'; // TODO: Add the stacked option "percentage"
 };
 
 export type BarChartConfigurationProps = BarChartDefaultConfigurationProps & {
