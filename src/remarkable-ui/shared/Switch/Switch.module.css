@@ -41,8 +41,8 @@
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
-    width: var(--em-width-800, 2rem);
-    height: var(--em-height-400, 1rem);
+    width: var(--em-switch-size-width, 2rem);
+    height: var(--em-switch-size-height, 1rem);
     border-radius: var(--em-border-radius-500, 624.9375rem);
     background: var(--em-switch-background-color-off, #e4e4ea);
     transition: all 0.2s ease-in-out;
