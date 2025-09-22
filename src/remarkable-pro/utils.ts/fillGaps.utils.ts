@@ -228,7 +228,7 @@ const getGranularityDimensionName = (
   const granularityKey = `${baseDimensionName}.${granularity}`;
 
   // Check if granularity-specific dimension exists in the data
-  if (sampleRecord[granularityKey] !== undefined) {
+  if (granularityKey in sampleRecord) {
     return granularityKey;
   }
 
