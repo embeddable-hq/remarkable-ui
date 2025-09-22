@@ -1,3 +1,8 @@
+.confirmCancelModal {
+  height: auto;
+  width: auto;
+}
+
 .actions {
   display: flex;
   gap: var(--em-form-padding-small, 0.5rem);

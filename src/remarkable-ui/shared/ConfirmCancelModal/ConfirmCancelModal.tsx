@@ -7,6 +7,7 @@ import type { ConfirmCancelModalProps } from './ConfirmCancelModal.types';
 import { PageOverlay } from '../PageOverlay';
 import { IconX } from '@tabler/icons-react';
 import { IconButton } from '../IconButton/IconButton';
+import clsx from 'clsx';
 
 export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
   title,
@@ -19,7 +20,7 @@ export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
 }) => {
   return (
     <PageOverlay>
-      <Card className={className}>
+      <Card className={clsx(className, styles.confirmCancelModal)}>
         <CardHeader title={title} rightContent={<IconButton icon={IconX} onClick={onCancel} />} />
         <CardContent>
           <Typography as="span">{message}</Typography>
