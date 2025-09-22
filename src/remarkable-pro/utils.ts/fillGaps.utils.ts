@@ -3,6 +3,13 @@ import { Dimension, Granularity, TimeRangeDeserializedValue } from '@embeddable.
 
 export type DateRecord = Record<string, unknown>;
 
+const DATE_FORMATS = {
+  DEFAULT: 'YYYY-MM-DDTHH:mm:ss.SSS',
+  WITH_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
+  WITHOUT_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS',
+  WITHOUT_MILLISECONDS: 'YYYY-MM-DDTHH:mm:ss',
+} as const;
+
 export type FillGapsOptions = {
   dimension: Dimension;
   granularity?: Granularity;
@@ -233,25 +240,25 @@ const getGranularityDimensionName = (
  * Detects the date format from sample data
  */
 const getDateFormatFromSample = (data: DateRecord[]): string => {
-  if (!data?.length) return 'YYYY-MM-DDTHH:mm:ss.SSS';
+  if (!data?.length) return DATE_FORMATS.DEFAULT;
 
   const sampleRecord = data[0];
-  if (!sampleRecord) return 'YYYY-MM-DDTHH:mm:ss.SSS';
+  if (!sampleRecord) return DATE_FORMATS.DEFAULT;
 
   // Look for any date field to determine format
   for (const value of Object.values(sampleRecord)) {
     if (typeof value === 'string' && value.includes('T') && value.includes(':')) {
       if (value.endsWith('Z')) {
-        return 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
+        return DATE_FORMATS.WITH_TIMEZONE;
       }
       if (value.includes('.')) {
-        return 'YYYY-MM-DDTHH:mm:ss.SSS';
+        return DATE_FORMATS.WITHOUT_TIMEZONE;
       }
-      return 'YYYY-MM-DDTHH:mm:ss';
+      return DATE_FORMATS.WITHOUT_MILLISECONDS;
     }
   }
 
-  return 'YYYY-MM-DDTHH:mm:ss.SSS';
+  return DATE_FORMATS.DEFAULT;
 };
 
 /**
@@ -259,11 +266,11 @@ const getDateFormatFromSample = (data: DateRecord[]): string => {
  */
 const formatDateForGapRecord = (date: dayjs.Dayjs, dateFormat: string): string => {
   if (dateFormat.includes('[Z]')) {
-    return date.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    return date.format(DATE_FORMATS.WITH_TIMEZONE);
   } else if (dateFormat.includes('.SSS')) {
-    return date.format('YYYY-MM-DDTHH:mm:ss.SSS');
+    return date.format(DATE_FORMATS.WITHOUT_TIMEZONE);
   } else {
-    return date.format('YYYY-MM-DDTHH:mm:ss');
+    return date.format(DATE_FORMATS.WITHOUT_MILLISECONDS);
   }
 };
 
