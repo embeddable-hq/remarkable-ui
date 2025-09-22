@@ -66,7 +66,7 @@ const BarChartGroupedPro = (props: BarChartGroupedProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions({ onBarClicked, measure, horizontal: false }, theme), // Format Y axis based on first measure
+    getBarChartProOptions({ measure, horizontal: false, onBarClicked }, theme), // Format Y axis based on first measure
     theme.charts?.barChartGroupedPro?.options || {},
   );
 
