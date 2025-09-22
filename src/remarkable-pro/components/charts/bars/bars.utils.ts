@@ -119,7 +119,7 @@ export const getBarChartProData = (
 };
 
 export const getBarChartProOptions = (
-  props: {
+  options: {
     onBarClicked: (args: {
       axisDimensionValue: string | null;
       groupingDimensionValue: string | null;
@@ -129,11 +129,15 @@ export const getBarChartProOptions = (
   },
   theme: Theme,
 ): Partial<ChartOptions<'bar'>> => {
-  const { onBarClicked, measure, horizontal } = props;
+  const { onBarClicked, measure, horizontal } = options;
 
   const themeFormatter = getThemeFormatter(theme);
   return {
     plugins: {
+      legend: { position: theme.charts.legendPosition ?? 'bottom' },
+      datalabels: {
+        formatter: (value: string | number) => themeFormatter.data(options.measure, value),
+      },
       tooltip: {
         callbacks: {
           label(context) {
