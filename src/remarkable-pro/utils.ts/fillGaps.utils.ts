@@ -152,7 +152,6 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   const result: DateRecord[] = [];
   allDates.forEach((date) => {
     const dateKey = generateDateKey(date);
-
     const existingRecord = existingDataMap.get(dateKey);
 
     if (existingRecord) {
@@ -207,9 +206,10 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
 
 /**
  * Generates a consistent date key for mapping
+ * Includes time component to support second/minute granularities
  */
 const generateDateKey = (date: dayjs.Dayjs): string => {
-  return date.format('YYYY-MM-DD');
+  return date.format('YYYY-MM-DDTHH:mm:ss');
 };
 
 /**
