@@ -126,37 +126,51 @@ const detectGranularityFromData = (
   return null;
 };
 
+// Time constants calculated progressively for better performance
+const TIME_CONSTANTS = (() => {
+  const SECOND = 1000;
+  const MINUTE = 60 * SECOND;
+  const HOUR = 60 * MINUTE;
+  const DAY = 24 * HOUR;
+  const WEEK = 7 * DAY;
+  const MONTH = 30 * DAY; // Approximate
+  const QUARTER = 90 * DAY; // Approximate
+  const YEAR = 365 * DAY; // Approximate
+
+  return {
+    SECOND,
+    MINUTE,
+    HOUR,
+    DAY,
+    WEEK,
+    MONTH,
+    QUARTER,
+    YEAR,
+  };
+})();
+
 /**
  * Gets the expected step size in milliseconds for a given granularity
  */
 const getGranularityStepMs = (granularity: string): number => {
-  const oneSecond = 1000;
-  const oneMinute = 60 * oneSecond;
-  const oneHour = 60 * oneMinute;
-  const oneDay = 24 * oneHour;
-  const oneWeek = 7 * oneDay;
-  const oneMonth = 30 * oneDay; // Approximate
-  const oneQuarter = 90 * oneDay; // Approximate
-  const oneYear = 365 * oneDay; // Approximate
-
   switch (granularity) {
     case 'second':
-      return oneSecond;
+      return TIME_CONSTANTS.SECOND;
     case 'minute':
-      return oneMinute;
+      return TIME_CONSTANTS.MINUTE;
     case 'hour':
-      return oneHour;
+      return TIME_CONSTANTS.HOUR;
     case 'day':
-      return oneDay;
+      return TIME_CONSTANTS.DAY;
     case 'week':
-      return oneWeek;
+      return TIME_CONSTANTS.WEEK;
     case 'month':
-      return oneMonth;
+      return TIME_CONSTANTS.MONTH;
     case 'quarter':
-      return oneQuarter;
+      return TIME_CONSTANTS.QUARTER;
     case 'year':
-      return oneYear;
+      return TIME_CONSTANTS.YEAR;
     default:
-      return oneDay; // Default fallback
+      return TIME_CONSTANTS.DAY; // Default fallback
   }
 };

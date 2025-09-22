@@ -282,5 +282,5 @@ const granularityToDayjsUnit = (granularity: Granularity): dayjs.ManipulateType 
     year: 'year',
   };
 
-  return mapping[granularity] || 'day';
+  return mapping[granularity] || granularityToDayjsUnit('day');
 };
