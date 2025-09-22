@@ -56,6 +56,24 @@ export const subInputAbbreviateLargeNumber: any = {
   supportedTypes: ['number'],
 } as const;
 
+// TODO: Update SDK to export the needed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subInputDateBounds: any = {
+  name: 'dateBounds',
+  type: 'timeRange',
+  label: 'Date Bounds',
+  supportedTypes: ['time'],
+} as const;
+
+// TODO: Update SDK to export the needed types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const subInputGranularity: any = {
+  name: 'granularity',
+  type: 'granularity',
+  label: 'Granularity',
+  supportedTypes: ['time'],
+} as const;
+
 const subInputs = [
   subInputPrefix,
   subInputSuffix,
@@ -64,6 +82,18 @@ const subInputs = [
   subInputDecimalPlaces,
   subInputCurrency,
   subInputAbbreviateLargeNumber,
+];
+
+const timeDimensionSubInputs = [
+  subInputPrefix,
+  subInputSuffix,
+  subInputDisplayName,
+  subInputMaxCharacters,
+  subInputDecimalPlaces,
+  subInputCurrency,
+  subInputAbbreviateLargeNumber,
+  subInputGranularity,
+  subInputDateBounds,
 ];
 
 export const dataset = {
@@ -84,6 +114,18 @@ export const dimension = {
   required: true,
   category: 'Component Data',
   inputs: subInputs,
+} as const;
+
+export const timeDimension = {
+  name: 'dimension',
+  type: 'dimension',
+  label: 'Dimension',
+  config: {
+    dataset: 'dataset',
+  },
+  required: true,
+  category: 'Component Data',
+  inputs: timeDimensionSubInputs,
 } as const;
 
 export const dimensions = {

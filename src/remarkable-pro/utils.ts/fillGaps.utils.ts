@@ -1,20 +1,56 @@
 import dayjs from 'dayjs';
 import { Dimension, Granularity, TimeRangeDeserializedValue } from '@embeddable.com/core';
+import { Theme } from '../theme/theme.types';
 
 export type DateRecord = Record<string, unknown>;
 
-const DATE_FORMATS = {
+export const DATE_FORMATS = {
   DEFAULT: 'YYYY-MM-DDTHH:mm:ss.SSS',
   WITH_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
   WITHOUT_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS',
   WITHOUT_MILLISECONDS: 'YYYY-MM-DDTHH:mm:ss',
 } as const;
 
+/**
+ * Resolves date bounds from dimension inputs, handling relative time strings
+ */
+const resolveDateBounds = (
+  dimension: Dimension,
+  theme?: Theme,
+): TimeRangeDeserializedValue | undefined => {
+  const dateBounds = dimension.inputs?.dateBounds;
+  if (!dateBounds) return undefined;
+
+  // If it already has from/to dates, use them directly
+  if (dateBounds.from && dateBounds.to) {
+    return dateBounds;
+  }
+
+  // If it has a relativeTimeString, resolve it using theme options
+  const relativeTimeString = dateBounds.relativeTimeString;
+  if (relativeTimeString && theme) {
+    const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
+    const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
+
+    if (matchedOption) {
+      const range = matchedOption.getRange();
+      return {
+        from: range.from,
+        to: range.to,
+        relativeTimeString: relativeTimeString,
+      };
+    }
+  }
+
+  return undefined;
+};
+
 export type FillGapsOptions = {
   dimension: Dimension;
   granularity?: Granularity;
   sortOrder?: 'asc' | 'desc';
   dateBounds?: TimeRangeDeserializedValue;
+  theme?: Theme;
 };
 
 /**
@@ -38,7 +74,10 @@ export type FillGapsOptions = {
  * ```
  */
 export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateRecord[] => {
-  const { dimension, granularity = 'day', sortOrder = 'asc', dateBounds } = options;
+  const { dimension, granularity = 'day', sortOrder = 'asc', dateBounds, theme } = options;
+
+  // Resolve date bounds from dimension inputs if not provided directly
+  const resolvedDateBounds = dateBounds || resolveDateBounds(dimension, theme);
 
   if (!data || data.length === 0) {
     return data;
@@ -72,27 +111,10 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   let minDate: dayjs.Dayjs;
   let maxDate: dayjs.Dayjs;
 
-  if (dateBounds) {
-    if (typeof dateBounds === 'string') {
-      // Handle relative time strings like "last 30 days"
-      const relativeMatch = (dateBounds as string).match(
-        /last\s+(\d+)\s+(day|week|month|quarter|year)s?/i,
-      );
-      if (relativeMatch && relativeMatch[1] && relativeMatch[2]) {
-        const amount = parseInt(relativeMatch[1]);
-        const unit = relativeMatch[2] as dayjs.ManipulateType;
-        maxDate = dayjs();
-        minDate = maxDate.subtract(amount, unit);
-      } else {
-        // Fallback to parsing as date range
-        const [from, to] = (dateBounds as string).split(' to ');
-        minDate = dayjs(from);
-        maxDate = dayjs(to);
-      }
-    } else {
-      minDate = dayjs((dateBounds as DateRecord).from as string);
-      maxDate = dayjs((dateBounds as DateRecord).to as string);
-    }
+  if (resolvedDateBounds) {
+    // Handle TimeRangeDeserializedValue with Date objects
+    minDate = dayjs(resolvedDateBounds.from);
+    maxDate = dayjs(resolvedDateBounds.to);
   } else {
     // Use data range - more efficient single pass
     const firstRecord = validData[0];

@@ -4,6 +4,7 @@ import BarChartStackedPro from './index';
 import {
   dataset,
   description,
+  timeDimension,
   dimension,
   showLegend,
   showTooltips,
@@ -26,7 +27,7 @@ export const meta = {
   inputs: [
     dataset,
     measure,
-    { ...dimension, name: 'xAxis', label: 'X-axis' },
+    { ...timeDimension, name: 'xAxis', label: 'X-axis' },
     { ...dimension, name: 'groupBy', label: 'Group by' },
     title,
     description,
