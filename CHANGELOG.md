@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.7
+
+### Patch Changes
+
+- 819f60e: Fix Card css props
+
 ## 0.1.6
 
 ### Patch Changes
