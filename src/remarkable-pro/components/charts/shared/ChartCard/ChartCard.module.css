@@ -1,3 +1,8 @@
+.chartCard {
+  height: 100%;
+  width: 100%;
+}
+
 .error svg,
 .error h2,
 .error p {
