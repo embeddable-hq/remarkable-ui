@@ -67,7 +67,7 @@ const BarChartHorizontalStackedPro = (props: BarChartHorizontalStackedProProps) 
 
   const options = mergician(
     getBarChartProOptions({ measure, horizontal: true, onBarClicked }, theme), // Format Y axis based on first measure
-    theme.charts?.barChartPro?.options || {},
+    theme.charts?.barChartStackedHorizontalPro?.options || {},
   );
 
   return (
