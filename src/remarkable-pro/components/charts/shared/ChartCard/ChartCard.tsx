@@ -71,7 +71,7 @@ export const ChartCard: FC<ChartCardProps> = ({
   };
 
   return (
-    <Card ref={chartRef} {...props}>
+    <Card ref={chartRef} className={styles.chartCard} {...props}>
       <CardHeader
         title={title}
         subtitle={subtitle}
