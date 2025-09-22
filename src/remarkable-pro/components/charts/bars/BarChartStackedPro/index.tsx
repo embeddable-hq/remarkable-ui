@@ -26,7 +26,10 @@ type BarChartStackedProProps = {
   yAxisLabel: string;
   yAxisRangeMax?: number;
   yAxisRangeMin?: number;
-  onSegmentClick: (args: { dimensionValue: string | null }) => void;
+  onBarClicked: (args: {
+    axisDimensionValue: string | null;
+    groupingDimensionValue: string | null;
+  }) => void;
 };
 
 const BarChartStackedPro = (props: BarChartStackedProProps) => {
@@ -50,7 +53,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     yAxisLabel,
     yAxisRangeMax,
     yAxisRangeMin,
-    onSegmentClick,
+    onBarClicked,
   } = resolveI18nProps(props);
 
   const data = getBarStackedChartProData(
@@ -64,17 +67,9 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measure), // Format Y axis based on first measure
+    getBarChartProOptions({ onBarClicked, measure, horizontal: false }, theme), // Format Y axis based on first measure
     theme.charts?.barChartPro?.options || {},
   );
-
-  const handleSegmentClick = (index: number | undefined) => {
-    if (!data || !data.labels || data.labels.length === 0) return;
-
-    onSegmentClick({
-      dimensionValue: index === undefined ? null : (data.labels[index] as string),
-    });
-  };
 
   return (
     <ChartCard
@@ -86,7 +81,6 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     >
       <BarChart
         data={data}
-        onSegmentClick={handleSegmentClick}
         showLegend={showLegend}
         showTooltips={showTooltips}
         showValueLabels={showValueLabels}

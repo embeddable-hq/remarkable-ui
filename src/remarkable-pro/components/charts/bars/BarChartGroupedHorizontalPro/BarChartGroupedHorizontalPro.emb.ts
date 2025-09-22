@@ -1,6 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartHorizontalStackedPro from './index';
+import BarChartGroupedHorizontalPro from './index';
 import {
   dataset,
   description,
@@ -13,15 +13,14 @@ import {
   showLogarithmicScale,
   xAxisLabel,
   yAxisLabel,
-  showTotalLabels,
   reverseYAxis,
   xAxisRangeMin,
   xAxisRangeMax,
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartHorizontalStackedPro',
-  label: 'Bar Chart Horizontal Stacked',
+  name: 'BarChartGroupedHorizontalPro',
+  label: 'Bar Chart - Grouped Horizontal',
   category: 'Bar Charts',
   inputs: [
     dataset,
@@ -39,16 +38,20 @@ export const meta = {
     reverseYAxis,
     xAxisRangeMin,
     xAxisRangeMax,
-    showTotalLabels,
   ],
   events: [
     {
-      name: 'onSegmentClick',
+      name: 'onBarClicked',
       label: 'A bar is clicked',
       properties: [
         {
-          name: 'dimensionValue',
-          label: 'Clicked Dimension value',
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
+          type: 'string',
+        },
+        {
+          name: 'groupingDimensionValue',
+          label: 'Clicked Grouping Dimension Value',
           type: 'string',
         },
       ],
@@ -56,7 +59,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartHorizontalStackedPro, meta, {
+export default defineComponent(BarChartGroupedHorizontalPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
@@ -67,9 +70,10 @@ export default defineComponent(BarChartHorizontalStackedPro, meta, {
     };
   },
   events: {
-    onSegmentClick: (value) => {
+    onBarClicked: (value) => {
       return {
-        dimensionValue: value.dimensionValue || Value.noFilter(),
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },
   },

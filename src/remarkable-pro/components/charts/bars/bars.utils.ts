@@ -119,10 +119,18 @@ export const getBarChartProData = (
 };
 
 export const getBarChartProOptions = (
+  props: {
+    onBarClicked: (args: {
+      axisDimensionValue: string | null;
+      groupingDimensionValue: string | null;
+    }) => void;
+    measure: Measure;
+    horizontal: boolean;
+  },
   theme: Theme,
-  measure: Measure,
-  horizontal: boolean = false,
 ): Partial<ChartOptions<'bar'>> => {
+  const { onBarClicked, measure, horizontal } = props;
+
   const themeFormatter = getThemeFormatter(theme);
   return {
     plugins: {
@@ -150,6 +158,20 @@ export const getBarChartProOptions = (
           }),
         },
       },
+    },
+    onClick: (_event, elements, chart) => {
+      const element = elements[0];
+      const axisDimensionValue = (element ? chart.data.labels![element.index] : null) as
+        | string
+        | null;
+      const groupingDimensionValue = (
+        element ? chart.data.datasets[element.datasetIndex]!.label : null
+      ) as string | null;
+
+      onBarClicked({
+        axisDimensionValue,
+        groupingDimensionValue,
+      });
     },
   };
 };

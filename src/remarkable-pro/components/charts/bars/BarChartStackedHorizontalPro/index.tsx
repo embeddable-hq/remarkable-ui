@@ -8,7 +8,7 @@ import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils'
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 
-type BarChartHorizontalGroupedProProps = {
+type BarChartHorizontalStackedProProps = {
   description: string;
   groupBy: Dimension;
   measure: Measure;
@@ -25,10 +25,13 @@ type BarChartHorizontalGroupedProProps = {
   yAxisLabel: string;
   xAxisRangeMax?: number;
   xAxisRangeMin?: number;
-  onSegmentClick: (args: { dimensionValue: string | null }) => void;
+  onBarClicked: (args: {
+    axisDimensionValue: string | null;
+    groupingDimensionValue: string | null;
+  }) => void;
 };
 
-const BarChartHorizontalGroupedPro = (props: BarChartHorizontalGroupedProProps) => {
+const BarChartHorizontalStackedPro = (props: BarChartHorizontalStackedProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -49,7 +52,7 @@ const BarChartHorizontalGroupedPro = (props: BarChartHorizontalGroupedProProps) 
     yAxisLabel,
     xAxisRangeMax,
     xAxisRangeMin,
-    onSegmentClick,
+    onBarClicked,
   } = resolveI18nProps(props);
 
   const data = getBarStackedChartProData(
@@ -63,17 +66,9 @@ const BarChartHorizontalGroupedPro = (props: BarChartHorizontalGroupedProProps) 
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measure, true), // Format X axis based on first measure
+    getBarChartProOptions({ measure, horizontal: true, onBarClicked }, theme), // Format Y axis based on first measure
     theme.charts?.barChartPro?.options || {},
   );
-
-  const handleSegmentClick = (index: number | undefined) => {
-    if (!data || !data.labels || data.labels.length === 0) return;
-
-    onSegmentClick({
-      dimensionValue: index === undefined ? null : (data.labels[index] as string),
-    });
-  };
 
   return (
     <ChartCard
@@ -85,7 +80,6 @@ const BarChartHorizontalGroupedPro = (props: BarChartHorizontalGroupedProProps) 
     >
       <BarChart
         data={data}
-        onSegmentClick={handleSegmentClick}
         showLegend={showLegend}
         showTooltips={showTooltips}
         showValueLabels={showValueLabels}
@@ -97,10 +91,11 @@ const BarChartHorizontalGroupedPro = (props: BarChartHorizontalGroupedProProps) 
         xAxisRangeMax={xAxisRangeMax}
         showTotalLabels={showTotalLabels}
         options={options}
+        stacked="stacked"
         horizontal
       />
     </ChartCard>
   );
 };
 
-export default BarChartHorizontalGroupedPro;
+export default BarChartHorizontalStackedPro;
