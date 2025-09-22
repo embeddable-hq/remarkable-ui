@@ -12,28 +12,52 @@ export type FillGapsOptions = {
 
 /**
  * Fills missing time buckets in a date-series based on granularity and sorting
+ *
+ * @param data - Array of date records to process
+ * @param options - Configuration options for gap filling
+ * @returns Array with missing time buckets filled in
+ *
+ * @example
+ * ```typescript
+ * const data = [
+ *   { date: '2024-01-01', value: 10 },
+ *   { date: '2024-01-03', value: 20 }
+ * ];
+ * const result = fillGaps(data, {
+ *   xAxis: { name: 'date' },
+ *   granularity: 'day'
+ * });
+ * // Result: [{ date: '2024-01-01', value: 10 }, { date: '2024-01-02', value: null }, { date: '2024-01-03', value: 20 }]
+ * ```
  */
 export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateRecord[] => {
   const { xAxis, granularity = 'day', sortOrder = 'asc', dateBounds } = options;
-  console.log('fillGaps - granularity:', granularity, 'dimensionName:', xAxis.name);
 
   if (!data || data.length === 0) {
     return data;
   }
 
+  if (!xAxis?.name) {
+    throw new Error('xAxis.name is required');
+  }
+
   // Get the dimension name - use granularity-specific name if available
   const dimensionName = getGranularityDimensionName(xAxis.name, granularity, data);
-  console.log('fillGaps - using dimensionName:', dimensionName);
 
   // Parse dates and filter valid ones
   const validData = data
-    .map((record) => ({
-      ...record,
-      _parsedDate: dayjs(record[dimensionName] as string),
-    }))
-    .filter((record) => record._parsedDate.isValid());
+    .map((record) => {
+      const dateValue = record[dimensionName];
+      if (typeof dateValue !== 'string') {
+        return null;
+      }
+      const parsedDate = dayjs(dateValue);
+      return parsedDate.isValid() ? { ...record, _parsedDate: parsedDate } : null;
+    })
+    .filter((record): record is DateRecord & { _parsedDate: dayjs.Dayjs } => record !== null);
 
   if (validData.length === 0) {
+    console.warn('fillGaps: No valid dates found in data');
     return data;
   }
 
@@ -63,21 +87,37 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
       maxDate = dayjs((dateBounds as DateRecord).to as string);
     }
   } else {
-    // Use data range
-    const dates = validData.map((d) => d._parsedDate);
-    minDate = dates.reduce((min, date) => (date.isBefore(min) ? date : min));
-    maxDate = dates.reduce((max, date) => (date.isAfter(max) ? date : max));
+    // Use data range - more efficient single pass
+    const firstRecord = validData[0];
+    if (!firstRecord) {
+      return data;
+    }
+
+    let min = firstRecord._parsedDate;
+    let max = firstRecord._parsedDate;
+
+    for (let i = 1; i < validData.length; i++) {
+      const record = validData[i];
+      if (record) {
+        const date = record._parsedDate;
+        if (date.isBefore(min)) min = date;
+        if (date.isAfter(max)) max = date;
+      }
+    }
+
+    minDate = min;
+    maxDate = max;
   }
 
   // Generate all possible dates in the range
   const allDates: dayjs.Dayjs[] = [];
 
   if (granularity === 'week') {
-    // For week granularity, start from the first existing date and add weeks
+    // For week granularity, start from the first existing date and add exactly 7 days
     let currentDate = minDate;
     while (currentDate.isBefore(maxDate) || currentDate.isSame(maxDate, 'day')) {
       allDates.push(currentDate);
-      currentDate = currentDate.add(1, 'week');
+      currentDate = currentDate.add(7, 'day'); // Add exactly 7 days
     }
   } else {
     // For other granularities, use the standard approach
@@ -94,38 +134,19 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
     }
   }
 
-  // Create a map of existing data by date (using week-based matching for week granularity)
+  // Create a map of existing data by date
   const existingDataMap = new Map<string, DateRecord>();
   validData.forEach((record) => {
-    let dateKey: string;
-    if (granularity === 'week') {
-      // For week granularity, use the start of the week as the key
-      dateKey = record._parsedDate.startOf('week').format('YYYY-MM-DD');
-    } else {
-      dateKey = record._parsedDate.format('YYYY-MM-DD');
-    }
-    console.log(
-      'fillGaps - existing data key:',
-      dateKey,
-      'original date:',
-      (record as DateRecord)[dimensionName],
-    );
+    const dateKey = generateDateKey(record._parsedDate);
     existingDataMap.set(dateKey, record);
   });
 
   // Fill gaps
   const result: DateRecord[] = [];
   allDates.forEach((date) => {
-    let dateKey: string;
-    if (granularity === 'week') {
-      // For week granularity, use the start of the week as the key
-      dateKey = date.startOf('week').format('YYYY-MM-DD');
-    } else {
-      dateKey = date.format('YYYY-MM-DD');
-    }
+    const dateKey = generateDateKey(date);
 
     const existingRecord = existingDataMap.get(dateKey);
-    console.log('fillGaps - checking date:', dateKey, 'found existing:', !!existingRecord);
 
     if (existingRecord) {
       // Use existing data
@@ -143,18 +164,20 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
 
       // Set all other dimensions to null/zero, but preserve date fields
       const baseDimensionName = xAxis.name;
-      Object.keys(data[0] || {}).forEach((key) => {
-        if (key !== dimensionName) {
-          // If this is another date dimension (same base name), use the same date
-          if (key.startsWith(baseDimensionName) && key !== dimensionName) {
-            gapRecord[key] = formattedDate;
-          } else {
-            gapRecord[key] = null;
+      const sampleRecord = data[0];
+      if (sampleRecord) {
+        for (const key of Object.keys(sampleRecord)) {
+          if (key !== dimensionName) {
+            // If this is another date dimension (same base name), use the same date
+            if (key.startsWith(baseDimensionName) && key !== dimensionName) {
+              gapRecord[key] = formattedDate;
+            } else {
+              gapRecord[key] = null;
+            }
           }
         }
-      });
+      }
 
-      console.log('fillGaps - created gap record:', gapRecord);
       result.push(gapRecord);
     }
   });
@@ -173,6 +196,13 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   }
 
   return result;
+};
+
+/**
+ * Generates a consistent date key for mapping
+ */
+const generateDateKey = (date: dayjs.Dayjs): string => {
+  return date.format('YYYY-MM-DD');
 };
 
 /**
@@ -203,22 +233,21 @@ const getGranularityDimensionName = (
  * Detects the date format from sample data
  */
 const getDateFormatFromSample = (data: DateRecord[]): string => {
-  if (!data || data.length === 0) return 'YYYY-MM-DDTHH:mm:ss.SSS';
+  if (!data?.length) return 'YYYY-MM-DDTHH:mm:ss.SSS';
 
   const sampleRecord = data[0];
   if (!sampleRecord) return 'YYYY-MM-DDTHH:mm:ss.SSS';
 
   // Look for any date field to determine format
-  for (const [, value] of Object.entries(sampleRecord)) {
+  for (const value of Object.values(sampleRecord)) {
     if (typeof value === 'string' && value.includes('T') && value.includes(':')) {
-      // Check if it has milliseconds and Z suffix
-      if (value.includes('.') && value.endsWith('Z')) {
+      if (value.endsWith('Z')) {
         return 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
-      } else if (value.includes('.')) {
-        return 'YYYY-MM-DDTHH:mm:ss.SSS';
-      } else {
-        return 'YYYY-MM-DDTHH:mm:ss';
       }
+      if (value.includes('.')) {
+        return 'YYYY-MM-DDTHH:mm:ss.SSS';
+      }
+      return 'YYYY-MM-DDTHH:mm:ss';
     }
   }
 
@@ -254,11 +283,4 @@ const granularityToDayjsUnit = (granularity: Granularity): dayjs.ManipulateType 
   };
 
   return mapping[granularity] || 'day';
-};
-
-/**
- * React hook for fillGaps
- */
-export const useFillGaps = (data: DateRecord[], options: FillGapsOptions): DateRecord[] => {
-  return fillGaps(data, options);
 };
