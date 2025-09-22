@@ -4,7 +4,7 @@ import { Dimension, Granularity, TimeRangeDeserializedValue } from '@embeddable.
 export type DateRecord = Record<string, unknown>;
 
 export type FillGapsOptions = {
-  xAxis: Dimension;
+  dimension: Dimension;
   granularity?: Granularity;
   sortOrder?: 'asc' | 'desc';
   dateBounds?: TimeRangeDeserializedValue;
@@ -24,25 +24,25 @@ export type FillGapsOptions = {
  *   { date: '2024-01-03', value: 20 }
  * ];
  * const result = fillGaps(data, {
- *   xAxis: { name: 'date' },
+ *   dimension: { name: 'date' },
  *   granularity: 'day'
  * });
  * // Result: [{ date: '2024-01-01', value: 10 }, { date: '2024-01-02', value: null }, { date: '2024-01-03', value: 20 }]
  * ```
  */
 export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateRecord[] => {
-  const { xAxis, granularity = 'day', sortOrder = 'asc', dateBounds } = options;
+  const { dimension, granularity = 'day', sortOrder = 'asc', dateBounds } = options;
 
   if (!data || data.length === 0) {
     return data;
   }
 
-  if (!xAxis?.name) {
-    throw new Error('xAxis.name is required');
+  if (!dimension?.name) {
+    throw new Error('dimension.name is required');
   }
 
   // Get the dimension name - use granularity-specific name if available
-  const dimensionName = getGranularityDimensionName(xAxis.name, granularity, data);
+  const dimensionName = getGranularityDimensionName(dimension.name, granularity, data);
 
   // Parse dates and filter valid ones
   const validData = data
@@ -163,7 +163,7 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
       };
 
       // Set all other dimensions to null/zero, but preserve date fields
-      const baseDimensionName = xAxis.name;
+      const baseDimensionName = dimension.name;
       const sampleRecord = data[0];
       if (sampleRecord) {
         for (const key of Object.keys(sampleRecord)) {

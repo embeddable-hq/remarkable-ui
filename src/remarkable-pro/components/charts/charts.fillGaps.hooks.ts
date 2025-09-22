@@ -34,7 +34,7 @@ export const useChartDataWithFillGaps = (
 
     // Use the detected or provided granularity
     const options: FillGapsOptions = {
-      xAxis: dimension,
+      dimension: dimension,
       granularity: detectedGranularity,
       sortOrder: 'asc',
     };
