@@ -7,6 +7,7 @@ import { BarChart } from '../../../../../remarkable-ui/charts/bars/BarChart';
 import { getBarChartProData, getBarChartProOptions } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 
 type BarChartProProps = {
   description: string;
@@ -31,6 +32,11 @@ const BarChartPro = (props: BarChartProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
+  const enhancedResults = {
+    ...props.results,
+    data: useChartDataWithFillGaps(props.results, props.dimension),
+  };
+
   const {
     description,
     dimension,
@@ -48,7 +54,7 @@ const BarChartPro = (props: BarChartProProps) => {
     showValueLabels,
     reverseXAxis,
     onSegmentClick,
-  } = resolveI18nProps(props);
+  } = resolveI18nProps({ ...props, results: enhancedResults });
 
   const data = getBarChartProData(
     { data: results.data, dimension, measures, maxItems: xAxisMaxItems },
@@ -65,7 +71,6 @@ const BarChartPro = (props: BarChartProProps) => {
       dimensionValue: index === undefined ? undefined : results.data?.[index]?.[dimension.name],
     });
   };
-
   return (
     <ChartCard
       data={results}
