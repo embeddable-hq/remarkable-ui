@@ -210,8 +210,9 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
     const existingRecord = existingDataMap.get(dateKey);
 
     if (existingRecord) {
-      // Use existing data
-      const { ...cleanRecord } = existingRecord;
+      // Use existing data - exclude internal _parsedDate field
+      const cleanRecord = { ...existingRecord };
+      delete cleanRecord._parsedDate;
       result.push(cleanRecord);
     } else {
       // Create gap record with zero/null values
