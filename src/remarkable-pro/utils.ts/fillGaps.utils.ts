@@ -40,6 +40,45 @@ const formatDateAsStringUTC = (date: Date): string => {
 };
 
 /**
+ * Checks if a date is in UTC format (contains 'Z')
+ */
+const isUTCDate = (date: Date): boolean => {
+  return date.toISOString().includes('Z');
+};
+
+/**
+ * Formats a date string based on whether it's UTC or local
+ */
+const formatDateString = (date: Date): string => {
+  return isUTCDate(date) ? formatDateAsStringUTC(date) : formatDateAsString(date);
+};
+
+/**
+ * Gets the quarter start date for a given dayjs date
+ */
+const getQuarterStart = (date: dayjs.Dayjs): dayjs.Dayjs => {
+  return date
+    .startOf('month')
+    .month(Math.floor(date.month() / 3) * 3)
+    .startOf('month');
+};
+
+/**
+ * Applies granularity-specific start/end logic to dates
+ */
+const applyGranularityBounds = (date: dayjs.Dayjs, granularity: Granularity): dayjs.Dayjs => {
+  const unit = granularityToDayjsUnit(granularity);
+
+  if (granularity === 'week') {
+    return date.startOf('week');
+  } else if (granularity === 'quarter') {
+    return getQuarterStart(date);
+  } else {
+    return date.startOf(unit);
+  }
+};
+
+/**
  * Resolves date bounds from dimension inputs, handling relative time strings
  */
 const resolveDateBounds = (
@@ -140,8 +179,7 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   let maxDate: dayjs.Dayjs;
 
   if (resolvedDateBounds) {
-    // Parse dates by extracting just the date part to avoid timezone issues
-    // Handle both Date objects and ISO strings
+    // Parse dates with timezone-safe approach
     const fromDate =
       resolvedDateBounds.from instanceof Date
         ? resolvedDateBounds.from
@@ -151,17 +189,22 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
         ? resolvedDateBounds.to
         : new Date(resolvedDateBounds.to!);
 
-    // Extract date parts - use UTC if the original dates were in UTC format
-    const fromDateStr = fromDate.toISOString().includes('Z')
-      ? formatDateAsStringUTC(fromDate)
-      : formatDateAsString(fromDate);
-    const toDateStr = toDate.toISOString().includes('Z')
-      ? formatDateAsStringUTC(toDate)
-      : formatDateAsString(toDate);
+    // For sub-day granularities, preserve time component
+    if (granularity === 'second' || granularity === 'minute' || granularity === 'hour') {
+      minDate = dayjs(fromDate);
+      maxDate = dayjs(toDate);
+    } else {
+      // For day+ granularities, extract date only to avoid timezone issues
+      const fromDateStr = formatDateString(fromDate);
+      const toDateStr = formatDateString(toDate);
 
-    // Create dayjs objects from date strings (no time, no timezone)
-    minDate = dayjs(fromDateStr);
-    maxDate = dayjs(toDateStr);
+      minDate = dayjs(fromDateStr);
+      maxDate = dayjs(toDateStr);
+    }
+
+    // Apply granularity-specific start/end logic
+    minDate = applyGranularityBounds(minDate, granularity);
+    maxDate = applyGranularityBounds(maxDate, granularity);
   } else {
     // Use data range - more efficient single pass
     const firstRecord = validData[0];
