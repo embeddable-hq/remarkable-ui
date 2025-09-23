@@ -112,9 +112,23 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   let maxDate: dayjs.Dayjs;
 
   if (resolvedDateBounds) {
-    // Handle TimeRangeDeserializedValue with Date objects
-    minDate = dayjs(resolvedDateBounds.from);
-    maxDate = dayjs(resolvedDateBounds.to);
+    // Parse dates by extracting just the date part to avoid timezone issues
+    // Handle both Date objects and ISO strings
+    const fromDate =
+      resolvedDateBounds.from instanceof Date
+        ? resolvedDateBounds.from
+        : new Date(resolvedDateBounds.from!);
+    const toDate =
+      resolvedDateBounds.to instanceof Date
+        ? resolvedDateBounds.to
+        : new Date(resolvedDateBounds.to!);
+
+    const fromDateStr = fromDate.toISOString().split('T')[0];
+    const toDateStr = toDate.toISOString().split('T')[0];
+
+    // Create dayjs objects from date strings (no time, no timezone)
+    minDate = dayjs(fromDateStr);
+    maxDate = dayjs(toDateStr);
   } else {
     // Use data range - more efficient single pass
     const firstRecord = validData[0];
@@ -141,18 +155,23 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   // Generate all possible dates in the range
   const allDates: dayjs.Dayjs[] = [];
 
+  // Normalize both dates to the start of their respective granularity units
+  const dayjsUnit = granularityToDayjsUnit(granularity);
+  const minDateStart = minDate.startOf(dayjsUnit);
+  const maxDateStart = maxDate.startOf(dayjsUnit);
+
   if (granularity === 'week') {
-    // For week granularity, start from the first existing date and add exactly 7 days
-    let currentDate = minDate;
-    while (currentDate.isBefore(maxDate) || currentDate.isSame(maxDate, 'day')) {
+    // For week granularity, start from the first day and add exactly 7 days
+    let currentDate = minDateStart;
+    while (currentDate.isBefore(maxDateStart) || currentDate.isSame(maxDateStart, 'day')) {
       allDates.push(currentDate);
       currentDate = currentDate.add(7, 'day'); // Add exactly 7 days
     }
   } else {
     // For other granularities, use the standard approach
-    const dayjsUnit = granularityToDayjsUnit(granularity);
-    let currentDate = minDate.startOf(dayjsUnit);
-    while (currentDate.isBefore(maxDate) || currentDate.isSame(maxDate, dayjsUnit)) {
+    let currentDate = minDateStart;
+
+    while (currentDate.isBefore(maxDateStart) || currentDate.isSame(maxDateStart, dayjsUnit)) {
       allDates.push(currentDate);
 
       if (granularity === 'quarter') {
