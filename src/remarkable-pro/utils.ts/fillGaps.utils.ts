@@ -26,6 +26,13 @@ const granularityToDayjsUnitMap: Record<Granularity, dayjs.ManipulateType> = {
 } as const;
 
 /**
+ * Formats a Date object as YYYY-MM-DD string in local timezone
+ */
+const formatDateAsString = (date: Date): string => {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+};
+
+/**
  * Resolves date bounds from dimension inputs, handling relative time strings
  */
 const resolveDateBounds = (
@@ -137,8 +144,9 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
         ? resolvedDateBounds.to
         : new Date(resolvedDateBounds.to!);
 
-    const fromDateStr = fromDate.toISOString().split('T')[0];
-    const toDateStr = toDate.toISOString().split('T')[0];
+    // Extract date parts directly to avoid timezone conversion
+    const fromDateStr = formatDateAsString(fromDate);
+    const toDateStr = formatDateAsString(toDate);
 
     // Create dayjs objects from date strings (no time, no timezone)
     minDate = dayjs(fromDateStr);
