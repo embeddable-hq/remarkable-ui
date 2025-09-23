@@ -95,8 +95,8 @@ const resolveDateBounds = (
 
   // If it has a relativeTimeString, resolve it using theme options
   const relativeTimeString = dateBounds.relativeTimeString;
-  if (relativeTimeString && theme) {
-    const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
+  if (relativeTimeString) {
+    const dateRangeOptions = theme?.editors?.dateRangeSelectFieldPro?.options ?? [];
     const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
 
     if (matchedOption) {
