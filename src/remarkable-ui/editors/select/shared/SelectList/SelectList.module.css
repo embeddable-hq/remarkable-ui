@@ -8,10 +8,10 @@
     var(--em-select-menu-size-width-max-width, 25rem)
   );
   min-width: var(--radix-dropdown-menu-trigger-width);
-  padding: var(--em-padding-200, 0.5rem);
+  padding: var(--em-select-menu-list-padding-default, 0.5rem);
   max-height: var(--em-select-menu-list-size-max-height, 20rem);
   gap: var(--em-select-menu-list-gap-default, 0.5rem);
-  border-radius: var(--em-border-radius-300, 0.75rem);
+  border-radius: var(--em-select-menu-list-border-radius-default, 0.75rem);
   background: var(--em-background-color-neutral, #fff);
   box-shadow: var(--em-box-shadow-default-position-x, 0)
     var(--em-box-shadow-default-position-y, 1px) var(--em-box-shadow-default-blur, 40px)

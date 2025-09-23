@@ -1,7 +1,7 @@
 {
   "name": "@embeddable.com/remarkable-ui",
   "author": "embeddable (https://embeddable.com)",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -60,7 +60,6 @@
     "chart.js": "^4.5.0",
     "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "chartjs-plugin-stacked100": "^1.7.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.14",
     "dom-to-image-more": "^3.6.3",
