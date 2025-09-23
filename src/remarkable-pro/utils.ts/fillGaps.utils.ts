@@ -33,6 +33,13 @@ const formatDateAsString = (date: Date): string => {
 };
 
 /**
+ * Formats a Date object as YYYY-MM-DD string in UTC timezone
+ */
+const formatDateAsStringUTC = (date: Date): string => {
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
+};
+
+/**
  * Resolves date bounds from dimension inputs, handling relative time strings
  */
 const resolveDateBounds = (
@@ -144,9 +151,13 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
         ? resolvedDateBounds.to
         : new Date(resolvedDateBounds.to!);
 
-    // Extract date parts directly to avoid timezone conversion
-    const fromDateStr = formatDateAsString(fromDate);
-    const toDateStr = formatDateAsString(toDate);
+    // Extract date parts - use UTC if the original dates were in UTC format
+    const fromDateStr = fromDate.toISOString().includes('Z')
+      ? formatDateAsStringUTC(fromDate)
+      : formatDateAsString(fromDate);
+    const toDateStr = toDate.toISOString().includes('Z')
+      ? formatDateAsStringUTC(toDate)
+      : formatDateAsString(toDate);
 
     // Create dayjs objects from date strings (no time, no timezone)
     minDate = dayjs(fromDateStr);
