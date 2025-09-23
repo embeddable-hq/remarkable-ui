@@ -4,11 +4,25 @@ import { Theme } from '../theme/theme.types';
 
 export type DateRecord = Record<string, unknown>;
 
-export const DATE_FORMATS = {
+const DATE_FORMATS = {
   DEFAULT: 'YYYY-MM-DDTHH:mm:ss.SSS',
   WITH_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
   WITHOUT_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS',
   WITHOUT_MILLISECONDS: 'YYYY-MM-DDTHH:mm:ss',
+} as const;
+
+/**
+ * Maps granularity to dayjs unit for date manipulation
+ */
+const granularityToDayjsUnitMap: Record<Granularity, dayjs.ManipulateType> = {
+  second: 'second',
+  minute: 'minute',
+  hour: 'hour',
+  day: 'day',
+  week: 'week',
+  month: 'month',
+  quarter: 'month', // Will be handled specially
+  year: 'year',
 } as const;
 
 /**
@@ -319,16 +333,5 @@ const formatDateForGapRecord = (date: dayjs.Dayjs, dateFormat: string): string =
  * Maps granularity to dayjs unit
  */
 const granularityToDayjsUnit = (granularity: Granularity): dayjs.ManipulateType => {
-  const mapping: Record<Granularity, dayjs.ManipulateType> = {
-    second: 'second',
-    minute: 'minute',
-    hour: 'hour',
-    day: 'day',
-    week: 'week',
-    month: 'month',
-    quarter: 'month', // Will be handled specially
-    year: 'year',
-  };
-
-  return mapping[granularity] || granularityToDayjsUnit('day');
+  return granularityToDayjsUnitMap[granularity] || granularityToDayjsUnitMap.day;
 };
