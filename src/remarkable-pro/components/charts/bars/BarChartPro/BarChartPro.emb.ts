@@ -4,7 +4,7 @@ import BarChartPro from './index';
 import {
   dataset,
   description,
-  timeDimension,
+  dimensionWithDateBounds,
   showLegend,
   showTooltips,
   showValueLabels,
@@ -26,7 +26,7 @@ export const meta = {
   inputs: [
     dataset,
     measures,
-    timeDimension,
+    dimensionWithDateBounds,
     title,
     description,
     showLegend,

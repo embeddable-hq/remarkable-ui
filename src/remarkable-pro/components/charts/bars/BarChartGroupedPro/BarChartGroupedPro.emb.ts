@@ -4,7 +4,7 @@ import BarChartGroupedPro from './index';
 import {
   dataset,
   description,
-  timeDimension,
+  dimensionWithDateBounds,
   dimension,
   showLegend,
   showTooltips,
@@ -27,7 +27,7 @@ export const meta = {
   inputs: [
     dataset,
     measure,
-    { ...timeDimension, name: 'xAxis', label: 'X-axis' },
+    { ...dimensionWithDateBounds, name: 'xAxis', label: 'X-axis' },
     { ...dimension, name: 'groupBy', label: 'Group by' },
     title,
     description,

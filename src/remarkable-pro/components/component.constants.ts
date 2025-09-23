@@ -116,7 +116,7 @@ export const dimension = {
   inputs: subInputs,
 } as const;
 
-export const timeDimension = {
+export const dimensionWithDateBounds = {
   name: 'dimension',
   type: 'dimension',
   label: 'Dimension',
