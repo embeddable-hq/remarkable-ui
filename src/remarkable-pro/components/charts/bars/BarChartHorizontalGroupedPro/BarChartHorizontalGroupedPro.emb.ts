@@ -4,7 +4,7 @@ import BarChartHorizontalGroupedPro from './index';
 import {
   dataset,
   description,
-  dimension,
+  dimensionWithDateBounds,
   showLegend,
   showTooltips,
   showValueLabels,
@@ -26,8 +26,8 @@ export const meta = {
   inputs: [
     dataset,
     measure,
-    { ...dimension, name: 'yAxis', label: 'Y-axis' },
-    { ...dimension, name: 'groupBy', label: 'Group by' },
+    { ...dimensionWithDateBounds, name: 'yAxis', label: 'Y-axis' },
+    { ...dimensionWithDateBounds, name: 'groupBy', label: 'Group by' },
     title,
     description,
     showLegend,
