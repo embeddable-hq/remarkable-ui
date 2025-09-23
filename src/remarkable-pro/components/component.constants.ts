@@ -62,6 +62,7 @@ export const subInputDateBounds: any = {
   name: 'dateBounds',
   type: 'timeRange',
   label: 'Date Bounds',
+  description: 'Set the date range for the axis',
   supportedTypes: ['time'],
 } as const;
 
