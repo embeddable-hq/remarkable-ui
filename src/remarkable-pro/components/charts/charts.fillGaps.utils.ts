@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Dimension, Granularity, TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { Theme } from '../theme/theme.types';
+import { Theme } from '../../theme/theme.types';
 
 export type DateRecord = Record<string, unknown>;
 

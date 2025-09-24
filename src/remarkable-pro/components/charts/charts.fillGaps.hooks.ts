@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { DataResponse, Dimension, Granularity } from '@embeddable.com/core';
-import { fillGaps, type DateRecord, type FillGapsOptions } from '../../utils.ts/fillGaps.utils';
+import { fillGaps, type DateRecord, type FillGapsOptions } from './charts.fillGaps.utils';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../theme/theme.types';
 
@@ -19,10 +19,10 @@ import { Theme } from '../../theme/theme.types';
 export const useChartDataWithFillGaps = (
   results: DataResponse,
   dimension: Dimension,
-): DataResponse['data'] => {
+): DataResponse => {
   const theme = useTheme() as Theme;
 
-  return useMemo(() => {
+  const data = useMemo(() => {
     const data = results.data;
 
     // Only apply fillGaps if:
@@ -64,6 +64,10 @@ export const useChartDataWithFillGaps = (
       return data;
     }
   }, [results.data, dimension, theme]);
+  return {
+    ...results,
+    data,
+  };
 };
 
 /**

@@ -32,16 +32,10 @@ const BarChartPro = (props: BarChartProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
-  const enhancedResults = {
-    ...props.results,
-    data: useChartDataWithFillGaps(props.results, props.dimension),
-  };
-
   const {
     description,
     dimension,
     measures,
-    results,
     title,
     xAxisLabel,
     xAxisMaxItems,
@@ -54,7 +48,9 @@ const BarChartPro = (props: BarChartProProps) => {
     showValueLabels,
     reverseXAxis,
     onSegmentClick,
-  } = resolveI18nProps({ ...props, results: enhancedResults });
+  } = resolveI18nProps(props);
+
+  const results = useChartDataWithFillGaps(props.results, props.dimension);
 
   const data = getBarChartProData(
     { data: results.data, dimension, measures, maxItems: xAxisMaxItems },

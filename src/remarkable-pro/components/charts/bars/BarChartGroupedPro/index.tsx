@@ -33,16 +33,10 @@ const BarChartGroupedPro = (props: BarChartGroupedProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
-  const enhancedResults = {
-    ...props.results,
-    data: useChartDataWithFillGaps(props.results, props.xAxis),
-  };
-
   const {
     description,
     groupBy,
     measure,
-    results,
     reverseXAxis,
     showLegend,
     showLogarithmicScale,
@@ -56,7 +50,9 @@ const BarChartGroupedPro = (props: BarChartGroupedProProps) => {
     yAxisRangeMax,
     yAxisRangeMin,
     onSegmentClick,
-  } = resolveI18nProps({ ...props, results: enhancedResults });
+  } = resolveI18nProps(props);
+
+  const results = useChartDataWithFillGaps(props.results, props.xAxis);
 
   const data = getBarStackedChartProData(
     {
