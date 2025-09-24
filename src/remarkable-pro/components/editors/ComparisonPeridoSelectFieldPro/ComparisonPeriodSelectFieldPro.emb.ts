@@ -19,7 +19,6 @@ export const meta = {
       type: 'timeRange',
       label: 'To Compare Time Range',
       category: 'Pre-configured variables',
-      required: true,
     },
     {
       name: 'comparisonPeriod',
