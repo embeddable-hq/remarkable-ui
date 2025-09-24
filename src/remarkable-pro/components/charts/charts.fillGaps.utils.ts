@@ -9,7 +9,7 @@ const DATE_FORMATS = {
   WITH_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS[Z]',
   WITHOUT_TIMEZONE: 'YYYY-MM-DDTHH:mm:ss.SSS',
   WITHOUT_MILLISECONDS: 'YYYY-MM-DDTHH:mm:ss',
-} as const;
+};
 
 /**
  * Maps granularity to dayjs unit for date manipulation
@@ -23,7 +23,7 @@ const granularityToDayjsUnitMap: Record<Granularity, dayjs.ManipulateType> = {
   month: 'month',
   quarter: 'month', // Will be handled specially
   year: 'year',
-} as const;
+};
 
 /**
  * Formats a Date object as YYYY-MM-DD string in local timezone
