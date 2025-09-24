@@ -1,5 +1,5 @@
 import { TimeRange, TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { DateComparisonSelectFieldProOption } from './DateComparisonSelectFieldPro.types';
+import { DateComparisonSelectFieldProOption } from './ComparisonPeriodSelectFieldPro.types';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek.js';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';

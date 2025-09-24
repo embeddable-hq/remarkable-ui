@@ -4,7 +4,7 @@ import { ThemeStyles } from './styles/styles.types';
 import { ChartOptions } from 'chart.js';
 import { ChartCardMenuProOption } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 import { DateRangeSelectFieldProOption } from '../components/editors/DateRangeSelectFieldPro/DateRangeSelectFieldPro.types';
-import { DateComparisonSelectFieldProOption } from '../components/editors/DateComparisonSelectFieldPro/DateComparisonSelectFieldPro.types';
+import { DateComparisonSelectFieldProOption } from '../components/editors/ComparisonPeridoSelectFieldPro/ComparisonPeriodSelectFieldPro.types';
 
 export type ThemeI18n = { language: string; translations: Resource };
 

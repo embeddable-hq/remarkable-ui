@@ -31,7 +31,7 @@ const getQuarterBounds = (date: Date, offset = 0): TimeRange => {
   };
 };
 
-export const defaultDateTimeSelectFieldProOptions: DateRangeSelectFieldProOption[] = [
+export const defaultDateComparisonSelectFieldPros: DateRangeSelectFieldProOption[] = [
   {
     value: 'Today',
     label: 'Today',

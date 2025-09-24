@@ -3,9 +3,9 @@ import { de } from './i18n/translations/de';
 import { remarkableThemeFormatter } from './formatter/formatter.constants';
 import { remarkableThemeStyles } from './styles/styles.constants';
 import { Theme, ThemeCharts } from './theme.types';
-import { defaultDateTimeSelectFieldProOptions } from '../components/editors/DateRangeSelectFieldPro/DateRangeSelectFieldPro.constants';
+import { defaultDateComparisonSelectFieldPros } from '../components/editors/DateRangeSelectFieldPro/DateRangeSelectFieldPro.constants';
 import { defaultChartMenuProOptions } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.constants';
-import { defaultDateComparisonSelectFieldProOptions } from '../components/editors/DateComparisonSelectFieldPro/DateComparisonSelectFieldPro.constants';
+import { defaultDateComparisonSelectFieldProOptions } from '../components/editors/ComparisonPeridoSelectFieldPro/ComparisonPeriodSelectFieldPro.constants';
 
 const remarkableThemeI18n = {
   language: 'en',
@@ -24,7 +24,7 @@ const remarkableThemeCharts: ThemeCharts = {
 
 const remarkableThemeEditors = {
   dateRangeSelectFieldPro: {
-    options: defaultDateTimeSelectFieldProOptions,
+    options: defaultDateComparisonSelectFieldPros,
   },
   dateComparisonSelectFieldPro: {
     options: defaultDateComparisonSelectFieldProOptions,

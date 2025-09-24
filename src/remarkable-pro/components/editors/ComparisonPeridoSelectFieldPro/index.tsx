@@ -7,16 +7,8 @@ import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
 import { i18n } from '../../../theme/i18n/i18n';
-import { getDateComparisonSelectFieldProOptions } from './DateComparisonSelectFieldPro.utils';
-
-// TODO: export when it is needed outside this component
-const getTimeRangeFromTo = (receivedTimeRange: TimeRange, theme: Theme): TimeRange => {
-  return receivedTimeRange?.relativeTimeString
-    ? (theme.editors.dateRangeSelectFieldPro.options
-        .find((dateRange) => dateRange.value === receivedTimeRange?.relativeTimeString)
-        ?.getRange() as TimeRange)
-    : receivedTimeRange;
-};
+import { getDateComparisonSelectFieldProOptions } from './ComparisonPeriodSelectFieldPro.utils';
+import { getTimeRangeFromTo } from '../editors.timeRange.utils';
 
 type DateComparisonSelectFieldPro = {
   title?: string;
