@@ -83,8 +83,9 @@ const getPreviousYearRange = (primaryDateRange: TimeRange) => {
 
   const dateFrom = dayjs(primaryFrom);
 
-  // find the start of this month, then go one month back
-  const prevMonthStart = dateFrom.startOf('year').subtract(1, 'year');
+  // find the start of this year, then go one year back
+  const prevYearStart = dateFrom.startOf('year').subtract(1, 'year');
+  const prevYearEnd = prevYearStart.endOf('year');
   const prevMonthEnd = prevMonthStart.endOf('year');
 
   return {
