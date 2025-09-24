@@ -6,8 +6,8 @@ import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
-import { i18n } from '../../../theme/i18n/i18n';
-import { getDateComparisonSelectFieldProOptions } from './ComparisonPeriodSelectFieldPro.utils';
+import { i18n, i18nSetup } from '../../../theme/i18n/i18n';
+import { getComparisonPeriodSelectFieldProOptions } from './ComparisonPeriodSelectFieldPro.utils';
 import { getTimeRangeFromTo } from '../editors.timeRange.utils';
 
 type DateComparisonSelectFieldPro = {
@@ -21,6 +21,8 @@ type DateComparisonSelectFieldPro = {
 
 const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
   const theme: Theme = useTheme() as Theme;
+  i18nSetup(theme);
+
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
   // Obtain the actual range for the selected toCompareTimeRange
@@ -32,8 +34,11 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
 
   const { description, placeholder, title, comparisonPeriod, onChange } = resolveI18nProps(props);
 
-  const dateComparisonOptions = theme.editors.dateComparisonSelectFieldPro.options;
-  const options = getDateComparisonSelectFieldProOptions(dateComparisonOptions, toCompareTimeRange);
+  const comparisonPeriodOptions = theme.editors.comparisonPeriodSelectFieldPro.options;
+  const options = getComparisonPeriodSelectFieldProOptions(
+    comparisonPeriodOptions,
+    toCompareTimeRange,
+  );
 
   return (
     <EditorCard title={title} subtitle={description}>

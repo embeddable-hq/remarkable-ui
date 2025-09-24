@@ -16,6 +16,15 @@ export const en: ResourceLanguage = {
       emptyTitle: "It's a bit empty here.",
       emptyMessage: 'Try adding something.',
     },
+    editors: {
+      ComparisonPeriodSelectFielPro: {
+        previousPeriod: 'Previous period',
+        previousWeek: 'Previous week',
+        previousMonth: 'Previous month',
+        previousQuarter: 'Previous quarter',
+        previousYear: 'Previous year',
+      },
+    },
     granularity: {
       quarter: 'Q{{quarter}} {{year}}',
     },

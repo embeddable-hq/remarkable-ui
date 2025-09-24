@@ -1,5 +1,5 @@
 import { TimeRange, TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { DateComparisonSelectFieldProOption } from './ComparisonPeriodSelectFieldPro.types';
+import { ComparisonPeriodSelectFieldProOption } from './ComparisonPeriodSelectFieldPro.types';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek.js';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
@@ -94,35 +94,36 @@ const getPreviousYearRange = (primaryDateRange: TimeRange) => {
   };
 };
 
-export const defaultDateComparisonSelectFieldProOptions: DateComparisonSelectFieldProOption[] = [
-  {
-    value: 'Previous period',
-    label: 'Previous period',
-    getRange: getPreviousPeriodRange,
-    dateFormat: 'DD MMM YYYY',
-  },
-  {
-    value: 'Previous week',
-    label: 'Previous week',
-    getRange: getPreviousWeekRange,
-    dateFormat: 'MMM DD',
-  },
-  {
-    value: 'Previous month',
-    label: 'Previous month',
-    getRange: getPreviousMonthRange,
-    dateFormat: 'MMM YYYY',
-  },
-  {
-    value: 'Previous quarter',
-    label: 'Previous quarter',
-    getRange: getPreviousQuarterRange,
-    dateFormat: 'MMM YYYY',
-  },
-  {
-    value: 'Previous year',
-    label: 'Previous year',
-    getRange: getPreviousYearRange,
-    dateFormat: 'YYYY',
-  },
-];
+export const defaultComparisonPeriodSelectFieldProOptions: ComparisonPeriodSelectFieldProOption[] =
+  [
+    {
+      value: 'Previous period',
+      label: 'editors.ComparisonPeriodSelectFielPro.previousPeriod|Previous period',
+      getRange: getPreviousPeriodRange,
+      dateFormat: 'DD MMM YYYY',
+    },
+    {
+      value: 'Previous week',
+      label: 'editors.ComparisonPeriodSelectFielPro.previousWeek|Previous week',
+      getRange: getPreviousWeekRange,
+      dateFormat: 'MMM DD',
+    },
+    {
+      value: 'Previous month',
+      label: 'editors.ComparisonPeriodSelectFielPro.previousMonth|Previous month',
+      getRange: getPreviousMonthRange,
+      dateFormat: 'MMM YYYY',
+    },
+    {
+      value: 'Previous quarter',
+      label: 'editors.ComparisonPeriodSelectFielPro.previousQuarter|Previous quarter',
+      getRange: getPreviousQuarterRange,
+      dateFormat: 'MMM YYYY',
+    },
+    {
+      value: 'Previous year',
+      label: 'editors.ComparisonPeriodSelectFieldPro.previousYear|Previous year',
+      getRange: getPreviousYearRange,
+      dateFormat: 'YYYY',
+    },
+  ];
