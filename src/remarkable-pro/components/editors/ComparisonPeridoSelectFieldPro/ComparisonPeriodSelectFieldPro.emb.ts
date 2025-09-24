@@ -1,12 +1,12 @@
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 import { Value } from '@embeddable.com/core';
-import DateTimeSelectFieldPro from './index';
+import ComparisonPeriodSelectFieldPro from './index';
 import { description, placeholder, title } from '../../component.constants';
 import ComparisonPeriodType from '../../types/ComparisonPeriod.type.emb';
 
 export const meta = {
-  name: 'DateComparisonSelectFieldPro',
-  label: 'Date Comparison Select Field',
+  name: 'ComparisonPeriodSelectFieldPro',
+  label: 'Comparison Period Select Field',
   category: 'Dropdowns',
   defaultWidth: 300,
   defaultHeight: 120,
@@ -15,10 +15,11 @@ export const meta = {
     { ...description },
     { ...placeholder, defaultValue: 'Select a date-comparison' },
     {
-      name: 'primaryDateRange',
+      name: 'toCompareTimeRange',
       type: 'timeRange',
-      label: 'Primary Date Range',
+      label: 'To Compare Time Range',
       category: 'Pre-configured variables',
+      required: true,
     },
     {
       name: 'comparisonPeriod',
@@ -51,7 +52,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(DateTimeSelectFieldPro, meta, {
+export default defineComponent(ComparisonPeriodSelectFieldPro, meta, {
   /* @ts-expect-error - to be fixed in @embeddable.com/react */
   props: (inputs: Inputs<typeof meta>) => inputs,
   events: {

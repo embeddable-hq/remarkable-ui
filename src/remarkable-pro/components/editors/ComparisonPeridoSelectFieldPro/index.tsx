@@ -14,7 +14,7 @@ type DateComparisonSelectFieldPro = {
   title?: string;
   description?: string;
   placeholder?: string;
-  primaryDateRange?: TimeRange;
+  toCompareTimeRange?: TimeRange;
   comparisonPeriod?: string;
   onChange: (newComparisonPeriod: string) => void;
 };
@@ -23,8 +23,8 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
   const theme: Theme = useTheme() as Theme;
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
-  // Obtain the actual range for the selected primaryDateRange
-  const primaryDateRange = getTimeRangeFromTo(props.primaryDateRange, theme);
+  // Obtain the actual range for the selected toCompareTimeRange
+  const toCompareTimeRange = getTimeRangeFromTo(props.toCompareTimeRange, theme);
 
   if (!dayjsLocaleReady) {
     return null;
@@ -33,7 +33,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
   const { description, placeholder, title, comparisonPeriod, onChange } = resolveI18nProps(props);
 
   const dateComparisonOptions = theme.editors.dateComparisonSelectFieldPro.options;
-  const options = getDateComparisonSelectFieldProOptions(dateComparisonOptions, primaryDateRange);
+  const options = getDateComparisonSelectFieldProOptions(dateComparisonOptions, toCompareTimeRange);
 
   return (
     <EditorCard title={title} subtitle={description}>
