@@ -86,11 +86,10 @@ const getPreviousYearRange = (primaryDateRange: TimeRange) => {
   // find the start of this year, then go one year back
   const prevYearStart = dateFrom.startOf('year').subtract(1, 'year');
   const prevYearEnd = prevYearStart.endOf('year');
-  const prevMonthEnd = prevMonthStart.endOf('year');
 
   return {
-    from: prevMonthStart.startOf('day').toDate(),
-    to: prevMonthEnd.endOf('day').toDate(),
+    from: prevYearStart.startOf('day').toDate(),
+    to: prevYearEnd.endOf('day').toDate(),
     relativeTimeString: '',
   };
 };
@@ -99,25 +98,25 @@ export const defaultComparisonPeriodSelectFieldProOptions: ComparisonPeriodSelec
   [
     {
       value: 'Previous period',
-      label: 'editors.ComparisonPeriodSelectFielPro.previousPeriod|Previous period',
+      label: 'editors.ComparisonPeriodSelectFieldPro.previousPeriod|Previous period',
       getRange: getPreviousPeriodRange,
       dateFormat: 'DD MMM YYYY',
     },
     {
       value: 'Previous week',
-      label: 'editors.ComparisonPeriodSelectFielPro.previousWeek|Previous week',
+      label: 'editors.ComparisonPeriodSelectFieldPro.previousWeek|Previous week',
       getRange: getPreviousWeekRange,
       dateFormat: 'MMM DD',
     },
     {
       value: 'Previous month',
-      label: 'editors.ComparisonPeriodSelectFielPro.previousMonth|Previous month',
+      label: 'editors.ComparisonPeriodSelectFieldPro.previousMonth|Previous month',
       getRange: getPreviousMonthRange,
       dateFormat: 'MMM YYYY',
     },
     {
       value: 'Previous quarter',
-      label: 'editors.ComparisonPeriodSelectFielPro.previousQuarter|Previous quarter',
+      label: 'editors.ComparisonPeriodSelectFieldPro.previousQuarter|Previous quarter',
       getRange: getPreviousQuarterRange,
       dateFormat: 'MMM YYYY',
     },

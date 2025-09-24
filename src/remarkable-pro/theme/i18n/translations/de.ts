@@ -28,7 +28,7 @@ export const de: ResourceLanguage = {
       emptyMessage: 'Versuchen Sie, etwas hinzuzufügen.',
     },
     editors: {
-      ComparisonPeriodSelectFielPro: {
+      ComparisonPeriodSelectFieldPro: {
         previousPeriod: 'Vorheriger Zeitraum',
         previousWeek: 'Vorherige Woche',
         previousMonth: 'Vorheriger Monat',
