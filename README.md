@@ -20,34 +20,6 @@ There are **three layers** of variables in our system:
    – Element-specific tokens (namespaced by component, e.g. --icn-btn-background-hover, --dropdown-padding)  
    – Fine-tune individual components without touching global semantics.
 
-## 📦 Installation & Usage
-
-### Basic Setup
-
-```bash
-npm install @embeddable.com/remarkable-ui
-```
-
-### CSS Variables Setup
-
-Import the CSS variables file to use all design tokens:
-
-```javascript
-// Import the CSS variables file
-import '@embeddable.com/remarkable-ui/dist/remarkable-ui/styles/remarkable-ui-variables.css';
-
-// Import components
-import { Button, Card } from '@embeddable.com/remarkable-ui';
-```
-
-### Component Styles
-
-Don't forget to import the component styles:
-
-```javascript
-import '@embeddable.com/remarkable-ui/dist/remarkable-ui.css';
-```
-
 ## 🛠 Contributing
 
 Remarkable UI is under active development, and we’d love feedback or contributions.  

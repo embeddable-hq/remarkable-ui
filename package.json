@@ -13,15 +13,15 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run generate:variables-css && tsc",
-    "generate:variables-css": "node scripts/generate-variables-css.js",
+    "build": "npm run process:css-variables && tsc",
+    "process:css-variables": "node src/remarkable-ui/styles/process-css-variables.js",
     "build-storybook": "storybook build",
     "circular:check": "madge --circular .",
     "deploy-storybook": "gh-pages -d storybook-static",
     "embeddable:build": "embeddable build",
     "embeddable:dev": "embeddable dev",
     "embeddable:login": "embeddable login",
-    "embeddable:package": "embeddable buildPackage && npm run generate:variables-css",
+    "embeddable:package": "embeddable buildPackage && npm run process:css-variables",
     "embeddable:push": "embeddable push",
     "embeddable:upgrade": "npx npm-check-updates -u \"/embeddable/\"",
     "eslint:check": "eslint .",
