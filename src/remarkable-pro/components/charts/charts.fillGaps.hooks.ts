@@ -165,27 +165,21 @@ const detectGranularityFromData = (
   return null;
 };
 
-const TIME_CONSTANTS = (() => {
-  const SECOND = 1000;
-  const MINUTE = 60 * SECOND;
-  const HOUR = 60 * MINUTE;
-  const DAY = 24 * HOUR;
-  const WEEK = 7 * DAY;
-  const MONTH = 30 * DAY; // Approximate
-  const QUARTER = 90 * DAY; // Approximate
-  const YEAR = 365 * DAY; // Approximate
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
 
-  return {
-    SECOND,
-    MINUTE,
-    HOUR,
-    DAY,
-    WEEK,
-    MONTH,
-    QUARTER,
-    YEAR,
-  };
-})();
+export const TIME_CONSTANTS = {
+  SECOND,
+  MINUTE,
+  HOUR,
+  DAY,
+  WEEK: 7 * DAY,
+  MONTH: 30 * DAY, // Approximate
+  QUARTER: 90 * DAY, // Approximate
+  YEAR: 365 * DAY, // Approximate
+} as const;
 
 /**
  * Gets the expected step size in milliseconds for a given granularity.
