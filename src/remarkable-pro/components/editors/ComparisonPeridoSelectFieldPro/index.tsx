@@ -7,8 +7,12 @@ import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarFilled } from '@tabler/icons-react';
 import { i18n, i18nSetup } from '../../../theme/i18n/i18n';
-import { getComparisonPeriodSelectFieldProOptions } from './ComparisonPeriodSelectFieldPro.utils';
+import {
+  getComparisonPeriodSelectFieldProOptions,
+  isComparisonPeriodAvailable,
+} from './ComparisonPeriodSelectFieldPro.utils';
 import { getTimeRangeFromTo } from '../editors.timeRange.utils';
+import { useMemo } from 'react';
 
 type DateComparisonSelectFieldPro = {
   title?: string;
@@ -16,12 +20,21 @@ type DateComparisonSelectFieldPro = {
   placeholder?: string;
   toCompareTimeRange?: TimeRange;
   comparisonPeriod?: string;
-  onChange: (newComparisonPeriod: string) => void;
+  onChange: (newComparisonPeriod?: string) => void;
 };
 
 const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
   const theme: Theme = useTheme() as Theme;
   i18nSetup(theme);
+
+  const { description, placeholder, title, comparisonPeriod, onChange } = resolveI18nProps(props);
+
+  const comparisonPeriodOptions = theme.editors.comparisonPeriodSelectFieldPro.options;
+
+  const comparisonPeriodAvailable = useMemo(
+    () => isComparisonPeriodAvailable(comparisonPeriod, comparisonPeriodOptions),
+    [comparisonPeriod, comparisonPeriodOptions],
+  );
 
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
@@ -32,13 +45,15 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
     return null;
   }
 
-  const { description, placeholder, title, comparisonPeriod, onChange } = resolveI18nProps(props);
-
-  const comparisonPeriodOptions = theme.editors.comparisonPeriodSelectFieldPro.options;
   const options = getComparisonPeriodSelectFieldProOptions(
     comparisonPeriodOptions,
     toCompareTimeRange,
   );
+
+  // If the current comparison period is not available, reset the field
+  if (!comparisonPeriodAvailable) {
+    onChange(undefined);
+  }
 
   return (
     <EditorCard title={title} subtitle={description}>
@@ -46,7 +61,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
         startIcon={IconCalendarFilled}
         isClearable
         placeholder={placeholder}
-        value={comparisonPeriod}
+        value={comparisonPeriodAvailable ? comparisonPeriod : undefined}
         onChange={onChange}
         options={options}
         noOptionsMessage={i18n.t('common.noOptionsAvailable')}
