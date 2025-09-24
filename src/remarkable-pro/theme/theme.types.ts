@@ -13,7 +13,12 @@ export type ThemeCharts = {
   pieChartPro?: { options: Partial<ChartOptions<'pie'>> };
   donutChartPro?: { options: Partial<ChartOptions<'pie'>> };
   donutLabelChartPro?: { options: Partial<ChartOptions<'pie'>> };
-  barChartPro?: { options: Partial<ChartOptions<'bar'>> };
+  barChartDefaultPro?: { options: Partial<ChartOptions<'bar'>> };
+  barChartDefaultHorizontalPro?: { options: Partial<ChartOptions<'bar'>> };
+  barChartGroupedPro?: { options: Partial<ChartOptions<'bar'>> };
+  barChartGroupedHorizontalPro?: { options: Partial<ChartOptions<'bar'>> };
+  barChartStackedPro?: { options: Partial<ChartOptions<'bar'>> };
+  barChartStackedHorizontalPro?: { options: Partial<ChartOptions<'bar'>> };
   backgroundColors?: string[];
   borderColors?: string[];
   legendPosition: ThemeChartsLegendPosition;
