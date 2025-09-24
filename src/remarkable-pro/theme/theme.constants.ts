@@ -5,6 +5,7 @@ import { remarkableThemeStyles } from './styles/styles.constants';
 import { Theme, ThemeCharts } from './theme.types';
 import { defaultDateTimeSelectFieldProOptions } from '../components/editors/DateRangeSelectFieldPro/DateRangeSelectFieldPro.constants';
 import { defaultChartMenuProOptions } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.constants';
+import { defaultDateComparisonSelectFieldProOptions } from '../components/editors/DateComparisonSelectFieldPro/DateComparisonSelectFieldPro.constants';
 
 const remarkableThemeI18n = {
   language: 'en',
@@ -24,6 +25,9 @@ const remarkableThemeCharts: ThemeCharts = {
 const remarkableThemeEditors = {
   dateRangeSelectFieldPro: {
     options: defaultDateTimeSelectFieldProOptions,
+  },
+  dateComparisonSelectFieldPro: {
+    options: defaultDateComparisonSelectFieldProOptions,
   },
 };
 

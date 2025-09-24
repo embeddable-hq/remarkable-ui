@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import { DateTimeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
+import { DateRangeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
 import { SelectListOptionProps } from '../../../../remarkable-ui';
-import { TimeRangeDeserializedValue } from '@embeddable.com/core';
+import { TimeRange } from '@embeddable.com/core';
 
-export const getDateTimeSelectFieldProRangeLabel = (
-  range: Omit<TimeRangeDeserializedValue, 'relativeTimeString'>,
+export const getDateRangeSelectFieldProRangeLabel = (
+  range: TimeRange,
   dateFormat: string,
 ): string => {
   if (!range) {
@@ -26,12 +26,12 @@ export const getDateTimeSelectFieldProRangeLabel = (
   return `${labelFrom} - ${labelTo}`;
 };
 
-export const getDateTimeSelectFieldProOptions = (
-  dateRangeSelectFieldProOptions: DateTimeSelectFieldProOption[],
+export const getDateRangeSelectFieldProOptions = (
+  dateRangeSelectFieldProOptions: DateRangeSelectFieldProOption[],
 ): SelectListOptionProps[] => {
   return dateRangeSelectFieldProOptions.map((option) => {
     return {
-      rightLabel: getDateTimeSelectFieldProRangeLabel(option.getRange(), option.dateFormat),
+      rightLabel: getDateRangeSelectFieldProRangeLabel(option.getRange(), option.dateFormat),
       value: option.value,
       label: option.label,
     };
