@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 try {
   // Step 1: Generate CSS variables from TypeScript constants
-  const compiledPath = path.join(__dirname, '../../../../dist/remarkable-ui/styles/styles.constants.js');
+  const compiledPath = path.join(process.cwd(), 'dist/remarkable-ui/styles/styles.constants.js');
   
   // Ensure the compiled file exists by running TypeScript compilation
   if (!fs.existsSync(compiledPath)) {
@@ -40,7 +40,7 @@ try {
   const cssContent = `:root {\n${Object.entries(styles).map(([key, value]) => `  ${key}: ${value};`).join('\n')}\n}`;
 
   // Step 2: Merge variables into the main CSS file
-  const mainCssPath = path.join(__dirname, '../../../../dist/remarkable-ui.css');
+  const mainCssPath = path.join(process.cwd(), 'dist/remarkable-ui.css');
   
   if (!fs.existsSync(mainCssPath)) {
     throw new Error('Main CSS file not found. Run embeddable buildPackage first.');
@@ -60,7 +60,7 @@ try {
   
 } catch (error) {
   // Clean up temporary .cjs file if it exists
-  const cjsPath = path.join(__dirname, '../../../../dist/remarkable-ui/styles/styles.constants.cjs');
+  const cjsPath = path.join(process.cwd(), 'dist/remarkable-ui/styles/styles.constants.cjs');
   if (fs.existsSync(cjsPath)) {
     fs.unlinkSync(cjsPath);
   }
