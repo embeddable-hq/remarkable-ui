@@ -1,6 +1,6 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartPro from './index';
+import BarChartDefaultPro from './index';
 import {
   dataset,
   description,
@@ -20,8 +20,8 @@ import {
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartPro',
-  label: 'Bar Chart',
+  name: 'BarChartDefaultPro',
+  label: 'Bar Chart - Default',
   category: 'Bar Charts',
   inputs: [
     dataset,
@@ -42,12 +42,12 @@ export const meta = {
   ],
   events: [
     {
-      name: 'onSegmentClick',
+      name: 'onBarClicked',
       label: 'A bar is clicked',
       properties: [
         {
-          name: 'dimensionValue',
-          label: 'Clicked Dimension value',
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
           type: 'string',
         },
       ],
@@ -55,7 +55,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartPro, meta, {
+export default defineComponent(BarChartDefaultPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
@@ -66,9 +66,9 @@ export default defineComponent(BarChartPro, meta, {
     };
   },
   events: {
-    onSegmentClick: (value) => {
+    onBarClicked: (value) => {
       return {
-        dimensionValue: value.dimensionValue || Value.noFilter(),
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
       };
     },
   },

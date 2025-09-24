@@ -1,53 +1,60 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartHorizontalPro from './index';
+import BarChartStackedHorizontalPro from './index';
 import {
   dataset,
   description,
   dimensionWithDateBounds,
+  dimension,
   showLegend,
   showTooltips,
   showValueLabels,
   title,
-  measures,
+  measure,
   showLogarithmicScale,
   xAxisLabel,
   yAxisLabel,
+  showTotalLabels,
   reverseYAxis,
   xAxisRangeMin,
   xAxisRangeMax,
-  yAxisMaxItems,
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartHorizontalPro',
-  label: 'Bar Chart Horizontal',
+  name: 'BarChartStackedHorizontalPro',
+  label: 'Bar Chart - Stacked Horizontal',
   category: 'Bar Charts',
   inputs: [
     dataset,
-    measures,
-    dimensionWithDateBounds,
+    measure,
+    { ...dimensionWithDateBounds, name: 'yAxis', label: 'Y-axis' },
+    { ...dimension, name: 'groupBy', label: 'Group by' },
     title,
     description,
     showLegend,
     showTooltips,
-    showValueLabels,
+    { ...showValueLabels, defaultValue: false },
     showLogarithmicScale,
     xAxisLabel,
     yAxisLabel,
     reverseYAxis,
     xAxisRangeMin,
     xAxisRangeMax,
-    yAxisMaxItems,
+    showTotalLabels,
   ],
   events: [
     {
-      name: 'onSegmentClick',
+      name: 'onBarClicked',
       label: 'A bar is clicked',
       properties: [
         {
-          name: 'dimensionValue',
-          label: 'Clicked Dimension value',
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
+          type: 'string',
+        },
+        {
+          name: 'groupingDimensionValue',
+          label: 'Clicked Grouping Dimension Value',
           type: 'string',
         },
       ],
@@ -55,20 +62,21 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartHorizontalPro, meta, {
+export default defineComponent(BarChartStackedHorizontalPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
       results: loadData({
         from: inputs.dataset,
-        select: [...inputs.measures, inputs.dimension],
+        select: [inputs.yAxis, inputs.groupBy, inputs.measure],
       }),
     };
   },
   events: {
-    onSegmentClick: (value) => {
+    onBarClicked: (value) => {
       return {
-        dimensionValue: value.dimensionValue || Value.noFilter(),
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },
   },

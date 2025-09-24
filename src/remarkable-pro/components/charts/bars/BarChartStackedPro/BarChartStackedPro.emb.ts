@@ -22,7 +22,7 @@ import {
 
 export const meta = {
   name: 'BarChartStackedPro',
-  label: 'Bar Chart Stacked',
+  label: 'Bar Chart - Stacked',
   category: 'Bar Charts',
   inputs: [
     dataset,
@@ -44,12 +44,17 @@ export const meta = {
   ],
   events: [
     {
-      name: 'onSegmentClick',
+      name: 'onBarClicked',
       label: 'A bar is clicked',
       properties: [
         {
-          name: 'dimensionValue',
-          label: 'Clicked Dimension value',
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
+          type: 'string',
+        },
+        {
+          name: 'groupingDimensionValue',
+          label: 'Clicked Grouping Dimension Value',
           type: 'string',
         },
       ],
@@ -68,9 +73,10 @@ export default defineComponent(BarChartStackedPro, meta, {
     };
   },
   events: {
-    onSegmentClick: (value) => {
+    onBarClicked: (value) => {
       return {
-        dimensionValue: value.dimensionValue || Value.noFilter(),
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },
   },

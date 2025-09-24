@@ -9,7 +9,7 @@ import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 
-type BarChartProProps = {
+type BarChartDefaultProProps = {
   description: string;
   dimension: Dimension;
   measures: Measure[];
@@ -25,10 +25,10 @@ type BarChartProProps = {
   showTooltips: boolean;
   showValueLabels: boolean;
   reverseXAxis: boolean;
-  onSegmentClick: (args: { dimensionValue: string | null }) => void;
+  onBarClicked: (args: { axisDimensionValue: string | null }) => void;
 };
 
-const BarChartPro = (props: BarChartProProps) => {
+const BarChartDefaultPro = (props: BarChartDefaultProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
 
@@ -47,7 +47,7 @@ const BarChartPro = (props: BarChartProProps) => {
     showTooltips,
     showValueLabels,
     reverseXAxis,
-    onSegmentClick,
+    onBarClicked,
   } = resolveI18nProps(props);
 
   const results = useChartDataWithFillGaps(props.results, props.dimension);
@@ -58,15 +58,10 @@ const BarChartPro = (props: BarChartProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions(theme, measures[0]!), // Format Y axis based on first measure
-    theme.charts?.barChartPro?.options || {},
+    getBarChartProOptions({ measure: measures[0]!, horizontal: false, onBarClicked }, theme), // Format Y axis based on first measure
+    theme.charts?.barChartDefaultPro?.options || {},
   );
 
-  const handleSegmentClick = (index: number | undefined) => {
-    onSegmentClick({
-      dimensionValue: index === undefined ? undefined : results.data?.[index]?.[dimension.name],
-    });
-  };
   return (
     <ChartCard
       data={results}
@@ -77,7 +72,6 @@ const BarChartPro = (props: BarChartProProps) => {
     >
       <BarChart
         data={data}
-        onSegmentClick={handleSegmentClick}
         showLegend={showLegend}
         showTooltips={showTooltips}
         showValueLabels={showValueLabels}
@@ -93,4 +87,4 @@ const BarChartPro = (props: BarChartProProps) => {
   );
 };
 
-export default BarChartPro;
+export default BarChartDefaultPro;

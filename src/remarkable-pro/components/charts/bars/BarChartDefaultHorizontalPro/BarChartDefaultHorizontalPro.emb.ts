@@ -1,55 +1,53 @@
 import { Value, loadData } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import BarChartHorizontalStackedPro from './index';
+import BarChartDefaultHorizontalPro from './index';
 import {
   dataset,
   description,
   dimensionWithDateBounds,
-  dimension,
   showLegend,
   showTooltips,
   showValueLabels,
   title,
-  measure,
+  measures,
   showLogarithmicScale,
   xAxisLabel,
   yAxisLabel,
-  showTotalLabels,
   reverseYAxis,
   xAxisRangeMin,
   xAxisRangeMax,
+  yAxisMaxItems,
 } from '../../../component.constants';
 
 export const meta = {
-  name: 'BarChartHorizontalStackedPro',
-  label: 'Bar Chart Horizontal Stacked',
+  name: 'BarChartDefaultHorizontalPro',
+  label: 'Bar Chart - Default Horizontal',
   category: 'Bar Charts',
   inputs: [
     dataset,
-    measure,
-    { ...dimensionWithDateBounds, name: 'yAxis', label: 'Y-axis' },
-    { ...dimension, name: 'groupBy', label: 'Group by' },
+    measures,
+    dimensionWithDateBounds,
     title,
     description,
     showLegend,
     showTooltips,
-    { ...showValueLabels, defaultValue: false },
+    showValueLabels,
     showLogarithmicScale,
     xAxisLabel,
     yAxisLabel,
     reverseYAxis,
     xAxisRangeMin,
     xAxisRangeMax,
-    showTotalLabels,
+    yAxisMaxItems,
   ],
   events: [
     {
-      name: 'onSegmentClick',
+      name: 'onBarClicked',
       label: 'A bar is clicked',
       properties: [
         {
-          name: 'dimensionValue',
-          label: 'Clicked Dimension value',
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
           type: 'string',
         },
       ],
@@ -57,20 +55,20 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(BarChartHorizontalStackedPro, meta, {
+export default defineComponent(BarChartDefaultHorizontalPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
       results: loadData({
         from: inputs.dataset,
-        select: [inputs.yAxis, inputs.groupBy, inputs.measure],
+        select: [...inputs.measures, inputs.dimension],
       }),
     };
   },
   events: {
-    onSegmentClick: (value) => {
+    onBarClicked: (value) => {
       return {
-        dimensionValue: value.dimensionValue || Value.noFilter(),
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
       };
     },
   },

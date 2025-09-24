@@ -17,12 +17,11 @@ import {
   reverseXAxis,
   yAxisRangeMin,
   yAxisRangeMax,
-  showTotalLabels,
 } from '../../../component.constants';
 
 export const meta = {
   name: 'BarChartGroupedPro',
-  label: 'Bar Chart Grouped',
+  label: 'Bar Chart - Grouped',
   category: 'Bar Charts',
   inputs: [
     dataset,
@@ -40,16 +39,20 @@ export const meta = {
     reverseXAxis,
     yAxisRangeMin,
     yAxisRangeMax,
-    showTotalLabels,
   ],
   events: [
     {
-      name: 'onSegmentClick',
+      name: 'onBarClicked',
       label: 'A bar is clicked',
       properties: [
         {
-          name: 'dimensionValue',
-          label: 'Clicked Dimension value',
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
+          type: 'string',
+        },
+        {
+          name: 'groupingDimensionValue',
+          label: 'Clicked Grouping Dimension Value',
           type: 'string',
         },
       ],
@@ -68,9 +71,10 @@ export default defineComponent(BarChartGroupedPro, meta, {
     };
   },
   events: {
-    onSegmentClick: (value) => {
+    onBarClicked: (value) => {
       return {
-        dimensionValue: value.dimensionValue || Value.noFilter(),
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },
   },
