@@ -7,6 +7,7 @@ import { BarChart } from '../../../../../remarkable-ui/charts/bars/BarChart';
 import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 
 type BarChartHorizontalStackedProProps = {
   description: string;
@@ -39,7 +40,6 @@ const BarChartHorizontalStackedPro = (props: BarChartHorizontalStackedProProps) 
     description,
     groupBy,
     measure,
-    results,
     reverseYAxis,
     showLegend,
     showLogarithmicScale,
@@ -55,6 +55,7 @@ const BarChartHorizontalStackedPro = (props: BarChartHorizontalStackedProProps) 
     onBarClicked,
   } = resolveI18nProps(props);
 
+  const results = useChartDataWithFillGaps(props.results, props.yAxis);
   const data = getBarStackedChartProData(
     {
       data: results.data,

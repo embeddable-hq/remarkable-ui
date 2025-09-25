@@ -27,6 +27,15 @@ export const de: ResourceLanguage = {
       emptyTitle: 'Hier ist es etwas leer.',
       emptyMessage: 'Versuchen Sie, etwas hinzuzufügen.',
     },
+    editors: {
+      ComparisonPeriodSelectFieldPro: {
+        previousPeriod: 'Vorheriger Zeitraum',
+        previousWeek: 'Vorherige Woche',
+        previousMonth: 'Vorheriger Monat',
+        previousQuarter: 'Vorheriges Quartal',
+        previousYear: 'Vorheriges Jahr',
+      },
+    },
     granularity: {
       quarter: '{{quarter}}. Quartal {{year}}',
     },

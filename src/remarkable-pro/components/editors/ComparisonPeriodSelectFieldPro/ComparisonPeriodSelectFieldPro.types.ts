@@ -1,8 +1,8 @@
 import { TimeRange } from '@embeddable.com/core';
 
-export type DateRangeSelectFieldProOption = {
+export type ComparisonPeriodSelectFieldProOption = {
   label: string;
   value: string;
   dateFormat: string;
-  getRange: () => TimeRange;
+  getRange: (dateRange: TimeRange) => TimeRange;
 };

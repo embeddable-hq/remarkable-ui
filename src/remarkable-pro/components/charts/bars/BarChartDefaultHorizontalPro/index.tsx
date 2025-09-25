@@ -7,6 +7,7 @@ import { BarChart } from '../../../../../remarkable-ui/charts/bars/BarChart';
 import { getBarChartProData, getBarChartProOptions } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
+import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 
 type BarChartDefaultHorizontalProProps = {
   description: string;
@@ -35,7 +36,6 @@ const BarChartDefaultHorizontalPro = (props: BarChartDefaultHorizontalProProps) 
     description,
     dimension,
     measures,
-    results,
     reverseYAxis,
     showLegend,
     showLogarithmicScale,
@@ -49,6 +49,8 @@ const BarChartDefaultHorizontalPro = (props: BarChartDefaultHorizontalProProps) 
     yAxisMaxItems,
     onBarClicked,
   } = resolveI18nProps(props);
+
+  const results = useChartDataWithFillGaps(props.results, props.dimension);
 
   const data = getBarChartProData(
     { data: results.data, dimension, measures, maxItems: yAxisMaxItems },

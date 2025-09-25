@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--em-secondary-btn-padding-medium-left, 0.75rem);
+  gap: var(--em-switch-container-gap, 0.75rem);
 }
 
 .switchLabel {
@@ -51,7 +51,7 @@
     .switchThumb {
       position: absolute;
       top: 50%;
-      left: var(--em-padding-050, 0.125rem);
+      left: var(--em-switch-thumb-padding, 0.125rem);
       transform: translateY(-50%);
       background: var(--em-switch-thumb-background-color, #ffffff);
       border-radius: 50%;
@@ -69,7 +69,7 @@
     }
 
     .switchThumb {
-      left: calc(100% - var(--em-padding-050, 0.125rem));
+      left: calc(100% - var(--em-switch-padding, 0.125rem));
       transform: translate(-100%, -50%);
     }
   }
