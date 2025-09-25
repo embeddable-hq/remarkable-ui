@@ -5,13 +5,28 @@ import { KpiChange } from './KpiChange';
 import { KpiProps } from './Kpi.types';
 import clsx from 'clsx';
 
-export const Kpi: FC<KpiProps> = ({ comparisonLabel = 'vs previous period.', ...props }) => {
+export const Kpi: FC<KpiProps> = ({
+  comparisonLabel,
+  comparisonValue,
+  value,
+  invertChangeColors,
+  showChangeAsPercentage,
+}) => {
+  const hideComparisonContainer = !comparisonValue || comparisonValue === value;
+
   return (
     <div className={styles.kpiContainer}>
-      <Typography>{props.value}</Typography>
-      <div className={clsx(styles.kpiComparisonContainer, !props.comparisonValue && styles.hidden)}>
-        <KpiChange {...props} />
-        <Typography>{comparisonLabel}</Typography>
+      <Typography>{value}</Typography>
+      <div
+        className={clsx(styles.kpiComparisonContainer, hideComparisonContainer && styles.hidden)}
+      >
+        <KpiChange
+          value={value}
+          comparisonValue={comparisonValue}
+          invertChangeColors={invertChangeColors}
+          showChangeAsPercentage={showChangeAsPercentage}
+        />
+        {comparisonLabel && <Typography>{comparisonLabel}</Typography>}
       </div>
     </div>
   );

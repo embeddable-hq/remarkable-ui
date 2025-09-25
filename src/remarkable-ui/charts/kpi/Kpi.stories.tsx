@@ -16,6 +16,13 @@ export const Simple: Story = {
   },
 };
 
+export const KpiComparisonEqual: Story = {
+  args: {
+    value: 100,
+    comparisonValue: 100,
+  },
+};
+
 export const KpiComparisonNegative: Story = {
   args: {
     value: 100,
