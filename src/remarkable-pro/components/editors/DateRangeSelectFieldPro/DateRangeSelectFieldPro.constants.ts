@@ -1,10 +1,7 @@
-import { TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { DateTimeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
+import { TimeRange } from '@embeddable.com/core';
+import { DateRangeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
 
-const getWeekBounds = (
-  date: Date,
-  offset = 0,
-): Omit<TimeRangeDeserializedValue, 'relativeTimeString'> => {
+const getWeekBounds = (date: Date, offset = 0): TimeRange => {
   const d = new Date(date);
   const day = (d.getDay() + 6) % 7; // Mon=0…Sun=6
   d.setDate(d.getDate() - day + offset * 7);
@@ -15,13 +12,11 @@ const getWeekBounds = (
   return {
     from,
     to,
+    relativeTimeString: '',
   };
 };
 
-const getQuarterBounds = (
-  date: Date,
-  offset = 0,
-): Omit<TimeRangeDeserializedValue, 'relativeTimeString'> => {
+const getQuarterBounds = (date: Date, offset = 0): TimeRange => {
   const currentQuarter = Math.floor(date.getMonth() / 3);
   const targetQuarter = currentQuarter + offset;
   const yearShift = Math.floor(targetQuarter / 4);
@@ -32,10 +27,11 @@ const getQuarterBounds = (
   return {
     from,
     to,
+    relativeTimeString: '',
   };
 };
 
-export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[] = [
+export const defaultDateComparisonSelectFieldPros: DateRangeSelectFieldProOption[] = [
   {
     value: 'Today',
     label: 'Today',
@@ -47,6 +43,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -64,6 +61,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -92,6 +90,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -108,6 +107,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -124,6 +124,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -140,6 +141,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -156,6 +158,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM DD',
@@ -170,6 +173,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM YYYY',
@@ -184,6 +188,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       return {
         from,
         to,
+        relativeTimeString: '',
       };
     },
     dateFormat: 'MMM YYYY',
@@ -195,7 +200,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const now = new Date();
       const from = new Date(now.getFullYear(), now.getMonth() + 1, 1);
       const to = new Date(now.getFullYear(), now.getMonth() + 2, 0, 23, 59, 59, 999);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'MMM YYYY',
   },
@@ -225,7 +230,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const { from } = getQuarterBounds(now, 0)!;
       const to = new Date(now);
       to.setHours(23, 59, 59, 999);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'MMM YYYY',
   },
@@ -238,7 +243,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const from = new Date(to);
       from.setMonth(to.getMonth() - 6);
       from.setHours(0, 0, 0, 0);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'MMM YYYY',
   },
@@ -251,7 +256,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const from = new Date(to);
       from.setMonth(to.getMonth() - 12);
       from.setHours(0, 0, 0, 0);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'MMM YYYY',
   },
@@ -262,7 +267,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const now = new Date();
       const from = new Date(now.getFullYear(), 0, 1);
       const to = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'YYYY',
   },
@@ -274,7 +279,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const year = now.getFullYear() - 1;
       const from = new Date(year, 0, 1);
       const to = new Date(year, 11, 31, 23, 59, 59, 999);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'YYYY',
   },
@@ -286,7 +291,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const year = now.getFullYear() + 1;
       const from = new Date(year, 0, 1);
       const to = new Date(year, 11, 31, 23, 59, 59, 999);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'YYYY',
   },
@@ -298,7 +303,7 @@ export const defaultDateTimeSelectFieldProOptions: DateTimeSelectFieldProOption[
       const from = new Date(now.getFullYear(), 0, 1);
       const to = new Date(now);
       to.setHours(23, 59, 59, 999);
-      return { from, to };
+      return { from, to, relativeTimeString: '' };
     },
     dateFormat: 'MMM YYYY',
   },

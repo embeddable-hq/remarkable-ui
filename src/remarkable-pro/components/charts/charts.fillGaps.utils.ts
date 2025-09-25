@@ -3,6 +3,7 @@ import {
   DataResponse,
   Dimension,
   Granularity,
+  TimeRange,
   TimeRangeDeserializedValue,
 } from '@embeddable.com/core';
 import { Theme } from '../../theme/theme.types';
@@ -86,10 +87,7 @@ const applyGranularityBounds = (date: dayjs.Dayjs, granularity: Granularity): da
 /**
  * Resolves date bounds from dimension inputs, handling relative time strings
  */
-const resolveDateBounds = (
-  dimension: Dimension,
-  theme?: Theme,
-): TimeRangeDeserializedValue | undefined => {
+const resolveDateBounds = (dimension: Dimension, theme?: Theme): TimeRange => {
   const dateBounds = dimension.inputs?.dateBounds;
   if (!dateBounds) return undefined;
 
@@ -105,7 +103,7 @@ const resolveDateBounds = (
     const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
 
     if (matchedOption) {
-      const range = matchedOption.getRange();
+      const range = matchedOption.getRange() as TimeRangeDeserializedValue;
       return {
         from: range.from,
         to: range.to,

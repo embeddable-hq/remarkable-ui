@@ -2,7 +2,7 @@ import { useTheme } from '@embeddable.com/react';
 import { SingleSelectField } from '../../../../remarkable-ui';
 import { Theme } from '../../../theme/theme.types';
 import { useLoadDayjsLocale } from '../../../utils.ts/date.utils';
-import { getDateTimeSelectFieldProOptions } from './DateRangeSelectFieldPro.utils';
+import { getDateRangeSelectFieldProOptions } from './DateRangeSelectFieldPro.utils';
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 
 type DateRangeSelectFieldProProps = {
   description?: string;
-  onChange: (selectedTimeRange: TimeRange) => void;
+  onChange: (newDateRange: TimeRange) => void;
   placeholder?: string;
   selectedValue: TimeRange;
   title?: string;
@@ -47,7 +47,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
 
     const matchedOption = dateRangeOptions.find((option) => option.value === internalValue);
 
-    onChange(matchedOption ? { ...matchedOption.getRange(), relativeTimeString: '' } : undefined);
+    onChange(matchedOption ? matchedOption.getRange() : undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [internalValue, dateRangeOptions]);
 
@@ -57,7 +57,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
 
   const { description, placeholder, title } = resolveI18nProps(props);
 
-  const options = getDateTimeSelectFieldProOptions(dateRangeOptions);
+  const options = getDateRangeSelectFieldProOptions(dateRangeOptions);
 
   return (
     <EditorCard title={title} subtitle={description}>
