@@ -15,10 +15,11 @@ export const meta = {
     { ...description },
     { ...placeholder, defaultValue: 'Select a date-comparison' },
     {
-      name: 'toCompareTimeRange',
+      name: 'primaryDateRange',
       type: 'timeRange',
-      label: 'To Compare Time Range',
+      label: 'Primary Date Range',
       category: 'Pre-configured variables',
+      description: 'Pick the main time period. The comparison range is based on this selection.',
     },
     {
       name: 'comparisonPeriod',

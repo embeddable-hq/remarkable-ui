@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    toCompareTimeRange: undefined,
+    primaryDateRange: undefined,
     comparisonPeriod: 'Previous period',
     onChange: (value) => console.log('onChange', value),
   },
@@ -22,7 +22,7 @@ export const Small = () => {
   return (
     <div style={{ width: 170 }}>
       <Index
-        toCompareTimeRange={undefined}
+        primaryDateRange={undefined}
         comparisonPeriod="Previous period"
         onChange={(value) => console.log('onChange', value)}
       />
@@ -34,7 +34,7 @@ export const DefaultValue = () => {
   return (
     <div style={{ width: 500 }}>
       <Index
-        toCompareTimeRange={undefined}
+        primaryDateRange={undefined}
         comparisonPeriod="Previous period"
         onChange={(value) => console.log('onChange', value)}
       />
@@ -46,7 +46,7 @@ export const NoDefaultValue = () => {
   return (
     <div style={{ width: 500 }}>
       <Index
-        toCompareTimeRange={undefined}
+        primaryDateRange={undefined}
         comparisonPeriod={undefined}
         onChange={(value) => console.log('onChange', value)}
       />

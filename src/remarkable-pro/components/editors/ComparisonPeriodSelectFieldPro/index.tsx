@@ -18,7 +18,7 @@ type DateComparisonSelectFieldPro = {
   title?: string;
   description?: string;
   placeholder?: string;
-  toCompareTimeRange?: TimeRange;
+  primaryDateRange?: TimeRange;
   comparisonPeriod?: string;
   onChange: (newComparisonPeriod?: string) => void;
 };
@@ -38,8 +38,8 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
 
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
-  // Obtain the actual range for the selected toCompareTimeRange
-  const toCompareTimeRange = getTimeRangeFromTo(props.toCompareTimeRange, theme);
+  // Obtain the actual range for the selected primaryDateRange
+  const primaryDateRange = getTimeRangeFromTo(props.primaryDateRange, theme);
 
   if (!dayjsLocaleReady) {
     return null;
@@ -47,7 +47,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
 
   const options = getComparisonPeriodSelectFieldProOptions(
     comparisonPeriodOptions,
-    toCompareTimeRange,
+    primaryDateRange,
   );
 
   // If the current comparison period is not available, reset the field
