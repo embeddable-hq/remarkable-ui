@@ -1,8 +1,13 @@
 import dayjs from 'dayjs';
-import { Dimension, Granularity, TimeRangeDeserializedValue } from '@embeddable.com/core';
+import {
+  DataResponse,
+  Dimension,
+  Granularity,
+  TimeRangeDeserializedValue,
+} from '@embeddable.com/core';
 import { Theme } from '../../theme/theme.types';
 
-export type DateRecord = Record<string, unknown>;
+type DataResponseDataRecord = NonNullable<DataResponse['data']>[number];
 
 const DATE_FORMATS = {
   DEFAULT: 'YYYY-MM-DDTHH:mm:ss.SSS',
@@ -140,7 +145,10 @@ export type FillGapsOptions = {
  * // Result: [{ date: '2024-01-01', value: 10 }, { date: '2024-01-02', value: null }, { date: '2024-01-03', value: 20 }]
  * ```
  */
-export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateRecord[] => {
+export const fillGaps = (
+  data: DataResponse['data'],
+  options: FillGapsOptions,
+): DataResponse['data'] => {
   const { dimension, granularity = 'day', sortOrder = 'asc', dateBounds, theme } = options;
 
   // Resolve date bounds from dimension inputs if not provided directly
@@ -167,7 +175,9 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
       const parsedDate = dayjs(dateValue);
       return parsedDate.isValid() ? { ...record, _parsedDate: parsedDate } : null;
     })
-    .filter((record): record is DateRecord & { _parsedDate: dayjs.Dayjs } => record !== null);
+    .filter(
+      (record): record is DataResponseDataRecord & { _parsedDate: dayjs.Dayjs } => record !== null,
+    );
 
   if (validData.length === 0) {
     console.warn('fillGaps: No valid dates found in data');
@@ -259,14 +269,14 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
   }
 
   // Create a map of existing data by date
-  const existingDataMap = new Map<string, DateRecord>();
+  const existingDataMap = new Map<string, DataResponseDataRecord>();
   validData.forEach((record) => {
     const dateKey = generateDateKey(record._parsedDate);
     existingDataMap.set(dateKey, record);
   });
 
   // Fill gaps
-  const result: DateRecord[] = [];
+  const result: DataResponse['data'] = [];
   allDates.forEach((date) => {
     const dateKey = generateDateKey(date);
     const existingRecord = existingDataMap.get(dateKey);
@@ -282,7 +292,7 @@ export const fillGaps = (data: DateRecord[], options: FillGapsOptions): DateReco
       const dateFormat = getDateFormatFromSample(data);
       const formattedDate = formatDateForGapRecord(date, dateFormat);
 
-      const gapRecord: DateRecord = {
+      const gapRecord: DataResponseDataRecord = {
         [dimensionName]: formattedDate,
       };
 
@@ -336,7 +346,7 @@ const generateDateKey = (date: dayjs.Dayjs): string => {
 const getGranularityDimensionName = (
   baseDimensionName: string,
   granularity: Granularity,
-  data: DateRecord[],
+  data: DataResponse['data'],
 ): string => {
   if (!data || data.length === 0) return baseDimensionName;
 
@@ -357,7 +367,7 @@ const getGranularityDimensionName = (
 /**
  * Detects the date format from sample data
  */
-const getDateFormatFromSample = (data: DateRecord[]): string => {
+const getDateFormatFromSample = (data: DataResponse['data']): string => {
   if (!data?.length) return DATE_FORMATS.DEFAULT;
 
   const sampleRecord = data[0];
