@@ -10,13 +10,15 @@ const getChangeClass = (isPositive: boolean, invertChangeColors: boolean) => {
   return invertChangeColors ? styles.positive : styles.negative;
 };
 
-type KpiChangeProps = KpiProps;
+type KpiChangeProps = KpiProps & { className?: string };
 
 export const KpiChange: FC<KpiChangeProps> = ({
   value,
   comparisonValue = 0,
   showChangeAsPercentage,
   invertChangeColors = false,
+  comparisonLabel,
+  className,
 }) => {
   const difference = value - comparisonValue;
   const isPositive = difference > 0;
@@ -33,11 +35,12 @@ export const KpiChange: FC<KpiChangeProps> = ({
   const Icon = isPositive ? IconTrendingUp : IconTrendingDown;
 
   return (
-    <div
-      className={clsx(styles.kpiChangeContainer, getChangeClass(isPositive, invertChangeColors))}
-    >
-      <Icon />
-      <Typography className={styles.kpiChangeValue}>{displayValue}</Typography>
+    <div className={clsx(className, styles.kpiChangeContainer)}>
+      <div className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}>
+        <Icon />
+        <Typography>{displayValue}</Typography>
+      </div>
+      {comparisonLabel && <Typography>{comparisonLabel}</Typography>}
     </div>
   );
 };

@@ -4,4 +4,5 @@ export type KpiProps = {
   showChangeAsPercentage?: boolean;
   invertChangeColors?: boolean;
   comparisonLabel?: string;
+  equalComparisonLabel?: string;
 };

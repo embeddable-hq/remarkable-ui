@@ -11,22 +11,26 @@ export const Kpi: FC<KpiProps> = ({
   comparisonLabel,
   invertChangeColors,
   showChangeAsPercentage,
+  equalComparisonLabel = 'No change',
 }) => {
-  const hideComparisonContainer = !comparisonValue || comparisonValue === value;
+  const equalComparison = comparisonValue && comparisonValue === value;
 
   return (
     <div className={styles.kpiContainer}>
       <Typography>{value}</Typography>
-      <div
-        className={clsx(styles.kpiComparisonContainer, hideComparisonContainer && styles.hidden)}
-      >
-        <KpiChange
-          value={value}
-          comparisonValue={comparisonValue}
-          invertChangeColors={invertChangeColors}
-          showChangeAsPercentage={showChangeAsPercentage}
-        />
-        {comparisonLabel && <Typography>{comparisonLabel}</Typography>}
+      <div className={styles.kpiComparisonContainer}>
+        {equalComparison ? (
+          <Typography>{equalComparisonLabel}</Typography>
+        ) : (
+          <KpiChange
+            className={clsx(!comparisonValue && styles.kpiChangeHidden)}
+            value={value}
+            comparisonValue={comparisonValue}
+            invertChangeColors={invertChangeColors}
+            showChangeAsPercentage={showChangeAsPercentage}
+            comparisonLabel={comparisonLabel}
+          />
+        )}
       </div>
     </div>
   );

@@ -23,10 +23,10 @@
   align-items: center;
   padding-top: var(--em-chart-grid-padding-lg, 1rem);
   gap: var(--em-chart-grid-padding-default, 0.5rem);
-}
 
-.kpiComparisonContainer.hidden {
-  visibility: hidden;
+  height: 2rem; /* Avoid flickering of dynamic height */
+  display: flex;
+  flex-direction: column;
 }
 
 .kpiComparisonContainer > p {
@@ -34,8 +34,13 @@
   font-style: normal;
   color: var(--em-chart-grid-font-color-default, #000);
   /* TODO: implement on the font ticket */
-  /* font-family: var(--em-chart-grid-font-font-family, Inter); */
-  font-size: var(--em-chart-grid-font-title-size, 0.875rem);
-  font-weight: var(--em-chart-grid-font-label-weight, 400);
-  line-height: var(--em-chart-grid-font-line-height, 0.875rem);
+  /* font-family: var(--em-kpi-trend-font-font-family, Inter); */
+  font-size: var(--em-kpi-trend-font-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--em-kpi-trend-font-font-weight, 500);
+  line-height: var(--em-kpi-trend-font-line-height, 1rem);
+}
+
+.kpiChangeHidden {
+  visibility: hidden;
 }
