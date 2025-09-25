@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { DataResponse, Dimension, Granularity } from '@embeddable.com/core';
-import { fillGaps, type DateRecord, type FillGapsOptions } from './charts.fillGaps.utils';
+import { fillGaps, type FillGapsOptions } from './charts.fillGaps.utils';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../theme/theme.types';
 
@@ -58,7 +58,7 @@ export const useChartDataWithFillGaps = (
     };
 
     try {
-      return fillGaps(data as DateRecord[], options);
+      return fillGaps(data, options);
     } catch (error) {
       console.warn('Failed to apply fillGaps to chart data:', error);
       return data;
