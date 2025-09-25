@@ -6,9 +6,9 @@ import { KpiProps } from './Kpi.types';
 import clsx from 'clsx';
 
 export const Kpi: FC<KpiProps> = ({
-  comparisonLabel,
-  comparisonValue,
   value,
+  comparisonValue,
+  comparisonLabel,
   invertChangeColors,
   showChangeAsPercentage,
 }) => {
