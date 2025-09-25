@@ -26,15 +26,19 @@ try {
   // Create temp directory and compile TypeScript
   fs.mkdirSync(tempDir, { recursive: true });
   console.log('Compiling TypeScript constants...');
-  
-  execSync(`npx tsc "${sourcePath}" --outDir "${tempDir}" --target es2022 --module commonjs --esModuleInterop`, { 
-    stdio: 'inherit' 
-  });
+
+  execSync(
+    `npx tsc "${sourcePath}" --outDir "${tempDir}" --target es2022 --module commonjs --esModuleInterop`,
+    {
+      stdio: 'inherit',
+    },
+  );
 
   // Import compiled module
-  const tempCjsPath = path.join(tempDir, 'styles.constants.cjs');
-  fs.renameSync(path.join(tempDir, 'styles.constants.js'), tempCjsPath);
-  
+  const tempCompiledPath = path.join(tempDir, 'styles.constants.js');
+  const tempCjsPath = tempCompiledPath.replace('.js', '.cjs');
+  fs.renameSync(tempCompiledPath, tempCjsPath);
+
   const require = createRequire(import.meta.url);
   const { styles } = require(tempCjsPath);
 
@@ -60,7 +64,6 @@ try {
 
   console.log('✅ Successfully merged CSS variables into remarkable-ui.css');
   console.log(`📁 Final CSS: ${mainCssPath}`);
-
 } catch (error) {
   console.error('❌ Error processing CSS variables:');
   console.error(`   ${error.message}`);
