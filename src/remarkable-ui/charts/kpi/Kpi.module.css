@@ -1,0 +1,41 @@
+.kpiContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.kpiContainer > p {
+  color: var(--em-kpi-kpi-font-font-color, #212129);
+  text-align: center;
+  /* TODO: implement on the font ticket */
+  /* font-family: var(--em-kpi-kpi-font-font-family, Inter); */
+  font-size: 52px;
+  font-style: normal;
+  font-weight: var(--em-kpi-kpi-font-font-weight, 700);
+  line-height: normal;
+}
+
+.kpiComparisonContainer {
+  display: flex;
+  align-items: center;
+  padding-top: var(--em-chart-grid-padding-lg, 1rem);
+  gap: var(--em-chart-grid-padding-default, 0.5rem);
+}
+
+.kpiComparisonContainer.hidden {
+  visibility: hidden;
+}
+
+.kpiComparisonContainer > p {
+  text-align: center;
+  font-style: normal;
+  color: var(--em-chart-grid-font-color-default, #000);
+  /* TODO: implement on the font ticket */
+  /* font-family: var(--em-chart-grid-font-font-family, Inter); */
+  font-size: var(--em-chart-grid-font-title-size, 0.875rem);
+  font-weight: var(--em-chart-grid-font-label-weight, 400);
+  line-height: var(--em-chart-grid-font-line-height, 0.875rem);
+}
