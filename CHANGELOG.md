@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.10
+
+### Patch Changes
+
+- 88bb6dc: Fix css injection pattern
+
 ## 0.1.9
 
 ### Patch Changes
