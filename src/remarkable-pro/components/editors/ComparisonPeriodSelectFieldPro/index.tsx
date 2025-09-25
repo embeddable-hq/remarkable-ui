@@ -5,7 +5,7 @@ import { useLoadDayjsLocale } from '../../../utils.ts/date.utils';
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
-import { IconCalendarFilled } from '@tabler/icons-react';
+import { IconCalendarTime } from '@tabler/icons-react';
 import { i18n, i18nSetup } from '../../../theme/i18n/i18n';
 import {
   getComparisonPeriodSelectFieldProOptions,
@@ -58,7 +58,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
   return (
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
-        startIcon={IconCalendarFilled}
+        startIcon={IconCalendarTime}
         isClearable
         placeholder={placeholder}
         value={comparisonPeriodAvailable ? comparisonPeriod : undefined}
