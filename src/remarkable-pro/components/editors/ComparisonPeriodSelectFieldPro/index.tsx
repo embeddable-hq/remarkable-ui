@@ -12,7 +12,7 @@ import {
   isComparisonPeriodAvailable,
 } from './ComparisonPeriodSelectFieldPro.utils';
 import { getTimeRangeFromTo } from '../editors.timeRange.utils';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 type DateComparisonSelectFieldPro = {
   title?: string;
@@ -36,6 +36,13 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
     [comparisonPeriod, comparisonPeriodOptions],
   );
 
+  // If the current comparison period is not available, reset the field
+  useEffect(() => {
+    if (!comparisonPeriodAvailable) {
+      onChange(undefined);
+    }
+  }, [comparisonPeriodAvailable, onChange]);
+
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
   // Obtain the actual range for the selected primaryDateRange
@@ -49,11 +56,6 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
     comparisonPeriodOptions,
     primaryDateRange,
   );
-
-  // If the current comparison period is not available, reset the field
-  if (!comparisonPeriodAvailable) {
-    onChange(undefined);
-  }
 
   return (
     <EditorCard title={title} subtitle={description}>
