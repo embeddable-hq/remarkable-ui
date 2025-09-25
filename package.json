@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "npm run process:css-variables && tsc",
-    "process:css-variables": "node src/remarkable-ui/styles/process-css-variables.js",
+    "process:css-variables": "node scripts/process-css-variables.js",
     "build-storybook": "storybook build",
     "circular:check": "madge --circular .",
     "deploy-storybook": "gh-pages -d storybook-static",
