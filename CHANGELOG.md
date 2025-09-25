@@ -1,5 +1,13 @@
 # @embeddable/remarkable-ui
 
+## 0.1.8
+
+### Patch Changes
+
+- eb52f2a: Add css variables to a css file
+- 595b4a6: Add fill gap and date bounds functionalities to bar charts
+- eb52f2a: Include css variables in the NPM package
+
 ## 0.1.7
 
 ### Patch Changes
