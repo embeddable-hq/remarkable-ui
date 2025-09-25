@@ -58,7 +58,7 @@ export const useChartDataWithFillGaps = (
     };
 
     try {
-      return fillGaps(data as DataResponse['data'], options);
+      return fillGaps(data, options);
     } catch (error) {
       console.warn('Failed to apply fillGaps to chart data:', error);
       return data;
