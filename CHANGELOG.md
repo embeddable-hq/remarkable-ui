@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.9
+
+### Patch Changes
+
+- 1436839: Fix script path
+
 ## 0.1.8
 
 ### Patch Changes
