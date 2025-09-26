@@ -41,8 +41,8 @@ export type ThemeEditors = {
 };
 
 export type ThemeDefaults = {
-  comparisonPeriods: ComparisonPeriodOption[];
-  dateRanges: DateRangeOption[];
+  comparisonPeriodsOptions: ComparisonPeriodOption[];
+  dateRangesOptions: DateRangeOption[];
 };
 
 export type Theme = {

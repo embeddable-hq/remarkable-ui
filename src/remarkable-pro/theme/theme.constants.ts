@@ -23,16 +23,16 @@ const remarkableThemeCharts: ThemeCharts = {
 };
 
 const remarkableThemeDefaults: ThemeDefaults = {
-  comparisonPeriods: defaultComparisonPeriodOptions,
-  dateRanges: defaultDateRangeOptions,
+  comparisonPeriodsOptions: defaultComparisonPeriodOptions,
+  dateRangesOptions: defaultDateRangeOptions,
 };
 
 const remarkableThemeEditors: ThemeEditors = {
   dateRangeSelectFieldPro: {
-    options: remarkableThemeDefaults.dateRanges,
+    options: remarkableThemeDefaults.dateRangesOptions,
   },
   comparisonPeriodSelectFieldPro: {
-    options: remarkableThemeDefaults.comparisonPeriods,
+    options: remarkableThemeDefaults.comparisonPeriodsOptions,
   },
 };
 

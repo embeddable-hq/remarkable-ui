@@ -7,24 +7,28 @@ export const getComparisonPeriodDateRange = (
   comparisonPeriod: string | undefined,
   theme: Theme,
 ): TimeRange => {
+  if (!primaryDateRange || !comparisonPeriod) {
+    return undefined;
+  }
+
   const primaryDateRangeRange = primaryDateRange?.relativeTimeString
-    ? theme.defaults.dateRanges
+    ? theme.defaults.dateRangesOptions
         .find((option) => option.value === primaryDateRange?.relativeTimeString)
         ?.getRange()
     : primaryDateRange;
 
-  const compariosonPeriodOption = theme.defaults.comparisonPeriods.find(
+  const comparisonPeriodOption = theme.defaults.comparisonPeriodsOptions.find(
     (option) => option.value === comparisonPeriod,
   );
 
-  return compariosonPeriodOption?.getRange(primaryDateRangeRange);
+  return comparisonPeriodOption?.getRange(primaryDateRangeRange);
 };
 
 export const getComparisonPeriodLabel = (
   comparisonPeriod: string | undefined,
   theme: Theme,
 ): string => {
-  const option = theme.defaults.comparisonPeriods.find(
+  const option = theme.defaults.comparisonPeriodsOptions.find(
     (option) => option.value === comparisonPeriod,
   );
   return option ? resolveI18nString(option.label) : '';
