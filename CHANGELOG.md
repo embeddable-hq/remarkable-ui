@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.11
+
+### Patch Changes
+
+- cb7e09b: New Kpi Remarkable UI component
+
 ## 0.1.10
 
 ### Patch Changes
