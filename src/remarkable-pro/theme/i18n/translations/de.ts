@@ -28,6 +28,7 @@ export const de: ResourceLanguage = {
       emptyMessage: 'Versuchen Sie, etwas hinzuzufügen.',
     },
     editors: {
+      errorTitle: 'Etwas ist schiefgelaufen.',
       ComparisonPeriodSelectFieldPro: {
         previousPeriod: 'Vorheriger Zeitraum',
         previousWeek: 'Vorherige Woche',

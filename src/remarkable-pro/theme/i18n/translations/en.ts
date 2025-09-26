@@ -17,6 +17,7 @@ export const en: ResourceLanguage = {
       emptyMessage: 'Try adding something.',
     },
     editors: {
+      errorTitle: 'Something went wrong.',
       ComparisonPeriodSelectFieldPro: {
         previousPeriod: 'Previous period',
         previousWeek: 'Previous week',
