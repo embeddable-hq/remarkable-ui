@@ -1,3 +1,5 @@
+import { CssSize } from '../../types/css.types';
+
 export type KpiChartProps = {
   value: number;
   comparisonValue?: number;
@@ -5,4 +7,6 @@ export type KpiChartProps = {
   invertChangeColors?: boolean;
   comparisonLabel?: string;
   equalComparisonLabel?: string;
+  valueFontSize?: CssSize;
+  valueFormatter?: (value: number) => string;
 };

@@ -8,11 +8,16 @@
 }
 
 .kpiChartContainer > p {
-  color: var(--em-kpi-kpi-font-font-color, #212129);
+  width: 100%;
+  font-size: 52px;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--em-kpi-kpi-font-font-color, #212129);
   /* TODO: implement on the font ticket */
   /* font-family: var(--em-kpi-kpi-font-font-family, Inter); */
-  font-size: 52px;
   font-style: normal;
   font-weight: var(--em-kpi-kpi-font-font-weight, 700);
   line-height: normal;

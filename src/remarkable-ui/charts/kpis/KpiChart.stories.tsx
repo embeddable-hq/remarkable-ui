@@ -4,6 +4,13 @@ import { KpiChart } from './KpiChart';
 
 const meta = {
   component: KpiChart,
+  argTypes: {
+    valueFontSize: {
+      control: {
+        type: 'number',
+      },
+    },
+  },
 } satisfies Meta<typeof KpiChart>;
 
 export default meta;

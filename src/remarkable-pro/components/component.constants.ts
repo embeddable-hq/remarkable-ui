@@ -117,6 +117,19 @@ export const dimension = {
   inputs: subInputs,
 } as const;
 
+export const dimensionTime = {
+  name: 'dimensionTime',
+  type: 'dimension',
+  label: 'Dimension Time',
+  config: {
+    dataset: 'dataset',
+    supportedTypes: ['time'],
+  },
+  required: true,
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
 export const dimensionWithDateBounds = {
   name: 'dimension',
   type: 'dimension',
@@ -164,6 +177,20 @@ export const measures = {
   required: true,
   category: 'Component Data',
   inputs: subInputs,
+} as const;
+
+export const genericNumber = {
+  name: 'number',
+  type: 'number',
+  label: 'Number',
+  category: 'Component Settings',
+} as const;
+
+export const genericString = {
+  name: 'string',
+  type: 'string',
+  label: 'String',
+  category: 'Component Settings',
 } as const;
 
 export const title = {

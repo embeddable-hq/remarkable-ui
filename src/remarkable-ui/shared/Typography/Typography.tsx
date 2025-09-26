@@ -9,16 +9,18 @@ type TypographyProps = {
   as?: TypographyElement;
   className?: string;
   title?: string;
+  style?: React.CSSProperties;
 };
 
 export function Typography({
   children,
   as: Component = 'p',
   className,
+  style,
   title,
 }: TypographyProps): React.JSX.Element {
   return (
-    <Component title={title} className={clsx(styles.typography, className)}>
+    <Component title={title} className={clsx(styles.typography, className)} style={style}>
       {children}
     </Component>
   );
