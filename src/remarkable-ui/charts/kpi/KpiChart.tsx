@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Typography } from '../../shared/Typography/Typography';
-import styles from './Kpi.module.css';
-import { KpiChange } from './KpiChange';
-import { KpiProps } from './Kpi.types';
+import styles from './KpiChart.module.css';
+import { KpiChartChange } from './components/KpiChartChange';
+import { KpiChartProps } from './KpiChart.types';
 import clsx from 'clsx';
 
-export const Kpi: FC<KpiProps> = ({
+export const KpiChart: FC<KpiChartProps> = ({
   value,
   comparisonValue,
   comparisonLabel,
@@ -16,13 +16,13 @@ export const Kpi: FC<KpiProps> = ({
   const equalComparison = comparisonValue && comparisonValue === value;
 
   return (
-    <div className={styles.kpiContainer}>
+    <div className={styles.kpiChartContainer}>
       <Typography>{value}</Typography>
       <div className={styles.kpiComparisonContainer}>
         {equalComparison ? (
           <Typography>{equalComparisonLabel}</Typography>
         ) : (
-          <KpiChange
+          <KpiChartChange
             className={clsx(!comparisonValue && styles.kpiChangeHidden)}
             value={value}
             comparisonValue={comparisonValue}

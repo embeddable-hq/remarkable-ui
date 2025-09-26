@@ -1,4 +1,4 @@
-export type KpiProps = {
+export type KpiChartProps = {
   value: number;
   comparisonValue?: number;
   showChangeAsPercentage?: boolean;

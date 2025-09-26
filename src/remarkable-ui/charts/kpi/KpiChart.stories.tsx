@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { Kpi } from './Kpi';
+import { KpiChart } from './KpiChart';
 
 const meta = {
-  component: Kpi,
-} satisfies Meta<typeof Kpi>;
+  component: KpiChart,
+} satisfies Meta<typeof KpiChart>;
 
 export default meta;
 

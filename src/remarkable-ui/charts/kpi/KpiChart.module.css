@@ -1,4 +1,4 @@
-.kpiContainer {
+.kpiChartContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.kpiContainer > p {
+.kpiChartContainer > p {
   color: var(--em-kpi-kpi-font-font-color, #212129);
   text-align: center;
   /* TODO: implement on the font ticket */
