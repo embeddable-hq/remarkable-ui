@@ -82,3 +82,12 @@ export const KpiComparisonNegativeInvertedColors: Story = {
     equalComparisonLabel: 'No change',
   },
 };
+
+export const KpiComparisonZero: Story = {
+  args: {
+    value: 0,
+    comparisonValue: 0,
+    comparisonLabel: 'vs previous period.',
+    equalComparisonLabel: 'No change',
+  },
+};

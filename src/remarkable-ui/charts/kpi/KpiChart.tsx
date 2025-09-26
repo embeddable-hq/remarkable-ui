@@ -13,7 +13,8 @@ export const KpiChart: FC<KpiChartProps> = ({
   showChangeAsPercentage,
   equalComparisonLabel = 'No change',
 }) => {
-  const equalComparison = comparisonValue && comparisonValue === value;
+  const hasComparisonValue = comparisonValue !== undefined;
+  const equalComparison = hasComparisonValue && comparisonValue === value;
 
   return (
     <div className={styles.kpiChartContainer}>
@@ -23,7 +24,7 @@ export const KpiChart: FC<KpiChartProps> = ({
           <Typography>{equalComparisonLabel}</Typography>
         ) : (
           <KpiChartChange
-            className={clsx(!comparisonValue && styles.kpiChangeHidden)}
+            className={clsx(!hasComparisonValue && styles.kpiChangeHidden)}
             value={value}
             comparisonValue={comparisonValue}
             invertChangeColors={invertChangeColors}
