@@ -23,6 +23,7 @@ type KpiChartNumberComparisonProProp = {
   resultsComparison: DataResponse | undefined;
   reversePositiveNegativeColors?: boolean;
   title: string;
+  comparisonDateRange: TimeRange;
   setComparisonDateRange: (dateRange: TimeRange) => void;
 };
 
@@ -40,6 +41,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
     results,
     resultsComparison,
     reversePositiveNegativeColors,
+    comparisonDateRange,
     setComparisonDateRange,
   } = props;
 
@@ -53,7 +55,9 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
   }, [comparisonPeriod, JSON.stringify(primaryDateRange)]);
 
   const value = results.data?.[0]?.[measure.name];
-  const comparisonValue = resultsComparison?.data?.[0]?.[measure.name];
+  const comparisonValue = comparisonDateRange
+    ? resultsComparison?.data?.[0]?.[measure.name]
+    : undefined;
 
   const themeFormatter = getThemeFormatter(theme);
   const valueFormatter = (valueToFormat: number) => themeFormatter.data(measure, valueToFormat);

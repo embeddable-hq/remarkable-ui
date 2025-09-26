@@ -52,7 +52,7 @@ export const meta = {
 } as const satisfies EmbeddedComponentMeta;
 
 type KpiChartNumberComparisonProState = {
-  comparisonDateRange?: TimeRange;
+  comparisonDateRange: TimeRange;
 };
 
 export default defineComponent(KpiChartNumberComparisonPro, meta, {
@@ -66,6 +66,7 @@ export default defineComponent(KpiChartNumberComparisonPro, meta, {
   ) => {
     return {
       ...inputs,
+      comparisonDateRange: state?.comparisonDateRange,
       setComparisonDateRange: (comparisonDateRange: TimeRange) => setState({ comparisonDateRange }),
       results: loadData({
         from: inputs.dataset,
