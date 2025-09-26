@@ -127,7 +127,6 @@ export const dimensionTime = {
   },
   required: true,
   category: 'Component Data',
-  inputs: subInputs,
 } as const;
 
 export const dimensionWithDateBounds = {
@@ -177,6 +176,20 @@ export const measures = {
   required: true,
   category: 'Component Data',
   inputs: subInputs,
+} as const;
+
+export const genericBoolean = {
+  name: 'boolean',
+  type: 'boolean',
+  label: 'Boolean',
+  category: 'Component Settings',
+} as const;
+
+export const genericTimeRange = {
+  name: 'timeRange',
+  type: 'timeRange',
+  label: 'Time Range',
+  category: 'Component Settings',
 } as const;
 
 export const genericNumber = {
