@@ -7,6 +7,10 @@ import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { KpiChart } from '../../../../../remarkable-ui';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { useEffect } from 'react';
+import {
+  getComparisonPeriodDateRange,
+  getComparisonPeriodLabel,
+} from '../../../utils/timeRange.utils';
 
 type KpiChartNumberComparisonProProp = {
   comparisonPeriod?: string;
@@ -40,17 +44,12 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
   } = props;
 
   useEffect(() => {
-    const primaryDateRangeRange = primaryDateRange?.relativeTimeString
-      ? theme.editors.dateRangeSelectFieldPro.options
-          .find((x) => x.value === primaryDateRange?.relativeTimeString)
-          ?.getRange()
-      : primaryDateRange;
-
-    const selectedOption = theme.editors.comparisonPeriodSelectFieldPro.options
-      .find((x) => x.value === comparisonPeriod)
-      ?.getRange(primaryDateRangeRange);
-
-    setComparisonDateRange(selectedOption);
+    const newComparisonDateRange = getComparisonPeriodDateRange(
+      primaryDateRange,
+      comparisonPeriod,
+      theme,
+    );
+    setComparisonDateRange(newComparisonDateRange);
   }, [comparisonPeriod, JSON.stringify(primaryDateRange)]);
 
   const value = results.data?.[0]?.[measure.name];
@@ -58,6 +57,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
 
   const themeFormatter = getThemeFormatter(theme);
   const valueFormatter = (valueToFormat: number) => themeFormatter.data(measure, valueToFormat);
+  const comparisonLabel = `vs ${getComparisonPeriodLabel(comparisonPeriod, theme).toLowerCase()}.`;
 
   return (
     <ChartCard
@@ -74,7 +74,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
         valueFontSize={fontSize}
         invertChangeColors={reversePositiveNegativeColors}
         showChangeAsPercentage={displayChangeAsPercentage}
-        comparisonLabel={'vs ' + comparisonPeriod}
+        comparisonLabel={comparisonLabel}
       />
     </ChartCard>
   );

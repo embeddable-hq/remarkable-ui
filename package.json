@@ -13,7 +13,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "npm run process:css-variables && tsc",
+    "build": "tsc",
     "process:css-variables": "node scripts/process-css-variables.js",
     "build-storybook": "storybook build",
     "circular:check": "madge --circular .",
@@ -21,7 +21,7 @@
     "embeddable:build": "embeddable build",
     "embeddable:dev": "embeddable dev",
     "embeddable:login": "embeddable login",
-    "embeddable:package": "embeddable buildPackage",
+    "embeddable:package": "embeddable buildPackage && npm run process:css-variables",
     "embeddable:push": "embeddable push",
     "embeddable:upgrade": "npx npm-check-updates -u \"/embeddable/\"",
     "eslint:check": "eslint .",
