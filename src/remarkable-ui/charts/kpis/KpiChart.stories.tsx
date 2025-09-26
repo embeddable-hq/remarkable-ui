@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { Kpi } from './Kpi';
+import { KpiChart } from './KpiChart';
 
 const meta = {
-  component: Kpi,
-} satisfies Meta<typeof Kpi>;
+  component: KpiChart,
+} satisfies Meta<typeof KpiChart>;
 
 export default meta;
 
@@ -78,6 +78,15 @@ export const KpiComparisonNegativeInvertedColors: Story = {
     value: 100,
     comparisonValue: 150,
     invertChangeColors: true,
+    comparisonLabel: 'vs previous period.',
+    equalComparisonLabel: 'No change',
+  },
+};
+
+export const KpiComparisonZero: Story = {
+  args: {
+    value: 0,
+    comparisonValue: 0,
     comparisonLabel: 'vs previous period.',
     equalComparisonLabel: 'No change',
   },

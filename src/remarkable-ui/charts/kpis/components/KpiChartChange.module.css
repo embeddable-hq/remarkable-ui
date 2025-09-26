@@ -1,4 +1,4 @@
-.kpiChangeContainer {
+.kpiChartChangeContainer {
   display: flex;
   align-items: center;
   gap: var(--em-chart-grid-padding-default, 0.5rem);

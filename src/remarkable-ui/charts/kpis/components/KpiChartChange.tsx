@@ -1,18 +1,18 @@
 import { FC } from 'react';
-import styles from './KpiChange.module.css';
+import styles from './KpiChartChange.module.css';
 import clsx from 'clsx';
-import { Typography } from '../../shared/Typography/Typography';
+import { Typography } from '../../../shared/Typography/Typography';
 import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
-import { KpiProps } from './Kpi.types';
+import { KpiChartProps } from '../KpiChart.types';
 
 const getChangeClass = (isPositive: boolean, invertChangeColors: boolean) => {
   if (isPositive) return invertChangeColors ? styles.negative : styles.positive;
   return invertChangeColors ? styles.positive : styles.negative;
 };
 
-type KpiChangeProps = KpiProps & { className?: string };
+type KpiChartChangeProps = KpiChartProps & { className?: string };
 
-export const KpiChange: FC<KpiChangeProps> = ({
+export const KpiChartChange: FC<KpiChartChangeProps> = ({
   value,
   comparisonValue = 0,
   showChangeAsPercentage,
@@ -35,7 +35,7 @@ export const KpiChange: FC<KpiChangeProps> = ({
   const Icon = isPositive ? IconTrendingUp : IconTrendingDown;
 
   return (
-    <div className={clsx(className, styles.kpiChangeContainer)}>
+    <div className={clsx(className, styles.kpiChartChangeContainer)}>
       <div className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}>
         <Icon />
         <Typography>{displayValue}</Typography>
