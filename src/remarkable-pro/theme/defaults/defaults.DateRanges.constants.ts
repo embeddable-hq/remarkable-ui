@@ -1,5 +1,4 @@
 import { TimeRange } from '@embeddable.com/core';
-import { DateRangeSelectFieldProOption } from './DateRangeSelectFieldPro.types';
 
 const getWeekBounds = (date: Date, offset = 0): TimeRange => {
   const d = new Date(date);
@@ -31,7 +30,14 @@ const getQuarterBounds = (date: Date, offset = 0): TimeRange => {
   };
 };
 
-export const defaultDateComparisonSelectFieldPros: DateRangeSelectFieldProOption[] = [
+export type DateRangeOption = {
+  label: string;
+  value: string;
+  dateFormat: string;
+  getRange: () => TimeRange;
+};
+
+export const defaultDateRangeOptions: DateRangeOption[] = [
   {
     value: 'Today',
     label: 'Today',

@@ -12,13 +12,19 @@ export const KpiChart: FC<KpiChartProps> = ({
   invertChangeColors,
   showChangeAsPercentage,
   equalComparisonLabel = 'No change',
+  valueFontSize,
+  valueFormatter,
 }) => {
   const hasComparisonValue = comparisonValue !== undefined;
   const equalComparison = hasComparisonValue && comparisonValue === value;
 
+  const displayValue = valueFormatter ? valueFormatter(value) : value;
+
   return (
     <div className={styles.kpiChartContainer}>
-      <Typography>{value}</Typography>
+      <Typography className={styles.kpiValue} style={{ fontSize: valueFontSize }}>
+        {displayValue}
+      </Typography>
       <div className={styles.kpiComparisonContainer}>
         {equalComparison ? (
           <Typography>{equalComparisonLabel}</Typography>

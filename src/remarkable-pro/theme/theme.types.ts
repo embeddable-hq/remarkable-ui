@@ -5,6 +5,8 @@ import { ChartOptions } from 'chart.js';
 import { ChartCardMenuProOption } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 import { DateRangeSelectFieldProOption } from '../components/editors/DateRangeSelectFieldPro/DateRangeSelectFieldPro.types';
 import { ComparisonPeriodSelectFieldProOption } from '../components/editors/ComparisonPeriodSelectFieldPro/ComparisonPeriodSelectFieldPro.types';
+import { ComparisonPeriodOption } from './defaults/defaults.ComparisonPeriods.constants';
+import { DateRangeOption } from './defaults/defaults.DateRanges.constants';
 
 export type ThemeI18n = { language: string; translations: Resource };
 
@@ -38,10 +40,16 @@ export type ThemeEditors = {
   };
 };
 
+export type ThemeDefaults = {
+  comparisonPeriodsOptions: ComparisonPeriodOption[];
+  dateRangesOptions: DateRangeOption[];
+};
+
 export type Theme = {
   i18n: ThemeI18n;
   charts: ThemeCharts;
   styles: ThemeStyles;
   formatter: ThemeFormatter;
   editors: ThemeEditors;
+  defaults: ThemeDefaults;
 };

@@ -1,5 +1,4 @@
 import { TimeRange, TimeRangeDeserializedValue } from '@embeddable.com/core';
-import { ComparisonPeriodSelectFieldProOption } from './ComparisonPeriodSelectFieldPro.types';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek.js';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
@@ -94,36 +93,42 @@ const getPreviousYearRange = (primaryDateRange: TimeRange) => {
   };
 };
 
-export const defaultComparisonPeriodSelectFieldProOptions: ComparisonPeriodSelectFieldProOption[] =
-  [
-    {
-      value: 'Previous period',
-      label: 'editors.ComparisonPeriodSelectFieldPro.previousPeriod|Previous period',
-      getRange: getPreviousPeriodRange,
-      dateFormat: 'DD MMM YYYY',
-    },
-    {
-      value: 'Previous week',
-      label: 'editors.ComparisonPeriodSelectFieldPro.previousWeek|Previous week',
-      getRange: getPreviousWeekRange,
-      dateFormat: 'MMM DD',
-    },
-    {
-      value: 'Previous month',
-      label: 'editors.ComparisonPeriodSelectFieldPro.previousMonth|Previous month',
-      getRange: getPreviousMonthRange,
-      dateFormat: 'MMM YYYY',
-    },
-    {
-      value: 'Previous quarter',
-      label: 'editors.ComparisonPeriodSelectFieldPro.previousQuarter|Previous quarter',
-      getRange: getPreviousQuarterRange,
-      dateFormat: 'MMM YYYY',
-    },
-    {
-      value: 'Previous year',
-      label: 'editors.ComparisonPeriodSelectFieldPro.previousYear|Previous year',
-      getRange: getPreviousYearRange,
-      dateFormat: 'YYYY',
-    },
-  ];
+export type ComparisonPeriodOption = {
+  label: string;
+  value: string;
+  dateFormat: string;
+  getRange: (dateRange: TimeRange) => TimeRange;
+};
+
+export const defaultComparisonPeriodOptions: ComparisonPeriodOption[] = [
+  {
+    value: 'Previous period',
+    label: 'defaults.comparisonPeriodOptions.previousPeriod|Previous period',
+    getRange: getPreviousPeriodRange,
+    dateFormat: 'DD MMM YYYY',
+  },
+  {
+    value: 'Previous week',
+    label: 'defaults.comparisonPeriodOptions.previousWeek|Previous week',
+    getRange: getPreviousWeekRange,
+    dateFormat: 'MMM DD',
+  },
+  {
+    value: 'Previous month',
+    label: 'defaults.comparisonPeriodOptions.previousMonth|Previous month',
+    getRange: getPreviousMonthRange,
+    dateFormat: 'MMM YYYY',
+  },
+  {
+    value: 'Previous quarter',
+    label: 'defaults.comparisonPeriodOptions.previousQuarter|Previous quarter',
+    getRange: getPreviousQuarterRange,
+    dateFormat: 'MMM YYYY',
+  },
+  {
+    value: 'Previous year',
+    label: 'defaults.comparisonPeriodOptions.previousYear|Previous year',
+    getRange: getPreviousYearRange,
+    dateFormat: 'YYYY',
+  },
+];

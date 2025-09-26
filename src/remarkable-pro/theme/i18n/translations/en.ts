@@ -18,7 +18,9 @@ export const en: ResourceLanguage = {
     },
     editors: {
       errorTitle: 'Something went wrong.',
-      ComparisonPeriodSelectFieldPro: {
+    },
+    defaults: {
+      comparisonPeriodOptions: {
         previousPeriod: 'Previous period',
         previousWeek: 'Previous week',
         previousMonth: 'Previous month',

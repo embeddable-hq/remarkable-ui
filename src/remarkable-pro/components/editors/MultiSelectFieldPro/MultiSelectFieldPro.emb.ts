@@ -79,7 +79,6 @@ export default defineComponent(MultiSelectFieldPro, meta, {
     const operator = inputs.dimension.nativeType === 'string' ? 'contains' : 'equals';
     return {
       ...inputs,
-      maxOptions: inputs.maxOptions,
       setSearchValue: (searchValue: string) => setState({ searchValue }),
       results: loadData({
         limit: inputs.maxOptions,
