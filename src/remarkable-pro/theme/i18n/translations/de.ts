@@ -29,7 +29,9 @@ export const de: ResourceLanguage = {
     },
     editors: {
       errorTitle: 'Etwas ist schiefgelaufen.',
-      ComparisonPeriodSelectFieldPro: {
+    },
+    defaults: {
+      comparisonPeriodOptions: {
         previousPeriod: 'Vorheriger Zeitraum',
         previousWeek: 'Vorherige Woche',
         previousMonth: 'Vorheriger Monat',
