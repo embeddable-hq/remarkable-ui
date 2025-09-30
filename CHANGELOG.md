@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.15
+
+### Patch Changes
+
+- 93a89e7: Hide granularity for dimensionTime
+
 ## 0.1.14
 
 ### Patch Changes
