@@ -2,7 +2,9 @@ import { TimeRange, TimeRangeDeserializedValue } from '@embeddable.com/core';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek.js';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
+import utc from 'dayjs/plugin/utc.js';
 
+dayjs.extend(utc);
 dayjs.extend(isoWeek);
 dayjs.extend(quarterOfYear);
 

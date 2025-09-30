@@ -56,7 +56,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
     setComparisonDateRange(newComparisonDateRange);
   }, [comparisonPeriod, JSON.stringify(primaryDateRange), theme]);
 
-  const value: number = Number(results.data?.[0]?.[measure.name]);
+  const value: number = results.data?.[0]?.[measure.name];
   const comparisonValue = comparisonDateRange
     ? resultsComparison?.data?.[0]?.[measure.name]
     : undefined;

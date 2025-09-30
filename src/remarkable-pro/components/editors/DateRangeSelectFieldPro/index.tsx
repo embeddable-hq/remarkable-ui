@@ -33,14 +33,17 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
 
   const dateRangeOptions = theme.defaults.dateRangesOptions;
 
-  useEffect(() => {
-    const relativeTimeString = selectedValue?.relativeTimeString;
-    if (relativeTimeString === '') return;
+  const selectedValueRelativeTimeString = selectedValue?.relativeTimeString;
 
-    const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
+  useEffect(() => {
+    if (!selectedValueRelativeTimeString) return;
+
+    const matchedOption = dateRangeOptions.find(
+      (option) => option.value === selectedValueRelativeTimeString,
+    );
 
     setInternalValue(matchedOption ? matchedOption.value : undefined);
-  }, []);
+  }, [selectedValueRelativeTimeString, dateRangeOptions]);
 
   useEffect(() => {
     if (!selectedValue && !internalValue) return;
