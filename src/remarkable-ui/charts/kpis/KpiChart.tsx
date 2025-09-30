@@ -23,9 +23,7 @@ export const KpiChart: FC<KpiChartProps> = ({
 
   return (
     <div className={styles.kpiChartContainer}>
-      <Typography className={styles.kpiValue} style={{ fontSize: valueFontSize }}>
-        {displayValue}
-      </Typography>
+      <Typography style={{ fontSize: valueFontSize }}>{displayValue}</Typography>
       <div className={styles.kpiComparisonContainer} style={{ fontSize: changeFontSize }}>
         {equalComparison ? (
           <Typography>{equalComparisonLabel}</Typography>
