@@ -2,10 +2,7 @@ import { useTheme } from '@embeddable.com/react';
 import { SingleSelectField } from '../../../../remarkable-ui';
 import { Theme } from '../../../theme/theme.types';
 import { useLoadDayjsLocale } from '../../../utils.ts/date.utils';
-import {
-  getAvailableDateRangeSelectFieldProOptions,
-  getDateRangeSelectFieldProOptions,
-} from './DateRangeSelectFieldPro.utils';
+import { getDateRangeSelectFieldProOptions } from './DateRangeSelectFieldPro.utils';
 import { TimeRange } from '@embeddable.com/core';
 import { resolveI18nProps } from '../../component.utils';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
@@ -34,15 +31,13 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   // 1. exist in the options: relativeTimeString converted into TimeRange and onChange is called with the TimeRange
   // 2. not exist in the options: onChange is called with undefined (resets)
 
-  const availableDateRangeOptions = getAvailableDateRangeSelectFieldProOptions(theme);
+  const dateRangeOptions = theme.defaults.dateRangesOptions;
 
   useEffect(() => {
     const relativeTimeString = selectedValue?.relativeTimeString;
     if (relativeTimeString === '') return;
 
-    const matchedOption = availableDateRangeOptions.find(
-      (option) => option.value === relativeTimeString,
-    );
+    const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
 
     setInternalValue(matchedOption ? matchedOption.value : undefined);
   }, []);
@@ -50,15 +45,13 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   useEffect(() => {
     if (!selectedValue && !internalValue) return;
 
-    const matchedOption = availableDateRangeOptions.find(
-      (option) => option.value === internalValue,
-    );
+    const matchedOption = dateRangeOptions.find((option) => option.value === internalValue);
 
     const newChangeValue = matchedOption ? matchedOption.getRange() : undefined;
 
     onChange(newChangeValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [internalValue, availableDateRangeOptions]);
+  }, [internalValue, dateRangeOptions]);
 
   if (!dayjsLocaleReady) {
     return null;
@@ -66,7 +59,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
 
   const { description, placeholder, title } = resolveI18nProps(props);
 
-  const options = getDateRangeSelectFieldProOptions(availableDateRangeOptions);
+  const options = getDateRangeSelectFieldProOptions(dateRangeOptions);
 
   return (
     <EditorCard title={title} subtitle={description}>
@@ -75,10 +68,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
         isClearable
         placeholder={placeholder}
         value={internalValue}
-        onChange={(value) => {
-          console.log('set internal value', value);
-          setInternalValue(value || undefined);
-        }}
+        onChange={(value) => setInternalValue(value || undefined)}
         options={options}
         noOptionsMessage={i18n.t('common.noOptionsAvailable')}
       />

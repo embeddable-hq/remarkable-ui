@@ -34,12 +34,16 @@ const getQuarterBounds = (date: Date, offset = 0): TimeRange => {
 
 export type DateRangeOption = {
   value: string;
+  label: string;
+  dateFormat: string;
   getRange: () => TimeRange;
 };
 
 export const defaultDateRangeOptions: DateRangeOption[] = [
   {
     value: 'Today',
+    label: 'Today',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('day').toDate();
@@ -54,6 +58,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Yesterday',
+    label: 'Yesterday',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.subtract(1, 'day').startOf('day').toDate();
@@ -68,14 +74,20 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This week',
+    label: 'This week',
+    dateFormat: 'MMM DD',
     getRange: () => getWeekBounds(new Date(), 0),
   },
   {
     value: 'Last week',
+    label: 'Last week',
+    dateFormat: 'MMM DD',
     getRange: () => getWeekBounds(new Date(), -1),
   },
   {
     value: 'Week to date',
+    label: 'Week to date',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('isoWeek').toDate(); // Monday as start of week
@@ -90,6 +102,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 7 days',
+    label: 'Last 7 days',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const to = now.endOf('day').toDate();
@@ -104,6 +118,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next 7 days',
+    label: 'Next 7 days',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('day').toDate();
@@ -118,6 +134,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 30 days',
+    label: 'Last 30 days',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const to = now.endOf('day').toDate();
@@ -132,6 +150,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next 30 days',
+    label: 'Next 30 days',
+    dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('day').toDate();
@@ -146,6 +166,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This month',
+    label: 'This month',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('month').toDate();
@@ -160,6 +182,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last month',
+    label: 'Last month',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.subtract(1, 'month').startOf('month').toDate();
@@ -174,6 +198,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next month',
+    label: 'Next month',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.add(1, 'month').startOf('month').toDate();
@@ -188,18 +214,26 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This quarter',
+    label: 'This quarter',
+    dateFormat: 'MMM YYYY',
     getRange: () => getQuarterBounds(new Date(), 0),
   },
   {
     value: 'Last quarter',
+    label: 'Last quarter',
+    dateFormat: 'MMM YYYY',
     getRange: () => getQuarterBounds(new Date(), -1),
   },
   {
     value: 'Next quarter',
+    label: 'Next quarter',
+    dateFormat: 'MMM YYYY',
     getRange: () => getQuarterBounds(new Date(), +1),
   },
   {
     value: 'Quarter to date',
+    label: 'Quarter to date',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('quarter').toDate(); // start of current quarter
@@ -214,6 +248,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 6 months',
+    label: 'Last 6 months',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const to = now.endOf('day').toDate();
@@ -228,6 +264,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 12 months',
+    label: 'Last 12 months',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const to = now.endOf('day').toDate();
@@ -242,6 +280,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This year',
+    label: 'This year',
+    dateFormat: 'YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('year').toDate();
@@ -256,6 +296,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last year',
+    label: 'Last year',
+    dateFormat: 'YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.subtract(1, 'year').startOf('year').toDate();
@@ -270,6 +312,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next year',
+    label: 'Next year',
+    dateFormat: 'YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.add(1, 'year').startOf('year').toDate();
@@ -284,6 +328,8 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Year to date',
+    label: 'Year to date',
+    dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
       const from = now.startOf('year').toDate();

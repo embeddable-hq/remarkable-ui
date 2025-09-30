@@ -29,15 +29,6 @@ export type ThemeCharts = {
   barChartStackedHorizontalPro?: { options: Partial<ChartOptions<'bar'>> };
 };
 
-export type ThemeEditors = {
-  dateRangeSelectFieldPro: {
-    options: { value: string; label: string; dateFormat: string }[];
-  };
-  comparisonPeriodSelectFieldPro: {
-    options: { value: string; label: string; dateFormat: string }[];
-  };
-};
-
 export type ThemeDefaults = {
   comparisonPeriodsOptions: ComparisonPeriodOption[];
   dateRangesOptions: DateRangeOption[];
@@ -48,6 +39,5 @@ export type Theme = {
   charts: ThemeCharts;
   styles: ThemeStyles;
   formatter: ThemeFormatter;
-  editors: ThemeEditors;
   defaults: ThemeDefaults;
 };

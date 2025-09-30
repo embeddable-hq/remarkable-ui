@@ -8,7 +8,6 @@ import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { IconCalendarTime } from '@tabler/icons-react';
 import { i18n, i18nSetup } from '../../../theme/i18n/i18n';
 import {
-  getAvailableComparisonPeriodSelectFieldProOptions,
   getComparisonPeriodSelectFieldProOptions,
   isComparisonPeriodAvailable,
 } from './ComparisonPeriodSelectFieldPro.utils';
@@ -30,11 +29,11 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
 
   const { description, placeholder, title, comparisonPeriod, onChange } = resolveI18nProps(props);
 
-  const availableComparisonPeriodOptions = getAvailableComparisonPeriodSelectFieldProOptions(theme);
+  const comparisonPeriodOptions = theme.defaults.comparisonPeriodsOptions;
 
   const comparisonPeriodAvailable = useMemo(
-    () => isComparisonPeriodAvailable(comparisonPeriod, availableComparisonPeriodOptions),
-    [comparisonPeriod, availableComparisonPeriodOptions],
+    () => isComparisonPeriodAvailable(comparisonPeriod, comparisonPeriodOptions),
+    [comparisonPeriod, comparisonPeriodOptions],
   );
 
   // If the current comparison period is not available, reset the field
@@ -54,7 +53,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
   }
 
   const options = getComparisonPeriodSelectFieldProOptions(
-    availableComparisonPeriodOptions,
+    comparisonPeriodOptions,
     primaryDateRange,
   );
 
