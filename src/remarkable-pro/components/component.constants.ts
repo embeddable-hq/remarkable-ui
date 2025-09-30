@@ -124,6 +124,7 @@ export const dimensionTime = {
   config: {
     dataset: 'dataset',
     supportedTypes: ['time'],
+    hideGranularity: true,
   },
   required: true,
   category: 'Component Data',
