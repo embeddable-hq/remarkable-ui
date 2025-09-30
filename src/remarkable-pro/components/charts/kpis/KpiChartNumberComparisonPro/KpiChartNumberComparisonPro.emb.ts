@@ -12,7 +12,6 @@ import {
 import KpiChartNumberComparisonPro from './index';
 import { loadData, TimeRange } from '@embeddable.com/core';
 import ComparisonPeriodType from '../../../types/ComparisonPeriod.type.emb';
-import { localToUtcDate } from '../../../../utils.ts/date.utils';
 
 export const meta = {
   name: 'KpiChartNumberComparisonPro',
@@ -103,11 +102,7 @@ export default defineComponent(KpiChartNumberComparisonPro, meta, {
                 {
                   property: inputs.timeProperty,
                   operator: 'inDateRange',
-                  value: {
-                    from: localToUtcDate(state.comparisonDateRange.from!),
-                    to: localToUtcDate(state.comparisonDateRange.to!),
-                    relativeTimeString: '',
-                  },
+                  value: state.comparisonDateRange,
                 },
               ],
             })

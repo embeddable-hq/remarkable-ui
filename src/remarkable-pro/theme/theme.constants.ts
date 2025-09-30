@@ -29,10 +29,10 @@ const remarkableThemeDefaults: ThemeDefaults = {
 
 const remarkableThemeEditors: ThemeEditors = {
   dateRangeSelectFieldPro: {
-    options: remarkableThemeDefaults.dateRangesOptions,
+    options: remarkableThemeDefaults.dateRangesOptions.map((option) => option.value),
   },
   comparisonPeriodSelectFieldPro: {
-    options: remarkableThemeDefaults.comparisonPeriodsOptions,
+    options: remarkableThemeDefaults.comparisonPeriodsOptions.map((option) => option.value),
   },
 };
 

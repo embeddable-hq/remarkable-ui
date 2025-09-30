@@ -31,7 +31,9 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   // 1. exist in the options: relativeTimeString converted into TimeRange and onChange is called with the TimeRange
   // 2. not exist in the options: onChange is called with undefined (resets)
 
-  const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
+  const dateRangeOptions = theme.defaults.dateRangesOptions.filter((option) =>
+    theme.editors.dateRangeSelectFieldPro.options.includes(option.value),
+  );
 
   useEffect(() => {
     const relativeTimeString = selectedValue?.relativeTimeString;
@@ -39,15 +41,18 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
 
     const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
 
+    console.log('internal value', matchedOption ? matchedOption.value : undefined);
     setInternalValue(matchedOption ? matchedOption.value : undefined);
-  }, [selectedValue, dateRangeOptions]);
+  }, []);
 
   useEffect(() => {
     if (!selectedValue && !internalValue) return;
 
     const matchedOption = dateRangeOptions.find((option) => option.value === internalValue);
 
-    onChange(matchedOption ? matchedOption.getRange() : undefined);
+    const newChangeValue = matchedOption ? matchedOption.getRange() : undefined;
+
+    onChange(newChangeValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [internalValue, dateRangeOptions]);
 
@@ -66,7 +71,10 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
         isClearable
         placeholder={placeholder}
         value={internalValue}
-        onChange={(value) => setInternalValue(value || undefined)}
+        onChange={(value) => {
+          console.log('set internal value', value);
+          setInternalValue(value || undefined);
+        }}
         options={options}
         noOptionsMessage={i18n.t('common.noOptionsAvailable')}
       />
