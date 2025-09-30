@@ -2,7 +2,6 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 import { Value } from '@embeddable.com/core';
 import DateTimeSelectFieldPro from './index';
 import { description, placeholder, title } from '../../component.constants';
-import { localToUtcDate } from '../../../utils.ts/date.utils';
 
 export const meta = {
   name: 'DateRangeSelectFieldPro',
@@ -56,8 +55,7 @@ export default defineComponent(DateTimeSelectFieldPro, meta, {
       return {
         value: range
           ? {
-              from: range.from ? localToUtcDate(range.from) : undefined,
-              to: range.to ? localToUtcDate(range.to) : undefined,
+              ...range,
               relativeTimeString: '', // This is prioritised over the from and to dates, so we don't pass this for now (as we don't want Cube parsing this instead of using the calculated dates)
             }
           : Value.noFilter(),

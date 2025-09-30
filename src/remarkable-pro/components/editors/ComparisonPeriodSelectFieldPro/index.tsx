@@ -29,7 +29,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
 
   const { description, placeholder, title, comparisonPeriod, onChange } = resolveI18nProps(props);
 
-  const comparisonPeriodOptions = theme.editors.comparisonPeriodSelectFieldPro.options;
+  const comparisonPeriodOptions = theme.defaults.comparisonPeriodsOptions;
 
   const comparisonPeriodAvailable = useMemo(
     () => isComparisonPeriodAvailable(comparisonPeriod, comparisonPeriodOptions),

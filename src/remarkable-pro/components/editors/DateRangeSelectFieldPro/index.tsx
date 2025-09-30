@@ -31,23 +31,28 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   // 1. exist in the options: relativeTimeString converted into TimeRange and onChange is called with the TimeRange
   // 2. not exist in the options: onChange is called with undefined (resets)
 
-  const dateRangeOptions = theme.editors.dateRangeSelectFieldPro.options;
+  const dateRangeOptions = theme.defaults.dateRangesOptions;
+
+  const selectedValueRelativeTimeString = selectedValue?.relativeTimeString;
 
   useEffect(() => {
-    const relativeTimeString = selectedValue?.relativeTimeString;
-    if (relativeTimeString === '') return;
+    if (!selectedValueRelativeTimeString) return;
 
-    const matchedOption = dateRangeOptions.find((option) => option.value === relativeTimeString);
+    const matchedOption = dateRangeOptions.find(
+      (option) => option.value === selectedValueRelativeTimeString,
+    );
 
     setInternalValue(matchedOption ? matchedOption.value : undefined);
-  }, [selectedValue, dateRangeOptions]);
+  }, [selectedValueRelativeTimeString, dateRangeOptions]);
 
   useEffect(() => {
     if (!selectedValue && !internalValue) return;
 
     const matchedOption = dateRangeOptions.find((option) => option.value === internalValue);
 
-    onChange(matchedOption ? matchedOption.getRange() : undefined);
+    const newChangeValue = matchedOption ? matchedOption.getRange() : undefined;
+
+    onChange(newChangeValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [internalValue, dateRangeOptions]);
 

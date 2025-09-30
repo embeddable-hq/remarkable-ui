@@ -2,7 +2,7 @@ import { en } from './i18n/translations/en';
 import { de } from './i18n/translations/de';
 import { remarkableThemeFormatter } from './formatter/formatter.constants';
 import { remarkableThemeStyles } from './styles/styles.constants';
-import { Theme, ThemeCharts, ThemeDefaults, ThemeEditors } from './theme.types';
+import { Theme, ThemeCharts, ThemeDefaults } from './theme.types';
 import { defaultChartMenuProOptions } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.constants';
 import { defaultComparisonPeriodOptions } from './defaults/defaults.ComparisonPeriods.constants';
 import { defaultDateRangeOptions } from './defaults/defaults.DateRanges.constants';
@@ -27,19 +27,9 @@ const remarkableThemeDefaults: ThemeDefaults = {
   dateRangesOptions: defaultDateRangeOptions,
 };
 
-const remarkableThemeEditors: ThemeEditors = {
-  dateRangeSelectFieldPro: {
-    options: remarkableThemeDefaults.dateRangesOptions,
-  },
-  comparisonPeriodSelectFieldPro: {
-    options: remarkableThemeDefaults.comparisonPeriodsOptions,
-  },
-};
-
 export const remarkableTheme: Theme = {
   i18n: remarkableThemeI18n,
   charts: remarkableThemeCharts,
-  editors: remarkableThemeEditors,
   formatter: remarkableThemeFormatter,
   styles: remarkableThemeStyles,
   defaults: remarkableThemeDefaults,
