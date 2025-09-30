@@ -29,7 +29,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
     const percentage = comparisonValue === 0 ? 0 : (difference / comparisonValue) * 100;
 
     const percentageDisplay =
-      percentage % 1 === 0 ? percentage : percentage.toFixed(2).replace(/\.?0+$/, '');
+      percentage % 1 === 0 ? percentage : percentage.toFixed(1).replace(/\.?0+$/, '');
 
     differenceLabel = `${percentageDisplay}%`;
   }

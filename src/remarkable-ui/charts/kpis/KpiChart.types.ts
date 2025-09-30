@@ -2,6 +2,7 @@ import { CssSize } from '../../types/css.types';
 
 export type KpiChartProps = {
   value: number;
+  changeFontSize?: number;
   comparisonValue?: number;
   showChangeAsPercentage?: boolean;
   invertChangeColors?: boolean;

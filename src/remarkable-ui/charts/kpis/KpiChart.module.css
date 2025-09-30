@@ -26,24 +26,22 @@
 .kpiComparisonContainer {
   display: flex;
   align-items: center;
-  padding-top: var(--em-chart-grid-padding-lg, 1rem);
-  gap: var(--em-chart-grid-padding-default, 0.5rem);
-
-  height: 2rem; /* Avoid flickering of dynamic height */
   display: flex;
   flex-direction: column;
+
+  padding: var(--em-chart-grid-padding-lg, 1rem) 0 0 0;
+  gap: var(--em-chart-grid-padding-default, 0.5rem);
+  font-size: var(--em-kpi-trend-font-font-size, 1rem);
 }
 
 .kpiComparisonContainer > p {
   text-align: center;
-  font-style: normal;
-  color: var(--em-chart-grid-font-color-default, #000);
   /* TODO: implement on the font ticket */
   /* font-family: var(--em-kpi-trend-font-font-family, Inter); */
-  font-size: var(--em-kpi-trend-font-font-size, 1rem);
+  color: var(--em-chart-grid-font-color-default, #000);
+  font-size: 0.875em; /* 87.5% of --em-kpi-trend-font-font-size */
   font-style: normal;
   font-weight: var(--em-kpi-trend-font-font-weight, 500);
-  line-height: var(--em-kpi-trend-font-line-height, 1rem);
 }
 
 .kpiChangeHidden {

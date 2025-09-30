@@ -13,6 +13,7 @@ import {
 } from '../../../utils/timeRange.utils';
 
 type KpiChartNumberComparisonProProp = {
+  changeFontSize: number;
   comparisonPeriod?: string;
   description: string;
   displayChangeAsPercentage?: boolean;
@@ -33,7 +34,9 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
 
   const { title, description } = resolveI18nProps(props);
   const {
+    changeFontSize,
     comparisonPeriod,
+    comparisonDateRange,
     displayChangeAsPercentage,
     fontSize,
     measure,
@@ -41,7 +44,6 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
     results,
     resultsComparison,
     reversePositiveNegativeColors,
-    comparisonDateRange,
     setComparisonDateRange,
   } = props;
 
@@ -61,7 +63,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
 
   const themeFormatter = getThemeFormatter(theme);
   const valueFormatter = (valueToFormat: number) => themeFormatter.data(measure, valueToFormat);
-  const comparisonLabel = `vs ${getComparisonPeriodLabel(comparisonPeriod, theme).toLowerCase()}.`;
+  const comparisonLabel = `vs ${getComparisonPeriodLabel(comparisonPeriod, theme).toLowerCase()}`;
 
   return (
     <ChartCard
@@ -76,6 +78,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
         comparisonValue={comparisonValue}
         valueFormatter={valueFormatter}
         valueFontSize={fontSize}
+        changeFontSize={changeFontSize}
         invertChangeColors={reversePositiveNegativeColors}
         showChangeAsPercentage={displayChangeAsPercentage}
         comparisonLabel={comparisonLabel}

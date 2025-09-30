@@ -7,6 +7,7 @@ import clsx from 'clsx';
 
 export const KpiChart: FC<KpiChartProps> = ({
   value,
+  changeFontSize,
   comparisonValue,
   comparisonLabel,
   invertChangeColors,
@@ -25,7 +26,7 @@ export const KpiChart: FC<KpiChartProps> = ({
       <Typography className={styles.kpiValue} style={{ fontSize: valueFontSize }}>
         {displayValue}
       </Typography>
-      <div className={styles.kpiComparisonContainer}>
+      <div className={styles.kpiComparisonContainer} style={{ fontSize: changeFontSize }}>
         {equalComparison ? (
           <Typography>{equalComparisonLabel}</Typography>
         ) : (
@@ -36,6 +37,7 @@ export const KpiChart: FC<KpiChartProps> = ({
             invertChangeColors={invertChangeColors}
             showChangeAsPercentage={showChangeAsPercentage}
             comparisonLabel={comparisonLabel}
+            changeFontSize={changeFontSize}
           />
         )}
       </div>

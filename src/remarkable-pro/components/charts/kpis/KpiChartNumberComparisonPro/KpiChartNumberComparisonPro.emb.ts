@@ -25,12 +25,14 @@ export const meta = {
       ...genericTimeRange,
       name: 'primaryDateRange',
       label: 'Primary Date Range',
+      description: 'You can also connect this to a date range selector using its variable',
       category: 'Component Data',
     },
     {
       name: 'comparisonPeriod',
       type: ComparisonPeriodType,
       label: 'Comparison Period',
+      description: 'You can also connect this to a comparison period selector using its variable',
       category: 'Component Data',
     },
     title,
@@ -48,6 +50,13 @@ export const meta = {
       defaultValue: false,
     },
     { ...genericNumber, name: 'fontSize', label: 'Font Size', defaultValue: 44, required: true },
+    {
+      ...genericNumber,
+      name: 'changeFontSize',
+      label: 'Change Font Size',
+      defaultValue: 16,
+      required: true,
+    },
   ],
 } as const satisfies EmbeddedComponentMeta;
 
@@ -71,29 +80,31 @@ export default defineComponent(KpiChartNumberComparisonPro, meta, {
       results: loadData({
         from: inputs.dataset,
         select: [inputs.measure],
-        filters: inputs.timeProperty
-          ? [
-              {
-                property: inputs.timeProperty,
-                operator: 'inDateRange',
-                value: inputs.primaryDateRange,
-              },
-            ]
-          : undefined,
+        filters:
+          inputs.primaryDateRange && inputs.timeProperty
+            ? [
+                {
+                  property: inputs.timeProperty,
+                  operator: 'inDateRange',
+                  value: inputs.primaryDateRange,
+                },
+              ]
+            : undefined,
       }),
-      resultsComparison: state?.comparisonDateRange
-        ? loadData({
-            from: inputs.dataset,
-            select: [inputs.measure],
-            filters: [
-              {
-                property: inputs.timeProperty,
-                operator: 'inDateRange',
-                value: state.comparisonDateRange,
-              },
-            ],
-          })
-        : undefined,
+      resultsComparison:
+        inputs.primaryDateRange && inputs.timeProperty && state?.comparisonDateRange
+          ? loadData({
+              from: inputs.dataset,
+              select: [inputs.measure],
+              filters: [
+                {
+                  property: inputs.timeProperty,
+                  operator: 'inDateRange',
+                  value: state.comparisonDateRange,
+                },
+              ],
+            })
+          : undefined,
     };
   },
 });
