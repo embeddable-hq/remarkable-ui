@@ -1,5 +1,12 @@
 # @embeddable/remarkable-ui
 
+## 0.1.14
+
+### Patch Changes
+
+- 61a76d8: Single source of truth for the date editor options
+- 61a76d8: Change naming of the Kpi to KpiChart
+
 ## 0.1.13
 
 ### Patch Changes
