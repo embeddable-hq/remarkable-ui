@@ -28,7 +28,7 @@ export const getComparisonPeriodLabel = (
   comparisonPeriod: string | undefined,
   theme: Theme,
 ): string => {
-  const option = theme.defaults.comparisonPeriodsOptions.find(
+  const option = theme.editors.comparisonPeriodSelectFieldPro.options.find(
     (option) => option.value === comparisonPeriod,
   );
   return option ? resolveI18nString(option.label) : '';

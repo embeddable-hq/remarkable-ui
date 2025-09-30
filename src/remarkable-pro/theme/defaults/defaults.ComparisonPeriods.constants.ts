@@ -94,41 +94,29 @@ const getPreviousYearRange = (primaryDateRange: TimeRange) => {
 };
 
 export type ComparisonPeriodOption = {
-  label: string;
   value: string;
-  dateFormat: string;
   getRange: (dateRange: TimeRange) => TimeRange;
 };
 
 export const defaultComparisonPeriodOptions: ComparisonPeriodOption[] = [
   {
     value: 'Previous period',
-    label: 'defaults.comparisonPeriodOptions.previousPeriod|Previous period',
     getRange: getPreviousPeriodRange,
-    dateFormat: 'DD MMM YYYY',
   },
   {
     value: 'Previous week',
-    label: 'defaults.comparisonPeriodOptions.previousWeek|Previous week',
     getRange: getPreviousWeekRange,
-    dateFormat: 'MMM DD',
   },
   {
     value: 'Previous month',
-    label: 'defaults.comparisonPeriodOptions.previousMonth|Previous month',
     getRange: getPreviousMonthRange,
-    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Previous quarter',
-    label: 'defaults.comparisonPeriodOptions.previousQuarter|Previous quarter',
     getRange: getPreviousQuarterRange,
-    dateFormat: 'MMM YYYY',
   },
   {
     value: 'Previous year',
-    label: 'defaults.comparisonPeriodOptions.previousYear|Previous year',
     getRange: getPreviousYearRange,
-    dateFormat: 'YYYY',
   },
 ];

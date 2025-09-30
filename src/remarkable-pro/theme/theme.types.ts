@@ -31,10 +31,10 @@ export type ThemeCharts = {
 
 export type ThemeEditors = {
   dateRangeSelectFieldPro: {
-    options: string[];
+    options: { value: string; label: string; dateFormat: string }[];
   };
   comparisonPeriodSelectFieldPro: {
-    options: string[];
+    options: { value: string; label: string; dateFormat: string }[];
   };
 };
 
