@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.13
+
+### Patch Changes
+
+- 129568d: Change naming of the Kpi to KpiChart
+
 ## 0.1.12
 
 ### Patch Changes
