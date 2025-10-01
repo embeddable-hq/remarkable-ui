@@ -57,6 +57,12 @@ export const meta = {
       defaultValue: 16,
       required: true,
     },
+    {
+      ...genericNumber,
+      name: 'percentageDecimalPlaces',
+      label: 'Percentage Decimal Places',
+      defaultValue: 1,
+    },
   ],
 } as const satisfies EmbeddedComponentMeta;
 
