@@ -44,6 +44,12 @@ export const meta = {
       defaultValue: false,
     },
     {
+      ...genericNumber,
+      name: 'percentageDecimalPlaces',
+      label: 'Percentage Decimal Places',
+      defaultValue: 1,
+    },
+    {
       ...genericBoolean,
       name: 'reversePositiveNegativeColors',
       label: 'Reverse Positive/Negative Colors',
@@ -56,12 +62,6 @@ export const meta = {
       label: 'Change Font Size',
       defaultValue: 16,
       required: true,
-    },
-    {
-      ...genericNumber,
-      name: 'percentageDecimalPlaces',
-      label: 'Percentage Decimal Places',
-      defaultValue: 1,
     },
   ],
 } as const satisfies EmbeddedComponentMeta;

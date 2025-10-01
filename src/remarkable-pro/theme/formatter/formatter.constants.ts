@@ -64,7 +64,7 @@ const dataNumberFormatter = (theme: Theme, key: DimensionOrMeasure): NumberForma
     style: currency ? 'currency' : undefined,
     currency: currency ? currency : undefined,
     notation: key.inputs?.abbreviateLargeNumber ? 'compact' : undefined,
-    maximumFractionDigits: key.inputs?.decimalPlaces ?? 0,
+    maximumFractionDigits: key.inputs?.decimalPlaces ?? undefined,
   };
 
   return theme.formatter.numberFormatter(theme, options);
