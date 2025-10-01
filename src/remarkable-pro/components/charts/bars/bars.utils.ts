@@ -31,14 +31,14 @@ export const getBarStackedChartProData = (
   const datasets = groupBy.map((groupByItem, index) => {
     const backgroundColor = getColor(
       `${themeKey}.charts.backgroundColors`,
-      groupByItem,
+      `${groupDimension.name}.${groupByItem}`,
       theme.charts.backgroundColors ?? chartContrastColors,
       index,
     );
 
     const borderColor = getColor(
       `${themeKey}.charts.borderColors`,
-      groupByItem,
+      `${groupDimension.name}.${groupByItem}`,
       theme.charts.borderColors ?? chartContrastColors,
       index,
     );
@@ -86,13 +86,6 @@ export const getBarChartProData = (
   return {
     labels: groupedData.map((item) => {
       return item[props.dimension.name];
-      // const formattedValue = themeFormatter.data(props.dimension, value);
-
-      // If formatter did not work, try i18n translation
-      // if (value === formattedValue) {
-      //   return i18n.t(value);
-      // }
-      // return formattedValue;
     }),
     datasets: props.measures.map((measure, index) => {
       const backgroundColor = getColor(
