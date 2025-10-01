@@ -131,7 +131,7 @@ const getBarChartProDatalabelTotalFormatter = (
     return sum + (val || 0);
   }, 0);
 
-  return total > 0 ? formatter(total) : null;
+  return formatter(total);
 };
 
 export const getBarChartProOptions = (
