@@ -68,7 +68,10 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions({ measure, horizontal: false, onBarClicked }, theme),
+    getBarChartProOptions(
+      { measure, horizontal: false, onBarClicked, data, dimension: xAxis },
+      theme,
+    ),
     theme.charts?.barChartStackedPro?.options || {},
   );
 
