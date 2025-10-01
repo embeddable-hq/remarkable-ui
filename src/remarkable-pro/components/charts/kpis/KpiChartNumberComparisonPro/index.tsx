@@ -24,6 +24,7 @@ type KpiChartNumberComparisonProProp = {
   resultsComparison: DataResponse | undefined;
   reversePositiveNegativeColors?: boolean;
   title: string;
+  percentageDecimalPlaces: number;
   comparisonDateRange: TimeRange;
   setComparisonDateRange: (dateRange: TimeRange) => void;
 };
@@ -44,6 +45,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
     results,
     resultsComparison,
     reversePositiveNegativeColors,
+    percentageDecimalPlaces,
     setComparisonDateRange,
   } = props;
 
@@ -82,6 +84,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
         invertChangeColors={reversePositiveNegativeColors}
         showChangeAsPercentage={displayChangeAsPercentage}
         comparisonLabel={comparisonLabel}
+        percentageDecimalPlaces={percentageDecimalPlaces}
       />
     </ChartCard>
   );

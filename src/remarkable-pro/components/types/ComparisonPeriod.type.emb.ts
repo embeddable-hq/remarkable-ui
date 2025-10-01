@@ -5,7 +5,6 @@ const ComparisonPeriodType = defineType('comparisonPeriod', {
   optionLabel: (value: string) => value,
 });
 
-defineOption(ComparisonPeriodType, 'summer');
 defineOption(ComparisonPeriodType, 'Previous period');
 defineOption(ComparisonPeriodType, 'Previous week');
 defineOption(ComparisonPeriodType, 'Previous month');

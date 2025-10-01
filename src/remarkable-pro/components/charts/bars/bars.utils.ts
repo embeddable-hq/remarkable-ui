@@ -9,6 +9,7 @@ import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
 import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
+import { Context } from 'chartjs-plugin-datalabels';
 
 export const getBarStackedChartProData = (
   props: {
@@ -118,6 +119,21 @@ export const getBarChartProData = (
   };
 };
 
+const getBarChartProDatalabelTotalFormatter = (
+  context: Context,
+  formatter: (value: number) => string,
+) => {
+  const { datasets } = context.chart.data;
+  const i = context.dataIndex;
+
+  const total = datasets.reduce((sum, ds) => {
+    const val = ds.data[i] as number;
+    return sum + (val || 0);
+  }, 0);
+
+  return formatter(total);
+};
+
 export const getBarChartProOptions = (
   options: {
     onBarClicked: (args: {
@@ -136,7 +152,17 @@ export const getBarChartProOptions = (
     plugins: {
       legend: { position: theme.charts.legendPosition ?? 'bottom' },
       datalabels: {
-        formatter: (value: string | number) => themeFormatter.data(options.measure, value),
+        labels: {
+          total: {
+            formatter: (_value: string | number, context: Context) =>
+              getBarChartProDatalabelTotalFormatter(context, (value: number) =>
+                themeFormatter.data(options.measure, value),
+              ),
+          },
+          value: {
+            formatter: (value: string | number) => themeFormatter.data(options.measure, value),
+          },
+        },
       },
       tooltip: {
         callbacks: {

@@ -12,6 +12,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   comparisonLabel,
   invertChangeColors,
   showChangeAsPercentage,
+  percentageDecimalPlaces = 1,
   equalComparisonLabel = 'No change',
   valueFontSize,
   valueFormatter,
@@ -29,13 +30,15 @@ export const KpiChart: FC<KpiChartProps> = ({
           <Typography>{equalComparisonLabel}</Typography>
         ) : (
           <KpiChartChange
+            changeFontSize={changeFontSize}
             className={clsx(!hasComparisonValue && styles.kpiChangeHidden)}
-            value={value}
+            comparisonLabel={comparisonLabel}
             comparisonValue={comparisonValue}
             invertChangeColors={invertChangeColors}
+            percentageDecimalPlaces={percentageDecimalPlaces}
             showChangeAsPercentage={showChangeAsPercentage}
-            comparisonLabel={comparisonLabel}
-            changeFontSize={changeFontSize}
+            value={value}
+            valueFormatter={valueFormatter}
           />
         )}
       </div>

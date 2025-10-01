@@ -8,6 +8,7 @@ export type KpiChartProps = {
   invertChangeColors?: boolean;
   comparisonLabel?: string;
   equalComparisonLabel?: string;
+  percentageDecimalPlaces?: number;
   valueFontSize?: CssSize;
   valueFormatter?: (value: number) => string;
 };

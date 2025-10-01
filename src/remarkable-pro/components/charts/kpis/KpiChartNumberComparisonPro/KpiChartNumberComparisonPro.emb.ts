@@ -44,6 +44,12 @@ export const meta = {
       defaultValue: false,
     },
     {
+      ...genericNumber,
+      name: 'percentageDecimalPlaces',
+      label: 'Percentage Decimal Places',
+      defaultValue: 1,
+    },
+    {
       ...genericBoolean,
       name: 'reversePositiveNegativeColors',
       label: 'Reverse Positive/Negative Colors',
