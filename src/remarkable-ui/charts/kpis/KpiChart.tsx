@@ -31,6 +31,7 @@ export const KpiChart: FC<KpiChartProps> = ({
           <KpiChartChange
             className={clsx(!hasComparisonValue && styles.kpiChangeHidden)}
             value={value}
+            valueFormatter={valueFormatter}
             comparisonValue={comparisonValue}
             invertChangeColors={invertChangeColors}
             showChangeAsPercentage={showChangeAsPercentage}
