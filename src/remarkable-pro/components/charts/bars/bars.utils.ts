@@ -168,9 +168,13 @@ export const getBarChartProOptions = (
       },
       tooltip: {
         callbacks: {
-          label(context) {
+          title: (context) => {
+            const label = context[0]?.label;
+            return themeFormatter.data(dimension, label);
+          },
+          label: (context) => {
             const raw = context.raw as number;
-            return `${context.dataset.label || ''}: ${themeFormatter.data(measure, raw)}`;
+            return `${themeFormatter.data(dimension, context.dataset.label) || ''}: ${themeFormatter.data(measure, raw)}`;
           },
         },
       },
