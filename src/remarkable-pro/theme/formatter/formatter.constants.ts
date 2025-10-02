@@ -59,12 +59,10 @@ const numberFormatter = (
 
 const dataNumberFormatter = (theme: Theme, key: DimensionOrMeasure): NumberFormatter => {
   const currency = key.inputs?.currency;
+  const decimalPlaces = key.inputs?.decimalPlaces;
+  const hasDecimalPlaces = decimalPlaces != null;
 
-  const fixedFractionDigits = key.inputs?.decimalPlaces
-    ? key.inputs?.decimalPlaces
-    : currency
-      ? 0
-      : undefined;
+  const fixedFractionDigits = hasDecimalPlaces ? decimalPlaces : undefined;
 
   const options: Intl.NumberFormatOptions = {
     style: currency ? 'currency' : undefined,
