@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.18
+
+### Patch Changes
+
+- 7210814: Fix data number formatting issue when decimal places is 0
+
 ## 0.1.17
 
 ### Patch Changes
