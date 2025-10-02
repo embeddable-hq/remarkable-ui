@@ -68,7 +68,10 @@ const BarChartGroupedPro = (props: BarChartGroupedProProps) => {
   );
 
   const options = mergician(
-    getBarChartProOptions({ measure, horizontal: false, onBarClicked }, theme),
+    getBarChartProOptions(
+      { measure, horizontal: false, onBarClicked, data, dimension: xAxis },
+      theme,
+    ),
     theme.charts?.barChartGroupedPro?.options || {},
   );
 

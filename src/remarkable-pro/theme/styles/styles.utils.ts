@@ -64,13 +64,12 @@ export const getColor = (key: string, value: string, palette: string[], idx: num
   }
 
   const catMap = colorsMap.get(key)!;
-  const catcolorsInUse = colorsInUse.get(key)!;
 
   // Return existing color if already assigned
   if (catMap.has(value)) return catMap.get(value)!;
 
   // Find first colorsInUse color, fallback to indexed one
-  const color = palette.find((c) => !catcolorsInUse.has(c)) ?? palette[idx % palette.length];
+  const color = palette[idx % palette.length];
 
   if (typeof color !== 'string') {
     throw new Error('No valid color found in palette');
@@ -78,7 +77,6 @@ export const getColor = (key: string, value: string, palette: string[], idx: num
 
   // Save mapping and mark as colorsInUse
   catMap.set(value, color);
-  catcolorsInUse.add(color);
   saveColorsMap();
 
   return color;

@@ -4,7 +4,6 @@ import { remarkableTheme } from '../../../theme/theme.constants';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { groupTailAsOther } from '../charts.utils';
-import { i18n } from '../../../theme/i18n/i18n';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartColors } from '../../../../remarkable-ui';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
@@ -32,20 +31,21 @@ export const getBarStackedChartProData = (
   const datasets = groupBy.map((groupByItem, index) => {
     const backgroundColor = getColor(
       `${themeKey}.charts.backgroundColors`,
-      groupByItem,
+      `${groupDimension.name}.${groupByItem}`,
       theme.charts.backgroundColors ?? chartContrastColors,
       index,
     );
 
     const borderColor = getColor(
       `${themeKey}.charts.borderColors`,
-      groupByItem,
+      `${groupDimension.name}.${groupByItem}`,
       theme.charts.borderColors ?? chartContrastColors,
       index,
     );
 
     return {
       label: themeFormatter.data(groupDimension, groupByItem),
+      rawLabel: groupByItem,
       backgroundColor,
       borderColor,
       data: axis.map((axisItem) => {
@@ -58,7 +58,7 @@ export const getBarStackedChartProData = (
   });
 
   return {
-    labels: axis.map((axisItem) => themeFormatter.data(dimension, axisItem)),
+    labels: axis,
     datasets,
   };
 };
@@ -85,14 +85,7 @@ export const getBarChartProData = (
 
   return {
     labels: groupedData.map((item) => {
-      const value = item[props.dimension.name];
-      const formattedValue = themeFormatter.data(props.dimension, value);
-
-      // If formatter did not work, try i18n translation
-      if (value === formattedValue) {
-        return i18n.t(value);
-      }
-      return formattedValue;
+      return item[props.dimension.name];
     }),
     datasets: props.measures.map((measure, index) => {
       const backgroundColor = getColor(
@@ -141,11 +134,13 @@ export const getBarChartProOptions = (
       groupingDimensionValue: string | null;
     }) => void;
     measure: Measure;
+    dimension: Dimension;
     horizontal: boolean;
+    data: ChartData<'bar'>;
   },
   theme: Theme,
 ): Partial<ChartOptions<'bar'>> => {
-  const { onBarClicked, measure, horizontal } = options;
+  const { onBarClicked, measure, dimension, horizontal, data } = options;
 
   const themeFormatter = getThemeFormatter(theme);
   return {
@@ -166,9 +161,13 @@ export const getBarChartProOptions = (
       },
       tooltip: {
         callbacks: {
-          label(context) {
+          title: (context) => {
+            const label = context[0]?.label;
+            return themeFormatter.data(dimension, label);
+          },
+          label: (context) => {
             const raw = context.raw as number;
-            return `${context.dataset.label || ''}: ${themeFormatter.data(measure, raw)}`;
+            return `${themeFormatter.data(dimension, context.dataset.label) || ''}: ${themeFormatter.data(measure, raw)}`;
           },
         },
       },
@@ -176,16 +175,28 @@ export const getBarChartProOptions = (
     scales: {
       x: {
         ticks: {
-          ...(horizontal && {
-            callback: (value) => themeFormatter.data(measure, value),
-          }),
+          callback: (value) => {
+            if (horizontal) {
+              return themeFormatter.data(measure, value);
+            }
+
+            if (!data || !data.labels) return undefined;
+
+            const label = data.labels[Number(value)] as string;
+            return themeFormatter.data(dimension, label);
+          },
         },
       },
       y: {
         ticks: {
-          ...(!horizontal && {
-            callback: (value) => themeFormatter.data(measure, value),
-          }),
+          callback: (value) => {
+            if (!horizontal) {
+              return themeFormatter.data(measure, value);
+            }
+            if (!data || !data.labels) return undefined;
+            const label = data.labels[Number(value)] as string;
+            return themeFormatter.data(dimension, label);
+          },
         },
       },
     },
@@ -195,7 +206,9 @@ export const getBarChartProOptions = (
         | string
         | null;
       const groupingDimensionValue = (
-        element ? chart.data.datasets[element.datasetIndex]!.label : null
+        element
+          ? (chart.data.datasets[element.datasetIndex] as { rawLabel?: string | null })?.rawLabel
+          : null
       ) as string | null;
 
       onBarClicked({

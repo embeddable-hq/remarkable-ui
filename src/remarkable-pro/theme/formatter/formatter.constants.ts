@@ -60,11 +60,18 @@ const numberFormatter = (
 const dataNumberFormatter = (theme: Theme, key: DimensionOrMeasure): NumberFormatter => {
   const currency = key.inputs?.currency;
 
+  const fixedFractionDigits = key.inputs?.decimalPlaces
+    ? key.inputs?.decimalPlaces
+    : currency
+      ? 0
+      : undefined;
+
   const options: Intl.NumberFormatOptions = {
     style: currency ? 'currency' : undefined,
     currency: currency ? currency : undefined,
     notation: key.inputs?.abbreviateLargeNumber ? 'compact' : undefined,
-    maximumFractionDigits: currency ? (key.inputs?.decimalPlaces ?? 0) : undefined,
+    minimumFractionDigits: fixedFractionDigits,
+    maximumFractionDigits: fixedFractionDigits,
   };
 
   return theme.formatter.numberFormatter(theme, options);
