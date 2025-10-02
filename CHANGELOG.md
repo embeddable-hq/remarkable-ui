@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.17
+
+### Patch Changes
+
+- 5de21e4: Fix barchart interactions + Number formatter with currency
+
 ## 0.1.16
 
 ### Patch Changes
