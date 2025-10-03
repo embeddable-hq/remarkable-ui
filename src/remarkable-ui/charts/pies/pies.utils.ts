@@ -6,8 +6,8 @@ export const getPieChartData = (data: ChartData<'pie'>) => {
   const mergedData: ChartData<'pie', number[], unknown> = {
     ...data,
     datasets:
-      data.datasets?.map((dataset, index) => {
-        const colors = chartColors[index % chartColors.length];
+      data.datasets?.map((dataset) => {
+        const colors = dataset.data.map((_value, index) => chartColors[index % chartColors.length]);
         const defaultDataset = {
           backgroundColor: colors,
           borderColor: colors,
