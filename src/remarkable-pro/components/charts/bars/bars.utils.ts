@@ -71,8 +71,6 @@ export const getBarChartProData = (
   },
   theme: Theme = remarkableTheme,
 ): ChartData<'bar'> => {
-  const themeFormatter = getThemeFormatter(theme);
-
   if (!props.data) {
     return {
       labels: [],
@@ -80,6 +78,7 @@ export const getBarChartProData = (
     };
   }
 
+  const themeFormatter = getThemeFormatter(theme);
   const themeKey = getObjectStableKey(theme);
   const groupedData = groupTailAsOther(props.data, props.dimension, props.measures, props.maxItems);
 
