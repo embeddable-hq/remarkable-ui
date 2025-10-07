@@ -4,7 +4,10 @@ import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { mergician } from 'mergician';
 import { BarChartConfigurationProps, BarChartHorizontalConfigurationProps } from './bars.types';
 import { Context } from 'chartjs-plugin-datalabels';
-import { chartjsAxisOptions, chartjsAxisOptionsLayoutPadding } from '../chartjs.axis.constants';
+import {
+  chartjsAxisOptions,
+  chartjsAxisOptionsLayoutPadding,
+} from '../chartjs.cartesian.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   return {
@@ -163,7 +166,6 @@ export const getBarChartOptions = (
         enabled: options.showTooltips,
       },
       datalabels: {
-        // TODO: test
         display: (context) => {
           return options.showValueLabels && context.dataset.data[context.dataIndex] !== 0
             ? 'auto'

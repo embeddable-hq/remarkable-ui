@@ -1,8 +1,11 @@
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { chartContrastColors } from '../charts.constants';
 import { mergician } from 'mergician';
-import { LineChartDefaultConfigurationProps } from './lines.types';
-import { chartjsAxisOptions, chartjsAxisOptionsLayoutPadding } from '../chartjs.axis.constants';
+import { LineChartConfigurationProps } from './lines.types';
+import {
+  chartjsAxisOptions,
+  chartjsAxisOptionsLayoutPadding,
+} from '../chartjs.cartesian.constants';
 import { getStyleNumber } from '../../styles/styles.utils';
 
 export const getLineChartData = (data: ChartData<'line'>) => {
@@ -23,7 +26,7 @@ export const getLineChartData = (data: ChartData<'line'>) => {
 };
 
 export const getLineChartOptions = (
-  options: LineChartDefaultConfigurationProps,
+  options: LineChartConfigurationProps,
 ): Partial<ChartOptions<'line'>> => {
   const newOptions: Partial<ChartOptions<'line'>> = {
     elements: {

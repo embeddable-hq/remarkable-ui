@@ -77,8 +77,7 @@ export const chartjsOptionsScales: Partial<ChartOptions['scales']> = {
 
 export const chartjsOptions: Partial<ChartOptions> = {
   responsive: true,
-  // TODO: recover
-  // maintainAspectRatio: false,
+  maintainAspectRatio: false,
   plugins: chartjsOptionsPlugins,
   scales: chartjsOptionsScales,
 };
