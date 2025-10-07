@@ -106,6 +106,11 @@ const stylesBorders = {
 };
 
 const stylesComponents = {
+  // TODO: denis to ADD
+  '--em-line-chart-point-size-default': '4px',
+  '--em-line-chart-point-size-hover': '6px',
+  '--em-line-chart-border-width-default': '2px',
+  // TODO: denis to ADD
   '--em-background-color-default': 'var(--em-gray-050)',
   '--em-background-color-inverted': 'var(--em-gray-900)',
   '--em-background-color-light': 'var(--em-gray-100)',

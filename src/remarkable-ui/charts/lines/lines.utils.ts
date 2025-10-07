@@ -3,6 +3,7 @@ import { chartContrastColors } from '../charts.constants';
 import { mergician } from 'mergician';
 import { LineChartDefaultConfigurationProps } from './lines.types';
 import { chartjsAxisOptions, chartjsAxisOptionsLayoutPadding } from '../chartjs.axis.constants';
+import { getStyleNumber } from '../../styles/styles.utils';
 
 export const getLineChartData = (data: ChartData<'line'>) => {
   const mergedData: ChartData<'line', number[], unknown> = {
@@ -13,8 +14,6 @@ export const getLineChartData = (data: ChartData<'line'>) => {
         const defaultDataset: Partial<ChartData<'line'>['datasets'][number]> = {
           backgroundColor: colors,
           borderColor: colors,
-          tension: 0.25,
-          pointRadius: 6,
         };
         const merged = mergician(defaultDataset, dataset) as ChartDataset<'line', number[]>;
         return merged;
@@ -27,6 +26,16 @@ export const getLineChartOptions = (
   options: LineChartDefaultConfigurationProps,
 ): Partial<ChartOptions<'line'>> => {
   const newOptions: Partial<ChartOptions<'line'>> = {
+    elements: {
+      point: {
+        radius: getStyleNumber('--em-line-chart-point-size-default'),
+        hoverRadius: getStyleNumber('--em-line-chart-point-size-hover'),
+      },
+      line: {
+        tension: 0.25,
+        borderWidth: getStyleNumber('--em-line-chart-border-width-default'),
+      },
+    },
     layout: {
       padding: {
         top: options.showValueLabels ? chartjsAxisOptionsLayoutPadding : 0,
