@@ -2,10 +2,20 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 import {
   dataset,
   description,
-  dimension,
+  dimensionWithDateBounds,
   genericBoolean,
+  genericString,
   measures,
+  reverseXAxis,
+  showLegend,
+  showLogarithmicScale,
+  showTooltips,
+  showValueLabels,
   title,
+  xAxisLabel,
+  yAxisLabel,
+  yAxisRangeMax,
+  yAxisRangeMin,
 } from '../../../component.constants';
 import KpiChartNumberPro from './index';
 import { loadData } from '@embeddable.com/core';
@@ -20,12 +30,22 @@ export const meta = {
       ...measures,
       inputs: [
         ...measures.inputs,
-        { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line', default: false },
+        { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
+        { ...genericString, name: 'lineColor', label: 'Line color' },
       ],
     },
-    dimension,
+    dimensionWithDateBounds,
     title,
     description,
+    showLegend,
+    showTooltips,
+    showValueLabels,
+    showLogarithmicScale,
+    xAxisLabel,
+    yAxisLabel,
+    reverseXAxis,
+    yAxisRangeMin,
+    yAxisRangeMax,
   ],
 } as const satisfies EmbeddedComponentMeta;
 
@@ -35,7 +55,7 @@ export default defineComponent(KpiChartNumberPro, meta, {
       ...inputs,
       results: loadData({
         from: inputs.dataset,
-        select: [inputs.measures, inputs.dimension],
+        select: [...inputs.measures, inputs.dimension],
       }),
     };
   },

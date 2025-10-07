@@ -132,14 +132,14 @@ export const getBarChartProOptions = (
       axisDimensionValue: string | null;
       groupingDimensionValue: string | null;
     }) => void;
-    measure: Measure;
+    measures: Measure[];
     dimension: Dimension;
     horizontal: boolean;
     data: ChartData<'bar'>;
   },
   theme: Theme,
 ): Partial<ChartOptions<'bar'>> => {
-  const { onBarClicked, measure, dimension, horizontal, data } = options;
+  const { onBarClicked, measures, dimension, horizontal, data } = options;
 
   const themeFormatter = getThemeFormatter(theme);
   return {
@@ -150,11 +150,14 @@ export const getBarChartProOptions = (
           total: {
             formatter: (_value: string | number, context: Context) =>
               getBarChartProDatalabelTotalFormatter(context, (value: number) =>
-                themeFormatter.data(options.measure, value),
+                themeFormatter.data(measures[0]!, value),
               ),
           },
           value: {
-            formatter: (value: string | number) => themeFormatter.data(options.measure, value),
+            formatter: (value: string | number, context) => {
+              const measure = measures[context.datasetIndex]!;
+              return themeFormatter.data(measure, value);
+            },
           },
         },
       },
@@ -165,6 +168,7 @@ export const getBarChartProOptions = (
             return themeFormatter.data(dimension, label);
           },
           label: (context) => {
+            const measure = measures[context.datasetIndex]!;
             const raw = context.raw as number;
             return `${themeFormatter.data(dimension, context.dataset.label) || ''}: ${themeFormatter.data(measure, raw)}`;
           },
@@ -176,7 +180,7 @@ export const getBarChartProOptions = (
         ticks: {
           callback: (value) => {
             if (horizontal) {
-              return themeFormatter.data(measure, value);
+              return themeFormatter.data(measures[0]!, value);
             }
 
             if (!data || !data.labels) return undefined;
@@ -190,7 +194,7 @@ export const getBarChartProOptions = (
         ticks: {
           callback: (value) => {
             if (!horizontal) {
-              return themeFormatter.data(measure, value);
+              return themeFormatter.data(measures[0]!, value);
             }
             if (!data || !data.labels) return undefined;
             const label = data.labels[Number(value)] as string;

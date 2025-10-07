@@ -57,3 +57,10 @@ export const getStyleNumber = (variableName: StylesKeys): number | undefined => 
   }
   return undefined;
 };
+
+export const isValidColor = (value: string) => {
+  const s = new Option().style;
+  s.color = '';
+  s.color = value;
+  return s.color !== '';
+};
