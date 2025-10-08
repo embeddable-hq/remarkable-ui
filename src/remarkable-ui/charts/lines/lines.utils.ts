@@ -29,6 +29,10 @@ export const getLineChartOptions = (
   options: LineChartConfigurationProps,
 ): Partial<ChartOptions<'line'>> => {
   const newOptions: Partial<ChartOptions<'line'>> = {
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
     elements: {
       point: {
         radius: getStyleNumber('--em-line-chart-point-size-default')! / 2,

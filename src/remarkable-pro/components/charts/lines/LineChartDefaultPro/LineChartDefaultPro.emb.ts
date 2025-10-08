@@ -35,6 +35,7 @@ export const meta = {
       ],
     },
     dimensionWithDateBounds,
+    { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: false },
     title,
     description,
     showLegend,

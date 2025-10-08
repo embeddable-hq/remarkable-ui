@@ -75,10 +75,6 @@ export const getLineChartProOptions = (
   const themeFormatter = getThemeFormatter(theme);
 
   const lineChartOptions: ChartOptions<'line'> = {
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
     plugins: {
       datalabels: {
         labels: {
@@ -91,7 +87,6 @@ export const getLineChartProOptions = (
         },
       },
       tooltip: {
-        mode: 'index',
         callbacks: {
           title: (context) => {
             const label = context[0]?.label;

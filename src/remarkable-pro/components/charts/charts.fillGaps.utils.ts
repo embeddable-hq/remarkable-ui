@@ -120,6 +120,7 @@ export type FillGapsOptions = {
   granularity?: Granularity;
   sortOrder?: 'asc' | 'desc';
   dateBounds?: TimeRangeDeserializedValue;
+  fillMissingAsZero?: boolean;
   theme?: Theme;
 };
 
@@ -304,7 +305,7 @@ export const fillGaps = (
             if (key.startsWith(baseDimensionName) && key !== dimensionName) {
               gapRecord[key] = formattedDate;
             } else {
-              gapRecord[key] = null;
+              gapRecord[key] = options.fillMissingAsZero ? 0 : null;
             }
           }
         }

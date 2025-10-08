@@ -12,6 +12,7 @@ import { getLineChartProData, getLineChartProOptions } from '../lines.utils';
 type LineChartProProp = {
   description: string;
   dimension: Dimension;
+  connectGaps: boolean;
   measures: Measure[];
   results: DataResponse;
   reverseXAxis: boolean;
@@ -41,9 +42,10 @@ const LineChartPro = (props: LineChartProProp) => {
     showValueLabels,
     yAxisRangeMax,
     yAxisRangeMin,
+    connectGaps,
   } = props;
 
-  const results = useChartDataWithFillGaps(props.results, props.dimension);
+  const results = useChartDataWithFillGaps(props.results, props.dimension, connectGaps);
 
   const data = getLineChartProData({ data: results.data, dimension, measures }, theme);
   const options = mergician(
