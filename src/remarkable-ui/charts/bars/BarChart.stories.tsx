@@ -5,6 +5,23 @@ import { ChartData } from 'chart.js';
 
 const meta = {
   component: BarChart,
+  argTypes: {
+    stacked: {
+      control: {
+        type: 'text',
+      },
+    },
+    yAxisRangeMin: {
+      control: {
+        type: 'number',
+      },
+    },
+    yAxisRangeMax: {
+      control: {
+        type: 'number',
+      },
+    },
+  },
 } satisfies Meta<typeof BarChart>;
 
 export default meta;
@@ -26,6 +43,36 @@ const barChartData: ChartData<'bar'> = {
   ],
 };
 
+export const Default: Story = {
+  args: {
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+      datasets: [
+        {
+          label: 'Primary Dataset',
+          data: [10, 20, 5, 80, 10],
+          xAxisID: 'x',
+        },
+        {
+          label: 'Secondary Dataset',
+          data: [20, 60, 30, 50, 80],
+          xAxisID: 'x',
+        },
+      ],
+    },
+    showValueLabels: true,
+    showLegend: true,
+    showTooltips: true,
+    horizontal: false,
+    showLogarithmicScale: false,
+    xAxisLabel: '',
+    yAxisLabel: '',
+    reverseXAxis: false,
+    reverseYAxis: false,
+    stacked: undefined,
+  },
+};
+
 export const Vertical: Story = {
   render: (args) => {
     return (
@@ -37,15 +84,13 @@ export const Vertical: Story = {
   args: {
     data: barChartData,
     horizontal: false,
-    showLegend: false,
+    showLegend: true,
     showTooltips: true,
-    showValueLabels: false,
+    showValueLabels: true,
     showLogarithmicScale: false,
     xAxisLabel: '',
     yAxisLabel: '',
     reverseXAxis: false,
-    xAxisRangeMin: undefined,
-    xAxisRangeMax: undefined,
   },
 };
 
@@ -63,6 +108,7 @@ export const VerticalStacked: Story = {
     showLegend: false,
     showTooltips: true,
     showValueLabels: false,
+    showTotalLabels: false,
     showLogarithmicScale: false,
     stacked: 'stacked',
     xAxisLabel: '',
@@ -110,6 +156,7 @@ export const HorizontalStacked: Story = {
     showLegend: false,
     showTooltips: true,
     showValueLabels: false,
+    showTotalLabels: false,
     showLogarithmicScale: false,
     stacked: 'stacked',
     xAxisLabel: '',

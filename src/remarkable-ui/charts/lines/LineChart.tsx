@@ -1,26 +1,28 @@
-import { FC, useRef } from 'react';
-import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
   LogarithmicScale,
 } from 'chart.js';
-import { BaseBarChartProps } from './bars.types';
-import { getSegmentIndexClicked } from '../chartjs.utils';
-import { getBarChartData, getBarChartOptions } from './bars.utils';
+import { Line } from 'react-chartjs-2';
 import styles from '../charts.module.css';
+import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
+import { BaseLineChartProps } from './lines.types';
+import { getLineChartData, getLineChartOptions } from './lines.utils';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { getSegmentIndexClicked } from '../chartjs.utils';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   LogarithmicScale,
   Title,
   Tooltip,
@@ -28,12 +30,12 @@ ChartJS.register(
   ChartDataLabels,
 );
 
-export type BarChartProps = BaseBarChartProps;
+export type LineChartProps = BaseLineChartProps;
 
-export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, options = {}, ...props }) => {
+export const LineChart: FC<LineChartProps> = ({ options = {}, data, onSegmentClick, ...props }) => {
   const chartRef = useRef(null);
 
-  const barChartOptions = mergician(getBarChartOptions(props), options);
+  const pieOptions = mergician(getLineChartOptions(props), options);
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const indexClicked = getSegmentIndexClicked(event, chartRef);
@@ -42,10 +44,10 @@ export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, options = {}
 
   return (
     <div className={styles.chartContainer}>
-      <Bar
+      <Line
         ref={chartRef}
-        data={getBarChartData(data)}
-        options={barChartOptions}
+        data={getLineChartData(data)}
+        options={pieOptions}
         onClick={handleSegmentClick}
       />
     </div>

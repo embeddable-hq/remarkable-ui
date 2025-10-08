@@ -3,7 +3,6 @@ import { getStyle, getStyleNumber } from '../styles/styles.utils';
 
 export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
   datalabels: {
-    display: 'auto',
     backgroundColor: getStyle('--em-label-background-color-default'),
     borderRadius: getStyleNumber('--em-label-border-radius-default'),
     padding: {
@@ -14,16 +13,13 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     },
     color: getStyle('--em-label-label-font-color-default'),
     font: {
-      // TODO: replace later
-      family: 'Inter, sans-serif',
       size: getStyleNumber('--em-label-label-font-size'),
       weight: getStyleNumber('--em-label-label-font-weight'),
+      // TODO: fix family on dedicated ticket
+      family: 'Inter, sans-serif',
     },
-    anchor: 'center',
-    align: 'center',
   },
   legend: {
-    display: true,
     position: 'bottom',
     labels: {
       boxWidth: getStyleNumber('--em-category-indicator-size-width'),
@@ -52,6 +48,7 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     bodyFont: {
       size: getStyleNumber('--em-category-group-item-label-font-size'),
       weight: getStyleNumber('--em-category-group-item-label-font-weight'),
+      // TODO: fix family on dedicated ticket
       family: 'Inter, sans-serif',
     },
     titleAlign: 'left',
@@ -59,8 +56,22 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     titleFont: {
       size: getStyleNumber('--em-chart-tooltip-title-font-size'),
       weight: getStyleNumber('--em-chart-tooltip-title-font-weight'),
+      // TODO: fix family on dedicated ticket
       family: 'Inter, sans-serif',
     },
+  },
+};
+
+export const chartjsOptionsScales: Partial<ChartOptions['scales']> = {
+  x: {
+    border: { display: false },
+    grid: { display: false },
+    ticks: { display: false },
+  },
+  y: {
+    border: { display: false },
+    grid: { display: false },
+    ticks: { display: false },
   },
 };
 
@@ -68,4 +79,5 @@ export const chartjsOptions: Partial<ChartOptions> = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: chartjsOptionsPlugins,
+  scales: chartjsOptionsScales,
 };

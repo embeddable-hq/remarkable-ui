@@ -106,6 +106,9 @@ const stylesBorders = {
 };
 
 const stylesComponents = {
+  '--em-line-chart-point-size-default': '4px',
+  '--em-line-chart-point-size-hover': '6px',
+  '--em-line-chart-border-width-default': '2px',
   '--em-background-color-default': 'var(--em-gray-050)',
   '--em-background-color-inverted': 'var(--em-gray-900)',
   '--em-background-color-light': 'var(--em-gray-100)',
@@ -190,6 +193,7 @@ const stylesComponents = {
   '--em-category-indicator-size-height': 'var(--em-width-200)',
   '--em-category-indicator-size-width': 'var(--em-width-200)',
   '--em-cc-card-icon-size-width': 'var(--em-width-200)',
+  '--em-line-chart-point-width-default': 'var(--em-width-200)',
   '--em-chart-color-1': 'var(--em-orange-900)',
   '--em-chart-color-10': 'var(--em-orange-050)',
   '--em-chart-color-2': 'var(--em-orange-800)',
