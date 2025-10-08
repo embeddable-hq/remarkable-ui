@@ -19,7 +19,6 @@ import { Theme } from '../../theme/theme.types';
 export const useChartDataWithFillGaps = (
   results: DataResponse,
   dimension: Dimension,
-  fillMissingAsZero = false,
 ): DataResponse => {
   const theme = useTheme() as Theme;
 
@@ -56,7 +55,6 @@ export const useChartDataWithFillGaps = (
       granularity: effectiveGranularity,
       sortOrder: 'asc',
       theme: theme,
-      fillMissingAsZero,
     };
 
     try {

@@ -106,6 +106,8 @@ const stylesBorders = {
 };
 
 const stylesComponents = {
+  '--em-line-chart-line-dash-length': '4px',
+  '--em-line-chart-line-gap-length': '4px',
   '--em-line-chart-line-tension': '0.25',
   '--em-line-chart-line-fill-opacity': '0.25',
   '--em-line-chart-point-size-default': '8px',

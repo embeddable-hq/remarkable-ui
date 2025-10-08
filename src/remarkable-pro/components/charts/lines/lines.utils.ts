@@ -32,6 +32,9 @@ export const getLineChartProData = (
       return item[props.dimension.name];
     }),
     datasets: props.measures.map((measure, index) => {
+      const zeroFill = Boolean(measure.inputs?.['connectGaps']);
+      const values = groupedData.map((item) => item[measure.name] ?? (zeroFill ? 0 : null));
+
       const lineColor = measure.inputs?.['lineColor'];
 
       const backgroundColor = isValidColor(lineColor)
@@ -54,12 +57,18 @@ export const getLineChartProData = (
 
       return {
         label: themeFormatter.dimensionOrMeasureTitle(measure),
-        data: groupedData.map((item) => item[measure.name]),
+        data: values,
         backgroundColor: colorWithOpacity(
           backgroundColor,
           getStyleNumber('--em-line-chart-line-fill-opacity'),
         ),
         pointBackgroundColor: backgroundColor,
+        borderDash: measure.inputs?.['dashedLine']
+          ? [
+              getStyleNumber('--em-line-chart-line-dash-length'),
+              getStyleNumber('--em-line-chart-line-gap-length'),
+            ]
+          : undefined,
         borderColor,
         fill: Boolean(measure.inputs?.['fillUnderLine']),
       };
