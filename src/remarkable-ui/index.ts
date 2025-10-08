@@ -28,6 +28,7 @@ export { TextField } from './editors/TextField/TextField';
 export { NumberField } from './editors/NumberField/NumberField';
 
 // Charts
+export { LineChart } from './charts/lines/LineChart';
 export { KpiChart } from './charts/kpis/KpiChart';
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
@@ -38,4 +39,4 @@ export { chartColors } from './charts/charts.constants';
 export { styles, type Styles } from './styles/styles.constants';
 
 // Utils
-export { getStyle, getStyleNumber } from './styles/styles.utils';
+export { getStyle, getStyleNumber, isValidColor, colorWithOpacity } from './styles/styles.utils';

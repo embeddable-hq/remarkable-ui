@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
   LogarithmicScale,
+  Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import styles from '../charts.module.css';
@@ -24,6 +25,7 @@ ChartJS.register(
   PointElement,
   LineElement,
   LogarithmicScale,
+  Filler,
   Title,
   Tooltip,
   Legend,
