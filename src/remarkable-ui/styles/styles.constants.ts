@@ -106,8 +106,10 @@ const stylesBorders = {
 };
 
 const stylesComponents = {
-  '--em-line-chart-point-size-default': '4px',
-  '--em-line-chart-point-size-hover': '6px',
+  '--em-line-chart-line-tension': '0.25',
+  '--em-line-chart-line-fill-opacity': '0.25',
+  '--em-line-chart-point-size-default': '8px',
+  '--em-line-chart-point-size-hover': '12px',
   '--em-line-chart-border-width-default': '2px',
   '--em-background-color-default': 'var(--em-gray-050)',
   '--em-background-color-inverted': 'var(--em-gray-900)',

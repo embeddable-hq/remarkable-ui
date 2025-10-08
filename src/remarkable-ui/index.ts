@@ -39,4 +39,4 @@ export { chartColors } from './charts/charts.constants';
 export { styles, type Styles } from './styles/styles.constants';
 
 // Utils
-export { getStyle, getStyleNumber, isValidColor } from './styles/styles.utils';
+export { getStyle, getStyleNumber, isValidColor, colorWithOpacity } from './styles/styles.utils';

@@ -31,11 +31,11 @@ export const getLineChartOptions = (
   const newOptions: Partial<ChartOptions<'line'>> = {
     elements: {
       point: {
-        radius: getStyleNumber('--em-line-chart-point-size-default'),
-        hoverRadius: getStyleNumber('--em-line-chart-point-size-hover'),
+        radius: getStyleNumber('--em-line-chart-point-size-default')! / 2,
+        hoverRadius: getStyleNumber('--em-line-chart-point-size-hover')! / 2,
       },
       line: {
-        tension: 0.25,
+        tension: getStyleNumber('--em-line-chart-line-tension'),
         borderWidth: getStyleNumber('--em-line-chart-border-width-default'),
       },
     },

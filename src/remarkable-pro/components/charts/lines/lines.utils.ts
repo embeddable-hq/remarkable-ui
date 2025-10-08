@@ -3,7 +3,7 @@ import { Theme } from '../../../theme/theme.types';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
-import { isValidColor } from '../../../../remarkable-ui';
+import { colorWithOpacity, getStyleNumber, isValidColor } from '../../../../remarkable-ui';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
 
@@ -55,7 +55,11 @@ export const getLineChartProData = (
       return {
         label: themeFormatter.dimensionOrMeasureTitle(measure),
         data: groupedData.map((item) => item[measure.name]),
-        backgroundColor,
+        backgroundColor: colorWithOpacity(
+          backgroundColor,
+          getStyleNumber('--em-line-chart-line-fill-opacity'),
+        ),
+        pointBackgroundColor: backgroundColor,
         borderColor,
         fill: Boolean(measure.inputs?.['fillUnderLine']),
       };
@@ -70,7 +74,7 @@ export const getLineChartProOptions = (
   const { dimension, data, measures } = options;
   const themeFormatter = getThemeFormatter(theme);
 
-  return {
+  const lineChartOptions: ChartOptions<'line'> = {
     interaction: {
       mode: 'index',
       intersect: false,
@@ -121,4 +125,6 @@ export const getLineChartProOptions = (
       },
     },
   };
+
+  return lineChartOptions;
 };
