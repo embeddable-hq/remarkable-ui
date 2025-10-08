@@ -17,7 +17,7 @@ import {
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import KpiChartNumberPro from './index';
+import LineChartDefaultPro from './index';
 import { loadData } from '@embeddable.com/core';
 
 export const meta = {
@@ -52,7 +52,7 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(KpiChartNumberPro, meta, {
+export default defineComponent(LineChartDefaultPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
