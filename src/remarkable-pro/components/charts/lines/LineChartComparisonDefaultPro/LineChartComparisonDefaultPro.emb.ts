@@ -2,16 +2,17 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 import {
   dataset,
   description,
+  dimension,
   dimensionTime,
   genericBoolean,
   genericString,
+  genericTimeRange,
   measures,
   reverseXAxis,
   showLegend,
   showLogarithmicScale,
   showTooltips,
   showValueLabels,
-  timeDimensionSubInputs,
   title,
   xAxisLabel,
   yAxisLabel,
@@ -45,14 +46,28 @@ export const meta = {
         { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },
       ],
     },
-    { ...dimensionTime, inputs: timeDimensionSubInputs },
+    dimension,
+    {
+      ...dimensionTime,
+      name: 'timePropertyForNonTimeDimensions',
+      label: 'Time property for non time dimensions',
+      description:
+        'Choose the time property used for filtering comparison ranges. This will be ignored if your x-axis is already time-based.',
+      required: false,
+    },
+    {
+      ...genericTimeRange,
+      name: 'primaryDateRange',
+      label: 'Primary Date Range',
+      description: 'You can also connect this to a date range selector using its variable',
+      category: 'Component Data',
+    },
     {
       name: 'comparisonPeriod',
       type: ComparisonPeriodType,
       label: 'Comparison Period',
       description: 'You can also connect this to a comparison period selector using its variable',
       category: 'Component Data',
-      // required: true,
     },
 
     title,
@@ -81,6 +96,7 @@ type LineChartComparisonDefaultProState = {
 
 export default defineComponent(LineChartComparisonDefaultPro, meta, {
   /* @ts-expect-error - to be fixed in @embeddable.com/react */
+
   props: (
     inputs: Inputs<typeof meta>,
     [state, setState]: [
@@ -88,42 +104,46 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
       (state: LineChartComparisonDefaultProState) => void,
     ],
   ) => {
-    const dimensionTimeDateBoundsRelativeTimeString =
-      inputs.dimensionTime.inputs?.['dateBounds']?.relativeTimeString;
-
     const orderBy: OrderBy[] = [
       {
-        property: inputs.dimensionTime,
+        property: inputs.dimension,
         direction: 'asc',
       },
     ];
+
+    const timeProperty =
+      inputs.dimension.nativeType === 'time'
+        ? inputs.dimension
+        : inputs.timePropertyForNonTimeDimensions;
+
     return {
       ...inputs,
       comparisonDateRange: state?.comparisonDateRange,
       setComparisonDateRange: (comparisonDateRange: TimeRange) => setState({ comparisonDateRange }),
       results: loadData({
         from: inputs.dataset,
-        select: [...inputs.measures, inputs.dimensionTime],
+        select: [...inputs.measures, inputs.dimension],
         orderBy,
-        filters: dimensionTimeDateBoundsRelativeTimeString
-          ? [
-              {
-                property: inputs.dimensionTime,
-                operator: 'inDateRange',
-                value: dimensionTimeDateBoundsRelativeTimeString,
-              },
-            ]
-          : undefined,
+        filters:
+          inputs.primaryDateRange && timeProperty
+            ? [
+                {
+                  property: timeProperty,
+                  operator: 'inDateRange',
+                  value: inputs.primaryDateRange,
+                },
+              ]
+            : undefined,
       }),
       resultsComparison:
-        inputs.dimensionTime && state?.comparisonDateRange
+        inputs.primaryDateRange && timeProperty && state?.comparisonDateRange
           ? loadData({
               from: inputs.dataset,
-              select: [...inputs.measures, inputs.dimensionTime],
+              select: [...inputs.measures, inputs.dimension],
               orderBy,
               filters: [
                 {
-                  property: inputs.dimensionTime,
+                  property: timeProperty,
                   operator: 'inDateRange',
                   value: state.comparisonDateRange,
                 },

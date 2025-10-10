@@ -17,14 +17,14 @@ const getDataset = (
   props: {
     data: DataResponse['data'];
     measure: Measure;
-    dimensionTime: Dimension;
+    dimension: Dimension;
     index: number;
     isPreviousPeriod?: boolean;
   },
   theme: Theme,
 ): ChartData<'line'>['datasets'][number] => {
-  const { data, measure, dimensionTime, index, isPreviousPeriod } = props;
-  const labels = data?.map((item) => item[dimensionTime.name]);
+  const { data, measure, dimension, index, isPreviousPeriod } = props;
+  const labels = data?.map((item) => item[dimension.name]);
 
   const zeroFill = Boolean(measure.inputs?.['connectGaps']);
   const processedData = (data || []).map((item) => item[measure.name] ?? (zeroFill ? 0 : null));
@@ -72,7 +72,7 @@ export const getLineChartComparisonProData = (
   props: {
     data: DataResponse['data'];
     dataComparison: DataResponse['data'] | undefined;
-    dimensionTime: Dimension;
+    dimension: Dimension;
     measures: Measure[];
   },
   theme: Theme,
@@ -81,14 +81,14 @@ export const getLineChartComparisonProData = (
     return { labels: [], datasets: [{ data: [] }] };
   }
 
-  const { data, dataComparison, dimensionTime, measures } = props;
+  const { data, dataComparison, dimension, measures } = props;
 
   const originalDatasets = measures.map((measure, index) =>
     getDataset(
       {
         data,
         measure,
-        dimensionTime,
+        dimension,
         index,
       },
       theme,
@@ -100,7 +100,7 @@ export const getLineChartComparisonProData = (
       {
         data: dataComparison,
         measure,
-        dimensionTime,
+        dimension,
         index,
         isPreviousPeriod: true,
       },
@@ -110,7 +110,7 @@ export const getLineChartComparisonProData = (
 
   return {
     labels: data.map((item) => {
-      return item[dimensionTime.name];
+      return item[dimension.name];
     }),
     datasets: [...originalDatasets, ...comparisonDatasets],
   };
@@ -210,5 +210,5 @@ export const getLineChartComparisonProOptions = (
       },
     },
   };
-  return mergician(lineChartOptions, theme.charts?.lineChartDefaultPro?.options || {});
+  return mergician(lineChartOptions, theme.charts?.lineChartComparisonDefaultPro?.options || {});
 };
