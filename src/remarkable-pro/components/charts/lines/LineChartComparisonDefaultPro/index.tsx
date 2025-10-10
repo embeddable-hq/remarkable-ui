@@ -15,7 +15,7 @@ import {
 
 type LineChartComparisonDefaultProProps = {
   description: string;
-  dimensionTime: Dimension;
+  dimension: Dimension;
   measures: Measure[];
   results: DataResponse;
   resultsComparison: DataResponse | undefined;
@@ -32,6 +32,7 @@ type LineChartComparisonDefaultProProps = {
   comparisonPeriod?: string;
   comparisonDateRange: TimeRange;
   showComparisonAxis: boolean;
+  primaryDateRange: TimeRange;
   setComparisonDateRange: (dateRange: TimeRange) => void;
 };
 
@@ -43,7 +44,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   const {
     comparisonPeriod,
     measures,
-    dimensionTime,
+    dimension,
     reverseXAxis,
     showLegend,
     showLogarithmicScale,
@@ -51,36 +52,35 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     showValueLabels,
     yAxisRangeMax,
     yAxisRangeMin,
+    primaryDateRange,
     comparisonDateRange,
     showComparisonAxis,
     setComparisonDateRange,
   } = props;
 
-  const dimensionDateBounds = dimensionTime.inputs?.['dateBounds'];
-
   useEffect(() => {
     const newComparisonDateRange = getComparisonPeriodDateRange(
-      dimensionDateBounds,
+      primaryDateRange,
       comparisonPeriod,
       theme,
     );
     setComparisonDateRange(newComparisonDateRange);
-  }, [comparisonPeriod, JSON.stringify(dimensionDateBounds), theme]);
+  }, [comparisonPeriod, JSON.stringify(primaryDateRange), theme]);
 
-  const results = useChartDataWithFillGaps(props.results, props.dimensionTime);
+  const results = useChartDataWithFillGaps(props.results, dimension);
 
   const resultsComparison = useChartDataWithFillGaps(
     props.resultsComparison,
-    props.dimensionTime,
+    dimension,
     comparisonDateRange,
   );
 
-  const showDataComparison = Boolean(dimensionDateBounds && comparisonPeriod);
+  const showDataComparison = Boolean(primaryDateRange && comparisonPeriod);
   const data = getLineChartComparisonProData(
     {
       data: results.data,
       dataComparison: showDataComparison ? resultsComparison.data : undefined,
-      dimensionTime,
+      dimension,
       measures,
     },
     theme,
@@ -89,7 +89,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   const options = getLineChartComparisonProOptions(
     {
       data: data,
-      dimension: dimensionTime,
+      dimension,
       measures,
       xAxisLabel,
       showComparisonAxis,
@@ -100,7 +100,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   return (
     <ChartCard
       data={results}
-      dimensionsAndMeasures={[...measures, dimensionTime]}
+      dimensionsAndMeasures={[...measures, dimension]}
       errorMessage={results.error}
       subtitle={description}
       title={title}
