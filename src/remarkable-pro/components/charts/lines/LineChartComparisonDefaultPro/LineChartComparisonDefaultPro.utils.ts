@@ -210,5 +210,5 @@ export const getLineChartComparisonProOptions = (
       },
     },
   };
-  return mergician(lineChartOptions, theme.charts?.lineChartDefaultPro?.options || {});
+  return mergician(lineChartOptions, theme.charts?.lineChartComparisonDefaultPro?.options || {});
 };
