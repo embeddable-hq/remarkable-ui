@@ -32,7 +32,7 @@ export const meta = {
         ...measures.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
         { ...genericString, name: 'lineColor', label: 'Line color' },
-        { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: false },
+        { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },
         { ...genericBoolean, name: 'dashedLine', label: 'Dashed line', defaultValue: false },
       ],
     },

@@ -85,7 +85,7 @@ const subInputs = [
   subInputAbbreviateLargeNumber,
 ];
 
-const timeDimensionSubInputs = [
+export const timeDimensionSubInputs = [
   subInputPrefix,
   subInputSuffix,
   subInputDisplayName,

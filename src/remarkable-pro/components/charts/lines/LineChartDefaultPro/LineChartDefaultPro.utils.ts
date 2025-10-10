@@ -1,11 +1,12 @@
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { Theme } from '../../../theme/theme.types';
+import { Theme } from '../../../../theme/theme.types';
 import { ChartData, ChartOptions } from 'chart.js';
-import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
-import { getObjectStableKey } from '../../../utils.ts/object.utils';
-import { colorWithOpacity, getStyleNumber, isValidColor } from '../../../../remarkable-ui';
-import { getColor } from '../../../theme/styles/styles.utils';
-import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
+import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
+import { getObjectStableKey } from '../../../../utils.ts/object.utils';
+import { colorWithOpacity, getStyleNumber, isValidColor } from '../../../../../remarkable-ui';
+import { getColor } from '../../../../theme/styles/styles.utils';
+import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
+import { mergician } from 'mergician';
 
 export const getLineChartProData = (
   props: {
@@ -130,5 +131,5 @@ export const getLineChartProOptions = (
     },
   };
 
-  return lineChartOptions;
+  return mergician(lineChartOptions, theme.charts?.lineChartDefaultPro?.options || {});
 };
