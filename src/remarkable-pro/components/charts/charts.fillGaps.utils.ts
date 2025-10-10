@@ -152,7 +152,7 @@ export const fillGaps = (
   // Resolve date bounds from dimension inputs if not provided directly
   const resolvedDateBounds = dateBounds || resolveDateBounds(dimension, theme);
 
-  if (!data || data.length === 0) {
+  if (!data) {
     return data;
   }
 
@@ -176,11 +176,6 @@ export const fillGaps = (
     .filter(
       (record): record is DataResponseDataRecord & { _parsedDate: dayjs.Dayjs } => record !== null,
     );
-
-  if (validData.length === 0) {
-    console.warn('fillGaps: No valid dates found in data');
-    return data;
-  }
 
   // Determine date range
   let minDate: dayjs.Dayjs;

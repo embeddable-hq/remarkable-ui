@@ -36,7 +36,7 @@ export const useChartDataWithFillGaps = (
     // Only apply fillGaps if:
     // 1. The dimension is a date/time dimension
     // 2. We have data to process
-    if (dimension.nativeType !== 'time' || !data || data.length === 0) {
+    if (dimension.nativeType !== 'time' || !data) {
       return data;
     }
 
