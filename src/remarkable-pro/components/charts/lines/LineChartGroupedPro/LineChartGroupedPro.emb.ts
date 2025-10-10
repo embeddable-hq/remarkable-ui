@@ -33,7 +33,6 @@ export const meta = {
         ...measure.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
         { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },
-        { ...genericBoolean, name: 'dashedLine', label: 'Dashed line', defaultValue: false },
       ],
     },
     { ...dimensionWithDateBounds, name: 'xAxis', label: 'X-axis' },
