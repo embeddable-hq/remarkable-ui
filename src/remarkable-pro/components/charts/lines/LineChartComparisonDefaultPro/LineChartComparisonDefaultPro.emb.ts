@@ -66,6 +66,12 @@ export const meta = {
     reverseXAxis,
     yAxisRangeMin,
     yAxisRangeMax,
+    {
+      ...genericBoolean,
+      name: 'showComparisonAxis',
+      label: 'Display a comparison X-axis',
+      defaultValue: true,
+    },
   ],
 } as const satisfies EmbeddedComponentMeta;
 

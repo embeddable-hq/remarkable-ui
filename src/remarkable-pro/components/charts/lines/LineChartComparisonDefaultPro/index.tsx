@@ -31,6 +31,7 @@ type LineChartComparisonDefaultProProps = {
   yAxisRangeMin?: number;
   comparisonPeriod?: string;
   comparisonDateRange: TimeRange;
+  showComparisonAxis: boolean;
   setComparisonDateRange: (dateRange: TimeRange) => void;
 };
 
@@ -51,6 +52,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     yAxisRangeMax,
     yAxisRangeMin,
     comparisonDateRange,
+    showComparisonAxis,
     setComparisonDateRange,
   } = props;
 
@@ -90,6 +92,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
       dimension: dimensionTime,
       measures,
       xAxisLabel,
+      showComparisonAxis,
     },
     theme,
   );

@@ -122,10 +122,11 @@ export const getLineChartComparisonProOptions = (
     measures: Measure[];
     data: ChartData<'line'>;
     xAxisLabel?: string;
+    showComparisonAxis: boolean;
   },
   theme: Theme,
 ): ChartOptions<'line'> => {
-  const { dimension, data, measures, xAxisLabel } = options;
+  const { dimension, data, measures, xAxisLabel, showComparisonAxis } = options;
   const themeFormatter = getThemeFormatter(theme);
 
   const mainDimensionLabels: string[] =
@@ -175,8 +176,8 @@ export const getLineChartComparisonProOptions = (
       x: { display: false },
       [AXIS_ID_MAIN]: {
         title: {
-          text: xAxisLabel ?? '',
-          display: Boolean(comparisonDimensionLabels.length == 0 && xAxisLabel),
+          text: xAxisLabel,
+          display: Boolean(!showComparisonAxis && xAxisLabel),
         },
         grid: { display: false },
         ticks: {
@@ -188,11 +189,11 @@ export const getLineChartComparisonProOptions = (
       },
       [AXIS_ID_COMPARISON]: {
         title: {
-          text: xAxisLabel ?? '',
+          text: xAxisLabel,
           display: Boolean(xAxisLabel),
         },
         grid: { display: false },
-        display: comparisonDimensionLabels.length > 0,
+        display: showComparisonAxis,
         ticks: {
           ...chartjsAxisOptionsScalesTicksDefault,
           callback: (index) => {
