@@ -50,7 +50,7 @@ const getDataset = (
     xAxisID: isPreviousPeriod ? AXIS_ID_COMPARISON : AXIS_ID_MAIN,
     labels,
     label:
-      (isPreviousPeriod ? `${i18n.t('common.previous')} ` : '') +
+      (isPreviousPeriod ? `${i18n.t('common.compared')} ` : '') +
       themeFormatter.dimensionOrMeasureTitle(measure),
     data: processedData,
     backgroundColor: colorWithOpacity(lineColor),

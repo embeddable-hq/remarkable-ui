@@ -6,7 +6,7 @@ export const en: ResourceLanguage = {
       other: 'Other',
       noOptionsFound: 'No options found',
       noOptionsAvailable: 'No options available',
-      previous: 'Previous',
+      compared: 'Compared',
     },
     charts: {
       'menuOptions.downloadCSV': 'Download CSV',
