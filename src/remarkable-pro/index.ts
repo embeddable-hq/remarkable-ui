@@ -38,5 +38,5 @@ export * as MultiSelectFieldPro from './components/editors/MultiSelectFieldPro';
 export * as SingleSelectFieldPro from './components/editors/SingleSelectFieldPro';
 export * as DateRangeSelectFieldPro from './components/editors/DateRangeSelectFieldPro';
 
-// Types
+// Custom Types
 export { default as ComparisonPeriodType } from './components/types/ComparisonPeriod.type.emb';
