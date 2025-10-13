@@ -40,3 +40,6 @@ export * as DateRangeSelectFieldPro from './components/editors/DateRangeSelectFi
 
 // Custom Types
 export { default as ComparisonPeriodType } from './components/types/ComparisonPeriod.type.emb';
+
+// Utils
+export { setColorAlpha, isColorValid } from './utils.ts/color.utils';

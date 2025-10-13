@@ -3,9 +3,10 @@ import { Theme } from '../../../theme/theme.types';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
-import { colorWithOpacity, getStyleNumber, isValidColor } from '../../../../remarkable-ui';
+import { getStyleNumber } from '../../../../remarkable-ui';
 import { getColor } from '../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
+import { isColorValid, setColorAlpha } from '../../../utils.ts/color.utils';
 
 export const getLineChartProData = (
   props: {
@@ -37,7 +38,7 @@ export const getLineChartProData = (
 
       const lineColor = measure.inputs?.['lineColor'];
 
-      const backgroundColor = isValidColor(lineColor)
+      const backgroundColor = isColorValid(lineColor)
         ? lineColor
         : getColor(
             `${themeKey}.charts.backgroundColors`,
@@ -46,7 +47,7 @@ export const getLineChartProData = (
             index,
           );
 
-      const borderColor = isValidColor(lineColor)
+      const borderColor = isColorValid(lineColor)
         ? lineColor
         : getColor(
             `${themeKey}.charts.borderColors`,
@@ -58,9 +59,9 @@ export const getLineChartProData = (
       return {
         label: themeFormatter.dimensionOrMeasureTitle(measure),
         data: values,
-        backgroundColor: colorWithOpacity(
+        backgroundColor: setColorAlpha(
           backgroundColor,
-          getStyleNumber('--em-line-chart-line-fill-opacity'),
+          getStyleNumber('--em-line-chart-line-fill-opacity') as number,
         ),
         pointBackgroundColor: backgroundColor,
         borderDash: measure.inputs?.['dashedLine']
