@@ -2,7 +2,7 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
-import { colorWithOpacity, getStyleNumber, isValidColor } from '../../../../../remarkable-ui';
+import { getStyleNumber } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
 import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
@@ -12,6 +12,7 @@ import {
   chartjsAxisOptionsScalesTitle,
 } from '../../../../../remarkable-ui/charts/chartjs.cartesian.constants';
 import { mergician } from 'mergician';
+import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
 
 const AXIS_ID_MAIN = 'mainAxis';
 const AXIS_ID_COMPARISON = 'comparisonAxis';
@@ -48,7 +49,7 @@ const getLineChartComparisonDataset = (
   );
 
   const lineColorTemp = measure.inputs?.[isPreviousPeriod ? 'previousLineColor' : 'lineColor'];
-  const lineColor = isValidColor(lineColorTemp)
+  const lineColor = isColorValid(lineColorTemp)
     ? lineColorTemp
     : getColor(
         `${themeKey}.charts.backgroundColors`,
@@ -64,7 +65,10 @@ const getLineChartComparisonDataset = (
       (isPreviousPeriod ? `${i18n.t('common.compared')} ` : '') +
       themeFormatter.dimensionOrMeasureTitle(measure),
     data: processedData,
-    backgroundColor: colorWithOpacity(lineColor),
+    backgroundColor: setColorAlpha(
+      lineColor,
+      getStyleNumber('--em-line-chart-line-fill-opacity') as number,
+    ),
     pointBackgroundColor: lineColor,
     borderDash: isLineDashed
       ? [

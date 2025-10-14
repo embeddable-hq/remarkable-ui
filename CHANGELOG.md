@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.19
+
+### Patch Changes
+
+- 24dc39e: Make the custom type ComparisonPeriodType available
+
 ## 0.1.18
 
 ### Patch Changes

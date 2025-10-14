@@ -6,8 +6,9 @@ import { mergician } from 'mergician';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
 import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
-import { colorWithOpacity } from '../../../../../remarkable-ui';
 import { i18n } from '../../../../theme/i18n/i18n';
+import { setColorAlpha } from '../../../../utils.ts/color.utils';
+import { getStyleNumber } from '../../../../../remarkable-ui';
 
 export const getLineChartGroupedProData = (
   props: {
@@ -58,7 +59,10 @@ export const getLineChartGroupedProData = (
 
     return {
       label: themeFormatter.data(groupDimension, groupByItem),
-      backgroundColor: colorWithOpacity(backgroundColor),
+      backgroundColor: setColorAlpha(
+        backgroundColor,
+        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
+      ),
       pointBackgroundColor: backgroundColor,
       borderColor,
       fill: measure.inputs?.['fillUnderLine'],
@@ -102,7 +106,10 @@ export const getLineChartGroupedProData = (
 
     datasets.push({
       label: i18n.t('common.other'),
-      backgroundColor: colorWithOpacity(backgroundColor),
+      backgroundColor: setColorAlpha(
+        backgroundColor,
+        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
+      ),
       pointBackgroundColor: backgroundColor,
       borderColor,
       fill: measure.inputs?.['fillUnderLine'],

@@ -37,3 +37,9 @@ export { EditorCard } from './components/editors/shared/EditorCard/EditorCard';
 export * as MultiSelectFieldPro from './components/editors/MultiSelectFieldPro';
 export * as SingleSelectFieldPro from './components/editors/SingleSelectFieldPro';
 export * as DateRangeSelectFieldPro from './components/editors/DateRangeSelectFieldPro';
+
+// Custom Types
+export { default as ComparisonPeriodType } from './components/types/ComparisonPeriod.type.emb';
+
+// Utils
+export { setColorAlpha, isColorValid } from './utils.ts/color.utils';
