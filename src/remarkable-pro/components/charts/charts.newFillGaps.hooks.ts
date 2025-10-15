@@ -30,7 +30,11 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
     const dimensionName = dimension.name;
     const dateBoundsTmp: TimeRange = dimension.inputs?.dateBounds;
 
-    if (!results || !granularity || !dimensionName) return { ...results, data: [] };
+    if (!results || !results.data || results.data.length === 0) {
+      return { ...results, data: [] };
+    }
+
+    if (!granularity || !dimensionName) return results;
 
     const dateBounds = dateBoundsTmp?.relativeTimeString
       ? theme.defaults.dateRangesOptions
