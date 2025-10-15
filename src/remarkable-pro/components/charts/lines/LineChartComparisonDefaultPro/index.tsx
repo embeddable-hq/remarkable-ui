@@ -5,13 +5,13 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
-import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 import { useEffect } from 'react';
 import { getComparisonPeriodDateRange } from '../../../utils/timeRange.utils';
 import {
   getLineChartComparisonProData,
   getLineChartComparisonProOptions,
 } from './LineChartComparisonDefaultPro.utils';
+import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type LineChartComparisonDefaultProProps = {
   description: string;
@@ -67,13 +67,13 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     setComparisonDateRange(newComparisonDateRange);
   }, [comparisonPeriod, JSON.stringify(primaryDateRange), theme]);
 
-  const results = useChartDataWithFillGaps(props.results, dimension);
+  const results = useFillGaps({ results: props.results, dimension });
 
-  const resultsComparison = useChartDataWithFillGaps(
-    props.resultsComparison,
+  const resultsComparison = useFillGaps({
+    results: props.resultsComparison,
     dimension,
-    comparisonDateRange,
-  );
+    externalDateBounds: comparisonDateRange,
+  });
 
   const showDataComparison = Boolean(primaryDateRange && comparisonPeriod);
   const data = getLineChartComparisonProData(

@@ -5,8 +5,8 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
-import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 import { getLineChartProData, getLineChartProOptions } from './LineChartDefaultPro.utils';
+import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type LineChartProProp = {
   description: string;
@@ -42,7 +42,10 @@ const LineChartPro = (props: LineChartProProp) => {
     yAxisRangeMin,
   } = props;
 
-  const results = useChartDataWithFillGaps(props.results, props.dimension);
+  const results = useFillGaps({
+    results: props.results,
+    dimension,
+  });
 
   const data = getLineChartProData({ data: results.data, dimension, measures }, theme);
   const options = getLineChartProOptions({ data, dimension, measures }, theme);

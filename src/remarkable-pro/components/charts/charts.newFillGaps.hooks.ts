@@ -15,21 +15,22 @@ dayjs.extend(isSameOrBefore);
 type DataRecord = { [key: string]: any };
 
 type UseFillGapsProps = {
-  results: DataResponse;
+  results: DataResponse | undefined;
   dimension: Dimension;
   orderDirection?: 'asc' | 'desc';
+  externalDateBounds?: TimeRange;
 };
 
 export function useFillGaps(props: UseFillGapsProps): DataResponse {
   const theme = useTheme() as Theme;
-  const { results, dimension, orderDirection = 'asc' } = props;
+  const { results, dimension, orderDirection = 'asc', externalDateBounds } = props;
 
   const processed = useMemo(() => {
     const granularity = dimension.inputs?.granularity;
     const dimensionName = dimension.name;
     const dateBoundsTmp: TimeRange = dimension.inputs?.dateBounds;
 
-    if (!granularity || !dimensionName) return results;
+    if (!results || !granularity || !dimensionName) return { ...results, data: [] };
 
     const dateBounds = dateBoundsTmp?.relativeTimeString
       ? theme.defaults.dateRangesOptions
@@ -47,9 +48,13 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
       return dayjs.utc(aVal).diff(dayjs.utc(bVal));
     });
 
-    const from = dayjs.utc(dateBounds?.from ?? sortedResults[0]?.[dimensionName]);
+    const from = dayjs.utc(
+      externalDateBounds?.from ?? dateBounds?.from ?? sortedResults[0]?.[dimensionName],
+    );
     const to = dayjs.utc(
-      dateBounds?.to ?? sortedResults[sortedResults.length - 1]?.[dimensionName],
+      externalDateBounds?.to ??
+        dateBounds?.to ??
+        sortedResults[sortedResults.length - 1]?.[dimensionName],
     );
 
     const recordsByDate = new Map<string, DataRecord[]>();
@@ -86,7 +91,7 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
       ...results,
       data: filled,
     };
-  }, [results.data, dimension, orderDirection, theme]);
+  }, [results, dimension, orderDirection, theme]);
 
-  return processed;
+  return processed as DataResponse;
 }
