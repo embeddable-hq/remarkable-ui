@@ -23,8 +23,8 @@ export const getBarStackedChartProData = (
   const { data = [], dimension, groupDimension, measure } = props;
 
   const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
-
-  const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))].filter(Boolean);
+  const groupDimensionName = `${groupDimension.name}${groupDimension.inputs?.granularity ? `.${groupDimension.inputs.granularity}` : ''}`;
+  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter(Boolean);
 
   const themeKey = getObjectStableKey(theme);
 
@@ -50,7 +50,7 @@ export const getBarStackedChartProData = (
       borderColor,
       data: axis.map((axisItem) => {
         const record = data.find(
-          (d) => d[groupDimension.name] === groupByItem && d[dimension.name] === axisItem,
+          (d) => d[groupDimensionName] === groupByItem && d[dimension.name] === axisItem,
         );
         return record ? Number(record[measure.name]) : 0;
       }),
