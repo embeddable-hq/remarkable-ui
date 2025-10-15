@@ -221,6 +221,15 @@ export const description = {
   category: 'Component Header',
 } as const;
 
+export const maxResults = {
+  name: 'maxResults',
+  type: 'number',
+  label: 'Max results',
+  category: 'Component Settings',
+  defaultValue: 1000,
+  required: true,
+} as const;
+
 export const showLegend = {
   name: 'showLegend',
   type: 'boolean',
