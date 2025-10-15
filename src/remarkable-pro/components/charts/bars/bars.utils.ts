@@ -186,7 +186,6 @@ export const getBarChartProOptions = (
 
             if (!data || !data.labels) return undefined;
 
-            console.log('Data labels:', data.labels);
             const label = data.labels[Number(value)] as string;
             return themeFormatter.data(dimension, label);
           },
