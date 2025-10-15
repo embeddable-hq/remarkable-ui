@@ -55,13 +55,10 @@ const BarChartGroupedPro = (props: BarChartGroupedProProps) => {
     onBarClicked,
   } = resolveI18nProps(props);
 
-  const results = useFillGaps(
-    {
-      results: props.results,
-      dimension: props.xAxis,
-    },
-    theme,
-  );
+  const results = useFillGaps({
+    results: props.results,
+    dimension: props.xAxis,
+  });
 
   const data = getBarStackedChartProData(
     {

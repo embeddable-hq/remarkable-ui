@@ -4,6 +4,7 @@ import isoWeek from 'dayjs/plugin/isoWeek.js';
 import utc from 'dayjs/plugin/utc.js';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 import { Theme } from '../../theme/theme.types';
+import { useTheme } from '@embeddable.com/react';
 
 dayjs.extend(utc);
 dayjs.extend(isoWeek);
@@ -18,7 +19,8 @@ type UseFillGapsProps = {
   orderDirection?: 'asc' | 'desc';
 };
 
-export function useFillGaps(props: UseFillGapsProps, theme: Theme): DataResponse {
+export function useFillGaps(props: UseFillGapsProps): DataResponse {
+  const theme = useTheme() as Theme;
   const { results, dimension, orderDirection = 'asc' } = props;
   const granularity = dimension.inputs?.granularity ?? 'day';
   const dimensionName = dimension.name;
