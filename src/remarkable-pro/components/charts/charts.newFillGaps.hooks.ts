@@ -30,8 +30,6 @@ export function useFillGaps(props: UseFillGapsProps, theme: Theme): DataResponse
         ?.getRange()
     : dateBoundsTmp;
 
-  console.log('dateBounds', dateBounds);
-
   if (dimension.nativeType !== 'time' || !dateBounds) return results;
 
   const from = dayjs.utc(dateBounds.from);
