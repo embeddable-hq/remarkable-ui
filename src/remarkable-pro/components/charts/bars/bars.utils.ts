@@ -187,6 +187,7 @@ export const getBarChartProOptions = (
             if (!data || !data.labels) return undefined;
 
             const label = data.labels[Number(value)] as string;
+
             return themeFormatter.data(dimension, label);
           },
         },

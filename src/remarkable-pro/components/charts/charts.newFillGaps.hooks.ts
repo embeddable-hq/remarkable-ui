@@ -25,9 +25,11 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
   const { results, dimension, orderDirection = 'asc' } = props;
 
   const processed = useMemo(() => {
-    const granularity = dimension.inputs?.granularity ?? 'day';
+    const granularity = dimension.inputs?.granularity;
     const dimensionName = dimension.name;
     const dateBoundsTmp: TimeRange = dimension.inputs?.dateBounds;
+
+    if (!granularity || !dimensionName) return results;
 
     const dateBounds = dateBoundsTmp?.relativeTimeString
       ? theme.defaults.dateRangesOptions
