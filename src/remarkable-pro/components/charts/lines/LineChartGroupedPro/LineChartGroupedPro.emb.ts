@@ -5,7 +5,7 @@ import {
   dimension,
   dimensionWithDateBounds,
   genericBoolean,
-  genericNumber,
+  maxResults,
   measure,
   reverseXAxis,
   showLegend,
@@ -37,15 +37,9 @@ export const meta = {
     },
     { ...dimensionWithDateBounds, name: 'xAxis', label: 'X-axis' },
     { ...dimension, name: 'groupBy', label: 'Group by' },
-    {
-      ...genericNumber,
-      name: 'maxLegendItems',
-      label: 'Max legend items',
-      category: 'Component Data',
-      defaultValue: 8,
-    },
     title,
     description,
+    maxResults,
     showLegend,
     showTooltips,
     showValueLabels,
@@ -63,6 +57,7 @@ export default defineComponent(LineChartGroupedPro, meta, {
     return {
       ...inputs,
       results: loadData({
+        limit: inputs.maxResults,
         from: inputs.dataset,
         select: [inputs.xAxis, inputs.groupBy, inputs.measure],
       }),

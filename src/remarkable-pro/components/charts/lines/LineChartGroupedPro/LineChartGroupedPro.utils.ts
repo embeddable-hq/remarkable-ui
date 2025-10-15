@@ -16,6 +16,65 @@ export const getLineChartGroupedProData = (
     dimension: Dimension;
     groupDimension: Dimension;
     measure: Measure;
+  },
+  theme: Theme,
+): ChartData<'line'> => {
+  const themeFormatter = getThemeFormatter(theme);
+  const { data = [], dimension, groupDimension, measure } = props;
+
+  const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
+
+  console.log('data line', data);
+  const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))].filter(Boolean);
+
+  const themeKey = getObjectStableKey(theme);
+
+  const datasets = groupBy.map((groupByItem, index) => {
+    const backgroundColor = getColor(
+      `${themeKey}.charts.backgroundColors`,
+      `${groupDimension.name}.${groupByItem}`,
+      theme.charts.backgroundColors ?? chartContrastColors,
+      index,
+    );
+
+    const borderColor = getColor(
+      `${themeKey}.charts.borderColors`,
+      `${groupDimension.name}.${groupByItem}`,
+      theme.charts.borderColors ?? chartContrastColors,
+      index,
+    );
+
+    return {
+      label: themeFormatter.data(groupDimension, groupByItem),
+      rawLabel: groupByItem,
+      backgroundColor: setColorAlpha(
+        backgroundColor,
+        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
+      ),
+      pointBackgroundColor: backgroundColor,
+      fill: measure.inputs?.['fillUnderLine'],
+      borderColor,
+      data: axis.map((axisItem) => {
+        const record = data.find(
+          (d) => d[groupDimension.name] === groupByItem && d[dimension.name] === axisItem,
+        );
+        return record?.[measure.name] ?? (measure.inputs?.['connectGaps'] ? 0 : null);
+      }),
+    };
+  });
+
+  return {
+    labels: axis,
+    datasets,
+  };
+};
+
+export const getLineChartGroupedProData2 = (
+  props: {
+    data: DataResponse['data'];
+    dimension: Dimension;
+    groupDimension: Dimension;
+    measure: Measure;
     maxLegendItems: number;
   },
   theme: Theme,

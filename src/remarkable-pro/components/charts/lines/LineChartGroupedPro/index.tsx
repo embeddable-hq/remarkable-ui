@@ -5,11 +5,11 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
-import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
 import {
   getLineChartGroupedProData,
   getLineChartGroupedProOptions,
 } from './LineChartGroupedPro.utils';
+import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type LineChartGroupedProProp = {
   description: string;
@@ -27,7 +27,6 @@ type LineChartGroupedProProp = {
   yAxisLabel: string;
   yAxisRangeMax?: number;
   yAxisRangeMin?: number;
-  maxLegendItems: number;
 };
 
 const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
@@ -46,10 +45,12 @@ const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
     showValueLabels,
     yAxisRangeMax,
     yAxisRangeMin,
-    maxLegendItems,
   } = props;
 
-  const results = useChartDataWithFillGaps(props.results, props.xAxis);
+  const results = useFillGaps({
+    results: props.results,
+    dimension: props.xAxis,
+  });
 
   const data = getLineChartGroupedProData(
     {
@@ -57,7 +58,6 @@ const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
       dimension: xAxis,
       groupDimension: groupBy,
       measure,
-      maxLegendItems,
     },
 
     theme,
