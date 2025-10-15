@@ -55,10 +55,13 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     onBarClicked,
   } = resolveI18nProps(props);
 
-  const results = useFillGaps({
-    results: props.results,
-    dimension: props.xAxis,
-  });
+  const results = useFillGaps(
+    {
+      results: props.results,
+      dimension: props.xAxis,
+    },
+    theme,
+  );
 
   const data = getBarStackedChartProData(
     {

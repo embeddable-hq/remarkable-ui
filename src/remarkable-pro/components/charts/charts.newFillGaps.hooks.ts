@@ -1,8 +1,9 @@
-import { DataResponse, Dimension } from '@embeddable.com/core';
+import { DataResponse, Dimension, TimeRange } from '@embeddable.com/core';
 import dayjs, { QUnitType } from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek.js';
 import utc from 'dayjs/plugin/utc.js';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
+import { Theme } from '../../theme/theme.types';
 
 dayjs.extend(utc);
 dayjs.extend(isoWeek);
@@ -17,14 +18,19 @@ type UseFillGapsProps = {
   orderDirection?: 'asc' | 'desc';
 };
 
-export const useFillGaps = ({
-  results,
-  dimension,
-  orderDirection = 'asc',
-}: UseFillGapsProps): DataResponse => {
+export function useFillGaps(props: UseFillGapsProps, theme: Theme): DataResponse {
+  const { results, dimension, orderDirection = 'asc' } = props;
   const granularity = dimension.inputs?.granularity ?? 'day';
   const dimensionName = dimension.name;
-  const dateBounds = dimension.inputs?.dateBounds;
+  const dateBoundsTmp: TimeRange = dimension.inputs?.dateBounds;
+
+  const dateBounds = dateBoundsTmp?.relativeTimeString
+    ? theme.defaults.dateRangesOptions
+        .find((option) => option.value === dateBoundsTmp?.relativeTimeString)
+        ?.getRange()
+    : dateBoundsTmp;
+
+  console.log('dateBounds', dateBounds);
 
   if (dimension.nativeType !== 'time' || !dateBounds) return results;
 
@@ -77,4 +83,4 @@ export const useFillGaps = ({
     ...results,
     data: filled,
   };
-};
+}
