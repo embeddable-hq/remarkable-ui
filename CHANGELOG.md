@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.20
+
+### Patch Changes
+
+- 8ca3dc7: New LineChartDefaultPro
+
 ## 0.1.19
 
 ### Patch Changes
