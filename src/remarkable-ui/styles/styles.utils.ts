@@ -14,6 +14,7 @@ import { StylesKeys } from './styles.constants';
 const numericRegex = /^-?\d+(\.\d+)?$/;
 
 const getStyleValue = (variableName: StylesKeys): string => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return '';
   const computedStyle = getComputedStyle(document.documentElement);
   return computedStyle.getPropertyValue(variableName).trim();
 };
