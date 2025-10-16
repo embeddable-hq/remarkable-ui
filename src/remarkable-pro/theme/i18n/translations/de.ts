@@ -6,6 +6,7 @@ export const de: ResourceLanguage = {
       other: 'Andere',
       noOptionsFound: 'Keine Optionen gefunden',
       noOptionsAvailable: 'Keine Optionen verfügbar',
+      compared: 'Verglichen',
     },
     dimension: {
       'customers.country.United States': 'Vereinigte Staaten',

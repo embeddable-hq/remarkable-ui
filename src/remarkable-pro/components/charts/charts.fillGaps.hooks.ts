@@ -1,5 +1,10 @@
 import { useMemo } from 'react';
-import { DataResponse, Dimension, Granularity } from '@embeddable.com/core';
+import {
+  DataResponse,
+  Dimension,
+  Granularity,
+  TimeRangeDeserializedValue,
+} from '@embeddable.com/core';
 import { fillGaps, type FillGapsOptions } from './charts.fillGaps.utils';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../theme/theme.types';
@@ -17,9 +22,12 @@ import { Theme } from '../../theme/theme.types';
  * @returns Enhanced data with filled time gaps, or original data if no gaps need filling
  */
 export const useChartDataWithFillGaps = (
-  results: DataResponse,
+  incomeResults: DataResponse | undefined,
   dimension: Dimension,
+  staticDateBounds?: TimeRangeDeserializedValue,
 ): DataResponse => {
+  const results = incomeResults ?? { data: [], isLoading: false };
+
   const theme = useTheme() as Theme;
 
   const data = useMemo(() => {
@@ -28,7 +36,7 @@ export const useChartDataWithFillGaps = (
     // Only apply fillGaps if:
     // 1. The dimension is a date/time dimension
     // 2. We have data to process
-    if (dimension.nativeType !== 'time' || !data || data.length === 0) {
+    if (dimension.nativeType !== 'time' || !data) {
       return data;
     }
 
@@ -55,6 +63,7 @@ export const useChartDataWithFillGaps = (
       granularity: effectiveGranularity,
       sortOrder: 'asc',
       theme: theme,
+      dateBounds: staticDateBounds,
     };
 
     try {

@@ -5,9 +5,8 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
-import { mergician } from 'mergician';
 import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
-import { getLineChartProData, getLineChartProOptions } from '../lines.utils';
+import { getLineChartProData, getLineChartProOptions } from './LineChartDefaultPro.utils';
 
 type LineChartProProp = {
   description: string;
@@ -46,10 +45,7 @@ const LineChartPro = (props: LineChartProProp) => {
   const results = useChartDataWithFillGaps(props.results, props.dimension);
 
   const data = getLineChartProData({ data: results.data, dimension, measures }, theme);
-  const options = mergician(
-    getLineChartProOptions({ data, dimension, measures }, theme),
-    theme.charts?.lineChartDefaultPro?.options || {},
-  );
+  const options = getLineChartProOptions({ data, dimension, measures }, theme);
 
   return (
     <ChartCard
