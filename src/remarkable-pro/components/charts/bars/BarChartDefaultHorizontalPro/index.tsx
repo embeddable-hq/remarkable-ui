@@ -52,7 +52,7 @@ const BarChartDefaultHorizontalPro = (props: BarChartDefaultHorizontalProProps) 
 
   const results = useFillGaps({
     results: props.results,
-    dimension: props.dimension,
+    dimension,
   });
 
   const data = getBarChartProData(

@@ -26,7 +26,7 @@ export const meta = {
   inputs: [
     dataset,
     measures,
-    dimensionWithDateBounds,
+    { ...dimensionWithDateBounds, label: 'X-axis' },
     title,
     description,
     showLegend,
