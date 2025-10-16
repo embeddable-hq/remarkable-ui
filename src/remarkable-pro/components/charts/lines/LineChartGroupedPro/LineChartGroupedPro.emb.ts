@@ -2,47 +2,44 @@ import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/
 import {
   dataset,
   description,
+  dimension,
   dimensionWithDateBounds,
   genericBoolean,
-  measures,
+  maxResults,
+  measure,
   reverseXAxis,
   showLegend,
   showLogarithmicScale,
   showTooltips,
   showValueLabels,
-  subInputColor,
   title,
   xAxisLabel,
   yAxisLabel,
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import LineChartDefaultPro from './index';
+import LineChartGroupedPro from './index';
 import { loadData } from '@embeddable.com/core';
 
 export const meta = {
-  name: 'LineChartDefaultPro',
-  label: 'Line Chart - Default',
+  name: 'LineChartGroupedPro',
+  label: 'Line Chart - Grouped',
   category: 'Line Charts',
   inputs: [
     dataset,
     {
-      ...measures,
+      ...measure,
       inputs: [
-        ...measures.inputs,
+        ...measure.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
-        {
-          ...subInputColor,
-          name: 'lineColor',
-          label: 'Line color',
-        },
         { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },
-        { ...genericBoolean, name: 'dashedLine', label: 'Dashed line', defaultValue: false },
       ],
     },
-    { ...dimensionWithDateBounds, label: 'X-axis', name: 'xAxis' },
+    { ...dimensionWithDateBounds, name: 'xAxis', label: 'X-axis' },
+    { ...dimension, name: 'groupBy', label: 'Group by' },
     title,
     description,
+    maxResults,
     showLegend,
     showTooltips,
     showValueLabels,
@@ -55,13 +52,14 @@ export const meta = {
   ],
 } as const satisfies EmbeddedComponentMeta;
 
-export default defineComponent(LineChartDefaultPro, meta, {
+export default defineComponent(LineChartGroupedPro, meta, {
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,
       results: loadData({
+        limit: inputs.maxResults,
         from: inputs.dataset,
-        select: [...inputs.measures, inputs.xAxis],
+        select: [inputs.xAxis, inputs.groupBy, inputs.measure],
       }),
     };
   },

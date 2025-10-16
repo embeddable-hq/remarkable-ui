@@ -28,6 +28,7 @@ export type ThemeCharts = {
   barChartStackedPro?: { options: Partial<ChartOptions<'bar'>> };
   barChartStackedHorizontalPro?: { options: Partial<ChartOptions<'bar'>> };
   lineChartDefaultPro?: { options: Partial<ChartOptions<'line'>> };
+  lineChartGroupedPro?: { options: Partial<ChartOptions<'line'>> };
   lineChartComparisonDefaultPro?: { options: Partial<ChartOptions<'line'>> };
 };
 

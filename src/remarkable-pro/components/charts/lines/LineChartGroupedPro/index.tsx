@@ -5,13 +5,17 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
-import { getLineChartProData, getLineChartProOptions } from './LineChartDefaultPro.utils';
+import {
+  getLineChartGroupedProData,
+  getLineChartGroupedProOptions,
+} from './LineChartGroupedPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
-type LineChartProProp = {
+type LineChartGroupedProProp = {
   description: string;
   xAxis: Dimension;
-  measures: Measure[];
+  groupBy: Dimension;
+  measure: Measure;
   results: DataResponse;
   reverseXAxis: boolean;
   showLegend: boolean;
@@ -25,14 +29,15 @@ type LineChartProProp = {
   yAxisRangeMin?: number;
 };
 
-const LineChartPro = (props: LineChartProProp) => {
+const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
   const theme: Theme = useTheme() as Theme;
   i18nSetup(theme);
 
   const { title, description, xAxisLabel, yAxisLabel } = resolveI18nProps(props);
   const {
-    measures,
+    measure,
     xAxis,
+    groupBy,
     reverseXAxis,
     showLegend,
     showLogarithmicScale,
@@ -44,16 +49,25 @@ const LineChartPro = (props: LineChartProProp) => {
 
   const results = useFillGaps({
     results: props.results,
-    dimension: xAxis,
+    dimension: props.xAxis,
   });
 
-  const data = getLineChartProData({ data: results.data, dimension: xAxis, measures }, theme);
-  const options = getLineChartProOptions({ data, dimension: xAxis, measures }, theme);
+  const data = getLineChartGroupedProData(
+    {
+      data: results.data,
+      dimension: xAxis,
+      groupDimension: groupBy,
+      measure,
+    },
+
+    theme,
+  );
+  const options = getLineChartGroupedProOptions({ data, dimension: xAxis, measure }, theme);
 
   return (
     <ChartCard
       data={results}
-      dimensionsAndMeasures={[...measures, xAxis]}
+      dimensionsAndMeasures={[measure, xAxis, groupBy]}
       errorMessage={results.error}
       subtitle={description}
       title={title}
@@ -75,4 +89,4 @@ const LineChartPro = (props: LineChartProProp) => {
   );
 };
 
-export default LineChartPro;
+export default LineChartGroupedPro;

@@ -7,7 +7,7 @@ import { BarChart } from '../../../../../remarkable-ui/charts/bars/BarChart';
 import { getBarChartProOptions, getBarStackedChartProData } from '../bars.utils';
 import { mergician } from 'mergician';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { useChartDataWithFillGaps } from '../../charts.fillGaps.hooks';
+import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type BarChartStackedProProps = {
   description: string;
@@ -55,7 +55,10 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
     onBarClicked,
   } = resolveI18nProps(props);
 
-  const results = useChartDataWithFillGaps(props.results, props.xAxis);
+  const results = useFillGaps({
+    results: props.results,
+    dimension: props.xAxis,
+  });
 
   const data = getBarStackedChartProData(
     {

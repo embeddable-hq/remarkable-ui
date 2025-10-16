@@ -7,28 +7,40 @@ import { Theme } from '../../../../theme/theme.types';
 import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { i18n } from '../../../../theme/i18n/i18n';
-import { chartjsAxisOptionsScalesTicksDefault } from '../../../../../remarkable-ui/charts/chartjs.cartesian.constants';
+import {
+  chartjsAxisOptionsScalesTicksDefault,
+  chartjsAxisOptionsScalesTitle,
+} from '../../../../../remarkable-ui/charts/chartjs.cartesian.constants';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
 
 const AXIS_ID_MAIN = 'mainAxis';
 const AXIS_ID_COMPARISON = 'comparisonAxis';
 
-const getDataset = (
+const getLineChartComparisonDataset = (
   props: {
     data: DataResponse['data'];
     measure: Measure;
     dimension: Dimension;
-    index: number;
+    labels?: string[];
+    hasMinMaxYAxisRange: boolean;
     isPreviousPeriod?: boolean;
+    index: number;
   },
   theme: Theme,
 ): ChartData<'line'>['datasets'][number] => {
-  const { data, measure, dimension, index, isPreviousPeriod } = props;
-  const labels = data?.map((item) => item[dimension.name]);
+  const { data, measure, dimension, index, isPreviousPeriod, hasMinMaxYAxisRange, labels } = props;
+
+  const datasetLabels = data?.map((item) => item[dimension.name]);
 
   const zeroFill = Boolean(measure.inputs?.['connectGaps']);
-  const processedData = (data || []).map((item) => item[measure.name] ?? (zeroFill ? 0 : null));
+
+  const processedData = labels
+    ? labels.map((label) => {
+        const found = data?.find((item) => item[dimension.name] === label);
+        return found?.[measure.name] ?? (zeroFill ? 0 : null);
+      })
+    : data?.map((item) => item[measure.name] ?? (zeroFill ? 0 : null));
 
   const themeFormatter = getThemeFormatter(theme);
   const themeKey = getObjectStableKey(theme);
@@ -49,7 +61,7 @@ const getDataset = (
 
   const dataset = {
     xAxisID: isPreviousPeriod ? AXIS_ID_COMPARISON : AXIS_ID_MAIN,
-    labels,
+    labels: datasetLabels,
     label:
       (isPreviousPeriod ? `${i18n.t('common.compared')} ` : '') +
       themeFormatter.dimensionOrMeasureTitle(measure),
@@ -67,6 +79,7 @@ const getDataset = (
       : undefined,
     borderColor: lineColor,
     fill: measure.inputs?.['fillUnderLine'],
+    clip: hasMinMaxYAxisRange,
   } as ChartData<'line'>['datasets'][number];
 
   return dataset;
@@ -78,6 +91,7 @@ export const getLineChartComparisonProData = (
     dataComparison: DataResponse['data'] | undefined;
     dimension: Dimension;
     measures: Measure[];
+    hasMinMaxYAxisRange: boolean;
   },
   theme: Theme,
 ): ChartData<'line'> => {
@@ -85,14 +99,27 @@ export const getLineChartComparisonProData = (
     return { labels: [], datasets: [{ data: [] }] };
   }
 
-  const { data, dataComparison, dimension, measures } = props;
+  const { data, dataComparison, dimension, measures, hasMinMaxYAxisRange } = props;
+
+  // Get all the available labels from both datasets if the dimension is not a time type (E.g. join United States with United Kindom and Germany)
+  const isTimeDimension = dimension.nativeType === 'time';
+  const labels = isTimeDimension
+    ? undefined
+    : Array.from(
+        new Set([
+          ...data.map((item) => item[dimension.name]),
+          ...(dataComparison?.map((item) => item[dimension.name]) ?? []),
+        ]),
+      );
 
   const originalDatasets = measures.map((measure, index) =>
-    getDataset(
+    getLineChartComparisonDataset(
       {
         data,
         measure,
         dimension,
+        labels,
+        hasMinMaxYAxisRange,
         index,
       },
       theme,
@@ -100,11 +127,13 @@ export const getLineChartComparisonProData = (
   );
 
   const comparisonDatasets = measures.map((measure, index) =>
-    getDataset(
+    getLineChartComparisonDataset(
       {
         data: dataComparison,
         measure,
         dimension,
+        labels,
+        hasMinMaxYAxisRange,
         index,
         isPreviousPeriod: true,
       },
@@ -113,14 +142,88 @@ export const getLineChartComparisonProData = (
   );
 
   return {
-    labels: data.map((item) => {
-      return item[dimension.name];
-    }),
+    labels: isTimeDimension ? data.map((item) => item[dimension.name]) : labels,
     datasets: [...originalDatasets, ...comparisonDatasets],
   };
 };
 
-export const getLineChartComparisonProOptions = (
+type LineChartComparisonProOptionsProps = {
+  dimension: Dimension;
+  measures: Measure[];
+  data: ChartData<'line'>;
+  xAxisLabel?: string;
+  showComparisonAxis: boolean;
+};
+
+const getLineChartComparisonNonTimeOptions = (
+  options: LineChartComparisonProOptionsProps,
+  theme: Theme,
+): ChartOptions<'line'> => {
+  const { dimension, data, measures, xAxisLabel } = options;
+  const themeFormatter = getThemeFormatter(theme);
+
+  const lineChartOptions: ChartOptions<'line'> = {
+    plugins: {
+      datalabels: {
+        labels: {
+          value: {
+            formatter: (value: string | number, context) => {
+              const measure = measures[context.datasetIndex % measures.length]!;
+              return themeFormatter.data(measure, value);
+            },
+          },
+        },
+      },
+      tooltip: {
+        callbacks: {
+          title: (context) => {
+            if (!context[0]) return '';
+
+            return themeFormatter.data(dimension, context[0].label);
+          },
+          label: (context) => {
+            const measure = measures[context.datasetIndex % measures.length]!;
+            const raw = context.raw as number;
+            return `${context.dataset.label}: ${themeFormatter.data(measure, raw)}`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        display: false,
+      },
+      [AXIS_ID_MAIN]: {
+        title: {
+          ...chartjsAxisOptionsScalesTitle,
+          text: xAxisLabel,
+          display: Boolean(xAxisLabel),
+        },
+        grid: { display: false },
+        ticks: {
+          ...chartjsAxisOptionsScalesTicksDefault,
+          callback(index) {
+            return themeFormatter.data(dimension, data.labels?.[index as number]);
+          },
+        },
+      },
+      [AXIS_ID_COMPARISON]: {
+        display: false,
+      },
+      y: {
+        ticks: {
+          callback: (value) => {
+            return themeFormatter.data(measures[0]!, value);
+          },
+        },
+      },
+    },
+  };
+
+  return lineChartOptions;
+};
+
+const getLineChartComparisonTimeOptions = (
   options: {
     dimension: Dimension;
     measures: Measure[];
@@ -142,6 +245,16 @@ export const getLineChartComparisonProOptions = (
 
   const lineChartOptions: ChartOptions<'line'> = {
     plugins: {
+      legend: {
+        labels: {
+          filter: (legendItem, chartData) => {
+            if (!legendItem) return false;
+            const dataset = chartData.datasets[legendItem.datasetIndex!]!;
+            // Only show legend if dataset has at least one data point
+            return Array.isArray(dataset.data) && dataset.data.length > 0;
+          },
+        },
+      },
       datalabels: {
         labels: {
           value: {
@@ -171,7 +284,7 @@ export const getLineChartComparisonProOptions = (
           label: (context) => {
             const measure = measures[context.datasetIndex % measures.length]!;
             const raw = context.raw as number;
-            return `${themeFormatter.data(dimension, context.dataset.label) || ''}: ${themeFormatter.data(measure, raw)}`;
+            return `${context.dataset.label}: ${themeFormatter.data(measure, raw)}`;
           },
         },
       },
@@ -180,8 +293,11 @@ export const getLineChartComparisonProOptions = (
       x: { display: false },
       [AXIS_ID_MAIN]: {
         title: {
+          ...chartjsAxisOptionsScalesTitle,
           text: xAxisLabel,
-          display: Boolean(!showComparisonAxis && xAxisLabel),
+          display: Boolean(
+            (!showComparisonAxis || comparisonDimensionLabels.length === 0) && xAxisLabel,
+          ),
         },
         grid: { display: false },
         ticks: {
@@ -193,15 +309,19 @@ export const getLineChartComparisonProOptions = (
       },
       [AXIS_ID_COMPARISON]: {
         title: {
+          ...chartjsAxisOptionsScalesTitle,
           text: xAxisLabel,
           display: Boolean(xAxisLabel),
         },
         grid: { display: false },
-        display: showComparisonAxis,
+        display: showComparisonAxis && comparisonDimensionLabels.length > 0,
         ticks: {
           ...chartjsAxisOptionsScalesTicksDefault,
           callback: (index) => {
-            return themeFormatter.data(dimension, comparisonDimensionLabels[Number(index)] ?? '-');
+            if (comparisonDimensionLabels.length === 0) {
+              return '';
+            }
+            return themeFormatter.data(dimension, comparisonDimensionLabels[Number(index)]);
           },
         },
       },
@@ -214,5 +334,20 @@ export const getLineChartComparisonProOptions = (
       },
     },
   };
-  return mergician(lineChartOptions, theme.charts?.lineChartComparisonDefaultPro?.options || {});
+
+  return lineChartOptions;
+};
+
+export const getLineChartComparisonProOptions = (
+  options: LineChartComparisonProOptionsProps,
+  theme: Theme,
+): ChartOptions<'line'> => {
+  const getOptions =
+    options.dimension.nativeType === 'time'
+      ? getLineChartComparisonTimeOptions
+      : getLineChartComparisonNonTimeOptions;
+  return mergician(
+    getOptions(options, theme),
+    theme.charts?.lineChartComparisonDefaultPro?.options || {},
+  );
 };

@@ -23,8 +23,8 @@ export const getBarStackedChartProData = (
   const { data = [], dimension, groupDimension, measure } = props;
 
   const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
-
-  const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))];
+  const groupDimensionName = `${groupDimension.name}${groupDimension.inputs?.granularity ? `.${groupDimension.inputs.granularity}` : ''}`;
+  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter(Boolean);
 
   const themeKey = getObjectStableKey(theme);
 
@@ -50,7 +50,7 @@ export const getBarStackedChartProData = (
       borderColor,
       data: axis.map((axisItem) => {
         const record = data.find(
-          (d) => d[groupDimension.name] === groupByItem && d[dimension.name] === axisItem,
+          (d) => d[groupDimensionName] === groupByItem && d[dimension.name] === axisItem,
         );
         return record ? Number(record[measure.name]) : 0;
       }),
@@ -62,6 +62,7 @@ export const getBarStackedChartProData = (
     datasets,
   };
 };
+
 export const getBarChartProData = (
   props: {
     data: DataResponse['data'];
@@ -103,7 +104,7 @@ export const getBarChartProData = (
 
       return {
         label: themeFormatter.dimensionOrMeasureTitle(measure),
-        data: groupedData.map((item) => item[measure.name]),
+        data: groupedData.map((item) => item[measure.name] ?? 0),
         backgroundColor,
         borderColor,
       };
@@ -155,7 +156,7 @@ export const getBarChartProOptions = (
           },
           value: {
             formatter: (value: string | number, context) => {
-              const measure = measures[context.datasetIndex]!;
+              const measure = measures[context.datasetIndex % measures.length]!;
               return themeFormatter.data(measure, value);
             },
           },
@@ -168,7 +169,7 @@ export const getBarChartProOptions = (
             return themeFormatter.data(dimension, label);
           },
           label: (context) => {
-            const measure = measures[context.datasetIndex]!;
+            const measure = measures[context.datasetIndex % measures.length]!;
             const raw = context.raw as number;
             return `${themeFormatter.data(dimension, context.dataset.label) || ''}: ${themeFormatter.data(measure, raw)}`;
           },
@@ -186,6 +187,7 @@ export const getBarChartProOptions = (
             if (!data || !data.labels) return undefined;
 
             const label = data.labels[Number(value)] as string;
+
             return themeFormatter.data(dimension, label);
           },
         },

@@ -99,14 +99,12 @@ const dataDateTimeFormatter = (theme: Theme, key: DimensionOrMeasure): DateTimeF
 
   const locale = getLocale(theme.formatter.locale);
 
-  if (!key.inputs?.granularity) {
-    return theme.formatter.dateTimeFormatter(theme);
-  }
+  const granularity = key.inputs?.granularity;
 
   const { year, month, day, hour, minute, second } = theme.formatter.defaultDateTimeFormatOptions;
 
   // TODO: Update SDK to export the needed constants for the granularity
-  switch (key.inputs?.granularity) {
+  switch (granularity) {
     case 'year':
       return new Intl.DateTimeFormat(locale, { year });
     case 'quarter': {

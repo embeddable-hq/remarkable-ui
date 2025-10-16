@@ -22,8 +22,8 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <BaseButton
       variant={variant}
-      className={size === 'medium' ? styles.buttonMedium : styles.buttonSmall}
       {...props}
+      className={size === 'medium' ? styles.buttonMedium : styles.buttonSmall}
       size={size}
     >
       {StartIcon && <StartIcon className={styles.icon} />}
