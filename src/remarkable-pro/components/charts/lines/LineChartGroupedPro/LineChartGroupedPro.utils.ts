@@ -23,8 +23,6 @@ export const getLineChartGroupedProData = (
   const { data = [], dimension, groupDimension, measure } = props;
 
   const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
-
-  console.log('data line', data);
   const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))].filter(Boolean);
 
   const themeKey = getObjectStableKey(theme);

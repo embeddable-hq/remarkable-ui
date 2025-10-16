@@ -50,15 +50,7 @@ export const meta = {
         { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },
       ],
     },
-    dimension,
-    {
-      ...dimensionTime,
-      name: 'timePropertyForNonTimeDimensions',
-      label: 'Time property for non time dimensions',
-      description:
-        'Choose the time property used for filtering comparison ranges. This will be ignored if your x-axis is already time-based.',
-      required: false,
-    },
+    { ...dimension, label: 'X-axis', name: 'xAxis' },
     {
       ...genericTimeRange,
       name: 'primaryDateRange',
@@ -72,6 +64,14 @@ export const meta = {
       label: 'Comparison Period',
       description: 'You can also connect this to a comparison period selector using its variable',
       category: 'Component Data',
+    },
+    {
+      ...dimensionTime,
+      name: 'timePropertyForNonTimeDimensions',
+      label: 'Time property for non time dimensions',
+      description:
+        'Choose the time property used for filtering comparison ranges. This will be ignored if your x-axis is already time-based.',
+      required: false,
     },
 
     title,
@@ -110,15 +110,13 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
   ) => {
     const orderBy: OrderBy[] = [
       {
-        property: inputs.dimension,
+        property: inputs.xAxis,
         direction: 'asc',
       },
     ];
 
     const timeProperty =
-      inputs.dimension.nativeType === 'time'
-        ? inputs.dimension
-        : inputs.timePropertyForNonTimeDimensions;
+      inputs.xAxis.nativeType === 'time' ? inputs.xAxis : inputs.timePropertyForNonTimeDimensions;
 
     return {
       ...inputs,
@@ -126,7 +124,7 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
       setComparisonDateRange: (comparisonDateRange: TimeRange) => setState({ comparisonDateRange }),
       results: loadData({
         from: inputs.dataset,
-        select: [...inputs.measures, inputs.dimension],
+        select: [...inputs.measures, inputs.xAxis],
         orderBy,
         filters:
           inputs.primaryDateRange && timeProperty
@@ -143,7 +141,7 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
         inputs.primaryDateRange && timeProperty && state?.comparisonDateRange
           ? loadData({
               from: inputs.dataset,
-              select: [...inputs.measures, inputs.dimension],
+              select: [...inputs.measures, inputs.xAxis],
               orderBy,
               filters: [
                 {

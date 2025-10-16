@@ -15,7 +15,7 @@ import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type LineChartComparisonDefaultProProps = {
   description: string;
-  dimension: Dimension;
+  xAxis: Dimension;
   measures: Measure[];
   results: DataResponse;
   resultsComparison: DataResponse | undefined;
@@ -44,7 +44,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   const {
     comparisonPeriod,
     measures,
-    dimension,
+    xAxis,
     reverseXAxis,
     showLegend,
     showLogarithmicScale,
@@ -67,11 +67,11 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     setComparisonDateRange(newComparisonDateRange);
   }, [comparisonPeriod, JSON.stringify(primaryDateRange), theme]);
 
-  const results = useFillGaps({ results: props.results, dimension });
+  const results = useFillGaps({ results: props.results, dimension: xAxis });
 
   const resultsComparison = useFillGaps({
     results: props.resultsComparison,
-    dimension,
+    dimension: xAxis,
     externalDateBounds: comparisonDateRange,
   });
 
@@ -80,7 +80,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     {
       data: results.data,
       dataComparison: showDataComparison ? resultsComparison.data : undefined,
-      dimension,
+      dimension: xAxis,
       measures,
     },
     theme,
@@ -89,7 +89,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   const options = getLineChartComparisonProOptions(
     {
       data: data,
-      dimension,
+      dimension: xAxis,
       measures,
       xAxisLabel,
       showComparisonAxis,
@@ -100,7 +100,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   return (
     <ChartCard
       data={results}
-      dimensionsAndMeasures={[...measures, dimension]}
+      dimensionsAndMeasures={[...measures, xAxis]}
       errorMessage={results.error}
       subtitle={description}
       title={title}

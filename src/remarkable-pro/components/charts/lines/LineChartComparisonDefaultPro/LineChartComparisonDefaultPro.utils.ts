@@ -240,6 +240,16 @@ const getLineChartComparisonTimeOptions = (
 
   const lineChartOptions: ChartOptions<'line'> = {
     plugins: {
+      legend: {
+        labels: {
+          filter: (legendItem, chartData) => {
+            if (!legendItem) return false;
+            const dataset = chartData.datasets[legendItem.datasetIndex!]!;
+            // Only show legend if dataset has at least one data point
+            return Array.isArray(dataset.data) && dataset.data.length > 0;
+          },
+        },
+      },
       datalabels: {
         labels: {
           value: {
