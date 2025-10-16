@@ -1,5 +1,41 @@
 // ATENTION: THESE OBJECTS SHOULD NEVER BE TOUCHED
 
+// Generics
+export const genericBoolean = {
+  name: 'boolean',
+  type: 'boolean',
+  label: 'Boolean',
+  category: 'Component Settings',
+} as const;
+
+export const genericTimeRange = {
+  name: 'timeRange',
+  type: 'timeRange',
+  label: 'Time Range',
+  category: 'Component Settings',
+} as const;
+
+export const genericNumber = {
+  name: 'number',
+  type: 'number',
+  label: 'Number',
+  category: 'Component Settings',
+} as const;
+
+export const genericString = {
+  name: 'string',
+  type: 'string',
+  label: 'String',
+  category: 'Component Settings',
+} as const;
+
+export const subInputColor = {
+  ...genericString,
+  name: 'color',
+  label: 'Color',
+  description:
+    'You can input Hex e.g. #00FF00, RGB and RGBA e.g. rgb(0, 255, 0), HSL e.g. hsl(120, 100%, 50%), or CSS color names like green, red, blue',
+};
 export const subInputPrefix = {
   name: 'prefix',
   type: 'string',
@@ -45,6 +81,7 @@ export const subInputCurrency: any = {
   type: 'string',
   label: 'Currency',
   supportedTypes: ['number'],
+  description: 'e.g. EUR',
 } as const;
 
 // TODO: Update SDK to export the needed types
@@ -177,34 +214,6 @@ export const measures = {
   required: true,
   category: 'Component Data',
   inputs: subInputs,
-} as const;
-
-export const genericBoolean = {
-  name: 'boolean',
-  type: 'boolean',
-  label: 'Boolean',
-  category: 'Component Settings',
-} as const;
-
-export const genericTimeRange = {
-  name: 'timeRange',
-  type: 'timeRange',
-  label: 'Time Range',
-  category: 'Component Settings',
-} as const;
-
-export const genericNumber = {
-  name: 'number',
-  type: 'number',
-  label: 'Number',
-  category: 'Component Settings',
-} as const;
-
-export const genericString = {
-  name: 'string',
-  type: 'string',
-  label: 'String',
-  category: 'Component Settings',
 } as const;
 
 export const title = {

@@ -5,7 +5,6 @@ import {
   dimension,
   dimensionTime,
   genericBoolean,
-  genericString,
   genericTimeRange,
   measures,
   reverseXAxis,
@@ -13,6 +12,7 @@ import {
   showLogarithmicScale,
   showTooltips,
   showValueLabels,
+  subInputColor,
   title,
   xAxisLabel,
   yAxisLabel,
@@ -34,8 +34,12 @@ export const meta = {
       inputs: [
         ...measures.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
-        { ...genericString, name: 'lineColor', label: 'Line color' },
-        { ...genericString, name: 'previousLineColor', label: 'Previous line color' },
+        {
+          ...subInputColor,
+          name: 'lineColor',
+          label: 'Line color',
+        },
+        { ...subInputColor, name: 'previousLineColor', label: 'Previous line color' },
         { ...genericBoolean, name: 'lineDashed', label: 'Line dashed', defaultValue: false },
         {
           ...genericBoolean,
