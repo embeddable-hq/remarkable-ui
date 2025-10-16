@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.21
+
+### Patch Changes
+
+- 9c3eccb: New line charts
+
 ## 0.1.20
 
 ### Patch Changes
