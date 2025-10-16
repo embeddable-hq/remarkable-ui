@@ -40,11 +40,16 @@ export const meta = {
           label: 'Line color',
         },
         { ...subInputColor, name: 'previousLineColor', label: 'Previous line color' },
-        { ...genericBoolean, name: 'lineDashed', label: 'Line dashed', defaultValue: false },
+        {
+          ...genericBoolean,
+          name: 'lineDashed',
+          label: 'Primary line dashed',
+          defaultValue: false,
+        },
         {
           ...genericBoolean,
           name: 'previousLineDashed',
-          label: 'Previous line dashed',
+          label: 'Compared line dashed',
           defaultValue: true,
         },
         { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },

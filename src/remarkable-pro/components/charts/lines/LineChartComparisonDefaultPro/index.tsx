@@ -82,6 +82,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
       dataComparison: showDataComparison ? resultsComparison.data : undefined,
       dimension: xAxis,
       measures,
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
     },
     theme,
   );

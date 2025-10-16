@@ -23,12 +23,13 @@ const getLineChartComparisonDataset = (
     measure: Measure;
     dimension: Dimension;
     labels?: string[];
-    index: number;
+    hasMinMaxYAxisRange: boolean;
     isPreviousPeriod?: boolean;
+    index: number;
   },
   theme: Theme,
 ): ChartData<'line'>['datasets'][number] => {
-  const { data, measure, dimension, index, isPreviousPeriod, labels } = props;
+  const { data, measure, dimension, index, isPreviousPeriod, hasMinMaxYAxisRange, labels } = props;
 
   const datasetLabels = data?.map((item) => item[dimension.name]);
 
@@ -78,6 +79,7 @@ const getLineChartComparisonDataset = (
       : undefined,
     borderColor: lineColor,
     fill: measure.inputs?.['fillUnderLine'],
+    clip: hasMinMaxYAxisRange,
   } as ChartData<'line'>['datasets'][number];
 
   return dataset;
@@ -89,6 +91,7 @@ export const getLineChartComparisonProData = (
     dataComparison: DataResponse['data'] | undefined;
     dimension: Dimension;
     measures: Measure[];
+    hasMinMaxYAxisRange: boolean;
   },
   theme: Theme,
 ): ChartData<'line'> => {
@@ -96,7 +99,7 @@ export const getLineChartComparisonProData = (
     return { labels: [], datasets: [{ data: [] }] };
   }
 
-  const { data, dataComparison, dimension, measures } = props;
+  const { data, dataComparison, dimension, measures, hasMinMaxYAxisRange } = props;
 
   // Get all the available labels from both datasets if the dimension is not a time type (E.g. join United States with United Kindom and Germany)
   const isTimeDimension = dimension.nativeType === 'time';
@@ -116,6 +119,7 @@ export const getLineChartComparisonProData = (
         measure,
         dimension,
         labels,
+        hasMinMaxYAxisRange,
         index,
       },
       theme,
@@ -129,6 +133,7 @@ export const getLineChartComparisonProData = (
         measure,
         dimension,
         labels,
+        hasMinMaxYAxisRange,
         index,
         isPreviousPeriod: true,
       },
