@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.22
+
+### Patch Changes
+
+- 7f6dc64: Prevent getComputedStyle from running during SSR
+
 ## 0.1.21
 
 ### Patch Changes
