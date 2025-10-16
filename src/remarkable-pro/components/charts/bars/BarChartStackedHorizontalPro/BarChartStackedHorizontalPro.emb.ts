@@ -18,6 +18,7 @@ import {
   reverseYAxis,
   xAxisRangeMin,
   xAxisRangeMax,
+  maxResults,
 } from '../../../component.constants';
 
 export const meta = {
@@ -31,6 +32,7 @@ export const meta = {
     { ...dimension, name: 'groupBy', label: 'Group by' },
     title,
     description,
+    maxResults,
     showLegend,
     showTooltips,
     { ...showValueLabels, defaultValue: false },
@@ -67,6 +69,7 @@ export default defineComponent(BarChartStackedHorizontalPro, meta, {
     return {
       ...inputs,
       results: loadData({
+        limit: inputs.maxResults,
         from: inputs.dataset,
         select: [inputs.yAxis, inputs.groupBy, inputs.measure],
       }),
