@@ -28,6 +28,7 @@ export { TextField } from './editors/TextField/TextField';
 export { NumberField } from './editors/NumberField/NumberField';
 
 // Charts
+export { LineChart } from './charts/lines/LineChart';
 export { KpiChart } from './charts/kpis/KpiChart';
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
