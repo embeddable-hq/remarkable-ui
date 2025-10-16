@@ -10,7 +10,7 @@ import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type LineChartProProp = {
   description: string;
-  dimension: Dimension;
+  xAxis: Dimension;
   measures: Measure[];
   results: DataResponse;
   reverseXAxis: boolean;
@@ -32,7 +32,7 @@ const LineChartPro = (props: LineChartProProp) => {
   const { title, description, xAxisLabel, yAxisLabel } = resolveI18nProps(props);
   const {
     measures,
-    dimension,
+    xAxis,
     reverseXAxis,
     showLegend,
     showLogarithmicScale,
@@ -44,16 +44,16 @@ const LineChartPro = (props: LineChartProProp) => {
 
   const results = useFillGaps({
     results: props.results,
-    dimension,
+    dimension: xAxis,
   });
 
-  const data = getLineChartProData({ data: results.data, dimension, measures }, theme);
-  const options = getLineChartProOptions({ data, dimension, measures }, theme);
+  const data = getLineChartProData({ data: results.data, dimension: xAxis, measures }, theme);
+  const options = getLineChartProOptions({ data, dimension: xAxis, measures }, theme);
 
   return (
     <ChartCard
       data={results}
-      dimensionsAndMeasures={[...measures, dimension]}
+      dimensionsAndMeasures={[...measures, xAxis]}
       errorMessage={results.error}
       subtitle={description}
       title={title}

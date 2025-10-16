@@ -40,8 +40,7 @@ export const meta = {
         { ...genericBoolean, name: 'dashedLine', label: 'Dashed line', defaultValue: false },
       ],
     },
-    dimensionWithDateBounds,
-
+    { ...dimensionWithDateBounds, label: 'X-axis', name: 'xAxis' },
     title,
     description,
     showLegend,
@@ -62,7 +61,7 @@ export default defineComponent(LineChartDefaultPro, meta, {
       ...inputs,
       results: loadData({
         from: inputs.dataset,
-        select: [...inputs.measures, inputs.dimension],
+        select: [...inputs.measures, inputs.xAxis],
       }),
     };
   },
