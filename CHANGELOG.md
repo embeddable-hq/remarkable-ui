@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.23
+
+### Patch Changes
+
+- f46143c: Inject Inter font
+
 ## 0.1.22
 
 ### Patch Changes
