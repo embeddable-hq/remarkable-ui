@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.24
+
+### Patch Changes
+
+- dafdc94: LineChartComparison should shows compared data even if theres none
+
 ## 0.1.23
 
 ### Patch Changes
