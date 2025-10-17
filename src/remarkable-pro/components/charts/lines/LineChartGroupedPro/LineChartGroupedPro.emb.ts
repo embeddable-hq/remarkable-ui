@@ -18,8 +18,9 @@ import {
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import LineChartGroupedPro, { LineChartGroupedProPropsOnLineClicked } from './index';
+import LineChartGroupedPro from './index';
 import { loadData, Value } from '@embeddable.com/core';
+import { LineChartProOptionsClickArg } from '../lines.utils';
 
 export const meta = {
   name: 'LineChartGroupedPro',
@@ -82,9 +83,9 @@ export default defineComponent(LineChartGroupedPro, meta, {
     };
   },
   events: {
-    onLineClicked: (value: LineChartGroupedProPropsOnLineClicked) => {
+    onLineClicked: (value: LineChartProOptionsClickArg) => {
       return {
-        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        axisDimensionValue: value.dimensionValue || Value.noFilter(),
         groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },

@@ -19,11 +19,10 @@ import {
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import LineChartComparisonDefaultPro, {
-  LineChartComparisonDefaultProPropsOnLineClicked,
-} from './index';
+import LineChartComparisonDefaultPro from './index';
 import { loadData, OrderBy, TimeRange, Value } from '@embeddable.com/core';
 import ComparisonPeriodType from '../../../types/ComparisonPeriod.type.emb';
+import { LineChartProOptionsClickArg } from '../lines.utils';
 
 export const meta = {
   name: 'LineChartComparisonDefaultPro',
@@ -180,9 +179,9 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
     };
   },
   events: {
-    onLineClicked: (value: LineChartComparisonDefaultProPropsOnLineClicked) => {
+    onLineClicked: (value: LineChartProOptionsClickArg) => {
       return {
-        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        axisDimensionValue: value.dimensionValue || Value.noFilter(),
         groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },

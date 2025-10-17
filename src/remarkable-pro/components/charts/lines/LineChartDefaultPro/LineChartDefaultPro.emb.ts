@@ -17,8 +17,9 @@ import {
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import LineChartDefaultPro, { LineChartProPropsOnLineClicked } from './index';
+import LineChartDefaultPro from './index';
 import { loadData, Value } from '@embeddable.com/core';
+import { LineChartProOptionsClickArg } from '../lines.utils';
 
 export const meta = {
   name: 'LineChartDefaultPro',
@@ -79,9 +80,9 @@ export default defineComponent(LineChartDefaultPro, meta, {
     };
   },
   events: {
-    onLineClicked: (value: LineChartProPropsOnLineClicked) => {
+    onLineClicked: (value: LineChartProOptionsClickArg) => {
       return {
-        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        axisDimensionValue: value.dimensionValue || Value.noFilter(),
       };
     },
   },

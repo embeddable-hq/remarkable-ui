@@ -8,7 +8,7 @@ import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { setColorAlpha } from '../../../../utils.ts/color.utils';
 import { getStyleNumber } from '../../../../../remarkable-ui';
-import { LineChartGroupedProPropsOnLineClicked } from '.';
+import { getLineChartProOptions, LineChartProOptionsClick } from '../lines.utils';
 
 export const getLineChartGroupedProData = (
   props: {
@@ -76,7 +76,7 @@ export const getLineChartGroupedProOptions = (
     dimension: Dimension;
     measure: Measure;
     data: ChartData<'line'>;
-    onLineClicked: (args: LineChartGroupedProPropsOnLineClicked) => void;
+    onLineClicked: LineChartProOptionsClick;
   },
   theme: Theme,
 ): ChartOptions<'line'> => {
@@ -126,23 +126,11 @@ export const getLineChartGroupedProOptions = (
         },
       },
     },
-    onClick: (_event, elements, chart) => {
-      const element = elements[0];
-      const axisDimensionValue = (element ? chart.data.labels![element.index] : null) as
-        | string
-        | null;
-      const groupingDimensionValue = (
-        element
-          ? (chart.data.datasets[element.datasetIndex] as { rawLabel?: string | null })?.rawLabel
-          : null
-      ) as string | null;
-
-      onLineClicked({
-        axisDimensionValue,
-        groupingDimensionValue,
-      });
-    },
   };
 
-  return mergician(lineChartOptions, theme.charts?.lineChartGroupedPro?.options || {});
+  return mergician(
+    getLineChartProOptions({ onLineClicked }),
+    lineChartOptions,
+    theme.charts?.lineChartGroupedPro?.options || {},
+  );
 };

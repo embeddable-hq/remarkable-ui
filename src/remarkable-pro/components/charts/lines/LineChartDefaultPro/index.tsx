@@ -7,6 +7,7 @@ import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
 import { getLineChartProData, getLineChartProOptions } from './LineChartDefaultPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { LineChartProOptionsClick } from '../lines.utils';
 
 export type LineChartProPropsOnLineClicked = { axisDimensionValue: string | null };
 
@@ -25,7 +26,7 @@ type LineChartProProp = {
   yAxisLabel: string;
   yAxisRangeMax?: number;
   yAxisRangeMin?: number;
-  onLineClicked: (args: LineChartProPropsOnLineClicked) => void;
+  onLineClicked: LineChartProOptionsClick;
 };
 
 const LineChartPro = (props: LineChartProProp) => {

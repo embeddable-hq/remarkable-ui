@@ -10,6 +10,7 @@ import {
   getLineChartGroupedProOptions,
 } from './LineChartGroupedPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { LineChartProOptionsClick } from '../lines.utils';
 
 export type LineChartGroupedProPropsOnLineClicked = {
   axisDimensionValue: string | null;
@@ -32,7 +33,7 @@ type LineChartGroupedProProp = {
   yAxisLabel: string;
   yAxisRangeMax?: number;
   yAxisRangeMin?: number;
-  onLineClicked: (args: LineChartGroupedProPropsOnLineClicked) => void;
+  onLineClicked: LineChartProOptionsClick;
 };
 
 const LineChartGroupedPro = (props: LineChartGroupedProProp) => {

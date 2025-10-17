@@ -8,7 +8,7 @@ import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
-import { LineChartProPropsOnLineClicked } from '.';
+import { LineChartProOptionsClick } from '../lines.utils';
 
 export const getLineChartProData = (
   props: {
@@ -86,7 +86,7 @@ export const getLineChartProOptions = (
     dimension: Dimension;
     measures: Measure[];
     data: ChartData<'line'>;
-    onLineClicked: (args: LineChartProPropsOnLineClicked) => void;
+    onLineClicked: LineChartProOptionsClick;
   },
   theme: Theme,
 ): ChartOptions<'line'> => {
@@ -140,12 +140,10 @@ export const getLineChartProOptions = (
     },
     onClick: (_event, elements, chart) => {
       const element = elements[0];
-      const axisDimensionValue = (element ? chart.data.labels![element.index] : null) as
-        | string
-        | null;
+      const dimensionValue = (element ? chart.data.labels![element.index] : null) as string | null;
 
       onLineClicked({
-        axisDimensionValue,
+        dimensionValue,
       });
     },
   };
