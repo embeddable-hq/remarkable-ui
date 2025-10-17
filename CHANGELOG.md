@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.25
+
+### Patch Changes
+
+- 9721c02: Improve LineChartComparison
+
 ## 0.1.24
 
 ### Patch Changes
