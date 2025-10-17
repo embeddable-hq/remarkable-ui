@@ -19,8 +19,10 @@ import {
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import LineChartComparisonDefaultPro from './index';
-import { loadData, OrderBy, TimeRange } from '@embeddable.com/core';
+import LineChartComparisonDefaultPro, {
+  LineChartComparisonDefaultProPropsOnLineClicked,
+} from './index';
+import { loadData, OrderBy, TimeRange, Value } from '@embeddable.com/core';
 import ComparisonPeriodType from '../../../types/ComparisonPeriod.type.emb';
 
 export const meta = {
@@ -97,6 +99,24 @@ export const meta = {
       defaultValue: true,
     },
   ],
+  events: [
+    {
+      name: 'onLineClicked',
+      label: 'A line is clicked',
+      properties: [
+        {
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
+          type: 'string',
+        },
+        {
+          name: 'groupingDimensionValue',
+          label: 'Clicked Grouping Dimension Value',
+          type: 'string',
+        },
+      ],
+    },
+  ],
 } as const satisfies EmbeddedComponentMeta;
 
 type LineChartComparisonDefaultProState = {
@@ -158,5 +178,13 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
             })
           : undefined,
     };
+  },
+  events: {
+    onLineClicked: (value: LineChartComparisonDefaultProPropsOnLineClicked) => {
+      return {
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+        groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
+      };
+    },
   },
 });

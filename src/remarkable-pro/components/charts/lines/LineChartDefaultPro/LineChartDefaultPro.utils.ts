@@ -8,12 +8,14 @@ import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
+import { LineChartProPropsOnLineClicked } from '.';
 
 export const getLineChartProData = (
   props: {
     data: DataResponse['data'];
     dimension: Dimension;
     measures: Measure[];
+    hasMinMaxYAxisRange: boolean;
   },
   theme: Theme,
 ): ChartData<'line'> => {
@@ -58,6 +60,7 @@ export const getLineChartProData = (
           );
 
       return {
+        clip: props.hasMinMaxYAxisRange,
         label: themeFormatter.dimensionOrMeasureTitle(measure),
         data: values,
         backgroundColor: setColorAlpha(
@@ -73,16 +76,21 @@ export const getLineChartProData = (
           : undefined,
         borderColor,
         fill: Boolean(measure.inputs?.['fillUnderLine']),
-      };
+      } as ChartData<'line'>['datasets'][number];
     }),
   };
 };
 
 export const getLineChartProOptions = (
-  options: { dimension: Dimension; measures: Measure[]; data: ChartData<'line'> },
+  options: {
+    dimension: Dimension;
+    measures: Measure[];
+    data: ChartData<'line'>;
+    onLineClicked: (args: LineChartProPropsOnLineClicked) => void;
+  },
   theme: Theme,
 ): ChartOptions<'line'> => {
-  const { dimension, data, measures } = options;
+  const { dimension, data, measures, onLineClicked } = options;
   const themeFormatter = getThemeFormatter(theme);
 
   const lineChartOptions: ChartOptions<'line'> = {
@@ -129,6 +137,16 @@ export const getLineChartProOptions = (
           },
         },
       },
+    },
+    onClick: (_event, elements, chart) => {
+      const element = elements[0];
+      const axisDimensionValue = (element ? chart.data.labels![element.index] : null) as
+        | string
+        | null;
+
+      onLineClicked({
+        axisDimensionValue,
+      });
     },
   };
 

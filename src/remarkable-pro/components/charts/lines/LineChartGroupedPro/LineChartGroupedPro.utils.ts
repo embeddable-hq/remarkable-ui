@@ -6,9 +6,9 @@ import { mergician } from 'mergician';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
 import { getColor } from '../../../../theme/styles/styles.utils';
 import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
-import { i18n } from '../../../../theme/i18n/i18n';
 import { setColorAlpha } from '../../../../utils.ts/color.utils';
 import { getStyleNumber } from '../../../../../remarkable-ui';
+import { LineChartGroupedProPropsOnLineClicked } from '.';
 
 export const getLineChartGroupedProData = (
   props: {
@@ -16,18 +16,19 @@ export const getLineChartGroupedProData = (
     dimension: Dimension;
     groupDimension: Dimension;
     measure: Measure;
+    hasMinMaxYAxisRange: boolean;
   },
   theme: Theme,
 ): ChartData<'line'> => {
   const themeFormatter = getThemeFormatter(theme);
-  const { data = [], dimension, groupDimension, measure } = props;
+  const { data = [], dimension, groupDimension, measure, hasMinMaxYAxisRange } = props;
 
   const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
   const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))].filter(Boolean);
 
   const themeKey = getObjectStableKey(theme);
 
-  const datasets = groupBy.map((groupByItem, index) => {
+  const datasets: ChartData<'line'>['datasets'] = groupBy.map((groupByItem, index) => {
     const backgroundColor = getColor(
       `${themeKey}.charts.backgroundColors`,
       `${groupDimension.name}.${groupByItem}`,
@@ -42,7 +43,8 @@ export const getLineChartGroupedProData = (
       index,
     );
 
-    return {
+    const dataset = {
+      clip: hasMinMaxYAxisRange,
       label: themeFormatter.data(groupDimension, groupByItem),
       rawLabel: groupByItem,
       backgroundColor: setColorAlpha(
@@ -58,7 +60,9 @@ export const getLineChartGroupedProData = (
         );
         return record?.[measure.name] ?? (measure.inputs?.['connectGaps'] ? 0 : null);
       }),
-    };
+    } as ChartData<'line'>['datasets'][number];
+
+    return dataset;
   });
 
   return {
@@ -67,125 +71,16 @@ export const getLineChartGroupedProData = (
   };
 };
 
-export const getLineChartGroupedProData2 = (
-  props: {
-    data: DataResponse['data'];
+export const getLineChartGroupedProOptions = (
+  options: {
     dimension: Dimension;
-    groupDimension: Dimension;
     measure: Measure;
-    maxLegendItems: number;
+    data: ChartData<'line'>;
+    onLineClicked: (args: LineChartGroupedProPropsOnLineClicked) => void;
   },
   theme: Theme,
-): ChartData<'line'> => {
-  const themeFormatter = getThemeFormatter(theme);
-  const { data = [], dimension, groupDimension, measure, maxLegendItems } = props;
-
-  const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
-  const groupDimensionName = `${groupDimension.name}${groupDimension.inputs?.granularity ? `.${groupDimension.inputs.granularity}` : ''}`;
-  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter(Boolean);
-
-  const themeKey = getObjectStableKey(theme);
-  const zeroFill = Boolean(measure.inputs?.['connectGaps']);
-
-  // Calculate total per group
-  const groupTotals = groupBy.map((group) => {
-    const total = data
-      .filter((d) => d[groupDimension.name] === group)
-      .reduce((sum, d) => sum + Number(d[measure.name] || 0), 0);
-    return { group, total };
-  });
-
-  // Sort by total descending and split top groups vs others
-  const sortedGroups = groupTotals.sort((a, b) => b.total - a.total);
-  const topGroups = sortedGroups.slice(0, maxLegendItems).map((g) => g.group);
-  const otherGroups = sortedGroups.slice(maxLegendItems).map((g) => g.group);
-
-  // Generate datasets for top groups
-  const datasets = topGroups.map((groupByItem, index) => {
-    const backgroundColor = getColor(
-      `${themeKey}.charts.backgroundColors`,
-      `${groupDimension.name}.${groupByItem}`,
-      theme.charts.backgroundColors ?? chartContrastColors,
-      index,
-    );
-
-    const borderColor = getColor(
-      `${themeKey}.charts.borderColors`,
-      `${groupDimension.name}.${groupByItem}`,
-      theme.charts.borderColors ?? chartContrastColors,
-      index,
-    );
-
-    return {
-      label: themeFormatter.data(groupDimension, groupByItem),
-      backgroundColor: setColorAlpha(
-        backgroundColor,
-        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
-      ),
-      pointBackgroundColor: backgroundColor,
-      borderColor,
-      fill: measure.inputs?.['fillUnderLine'],
-      data: axis.map((axisItem) => {
-        const record = data.find(
-          (d) => d[groupDimensionName] === groupByItem && d[dimension.name] === axisItem,
-        );
-        return record?.[measure.name] ?? (zeroFill ? 0 : null);
-      }),
-    };
-  });
-
-  // Aggregate “Others” dataset if needed
-  if (otherGroups.length > 0) {
-    const othersData = axis.map((axisItem) => {
-      const sum = data
-        .filter(
-          (d) => otherGroups.includes(d[groupDimension.name]) && d[dimension.name] === axisItem,
-        )
-        .reduce((total, d) => total + Number(d[measure.name] || 0), 0);
-
-      // Respect zeroFill logic
-      return sum > 0 || zeroFill ? sum : null;
-    });
-
-    const otherIndex = topGroups.length - 1;
-
-    const backgroundColor = getColor(
-      `${themeKey}.charts.backgroundColors`,
-      `${groupDimension.name}.Other`,
-      theme.charts.backgroundColors ?? chartContrastColors,
-      otherIndex,
-    );
-
-    const borderColor = getColor(
-      `${themeKey}.charts.borderColors`,
-      `${groupDimension.name}.Other`,
-      theme.charts.borderColors ?? chartContrastColors,
-      otherIndex,
-    );
-
-    datasets.push({
-      label: i18n.t('common.other'),
-      backgroundColor: setColorAlpha(
-        backgroundColor,
-        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
-      ),
-      pointBackgroundColor: backgroundColor,
-      borderColor,
-      fill: measure.inputs?.['fillUnderLine'],
-      data: othersData,
-    });
-  }
-
-  return {
-    labels: axis,
-    datasets,
-  };
-};
-export const getLineChartGroupedProOptions = (
-  options: { dimension: Dimension; measure: Measure; data: ChartData<'line'> },
-  theme: Theme,
 ): ChartOptions<'line'> => {
-  const { dimension, data, measure } = options;
+  const { dimension, data, measure, onLineClicked } = options;
   const themeFormatter = getThemeFormatter(theme);
 
   const lineChartOptions: ChartOptions<'line'> = {
@@ -230,6 +125,22 @@ export const getLineChartGroupedProOptions = (
           },
         },
       },
+    },
+    onClick: (_event, elements, chart) => {
+      const element = elements[0];
+      const axisDimensionValue = (element ? chart.data.labels![element.index] : null) as
+        | string
+        | null;
+      const groupingDimensionValue = (
+        element
+          ? (chart.data.datasets[element.datasetIndex] as { rawLabel?: string | null })?.rawLabel
+          : null
+      ) as string | null;
+
+      onLineClicked({
+        axisDimensionValue,
+        groupingDimensionValue,
+      });
     },
   };
 

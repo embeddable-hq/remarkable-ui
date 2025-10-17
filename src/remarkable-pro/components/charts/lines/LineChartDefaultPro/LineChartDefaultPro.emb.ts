@@ -17,8 +17,8 @@ import {
   yAxisRangeMax,
   yAxisRangeMin,
 } from '../../../component.constants';
-import LineChartDefaultPro from './index';
-import { loadData } from '@embeddable.com/core';
+import LineChartDefaultPro, { LineChartProPropsOnLineClicked } from './index';
+import { loadData, Value } from '@embeddable.com/core';
 
 export const meta = {
   name: 'LineChartDefaultPro',
@@ -53,6 +53,19 @@ export const meta = {
     yAxisRangeMin,
     yAxisRangeMax,
   ],
+  events: [
+    {
+      name: 'onLineClicked',
+      label: 'A line is clicked',
+      properties: [
+        {
+          name: 'axisDimensionValue',
+          label: 'Clicked Axis Dimension Value',
+          type: 'string',
+        },
+      ],
+    },
+  ],
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(LineChartDefaultPro, meta, {
@@ -64,5 +77,12 @@ export default defineComponent(LineChartDefaultPro, meta, {
         select: [...inputs.measures, inputs.xAxis],
       }),
     };
+  },
+  events: {
+    onLineClicked: (value: LineChartProPropsOnLineClicked) => {
+      return {
+        axisDimensionValue: value.axisDimensionValue || Value.noFilter(),
+      };
+    },
   },
 });

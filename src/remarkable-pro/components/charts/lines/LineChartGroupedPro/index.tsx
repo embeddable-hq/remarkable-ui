@@ -11,6 +11,11 @@ import {
 } from './LineChartGroupedPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
+export type LineChartGroupedProPropsOnLineClicked = {
+  axisDimensionValue: string | null;
+  groupingDimensionValue: string | null;
+};
+
 type LineChartGroupedProProp = {
   description: string;
   xAxis: Dimension;
@@ -27,6 +32,7 @@ type LineChartGroupedProProp = {
   yAxisLabel: string;
   yAxisRangeMax?: number;
   yAxisRangeMin?: number;
+  onLineClicked: (args: LineChartGroupedProPropsOnLineClicked) => void;
 };
 
 const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
@@ -45,6 +51,7 @@ const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
     showValueLabels,
     yAxisRangeMax,
     yAxisRangeMin,
+    onLineClicked,
   } = props;
 
   const results = useFillGaps({
@@ -58,11 +65,15 @@ const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
       dimension: xAxis,
       groupDimension: groupBy,
       measure,
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
     },
 
     theme,
   );
-  const options = getLineChartGroupedProOptions({ data, dimension: xAxis, measure }, theme);
+  const options = getLineChartGroupedProOptions(
+    { data, dimension: xAxis, measure, onLineClicked },
+    theme,
+  );
 
   return (
     <ChartCard

@@ -13,6 +13,7 @@ import {
 } from '../../../../../remarkable-ui/charts/chartjs.cartesian.constants';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
+import { LineChartGroupedProPropsOnLineClicked } from '../LineChartGroupedPro';
 
 const AXIS_ID_MAIN = 'mainAxis';
 const AXIS_ID_COMPARISON = 'comparisonAxis';
@@ -154,6 +155,7 @@ type LineChartComparisonProOptionsProps = {
   data: ChartData<'line'>;
   xAxisLabel?: string;
   showComparisonAxis: boolean;
+  onLineClicked: (args: LineChartGroupedProPropsOnLineClicked) => void;
 };
 
 const getLineChartComparisonNonTimeOptions = (
@@ -355,11 +357,70 @@ export const getLineChartComparisonProOptions = (
   options: LineChartComparisonProOptionsProps,
   theme: Theme,
 ): ChartOptions<'line'> => {
+  const { onLineClicked, dimension } = options;
+
+  const sharedLineChartOptions: ChartOptions<'line'> = {
+    onClick: (event, _elements, chart) => {
+      // 0) Chart.js passes ChartEvent; extract the native DOM Event
+      const native = (event as unknown as { native?: Event }).native ?? (event as unknown as Event);
+
+      // 1) Resolve the X-axis slice (all datasets at the same X)
+      const slice = chart.getElementsAtEventForMode(native, 'x', { intersect: false }, false);
+
+      if (!slice?.length) {
+        onLineClicked({
+          axisDimensionValue: null,
+          groupingDimensionValue: null,
+        });
+        return;
+      }
+
+      const xIndex = slice[0]!.index;
+      const axisDimensionValue = (chart.data.labels?.[xIndex] ?? null) as any;
+
+      // 2) Resolve the specific series (group) via nearest point
+      let nearest: any = chart.getElementsAtEventForMode(
+        native,
+        'nearest',
+        { intersect: true },
+        false,
+      )[0];
+
+      // If nearest is missing or points to a different X, fall back to an element in the slice
+      if (!nearest || nearest.index !== xIndex) {
+        nearest =
+          slice.find((el) => {
+            const ds: any = chart.data.datasets[el.datasetIndex];
+            const val = Array.isArray(ds?.data) ? ds.data[xIndex] : undefined;
+            return val !== null && val !== undefined;
+          }) ?? null;
+      }
+
+      // 3) Compute the grouping key with the requested fallbacks
+      let groupingDimensionValue: any; // default when X is found but no nearest
+
+      if (!nearest) {
+        // No nearest even after fallback — keep `false` to signal "no series picked"
+        // (axisDimensionValue is valid because slice existed)
+      } else {
+        const ds: any = chart.data.datasets[nearest.datasetIndex];
+        groupingDimensionValue = ds?.custom?.groupKey ?? ds?.label ?? null;
+      }
+
+      onLineClicked({
+        axisDimensionValue,
+        groupingDimensionValue,
+      });
+    },
+  };
+
   const getOptions =
-    options.dimension.nativeType === 'time'
+    dimension.nativeType === 'time'
       ? getLineChartComparisonTimeOptions
       : getLineChartComparisonNonTimeOptions;
+
   return mergician(
+    sharedLineChartOptions,
     getOptions(options, theme),
     theme.charts?.lineChartComparisonDefaultPro?.options || {},
   );

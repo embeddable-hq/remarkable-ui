@@ -8,6 +8,8 @@ import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
 import { getLineChartProData, getLineChartProOptions } from './LineChartDefaultPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
+export type LineChartProPropsOnLineClicked = { axisDimensionValue: string | null };
+
 type LineChartProProp = {
   description: string;
   xAxis: Dimension;
@@ -23,6 +25,7 @@ type LineChartProProp = {
   yAxisLabel: string;
   yAxisRangeMax?: number;
   yAxisRangeMin?: number;
+  onLineClicked: (args: LineChartProPropsOnLineClicked) => void;
 };
 
 const LineChartPro = (props: LineChartProProp) => {
@@ -40,6 +43,7 @@ const LineChartPro = (props: LineChartProProp) => {
     showValueLabels,
     yAxisRangeMax,
     yAxisRangeMin,
+    onLineClicked,
   } = props;
 
   const results = useFillGaps({
@@ -47,8 +51,19 @@ const LineChartPro = (props: LineChartProProp) => {
     dimension: xAxis,
   });
 
-  const data = getLineChartProData({ data: results.data, dimension: xAxis, measures }, theme);
-  const options = getLineChartProOptions({ data, dimension: xAxis, measures }, theme);
+  const data = getLineChartProData(
+    {
+      data: results.data,
+      dimension: xAxis,
+      measures,
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
+    },
+    theme,
+  );
+  const options = getLineChartProOptions(
+    { data, dimension: xAxis, measures, onLineClicked },
+    theme,
+  );
 
   return (
     <ChartCard

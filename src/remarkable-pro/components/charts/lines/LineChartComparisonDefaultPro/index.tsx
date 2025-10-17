@@ -13,6 +13,11 @@ import {
 } from './LineChartComparisonDefaultPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
+export type LineChartComparisonDefaultProPropsOnLineClicked = {
+  axisDimensionValue: string | null;
+  groupingDimensionValue: string | null;
+};
+
 type LineChartComparisonDefaultProProps = {
   description: string;
   xAxis: Dimension;
@@ -34,6 +39,7 @@ type LineChartComparisonDefaultProProps = {
   showComparisonAxis: boolean;
   primaryDateRange: TimeRange;
   setComparisonDateRange: (dateRange: TimeRange) => void;
+  onLineClicked: (args: LineChartComparisonDefaultProPropsOnLineClicked) => void;
 };
 
 const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps) => {
@@ -56,6 +62,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     comparisonDateRange,
     showComparisonAxis,
     setComparisonDateRange,
+    onLineClicked,
   } = props;
 
   useEffect(() => {
@@ -94,6 +101,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
       measures,
       xAxisLabel,
       showComparisonAxis,
+      onLineClicked,
     },
     theme,
   );
