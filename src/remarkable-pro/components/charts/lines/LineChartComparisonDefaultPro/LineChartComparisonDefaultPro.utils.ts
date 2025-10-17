@@ -30,7 +30,6 @@ const getLineChartComparisonDataset = (
   theme: Theme,
 ): ChartData<'line'>['datasets'][number] => {
   const { data, measure, dimension, index, isPreviousPeriod, hasMinMaxYAxisRange, labels } = props;
-
   const datasetLabels = data?.map((item) => item[dimension.name]);
 
   const zeroFill = Boolean(measure.inputs?.['connectGaps']);
@@ -321,7 +320,9 @@ const getLineChartComparisonTimeOptions = (
             if (comparisonDimensionLabels.length === 0) {
               return '';
             }
-            return themeFormatter.data(dimension, comparisonDimensionLabels[Number(index)]);
+
+            const comparisonLabel = comparisonDimensionLabels[Number(index)];
+            return comparisonLabel ? themeFormatter.data(dimension, comparisonLabel) : '';
           },
         },
       },
