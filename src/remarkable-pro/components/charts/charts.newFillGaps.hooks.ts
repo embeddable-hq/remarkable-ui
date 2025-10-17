@@ -30,10 +30,6 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
     const dimensionName = dimension.name;
     const dateBoundsTmp: TimeRange = dimension.inputs?.dateBounds;
 
-    if (!results || !results.data || results.data.length === 0) {
-      return { ...results, data: [] };
-    }
-
     if (!granularity || !dimensionName) return results;
 
     const dateBounds = dateBoundsTmp?.relativeTimeString
@@ -42,9 +38,9 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
           ?.getRange()
       : dateBoundsTmp;
 
-    if (dimension.nativeType !== 'time' || !results.data?.length) return results;
+    if (dimension.nativeType !== 'time') return results;
 
-    const sortedResults = [...(results.data ?? [])].sort((a, b) => {
+    const sortedResults = [...(results?.data ?? [])].sort((a, b) => {
       const aVal = a[dimensionName];
       const bVal = b[dimensionName];
       if (aVal == null) return 1;
@@ -52,6 +48,7 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
       return dayjs.utc(aVal).diff(dayjs.utc(bVal));
     });
 
+    // Determine the full date range even if data is empty
     const from = dayjs.utc(
       externalDateBounds?.from ?? dateBounds?.from ?? sortedResults[0]?.[dimensionName],
     );
@@ -60,6 +57,11 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
         dateBounds?.to ??
         sortedResults[sortedResults.length - 1]?.[dimensionName],
     );
+
+    // If we *still* don’t have valid date bounds, bail out safely
+    if (!from.isValid() || !to.isValid()) {
+      return { ...results, data: [] };
+    }
 
     const recordsByDate = new Map<string, DataRecord[]>();
     for (const record of sortedResults) {
