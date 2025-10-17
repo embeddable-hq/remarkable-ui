@@ -79,7 +79,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   const data = getLineChartComparisonProData(
     {
       data: results.data,
-      dataComparison: showDataComparison ? resultsComparison.data : undefined,
+      dataComparison: showDataComparison ? (resultsComparison?.data ?? []) : undefined,
       dimension: xAxis,
       measures,
       hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
@@ -98,9 +98,14 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     theme,
   );
 
+  const resultsCombined = {
+    ...results,
+    data: [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
+  };
+
   return (
     <ChartCard
-      data={results}
+      data={resultsCombined}
       dimensionsAndMeasures={[...measures, xAxis]}
       errorMessage={results.error}
       subtitle={description}

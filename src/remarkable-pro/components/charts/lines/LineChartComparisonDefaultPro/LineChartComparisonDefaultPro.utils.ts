@@ -104,12 +104,14 @@ export const getLineChartComparisonProData = (
   const isTimeDimension = dimension.nativeType === 'time';
   const labels = isTimeDimension
     ? undefined
-    : Array.from(
-        new Set([
-          ...data.map((item) => item[dimension.name]),
-          ...(dataComparison?.map((item) => item[dimension.name]) ?? []),
-        ]),
-      );
+    : dataComparison
+      ? Array.from(
+          new Set([
+            ...data.map((item) => item[dimension.name]),
+            ...(dataComparison?.map((item) => item[dimension.name]) ?? []),
+          ]),
+        )
+      : undefined;
 
   const originalDatasets = measures.map((measure, index) =>
     getLineChartComparisonDataset(
@@ -141,7 +143,7 @@ export const getLineChartComparisonProData = (
   );
 
   return {
-    labels: isTimeDimension ? data.map((item) => item[dimension.name]) : labels,
+    labels: labels ?? data.map((item) => item[dimension.name]),
     datasets: [...originalDatasets, ...comparisonDatasets],
   };
 };
@@ -163,6 +165,16 @@ const getLineChartComparisonNonTimeOptions = (
 
   const lineChartOptions: ChartOptions<'line'> = {
     plugins: {
+      legend: {
+        labels: {
+          filter: (legendItem, chartData) => {
+            if (!legendItem) return false;
+            const dataset = chartData.datasets[legendItem.datasetIndex!]!;
+            // Only show legend if dataset has at least one data point
+            return Array.isArray(dataset.data) && dataset.data.length > 0;
+          },
+        },
+      },
       datalabels: {
         labels: {
           value: {
