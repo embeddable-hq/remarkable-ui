@@ -14,11 +14,6 @@ import {
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
 import { LineChartProOptionsClick } from '../lines.utils';
 
-export type LineChartComparisonDefaultProPropsOnLineClicked = {
-  axisDimensionValue: string | null;
-  groupingDimensionValue: string | null;
-};
-
 type LineChartComparisonDefaultProProps = {
   description: string;
   xAxis: Dimension;
@@ -90,7 +85,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
       dataComparison: showDataComparison ? (resultsComparison?.data ?? []) : undefined,
       dimension: xAxis,
       measures,
-      hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin !== undefined || yAxisRangeMax !== undefined),
     },
     theme,
   );
@@ -108,7 +103,9 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     theme,
   );
 
-  const isLoading = results.isLoading || (showDataComparison && resultsComparison?.isLoading);
+  const isLoading = Boolean(
+    results.isLoading || (showDataComparison && resultsComparison?.isLoading),
+  );
   const resultsCombined: DataResponse = {
     isLoading,
     data: isLoading ? undefined : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
@@ -118,7 +115,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     <ChartCard
       data={resultsCombined}
       dimensionsAndMeasures={[...measures, xAxis]}
-      errorMessage={results.error}
+      errorMessage={results.error || resultsComparison?.error}
       subtitle={description}
       title={title}
     >

@@ -66,7 +66,7 @@ const LineChartGroupedPro = (props: LineChartGroupedProProp) => {
       dimension: xAxis,
       groupDimension: groupBy,
       measure,
-      hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin !== undefined || yAxisRangeMax !== undefined),
     },
 
     theme,
