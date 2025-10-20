@@ -67,10 +67,26 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
   const valueFormatter = (valueToFormat: number) => themeFormatter.data(measure, valueToFormat);
   const comparisonLabel = `vs ${getComparisonPeriodLabel(comparisonPeriod, theme).toLowerCase()}`;
 
+  const resultsCombined: DataResponse = {
+    isLoading: results.isLoading,
+    data: results.isLoading
+      ? undefined
+      : [
+          ...(results.data?.length ? [{ label: 'Primary period', ...results.data[0] }] : []),
+          ...(resultsComparison?.data?.length
+            ? [{ label: 'Comparison period', ...resultsComparison.data[0] }]
+            : []),
+        ],
+  };
+
   return (
     <ChartCard
-      data={results}
-      dimensionsAndMeasures={[measure]}
+      data={resultsCombined}
+      dimensionsAndMeasures={[
+        // Add a label dimension to distinguish primary and comparison periods in exports
+        { name: 'label', title: 'Label', nativeType: 'string', __type__: 'dimension' },
+        measure,
+      ]}
       errorMessage={results.error}
       subtitle={description}
       title={title}

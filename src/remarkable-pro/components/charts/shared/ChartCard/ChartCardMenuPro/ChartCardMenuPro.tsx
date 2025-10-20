@@ -21,6 +21,12 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const options = theme.charts?.chartCardMenuPro?.options ?? [];
+
+  if (options.length === 0) {
+    return null;
+  }
+
   const startAction = (onClick: () => void | Promise<void>) => {
     setIsLoading(true);
     setTimeout(() => {
@@ -31,12 +37,6 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
   const handleExport = (onClick: (props: ChartCardMenuProOptionOnClickProps) => void) => {
     startAction(() => onClick({ ...props, theme }));
   };
-
-  const options = theme.charts?.chartCardMenuPro?.options ?? [];
-
-  if (options.length === 0) {
-    return null;
-  }
 
   return (
     <Dropdown
