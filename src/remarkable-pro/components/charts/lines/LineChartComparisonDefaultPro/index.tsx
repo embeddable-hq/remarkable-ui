@@ -103,12 +103,11 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     theme,
   );
 
-  const isLoading = Boolean(
-    results.isLoading || (showDataComparison && resultsComparison?.isLoading),
-  );
   const resultsCombined: DataResponse = {
-    isLoading,
-    data: isLoading ? undefined : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
+    isLoading: results.isLoading,
+    data: results.isLoading
+      ? undefined
+      : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
   };
 
   return (
