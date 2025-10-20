@@ -1,7 +1,7 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
 import { DataResponse, Measure, TimeRange } from '@embeddable.com/core';
-import { i18nSetup } from '../../../../theme/i18n/i18n';
+import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { KpiChart } from '../../../../../remarkable-ui';
@@ -72,9 +72,11 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
     data: results.isLoading
       ? undefined
       : [
-          ...(results.data?.length ? [{ label: 'Primary period', ...results.data[0] }] : []),
+          ...(results.data?.length
+            ? [{ label: i18n.t('charts.primaryPeriod'), ...results.data[0] }]
+            : []),
           ...(resultsComparison?.data?.length
-            ? [{ label: 'Comparison period', ...resultsComparison.data[0] }]
+            ? [{ label: i18n.t('charts.comparisonPeriod'), ...resultsComparison.data[0] }]
             : []),
         ],
   };
@@ -84,7 +86,12 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
       data={resultsCombined}
       dimensionsAndMeasures={[
         // Add a label dimension to distinguish primary and comparison periods in exports
-        { name: 'label', title: 'Label', nativeType: 'string', __type__: 'dimension' },
+        {
+          name: 'label',
+          title: i18n.t('charts.label'),
+          nativeType: 'string',
+          __type__: 'dimension',
+        },
         measure,
       ]}
       errorMessage={results.error}

@@ -9,6 +9,9 @@ export const en: ResourceLanguage = {
       compared: 'Compared',
     },
     charts: {
+      label: 'Label',
+      primaryPeriod: 'Primary period',
+      comparisonPeriod: 'Comparison period',
       'menuOptions.downloadCSV': 'Download CSV',
       'menuOptions.downloadPNG': 'Download PNG',
       'menuOptions.downloadXLSX': 'Download XLSX',
