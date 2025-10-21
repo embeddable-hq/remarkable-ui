@@ -60,11 +60,7 @@ try {
   }
 
   const mainCss = fs.readFileSync(mainCssPath, 'utf8');
-  const interImport =
-    "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');\n";
-  const needsInter = !mainCss.includes('fonts.googleapis.com/css2?family=Inter');
-  const finalCss = (needsInter ? interImport : '') + cssVariables + '\n' + mainCss;
-  fs.writeFileSync(mainCssPath, finalCss);
+  fs.writeFileSync(mainCssPath, cssVariables + '\n' + mainCss);
 
   console.log('✅ Successfully merged CSS variables into remarkable-ui.css');
   console.log(`📁 Final CSS: ${mainCssPath}`);
