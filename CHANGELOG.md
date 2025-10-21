@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.26
+
+### Patch Changes
+
+- f368997: Bugfix
+
 ## 0.1.25
 
 ### Patch Changes
