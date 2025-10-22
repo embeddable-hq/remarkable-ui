@@ -30,7 +30,7 @@ export const getLineChartOptions = (
 ): Partial<ChartOptions<'line'>> => {
   const newOptions: Partial<ChartOptions<'line'>> = {
     interaction: {
-      mode: 'index',
+      mode: 'x',
       intersect: false,
     },
     elements: {

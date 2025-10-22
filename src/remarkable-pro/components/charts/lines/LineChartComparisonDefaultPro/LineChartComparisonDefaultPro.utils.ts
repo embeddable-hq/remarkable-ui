@@ -13,6 +13,7 @@ import {
 } from '../../../../../remarkable-ui/charts/chartjs.cartesian.constants';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
+import { getLineChartProOptions, LineChartProOptionsClick } from '../lines.utils';
 
 const AXIS_ID_MAIN = 'mainAxis';
 const AXIS_ID_COMPARISON = 'comparisonAxis';
@@ -58,12 +59,13 @@ const getLineChartComparisonDataset = (
         index,
       );
 
+  const rawLabel = themeFormatter.dimensionOrMeasureTitle(measure);
+
   const dataset = {
     xAxisID: isPreviousPeriod ? AXIS_ID_COMPARISON : AXIS_ID_MAIN,
     labels: datasetLabels,
-    label:
-      (isPreviousPeriod ? `${i18n.t('common.compared')} ` : '') +
-      themeFormatter.dimensionOrMeasureTitle(measure),
+    rawLabel,
+    label: (isPreviousPeriod ? `${i18n.t('common.compared')} ` : '') + rawLabel,
     data: processedData,
     backgroundColor: setColorAlpha(
       lineColor,
@@ -154,6 +156,8 @@ type LineChartComparisonProOptionsProps = {
   data: ChartData<'line'>;
   xAxisLabel?: string;
   showComparisonAxis: boolean;
+  showDataComparison: boolean;
+  onLineClicked: LineChartProOptionsClick;
 };
 
 const getLineChartComparisonNonTimeOptions = (
@@ -235,16 +239,10 @@ const getLineChartComparisonNonTimeOptions = (
 };
 
 const getLineChartComparisonTimeOptions = (
-  options: {
-    dimension: Dimension;
-    measures: Measure[];
-    data: ChartData<'line'>;
-    xAxisLabel?: string;
-    showComparisonAxis: boolean;
-  },
+  options: LineChartComparisonProOptionsProps,
   theme: Theme,
 ): ChartOptions<'line'> => {
-  const { dimension, data, measures, xAxisLabel, showComparisonAxis } = options;
+  const { dimension, data, measures, xAxisLabel, showComparisonAxis, showDataComparison } = options;
   const themeFormatter = getThemeFormatter(theme);
 
   const mainDimensionLabels: string[] =
@@ -279,7 +277,13 @@ const getLineChartComparisonTimeOptions = (
       tooltip: {
         callbacks: {
           title: (context) => {
-            const dataIndex = context[0]?.dataIndex;
+            const contextItem = context[0];
+
+            if (!showDataComparison && contextItem) {
+              return themeFormatter.data(dimension, contextItem.label);
+            }
+
+            const dataIndex = contextItem?.dataIndex;
 
             if (dataIndex === undefined) return '';
 
@@ -355,11 +359,15 @@ export const getLineChartComparisonProOptions = (
   options: LineChartComparisonProOptionsProps,
   theme: Theme,
 ): ChartOptions<'line'> => {
+  const { onLineClicked, dimension } = options;
+
   const getOptions =
-    options.dimension.nativeType === 'time'
+    dimension.nativeType === 'time'
       ? getLineChartComparisonTimeOptions
       : getLineChartComparisonNonTimeOptions;
+
   return mergician(
+    getLineChartProOptions({ onLineClicked }),
     getOptions(options, theme),
     theme.charts?.lineChartComparisonDefaultPro?.options || {},
   );

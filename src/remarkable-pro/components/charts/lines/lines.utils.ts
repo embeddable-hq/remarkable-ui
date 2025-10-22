@@ -1,135 +1,69 @@
-import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { Theme } from '../../../theme/theme.types';
-import { ChartData, ChartOptions } from 'chart.js';
-import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
-import { getObjectStableKey } from '../../../utils.ts/object.utils';
-import { getStyleNumber } from '../../../../remarkable-ui';
-import { getColor } from '../../../theme/styles/styles.utils';
-import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
-import { isColorValid, setColorAlpha } from '../../../utils.ts/color.utils';
+import { ChartDataset, ChartOptions, InteractionItem } from 'chart.js';
 
-export const getLineChartProData = (
-  props: {
-    data: DataResponse['data'];
-    dimension: Dimension;
-    measures: Measure[];
-  },
-  theme: Theme,
-): ChartData<'line'> => {
-  if (!props.data) {
-    return {
-      labels: [],
-      datasets: [{ data: [] }],
-    };
-  }
+export type LineChartProOptionsClickArg = {
+  dimensionValue: string | number | null;
+  groupingDimensionValue?: string | boolean | null;
+};
+export type LineChartProOptionsClick = (arg: LineChartProOptionsClickArg) => void;
 
-  const themeFormatter = getThemeFormatter(theme);
-
-  const themeKey = getObjectStableKey(theme);
-  const groupedData = props.data;
-
-  return {
-    labels: groupedData.map((item) => {
-      return item[props.dimension.name];
-    }),
-    datasets: props.measures.map((measure, index) => {
-      const zeroFill = Boolean(measure.inputs?.['connectGaps']);
-      const values = groupedData.map((item) => item[measure.name] ?? (zeroFill ? 0 : null));
-
-      const lineColor = measure.inputs?.['lineColor'];
-
-      const backgroundColor = isColorValid(lineColor)
-        ? lineColor
-        : getColor(
-            `${themeKey}.charts.backgroundColors`,
-            measure.name,
-            theme.charts.backgroundColors ?? chartContrastColors,
-            index,
-          );
-
-      const borderColor = isColorValid(lineColor)
-        ? lineColor
-        : getColor(
-            `${themeKey}.charts.borderColors`,
-            measure.name,
-            theme.charts.borderColors ?? chartContrastColors,
-            index,
-          );
-
-      return {
-        label: themeFormatter.dimensionOrMeasureTitle(measure),
-        data: values,
-        backgroundColor: setColorAlpha(
-          backgroundColor,
-          getStyleNumber('--em-line-chart-line-fill-opacity') as number,
-        ),
-        pointBackgroundColor: backgroundColor,
-        borderDash: measure.inputs?.['dashedLine']
-          ? [
-              getStyleNumber('--em-line-chart-line-dash-length'),
-              getStyleNumber('--em-line-chart-line-gap-length'),
-            ]
-          : undefined,
-        borderColor,
-        fill: Boolean(measure.inputs?.['fillUnderLine']),
-      };
-    }),
-  };
+type LineDataset = ChartDataset<'line'> & {
+  rawLabel?: string;
 };
 
-export const getLineChartProOptions = (
-  options: { dimension: Dimension; measures: Measure[]; data: ChartData<'line'> },
-  theme: Theme,
-): ChartOptions<'line'> => {
-  const { dimension, data, measures } = options;
-  const themeFormatter = getThemeFormatter(theme);
+export const getLineChartProOptions = (props: {
+  onLineClicked: LineChartProOptionsClick;
+}): ChartOptions<'line'> => {
+  const { onLineClicked } = props;
+  return {
+    onClick: (event, _elements, chart) => {
+      const native = (event as unknown as { native?: Event }).native ?? (event as unknown as Event);
 
-  const lineChartOptions: ChartOptions<'line'> = {
-    plugins: {
-      datalabels: {
-        labels: {
-          value: {
-            formatter: (value: string | number, context) => {
-              const measure = measures[context.datasetIndex]!;
-              return themeFormatter.data(measure, value);
-            },
-          },
-        },
-      },
-      tooltip: {
-        callbacks: {
-          title: (context) => {
-            const label = context[0]?.label;
-            return themeFormatter.data(dimension, label);
-          },
-          label: (context) => {
-            const measure = measures[context.datasetIndex]!;
-            const raw = context.raw as number;
-            return `${themeFormatter.data(dimension, context.dataset.label) || ''}: ${themeFormatter.data(measure, raw)}`;
-          },
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          callback: (value) => {
-            if (!data || !data.labels) return undefined;
+      // 1. Resolve the X-axis slice (all datasets at the same X)
+      const slice = chart.getElementsAtEventForMode(native, 'x', { intersect: false }, false);
 
-            const label = data.labels[Number(value)] as string;
-            return themeFormatter.data(dimension, label);
-          },
-        },
-      },
-      y: {
-        ticks: {
-          callback: (value) => {
-            return themeFormatter.data(measures[0]!, value);
-          },
-        },
-      },
+      if (!slice?.length) {
+        onLineClicked({
+          dimensionValue: null,
+          groupingDimensionValue: null,
+        });
+        return;
+      }
+
+      const xIndex = slice[0]!.index;
+      const dimensionValue = (chart.data.labels?.[xIndex] ?? null) as string | number | null;
+
+      // 2. Resolve the specific series (group) via nearest point
+      let nearest: InteractionItem | undefined = chart.getElementsAtEventForMode(
+        native,
+        'nearest',
+        { intersect: true },
+        false,
+      )[0];
+
+      // If nearest is missing or points to a different X, fall back to an element in the slice
+      if (!nearest || nearest.index !== xIndex) {
+        nearest = slice.find((el) => {
+          const ds: LineDataset = chart.data.datasets[el.datasetIndex] as LineDataset;
+          const val = Array.isArray(ds?.data) ? ds.data[xIndex] : undefined;
+          return val !== null && val !== undefined;
+        });
+      }
+
+      // 3. Compute the grouping key with the requested fallbacks
+      let groupingDimensionValue; // default when X is found but no nearest
+
+      if (!nearest) {
+        // No nearest even after fallback — keep false to signal "no series picked"
+        // (axisDimensionValue is valid because slice existed)
+      } else {
+        const ds: LineDataset = chart.data.datasets[nearest.datasetIndex] as LineDataset;
+        groupingDimensionValue = (ds?.rawLabel ?? null) as string | boolean | null;
+      }
+
+      onLineClicked({
+        dimensionValue,
+        groupingDimensionValue,
+      });
     },
   };
-
-  return lineChartOptions;
 };

@@ -20,6 +20,9 @@ export const de: ResourceLanguage = {
       Other: 'Andere',
     },
     charts: {
+      label: 'Beschriftung',
+      primaryPeriod: 'Primärzeitraum',
+      comparisonPeriod: 'Vergleichszeitraum',
       'menuOptions.downloadCSV': 'CSV herunterladen',
       'menuOptions.downloadPNG': 'PNG herunterladen',
       'menuOptions.downloadXLSX': 'XLSX herunterladen',

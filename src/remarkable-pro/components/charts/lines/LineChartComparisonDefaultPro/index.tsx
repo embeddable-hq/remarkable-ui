@@ -12,6 +12,7 @@ import {
   getLineChartComparisonProOptions,
 } from './LineChartComparisonDefaultPro.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { LineChartProOptionsClick } from '../lines.utils';
 
 type LineChartComparisonDefaultProProps = {
   description: string;
@@ -34,6 +35,7 @@ type LineChartComparisonDefaultProProps = {
   showComparisonAxis: boolean;
   primaryDateRange: TimeRange;
   setComparisonDateRange: (dateRange: TimeRange) => void;
+  onLineClicked: LineChartProOptionsClick;
 };
 
 const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps) => {
@@ -56,6 +58,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
     comparisonDateRange,
     showComparisonAxis,
     setComparisonDateRange,
+    onLineClicked,
   } = props;
 
   useEffect(() => {
@@ -82,7 +85,7 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
       dataComparison: showDataComparison ? (resultsComparison?.data ?? []) : undefined,
       dimension: xAxis,
       measures,
-      hasMinMaxYAxisRange: Boolean(yAxisRangeMin || yAxisRangeMax),
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin !== undefined || yAxisRangeMax !== undefined),
     },
     theme,
   );
@@ -94,20 +97,24 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
       measures,
       xAxisLabel,
       showComparisonAxis,
+      showDataComparison,
+      onLineClicked,
     },
     theme,
   );
 
-  const resultsCombined = {
-    ...results,
-    data: [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
+  const resultsCombined: DataResponse = {
+    isLoading: results.isLoading,
+    data: results.isLoading
+      ? undefined
+      : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
   };
 
   return (
     <ChartCard
       data={resultsCombined}
       dimensionsAndMeasures={[...measures, xAxis]}
-      errorMessage={results.error}
+      errorMessage={results.error || resultsComparison?.error}
       subtitle={description}
       title={title}
     >
