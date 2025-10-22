@@ -1,0 +1,22 @@
+.tableBody tr td {
+  box-sizing: border-box;
+  cursor: pointer;
+  height: var(--em-table-size-cell-height_R, 2.5rem);
+  min-width: var(--em-table-size-min-width_R, 3rem);
+  padding: var(--em-table-padding-medium_R, 0.5rem);
+}
+
+.tableBody tr td:hover,
+.tableBody tr td:focus-within {
+  background: var(--em-table-background-color-hover-header_R, #f7f7f8);
+}
+
+.tableBody tr td p {
+  /* font-family: var(--em-table-font-family, Inter); */
+  font-size: var(--em-table-font-size, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-table-font-font-weight-medium_R, 500);
+  line-height: var(--em-table-font-line-height_R, 0.875rem);
+  color: var(--em-table-text-default_R, #212129);
+  padding: 0 var(--em-table-padding-small_R, 0.25rem);
+}

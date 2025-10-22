@@ -1,0 +1,46 @@
+.tableContainer {
+  background: var(--em-table-background-color-default-header, #fff);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+  box-sizing: border-box;
+  border-radius: var(--em-table-border-radius-default, 0.75rem);
+}
+
+.scrollX {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1;
+}
+
+.scrollX table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scrollX table th,
+td {
+  border: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+}
+
+.scrollX table th:first-child,
+.scrollX table td:first-child {
+  border-left: none;
+}
+.scrollX table th:last-child,
+.scrollX table td:last-child {
+  border-right: none;
+}
+.scrollX table tr:first-child th,
+.scrollX table tr:first-child td {
+  border-top: none;
+}
+/* .scrollX table tr:last-child th,
+.scrollX table tr:last-child td {
+  border-bottom: none;
+} */

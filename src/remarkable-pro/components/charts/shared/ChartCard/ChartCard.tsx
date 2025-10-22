@@ -26,72 +26,69 @@ type ChartCardProps = {
   dimensionsAndMeasures?: (Dimension | Measure)[];
 };
 
-export const ChartCard: FC<ChartCardProps> = ({
-  title,
-  subtitle,
-  children,
-  data,
-  errorMessage,
-  dimensionsAndMeasures = [],
-  ...props
-}) => {
-  const theme: Theme = useTheme() as Theme;
-  i18nSetup(theme);
+export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
+  (
+    { title, subtitle, children, data, errorMessage, dimensionsAndMeasures = [], ...props },
+    ref,
+  ) => {
+    const theme: Theme = useTheme() as Theme;
+    i18nSetup(theme);
 
-  const chartRef = useRef<HTMLDivElement>(null);
+    const chartRef = useRef<HTMLDivElement>(null);
 
-  const hasData = data.data && data.data.length > 0;
+    const hasData = data.data && data.data.length > 0;
 
-  const getDisplay = () => {
-    if (!hasData && data.isLoading) {
-      return <Skeleton />;
-    }
+    const getDisplay = () => {
+      if (!hasData && data.isLoading) {
+        return <Skeleton />;
+      }
 
-    if (errorMessage) {
-      return (
-        <CardContentInfo
-          className={styles.error}
-          icon={IconAlertCircle}
-          title={i18n.t('charts.errorTitle')}
-          message={errorMessage}
+      if (errorMessage) {
+        return (
+          <CardContentInfo
+            className={styles.error}
+            icon={IconAlertCircle}
+            title={i18n.t('charts.errorTitle')}
+            message={errorMessage}
+          />
+        );
+      }
+
+      if (!hasData) {
+        return (
+          <CardContentInfo
+            title={i18n.t('charts.emptyTitle')}
+            message={i18n.t('charts.emptyMessage')}
+          />
+        );
+      }
+
+      return children;
+    };
+
+    return (
+      <Card className={styles.chartCard} {...props}>
+        <CardHeader
+          title={title}
+          subtitle={subtitle}
+          rightContent={
+            <div data-no-export className={styles.rightContent}>
+              {data.isLoading ? (
+                <ChartCardLoading />
+              ) : (
+                <ChartCardMenuPro
+                  title={title}
+                  containerRef={chartRef}
+                  data={data.data}
+                  dimensionsAndMeasures={dimensionsAndMeasures}
+                />
+              )}
+            </div>
+          }
         />
-      );
-    }
 
-    if (!hasData) {
-      return (
-        <CardContentInfo
-          title={i18n.t('charts.emptyTitle')}
-          message={i18n.t('charts.emptyMessage')}
-        />
-      );
-    }
-
-    return children;
-  };
-
-  return (
-    <Card ref={chartRef} className={styles.chartCard} {...props}>
-      <CardHeader
-        title={title}
-        subtitle={subtitle}
-        rightContent={
-          <div data-no-export className={styles.rightContent}>
-            {data.isLoading ? (
-              <ChartCardLoading />
-            ) : (
-              <ChartCardMenuPro
-                title={title}
-                containerRef={chartRef}
-                data={data.data}
-                dimensionsAndMeasures={dimensionsAndMeasures}
-              />
-            )}
-          </div>
-        }
-      />
-
-      <CardContent>{getDisplay()}</CardContent>
-    </Card>
-  );
-};
+        <CardContent ref={ref}>{getDisplay()}</CardContent>
+      </Card>
+    );
+  },
+);

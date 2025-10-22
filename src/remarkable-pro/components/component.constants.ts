@@ -191,6 +191,19 @@ export const dimensions = {
   inputs: subInputs,
 } as const;
 
+export const dimensionsAndMeasures = {
+  name: 'dimensionsAndMeasures',
+  type: 'dimensionOrMeasure',
+  label: 'Dimensions and Measures',
+  array: true,
+  required: true,
+  config: {
+    dataset: 'dataset',
+  },
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
 export const measure = {
   name: 'measure',
   type: 'measure',

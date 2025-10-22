@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react],
   lifecycleHooksFile: './embeddable.lifecycle.ts',
   pushModels: false,
-
+  region: 'US',
   // previewBaseUrl: 'https://app.dev.embeddable.com',
   // pushBaseUrl: 'https://api.dev.embeddable.com',
   // audienceUrl: 'https://api.dev.embeddable.com/',
