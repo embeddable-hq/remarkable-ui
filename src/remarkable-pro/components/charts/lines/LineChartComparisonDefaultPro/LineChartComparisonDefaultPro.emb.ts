@@ -108,11 +108,6 @@ export const meta = {
           label: 'Clicked Axis Dimension Value',
           type: 'string',
         },
-        {
-          name: 'groupingDimensionValue',
-          label: 'Clicked Grouping Dimension Value',
-          type: 'string',
-        },
       ],
     },
   ],
@@ -182,7 +177,6 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
     onLineClicked: (value: LineChartProOptionsClickArg) => {
       return {
         axisDimensionValue: value.dimensionValue || Value.noFilter(),
-        groupingDimensionValue: value.groupingDimensionValue || Value.noFilter(),
       };
     },
   },
