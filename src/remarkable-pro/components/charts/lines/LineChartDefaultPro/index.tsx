@@ -57,7 +57,7 @@ const LineChartPro = (props: LineChartProProp) => {
       data: results.data,
       dimension: xAxis,
       measures,
-      hasMinMaxYAxisRange: Boolean(yAxisRangeMin != null || yAxisRangeMax != null),
+      hasMinMaxYAxisRange: Boolean(yAxisRangeMin !== undefined || yAxisRangeMax !== undefined),
     },
     theme,
   );
