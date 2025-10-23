@@ -29,6 +29,12 @@ export const genericString = {
   category: 'Component Settings',
 } as const;
 
+export const subInputWidth = {
+  ...genericNumber,
+  name: 'width',
+  label: 'Width',
+  description: 'You can input a number in pixels e.g. 400, or a percentage e.g. 50%',
+};
 export const subInputColor = {
   ...genericString,
   name: 'color',

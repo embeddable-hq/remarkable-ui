@@ -17,7 +17,7 @@ export type TableHeaderItem<T> = {
   title: React.ReactNode;
   align?: TableHeaderItemAlign;
   field?: keyof T;
-  width?: CssSize;
+  minWidth?: CssSize;
   sort?: TableSort<T>;
   accessor?: (row: T) => React.ReactNode;
   cell?: TableHeaderCell;

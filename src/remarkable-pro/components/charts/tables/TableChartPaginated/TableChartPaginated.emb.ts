@@ -1,13 +1,28 @@
 import { loadData, OrderBy, OrderDirection } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 import TablePaginatedChart from './index';
-import { dataset, description, title, dimensionsAndMeasures } from '../../../component.constants';
+import {
+  dataset,
+  description,
+  title,
+  dimensionsAndMeasures,
+  subInputWidth,
+} from '../../../component.constants';
 
 export const meta = {
   name: 'TableChartPaginated',
   label: 'Table Chart - Paginated',
   category: 'Table Charts',
-  inputs: [dataset, { ...dimensionsAndMeasures, label: 'Columns' }, title, description],
+  inputs: [
+    dataset,
+    {
+      ...dimensionsAndMeasures,
+      label: 'Columns',
+      inputs: [...dimensionsAndMeasures.inputs, subInputWidth],
+    },
+    title,
+    description,
+  ],
 } as const satisfies EmbeddedComponentMeta;
 
 type TablePaginatedChartState = {

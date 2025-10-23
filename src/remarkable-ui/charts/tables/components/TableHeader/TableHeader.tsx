@@ -54,11 +54,13 @@ export const TableHeader = <T,>({
       <tr>
         {showIndex && (
           <th className={styles.tableHeadIndex}>
-            <button className={styles.tableHeadCell}>#</button>
+            <button className={styles.tableHeadCell}>
+              <Typography>#</Typography>
+            </button>
           </th>
         )}
         {headers.map((header) => (
-          <th key={header.id as string}>
+          <th key={header.id as string} style={{ minWidth: header.minWidth }}>
             <button className={styles.tableHeadCell} onClick={() => handleSort(header.id)}>
               <Typography>{header.title}</Typography>
               {getSortIcon(header)}

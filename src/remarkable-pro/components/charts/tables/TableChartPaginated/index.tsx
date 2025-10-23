@@ -5,17 +5,15 @@ import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, DimensionOrMeasure, OrderDirection } from '@embeddable.com/core';
 import { getStyleNumber, TablePaginated } from '../../../../../remarkable-ui';
-import { TableHeaderItem } from '../../../../../remarkable-ui/charts/tables/tables.types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
 import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table.hooks';
+import { getTableHeaders } from '../tables.utils';
 
-const getHeaders = (dimensionsAndMeasures: DimensionOrMeasure[]): TableHeaderItem<any>[] => {
-  return dimensionsAndMeasures.map((dimOrMeas) => ({
-    id: dimOrMeas.name,
-    title: dimOrMeas.title,
-  }));
-};
+const headerHeight = getStyleNumber('--em-table-size-cell-height_R' as any, '2.5rem') as number;
+const rowHeight = getStyleNumber('--em-table-size-cell-height_R' as any, '2.5rem') as number;
+const footerHeight = getStyleNumber('--em-table-size-footer-height_R' as any, '3rem') as number;
+
 type TableChartPaginatedProProps = {
   title: string;
   description: string;
@@ -32,11 +30,12 @@ type TableChartPaginatedProProps = {
 const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   const theme = useTheme() as Theme;
   i18nSetup(theme);
+  const [total, setTotal] = useState<number | undefined>(undefined);
 
   const { description, title } = resolveI18nProps(props);
   const { results, dimensionsAndMeasures, page = 0, sort, setPage, setSort } = props;
 
-  const headers = getHeaders(dimensionsAndMeasures);
+  const headers = getTableHeaders({ dimensionsAndMeasures }, theme);
   const rows = results?.data || [];
 
   const cardContentRef = useRef<HTMLDivElement>(null);
@@ -44,9 +43,9 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   const chartHeight = useObserverHeight(cardContentRef);
   const pageSize = useTableGetRowsPerPage({
     availableHeight: chartHeight,
-    headerHeight: getStyleNumber('--em-table-size-cell-height_R' as any, '2.5rem') as number,
-    rowHeight: getStyleNumber('--em-table-size-cell-height_R' as any, '2.5rem') as number,
-    footerHeight: getStyleNumber('--em-table-size-footer-height_R' as any, '3rem') as number,
+    headerHeight,
+    rowHeight,
+    footerHeight,
   });
 
   useEffect(() => {
@@ -54,6 +53,12 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
       props.setPageSize(pageSize);
     }
   }, [pageSize]);
+
+  useEffect(() => {
+    if (results?.total && results.total !== total) {
+      setTotal(results.total);
+    }
+  }, [results]);
 
   return (
     <ChartCard
@@ -65,14 +70,14 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
       errorMessage={results?.error}
     >
       <TablePaginated
-        showIndex
         headers={headers}
         rows={rows}
-        sort={sort}
-        onSortChange={setSort}
+        showIndex
         page={page}
         pageSize={pageSize}
-        total={results?.total}
+        total={total}
+        sort={sort}
+        onSortChange={setSort}
         onPageChange={setPage}
       />
     </ChartCard>

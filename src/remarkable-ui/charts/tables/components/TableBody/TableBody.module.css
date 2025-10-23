@@ -3,11 +3,12 @@
 }
 
 .tableBodyCell p {
+  white-space: nowrap;
+  padding: 0 var(--em-table-padding-small, 0.25rem);
   /* font-family: var(--em-table-font-family, Inter); */
   color: var(--em-table-text-default, #212129);
   font-size: var(--em-table-font-size, 0.75rem);
   font-style: normal;
   font-weight: var(--em-table-font-weight-regular, 400);
   line-height: 0.875rem;
-  padding: 0 var(--em-table-padding-small, 0.25rem);
 }
