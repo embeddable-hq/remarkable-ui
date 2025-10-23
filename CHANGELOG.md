@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.28
+
+### Patch Changes
+
+- 404ee38: Improve interactions on the Line Charts
+
 ## 0.1.27
 
 ### Patch Changes
