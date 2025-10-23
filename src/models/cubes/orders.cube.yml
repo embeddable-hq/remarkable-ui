@@ -1,0 +1,49 @@
+cubes:
+  - name: orders
+    data_source: default
+    sql_table: public.orders
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: created_at
+        sql: created_at
+        type: time
+        description: 'The time when the order was created'
+
+    measures:
+      - name: count
+        type: count
+        title: '# of orders'
+        description: 'Count of orders'
+        meta:
+          some_meta: 'value' # will be passed as a prop to your components
+
+      - name: rolling_count
+        type: count
+        title: 'Rolling # of orders'
+        description: 'Count of orders'
+        rolling_window:
+          trailing: unbounded
+
+      - name: is_large_order
+        type: boolean
+        sql: CASE WHEN COUNT(*) > 10 THEN TRUE ELSE FALSE END
+        title: 'Is Large Order'
+        description: 'Returns true if the order count is greater than 10'
+
+    joins:
+      - name: products # the name of the data model to join to (not the table)
+        sql: '{CUBE}.product_id = {products}.id'
+        relationship: many_to_one
+
+      - name: customers # the name of the data model to join to (not the table)
+        sql: '{CUBE}.customer_id = {customers}.id'
+        relationship: many_to_one
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

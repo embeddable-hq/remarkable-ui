@@ -1,0 +1,43 @@
+cubes:
+  - name: time_series
+    title: Time series
+    data_source: default
+    sql: SELECT time_series.id, time_series.day, time_series.number, CASE WHEN time_series.number > 9 THEN 'green' WHEN time_series.number > 6 THEN 'orange' WHEN COALESCE(time_series.number, 0) % 2 = 0 THEN 'blue' ELSE 'red' END AS color FROM public.time_series
+
+    dimensions:
+      - name: id
+        sql: id
+        type: string
+        primary_key: true
+
+      - name: day
+        sql: day
+        type: time
+
+      - name: number
+        sql: number
+        type: number
+
+      - name: color
+        sql: color
+        type: string
+
+    measures:
+      - name: count
+        type: count
+
+      - name: sum
+        type: sum
+        sql: number
+
+      - name: avg
+        type: avg
+        sql: number
+
+      - name: test_float
+        sql: '10.0 / {count}'
+        type: number
+
+    pre_aggregations:
+    # Pre-aggregation definitions go here.
+    # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started

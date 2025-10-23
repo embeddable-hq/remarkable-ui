@@ -1,0 +1,46 @@
+cubes:
+  - name: geolocation
+    data_source: default
+    sql_table: public.cities
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: city
+        sql: city
+        type: string
+        title: 'City'
+        description: 'The name of the city'
+
+      - name: country
+        sql: country
+        type: string
+        title: 'Country'
+        description: 'The name of the country'
+
+      - name: location
+        type: geo
+        latitude:
+          sql: lat
+        longitude:
+          sql: long
+        title: 'Geolocation (lat/lng)'
+        description: 'The latitude and longitude of the city'
+
+    measures:
+      - name: count
+        type: count
+        title: '# of cities'
+        description: 'Count of cities'
+
+    joins:
+      - name: customers # the name of the data model to join to (not the table)
+        sql: '{CUBE}.country = {customers}.country'
+        relationship: many_to_one
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
