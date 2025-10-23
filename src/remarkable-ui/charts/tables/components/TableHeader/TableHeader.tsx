@@ -1,15 +1,19 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import { Typography } from '../../../../shared/Typography/Typography';
 import styles from './TableHeader.module.css';
-import { TableHeaderItem, TableSort, TableSortDirection } from '../../tables.types';
+import { TableHeaderItem, TablePaginatedProps, TableSortDirection } from '../../tables.types';
 
-export type TableHeaderProps<T> = {
-  headers: TableHeaderItem<T>[];
-  sort?: TableSort<T>;
-  onSort?: (newSort: TableSort<T> | undefined) => void;
-};
+export type TableHeaderProps<T> = Pick<
+  TablePaginatedProps<T>,
+  'showIndex' | 'headers' | 'sort' | 'onSortChange'
+>;
 
-export const TableHeader = <T,>({ headers, sort, onSort }: TableHeaderProps<T>) => {
+export const TableHeader = <T,>({
+  headers,
+  sort,
+  showIndex,
+  onSortChange,
+}: TableHeaderProps<T>) => {
   const getSortIcon = (header: TableHeaderItem<T>) => {
     if (!sort) return <IconCaretUpDownFilled />;
 
@@ -24,33 +28,35 @@ export const TableHeader = <T,>({ headers, sort, onSort }: TableHeaderProps<T>) 
   };
 
   const handleSort = (id: keyof T) => {
-    if (!onSort) return;
+    if (!onSortChange) return;
 
     if (!sort) {
-      return onSort({ id, direction: TableSortDirection.ASC });
+      return onSortChange({ id, direction: TableSortDirection.ASC });
     }
 
     if (sort) {
       // New sort
       if (sort.id !== id) {
-        return onSort({ id, direction: TableSortDirection.ASC });
+        return onSortChange({ id, direction: TableSortDirection.ASC });
       }
 
       // Toggle sort direction
       if (sort.direction === TableSortDirection.ASC) {
-        return onSort({ id, direction: TableSortDirection.DESC });
+        return onSortChange({ id, direction: TableSortDirection.DESC });
       } else if (sort.direction === TableSortDirection.DESC) {
-        return onSort(undefined); // Remove sort after DESC
+        return onSortChange(undefined); // Remove sort after DESC
       }
     }
   };
 
   return (
-    <thead className={styles.tableHead}>
+    <thead>
       <tr>
-        <th>
-          <button className={styles.tableHeadCell}>#</button>
-        </th>
+        {showIndex && (
+          <th className={styles.tableHeadIndex}>
+            <button className={styles.tableHeadCell}>#</button>
+          </th>
+        )}
         {headers.map((header) => (
           <th key={header.id as string}>
             <button className={styles.tableHeadCell} onClick={() => handleSort(header.id)}>

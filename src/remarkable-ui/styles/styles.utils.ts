@@ -33,8 +33,11 @@ export const getStyle = (variableName: StylesKeys): string => {
   return rawValue;
 };
 
-export const getStyleNumber = (variableName: StylesKeys): number | undefined => {
-  const rawValue = getStyleValue(variableName);
+export const getStyleNumber = (
+  variableName: StylesKeys,
+  fallbackValue?: string,
+): number | undefined => {
+  const rawValue = getStyleValue(variableName) || fallbackValue;
 
   if (!rawValue) return undefined;
 

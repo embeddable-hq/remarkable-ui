@@ -1,20 +1,26 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useMemo } from 'react';
 
-const HEADER_PX = 40;
-const ROW_PX = 40;
-const FOOTER_PX = 48;
-
-export const useTableGetRowsPerPage = (wrapperHeight: number): number =>
+type UseTableGetRowsPerPageProps = {
+  availableHeight: number;
+  headerHeight: number;
+  rowHeight: number;
+  footerHeight?: number;
+};
+export const useTableGetRowsPerPage = ({
+  availableHeight,
+  headerHeight,
+  rowHeight,
+  footerHeight = 0,
+}: UseTableGetRowsPerPageProps): number =>
   useMemo(() => {
-    console.log('wrapperHeight', wrapperHeight);
-    const h = wrapperHeight;
+    const h = availableHeight;
     if (!h) return 0;
 
     // Available vertical space for BODY rows only
-    let available = h - HEADER_PX - FOOTER_PX;
+    let available = h - headerHeight - footerHeight;
     if (available < 0) available = 0;
 
     // DO NOT show partial rows: floor only
-    const rows = Math.floor(available / ROW_PX);
+    const rows = Math.floor(available / rowHeight);
     return Math.max(0, rows);
-  }, [wrapperHeight]);
+  }, [availableHeight]);

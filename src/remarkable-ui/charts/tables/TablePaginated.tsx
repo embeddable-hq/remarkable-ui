@@ -8,20 +8,45 @@ import { TablePaginatedProps } from './tables.types';
 
 export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedProps<any>>(
   <T extends Record<string, any>>(
-    { headers, rows, className, totalPages, onPageChange, currentPage }: TablePaginatedProps<T>,
+    props: TablePaginatedProps<T>,
     ref: React.Ref<HTMLDivElement>,
   ): React.JSX.Element => {
+    const {
+      headers,
+      rows,
+      className,
+      total,
+      page,
+      pageSize,
+      sort,
+      showIndex = false,
+      onPageChange,
+      onSortChange,
+    } = props;
+
     return (
       <div ref={ref} className={clsx(styles.tableContainer, className)}>
         <div className={styles.scrollX}>
-          <table>
-            <TableHeader headers={headers} />
-            <TableBody headers={headers} rows={rows} />
+          <table className={styles.table}>
+            <TableHeader
+              showIndex={showIndex}
+              headers={headers}
+              sort={sort}
+              onSortChange={onSortChange}
+            />
+            <TableBody
+              showIndex={showIndex}
+              headers={headers}
+              rows={rows}
+              page={page}
+              pageSize={pageSize}
+            />
           </table>
         </div>
         <TablePagination
-          currentPage={currentPage}
-          totalPages={totalPages}
+          page={page}
+          pageSize={pageSize}
+          total={total}
           onPageChange={onPageChange}
         />
       </div>

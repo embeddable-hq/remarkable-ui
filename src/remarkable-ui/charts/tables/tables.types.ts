@@ -5,8 +5,10 @@ export const TableSortDirection = {
   DESC: 'desc',
 } as const;
 
-type TableSortDirection = (typeof TableSortDirection)[keyof typeof TableSortDirection];
-export type TableSort<T> = { id: keyof T; direction: TableSortDirection };
+export type TableSort<T> = {
+  id: keyof T;
+  direction: (typeof TableSortDirection)[keyof typeof TableSortDirection];
+};
 type TableHeaderItemAlign = 'left' | 'center' | 'right';
 
 export type TableHeaderCell = (value: any) => React.ReactNode;
@@ -22,11 +24,14 @@ export type TableHeaderItem<T> = {
 };
 
 export type TablePaginatedProps<T> = {
+  showIndex?: boolean;
   className?: string;
   headers: TableHeaderItem<T>[];
   rows: T[];
-  currentPage: number;
-  totalPages: number;
+  page: number;
+  pageSize: number;
+  total?: number;
+  sort?: TableSort<T>;
   onPageChange: (page: number) => void;
-  onSortChange?: (value: { id: keyof T; direction: 'asc' | 'desc' }) => void;
+  onSortChange?: (value: TableSort<T> | undefined) => void;
 };

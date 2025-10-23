@@ -1,20 +1,23 @@
-import { Typography } from '../../../../shared/Typography/Typography';
-import { TableHeaderItem } from '../TableHeader/TableHeader';
 import styles from './TableBody.module.css';
+import { Typography } from '../../../../shared/Typography/Typography';
+import { TablePaginatedProps } from '../../tables.types';
+import clsx from 'clsx';
 
-export type TableBodyProps<T> = {
-  headers: TableHeaderItem<T>[];
-  rows: T[];
-};
+export type TableBodyProps<T> = Pick<
+  TablePaginatedProps<T>,
+  'showIndex' | 'headers' | 'rows' | 'pageSize' | 'page'
+>;
 
-export const TableBody = <T,>({ headers, rows }: TableBodyProps<T>) => {
+export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: TableBodyProps<T>) => {
   return (
-    <tbody className={styles.tableBody}>
+    <tbody>
       {rows.map((row, rowIndex) => (
         <tr key={rowIndex}>
-          <td>
-            <Typography>#</Typography>
-          </td>
+          {showIndex && (
+            <td className={clsx(styles.tableBodyCell, styles.tableBodyCellIndex)}>
+              <Typography>{pageSize * page + rowIndex + 1}</Typography>
+            </td>
+          )}
           {headers.map((header, cellIndex) => {
             const value =
               header.accessor !== undefined
@@ -26,7 +29,11 @@ export const TableBody = <T,>({ headers, rows }: TableBodyProps<T>) => {
             // Cell contains own rendering logic
             return (
               // TODO: Fix key
-              <td key={`${rowIndex}-${cellIndex}`} title={`Copy: ${value}`}>
+              <td
+                key={`${rowIndex}-${cellIndex}`}
+                className={styles.tableBodyCell}
+                title={`Copy: ${value}`}
+              >
                 {header.cell ? header.cell(value) : <Typography>{value}</Typography>}
               </td>
             );

@@ -12,24 +12,27 @@ type Story = StoryObj<typeof meta>;
 
 export const FirstPage: Story = {
   args: {
-    currentPage: 0,
-    totalPages: 10,
+    pageSize: 1,
+    page: 0,
+    total: 10,
     onPageChange: (page: number) => console.log('Go to page:', page),
   },
 };
 
 export const MiddlePage: Story = {
   args: {
-    currentPage: 5,
-    totalPages: 10,
+    pageSize: 1,
+    page: 5,
+    total: 10,
     onPageChange: (page: number) => console.log('Go to page:', page),
   },
 };
 
 export const LastPage: Story = {
   args: {
-    currentPage: 9,
-    totalPages: 10,
+    pageSize: 1,
+    page: 9,
+    total: 10,
     onPageChange: (page: number) => console.log('Go to page:', page),
   },
 };

@@ -1,14 +1,10 @@
-.tableHead tr th {
-  box-sizing: border-box;
-  max-height: var(--em-table-size-cell-height_R, 2.5rem);
-  height: var(--em-table-size-cell-height_R, 2.5rem);
+.tableHeadIndex {
   min-width: var(--em-table-size-min-width_R, 3rem);
-  padding: var(--em-table-padding-medium_R, 0.5rem);
+  width: var(--em-table-size-min-width_R, 3rem);
 }
 
-.tableHead tr th:hover,
-.tableHead tr th:focus-within {
-  background: var(--em-table-background-color-hover-header, #f7f7f8);
+.tableHeadIndex button {
+  color: var(--em-table-text-muted, #5c5c66);
 }
 
 .tableHeadCell {
@@ -17,19 +13,20 @@
   background-color: unset;
   display: flex;
   justify-content: space-between;
-}
-
-.tableHeadCell p {
-  /* font-family: var(--em-table-font-family, Inter); */
-  font-size: var(--em-table-font-size, 0.75rem);
-  font-style: normal;
-  font-weight: var(--em-table-font-font-weight-medium, 500);
-  line-height: var(--em-table-font-line-height, 0.875rem);
-  color: var(--em-table-text-default, #212129);
-  padding: 0 var(--em-table-padding-small, 0.25rem);
+  padding: unset;
 }
 
 .tableHeadCell svg {
   width: var(--em-table-icon-size-width, 1rem);
   height: var(--em-table-icon-size-height, 1rem);
+}
+
+.tableHeadCell p {
+  /* font-family: var(--em-table-font-family, Inter); */
+  color: var(--em-table-text-default, #212129);
+  font-size: var(--em-table-font-size, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-table-font-font-weight-medium, 500);
+  line-height: var(--em-table-font-line-height, 0.875rem);
+  padding: 0 var(--em-table-padding-small, 0.25rem);
 }
