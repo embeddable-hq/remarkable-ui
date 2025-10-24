@@ -29,6 +29,12 @@ export const genericString = {
   category: 'Component Settings',
 } as const;
 
+export const subInputWidth = {
+  ...genericNumber,
+  name: 'width',
+  label: 'Width',
+  description: 'You can input a number in pixels e.g. 400, or a percentage e.g. 50%',
+};
 export const subInputColor = {
   ...genericString,
   name: 'color',
@@ -187,6 +193,19 @@ export const dimensions = {
     dataset: 'dataset',
   },
   required: true,
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
+export const dimensionsAndMeasures = {
+  name: 'dimensionsAndMeasures',
+  type: 'dimensionOrMeasure',
+  label: 'Dimensions and Measures',
+  array: true,
+  required: true,
+  config: {
+    dataset: 'dataset',
+  },
   category: 'Component Data',
   inputs: subInputs,
 } as const;

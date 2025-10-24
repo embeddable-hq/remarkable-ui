@@ -33,6 +33,8 @@ export { KpiChart } from './charts/kpis/KpiChart';
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
 export { defaultPieChartOptions } from './charts/pies/pies.constants';
+export { TablePaginated } from './charts/tables/TablePaginated';
+export * from './charts/tables/tables.types';
 
 // Constants
 export { chartColors } from './charts/charts.constants';
