@@ -1,4 +1,4 @@
-export const stylesTokensComponents: Record<string, string> = {
+export const stylesTokensComponents = {
   '--em-action-icon-background-default': 'var(--em-sem-background-light)',
   '--em-action-icon-background-disabled': 'var(--em-sem-background-light)',
   '--em-action-icon-background-hover': 'var(--em-sem-background-subtle)',
@@ -471,3 +471,6 @@ export const stylesTokensComponents: Record<string, string> = {
   '--em-text-input-size-max-width': '400px',
   '--em-text-input-size-min-width': '160px',
 };
+
+type StylesTokensComponents = typeof stylesTokensComponents;
+export type StylesTokensComponentsKeys = keyof StylesTokensComponents;

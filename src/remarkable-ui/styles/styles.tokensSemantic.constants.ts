@@ -1,4 +1,4 @@
-export const stylesTokensSemantic: Record<string, string> = {
+export const stylesTokensSemantic = {
   '--em-sem-background-default': 'var(--em-core-color-gray-050)',
   '--em-sem-background-inverted': 'var(--em-core-color-gray-900)',
   '--em-sem-background-light': 'var(--em-core-color-gray-100)',
@@ -25,3 +25,6 @@ export const stylesTokensSemantic: Record<string, string> = {
   '--em-sem-text-neutral': 'var(--em-core-color-gray-1000)',
   '--em-sem-text-subtle': 'var(--em-core-color-gray-400)',
 };
+
+type StylesTokensSemantic = typeof stylesTokensSemantic;
+export type StylesTokensSemanticKeys = keyof StylesTokensSemantic;

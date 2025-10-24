@@ -1,10 +1,13 @@
-import { stylesTokensCore } from './styles.tokensCore.constants';
-import { stylesTokensSemantic } from './styles.tokensSemantic.constants';
-import { stylesTokensComponents } from './styles.tokensComponents.constants';
+import {
+  stylesTokensComponents,
+  StylesTokensComponentsKeys,
+} from './styles.tokensComponents.constants';
+import { stylesTokensCore, StylesTokensCoreKeys } from './styles.tokensCore.constants';
+import { stylesTokensSemantic, StylesTokensSemanticKeys } from './styles.tokensSemantic.constants';
 
-type StylesTokensCore = Record<keyof typeof stylesTokensCore, string>;
-type StylesTokensSemantic = Record<keyof typeof stylesTokensSemantic, string>;
-type StylesTokensComponents = Record<keyof typeof stylesTokensComponents, string>;
+type StylesTokensCore = Record<StylesTokensCoreKeys, string>;
+type StylesTokensSemantic = Record<StylesTokensSemanticKeys, string>;
+type StylesTokensComponents = Record<StylesTokensComponentsKeys, string>;
 
 export type Styles = StylesTokensCore & StylesTokensSemantic & StylesTokensComponents;
 

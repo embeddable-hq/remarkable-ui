@@ -1,4 +1,4 @@
-export const stylesTokensCore: Record<string, string> = {
+export const stylesTokensCore = {
   '--em-core-border-radius-0': '0px',
   '--em-core-border-radius-050': '2px',
   '--em-core-border-radius-100': '4px',
@@ -84,3 +84,6 @@ export const stylesTokensCore: Record<string, string> = {
   '--em-core-spacing-800': '32px',
   '--em-core-spacing-900': '36px',
 };
+
+type StylesTokensCore = typeof stylesTokensCore;
+export type StylesTokensCoreKeys = keyof StylesTokensCore;
