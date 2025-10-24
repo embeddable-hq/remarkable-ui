@@ -63,4 +63,4 @@ export default defineComponent(TablePaginatedChart, meta, {
         : undefined,
     };
   },
-}) as any;
+});

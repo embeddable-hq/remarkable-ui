@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useRef } from 'react';
+import React, { CSSProperties, useRef } from 'react';
 import { IconAlertCircle } from '@tabler/icons-react';
 import {
   Card,
