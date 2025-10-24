@@ -38,7 +38,7 @@
   text-align: center;
   /* TODO: implement on the font ticket */
   /* font-family: var(--em-kpi-trend-font-font-family, Inter); */
-  color: var(--em-chart-grid-font-color-default, #000);
+  color: var(--em-chart-grid-text-default, #000);
   font-size: 0.875em; /* 87.5% of --em-kpi-trend-font-font-size */
   font-style: normal;
   font-weight: var(--em-kpi-trend-font-font-weight, 500);

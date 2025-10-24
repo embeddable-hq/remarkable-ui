@@ -7,12 +7,20 @@
 }
 
 .title {
-  color: var(--em-card-empty-title-color-default, #212129);
   text-align: center;
-  font-size: var(--em-card-empty-title-font-size, 0.875rem);
   font-style: normal;
-  font-weight: var(--em-card-empty-title-font-weight, 500);
-  line-height: var(--em-card-empty-title-font-line-height, 1rem);
+  /* DENIS DISCUSS */
+  /* the name are weird and are inconsistent
+  --em-card-info-font-line-height
+  --em-card-info-font-title-weight */
+  /* expected to see --em-card-empty-title-font-color */
+  /* expected to see --em-card-empty-title-font-weight */
+  /* expected to see --em-card-empty-title-font-line-height */
+  color: var(--em-card-empty-title-text-default, #212129);
+  font-family: var(--em-card-info-font-family, Inter);
+  font-size: var(--em-card-info-font-size, 0.875rem);
+  font-weight: var(--em-card-info-font-title-weight, 500);
+  line-height: var(--em-card-info-font-line-height, 1rem); /* 114.286% */
 }
 
 .message {

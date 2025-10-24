@@ -2,16 +2,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--em-select-menu-padding-default, 0.75rem);
-  border-radius: var(--em-select-menu-border-radius-default, 0.75rem);
-  border: var(--em-select-menu-border-width-default, 1px) solid
-    var(--em-select-menu-border-color-default, #d2d2d5);
-  background: var(--em-select-menu-background-color-default, #fff);
+  padding: var(--em-sl-menu-padding-default, 0.75rem);
+  border-radius: var(--em-sl-menu-border-radius-default, 0.5rem);
+  border: var(--em-sl-menu-border-width-default, 1px) solid
+    var(--em-sl-menu-border-color-default, #d2d2d5);
+  background: var(--em-sl-menu-background-color-default, #fff);
   cursor: pointer;
-  color: var(--em-select-menu-label-color-default, #212129);
-  height: var(--em-select-menu-size-height-default, 2rem);
-  max-height: var(--em-select-menu-size-height-default, 2rem);
-  min-width: var(--em-select-menu-size-width-min-width, 10rem);
+  color: var(--em-sl-menu-label-text-default, #212129);
+  height: var(--em-sl-menu-size-height-default, 2.5rem);
+  max-height: var(--em-sl-menu-size-height-default, 2.5rem);
+  /* DENIS MISSED */
+  min-width: var(--em-select-menu-size-width-min-width, 4rem);
   width: 100%;
   outline: none;
 }
@@ -35,37 +36,38 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /* font-family: var(--em-select-menu-label-font-font-family, Inter); */
-  padding: 0 var(--em-select-menu-label-padding-default, 0.5rem);
-  font-size: var(--em-select-menu-label-font-size, 0.75rem);
+  /* DENIS MISSED */
+  font-family: Inter;
+  padding: 0 var(--em-sl-item-label-padding-default, 0.5rem);
+  font-size: var(--em-sl-item-left-label-font-size, 0.75rem);
   font-style: normal;
-  font-weight: var(--em-select-menu-label-font-weight, 500);
-  line-height: var(--em-select-menu-label-font-line-height, 0.875rem);
+  font-weight: var(--em-sl-item-left-label-font-weight, 500);
+  line-height: var(--em-sl-item-left-label-font-line-height, 0.875rem);
 }
 
 .button:hover,
 .button:focus {
-  background: var(--em-select-menu-background-color-hover, #f7f7f8);
+  background: var(--em-sl-menu-background-color-hover, #f7f7f8);
 }
 
 .button:active {
-  background: var(--em-select-menu-background-color-pressed, #ededf1);
+  background: var(--em-sl-menu-background-color-pressed, #ededf1);
 }
 
 .button.hasValue {
-  background: var(--em-select-menu-background-color-selected, #212129);
-  color: var(--em-select-menu-label-color-selected, #fff);
+  background: var(--em-sl-menu-background-color-selected, #212129);
+  color: var(--em-btn-pr-text-default, #fff);
 }
 
 .button:disabled {
-  background: var(--em-select-menu-background-color-disabled, #fff);
-  color: var(--em-select-menu-label-color-disabled, #b8b8bd);
+  background: var(--em-sl-menu-background-color-disabled, #fff);
+  color: var(--em-btn-pr-text-disabled, #b8b8bd);
   cursor: unset;
 }
 
 .button span svg {
-  width: var(--em-select-menu-icon-size-width, 1rem);
-  height: var(--em-select-menu-icon-size-height, 1rem);
+  width: var(--em-sl-menu-icon-size-width, 1rem);
+  height: var(--em-sl-menu-icon-size-height, 1rem);
 }
 
 @keyframes spin {
