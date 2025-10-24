@@ -1,5 +1,17 @@
 # @embeddable/remarkable-ui
 
+## 0.1.29
+
+### Patch Changes
+
+- eb68631: Include Kpi css variables
+
+## 0.1.28
+
+### Patch Changes
+
+- 404ee38: Improve interactions on the Line Charts
+
 ## 0.1.27
 
 ### Patch Changes
