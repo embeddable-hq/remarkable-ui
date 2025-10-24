@@ -67,9 +67,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
           />
           <IconButton
             icon={IconChevronsRight}
-            onClick={() => {
-              totalPages && onPageChange(totalPages - 1);
-            }}
+            onClick={() => totalPages && onPageChange(totalPages - 1)}
             disabled={disabledNext}
             aria-label="Last page"
           />

@@ -92,3 +92,5 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
     );
   },
 );
+
+ChartCard.displayName = 'ChartCard';

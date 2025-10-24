@@ -32,6 +32,7 @@ type TablePaginatedChartState = {
 };
 
 export default defineComponent(TablePaginatedChart, meta, {
+  /* @ts-expect-error - to be fixed in @embeddable.com/react */
   props: (
     inputs: Inputs<typeof meta>,
     [state, setState]: [TablePaginatedChartState, (state: TablePaginatedChartState) => void],

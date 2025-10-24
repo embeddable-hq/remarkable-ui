@@ -11,6 +11,7 @@ export type TableSort<T> = {
 };
 type TableHeaderItemAlign = 'left' | 'center' | 'right';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableHeaderCell = (value: any) => React.ReactNode;
 export type TableHeaderItem<T> = {
   id: keyof T;

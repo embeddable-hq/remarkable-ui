@@ -23,7 +23,8 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
               header.accessor !== undefined
                 ? header.accessor(row)
                 : header.id !== undefined
-                  ? (row as any)[header.id]
+                  ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    (row as any)[header.id]
                   : undefined;
 
             // Cell contains own rendering logic
