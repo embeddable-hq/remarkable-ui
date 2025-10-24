@@ -1,11 +1,11 @@
 import { stylesTokensCore } from '../../styles/styles.tokensCore.constants';
 
 export default {
-  title: 'Foundations/Colors',
+  title: 'Foundations/BorderRadius',
 };
 
-const stylesColors = Object.fromEntries(
-  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-color-')),
+const stylesBorderRadius = Object.fromEntries(
+  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-border-radius-')),
 );
 
 export const Default = () => {
@@ -18,7 +18,7 @@ export const Default = () => {
         </tr>
       </thead>
       <tbody>
-        {Object.entries(stylesColors).map(([key, value]) => (
+        {Object.entries(stylesBorderRadius).map(([key, value]) => (
           <tr key={key}>
             <td>
               <code>{key}</code>
@@ -28,7 +28,8 @@ export const Default = () => {
                 style={{
                   width: '150px',
                   height: '100px',
-                  backgroundColor: value,
+                  borderRadius: value,
+                  backgroundColor: stylesTokensCore['--em-core-color-gray-300'],
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
