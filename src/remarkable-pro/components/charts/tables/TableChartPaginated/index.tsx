@@ -23,6 +23,7 @@ type TableChartPaginatedProProps = {
   pageSize: number;
   sort?: { id: string; direction: OrderDirection };
   setSort: any;
+  showIndex: boolean;
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
 };
@@ -33,7 +34,7 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   const [total, setTotal] = useState<number | undefined>(undefined);
 
   const { description, title } = resolveI18nProps(props);
-  const { results, dimensionsAndMeasures, page = 0, sort, setPage, setSort } = props;
+  const { results, dimensionsAndMeasures, page = 0, sort, showIndex, setPage, setSort } = props;
 
   const headers = getTableHeaders({ dimensionsAndMeasures }, theme);
   const rows = results?.data || [];
@@ -72,7 +73,7 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
       <TablePaginated
         headers={headers}
         rows={rows}
-        showIndex
+        showIndex={showIndex}
         page={page}
         pageSize={pageSize}
         total={total}

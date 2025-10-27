@@ -50,13 +50,13 @@ export const TableHeader = <T,>({
   };
 
   return (
-    <thead>
+    <thead className={styles.tableHead}>
       <tr>
         {showIndex && (
           <th className={styles.tableHeadIndex}>
-            <button className={styles.tableHeadCell}>
+            <div className={styles.tableHeadCell}>
               <Typography>#</Typography>
-            </button>
+            </div>
           </th>
         )}
         {headers.map((header) => (

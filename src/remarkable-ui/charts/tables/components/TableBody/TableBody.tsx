@@ -29,7 +29,6 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
 
             // Cell contains own rendering logic
             return (
-              // TODO: Fix key
               <td
                 key={`${rowIndex}-${cellIndex}`}
                 className={styles.tableBodyCell}

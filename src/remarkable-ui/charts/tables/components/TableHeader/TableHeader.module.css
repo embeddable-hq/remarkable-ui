@@ -1,39 +1,44 @@
-.tableHeadIndex {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  pointer-events: none;
-
-  min-width: var(--em-table-size-min-width_R, 3rem);
-  width: var(--em-table-size-min-width_R, 3rem);
-  background: var(--em-table-background-color-default-header_R, #fff);
-}
-
-.tableHeadIndex button p {
-  color: var(--em-table-text-muted, #5c5c66);
-}
-
-.tableHeadCell {
-  width: 100%;
-  border: unset;
-  background-color: unset;
-  display: flex;
-  justify-content: space-between;
+.tableHead tr th {
   padding: unset;
-}
 
-.tableHeadCell svg {
-  width: var(--em-table-icon-size-width, 1rem);
-  height: var(--em-table-icon-size-height, 1rem);
-}
+  &.tableHeadIndex {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
 
-.tableHeadCell p {
-  white-space: nowrap;
-  padding: 0 var(--em-table-padding-small, 0.25rem);
-  /* font-family: var(--em-table-font-family, Inter); */
-  color: var(--em-table-text-default, #212129);
-  font-size: var(--em-table-font-size, 0.75rem);
-  font-style: normal;
-  font-weight: var(--em-table-font-font-weight-medium, 500);
-  line-height: var(--em-table-font-line-height, 0.875rem);
+    min-width: var(--em-table-size-min-width_R, 3rem);
+    width: var(--em-table-size-min-width_R, 3rem);
+    background: var(--em-table-background-color-default-header_R, #fff);
+
+    button p {
+      color: var(--em-table-text-muted, #5c5c66);
+    }
+  }
+
+  .tableHeadCell {
+    cursor: pointer;
+    width: 100%;
+    border: unset;
+    background-color: unset;
+    display: flex;
+    justify-content: space-between;
+    padding: var(--em-table-padding-medium_R, 0.5rem);
+
+    svg {
+      width: var(--em-table-icon-size-width, 1rem);
+      height: var(--em-table-icon-size-height, 1rem);
+    }
+
+    p {
+      white-space: nowrap;
+      padding: 0 var(--em-table-padding-small, 0.25rem);
+      /* font-family: var(--em-table-font-family, Inter); */
+      color: var(--em-table-text-default, #212129);
+      font-size: var(--em-table-font-size, 0.75rem);
+      font-style: normal;
+      font-weight: var(--em-table-font-font-weight-medium, 500);
+      line-height: var(--em-table-font-line-height, 0.875rem);
+    }
+  }
 }

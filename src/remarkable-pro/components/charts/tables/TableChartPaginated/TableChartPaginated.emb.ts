@@ -8,6 +8,7 @@ import {
   dimensionsAndMeasures,
   subInputWidth,
   subInputAlign,
+  genericBoolean,
 } from '../../../component.constants';
 
 export const meta = {
@@ -23,6 +24,7 @@ export const meta = {
     },
     title,
     description,
+    { ...genericBoolean, name: 'showIndex', label: 'Show Index Column', defaultValue: true },
   ],
 } as const satisfies EmbeddedComponentMeta;
 
