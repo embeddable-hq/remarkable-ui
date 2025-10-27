@@ -8,6 +8,23 @@ export type TableHeaderProps<T> = Pick<
   'showIndex' | 'headers' | 'sort' | 'onSortChange'
 >;
 
+const getHeaderAriaSort = <T,>(
+  sort: TablePaginatedProps<T>['sort'],
+  header: TablePaginatedProps<T>['headers'][0],
+) => {
+  return sort?.id === header.id ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none';
+};
+
+const getHeaderAriaLabel = <T,>(
+  sort: TablePaginatedProps<T>['sort'],
+  header: TablePaginatedProps<T>['headers'][0],
+) => {
+  return sort?.id === header.id
+    ? sort.direction === 'asc'
+      ? `Sort by ${header.title}, currently ascending. Activate to sort descending.`
+      : `Sort by ${header.title}, currently descending. Activate to sort ascending.`
+    : `Sort by ${header.title}. Activate to sort ascending.`;
+};
 export const TableHeader = <T,>({
   headers,
   sort,
@@ -60,8 +77,17 @@ export const TableHeader = <T,>({
           </th>
         )}
         {headers.map((header) => (
-          <th key={header.id as string} style={{ minWidth: header.minWidth }}>
-            <button className={styles.tableHeadCell} onClick={() => handleSort(header.id)}>
+          <th
+            key={header.id as string}
+            style={{ minWidth: header.minWidth }}
+            scope="col"
+            aria-sort={getHeaderAriaSort(sort, header)}
+          >
+            <button
+              className={styles.tableHeadCell}
+              onClick={() => handleSort(header.id)}
+              aria-label={getHeaderAriaLabel(sort, header)}
+            >
               <Typography>{header.title}</Typography>
               {getSortIcon(header)}
             </button>
