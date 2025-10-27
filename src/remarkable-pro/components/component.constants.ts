@@ -1,5 +1,7 @@
 // ATENTION: THESE OBJECTS SHOULD NEVER BE TOUCHED
 
+import AlignType from './types/Align.type.emb';
+
 // Generics
 export const genericBoolean = {
   name: 'boolean',
@@ -35,6 +37,14 @@ export const subInputWidth = {
   label: 'Width',
   description: 'You can input a number in pixels e.g. 400, or a percentage e.g. 50%',
 };
+
+export const subInputAlign = {
+  name: 'align',
+  type: AlignType,
+  label: 'Align',
+  category: 'Component Settings',
+};
+
 export const subInputColor = {
   ...genericString,
   name: 'color',

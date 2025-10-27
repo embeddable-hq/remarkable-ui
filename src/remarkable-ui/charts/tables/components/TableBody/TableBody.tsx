@@ -34,6 +34,7 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
                 key={`${rowIndex}-${cellIndex}`}
                 className={styles.tableBodyCell}
                 title={`Copy: ${value}`}
+                style={{ textAlign: header.align }}
               >
                 {header.cell ? header.cell(value) : <Typography>{value}</Typography>}
               </td>

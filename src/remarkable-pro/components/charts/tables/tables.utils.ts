@@ -4,6 +4,22 @@ import { CssSize } from '../../../../remarkable-ui/types/css.types';
 import { Theme } from '../../../theme/theme.types';
 import { getStyleNumber, TableHeaderItem } from '../../../../remarkable-ui';
 
+export const getTableHeaderAlign = (dimOrMeas: DimensionOrMeasure): 'left' | 'center' | 'right' => {
+  const subInputAlign = dimOrMeas.inputs?.align;
+
+  if (subInputAlign) return subInputAlign;
+
+  // Get width by native type
+  switch (dimOrMeas.nativeType) {
+    case 'number':
+    case 'boolean':
+    case 'time':
+      return 'right';
+    default:
+      return 'left';
+  }
+};
+
 export const getTableHeaderMinWidth = (dimOrMeas: DimensionOrMeasure): CssSize => {
   const subInputWidth = dimOrMeas.inputs?.width;
 
@@ -35,5 +51,6 @@ export const getTableHeaders = (
     title: themeFormatter.dimensionOrMeasureTitle(dimOrMeas),
     accessor: (row: any) => themeFormatter.data(dimOrMeas, row[dimOrMeas.name]),
     minWidth: getTableHeaderMinWidth(dimOrMeas),
+    align: getTableHeaderAlign(dimOrMeas),
   }));
 };

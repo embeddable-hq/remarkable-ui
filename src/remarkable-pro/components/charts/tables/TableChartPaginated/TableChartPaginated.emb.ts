@@ -7,6 +7,7 @@ import {
   title,
   dimensionsAndMeasures,
   subInputWidth,
+  subInputAlign,
 } from '../../../component.constants';
 
 export const meta = {
@@ -18,7 +19,7 @@ export const meta = {
     {
       ...dimensionsAndMeasures,
       label: 'Columns',
-      inputs: [...dimensionsAndMeasures.inputs, subInputWidth],
+      inputs: [...dimensionsAndMeasures.inputs, subInputWidth, subInputAlign],
     },
     title,
     description,
