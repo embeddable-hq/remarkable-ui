@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { TablePaginated } from './TablePaginated';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableHeaderItem } from './tables.types';
+import { Typography } from '../../shared/Typography/Typography';
 
 const teams = ['Design', 'Engineering', 'Ops', 'Marketing'] as const;
 const titles = ['IC', 'Lead', 'Manager', 'Director'] as const;
@@ -34,9 +35,17 @@ type Story = StoryObj<typeof meta>;
 type Client = { id: number; name: string; age: number; title: string };
 
 const headers: TableHeaderItem<Client>[] = [
-  { id: 'name', title: 'Name', minWidth: 500 },
-  { id: 'age', title: 'Age', minWidth: 500 },
-  { id: 'title', title: 'Title', minWidth: 500 },
+  {
+    id: 'name',
+    title: 'Name',
+    cell: (props) => (
+      <td style={{ background: 'yellow' }} className={props.className}>
+        <Typography>{props.value} 💅</Typography>
+      </td>
+    ),
+  },
+  { id: 'age', title: 'Age' },
+  { id: 'title', title: 'Title' },
 ];
 
 export const Basic: Story = {

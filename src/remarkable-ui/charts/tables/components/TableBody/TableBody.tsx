@@ -27,7 +27,11 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
                     (row as any)[header.id]
                   : undefined;
 
-            // Cell contains own rendering logic
+            // Custom cell renderer
+            if (header.cell) {
+              return header.cell({ value, className: styles.tableBodyCell });
+            }
+
             return (
               <td
                 key={`${rowIndex}-${cellIndex}`}
@@ -35,7 +39,7 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
                 title={`Copy: ${value}`}
                 style={{ textAlign: header.align }}
               >
-                {header.cell ? header.cell(value) : <Typography>{value}</Typography>}
+                <Typography>{value}</Typography>
               </td>
             );
           })}
