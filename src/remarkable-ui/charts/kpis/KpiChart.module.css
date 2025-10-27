@@ -14,13 +14,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  color: var(--em-kpi-kpi-font-font-color, #212129);
-  /* TODO: implement on the font ticket */
-  /* font-family: var(--em-kpi-kpi-font-font-family, Inter); */
   font-style: normal;
-  font-weight: var(--em-kpi-kpi-font-font-weight, 700);
   line-height: normal;
+
+  color: var(--em-kpi-kpi-text, #212129);
+  font-family: var(--em-kpi-kpi-font-family, Inter, sans-serif);
+  font-weight: var(--em-kpi-kpi-font-weight, 700);
+  font-size: var(--em-kpi-kpi-font-size, 2rem);
 }
 
 .kpiComparisonContainer {
@@ -28,20 +28,23 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-
-  padding: var(--em-chart-grid-padding-lg, 1rem) 0 0 0;
-  gap: var(--em-chart-grid-padding-default, 0.5rem);
-  font-size: var(--em-kpi-trend-font-font-size, 1rem);
+  /* DENIS MISSED */
+  padding: var(---em-chart-grid-padding-lg, 1rem) 0 0 0;
+  font-size: var(--em-chart-grid-font-size-title, 0.875rem);
 }
 
 .kpiComparisonContainer > p {
   text-align: center;
-  /* TODO: implement on the font ticket */
-  /* font-family: var(--em-kpi-trend-font-font-family, Inter); */
-  color: var(--em-chart-grid-text-default, #000);
-  font-size: 0.875em; /* 87.5% of --em-kpi-trend-font-font-size */
   font-style: normal;
-  font-weight: var(--em-kpi-trend-font-font-weight, 500);
+  font-size: 0.875em; /* 87.5% of --em-kpi-trend-font-font-size */
+  /* DENIS MISSED */
+  font-weight: var(em-kpi-trend-font-font-weight, 500);
+
+  color: var(--em-chart-grid-text-default, #000);
+  font-family: var(--em-chart-grid-font-family, Inter, sans-serif);
+  font-size: var(--em-chart-grid-font-size-title, 0.875rem);
+  font-weight: var(--em-chart-grid-font-weight-subtitle, 400);
+  line-height: var(--em-chart-grid-font-line-height, 0.875rem);
 }
 
 .kpiChangeHidden {

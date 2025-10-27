@@ -41,7 +41,7 @@
 
 .subtitle {
   color: var(--em-foreground-color-muted, #5c5c66);
-  font-family: var(--em-card-subtitle-font-font-family, Inter);
+  font-family: var(--em-card-subtitle-font-font-family, Inter, sans-serif);
   font-size: var(--em-card-subtitle-font-size, 0.875rem);
   font-style: normal;
   font-weight: var(--em-card-subtitle-font-weight, 400);

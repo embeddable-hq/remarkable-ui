@@ -5,7 +5,7 @@
   .characterCount {
     display: flex;
     justify-content: flex-start;
-    /* font-family: var(--em-form-section-font-font-family, Inter); */
+    font-family: var(--em-form-section-font-font-family, Inter, sans-serif);
     font-size: var(--em-form-form-font-font-size-required, 0.75rem);
     font-weight: var(--em-form-form-font-font-weight, 400);
     line-height: var(--em-form-form-font-line-height, 1rem);

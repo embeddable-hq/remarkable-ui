@@ -13,23 +13,23 @@
 }
 
 .primary {
-  background: var(--em-primary-btn-background-color-default, #5c5c66);
-  color: var(--em-primary-btn-label-color-default, #fff);
-  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
+  background: var(--em-btn-pr-background-default, #5c5c66);
+  color: var(--em-btn-pr-text-default, #fff);
+  border-radius: var(--em-btn-pr-border-radius-default, 624.9375rem);
 }
 
 .primary:hover,
 .primary:focus {
-  background: var(--em-primary-btn-background-color-hover, #212129);
+  background: var(--em-btn-pr-background-hover, #212129);
 }
 
 .primary:active {
-  background: var(--em-primary-btn-background-color-pressed, #000);
+  background: var(--em-btn-pr-background-pressed, #000);
 }
 
 .primary:disabled {
-  background: var(--em-primary-btn-background-color-disabled, #ededf1);
-  color: var(--em-primary-btn-label-color-disabled, #b8b8bd);
+  background: var(--em-btn-pr-background-disabled, #ededf1);
+  color: var(--em-btn-pr-text-disabled, #b8b8bd);
 }
 
 .secondary {

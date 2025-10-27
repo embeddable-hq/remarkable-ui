@@ -33,7 +33,7 @@ export const stylesTokensCore = {
   '--em-core-color-orange-700': 'rgb(255 119 51)',
   '--em-core-color-orange-800': 'rgb(255 102 26)',
   '--em-core-color-orange-900': 'rgb(255 84 0)',
-  '--em-core-font-family-base': "'inter'",
+  '--em-core-font-family-base': 'Inter, sans-serif',
   '--em-core-font-size-md': '16px',
   '--em-core-font-size-sm': '14px',
   '--em-core-font-size-xl': '20px',

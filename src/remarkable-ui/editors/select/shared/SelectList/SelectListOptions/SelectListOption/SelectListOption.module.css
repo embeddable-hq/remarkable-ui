@@ -56,7 +56,7 @@
   font-size: var(--em-sl-item-left-label-font-size, 0.75rem);
   font-weight: var(--em-sl-item-left-label-font-weight, 500);
   line-height: var(--em-sl-item-left-label-font-line-height, 0.875rem);
-  font-family: var(--em-sl-item-left-label-font-family, 'Inter');
+  font-family: var(--em-sl-item-left-label-font-family, Inter, sans-serif);
 }
 
 .listItem .rightContent p {
@@ -65,7 +65,7 @@
   font-size: var(--em-sl-item-right-label-font-size, 0.75rem);
   font-weight: var(--em-sl-item-right-label-font-weight, 400);
   line-height: var(--em-sl-item-right-label-font-line-height, 0.875rem);
-  font-family: var(--em-sl-item-right-label-font-family, 'Inter');
+  font-family: var(--em-sl-item-right-label-font-family, Inter, sans-serif);
 }
 
 .listItem.selected {
