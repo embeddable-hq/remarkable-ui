@@ -42,6 +42,7 @@ export const getTableHeaderMinWidth = (dimOrMeas: DimensionOrMeasure): CssSize =
 export const getTableHeaders = (
   props: {
     dimensionsAndMeasures: DimensionOrMeasure[];
+    displayNullAs?: string;
   },
   theme: Theme,
 ): TableHeaderItem<any>[] => {
@@ -49,7 +50,12 @@ export const getTableHeaders = (
   return props.dimensionsAndMeasures.map((dimOrMeas) => ({
     id: dimOrMeas.name,
     title: themeFormatter.dimensionOrMeasureTitle(dimOrMeas),
-    accessor: (row: any) => themeFormatter.data(dimOrMeas, row[dimOrMeas.name]),
+    accessor: (row: any) => {
+      if (row[dimOrMeas.name] == null) {
+        return props.displayNullAs ?? '';
+      }
+      return themeFormatter.data(dimOrMeas, row[dimOrMeas.name]);
+    },
     minWidth: getTableHeaderMinWidth(dimOrMeas),
     align: getTableHeaderAlign(dimOrMeas),
   }));

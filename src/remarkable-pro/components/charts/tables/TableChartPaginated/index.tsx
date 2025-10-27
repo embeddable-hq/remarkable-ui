@@ -4,7 +4,7 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, DimensionOrMeasure, OrderDirection } from '@embeddable.com/core';
-import { getStyleNumber, TablePaginated } from '../../../../../remarkable-ui';
+import { getStyleNumber, TablePaginated, TableSort } from '../../../../../remarkable-ui';
 import { useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
 import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table.hooks';
@@ -17,12 +17,13 @@ const footerHeight = getStyleNumber('--em-table-size-footer-height_R' as any, '3
 type TableChartPaginatedProProps = {
   title: string;
   description: string;
+  displayNullAs?: string;
   results: DataResponse;
   dimensionsAndMeasures: DimensionOrMeasure[];
   page: number;
   pageSize: number;
   sort?: { id: string; direction: OrderDirection };
-  setSort: any;
+  setSort: (value: TableSort<unknown> | undefined) => void;
   showIndex: boolean;
   setPage: (page: number) => void;
   setPageSize: (pageSize: number) => void;
@@ -34,9 +35,18 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   const [total, setTotal] = useState<number | undefined>(undefined);
 
   const { description, title } = resolveI18nProps(props);
-  const { results, dimensionsAndMeasures, page = 0, sort, showIndex, setPage, setSort } = props;
+  const {
+    results,
+    dimensionsAndMeasures,
+    displayNullAs,
+    page = 0,
+    sort,
+    showIndex,
+    setSort,
+    setPage,
+  } = props;
 
-  const headers = getTableHeaders({ dimensionsAndMeasures }, theme);
+  const headers = getTableHeaders({ dimensionsAndMeasures, displayNullAs }, theme);
   const rows = results?.data || [];
 
   const cardContentRef = useRef<HTMLDivElement>(null);
