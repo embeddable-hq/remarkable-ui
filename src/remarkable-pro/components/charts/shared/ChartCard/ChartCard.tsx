@@ -36,10 +36,12 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
 
     const chartRef = useRef<HTMLDivElement>(null);
 
-    const hasData = data?.data && data.data.length > 0;
+    const hasData = Boolean(data?.data && data.data?.length > 0);
+
+    const isLoading = !data || data?.isLoading;
 
     const getDisplay = () => {
-      if (!hasData && data?.isLoading) {
+      if (isLoading && !hasData) {
         return <Skeleton />;
       }
 
@@ -73,7 +75,7 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
           subtitle={subtitle}
           rightContent={
             <div data-no-export className={styles.rightContent}>
-              {data?.isLoading ? (
+              {isLoading ? (
                 <ChartCardLoading />
               ) : (
                 <ChartCardMenuPro
