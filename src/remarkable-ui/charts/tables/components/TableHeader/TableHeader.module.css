@@ -1,6 +1,12 @@
 .tableHeadIndex {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+
   min-width: var(--em-table-size-min-width_R, 3rem);
   width: var(--em-table-size-min-width_R, 3rem);
+  background: var(--em-table-background-color-default-header_R, #fff);
 }
 
 .tableHeadIndex button p {

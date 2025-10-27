@@ -1,3 +1,11 @@
+.tableBodyCellIndex {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--em-table-background-color-default-header_R, #fff);
+}
+
 .tableBodyCellIndex p {
   color: var(--em-table-text-muted, #5c5c66) !important;
 }

@@ -34,10 +34,9 @@ type Story = StoryObj<typeof meta>;
 type Client = { id: number; name: string; age: number; title: string };
 
 const headers: TableHeaderItem<Client>[] = [
-  { id: 'id', title: 'Id' },
-  { id: 'name', title: 'Name' },
-  { id: 'age', title: 'Age' },
-  { id: 'title', title: 'Title' },
+  { id: 'name', title: 'Name', minWidth: 500 },
+  { id: 'age', title: 'Age', minWidth: 500 },
+  { id: 'title', title: 'Title', minWidth: 500 },
 ];
 
 export const Basic: Story = {
