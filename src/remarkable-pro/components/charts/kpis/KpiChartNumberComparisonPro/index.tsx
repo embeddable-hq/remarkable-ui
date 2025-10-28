@@ -68,17 +68,18 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
   const comparisonLabel = `vs ${getComparisonPeriodLabel(comparisonPeriod, theme).toLowerCase()}`;
 
   const resultsCombined: DataResponse = {
-    isLoading: results.isLoading,
-    data: results.isLoading
-      ? undefined
-      : [
-          ...(results.data?.length
-            ? [{ label: i18n.t('charts.primaryPeriod'), ...results.data[0] }]
-            : []),
-          ...(resultsComparison?.data?.length
-            ? [{ label: i18n.t('charts.comparisonPeriod'), ...resultsComparison.data[0] }]
-            : []),
-        ],
+    isLoading: Boolean(results.isLoading || resultsComparison?.isLoading),
+    data:
+      !results?.data && !resultsComparison?.data
+        ? undefined
+        : [
+            ...(results.data?.length
+              ? [{ label: i18n.t('charts.primaryPeriod'), ...results.data[0] }]
+              : []),
+            ...(resultsComparison?.data?.length
+              ? [{ label: i18n.t('charts.comparisonPeriod'), ...resultsComparison.data[0] }]
+              : []),
+          ],
   };
 
   return (
