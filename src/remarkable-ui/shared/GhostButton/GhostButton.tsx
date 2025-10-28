@@ -5,18 +5,21 @@ import styles from './GhostButton.module.css';
 
 export type GhostButtonProps = {
   startIcon?: Icon;
+  endIcon?: Icon;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const GhostButton: React.FC<GhostButtonProps> = ({
   startIcon: StartIcon,
+  endIcon: EndIcon,
   children,
   className,
   ...props
 }) => {
   return (
     <button className={clsx(styles.ghostButton, className)} {...props}>
-      {StartIcon && <StartIcon className={styles.icon} />}
+      {StartIcon && <StartIcon className={styles.startIcon} />}
       {children}
+      {EndIcon && <EndIcon className={styles.endIcon} />}
     </button>
   );
 };
