@@ -1,4 +1,4 @@
-import { DimensionOrMeasure } from '@embeddable.com/core';
+import { DataResponse, Dimension, DimensionOrMeasure } from '@embeddable.com/core';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { CssSize } from '../../../../remarkable-ui/types/css.types';
 import { Theme } from '../../../theme/theme.types';
@@ -64,5 +64,22 @@ export const getTableHeaders = (
     },
     minWidth: getTableHeaderMinWidth(dimOrMeas),
     align: getTableHeaderAlign(dimOrMeas),
+  }));
+};
+
+export const getTableRows = (props: { clickDimension?: Dimension; rows: DataResponse['data'] }) => {
+  if (!props.rows || props.rows.length === 0) {
+    return [];
+  }
+
+  const clickDimensionName = props.clickDimension?.name;
+
+  if (!clickDimensionName || !Object.keys(props.rows[0]!).includes(clickDimensionName)) {
+    return props.rows;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  return props.rows.map(({ [clickDimensionName]: _, ...row }) => ({
+    ...row,
   }));
 };

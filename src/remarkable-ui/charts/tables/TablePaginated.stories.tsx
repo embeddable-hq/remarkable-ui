@@ -32,7 +32,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-type Client = { id: number; name: string; age: number; title: string };
+type Client = {
+  id: number;
+  name: string;
+  age: number;
+  title: string;
+  team: string;
+  salary: number;
+};
 
 const headers: TableHeaderItem<Client>[] = [
   {
@@ -44,7 +51,15 @@ const headers: TableHeaderItem<Client>[] = [
       </td>
     ),
   },
+  { id: 'title', title: 'Title', align: 'right' },
+  { id: 'team', title: 'Team', align: 'left' },
   { id: 'age', title: 'Age', align: 'right' },
+  {
+    id: 'salary',
+    title: 'Salary',
+    align: 'right',
+    accessor: (row) => `$${row.salary.toLocaleString()}`,
+  },
 ];
 
 export const Basic: Story = {

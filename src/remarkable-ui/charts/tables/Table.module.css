@@ -34,18 +34,16 @@
   padding: var(--em-table-padding-medium_R, 0.5rem);
 }
 
-.table th::after,
-.table td::after {
+/* Make index column always show the border on the right side */
+.table th:first-of-type:after,
+.table td:first-of-type::after {
   content: '';
   position: absolute;
   top: 0;
   bottom: 0;
-  right: calc(
-    -1 * var(--em-table-border-width-default, 1px)
-  ); /* offset so it lines up with the grid */
+  right: calc(-1 * var(--em-table-border-width-default, 1px));
   width: var(--em-table-border-width-default, 1px);
-  background: var(--em-table-border-color-default, #ededf1); /* your border color */
-  pointer-events: none;
+  background: var(--em-table-border-color-default, #ededf1);
 }
 
 .table td:hover,

@@ -8,14 +8,21 @@ import { useState } from 'react';
 
 export type TableBodyProps<T> = Pick<
   TablePaginatedProps<T>,
-  'showIndex' | 'headers' | 'rows' | 'pageSize' | 'page'
+  'showIndex' | 'headers' | 'rows' | 'pageSize' | 'page' | 'onRowIndexClick'
 >;
 
-export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: TableBodyProps<T>) => {
+export const TableBody = <T,>({
+  headers,
+  rows,
+  pageSize,
+  page,
+  showIndex,
+  onRowIndexClick,
+}: TableBodyProps<T>) => {
   return (
     <tbody className={styles.tableBody}>
       {rows.map((row, rowIndex) => (
-        <tr key={rowIndex}>
+        <tr key={rowIndex} onClick={() => onRowIndexClick?.(rowIndex)}>
           {showIndex && (
             <td className={clsx(styles.tableBodyCell, styles.tableBodyCellIndex)}>
               <Typography>{pageSize * page + rowIndex + 1}</Typography>
@@ -60,6 +67,7 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
   }
 
   const handleCopy = () => {
+    setIsPressedCopy(true);
     if (value !== undefined) {
       navigator.clipboard.writeText(String(value));
     }
@@ -75,7 +83,7 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
     >
       <IconButton
         title={`Copy: ${String(value)}`}
-        onMouseDown={() => setIsPressedCopy(true)}
+        onMouseDown={handleCopy}
         size="small"
         icon={isPressedCopy ? IconCopyCheckFilled : IconCopy}
         className={clsx(

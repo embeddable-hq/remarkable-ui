@@ -3,12 +3,12 @@ import { Theme } from '../../../../theme/theme.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
-import { DataResponse, DimensionOrMeasure, OrderDirection } from '@embeddable.com/core';
+import { DataResponse, Dimension, DimensionOrMeasure, OrderDirection } from '@embeddable.com/core';
 import { getStyleNumber, TablePaginated } from '../../../../../remarkable-ui';
 import { useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
 import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table.hooks';
-import { getTableHeaders } from '../tables.utils';
+import { getTableHeaders, getTableRows } from '../tables.utils';
 import { ChartCardMenuProOptionOnClickProps } from '../../shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -19,6 +19,7 @@ const footerHeight = getStyleNumber('--em-table-size-footer-height_R' as any, '3
 
 let downloadData: (data: DataResponse['data']) => void;
 
+export type TableChartPaginatedProOnRowClickArg = string | null;
 export type TableChartPaginatedProState = {
   page: number;
   pageSize?: number;
@@ -35,9 +36,11 @@ type TableChartPaginatedProProps = {
   dimensionsAndMeasures: DimensionOrMeasure[];
   showIndex: boolean;
   allResults?: DataResponse;
+  clickDimension?: Dimension;
   state: TableChartPaginatedProState;
   setState: React.Dispatch<React.SetStateAction<TableChartPaginatedProState>>;
-} & TableChartPaginatedProState;
+  onRowClicked: (rowDimensionValue: TableChartPaginatedProOnRowClickArg) => void;
+};
 
 const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   const theme = useTheme() as Theme;
@@ -45,8 +48,17 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   const [total, setTotal] = useState<number | undefined>(undefined);
 
   const { description, title } = resolveI18nProps(props);
-  const { results, allResults, dimensionsAndMeasures, displayNullAs, showIndex, state, setState } =
-    props;
+  const {
+    results,
+    allResults,
+    dimensionsAndMeasures,
+    displayNullAs,
+    showIndex,
+    clickDimension,
+    state,
+    setState,
+    onRowClicked,
+  } = props;
   const handleUpdateEmbeddableState = (newState: Partial<TableChartPaginatedProState>) => {
     setState((prevState) => ({
       ...prevState,
@@ -58,6 +70,7 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
 
   const headers = getTableHeaders({ dimensionsAndMeasures, displayNullAs }, theme);
   const rows = results?.data || [];
+  const tableRows = getTableRows({ rows, clickDimension });
 
   const cardContentRef = useRef<HTMLDivElement>(null);
 
@@ -110,6 +123,13 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
     }
   }, [isDownloadingData, props]);
 
+  const handleRowIndexClick = (rowIndex: number) => {
+    if (!clickDimension) return;
+
+    const rowDimensionValue = rows[rowIndex]?.[clickDimension.name];
+    onRowClicked(rowDimensionValue);
+  };
+
   return (
     <ChartCard
       ref={cardContentRef}
@@ -121,8 +141,9 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
       onCustomDownload={handleCustomDownload}
     >
       <TablePaginated
+        onRowIndexClick={handleRowIndexClick}
         headers={headers}
-        rows={rows}
+        rows={tableRows}
         showIndex={showIndex}
         page={state.page}
         pageSize={pageSize}

@@ -22,6 +22,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
       pageSize,
       sort,
       showIndex = false,
+      onRowIndexClick,
       onPageChange,
       onSortChange,
     } = props;
@@ -37,6 +38,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
               onSortChange={onSortChange}
             />
             <TableBody
+              onRowIndexClick={onRowIndexClick}
               showIndex={showIndex}
               headers={headers}
               rows={rows}

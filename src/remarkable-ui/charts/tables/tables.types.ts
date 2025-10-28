@@ -43,6 +43,7 @@ export type TablePaginatedProps<T> = {
   pageSize: number;
   total?: number;
   sort?: TableSort<T>;
+  onRowIndexClick?: (rowIndex: number) => void;
   onPageChange: (page: number) => void;
   onSortChange?: (value: TableSort<T> | undefined) => void;
 };

@@ -170,6 +170,18 @@ export const dimension = {
   inputs: subInputs,
 } as const;
 
+export const dimensionSimple = {
+  name: 'dimensionSimple',
+  type: 'dimension',
+  label: 'Dimension',
+  config: {
+    dataset: 'dataset',
+    hideGranularity: true,
+  },
+  required: true,
+  category: 'Component Data',
+} as const;
+
 export const dimensionTime = {
   name: 'dimensionTime',
   type: 'dimension',
@@ -203,6 +215,17 @@ export const dimensions = {
     dataset: 'dataset',
   },
   required: true,
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
+export const dimensionOrMeasure = {
+  name: 'dimensionOrMeasure',
+  type: 'dimensionOrMeasure',
+  label: 'Dimension or Measure',
+  config: {
+    dataset: 'dataset',
+  },
   category: 'Component Data',
   inputs: subInputs,
 } as const;

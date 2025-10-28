@@ -1,6 +1,9 @@
-import { loadData, OrderBy, OrderDirection } from '@embeddable.com/core';
+import { loadData, OrderBy, OrderDirection, Value } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
-import TablePaginatedChart, { TableChartPaginatedProState } from './index';
+import TablePaginatedChart, {
+  TableChartPaginatedProOnRowClickArg,
+  TableChartPaginatedProState,
+} from './index';
 import {
   dataset,
   description,
@@ -11,6 +14,7 @@ import {
   genericBoolean,
   genericString,
   maxResults,
+  dimensionSimple,
 } from '../../../component.constants';
 import { mergician } from 'mergician';
 
@@ -27,9 +31,28 @@ export const meta = {
     },
     title,
     description,
+    {
+      ...dimensionSimple,
+      label: 'Dimension to set on click',
+      name: 'clickDimension',
+      required: false,
+    },
     { ...genericBoolean, name: 'showIndex', label: 'Show Index Column', defaultValue: true },
     { ...genericString, name: 'displayNullAs', label: 'Display null as' },
     maxResults,
+  ],
+  events: [
+    {
+      name: 'onRowClicked',
+      label: 'A row is clicked',
+      properties: [
+        {
+          name: 'rowDimensionValue',
+          label: 'Clicked Row Dimension Value',
+          type: 'string',
+        },
+      ],
+    },
   ],
 } as const satisfies EmbeddedComponentMeta;
 
@@ -53,6 +76,15 @@ export default defineComponent(TablePaginatedChart, meta, {
       ? [{ property: orderDimensionAndMeasure, direction: state.sort!.direction as OrderDirection }]
       : [];
 
+    const clickDimensionInDimensionsAndMeasures = inputs.dimensionsAndMeasures.some(
+      (dimOrMeas) => dimOrMeas.name === inputs.clickDimension?.name,
+    );
+
+    const dimensionsAndMeasuresToLoad = [
+      ...inputs.dimensionsAndMeasures,
+      clickDimensionInDimensionsAndMeasures ? [] : inputs.clickDimension,
+    ];
+
     return {
       ...inputs,
 
@@ -62,7 +94,7 @@ export default defineComponent(TablePaginatedChart, meta, {
       results: state?.pageSize
         ? loadData({
             from: inputs.dataset,
-            select: inputs.dimensionsAndMeasures,
+            select: dimensionsAndMeasuresToLoad,
             offset: state.page * state.pageSize,
             limit: state.pageSize,
             countRows: true,
@@ -78,5 +110,12 @@ export default defineComponent(TablePaginatedChart, meta, {
           })
         : undefined,
     };
+  },
+  events: {
+    onRowClicked: (rowDimensionValue: TableChartPaginatedProOnRowClickArg) => {
+      return {
+        rowDimensionValue: rowDimensionValue !== undefined ? rowDimensionValue : Value.noFilter(),
+      };
+    },
   },
 });
