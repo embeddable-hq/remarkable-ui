@@ -31,7 +31,6 @@
   background: var(--em-primary-btn-background-color-disabled, #ededf1);
   color: var(--em-primary-btn-label-color-disabled, #b8b8bd);
 }
-
 .secondary {
   background: var(--em-secondary-btn-background-color-default, #ededf1);
   color: var(--em-secondary-btn-label-color-default, #212129);
