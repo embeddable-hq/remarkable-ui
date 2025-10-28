@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.30
+
+### Patch Changes
+
+- 6b0bb08: Add Ghost Button
+
 ## 0.1.29
 
 ### Patch Changes
