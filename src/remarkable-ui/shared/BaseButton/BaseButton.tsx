@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './BaseButton.module.css';
 
 export type BaseButtonProps = {
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium';
   ref?: React.Ref<HTMLButtonElement>;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;

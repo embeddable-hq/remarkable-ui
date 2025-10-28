@@ -51,35 +51,6 @@
   color: var(--em-secondary-btn-label-color-disabled, #b8b8bd);
 }
 
-.ghost {
-  height: var(--em-ghost-btn-size-height, 1.25rem);
-  padding: var(--em-ghost-btn-padding-default, 0.125rem);
-  flex-shrink: 0;
-  background: transparent;
-  color: var(--em-ghost-btn-label-color-default, #212129);
-  font-family: var(--em-ghost-btn-label-font-default-font-family, Inter);
-  font-size: var(--em-ghost-btn-label-font-default-size, 0.75rem);
-  font-style: normal;
-  font-weight: var(--em-ghost-btn-label-font-default-weight, 400);
-  line-height: var(--em-ghost-btn-label-font-default-line-height, 0.875rem);
-}
-
-.ghost:hover,
-.ghost:focus {
-  border-radius: var(--em-border-radius-100, 0.25rem);
-  background: var(--em-ghost-btn-background-color-hover, #f7f7f8);
-}
-
-.ghost:active {
-  border-radius: var(--em-border-radius-100, 0.25rem);
-  background: var(--em-ghost-btn-background-color-pressed, #ededf1);
-}
-
-.ghost:disabled {
-  background: transparent;
-  color: var(--em-ghost-btn-label-color-disabled, #b8b8bd);
-}
-
 /* Common icon styles */
 .icon {
   width: var(--em-primary-btn-icon-size-width, 1rem);
