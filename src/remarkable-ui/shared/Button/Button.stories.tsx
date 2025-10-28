@@ -58,3 +58,15 @@ export const SecondarySmall: Story = {
     onClick: () => console.log('Button clicked!'),
   },
 };
+
+export const GhostSmall: Story = {
+  args: {
+    children: 'Ghost Small Button',
+    variant: 'ghost',
+    size: 'small',
+    startIcon: IconBoltFilled,
+    endIcon: IconBoltFilled,
+    disabled: false,
+    onClick: () => console.log('Button clicked!'),
+  },
+};
