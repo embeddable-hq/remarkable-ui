@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TablePaginated } from './TablePaginated';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableHeaderItem } from './tables.types';
@@ -49,7 +49,7 @@ const headers: TableHeaderItem<Client>[] = [
 
 export const Basic: Story = {
   render: (args) => {
-    const [_, updateArgs] = useArgs();
+    const [, updateArgs] = useArgs();
 
     const start = args.page * args.pageSize;
     const end = start + args.pageSize;

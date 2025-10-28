@@ -15,13 +15,14 @@ export const TableHeaderAlign = {
   RIGHT: 'right',
 } as const;
 
-type TableHeaderItemAlign = (typeof TableHeaderAlign)[keyof typeof TableHeaderAlign];
+export type TableHeaderItemAlign = (typeof TableHeaderAlign)[keyof typeof TableHeaderAlign];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableHeaderCell = (props: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   value: any;
   className?: string;
 }) => React.ReactElement<HTMLTableCellElement>;
+
 export type TableHeaderItem<T> = {
   id: keyof T;
   title: React.ReactNode;

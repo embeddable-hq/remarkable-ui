@@ -2,9 +2,15 @@ import { DimensionOrMeasure } from '@embeddable.com/core';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { CssSize } from '../../../../remarkable-ui/types/css.types';
 import { Theme } from '../../../theme/theme.types';
-import { getStyleNumber, TableHeaderItem } from '../../../../remarkable-ui';
+import {
+  getStyleNumber,
+  TableHeaderAlign,
+  TableHeaderItem,
+  TableHeaderItemAlign,
+} from '../../../../remarkable-ui';
 
-export const getTableHeaderAlign = (dimOrMeas: DimensionOrMeasure): 'left' | 'center' | 'right' => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const getTableHeaderAlign = (dimOrMeas: DimensionOrMeasure): TableHeaderItemAlign => {
   const subInputAlign = dimOrMeas.inputs?.align;
 
   if (subInputAlign) return subInputAlign;
@@ -14,9 +20,9 @@ export const getTableHeaderAlign = (dimOrMeas: DimensionOrMeasure): 'left' | 'ce
     case 'number':
     case 'boolean':
     case 'time':
-      return 'right';
+      return TableHeaderAlign.RIGHT;
     default:
-      return 'left';
+      return TableHeaderAlign.LEFT;
   }
 };
 

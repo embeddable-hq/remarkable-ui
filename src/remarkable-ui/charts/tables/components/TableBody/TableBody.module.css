@@ -6,8 +6,8 @@
   background: var(--em-table-background-color-default-header_R, #fff);
 }
 
-.tableBodyCellIndex p {
-  color: var(--em-table-text-muted, #5c5c66) !important;
+.tableBody td.tableBodyCellIndex p {
+  color: var(--em-table-text-muted, #5c5c66);
 }
 
 .tableBodyCell {

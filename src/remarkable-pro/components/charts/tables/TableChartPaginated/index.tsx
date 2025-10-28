@@ -11,6 +11,8 @@ import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tabl
 import { getTableHeaders } from '../tables.utils';
 import { ChartCardMenuProOptionOnClickProps } from '../../shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 const headerHeight = getStyleNumber('--em-table-size-cell-height_R' as any, '2.5rem') as number;
 const rowHeight = getStyleNumber('--em-table-size-cell-height_R' as any, '2.5rem') as number;
 const footerHeight = getStyleNumber('--em-table-size-footer-height_R' as any, '3rem') as number;

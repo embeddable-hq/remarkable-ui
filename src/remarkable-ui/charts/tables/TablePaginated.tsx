@@ -6,7 +6,9 @@ import { TableHeader } from './components/TableHeader/TableHeader';
 import { TableBody } from './components/TableBody/TableBody';
 import { TablePaginatedProps } from './tables.types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedProps<any>>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   <T extends Record<string, any>>(
     props: TablePaginatedProps<T>,
     ref: React.Ref<HTMLDivElement>,
@@ -53,3 +55,5 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
     );
   },
 );
+
+TablePaginated.displayName = 'TablePaginated';
