@@ -31,7 +31,7 @@ export const meta = {
     {
       ...measure,
       inputs: [
-        ...measure.inputs,
+        // ...measure.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
         { ...genericBoolean, name: 'connectGaps', label: 'Connect gaps', defaultValue: true },
       ],

@@ -151,7 +151,7 @@ export const dimension = {
   },
   required: true,
   category: 'Component Data',
-  inputs: subInputs,
+  // inputs: subInputs,
 } as const;
 
 export const dimensionTime = {
@@ -200,7 +200,7 @@ export const measure = {
   },
   required: true,
   category: 'Component Data',
-  inputs: subInputs,
+  // inputs: subInputs,
 } as const;
 
 export const measures = {
@@ -373,7 +373,7 @@ export const maxLegendItems = {
   type: 'number',
   label: 'Max Legend Items',
   defaultValue: 10,
-  category: 'Component Data',
+  category: 'Component Settings',
 } as const;
 
 export const placeholder = {

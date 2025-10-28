@@ -5,13 +5,13 @@ import MultiSelectFieldPro, { MAX_OPTIONS } from '.';
 
 export const meta = {
   name: 'MultiSelectFieldPro',
-  label: 'Multi Select Field',
-  category: 'Dropdowns',
+  label: 'Multi-select Dropdown',
+  category: '_',
   defaultWidth: 300,
   defaultHeight: 120,
   inputs: [
-    dataset,
-    { ...dimension, label: 'Dimension (to load Dropdown values)' },
+    { ...dataset, required: false },
+    { ...dimension, label: 'Dimension (to load Dropdown values)', required: false },
     title,
     description,
     { ...placeholder, defaultValue: 'Select values...' },
@@ -76,7 +76,7 @@ export default defineComponent(MultiSelectFieldPro, meta, {
     inputs: Inputs<typeof meta>,
     [state, setState]: [MultiSelectDropdownState, (state: MultiSelectDropdownState) => void],
   ) => {
-    const operator = inputs.dimension.nativeType === 'string' ? 'contains' : 'equals';
+    const operator = inputs?.dimension?.nativeType === 'string' ? 'contains' : 'equals';
     return {
       ...inputs,
       setSearchValue: (searchValue: string) => setState({ searchValue }),

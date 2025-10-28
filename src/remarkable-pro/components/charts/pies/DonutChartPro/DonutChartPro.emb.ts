@@ -16,7 +16,7 @@ import {
 export const meta = {
   name: 'DonutChartPro',
   label: 'Donut Chart',
-  category: 'Pie Charts',
+  category: '_',
   inputs: [
     dataset,
     measure,
