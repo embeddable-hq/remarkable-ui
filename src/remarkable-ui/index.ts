@@ -14,7 +14,6 @@ export {
 export { SelectListOptions } from './editors/select/shared/SelectList/SelectListOptions/SelectListOptions';
 export { Button } from './shared/Button/Button';
 export { GhostButton } from './shared/GhostButton/GhostButton';
-export type { GhostButtonProps } from './shared/GhostButton/GhostButton';
 export { PageOverlay } from './shared/PageOverlay';
 export type { PageOverlayProps } from './shared/PageOverlay';
 export { ConfirmCancelModal } from './shared/ConfirmCancelModal';

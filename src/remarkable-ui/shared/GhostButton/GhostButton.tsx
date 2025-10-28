@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import styles from './GhostButton.module.css';
 import { Typography } from '../Typography/Typography';
 
-export type GhostButtonProps = {
+type GhostButtonProps = {
   startIcon?: Icon;
   endIcon?: Icon;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
