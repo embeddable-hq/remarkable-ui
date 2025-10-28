@@ -35,14 +35,14 @@
   color: var(--em-ghost-btn-label-color-disabled, #b8b8bd);
 }
 
-.startIcon {
+.icon {
   width: var(--em-ghost-btn-icon-size-width, 0.75rem);
   height: var(--em-ghost-btn-icon-size-height, 0.75rem);
-  margin-right: var(--em-ghost-btn-icon-spacing, 0.25rem);
 }
-
-.endIcon {
-  width: var(--em-ghost-btn-icon-size-width, 0.75rem);
-  height: var(--em-ghost-btn-icon-size-height, 0.75rem);
-  margin-left: var(--em-ghost-btn-icon-spacing, 0.25rem);
+.label {
+  padding: 0 var(--em-ghost-btn-label-padding-default, 0.25rem);
+  display: flex;
+  padding: 0 var(--em-ghost-btn-label-padding-default, 0.25rem);
+  align-items: center;
+  gap: 0.25rem;
 }
