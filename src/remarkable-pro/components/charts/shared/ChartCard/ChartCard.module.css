@@ -11,5 +11,19 @@
 
 .rightContent {
   position: absolute;
+  position: relative;
   right: 0;
+}
+
+.fixedContent {
+  background: var(--em-background-color-default, #f7f7f8);
+  position: absolute;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fixedContent.loading {
+  z-index: 1;
 }

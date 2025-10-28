@@ -14,6 +14,8 @@ import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
 import { ChartCardMenuPro } from './ChartCardMenuPro/ChartCardMenuPro';
 import { Theme } from '../../../../theme/theme.types';
 import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
+import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro/ChartCardMenuPro.types';
+import clsx from 'clsx';
 
 type ChartCardProps = {
   title: string;
@@ -24,6 +26,7 @@ type ChartCardProps = {
   errorMessage?: string;
   style?: CSSProperties;
   dimensionsAndMeasures?: (Dimension | Measure)[];
+  onCustomDownload?: (props: (props: ChartCardMenuProOptionOnClickProps) => void) => void;
 };
 
 export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
@@ -75,16 +78,18 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
           subtitle={subtitle}
           rightContent={
             <div data-no-export className={styles.rightContent}>
-              {isLoading ? (
+              <div className={clsx(styles.fixedContent, isLoading && styles.loading)}>
                 <ChartCardLoading />
-              ) : (
+              </div>
+              <div className={styles.fixedContent}>
                 <ChartCardMenuPro
                   title={title}
                   containerRef={chartRef}
                   data={data?.data}
                   dimensionsAndMeasures={dimensionsAndMeasures}
+                  onCustomDownload={props.onCustomDownload}
                 />
-              )}
+              </div>
             </div>
           }
         />
