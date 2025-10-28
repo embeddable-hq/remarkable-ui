@@ -1,7 +1,10 @@
 import styles from './TableBody.module.css';
 import { Typography } from '../../../../shared/Typography/Typography';
-import { TablePaginatedProps } from '../../tables.types';
+import { TableHeaderAlign, TablePaginatedProps } from '../../tables.types';
 import clsx from 'clsx';
+import { IconButton } from '../../../../shared/IconButton/IconButton';
+import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
+import { useState } from 'react';
 
 export type TableBodyProps<T> = Pick<
   TablePaginatedProps<T>,
@@ -10,7 +13,7 @@ export type TableBodyProps<T> = Pick<
 
 export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: TableBodyProps<T>) => {
   return (
-    <tbody>
+    <tbody className={styles.tableBody}>
       {rows.map((row, rowIndex) => (
         <tr key={rowIndex}>
           {showIndex && (
@@ -19,6 +22,8 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
             </td>
           )}
           {headers.map((header, cellIndex) => {
+            const [isPressedCopy, setIsPressedCopy] = useState(false);
+
             const value =
               header.accessor !== undefined
                 ? header.accessor(row)
@@ -32,13 +37,31 @@ export const TableBody = <T,>({ headers, rows, pageSize, page, showIndex }: Tabl
               return header.cell({ value, className: styles.tableBodyCell });
             }
 
+            const handleCopy = () => {
+              if (value !== undefined) {
+                navigator.clipboard.writeText(String(value));
+              }
+            };
+
             return (
               <td
                 key={`${rowIndex}-${cellIndex}`}
                 className={styles.tableBodyCell}
-                title={`Copy: ${value}`}
+                title={value}
                 style={{ textAlign: header.align }}
+                onMouseLeave={() => setIsPressedCopy(false)}
               >
+                <IconButton
+                  title={`Copy: ${String(value)}`}
+                  onMouseDown={() => setIsPressedCopy(true)}
+                  size="small"
+                  icon={isPressedCopy ? IconCopyCheckFilled : IconCopy}
+                  className={clsx(
+                    styles.copyButton,
+                    header.align === TableHeaderAlign.RIGHT && styles.leftAlign,
+                  )}
+                  onClick={handleCopy}
+                />
                 <Typography>{value}</Typography>
               </td>
             );

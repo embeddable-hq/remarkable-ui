@@ -1,4 +1,4 @@
-.tableBodyCellIndex {
+.tableBody td.tableBodyCellIndex {
   position: sticky;
   left: 0;
   z-index: 1;
@@ -10,6 +10,10 @@
   color: var(--em-table-text-muted, #5c5c66) !important;
 }
 
+.tableBodyCell {
+  position: relative;
+}
+
 .tableBodyCell p {
   white-space: nowrap;
   padding: 0 var(--em-table-padding-small, 0.25rem);
@@ -19,4 +23,21 @@
   font-style: normal;
   font-weight: var(--em-table-font-weight-regular, 400);
   line-height: 0.875rem;
+}
+
+.copyButton {
+  position: absolute;
+  top: 50%;
+  right: var(--em-table-padding-medium_R, 0.5rem);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.copyButton.leftAlign {
+  left: var(--em-table-padding-medium_R, 0.5rem);
+  right: auto;
+}
+
+.tableBodyCell:hover .copyButton {
+  opacity: 1;
 }

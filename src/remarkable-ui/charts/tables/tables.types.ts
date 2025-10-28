@@ -9,7 +9,13 @@ export type TableSort<T> = {
   id: keyof T;
   direction: (typeof TableSortDirection)[keyof typeof TableSortDirection];
 };
-type TableHeaderItemAlign = 'left' | 'center' | 'right';
+export const TableHeaderAlign = {
+  LEFT: 'left',
+  CENTER: 'center',
+  RIGHT: 'right',
+} as const;
+
+type TableHeaderItemAlign = (typeof TableHeaderAlign)[keyof typeof TableHeaderAlign];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TableHeaderCell = (props: {

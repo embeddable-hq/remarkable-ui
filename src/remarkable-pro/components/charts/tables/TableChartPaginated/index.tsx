@@ -69,7 +69,6 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
 
   useEffect(() => {
     if (pageSize) {
-      console.log('Updating page size to ', pageSize);
       handleUpdateEmbeddableState({ pageSize });
     }
   }, [pageSize]);
@@ -99,10 +98,10 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
   useEffect(() => {
     if (isDownloadingData) {
       if (!allResults || allResults.isLoading) {
-        // Still loading the download data
+        // Loading data to download
         return;
       }
-      debugger;
+
       downloadData(allResults.data);
       setIsDownloadingData(false);
       handleUpdateEmbeddableState({ isLoadingDownloadData: false });

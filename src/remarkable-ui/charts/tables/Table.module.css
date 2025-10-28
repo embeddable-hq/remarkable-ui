@@ -34,6 +34,20 @@
   padding: var(--em-table-padding-medium_R, 0.5rem);
 }
 
+.table th::after,
+.table td::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: calc(
+    -1 * var(--em-table-border-width-default, 1px)
+  ); /* offset so it lines up with the grid */
+  width: var(--em-table-border-width-default, 1px);
+  background: var(--em-table-border-color-default, #ededf1); /* your border color */
+  pointer-events: none;
+}
+
 .table td:hover,
 .table td:focus-within,
 .table th:hover,

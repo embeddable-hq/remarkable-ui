@@ -44,8 +44,7 @@ const headers: TableHeaderItem<Client>[] = [
       </td>
     ),
   },
-  { id: 'age', title: 'Age' },
-  { id: 'title', title: 'Title' },
+  { id: 'age', title: 'Age', align: 'right' },
 ];
 
 export const Basic: Story = {

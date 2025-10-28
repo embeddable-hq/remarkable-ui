@@ -18,7 +18,6 @@
 .fixedContent {
   background: var(--em-background-color-default, #f7f7f8);
   position: absolute;
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
