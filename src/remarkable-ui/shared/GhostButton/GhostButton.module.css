@@ -40,9 +40,7 @@
   height: var(--em-ghost-btn-icon-size-height, 0.75rem);
 }
 .label {
-  padding: 0 var(--em-ghost-btn-label-padding-default, 0.25rem);
   display: flex;
   padding: 0 var(--em-ghost-btn-label-padding-default, 0.25rem);
   align-items: center;
-  gap: 0.25rem;
 }
