@@ -5,7 +5,7 @@ import { Typography } from '../../shared/Typography/Typography';
 import { InputFieldProps } from '../InputField/InputField';
 
 export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ value = '', placeholder = 'Enter text', maxLength, ...props }, ref) => {
+  ({ value = '', placeholder = 'Enter text', maxLength, error, errorMessage, ...props }, ref) => {
     return (
       <div className={styles.textField}>
         <InputField
@@ -14,6 +14,8 @@ export const TextField = forwardRef<HTMLInputElement, InputFieldProps>(
           ref={ref}
           maxLength={maxLength}
           clearable
+          error={error}
+          errorMessage={errorMessage}
           {...props}
         />
         {maxLength && (
