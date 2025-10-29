@@ -74,7 +74,7 @@ export const getTableRows = (props: { clickDimension?: Dimension; rows: DataResp
 
   const clickDimensionName = props.clickDimension?.name;
 
-  if (!clickDimensionName || !Object.keys(props.rows[0]!).includes(clickDimensionName)) {
+  if (!clickDimensionName || Object.keys(props.rows[0]!).includes(clickDimensionName)) {
     return props.rows;
   }
 

@@ -46,11 +46,13 @@
   background: var(--em-table-border-color-default, #ededf1);
 }
 
-.table td:hover,
-.table td:focus-within,
 .table th:hover,
 .table th:focus-within {
   background: var(--em-table-background-color-hover-header_R, #f7f7f8);
+}
+
+.table tr:has(td:hover) {
+  background: var(--em-table-background-color-hover-row_R, #fafafa);
 }
 
 .table th:first-child,

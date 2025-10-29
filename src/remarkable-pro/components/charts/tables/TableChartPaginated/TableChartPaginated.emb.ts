@@ -31,15 +31,17 @@ export const meta = {
     },
     title,
     description,
+
+    { ...genericBoolean, name: 'showIndex', label: 'Show Index Column', defaultValue: true },
+    { ...genericString, name: 'displayNullAs', label: 'Display null as' },
+    { ...maxResults, label: 'Max Results to Download' },
     {
       ...dimensionSimple,
       label: 'Dimension to set on click',
       name: 'clickDimension',
+      category: 'Data Mapping for Interactions',
       required: false,
     },
-    { ...genericBoolean, name: 'showIndex', label: 'Show Index Column', defaultValue: true },
-    { ...genericString, name: 'displayNullAs', label: 'Display null as' },
-    maxResults,
   ],
   events: [
     {
