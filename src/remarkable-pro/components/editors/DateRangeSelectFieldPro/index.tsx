@@ -56,6 +56,12 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [internalValue, dateRangeOptions]);
 
+  useEffect(() => {
+    if (!selectedValue) {
+      setInternalValue(undefined);
+    }
+  }, [selectedValue]);
+
   if (!dayjsLocaleReady) {
     return null;
   }
