@@ -3,14 +3,16 @@ import { Theme } from '@embeddable.com/remarkable-ui';
 import { remarkableTheme } from './src/remarkable-pro/theme/theme.constants';
 
 const blueColors = [
-  '#d2ecfd',
-  '#a3d4fa',
-  '#6bb7f5',
-  '#3a99e5',
-  '#2878c6',
-  '#205493',
-  '#17375e',
-  '#0d1a26',
+  '#4E79A7',
+  '#F28E2B',
+  '#E15759',
+  '#76B7B2',
+  '#59A14F',
+  '#EDC948',
+  '#B07AA1',
+  '#FF9DA7',
+  '#9C755F',
+  '#BAB0AC',
 ];
 
 // const germanTheme: DeepPartial<Theme> = {
@@ -44,7 +46,7 @@ const themeProvider = (clientContext: object): Theme => {
       },
       i18n: {
         ...remarkableTheme.i18n,
-        language: 'de',
+        // language: 'de',
       },
     };
   }

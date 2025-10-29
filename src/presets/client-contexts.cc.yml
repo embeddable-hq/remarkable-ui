@@ -1,13 +1,13 @@
 # Client Context is front-facing info that can be used to customize the embeddable
 # experience. Common examples include language and currency. Note that this file is only
 # used by the builder. See https://docs.embeddable.com/development/client-context
-- name: English customer
+- name: Red theme
   clientContext:
     theme: 'english'
   canvas:
     background: '#fff'
 
-- name: German customer
+- name: Blue theme
   clientContext:
     theme: 'german'
   canvas:
