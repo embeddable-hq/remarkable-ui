@@ -82,5 +82,6 @@
 }
 
 .buttonError {
-  border: var(--em-text-input-border-width-error, 2px) solid var(--em-status-negative-foreground, #BC1010);
+  border: var(--em-text-input-border-width-error, 2px) solid
+    var(--em-status-negative-foreground, #bc1010);
 }

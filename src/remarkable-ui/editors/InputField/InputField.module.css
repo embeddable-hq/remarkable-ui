@@ -88,7 +88,8 @@
 }
 
 .inputError {
-  border: var(--em-text-input-border-width-error, 2px) solid var(--em-text-input-border-color-error, #BC1010);
+  border: var(--em-text-input-border-width-error, 2px) solid
+    var(--em-text-input-border-color-error, #bc1010);
 }
 
 .errorMessage {
@@ -100,4 +101,3 @@
   font-weight: var(--em-text-input-label-font-weight-default, 500);
   line-height: var(--em-text-input-label-font-line-height, 0.875rem);
 }
-
