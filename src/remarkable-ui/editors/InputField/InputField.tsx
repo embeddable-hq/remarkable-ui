@@ -36,7 +36,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     },
     ref,
   ) => {
-    const hasError = error || errorMessage;
+    const hasError = error || !!errorMessage;
     const showClearButton = value && clearable;
     return (
       <div className={styles.inputContainer}>
