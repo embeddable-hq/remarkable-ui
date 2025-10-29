@@ -11,6 +11,8 @@ export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
   clearable?: boolean;
+  error?: boolean;
+  errorMessage?: string;
 };
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -27,6 +29,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       clearable = false,
       type = 'text',
       required = false,
+      error = false,
+      errorMessage,
       ...props
     },
     ref,
@@ -39,7 +43,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             Required
           </Typography>
         )}
-        <div className={clsx(styles.input, className)}>
+        <div className={clsx(styles.input, error && styles.inputError, className)}>
           {StartIcon && <StartIcon />}
           <input
             type={type}
@@ -57,6 +61,11 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {EndIcon && <EndIcon />}
           </div>
         </div>
+        {error && errorMessage && (
+          <Typography as="span" className={styles.errorMessage}>
+            {errorMessage}
+          </Typography>
+        )}
       </div>
     );
   },

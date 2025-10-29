@@ -71,3 +71,27 @@ export const WithState: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+export const WithError: Story = {
+  args: {
+    values: [],
+    error: true,
+    errorMessage: 'Please select at least one option',
+    isSearchable: true,
+    options: mockOptions,
+    placeholder: 'Select colors',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithErrorAndValue: Story = {
+  args: {
+    values: [mockOptions[0]!.value!],
+    error: true,
+    errorMessage: 'You must select at least 2 options',
+    isSearchable: true,
+    isClearable: true,
+    options: mockOptions,
+    onChange: (value) => console.log('onChange', value),
+  },
+};

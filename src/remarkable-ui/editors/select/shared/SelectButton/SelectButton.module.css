@@ -80,3 +80,8 @@
 .loading {
   animation: spin 1s linear infinite;
 }
+
+.buttonError {
+  border-color: var(--em-text-input-border-color-error, rgb(208 49 9));
+  border-width: var(--em-text-input-border-width-error, 2px);
+}
