@@ -122,6 +122,8 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     onChange([]);
   };
 
+  const hasError = error || !!errorMessage;
+
   return (
     <div className={styles.selectField}>
       <Dropdown
@@ -137,7 +139,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
             onClear={handleClearAll}
             isClearable={isClearable}
             isLoading={isLoading}
-            error={error}
+            error={hasError}
           />
         }
       >
@@ -181,7 +183,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           </Button>
         </SelectList>
       </Dropdown>
-      {error && errorMessage && <FormErrorMessage message={errorMessage} />}
+      {errorMessage && <FormErrorMessage message={errorMessage} />}
     </div>
   );
 };

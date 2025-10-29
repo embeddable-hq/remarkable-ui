@@ -89,6 +89,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
     debouncedSearch?.(newSearch);
   };
 
+  const hasError = error || !!errorMessage;
+
   return (
     <div className={styles.selectField}>
       <Dropdown
@@ -105,7 +107,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             onClear={() => handleChange('')}
             isClearable={isClearable}
             isLoading={isLoading}
-            error={error}
+            error={hasError}
           />
         }
       >
@@ -137,7 +139,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
           </SelectListOptions>
         </SelectList>
       </Dropdown>
-      {error && errorMessage && <FormErrorMessage message={errorMessage} />}
+      {errorMessage && <FormErrorMessage message={errorMessage} />}
     </div>
   );
 };
