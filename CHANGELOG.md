@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.32
+
+### Patch Changes
+
+- 38aea79: Hide comparison if chart is still loading
+
 ## 0.1.31
 
 ### Patch Changes
