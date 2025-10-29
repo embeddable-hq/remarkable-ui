@@ -3,6 +3,7 @@ import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { Typography } from '../../shared/Typography/Typography';
+import { FormErrorMessage } from '../../shared/FormErrorMessage/FormErrorMessage';
 
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
@@ -61,11 +62,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {EndIcon && <EndIcon />}
           </div>
         </div>
-        {error && errorMessage && (
-          <Typography as="span" className={styles.errorMessage}>
-            {errorMessage}
-          </Typography>
-        )}
+        {error && errorMessage && <FormErrorMessage message={errorMessage} />}
       </div>
     );
   },

@@ -11,7 +11,7 @@ import {
 import { debounce } from '../../../utils/debounce.utils';
 import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
-import { Typography } from '../../../shared/Typography/Typography';
+import { FormErrorMessage } from '../../../shared/FormErrorMessage/FormErrorMessage';
 import styles from './SingleSelectField.module.css';
 
 export type SingleSelectFieldProps = {
@@ -137,11 +137,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
           </SelectListOptions>
         </SelectList>
       </Dropdown>
-      {error && errorMessage && (
-        <Typography as="span" className={styles.errorMessage}>
-          {errorMessage}
-        </Typography>
-      )}
+      {error && errorMessage && <FormErrorMessage message={errorMessage} />}
     </div>
   );
 };

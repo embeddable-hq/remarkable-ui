@@ -73,7 +73,9 @@
 }
 
 .inputContainer {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--em-form-padding-small, 0.5rem);
 }
 
 .requiredText {
@@ -90,14 +92,4 @@
 .inputError {
   border: var(--em-text-input-border-width-error, 2px) solid
     var(--em-text-input-border-color-error, #bc1010);
-}
-
-.errorMessage {
-  padding-top: var(--em-form-padding-small, 0.5rem);
-  display: flex;
-  color: var(--em-text-input-label-color-error, #bc1010);
-  font-family: var(--em-text-input-label-font-font-family, Inter);
-  font-size: var(--em-text-input-label-font-size, 0.75rem);
-  font-weight: var(--em-text-input-label-font-weight-default, 500);
-  line-height: var(--em-text-input-label-font-line-height, 0.875rem);
 }
