@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.31
+
+### Patch Changes
+
+- d7e0a62: Fix kpi, useeFillGaps and dateRangeSelect update
+
 ## 0.1.30
 
 ### Patch Changes
