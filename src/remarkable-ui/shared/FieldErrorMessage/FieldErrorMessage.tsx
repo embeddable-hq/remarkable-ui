@@ -1,11 +1,11 @@
 import { Typography } from '../Typography/Typography';
-import styles from './FormErrorMessage.module.css';
+import styles from './FieldErrorMessage.module.css';
 
-export type FormErrorMessageProps = {
+export type FieldErrorMessageProps = {
   message: string;
 };
 
-export const FormErrorMessage = ({ message }: FormErrorMessageProps) => {
+export const FieldErrorMessage = ({ message }: FieldErrorMessageProps) => {
   return (
     <Typography as="span" className={styles.errorMessage}>
       {message}

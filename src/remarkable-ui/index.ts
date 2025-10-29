@@ -4,7 +4,7 @@ export { EmptyStateSkeleton } from './shared/EmptyStateSkeleton/EmptyStateSkelet
 export { Card, CardContent, CardHeader } from './shared/Card/Card';
 export { CardContentInfo } from './shared/Card/CardContentInfo/CardContentInfo';
 export { Typography } from './shared/Typography/Typography';
-export { FormErrorMessage } from './shared/FormErrorMessage/FormErrorMessage';
+export { FieldErrorMessage } from './shared/FieldErrorMessage/FieldErrorMessage';
 export { IconButton } from './shared/IconButton/IconButton';
 export { ButtonIcon } from './shared/ButtonIcon/ButtonIcon';
 export { Dropdown } from './shared/Dropdown/Dropdown';

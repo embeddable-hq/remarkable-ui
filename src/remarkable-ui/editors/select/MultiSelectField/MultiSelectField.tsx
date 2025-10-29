@@ -13,7 +13,7 @@ import { IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-rea
 import { Button } from '../../../shared/Button/Button';
 import styles from './MultiSelectField.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
-import { FormErrorMessage } from '../../../shared/FormErrorMessage/FormErrorMessage';
+import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type MultiSelectFieldProps = {
   disabled?: boolean;
@@ -183,7 +183,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           </Button>
         </SelectList>
       </Dropdown>
-      {errorMessage && <FormErrorMessage message={errorMessage} />}
+      {errorMessage && <FieldErrorMessage message={errorMessage} />}
     </div>
   );
 };
