@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.34
+
+### Patch Changes
+
+- 11f6269: Table Paginated Pro
+
 ## 0.1.33
 
 ### Patch Changes

@@ -104,10 +104,11 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   );
 
   const resultsCombined: DataResponse = {
-    isLoading: results.isLoading,
-    data: results.isLoading
-      ? undefined
-      : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
+    isLoading: Boolean(results.isLoading || resultsComparison?.isLoading),
+    data:
+      !results?.data && !resultsComparison?.data
+        ? undefined
+        : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
   };
 
   return (
