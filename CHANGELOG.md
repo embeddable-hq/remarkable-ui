@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.33
+
+### Patch Changes
+
+- 3a2646b: Add error state to input fields
+
 ## 0.1.32
 
 ### Patch Changes

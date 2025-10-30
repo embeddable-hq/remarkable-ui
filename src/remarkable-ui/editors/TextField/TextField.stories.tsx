@@ -109,3 +109,53 @@ export const RequiredWithMaxLength: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+export const WithError: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <TextField {...args} value={value} onChange={(newValue) => updateArgs({ value: newValue })} />
+    );
+  },
+  args: {
+    value: 'Invalid input',
+    error: true,
+    errorMessage: 'This field contains invalid characters',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithErrorEmpty: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <TextField {...args} value={value} onChange={(newValue) => updateArgs({ value: newValue })} />
+    );
+  },
+  args: {
+    value: '',
+    error: true,
+    errorMessage: 'This field is required',
+    placeholder: 'Enter text',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithErrorAndMaxLength: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <TextField {...args} value={value} onChange={(newValue) => updateArgs({ value: newValue })} />
+    );
+  },
+  args: {
+    value: 'This text exceeds the maximum length allowed',
+    maxLength: 20,
+    error: true,
+    errorMessage: 'Text exceeds maximum length of 20 characters',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
