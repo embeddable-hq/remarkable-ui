@@ -34,18 +34,6 @@
   padding: var(--em-table-padding-medium_R, 0.5rem);
 }
 
-/* Make index column always show the border on the right side */
-.table th:first-of-type:after,
-.table td:first-of-type::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: calc(-1 * var(--em-table-border-width-default, 1px));
-  width: var(--em-table-border-width-default, 1px);
-  background: var(--em-table-border-color-default, #ededf1);
-}
-
 .table th:hover,
 .table th:focus-within {
   background: var(--em-table-background-color-hover-header_R, #f7f7f8);
@@ -59,6 +47,7 @@
 .table td:first-child {
   border-left: none;
 }
+.table th:last-child,
 .table td:last-child {
   border-right: none;
 }

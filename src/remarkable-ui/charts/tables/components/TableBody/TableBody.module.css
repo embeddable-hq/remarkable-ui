@@ -4,6 +4,16 @@
   z-index: 1;
   pointer-events: none;
   background: var(--em-table-background-color-default-header_R, #fff);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(-1 * var(--em-table-border-width-default, 1px));
+    width: var(--em-table-border-width-default, 1px);
+    background: var(--em-table-border-color-default, #ededf1);
+  }
 }
 
 .tableBody td.tableBodyCellIndex p {

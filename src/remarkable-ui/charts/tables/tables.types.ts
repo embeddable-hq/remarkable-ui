@@ -41,6 +41,7 @@ export type TablePaginatedProps<T> = {
   rows: T[];
   page: number;
   pageSize: number;
+  paginationLabel?: string;
   total?: number;
   sort?: TableSort<T>;
   onRowIndexClick?: (rowIndex: number) => void;

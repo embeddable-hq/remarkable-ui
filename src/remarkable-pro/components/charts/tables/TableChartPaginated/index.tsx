@@ -1,10 +1,10 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
-import { i18nSetup } from '../../../../theme/i18n/i18n';
+import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, DimensionOrMeasure, OrderDirection } from '@embeddable.com/core';
-import { getStyleNumber, TablePaginated } from '../../../../../remarkable-ui';
+import { getStyleNumber, getTableTotalPages, TablePaginated } from '../../../../../remarkable-ui';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
 import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table.hooks';
@@ -182,6 +182,10 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
         showIndex={showIndex}
         page={state.page}
         pageSize={pageSize}
+        paginationLabel={i18n.t('charts.tablePaginated.pagination', {
+          page: state.page + 1,
+          totalPages: getTableTotalPages(total, pageSize) ?? '?',
+        })}
         total={total}
         sort={localSort}
         onSortChange={(newSort) => {

@@ -35,7 +35,7 @@ export const subInputWidth = {
   ...genericNumber,
   name: 'width',
   label: 'Width',
-  description: 'You can input a number in pixels e.g. 400, or a percentage e.g. 50%',
+  description: 'You can input a number in pixels e.g. 400',
 };
 
 export const subInputAlign = {

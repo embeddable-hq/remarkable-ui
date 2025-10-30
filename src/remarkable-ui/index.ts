@@ -37,6 +37,9 @@ export { defaultPieChartOptions } from './charts/pies/pies.constants';
 export { TablePaginated } from './charts/tables/TablePaginated';
 export * from './charts/tables/tables.types';
 
+// Chart Utils
+export { getTableTotalPages } from './charts/tables/components/TablePagination/TablePagination';
+
 // Constants
 export { chartColors } from './charts/charts.constants';
 export { styles, type Styles } from './styles/styles.constants';

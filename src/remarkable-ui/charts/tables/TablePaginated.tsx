@@ -20,6 +20,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
       total,
       page,
       pageSize,
+      paginationLabel,
       sort,
       showIndex = false,
       onRowIndexClick,
@@ -50,6 +51,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
         <TablePagination
           page={page}
           pageSize={pageSize}
+          paginationLabel={paginationLabel}
           total={total}
           onPageChange={onPageChange}
         />

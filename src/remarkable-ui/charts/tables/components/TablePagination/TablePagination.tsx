@@ -12,16 +12,24 @@ import { TablePaginatedProps } from '../../tables.types';
 
 export type TablePaginationProps = Pick<
   TablePaginatedProps<unknown>,
-  'page' | 'pageSize' | 'total' | 'onPageChange'
+  'page' | 'pageSize' | 'paginationLabel' | 'total' | 'onPageChange'
 >;
+
+export const getTableTotalPages = (
+  total: number | undefined,
+  pageSize: number,
+): number | undefined => {
+  return total ? Math.ceil(total / pageSize) : undefined;
+};
 
 export const TablePagination: FC<TablePaginationProps> = ({
   page,
   pageSize,
+  paginationLabel,
   total,
   onPageChange,
 }) => {
-  const totalPages = total ? Math.ceil(total / pageSize) : undefined;
+  const totalPages = getTableTotalPages(total, pageSize);
 
   const disabledPrev = page <= 0;
   const disabledNext = !totalPages || page >= totalPages - 1;
@@ -53,9 +61,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
             aria-label="Previous page"
           />
         </div>
-        <Typography>
-          Page {page + 1} of {totalPages ?? '?'}
-        </Typography>
+        <Typography>{paginationLabel ?? `Page ${page + 1} of ${totalPages ?? '?'}`}</Typography>
         <div className={styles.tablePaginationCentralButtons}>
           <IconButton
             icon={IconChevronRight}
