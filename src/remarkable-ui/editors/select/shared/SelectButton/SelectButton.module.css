@@ -80,3 +80,8 @@
 .loading {
   animation: spin 1s linear infinite;
 }
+
+.buttonError {
+  border: var(--em-text-input-border-width-error, 2px) solid
+    var(--em-status-negative-foreground, #bc1010);
+}

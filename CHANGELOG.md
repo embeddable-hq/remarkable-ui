@@ -1,5 +1,23 @@
 # @embeddable/remarkable-ui
 
+## 0.1.34
+
+### Patch Changes
+
+- 11f6269: Table Paginated Pro
+
+## 0.1.33
+
+### Patch Changes
+
+- 3a2646b: Add error state to input fields
+
+## 0.1.32
+
+### Patch Changes
+
+- 38aea79: Hide comparison if chart is still loading
+
 ## 0.1.31
 
 ### Patch Changes

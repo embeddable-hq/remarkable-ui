@@ -3,6 +3,7 @@ import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { Typography } from '../../shared/Typography/Typography';
+import { FieldErrorMessage } from '../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
@@ -11,6 +12,8 @@ export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 
   endIcon?: TablerIcon;
   onChange: (value: string) => void;
   clearable?: boolean;
+  error?: boolean;
+  errorMessage?: string;
 };
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -27,10 +30,13 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       clearable = false,
       type = 'text',
       required = false,
+      error = false,
+      errorMessage,
       ...props
     },
     ref,
   ) => {
+    const hasError = error || !!errorMessage;
     const showClearButton = value && clearable;
     return (
       <div className={styles.inputContainer}>
@@ -39,7 +45,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             Required
           </Typography>
         )}
-        <div className={clsx(styles.input, className)}>
+        <div className={clsx(styles.input, hasError && styles.inputError, className)}>
           {StartIcon && <StartIcon />}
           <input
             type={type}
@@ -57,6 +63,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {EndIcon && <EndIcon />}
           </div>
         </div>
+        {errorMessage && <FieldErrorMessage message={errorMessage} />}
       </div>
     );
   },

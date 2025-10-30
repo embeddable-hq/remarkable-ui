@@ -4,6 +4,7 @@ export { EmptyStateSkeleton } from './shared/EmptyStateSkeleton/EmptyStateSkelet
 export { Card, CardContent, CardHeader } from './shared/Card/Card';
 export { CardContentInfo } from './shared/Card/CardContentInfo/CardContentInfo';
 export { Typography } from './shared/Typography/Typography';
+export { FieldErrorMessage } from './shared/FieldErrorMessage/FieldErrorMessage';
 export { IconButton } from './shared/IconButton/IconButton';
 export { ButtonIcon } from './shared/ButtonIcon/ButtonIcon';
 export { Dropdown } from './shared/Dropdown/Dropdown';
@@ -34,6 +35,11 @@ export { KpiChart } from './charts/kpis/KpiChart';
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
 export { defaultPieChartOptions } from './charts/pies/pies.constants';
+export { TablePaginated } from './charts/tables/TablePaginated';
+export * from './charts/tables/tables.types';
+
+// Chart Utils
+export { getTableTotalPages } from './charts/tables/components/TablePagination/TablePagination';
 
 // Constants
 export { chartColors } from './charts/charts.constants';

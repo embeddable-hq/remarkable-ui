@@ -155,3 +155,27 @@ export const WithState: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+export const WithError: Story = {
+  args: {
+    value: '',
+    error: true,
+    errorMessage: 'Please select an option',
+    isSearchable: true,
+    options: mockOptions,
+    placeholder: 'Select a color',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithErrorAndValue: Story = {
+  args: {
+    value: mockOptions[0]!.value,
+    error: true,
+    errorMessage: 'This selection is not available',
+    isSearchable: true,
+    isClearable: true,
+    options: mockOptions,
+    onChange: (value) => console.log('onChange', value),
+  },
+};

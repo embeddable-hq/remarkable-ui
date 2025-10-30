@@ -11,6 +11,7 @@ type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isClearable?: boolean;
   isLoading?: boolean;
   onClear?: () => void;
+  error?: boolean;
 };
 
 export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
@@ -22,6 +23,7 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
       isClearable,
       isLoading,
       onClear,
+      error = false,
       ...props
     },
     ref,
@@ -39,7 +41,11 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
     return (
       <button
         ref={ref}
-        className={clsx(styles.button, showClearButton && styles.hasValue)}
+        className={clsx(
+          styles.button,
+          showClearButton && styles.hasValue,
+          error && styles.buttonError,
+        )}
         {...props}
       >
         <span className={styles.leftContent}>
