@@ -32,7 +32,8 @@
     "prettier:write": "prettier . --write",
     "release": "npm run embeddable:package && changeset publish",
     "storybook": "storybook dev -p 6006",
-    "types:check": "tsc --noEmit --incremental false"
+    "types:check": "tsc --noEmit --incremental false",
+    "postinstall": "node -e \"try{require('child_process').execSync('xattr -dr com.apple.quarantine node_modules/@swc || true',{stdio:'inherit'})}catch(e){}\""
   },
   "keywords": [
     "embeddable",
@@ -55,8 +56,8 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.29.6",
-    "@embeddable.com/core": "^2.11.1",
-    "@embeddable.com/react": "^2.11.0",
+    "@embeddable.com/core": "^2.13.0",
+    "@embeddable.com/react": "^2.12.0",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@tabler/icons-react": "^3.34.1",
     "chart.js": "^4.5.0",
@@ -72,15 +73,15 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@embeddable.com/sdk-core": "^4.1.2",
-    "@embeddable.com/sdk-react": "^4.0.6",
-    "@eslint/css": "^0.10.0",
-    "@eslint/js": "^9.31.0",
+    "@embeddable.com/sdk-core": "^4.1.3",
+    "@embeddable.com/sdk-react": "^4.0.7",
+    "@eslint/css": "^0.13.0",
     "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
     "@storybook/react": "^9.0.18",
     "@storybook/react-webpack5": "^9.0.17",
+    "@swc-node/core": "1.14.1",
     "@swc/cli": "^0.4.0",
-    "@swc/core": "^1.4.0",
+    "@swc/core": "1.13.5",
     "@types/chroma-js": "^3.1.1",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
@@ -105,8 +106,5 @@
   "peerDependencies": {
     "react": ">=19.1.1",
     "react-dom": ">=19.1.1"
-  },
-  "optionalDependencies": {
-    "@swc/core-linux-x64-gnu": "^1.13.5"
   }
 }

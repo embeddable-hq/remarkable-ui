@@ -1,0 +1,28 @@
+.tablePagination {
+  /* Replace by css variable */
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.tablePaginationCentral {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+
+  /* Typography */
+  /* font-family: var(--em-table-font-font-family, Inter); */
+  color: var(--em-table-text-default_R, #212129);
+  font-size: var(--em-table-font-font-size_R, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-table-font-font-weight-medium_R, 500);
+  line-height: var(--em-table-font-line-height_R, 0.875rem);
+}
+
+.tablePaginationCentralButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--em-table-padding-medium_R, 0.5rem);
+}

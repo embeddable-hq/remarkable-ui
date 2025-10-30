@@ -42,7 +42,7 @@ export type DateRangeOption = {
 export const defaultDateRangeOptions: DateRangeOption[] = [
   {
     value: 'Today',
-    label: 'Today',
+    label: 'defaults.dateRangeOptions.today|Today',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -58,7 +58,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Yesterday',
-    label: 'Yesterday',
+    label: 'defaults.dateRangeOptions.yesterday|Yesterday',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -74,19 +74,19 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This week',
-    label: 'This week',
+    label: 'defaults.dateRangeOptions.thisWeek|This week',
     dateFormat: 'MMM DD',
     getRange: () => getWeekBounds(new Date(), 0),
   },
   {
     value: 'Last week',
-    label: 'Last week',
+    label: 'defaults.dateRangeOptions.lastWeek|Last week',
     dateFormat: 'MMM DD',
     getRange: () => getWeekBounds(new Date(), -1),
   },
   {
     value: 'Week to date',
-    label: 'Week to date',
+    label: 'defaults.dateRangeOptions.weekToDate|Week to date',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -102,7 +102,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 7 days',
-    label: 'Last 7 days',
+    label: 'defaults.dateRangeOptions.last7Days|Last 7 days',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -118,7 +118,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next 7 days',
-    label: 'Next 7 days',
+    label: 'defaults.dateRangeOptions.next7Days|Next 7 days',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -134,7 +134,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 30 days',
-    label: 'Last 30 days',
+    label: 'defaults.dateRangeOptions.last30Days|Last 30 days',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -150,7 +150,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next 30 days',
-    label: 'Next 30 days',
+    label: 'defaults.dateRangeOptions.next30Days|Next 30 days',
     dateFormat: 'MMM DD',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -166,7 +166,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This month',
-    label: 'This month',
+    label: 'defaults.dateRangeOptions.thisMonth|This month',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -182,7 +182,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last month',
-    label: 'Last month',
+    label: 'defaults.dateRangeOptions.lastMonth|Last month',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -198,7 +198,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next month',
-    label: 'Next month',
+    label: 'defaults.dateRangeOptions.nextMonth|Next month',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -214,25 +214,25 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This quarter',
-    label: 'This quarter',
+    label: 'defaults.dateRangeOptions.thisQuarter|This quarter',
     dateFormat: 'MMM YYYY',
     getRange: () => getQuarterBounds(new Date(), 0),
   },
   {
     value: 'Last quarter',
-    label: 'Last quarter',
+    label: 'defaults.dateRangeOptions.lastQuarter|Last quarter',
     dateFormat: 'MMM YYYY',
     getRange: () => getQuarterBounds(new Date(), -1),
   },
   {
     value: 'Next quarter',
-    label: 'Next quarter',
+    label: 'defaults.dateRangeOptions.nextQuarter|Next quarter',
     dateFormat: 'MMM YYYY',
     getRange: () => getQuarterBounds(new Date(), +1),
   },
   {
     value: 'Quarter to date',
-    label: 'Quarter to date',
+    label: 'defaults.dateRangeOptions.quarterToDate|Quarter to date',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -248,7 +248,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 6 months',
-    label: 'Last 6 months',
+    label: 'defaults.dateRangeOptions.last6Months|Last 6 months',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -264,7 +264,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last 12 months',
-    label: 'Last 12 months',
+    label: 'defaults.dateRangeOptions.last12Months|Last 12 months',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -280,7 +280,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'This year',
-    label: 'This year',
+    label: 'defaults.dateRangeOptions.thisYear|This year',
     dateFormat: 'YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -296,7 +296,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Last year',
-    label: 'Last year',
+    label: 'defaults.dateRangeOptions.lastYear|Last year',
     dateFormat: 'YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -312,7 +312,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Next year',
-    label: 'Next year',
+    label: 'defaults.dateRangeOptions.nextYear|Next year',
     dateFormat: 'YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
@@ -328,7 +328,7 @@ export const defaultDateRangeOptions: DateRangeOption[] = [
   },
   {
     value: 'Year to date',
-    label: 'Year to date',
+    label: 'defaults.dateRangeOptions.yearToDate|Year to date',
     dateFormat: 'MMM YYYY',
     getRange: () => {
       const now = dayjs.utc(new Date());
