@@ -23,4 +23,4 @@ export const useTableGetRowsPerPage = ({
     // DO NOT show partial rows: floor only
     const rows = Math.floor(available / rowHeight);
     return Math.max(0, rows);
-  }, [availableHeight]);
+  }, [availableHeight, headerHeight, rowHeight, footerHeight]);

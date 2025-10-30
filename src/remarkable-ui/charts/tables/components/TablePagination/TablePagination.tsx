@@ -35,7 +35,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
   const disabledNext = !totalPages || page >= totalPages - 1;
 
   useEffect(() => {
-    if (totalPages && page > totalPages) {
+    if (totalPages && page >= totalPages) {
       onPageChange(0);
     }
   }, [totalPages, page]);
@@ -69,7 +69,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
               onPageChange(page + 1);
             }}
             disabled={disabledNext}
-            aria-label="Previous page"
+            aria-label="Next page"
           />
           <IconButton
             icon={IconChevronsRight}

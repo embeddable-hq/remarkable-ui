@@ -1,4 +1,4 @@
-import { loadData, OrderBy, OrderDirection, Value } from '@embeddable.com/core';
+import { loadData, OrderBy, Value } from '@embeddable.com/core';
 import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
 import TablePaginatedChart, {
   TableChartPaginatedProOnRowClickArg,
@@ -74,9 +74,16 @@ export default defineComponent(TablePaginatedChart, meta, {
     const orderDimensionAndMeasure = inputs.dimensionsAndMeasures.find(
       (x) => x.name === state?.sort?.id,
     );
-    const orderBy: OrderBy[] = orderDimensionAndMeasure
-      ? [{ property: orderDimensionAndMeasure, direction: state.sort!.direction as OrderDirection }]
-      : [];
+
+    const orderBy: OrderBy[] =
+      orderDimensionAndMeasure && state?.sort
+        ? [
+            {
+              property: orderDimensionAndMeasure,
+              direction: state.sort.direction,
+            },
+          ]
+        : [];
 
     const clickDimensionInDimensionsAndMeasures = inputs.dimensionsAndMeasures.some(
       (dimOrMeas) => dimOrMeas.name === inputs.clickDimension?.name,
