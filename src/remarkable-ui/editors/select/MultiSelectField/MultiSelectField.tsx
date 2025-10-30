@@ -158,7 +158,9 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
               {...option}
             />
           ))}
-          {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
+          {noOptionsMessage && displayOptions.length === 0 && (
+            <SelectListOption disabled value="empty" label={noOptionsMessage} />
+          )}
         </SelectListOptions>
         <Button
           className={styles.submitButton}
