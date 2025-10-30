@@ -14,6 +14,16 @@
     button p {
       color: var(--em-table-text-muted, #5c5c66);
     }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: calc(-1 * var(--em-table-border-width-default, 1px));
+      width: var(--em-table-border-width-default, 1px);
+      background: var(--em-table-border-color-default, #ededf1);
+    }
   }
 
   .tableHeadCell {
@@ -39,16 +49,6 @@
       font-style: normal;
       font-weight: var(--em-table-font-font-weight-medium, 500);
       line-height: var(--em-table-font-line-height, 0.875rem);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: calc(-1 * var(--em-table-border-width-default, 1px));
-      width: var(--em-table-border-width-default, 1px);
-      background: var(--em-table-border-color-default, #ededf1);
     }
   }
 }
