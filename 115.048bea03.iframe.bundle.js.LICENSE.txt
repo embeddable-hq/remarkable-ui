@@ -6,7 +6,7 @@
  * MIT license
  */
 
-/*! dom-to-image-more 20-08-2025 */
+/*! dom-to-image-more 23-10-2025 */
 
 /*! sheetjs (C) 2013-present SheetJS -- http://sheetjs.com */
 

@@ -7,7 +7,7 @@
 
 /**
  * @license React
- * react-jsx-runtime.production.js
+ * react-dom.production.js
  *
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
