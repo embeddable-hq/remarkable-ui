@@ -51,6 +51,16 @@ export const Disabled: Story = {
   },
 };
 
+export const NoOptions: Story = {
+  args: {
+    values: [],
+    isSearchable: true,
+    options: [],
+    noOptionsMessage: 'No options available',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
 export const WithState: Story = {
   render: (args) => {
     const [{ values }, updateArgs] = useArgs();
