@@ -48,6 +48,7 @@ const getPivotDimension = (props: { dimension: Dimension }, theme: Theme) => {
   return {
     key: props.dimension.name,
     label: themeFormatter.dimensionOrMeasureTitle(props.dimension),
+    accessor: (value: string) => themeFormatter.data(props.dimension, value),
   };
 };
 

@@ -13,7 +13,11 @@ export type PivotTableProps<T> = {
     accessor?: (row: Record<string, any>) => any;
     cell?: (props: { value: any; className?: string }) => React.ReactElement<HTMLTableCellElement>;
   }[];
-  rowDimension: { key: Extract<keyof T, string>; label: string };
+  rowDimension: {
+    key: Extract<keyof T, string>;
+    label: string;
+    accessor?: (value: string) => any;
+  };
   columnDimension: { key: Extract<keyof T, string>; label: string };
   progressive?: boolean;
   batchSize?: number;
@@ -207,7 +211,9 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             <tr key={`row-${String(row)}`}>
               {/* Row header */}
               <td scope="row">
-                <Typography>{String(row)}</Typography>
+                <Typography>
+                  {rowDimension.accessor ? rowDimension.accessor(String(row)) : String(row)}
+                </Typography>
               </td>
 
               {colValues.flatMap((col) =>
