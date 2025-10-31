@@ -90,7 +90,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
       const rArr = rTotals.get(r) ?? measures.map(() => 0);
 
       measures.forEach((m, i) => {
-        const raw = m.accessor ? m.accessor(d as any) : (d as any)?.[m.key];
+        const raw = (d as any)?.[m.key];
         const v = Number(raw);
         if (!Number.isNaN(v)) {
           cArr[i]! += v;
@@ -213,8 +213,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               {colValues.flatMap((col) =>
                 measures.map((m, idx) => {
                   const object = cellMap.get(String(row))?.get(String(col)) ?? {};
-                  const rawValue = m.accessor ? m.accessor(object) : object?.[m.key];
-                  const value = typeof rawValue === 'number' ? rawValue : Number(rawValue);
+                  const value = object?.[m.key];
 
                   const key = `cell-${String(row)}-${String(col)}-${m.key}-${idx}`;
 
@@ -226,7 +225,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   const shouldShowPct =
                     showColumnPercentages &&
                     columnTotalsSet.has(String(m.key)) &&
-                    isNumber(value) &&
+                    isNumber(Number(value)) &&
                     isNumber(colTotal) &&
                     colTotal > 0;
 
@@ -240,12 +239,19 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                       .join(' ');
                     return cloneElement(el, { key, className: mergedClassName });
                   }
-                  const realValue = isNumber(value) ? value : rawValue;
+
+                  const getDisplayValue = () => {
+                    if (shouldShowPct) {
+                      debugger;
+                      return formatPercent(pct as number);
+                    }
+
+                    return m.accessor ? m.accessor(object) : value;
+                  };
+
                   return (
                     <td key={key}>
-                      <Typography>
-                        {shouldShowPct ? formatPercent(pct as number) : realValue}
-                      </Typography>
+                      <Typography>{getDisplayValue()}</Typography>
                     </td>
                   );
                 }),
@@ -258,8 +264,12 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   .map((m, idx) => {
                     const totalsForRow = rowTotals.get(String(row)) ?? measures.map(() => 0);
                     const mi = measureIndexByKey.get(String(m.key)) ?? -1;
-                    const total = mi >= 0 ? (totalsForRow[mi] ?? 0) : 0;
+                    let total = mi >= 0 ? (totalsForRow[mi] ?? 0) : 0;
                     const key = `row-total-${String(row)}-${m.key}-${idx}`;
+
+                    if (m.accessor) {
+                      total = m.accessor({ [m.key]: total });
+                    }
 
                     return (
                       <td key={key} className={styles.total}>
@@ -283,11 +293,17 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   const show = columnTotalsSet.has(String(m.key));
                   const totalsForCol = colTotals.get(String(col)) ?? measures.map(() => 0);
                   const mi = measures.findIndex((mm) => String(mm.key) === String(m.key));
-                  const total = totalsForCol[mi] ?? 0;
+                  const total = totalsForCol[mi];
                   const key = `col-total-${String(col)}-${m.key}-${idx}`;
+
+                  let value: number = total as any;
+                  if (m.accessor) {
+                    value = m.accessor({ [m.key]: total });
+                  }
+
                   return (
                     <td key={key} className={styles.total}>
-                      <Typography> {show ? total : ''}</Typography>
+                      <Typography> {show ? value : ''}</Typography>
                     </td>
                   );
                 }),

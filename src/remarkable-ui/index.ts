@@ -37,6 +37,7 @@ export { PieChart } from './charts/pies/PieChart';
 export { defaultPieChartOptions } from './charts/pies/pies.constants';
 export { TablePaginated } from './charts/tables/TablePaginated';
 export * from './charts/tables/tables.types';
+export { PivotTable } from './charts/tables/PivotTable';
 
 // Chart Utils
 export { getTableTotalPages } from './charts/tables/components/TablePagination/TablePagination';

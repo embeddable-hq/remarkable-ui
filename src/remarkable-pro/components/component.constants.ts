@@ -72,6 +72,13 @@ export const subInputDisplayName = {
   label: 'Display name',
 } as const;
 
+export const subInputGenericBoolean = {
+  name: 'boolean',
+  type: 'boolean',
+  defaultValue: false,
+  label: 'Boolean',
+} as const;
+
 // TODO: Update SDK to export the needed types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const subInputMaxCharacters: any = {
