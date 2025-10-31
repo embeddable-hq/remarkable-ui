@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.35
+
+### Patch Changes
+
+- 18fb3bd: Fix an issue with MultiSelect No Options message
+
 ## 0.1.34
 
 ### Patch Changes
