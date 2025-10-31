@@ -167,7 +167,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
                 {...option}
               />
             ))}
-            {noOptionsMessage && (
+            {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
           </SelectListOptions>
