@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useMemo, useState, cloneElement } from 'react';
 import styles from './PivotTable.module.css';
-import clsx from 'clsx';
 import { Typography } from '../../shared/Typography/Typography';
 
 const formatPercent = (n: number) => `${(n * 100).toFixed(1)}%`;
@@ -160,7 +159,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
   return (
     <div className={styles.tableContainer}>
-      <table className={clsx(styles.table, columnTotalsFor.length > 0 && styles.showTotalColumn)}>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th scope="col" rowSpan={1}>
@@ -172,7 +171,12 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               </th>
             ))}
             {hasRowTotals && (
-              <th key="col-total-group" scope="col" colSpan={Array.from(rowTotalsSet).length}>
+              <th
+                key="col-total-group"
+                scope="col"
+                colSpan={Array.from(rowTotalsSet).length}
+                className={styles.total}
+              >
                 <Typography>Total</Typography>
               </th>
             )}
@@ -192,11 +196,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               measures
                 .filter((m) => rowTotalsSet.has(String(m.key)))
                 .map((m, idx) => (
-                  <th
-                    key={`sub-total-${m.key}-${idx}`}
-                    scope="col"
-                    className={clsx(idx == 0 && styles.firstColumnTotal)}
-                  >
+                  <th key={`sub-total-${m.key}-${idx}`} scope="col" className={styles.total}>
                     <Typography> {m.label}</Typography>
                   </th>
                 ))}
@@ -242,7 +242,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   }
                   const realValue = isNumber(value) ? value : rawValue;
                   return (
-                    <td key={key} className={styles.tableBodyCell}>
+                    <td key={key}>
                       <Typography>
                         {shouldShowPct ? formatPercent(pct as number) : realValue}
                       </Typography>
@@ -262,10 +262,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     const key = `row-total-${String(row)}-${m.key}-${idx}`;
 
                     return (
-                      <td
-                        key={key}
-                        className={clsx(styles.columnTotals, idx == 0 && styles.firstColumnTotal)}
-                      >
+                      <td key={key} className={styles.total}>
                         <Typography>{total}</Typography>
                       </td>
                     );
@@ -277,7 +274,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
           {/* Bottom totals row (per column×measure) */}
           {hasColumnTotals && (
             <tr key="totals-row">
-              <td scope="row">
+              <td scope="row" className={styles.total}>
                 <Typography>Total</Typography>
               </td>
 
@@ -289,7 +286,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   const total = totalsForCol[mi] ?? 0;
                   const key = `col-total-${String(col)}-${m.key}-${idx}`;
                   return (
-                    <td key={key} className={styles.tableBodyCell}>
+                    <td key={key} className={styles.total}>
                       <Typography> {show ? total : ''}</Typography>
                     </td>
                   );
@@ -305,7 +302,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     const total = grandTotals[mi] ?? 0;
                     const key = `grand-total-${m.key}-${idx}`;
                     return (
-                      <td key={key} className={clsx(idx == 0 && styles.firstColumnTotal)}>
+                      <td key={key} className={styles.totalTotal}>
                         <Typography>{total}</Typography>
                       </td>
                     );

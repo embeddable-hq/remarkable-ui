@@ -8,19 +8,15 @@
   border: var(--em-table-border-width-default, 1px) solid
     var(--em-table-border-color-default, #ededf1);
   border-radius: var(--em-table-border-radius-default, 0.75rem);
-  /* resize: both; */
   overflow-x: auto;
   overflow-y: auto;
   flex: 1;
-  /* border: 1px solid red; */
-  /* box-sizing: initial; */
   position: relative;
   box-sizing: border-box;
 }
 
 .table {
   width: 100%;
-  /* border-collapse: collapse; */
   border-spacing: 0;
   background: var(--em-table-background-color-default-header, #fff);
   box-sizing: content-box;
@@ -28,7 +24,7 @@
 
 .table th,
 .table td {
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
   cursor: pointer;
   height: var(--em-table-size-cell-height_R, 2.5rem);
   max-height: var(--em-table-size-cell-height_R, 2.5rem);
@@ -39,80 +35,59 @@
   border-right: var(--em-table-border-width-default, 1px) solid
     var(--em-table-border-color-default, #ededf1);
   background: var(--em-table-background-color-default-header, #fff);
+
   p {
     padding: 0 var(--em-table-padding-small, 0.25rem);
   }
 }
 
+/* measure values right align */
 .table tbody td:not(:first-of-type),
 .table tfoot td:not(:first-of-type) {
   text-align: right;
 }
 
-/* total column */
-
+/* total column row values */
 .table td.columnTotals {
-  border-right: none;
-  background: color-mix(in srgb, var(--em-table-border-color-default, #ededf1) 20%, #fff);
   font-weight: bold;
+  background-color: goldenrod;
 }
 
-.table tfoot:last-of-type tr td {
-  border-top: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
-  border-bottom: unset;
+/* footer row */
+.table tfoot:last-of-type tr {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  td {
+    border-top: var(--em-table-border-width-default, 1px) solid
+      var(--em-table-border-color-default, #ededf1);
+    border-top: var(--em-table-border-width-default, 1px) solid
+      var(--em-table-border-color-default, #ededf1);
+    border-bottom: unset;
+    font-weight: bold;
+  }
 }
 
+/* remove bottom border from last body row  */
 .table tbody tr:last-of-type td {
   border-bottom: unset;
 }
 
-/* column totals */
-.table tfoot:last-of-type tr td {
-  border-top: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
-  border-bottom: unset;
-  font-weight: bold;
-  background: color-mix(in srgb, var(--em-table-border-color-default, #ededf1) 20%, #fff);
-}
-
-/* first column */
-.table thead tr th:first-of-type,
-.table tbody tr td:first-of-type,
-.table tfoot tr td:first-of-type {
-  border-right: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
-}
-
-/* last column */
-.table thead tr th:last-of-type,
-.table tbody tr td:last-of-type,
-.table tfoot tr td:last-of-type {
-  font-weight: bold;
-}
-
-/* headers */
+/* header */
 .table thead {
   position: sticky;
   top: 0;
   z-index: 2;
   pointer-events: none;
-  border: 2px solid green;
+
+  tr th {
+    background: whitesmoke;
+  }
 }
 
-.table thead tr th {
-  background: color-mix(in srgb, var(--em-table-border-color-default, #ededf1) 20%, #fff);
-}
-
-/* column totals */
-.table tfoot tr {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* row dimensions */
+/* 1st column */
 .table thead tr th:first-of-type,
 .table tbody tr td:first-of-type,
 .table tfoot tr td:first-of-type {
@@ -120,29 +95,21 @@
   left: 0;
   z-index: 1;
   pointer-events: none;
+  background: whitesmoke;
 }
 
-/* row totals */
-.table thead tr th:last-of-type,
-.table tbody tr td:last-of-type,
-.table tfoot tr td:last-of-type {
-  position: sticky;
-  right: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* last column totals*/
-.table.showTotalColumn thead tr:first-of-type th:last-of-type {
-  border-left: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
+/* total cell */
+.table thead tr th.total,
+.table tbody tr td.total,
+.table tfoot tr td.total {
+  background: lightgrey;
   font-weight: bold;
 }
 
-/* first column total - show left border */
-.table thead th,
-.table tbody td,
-.table tfoot td {
-  border-left: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
+/* total total cell */
+.table thead tr th.totalTotal,
+.table tbody tr td.totalTotal,
+.table tfoot tr td.totalTotal {
+  background: grey;
+  font-weight: bold;
 }
