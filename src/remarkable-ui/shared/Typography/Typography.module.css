@@ -1,4 +1,5 @@
 .typography {
   font-family: var(--em-font-default, 'Inter', sans-serif);
   margin: unset;
+  color: var(--em-form-section-font-font-color);
 }
