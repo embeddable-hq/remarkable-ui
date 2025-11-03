@@ -3,6 +3,8 @@
 export type PivotTablePropsMeasure<T> = {
   key: Extract<keyof T, string>;
   label: string;
+  showAsPercentage?: boolean;
+  percentageDecimalPlaces?: number;
   accessor?: (row: Record<string, any>) => any;
   cell?: (props: { value: any; className?: string }) => React.ReactElement<HTMLTableCellElement>;
 };

@@ -22,9 +22,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   batchDelayMs = 0,
   rowTotalsFor = [],
   columnTotalsFor = [],
-  showColumnPercentages = false,
   totalLabel = 'Total',
-  percentageDecimalPlaces = 1,
 }) => {
   // 1) Unique row/column values, memoized (first-seen order)
   const rowValues = useMemo(() => {
@@ -76,7 +74,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
   // 3) Totals (column totals, row totals, grand totals) in one pass over data
   const { colTotals, rowTotals, grandTotals } = useMemo(() => {
-    if (!showColumnPercentages && columnTotalsSet.size === 0 && rowTotalsSet.size === 0) {
+    if (columnTotalsSet.size === 0 && rowTotalsSet.size === 0) {
       return {
         colTotals: new Map<string, number[]>(),
         rowTotals: new Map<string, number[]>(),
@@ -168,36 +166,49 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
       <table className={styles.table}>
         <thead>
           <tr>
-            <th scope="col" rowSpan={1} className={clsx(styles.cell, styles.muted)}>
+            <th
+              scope="col"
+              rowSpan={1}
+              className={clsx(styles.cell, styles.muted)}
+              title={columnDimension.label}
+            >
               <Typography>{columnDimension.label}</Typography>
             </th>
-            {columnValues.map((columnValue) => (
-              <th
-                key={`col-${columnValue}`}
-                scope="col"
-                colSpan={measures.length}
-                className={clsx(styles.cell, styles.header)}
-              >
-                <Typography>
-                  {columnDimension.formatValue
-                    ? columnDimension.formatValue(columnValue)
-                    : columnValue}
-                </Typography>
-              </th>
-            ))}
+            {columnValues.map((columnValue) => {
+              const columnValueDisplay = columnDimension.formatValue
+                ? columnDimension.formatValue(columnValue)
+                : columnValue;
+              return (
+                <th
+                  key={`col-${columnValue}`}
+                  scope="col"
+                  colSpan={measures.length}
+                  className={clsx(styles.cell, styles.header)}
+                  title={columnValueDisplay}
+                >
+                  <Typography>{columnValueDisplay}</Typography>
+                </th>
+              );
+            })}
             {hasRowTotals && (
               <th
                 key="col-total-group"
                 scope="col"
                 colSpan={Array.from(rowTotalsSet).length}
                 className={clsx(styles.cell, styles.bold)}
+                title={totalLabel}
               >
                 <Typography>{totalLabel}</Typography>
               </th>
             )}
           </tr>
           <tr>
-            <th scope="col" rowSpan={1} className={clsx(styles.cell, styles.muted)}>
+            <th
+              scope="col"
+              rowSpan={1}
+              className={clsx(styles.cell, styles.muted)}
+              title={rowDimension.label}
+            >
               <Typography>{rowDimension.label}</Typography>
             </th>
             {columnValues.flatMap((col) =>
@@ -206,6 +217,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   key={`sub-${String(col)}-${measure.key}-${idx}`}
                   scope="col"
                   className={clsx(styles.cell, styles.header)}
+                  title={measure.label}
                 >
                   <Typography> {measure.label}</Typography>
                 </th>
@@ -219,6 +231,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     key={`sub-total-${measure.key}-${idx}`}
                     scope="col"
                     className={clsx(styles.cell, styles.bold)}
+                    title={measure.label}
                   >
                     <Typography> {measure.label}</Typography>
                   </th>
@@ -226,85 +239,101 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
           </tr>
         </thead>
         <tbody>
-          {visibleRows.map((row) => (
-            <tr key={`row-${row}`}>
-              <td scope="row" className={clsx(styles.cell, styles.header)}>
-                <Typography>
-                  {rowDimension.formatValue ? rowDimension.formatValue(row) : row}
-                </Typography>
-              </td>
-              {columnValues.flatMap((columnValue) =>
-                measures.map((measure, idx) => {
-                  const object = cellMap.get(row)?.get(columnValue) ?? {};
-                  const value = object?.[measure.key];
+          {visibleRows.map((row) => {
+            const rowDimensionValue = rowDimension.formatValue
+              ? rowDimension.formatValue(row)
+              : row;
+            return (
+              <tr key={`row-${row}`}>
+                <td
+                  scope="row"
+                  className={clsx(styles.cell, styles.header)}
+                  title={rowDimensionValue}
+                >
+                  <Typography>{rowDimensionValue}</Typography>
+                </td>
+                {columnValues.flatMap((columnValue) =>
+                  measures.map((measure, idx) => {
+                    const object = cellMap.get(row)?.get(columnValue) ?? {};
+                    const value = object?.[measure.key];
 
-                  const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
+                    const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
 
-                  const getDisplayValue = () => {
-                    if (showColumnPercentages) {
-                      // compute percentage against column total for this measure (if enabled)
-                      const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-                      const totalsForCol =
-                        colTotals.get(String(columnValue)) ?? measures.map(() => 0);
-                      const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
+                    const getDisplayValue = () => {
+                      if (measure.showAsPercentage) {
+                        // compute percentage against column total for this measure (if enabled)
+                        const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
+                        const totalsForCol =
+                          colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                        const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
 
-                      const shouldShowPct =
-                        showColumnPercentages &&
-                        isNumber(Number(value)) &&
-                        isNumber(colTotal) &&
-                        colTotal > 0;
+                        const shouldShowPct =
+                          measure.showAsPercentage &&
+                          isNumber(Number(value)) &&
+                          isNumber(colTotal) &&
+                          colTotal > 0;
 
-                      if (shouldShowPct) {
-                        const percentage = !shouldShowPct ? 0 : (value / colTotal) * 100;
-                        const percentageDisplay = `${percentage.toFixed(percentageDecimalPlaces)}%`;
-                        return percentageDisplay;
+                        if (shouldShowPct) {
+                          const percentage = !shouldShowPct ? 0 : (value / colTotal) * 100;
+                          const percentageDisplay = `${percentage.toFixed(measure.percentageDecimalPlaces ?? 0)}%`;
+                          return percentageDisplay;
+                        }
                       }
-                    }
 
-                    return measure.accessor ? measure.accessor(object) : value;
-                  };
+                      return measure.accessor ? measure.accessor(object) : value;
+                    };
 
-                  return (
-                    <td key={key} className={clsx(styles.cell)}>
-                      <Typography>{getDisplayValue()}</Typography>
-                    </td>
-                  );
-                }),
-              )}
-
-              {/* Row totals at end of each row (only for selected measure keys) */}
-              {hasRowTotals &&
-                measures
-                  .filter((measure) => rowTotalsSet.has(measure.key))
-                  .map((measure, idx) => {
-                    const totalsForRow = rowTotals.get(row) ?? measures.map(() => 0);
-                    const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
-                    const key = `row-total-${String(row)}-${measure.key}-${idx}`;
-
-                    const value: number = measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
-                    let displayValue: any = value;
-
-                    if (showColumnPercentages) {
-                      displayValue = getPercentageDisplay(100, percentageDecimalPlaces);
-                    }
-                    if (measure.accessor) {
-                      displayValue = measure.accessor({ [measure.key]: value });
-                    }
+                    const columnValueDisplay = getDisplayValue();
 
                     return (
-                      <td key={key} className={clsx(styles.cell, styles.bold)}>
-                        <Typography>{displayValue}</Typography>
+                      <td key={key} className={clsx(styles.cell)} title={columnValueDisplay}>
+                        <Typography>{columnValueDisplay}</Typography>
                       </td>
                     );
-                  })}
-            </tr>
-          ))}
+                  }),
+                )}
+
+                {/* Row totals at end of each row (only for selected measure keys) */}
+                {hasRowTotals &&
+                  measures
+                    .filter((measure) => rowTotalsSet.has(measure.key))
+                    .map((measure, idx) => {
+                      const totalsForRow = rowTotals.get(row) ?? measures.map(() => 0);
+                      const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
+                      const key = `row-total-${String(row)}-${measure.key}-${idx}`;
+
+                      const value: number =
+                        measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
+                      let displayValue: any = value;
+
+                      if (measure.showAsPercentage) {
+                        displayValue = getPercentageDisplay(
+                          100,
+                          measure.percentageDecimalPlaces ?? 0,
+                        );
+                      } else if (measure.accessor) {
+                        displayValue = measure.accessor({ [measure.key]: value });
+                      }
+
+                      return (
+                        <td
+                          key={key}
+                          className={clsx(styles.cell, styles.bold)}
+                          title={displayValue}
+                        >
+                          <Typography>{displayValue}</Typography>
+                        </td>
+                      );
+                    })}
+              </tr>
+            );
+          })}
         </tbody>
         <tfoot>
           {/* Bottom totals row (per column×measure) */}
           {hasColumnTotals && (
             <tr key="totals-row">
-              <td scope="row" className={clsx(styles.cell, styles.bold)}>
+              <td scope="row" className={clsx(styles.cell, styles.bold)} title={totalLabel}>
                 <Typography>{totalLabel}</Typography>
               </td>
 
@@ -318,16 +347,21 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   const value: number = totalsForCol[mi] ?? 0;
                   let displayValue: any = value;
 
-                  if (showColumnPercentages) {
-                    displayValue = getPercentageDisplay(100, percentageDecimalPlaces);
-                  }
-                  if (measure.accessor) {
+                  if (measure.showAsPercentage) {
+                    displayValue = getPercentageDisplay(100, measure.percentageDecimalPlaces ?? 0);
+                  } else if (measure.accessor) {
                     displayValue = measure.accessor({ [measure.key]: value });
                   }
 
+                  const columnValueDisplay = show ? displayValue : '';
+
                   return (
-                    <td key={key} className={clsx(styles.cell, styles.bold)}>
-                      <Typography> {show ? displayValue : ''}</Typography>
+                    <td
+                      key={key}
+                      className={clsx(styles.cell, styles.bold)}
+                      title={columnValueDisplay}
+                    >
+                      <Typography>{columnValueDisplay}</Typography>
                     </td>
                   );
                 }),
@@ -346,15 +380,17 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     const value: number = grandTotals[measureIndex] ?? 0;
                     let displayValue: any = value;
 
-                    if (showColumnPercentages) {
-                      displayValue = getPercentageDisplay(100, percentageDecimalPlaces);
-                    }
-                    if (measure.accessor) {
+                    if (measure.showAsPercentage) {
+                      displayValue = getPercentageDisplay(
+                        100,
+                        measure.percentageDecimalPlaces ?? 0,
+                      );
+                    } else if (measure.accessor) {
                       displayValue = measure.accessor({ [measure.key]: value });
                     }
 
                     return (
-                      <td key={key} className={clsx(styles.cell, styles.bold)}>
+                      <td key={key} className={clsx(styles.cell, styles.bold)} title={displayValue}>
                         <Typography>{displayValue}</Typography>
                       </td>
                     );

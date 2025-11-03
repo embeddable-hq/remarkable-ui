@@ -79,6 +79,12 @@ export const subInputGenericBoolean = {
   label: 'Boolean',
 } as const;
 
+export const subInputGenericNumber = {
+  name: 'number',
+  type: 'number',
+  label: 'Number',
+} as const;
+
 // TODO: Update SDK to export the needed types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const subInputMaxCharacters: any = {
