@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 import { SingleSelectField } from './SingleSelectField';
-import { SelectListOptionProps } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import {
+  SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
+} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { IconPalette } from '@tabler/icons-react';
 
 const meta = {
@@ -180,7 +183,7 @@ export const WithErrorAndValue: Story = {
   },
 };
 
-const mockOptionsWithCategories: SelectListOptionProps[] = [
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
   { value: 'red', label: 'Red', category: 'Primary Colors' },
   { value: 'green', label: 'Green', category: 'Primary Colors' },
   { value: 'blue', label: 'Blue', category: 'Primary Colors' },

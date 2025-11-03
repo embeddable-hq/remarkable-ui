@@ -7,6 +7,7 @@ import { SelectListOptions } from '../shared/SelectList/SelectListOptions/Select
 import {
   SelectListOption,
   SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
 import { debounce } from '../../../utils/debounce.utils';
@@ -16,7 +17,7 @@ import styles from './SingleSelectField.module.css';
 import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type SingleSelectFieldProps = {
-  options: SelectListOptionProps[];
+  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   startIcon?: TablerIcon;
   value?: string;
   disabled?: boolean;
@@ -73,25 +74,26 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       : options;
 
   const groupedOptions = useMemo(() => {
-    const hasCategories = displayOptions.some((option) => option.category);
+    const hasCategories = displayOptions.some(
+      (option): option is SelectListOptionPropsWithCategory =>
+        'category' in option && !!option.category,
+    );
     if (!hasCategories) return null;
 
-    const groups: { [key: string]: SelectListOptionProps[] } = {};
-    const uncategorized: SelectListOptionProps[] = [];
+    const groups: { [key: string]: (SelectListOptionProps | SelectListOptionPropsWithCategory)[] } =
+      {};
 
     displayOptions.forEach((option) => {
-      if (option.category) {
+      if ('category' in option && option.category) {
         const category = option.category;
         if (!groups[category]) {
           groups[category] = [];
         }
         groups[category].push(option);
-      } else {
-        uncategorized.push(option);
       }
     });
 
-    return { groups, uncategorized };
+    return groups;
   }, [displayOptions]);
 
   const handleChange = (newValue?: string) => {
@@ -148,9 +150,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             />
           )}
           <SelectListOptions disabled={isLoading}>
-            {groupedOptions ? (
-              <>
-                {Object.entries(groupedOptions.groups).map(([category, categoryOptions]) => (
+            {groupedOptions
+              ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <div key={category}>
                     <SelectListCategory label={category} />
                     {categoryOptions.map((option) => (
@@ -162,8 +163,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                       />
                     ))}
                   </div>
-                ))}
-                {groupedOptions.uncategorized.map((option) => (
+                ))
+              : displayOptions.map((option) => (
                   <SelectListOption
                     key={option?.value ?? option.label}
                     onClick={() => handleChange(option?.value)}
@@ -171,17 +172,6 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                     {...option}
                   />
                 ))}
-              </>
-            ) : (
-              displayOptions.map((option) => (
-                <SelectListOption
-                  key={option?.value ?? option.label}
-                  onClick={() => handleChange(option?.value)}
-                  isSelected={option.value === value}
-                  {...option}
-                />
-              ))
-            )}
             {options.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}

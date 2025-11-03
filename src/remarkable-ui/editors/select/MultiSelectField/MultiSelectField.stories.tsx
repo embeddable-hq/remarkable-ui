@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 import { MultiSelectField } from './MultiSelectField';
-import { SelectListOptionProps } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import {
+  SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
+} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 
 const meta = {
   component: MultiSelectField,
@@ -106,7 +109,7 @@ export const WithErrorAndValue: Story = {
   },
 };
 
-const mockOptionsWithCategories: SelectListOptionProps[] = [
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
   { value: 'red', label: 'Red', category: 'Primary Colors' },
   { value: 'green', label: 'Green', category: 'Primary Colors' },
   { value: 'blue', label: 'Blue', category: 'Primary Colors' },

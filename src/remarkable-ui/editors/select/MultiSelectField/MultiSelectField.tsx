@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
 import { debounce } from '../../../utils/debounce.utils';
@@ -22,7 +23,7 @@ export type MultiSelectFieldProps = {
   isLoading?: boolean;
   isSearchable?: boolean;
   noOptionsMessage?: string;
-  options: SelectListOptionProps[];
+  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   placeholder?: string;
   submitLabel?: string;
   values?: string[];
@@ -87,25 +88,25 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       : options;
 
   const groupedOptions = useMemo(() => {
-    const hasCategories = displayOptions.some((option) => option.category);
+    const hasCategories = displayOptions.some(
+      (option): option is SelectListOptionPropsWithCategory =>
+        'category' in option && !!option.category,
+    );
     if (!hasCategories) return null;
 
-    const groups: { [key: string]: SelectListOptionProps[] } = {};
-    const uncategorized: SelectListOptionProps[] = [];
+    const groups: { [key: string]: SelectListOptionPropsWithCategory[] } = {};
 
     displayOptions.forEach((option) => {
-      if (option.category) {
+      if ('category' in option && option.category) {
         const category = option.category;
         if (!groups[category]) {
           groups[category] = [];
         }
         groups[category].push(option);
-      } else {
-        uncategorized.push(option);
       }
     });
 
-    return { groups, uncategorized };
+    return groups;
   }, [displayOptions]);
 
   const isSubmitDisabled =
@@ -180,9 +181,8 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
             />
           )}
           <SelectListOptions disabled={isLoading}>
-            {groupedOptions ? (
-              <>
-                {Object.entries(groupedOptions.groups).map(([category, categoryOptions]) => (
+            {groupedOptions
+              ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <div key={category}>
                     <SelectListCategory label={category} />
                     {categoryOptions.map((option) => (
@@ -200,8 +200,8 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
                       />
                     ))}
                   </div>
-                ))}
-                {groupedOptions.uncategorized.map((option) => (
+                ))
+              : displayOptions.map((option) => (
                   <SelectListOption
                     key={option?.value ?? option.label}
                     onClick={(e) => handleSelectOption(e, option.value)}
@@ -211,19 +211,6 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
                     {...option}
                   />
                 ))}
-              </>
-            ) : (
-              displayOptions.map((option) => (
-                <SelectListOption
-                  key={option?.value ?? option.label}
-                  onClick={(e) => handleSelectOption(e, option.value)}
-                  startIcon={
-                    preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
-                  }
-                  {...option}
-                />
-              ))
-            )}
             {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
