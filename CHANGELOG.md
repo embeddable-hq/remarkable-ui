@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.36
+
+### Patch Changes
+
+- 424886e: Enable Grouping on Select Fields
+
 ## 0.1.35
 
 ### Patch Changes
