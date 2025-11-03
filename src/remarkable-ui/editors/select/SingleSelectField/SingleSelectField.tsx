@@ -10,6 +10,7 @@ import {
   SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
+import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
 import { debounce } from '../../../utils/debounce.utils';
 import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
@@ -73,28 +74,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
-  const groupedOptions = useMemo(() => {
-    const hasCategories = displayOptions.some(
-      (option): option is SelectListOptionPropsWithCategory =>
-        'category' in option && !!option.category,
-    );
-    if (!hasCategories) return null;
-
-    const groups: { [key: string]: (SelectListOptionProps | SelectListOptionPropsWithCategory)[] } =
-      {};
-
-    displayOptions.forEach((option) => {
-      if ('category' in option && option.category) {
-        const category = option.category;
-        if (!groups[category]) {
-          groups[category] = [];
-        }
-        groups[category].push(option);
-      }
-    });
-
-    return groups;
-  }, [displayOptions]);
+  const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
   const handleChange = (newValue?: string) => {
     setSearchValue('');

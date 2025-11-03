@@ -9,6 +9,7 @@ import { debounce } from '../../../utils/debounce.utils';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
 import { SelectList } from '../shared/SelectList/SelectList';
+import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
 import { TextField } from '../../TextField/TextField';
 import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
 import { IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
@@ -87,27 +88,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
-  const groupedOptions = useMemo(() => {
-    const hasCategories = displayOptions.some(
-      (option): option is SelectListOptionPropsWithCategory =>
-        'category' in option && !!option.category,
-    );
-    if (!hasCategories) return null;
-
-    const groups: { [key: string]: SelectListOptionPropsWithCategory[] } = {};
-
-    displayOptions.forEach((option) => {
-      if ('category' in option && option.category) {
-        const category = option.category;
-        if (!groups[category]) {
-          groups[category] = [];
-        }
-        groups[category].push(option);
-      }
-    });
-
-    return groups;
-  }, [displayOptions]);
+  const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
   const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
