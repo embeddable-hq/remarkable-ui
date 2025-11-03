@@ -105,3 +105,26 @@ export const WithErrorAndValue: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+const mockOptionsWithCategories: SelectListOptionProps[] = [
+  { value: 'red', label: 'Red', category: 'Primary Colors' },
+  { value: 'green', label: 'Green', category: 'Primary Colors' },
+  { value: 'blue', label: 'Blue', category: 'Primary Colors' },
+  { value: 'yellow', label: 'Yellow', category: 'Secondary Colors' },
+  { value: 'orange', label: 'Orange', category: 'Secondary Colors' },
+  { value: 'purple', label: 'Purple', category: 'Secondary Colors' },
+  { value: 'pink', label: 'Pink', category: 'Tertiary Colors' },
+  { value: 'brown', label: 'Brown', category: 'Tertiary Colors' },
+  { value: 'gray', label: 'Gray', category: 'Tertiary Colors' },
+  { value: 'black', label: 'Black', category: 'Tertiary Colors' },
+];
+
+export const WithCategories: Story = {
+  args: {
+    values: [],
+    isSearchable: true,
+    isClearable: true,
+    options: mockOptionsWithCategories,
+    onChange: (value) => console.log('onChange', value),
+  },
+};

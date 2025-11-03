@@ -16,6 +16,7 @@ export type SelectListOptionProps = {
   startIcon?: SelectListOptionIcon;
   endIcon?: SelectListOptionIcon;
   disabled?: boolean;
+  category?: string;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
 

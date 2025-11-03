@@ -3,6 +3,7 @@ import {
   SelectListOption,
   SelectListOptionProps,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
 import { debounce } from '../../../utils/debounce.utils';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
@@ -85,6 +86,28 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
+  const groupedOptions = useMemo(() => {
+    const hasCategories = displayOptions.some((option) => option.category);
+    if (!hasCategories) return null;
+
+    const groups: { [key: string]: SelectListOptionProps[] } = {};
+    const uncategorized: SelectListOptionProps[] = [];
+
+    displayOptions.forEach((option) => {
+      if (option.category) {
+        const category = option.category;
+        if (!groups[category]) {
+          groups[category] = [];
+        }
+        groups[category].push(option);
+      } else {
+        uncategorized.push(option);
+      }
+    });
+
+    return { groups, uncategorized };
+  }, [displayOptions]);
+
   const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
@@ -157,16 +180,50 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
             />
           )}
           <SelectListOptions disabled={isLoading}>
-            {displayOptions.map((option) => (
-              <SelectListOption
-                key={option?.value ?? option.label}
-                onClick={(e) => handleSelectOption(e, option.value)}
-                startIcon={
-                  preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
-                }
-                {...option}
-              />
-            ))}
+            {groupedOptions ? (
+              <>
+                {Object.entries(groupedOptions.groups).map(([category, categoryOptions]) => (
+                  <div key={category}>
+                    <SelectListCategory label={category} />
+                    {categoryOptions.map((option) => (
+                      <SelectListOption
+                        key={option?.value ?? option.label}
+                        onClick={(e) => handleSelectOption(e, option.value)}
+                        startIcon={
+                          preValues.includes(option.value!) ? (
+                            <IconSquareCheckFilled />
+                          ) : (
+                            <IconSquare />
+                          )
+                        }
+                        {...option}
+                      />
+                    ))}
+                  </div>
+                ))}
+                {groupedOptions.uncategorized.map((option) => (
+                  <SelectListOption
+                    key={option?.value ?? option.label}
+                    onClick={(e) => handleSelectOption(e, option.value)}
+                    startIcon={
+                      preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
+                    }
+                    {...option}
+                  />
+                ))}
+              </>
+            ) : (
+              displayOptions.map((option) => (
+                <SelectListOption
+                  key={option?.value ?? option.label}
+                  onClick={(e) => handleSelectOption(e, option.value)}
+                  startIcon={
+                    preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
+                  }
+                  {...option}
+                />
+              ))
+            )}
             {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
