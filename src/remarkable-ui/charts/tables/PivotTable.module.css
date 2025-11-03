@@ -1,3 +1,5 @@
+/* TODO: REVIEW ALL CSS VARIABLE WITH DENIS AND COMPLETE THE MISSING ONES */
+
 .tableContainer {
   background: var(--em-table-background-color-default-header, #fff);
   display: flex;

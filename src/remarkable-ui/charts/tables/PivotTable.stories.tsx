@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { PivotTable, PivotTableProps } from './PivotTable';
+import { PivotTable } from './PivotTable';
+import { PivotTableProps } from './PivotTable.types';
 
 const meta = {
   component: PivotTable,

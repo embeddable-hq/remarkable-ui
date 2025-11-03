@@ -23,13 +23,13 @@ export const meta = {
     dataset,
     {
       ...measures,
-      label: 'Measures to display',
+      label: 'Measures To Display',
       inputs: [
         ...measures.inputs,
         {
           ...subInputGenericBoolean,
           name: 'showColumnTotal',
-          label: 'Show column total',
+          label: 'Show Column Total',
         },
       ],
     },
@@ -48,7 +48,7 @@ export const meta = {
     {
       ...genericBoolean,
       name: 'showColumnPercentages',
-      label: 'Show column percentages',
+      label: 'Show Column Percentages',
       defaultValue: false,
     },
     {
@@ -57,8 +57,14 @@ export const meta = {
       label: 'Percentage Decimal Places',
       defaultValue: 1,
     },
-    { ...genericBoolean, name: 'showRowTotals', label: 'Show row totals' },
-    { ...genericString, name: 'displayNullAs', label: 'Display null as' },
+    { ...genericBoolean, name: 'showRowTotals', label: 'Show Row Totals' },
+    { ...genericString, name: 'displayNullAs', label: 'Display Null As' },
+    {
+      ...genericNumber,
+      name: 'columnWidth',
+      label: 'Column Width',
+      description: 'You can input a number in pixels e.g. 400',
+    },
 
     maxResults,
   ],

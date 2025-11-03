@@ -4,11 +4,12 @@ import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { PivotTable } from '../../../../../remarkable-ui';
+import { PivotTable, PivotTableProps } from '../../../../../remarkable-ui';
 import { useRef } from 'react';
-import { PivotTableProps } from '../../../../../remarkable-ui/charts/tables/PivotTable';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { useFillGaps } from '../../charts.newFillGaps.hooks';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type PivotTableProProps = {
   title: string;
@@ -21,6 +22,7 @@ type PivotTableProProps = {
   showRowTotals?: boolean;
   displayNullAs?: string;
   percentageDecimalPlaces: number;
+  columnWidth: number;
 };
 
 const getPivotMeasures = (
@@ -44,13 +46,16 @@ const getPivotMeasures = (
   });
 };
 
-const getPivotDimension = (props: { dimension: Dimension }, theme: Theme) => {
+const getPivotDimension = (
+  props: { dimension: Dimension },
+  theme: Theme,
+): PivotTableProps<any>['rowDimension' | 'columnDimension'] => {
   const themeFormatter = getThemeFormatter(theme);
 
   return {
     key: props.dimension.name,
     label: themeFormatter.dimensionOrMeasureTitle(props.dimension),
-    accessor: (value: string) => themeFormatter.data(props.dimension, value),
+    formatValue: (value: string) => themeFormatter.data(props.dimension, value),
   };
 };
 
