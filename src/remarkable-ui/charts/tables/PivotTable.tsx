@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import styles from './PivotTable.module.css';
 import { Typography } from '../../shared/Typography/Typography';
+import clsx from 'clsx';
 
 const isNumber = (v: any) => typeof v === 'number' && !Number.isNaN(v);
 
@@ -188,11 +189,16 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
       <table className={styles.table}>
         <thead>
           <tr>
-            <th scope="col" rowSpan={1}>
+            <th scope="col" rowSpan={1} className={clsx(styles.cell, styles.muted)}>
               <Typography>{columnDimension.label}</Typography>
             </th>
             {columnValues.map((columnValue) => (
-              <th key={`col-${columnValue}`} scope="col" colSpan={measures.length}>
+              <th
+                key={`col-${columnValue}`}
+                scope="col"
+                colSpan={measures.length}
+                className={clsx(styles.cell, styles.header)}
+              >
                 <Typography>
                   {columnDimension.accessor ? columnDimension.accessor(columnValue) : columnValue}
                 </Typography>
@@ -203,19 +209,23 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                 key="col-total-group"
                 scope="col"
                 colSpan={Array.from(rowTotalsSet).length}
-                className={styles.total}
+                className={clsx(styles.cell, styles.bold)}
               >
                 <Typography>{totalLabel}</Typography>
               </th>
             )}
           </tr>
           <tr>
-            <th scope="col" rowSpan={1}>
+            <th scope="col" rowSpan={1} className={clsx(styles.cell, styles.muted)}>
               <Typography>{rowDimension.label}</Typography>
             </th>
             {columnValues.flatMap((col) =>
               measures.map((measure, idx) => (
-                <th key={`sub-${String(col)}-${measure.key}-${idx}`} scope="col">
+                <th
+                  key={`sub-${String(col)}-${measure.key}-${idx}`}
+                  scope="col"
+                  className={clsx(styles.cell, styles.header)}
+                >
                   <Typography> {measure.label}</Typography>
                 </th>
               )),
@@ -224,7 +234,11 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               measures
                 .filter((measure) => rowTotalsSet.has(measure.key))
                 .map((measure, idx) => (
-                  <th key={`sub-total-${measure.key}-${idx}`} scope="col" className={styles.total}>
+                  <th
+                    key={`sub-total-${measure.key}-${idx}`}
+                    scope="col"
+                    className={clsx(styles.cell, styles.bold)}
+                  >
                     <Typography> {measure.label}</Typography>
                   </th>
                 ))}
@@ -233,7 +247,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
         <tbody>
           {visibleRows.map((row) => (
             <tr key={`row-${row}`}>
-              <td scope="row">
+              <td scope="row" className={clsx(styles.cell, styles.header)}>
                 <Typography>{rowDimension.accessor ? rowDimension.accessor(row) : row}</Typography>
               </td>
               {columnValues.flatMap((columnValue) =>
@@ -268,7 +282,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   };
 
                   return (
-                    <td key={key}>
+                    <td key={key} className={clsx(styles.cell)}>
                       <Typography>{getDisplayValue()}</Typography>
                     </td>
                   );
@@ -290,7 +304,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     }
 
                     return (
-                      <td key={key} className={styles.total}>
+                      <td key={key} className={clsx(styles.cell, styles.bold)}>
                         <Typography>{total}</Typography>
                       </td>
                     );
@@ -302,7 +316,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
           {/* Bottom totals row (per column×measure) */}
           {hasColumnTotals && (
             <tr key="totals-row">
-              <td scope="row" className={styles.total}>
+              <td scope="row" className={clsx(styles.cell, styles.bold)}>
                 <Typography>{totalLabel}</Typography>
               </td>
 
@@ -320,7 +334,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   }
 
                   return (
-                    <td key={key} className={styles.total}>
+                    <td key={key} className={clsx(styles.cell, styles.bold)}>
                       <Typography> {show ? value : ''}</Typography>
                     </td>
                   );
@@ -338,7 +352,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     const total = grandTotals[measureIndex] ?? 0;
                     const key = `grand-total-${measure.key}-${idx}`;
                     return (
-                      <td key={key} className={styles.totalTotal}>
+                      <td key={key} className={clsx(styles.cell, styles.bold)}>
                         <Typography>{total}</Typography>
                       </td>
                     );

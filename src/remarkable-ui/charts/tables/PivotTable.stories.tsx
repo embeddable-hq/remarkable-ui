@@ -102,6 +102,7 @@ export const Default: Story = {
     columnDimension,
     rowTotalsFor: [],
     columnTotalsFor: [],
+    totalLabel: 'Total',
   },
 };
 
@@ -113,7 +114,6 @@ export const PivotTablePlay: Story = {
           resize: 'both',
           flex: 1,
           overflow: 'auto',
-          background: 'red',
         }}
       >
         <PivotTable {...args} />
@@ -127,5 +127,6 @@ export const PivotTablePlay: Story = {
     columnDimension,
     rowTotalsFor: [],
     columnTotalsFor: [],
+    totalLabel: 'Total',
   },
 };
