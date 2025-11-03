@@ -18,7 +18,11 @@ export type PivotTableProps<T> = {
     label: string;
     accessor?: (value: string) => any;
   };
-  columnDimension: { key: Extract<keyof T, string>; label: string };
+  columnDimension: {
+    key: Extract<keyof T, string>;
+    label: string;
+    accessor?: (value: string) => any;
+  };
   progressive?: boolean;
   batchSize?: number;
   batchDelayMs?: number;
@@ -171,7 +175,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             </th>
             {colValues.map((col) => (
               <th key={`col-${String(col)}`} scope="col" colSpan={measures.length}>
-                <Typography>{String(col)}</Typography>
+                <Typography>
+                  {String(col)}{' '}
+                  {columnDimension.accessor ? columnDimension.accessor(String(col)) : String(col)}
+                </Typography>
               </th>
             ))}
             {hasRowTotals && (

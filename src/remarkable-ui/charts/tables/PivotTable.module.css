@@ -10,7 +10,6 @@
   border-radius: var(--em-table-border-radius-default, 0.75rem);
   overflow-x: auto;
   overflow-y: auto;
-  flex: 1;
   position: relative;
   box-sizing: border-box;
 }

@@ -113,6 +113,7 @@ export const PivotTablePlay: Story = {
           resize: 'both',
           flex: 1,
           overflow: 'auto',
+          background: 'red',
         }}
       >
         <PivotTable {...args} />
