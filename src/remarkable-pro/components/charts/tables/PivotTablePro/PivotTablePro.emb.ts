@@ -11,6 +11,8 @@ import {
   genericBoolean,
   subInputGenericBoolean,
   genericString,
+  dimensionWithDateBounds,
+  genericNumber,
 } from '../../../component.constants';
 
 export const meta = {
@@ -32,7 +34,7 @@ export const meta = {
       ],
     },
     {
-      ...dimension,
+      ...dimensionWithDateBounds,
       label: 'Column Dimension',
       name: 'columnDimension',
     },
@@ -48,6 +50,12 @@ export const meta = {
       name: 'showColumnPercentages',
       label: 'Show column percentages',
       defaultValue: false,
+    },
+    {
+      ...genericNumber,
+      name: 'percentageDecimalPlaces',
+      label: 'Percentage Decimal Places',
+      defaultValue: 1,
     },
     { ...genericBoolean, name: 'showRowTotals', label: 'Show row totals' },
     { ...genericString, name: 'displayNullAs', label: 'Display null as' },

@@ -1,6 +1,6 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
-import { i18nSetup } from '../../../../theme/i18n/i18n';
+import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
@@ -8,6 +8,7 @@ import { PivotTable } from '../../../../../remarkable-ui';
 import { useRef } from 'react';
 import { PivotTableProps } from '../../../../../remarkable-ui/charts/tables/PivotTable';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
+import { useFillGaps } from '../../charts.newFillGaps.hooks';
 
 type PivotTableProProps = {
   title: string;
@@ -19,6 +20,7 @@ type PivotTableProProps = {
   showColumnPercentages?: boolean;
   showRowTotals?: boolean;
   displayNullAs?: string;
+  percentageDecimalPlaces: number;
 };
 
 const getPivotMeasures = (
@@ -64,14 +66,16 @@ const PivotTablePro = (props: PivotTableProProps) => {
 
   const { description, title } = resolveI18nProps(props);
   const {
-    results,
     measures,
     rowDimension,
     columnDimension,
     showColumnPercentages,
     showRowTotals,
     displayNullAs,
+    percentageDecimalPlaces,
   } = props;
+
+  const results = useFillGaps({ results: props.results, dimension: columnDimension });
 
   const cardContentRef = useRef<HTMLDivElement>(null);
 
@@ -86,11 +90,12 @@ const PivotTablePro = (props: PivotTableProProps) => {
       ref={cardContentRef}
       title={title}
       subtitle={description}
-      data={results}
-      dimensionsAndMeasures={[]}
+      data={props.results}
+      dimensionsAndMeasures={[rowDimension, columnDimension, ...measures]}
       errorMessage={results?.error}
     >
       <PivotTable
+        totalLabel={i18n.t('charts.pivotTable.total')}
         data={results.data ?? []}
         measures={pivotMeasures}
         rowDimension={pivotRowDimension}
@@ -98,6 +103,7 @@ const PivotTablePro = (props: PivotTableProProps) => {
         showColumnPercentages={showColumnPercentages}
         columnTotalsFor={pivotColumnTotalsFor}
         rowTotalsFor={pivotRowTotalsFor}
+        percentageDecimalPlaces={percentageDecimalPlaces}
       />
     </ChartCard>
   );

@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useMemo, useState, cloneElement } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import styles from './PivotTable.module.css';
 import { Typography } from '../../shared/Typography/Typography';
 
-const formatPercent = (n: number) => `${(n * 100).toFixed(1)}%`;
 const isNumber = (v: any) => typeof v === 'number' && !Number.isNaN(v);
 
 export type PivotTableProps<T> = {
@@ -29,6 +28,8 @@ export type PivotTableProps<T> = {
   rowTotalsFor?: Array<Extract<keyof T, string>>;
   columnTotalsFor?: Array<Extract<keyof T, string>>;
   showColumnPercentages?: boolean;
+  totalLabel?: string;
+  percentageDecimalPlaces: number;
 };
 
 export const PivotTable: FC<PivotTableProps<any>> = ({
@@ -42,17 +43,29 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   rowTotalsFor = [],
   columnTotalsFor = [],
   showColumnPercentages = false,
+  totalLabel = 'Total',
+  percentageDecimalPlaces,
 }) => {
   // 1) Unique row/column values, memoized (first-seen order)
   const rowValues = useMemo(() => {
     const s = new Set<string>();
-    for (const d of data) s.add(String(d[rowDimension.key]));
+    for (const d of data) {
+      const rowValue = d[rowDimension.key];
+      if (rowValue) {
+        s.add(rowValue);
+      }
+    }
     return Array.from(s);
   }, [data, rowDimension.key]);
 
-  const colValues = useMemo(() => {
+  const columnValues = useMemo(() => {
     const s = new Set<string>();
-    for (const d of data) s.add(String(d[columnDimension.key]));
+    for (const d of data) {
+      const columnValue = d[rowDimension.key];
+      if (columnValue) {
+        s.add(d[columnDimension.key]);
+      }
+    }
     return Array.from(s);
   }, [data, columnDimension.key]);
 
@@ -69,11 +82,8 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   }, [data, rowDimension.key, columnDimension.key]);
 
   // Sets for quick membership checks
-  const rowTotalsSet = useMemo(() => new Set<string>(rowTotalsFor.map(String)), [rowTotalsFor]);
-  const columnTotalsSet = useMemo(
-    () => new Set<string>(columnTotalsFor.map(String)),
-    [columnTotalsFor],
-  );
+  const rowTotalsSet = useMemo(() => new Set<string>(rowTotalsFor), [rowTotalsFor]);
+  const columnTotalsSet = useMemo(() => new Set<string>(columnTotalsFor), [columnTotalsFor]);
 
   const hasRowTotals = rowTotalsSet.size > 0;
   const hasColumnTotals = columnTotalsSet.size > 0;
@@ -86,6 +96,14 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
   // 3) Totals (column totals, row totals, grand totals) in one pass over data
   const { colTotals, rowTotals, grandTotals } = useMemo(() => {
+    if (!showColumnPercentages && columnTotalsSet.size === 0 && rowTotalsSet.size === 0) {
+      return {
+        colTotals: new Map<string, number[]>(),
+        rowTotals: new Map<string, number[]>(),
+        grandTotals: measures.map(() => 0),
+      };
+    }
+
     const cTotals = new Map<string, number[]>(); // col -> [per-measure]
     const rTotals = new Map<string, number[]>(); // row -> [per-measure]
     const gTotals = measures.map(() => 0); // [per-measure]
@@ -112,7 +130,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     }
 
     // Ensure all displayed rows/cols exist (even if empty)
-    for (const c of colValues) {
+    for (const c of columnValues) {
       if (!cTotals.has(String(c)))
         cTotals.set(
           String(c),
@@ -128,7 +146,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     }
 
     return { colTotals: cTotals, rowTotals: rTotals, grandTotals: gTotals };
-  }, [data, measures, rowDimension.key, columnDimension.key, colValues, rowValues]);
+  }, [data, measures, rowDimension.key, columnDimension.key, columnValues, rowValues]);
 
   // 4) Progressive row rendering
   const [visibleCount, setVisibleCount] = useState(() =>
@@ -164,7 +182,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   }, [progressive, batchSize, batchDelayMs, rowValues.length, data]);
 
   const visibleRows = progressive ? rowValues.slice(0, visibleCount) : rowValues;
-
+  console.log('visibleRows', visibleRows);
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -173,11 +191,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             <th scope="col" rowSpan={1}>
               <Typography>{columnDimension.label}</Typography>
             </th>
-            {colValues.map((col) => (
-              <th key={`col-${String(col)}`} scope="col" colSpan={measures.length}>
+            {columnValues.map((columnValue) => (
+              <th key={`col-${columnValue}`} scope="col" colSpan={measures.length}>
                 <Typography>
-                  {String(col)}{' '}
-                  {columnDimension.accessor ? columnDimension.accessor(String(col)) : String(col)}
+                  {columnDimension.accessor ? columnDimension.accessor(columnValue) : columnValue}
                 </Typography>
               </th>
             ))}
@@ -188,7 +205,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                 colSpan={Array.from(rowTotalsSet).length}
                 className={styles.total}
               >
-                <Typography>Total</Typography>
+                <Typography>{totalLabel}</Typography>
               </th>
             )}
           </tr>
@@ -196,70 +213,58 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             <th scope="col" rowSpan={1}>
               <Typography>{rowDimension.label}</Typography>
             </th>
-            {colValues.flatMap((col) =>
-              measures.map((m, idx) => (
-                <th key={`sub-${String(col)}-${m.key}-${idx}`} scope="col">
-                  <Typography> {m.label}</Typography>
+            {columnValues.flatMap((col) =>
+              measures.map((measure, idx) => (
+                <th key={`sub-${String(col)}-${measure.key}-${idx}`} scope="col">
+                  <Typography> {measure.label}</Typography>
                 </th>
               )),
             )}
             {hasRowTotals &&
               measures
-                .filter((m) => rowTotalsSet.has(String(m.key)))
-                .map((m, idx) => (
-                  <th key={`sub-total-${m.key}-${idx}`} scope="col" className={styles.total}>
-                    <Typography> {m.label}</Typography>
+                .filter((measure) => rowTotalsSet.has(measure.key))
+                .map((measure, idx) => (
+                  <th key={`sub-total-${measure.key}-${idx}`} scope="col" className={styles.total}>
+                    <Typography> {measure.label}</Typography>
                   </th>
                 ))}
           </tr>
         </thead>
         <tbody>
           {visibleRows.map((row) => (
-            <tr key={`row-${String(row)}`}>
-              {/* Row header */}
+            <tr key={`row-${row}`}>
               <td scope="row">
-                <Typography>
-                  {rowDimension.accessor ? rowDimension.accessor(String(row)) : String(row)}
-                </Typography>
+                <Typography>{rowDimension.accessor ? rowDimension.accessor(row) : row}</Typography>
               </td>
+              {columnValues.flatMap((columnValue) =>
+                measures.map((measure, idx) => {
+                  const object = cellMap.get(row)?.get(columnValue) ?? {};
+                  const value = object?.[measure.key];
 
-              {colValues.flatMap((col) =>
-                measures.map((m, idx) => {
-                  const object = cellMap.get(String(row))?.get(String(col)) ?? {};
-                  const value = object?.[m.key];
-
-                  const key = `cell-${String(row)}-${String(col)}-${m.key}-${idx}`;
-
-                  // compute percentage against column total for this measure (if enabled)
-                  const mi = measureIndexByKey.get(String(m.key)) ?? -1;
-                  const totalsForCol = colTotals.get(String(col)) ?? measures.map(() => 0);
-                  const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
-
-                  const shouldShowPct =
-                    showColumnPercentages &&
-                    columnTotalsSet.has(String(m.key)) &&
-                    isNumber(Number(value)) &&
-                    isNumber(colTotal) &&
-                    colTotal > 0;
-
-                  const pct = shouldShowPct ? value / colTotal : null;
-
-                  if (m.cell) {
-                    // keep API stable: pass only { value } + merged className
-                    const el = m.cell({ value });
-                    const mergedClassName = [el.props.className, styles.tableBodyCell]
-                      .filter(Boolean)
-                      .join(' ');
-                    return cloneElement(el, { key, className: mergedClassName });
-                  }
+                  const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
 
                   const getDisplayValue = () => {
-                    if (shouldShowPct) {
-                      debugger;
-                      return formatPercent(pct as number);
+                    if (showColumnPercentages) {
+                      // compute percentage against column total for this measure (if enabled)
+                      const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
+                      const totalsForCol =
+                        colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                      const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
+
+                      const shouldShowPct =
+                        showColumnPercentages &&
+                        isNumber(Number(value)) &&
+                        isNumber(colTotal) &&
+                        colTotal > 0;
+
+                      if (shouldShowPct) {
+                        const percentage = !shouldShowPct ? 0 : (value / colTotal) * 100;
+                        const percentageDisplay = `${percentage.toFixed(percentageDecimalPlaces)}%`;
+                        return percentageDisplay;
+                      }
                     }
 
-                    return m.accessor ? m.accessor(object) : value;
+                    return measure.accessor ? measure.accessor(object) : value;
                   };
 
                   return (
@@ -273,15 +278,15 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               {/* Row totals at end of each row (only for selected measure keys) */}
               {hasRowTotals &&
                 measures
-                  .filter((m) => rowTotalsSet.has(String(m.key)))
-                  .map((m, idx) => {
-                    const totalsForRow = rowTotals.get(String(row)) ?? measures.map(() => 0);
-                    const mi = measureIndexByKey.get(String(m.key)) ?? -1;
-                    let total = mi >= 0 ? (totalsForRow[mi] ?? 0) : 0;
-                    const key = `row-total-${String(row)}-${m.key}-${idx}`;
+                  .filter((measure) => rowTotalsSet.has(measure.key))
+                  .map((measure, idx) => {
+                    const totalsForRow = rowTotals.get(row) ?? measures.map(() => 0);
+                    const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
+                    let total = measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
+                    const key = `row-total-${String(row)}-${measure.key}-${idx}`;
 
-                    if (m.accessor) {
-                      total = m.accessor({ [m.key]: total });
+                    if (measure.accessor) {
+                      total = measure.accessor({ [measure.key]: total });
                     }
 
                     return (
@@ -298,20 +303,20 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
           {hasColumnTotals && (
             <tr key="totals-row">
               <td scope="row" className={styles.total}>
-                <Typography>Total</Typography>
+                <Typography>{totalLabel}</Typography>
               </td>
 
-              {colValues.flatMap((col) =>
-                measures.map((m, idx) => {
-                  const show = columnTotalsSet.has(String(m.key));
-                  const totalsForCol = colTotals.get(String(col)) ?? measures.map(() => 0);
-                  const mi = measures.findIndex((mm) => String(mm.key) === String(m.key));
+              {columnValues.flatMap((columnValue) =>
+                measures.map((measure, idx) => {
+                  const show = columnTotalsSet.has(String(measure.key));
+                  const totalsForCol = colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                  const mi = measures.findIndex((mm) => String(mm.key) === String(measure.key));
                   const total = totalsForCol[mi];
-                  const key = `col-total-${String(col)}-${m.key}-${idx}`;
+                  const key = `col-total-${String(columnValue)}-${measure.key}-${idx}`;
 
                   let value: number = total as any;
-                  if (m.accessor) {
-                    value = m.accessor({ [m.key]: total });
+                  if (measure.accessor) {
+                    value = measure.accessor({ [measure.key]: total });
                   }
 
                   return (
@@ -325,11 +330,13 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               {/* Bottom-right grand totals only if we also have a row totals group */}
               {hasRowTotals &&
                 measures
-                  .filter((m) => rowTotalsSet.has(String(m.key)))
-                  .map((m, idx) => {
-                    const mi = measures.findIndex((mm) => String(mm.key) === String(m.key));
-                    const total = grandTotals[mi] ?? 0;
-                    const key = `grand-total-${m.key}-${idx}`;
+                  .filter((measure) => rowTotalsSet.has(measure.key))
+                  .map((measure, idx) => {
+                    const measureIndex = measures.findIndex(
+                      (mm) => String(mm.key) === String(measure.key),
+                    );
+                    const total = grandTotals[measureIndex] ?? 0;
+                    const key = `grand-total-${measure.key}-${idx}`;
                     return (
                       <td key={key} className={styles.totalTotal}>
                         <Typography>{total}</Typography>

@@ -30,7 +30,7 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
     const dimensionName = dimension.name;
     const dateBoundsTmp: TimeRange = dimension.inputs?.dateBounds;
 
-    if (!granularity || !dimensionName || !dateBoundsTmp) return results;
+    if (!granularity || !dimensionName) return results;
 
     const dateBounds = dateBoundsTmp?.relativeTimeString
       ? theme.defaults.dateRangesOptions
@@ -52,10 +52,12 @@ export function useFillGaps(props: UseFillGapsProps): DataResponse {
     const from = dayjs.utc(
       externalDateBounds?.from ?? dateBounds?.from ?? sortedResults[0]?.[dimensionName],
     );
+
     const to = dayjs.utc(
       externalDateBounds?.to ??
         dateBounds?.to ??
-        sortedResults[sortedResults.length - 1]?.[dimensionName],
+        sortedResults[sortedResults.length - 1]?.[dimensionName] ??
+        [...sortedResults].reverse().find((item) => item?.[dimensionName] != null)?.[dimensionName],
     );
 
     // If we *still* don’t have valid date bounds, bail out safely

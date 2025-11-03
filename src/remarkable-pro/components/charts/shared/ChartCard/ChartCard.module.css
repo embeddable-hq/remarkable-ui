@@ -10,13 +10,12 @@
 }
 
 .rightContent {
-  position: absolute;
   position: relative;
   right: 0;
 }
 
 .fixedContent {
-  z-index: 1;
+  z-index: 3;
   background: var(--em-background-color-default, #f7f7f8);
   position: absolute;
   top: 50%;
@@ -26,4 +25,8 @@
 
 .fixedContent.loading {
   z-index: 2;
+}
+
+.fixedContent.hidden {
+  display: none;
 }

@@ -33,6 +33,9 @@ export const de: ResourceLanguage = {
       tablePaginated: {
         pagination: 'Seite {{page}} von {{totalPages}}',
       },
+      pivotTable: {
+        total: 'Gesamt',
+      },
     },
     editors: {
       errorTitle: 'Etwas ist schiefgelaufen.',

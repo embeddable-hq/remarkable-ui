@@ -78,7 +78,7 @@
 .table thead {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
 
   tr th {
