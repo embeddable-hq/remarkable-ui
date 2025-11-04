@@ -44,6 +44,8 @@ const saveColorsMap = () => {
 };
 
 const loadColorMap = () => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
   const data = sessionStorage.getItem(STORAGE_KEY);
   if (!data) return;
   const obj: Record<string, Record<string, string>> = JSON.parse(data);
@@ -57,6 +59,8 @@ const loadColorMap = () => {
 loadColorMap();
 
 export const getColor = (key: string, value: string, palette: string[], idx: number): string => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return '';
+
   // Initialize structures if needed
   if (!colorsMap.has(key)) {
     colorsMap.set(key, new Map());
