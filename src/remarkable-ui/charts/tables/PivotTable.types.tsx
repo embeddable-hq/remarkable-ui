@@ -34,4 +34,6 @@ export type PivotTableProps<T> = {
   showColumnPercentages?: boolean;
   totalLabel?: string;
   percentageDecimalPlaces?: number;
+  columnWidth?: number;
+  firstColumnWidth?: number;
 };

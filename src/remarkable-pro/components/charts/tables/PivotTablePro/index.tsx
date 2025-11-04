@@ -20,7 +20,8 @@ type PivotTableProProps = {
   columnDimension: Dimension;
   showRowTotals?: boolean;
   displayNullAs?: string;
-  columnWidth: number;
+  columnWidth?: number;
+  firstColumnWidth?: number;
 };
 
 const getPivotMeasures = (
@@ -34,7 +35,7 @@ const getPivotMeasures = (
       key: measure.name,
       label: themeFormatter.dimensionOrMeasureTitle(measure),
       showAsPercentage: Boolean(measure.inputs?.showAsPercentage),
-      percentageDecimalPlaces: measure.inputs?.percentageDecimalPlaces,
+      percentageDecimalPlaces: measure.inputs?.decimalPlaces ?? 1,
       accessor: (row) => {
         const value = row[measure.name];
 
@@ -70,7 +71,15 @@ const PivotTablePro = (props: PivotTableProProps) => {
   i18nSetup(theme);
 
   const { description, title } = resolveI18nProps(props);
-  const { measures, rowDimension, columnDimension, showRowTotals, displayNullAs } = props;
+  const {
+    measures,
+    rowDimension,
+    columnDimension,
+    showRowTotals,
+    displayNullAs,
+    columnWidth,
+    firstColumnWidth,
+  } = props;
 
   const results = useFillGaps({ results: props.results, dimension: columnDimension });
 
@@ -92,6 +101,8 @@ const PivotTablePro = (props: PivotTableProProps) => {
       errorMessage={results?.error}
     >
       <PivotTable
+        firstColumnWidth={firstColumnWidth}
+        columnWidth={columnWidth}
         totalLabel={i18n.t('charts.pivotTable.total')}
         data={results.data ?? []}
         measures={pivotMeasures}

@@ -13,6 +13,8 @@ const getPercentageDisplay = (percentage: number, percentageDecimalPlaces: numbe
 };
 
 export const PivotTable: FC<PivotTableProps<any>> = ({
+  columnWidth,
+  firstColumnWidth,
   data,
   measures,
   rowDimension,
@@ -74,14 +76,6 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
   // 3) Totals (column totals, row totals, grand totals) in one pass over data
   const { colTotals, rowTotals, grandTotals } = useMemo(() => {
-    if (columnTotalsSet.size === 0 && rowTotalsSet.size === 0) {
-      return {
-        colTotals: new Map<string, number[]>(),
-        rowTotals: new Map<string, number[]>(),
-        grandTotals: measures.map(() => 0),
-      };
-    }
-
     const cTotals = new Map<string, number[]>(); // col -> [per-measure]
     const rTotals = new Map<string, number[]>(); // row -> [per-measure]
     const gTotals = measures.map(() => 0); // [per-measure]
@@ -169,7 +163,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             <th
               scope="col"
               rowSpan={1}
-              className={clsx(styles.cell, styles.muted)}
+              className={clsx(styles.cell, styles.header)}
               title={columnDimension.label}
             >
               <Typography>{columnDimension.label}</Typography>
@@ -206,8 +200,9 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             <th
               scope="col"
               rowSpan={1}
-              className={clsx(styles.cell, styles.muted)}
+              className={clsx(styles.cell, styles.header)}
               title={rowDimension.label}
+              style={{ minWidth: firstColumnWidth ? firstColumnWidth : undefined }}
             >
               <Typography>{rowDimension.label}</Typography>
             </th>
@@ -218,6 +213,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   scope="col"
                   className={clsx(styles.cell, styles.header)}
                   title={measure.label}
+                  style={{ minWidth: columnWidth ? columnWidth : undefined }}
                 >
                   <Typography> {measure.label}</Typography>
                 </th>
@@ -308,7 +304,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
                       if (measure.showAsPercentage) {
                         displayValue = getPercentageDisplay(
-                          100,
+                          (value / (grandTotals[measureIndex] || 1)) * 100,
                           measure.percentageDecimalPlaces ?? 0,
                         );
                       } else if (measure.accessor) {
@@ -352,7 +348,6 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   } else if (measure.accessor) {
                     displayValue = measure.accessor({ [measure.key]: value });
                   }
-
                   const columnValueDisplay = show ? displayValue : '';
 
                   return (

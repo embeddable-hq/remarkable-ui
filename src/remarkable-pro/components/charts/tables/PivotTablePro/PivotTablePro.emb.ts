@@ -7,13 +7,11 @@ import {
   title,
   maxResults,
   measures,
-  dimension,
   genericBoolean,
   subInputGenericBoolean,
   genericString,
   dimensionWithDateBounds,
   genericNumber,
-  subInputGenericNumber,
 } from '../../../component.constants';
 
 export const meta = {
@@ -39,28 +37,28 @@ export const meta = {
           description: 'If turned on, other measures may be ignored',
           defaultValue: false,
         },
-        {
-          ...subInputGenericNumber,
-          name: 'percentageDecimalPlaces',
-          label: 'Percentage Decimal Places',
-          defaultValue: 1,
-        },
       ],
+    },
+    {
+      ...dimensionWithDateBounds,
+      label: 'Row Dimension',
+      name: 'rowDimension',
     },
     {
       ...dimensionWithDateBounds,
       label: 'Column Dimension',
       name: 'columnDimension',
     },
-    {
-      ...dimension,
-      label: 'Row Dimension',
-      name: 'rowDimension',
-    },
     title,
     description,
     { ...genericBoolean, name: 'showRowTotals', label: 'Show Row Totals' },
     { ...genericString, name: 'displayNullAs', label: 'Display Null As' },
+    {
+      ...genericNumber,
+      name: 'firstColumnWidth',
+      label: 'First Column Width',
+      description: 'You can input a number in pixels e.g. 400',
+    },
     {
       ...genericNumber,
       name: 'columnWidth',
