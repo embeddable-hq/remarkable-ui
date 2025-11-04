@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.39
+
+### Patch Changes
+
+- 696ba64: PivotTablePro component
+
 ## 0.1.38
 
 ### Patch Changes
