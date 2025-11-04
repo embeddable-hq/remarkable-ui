@@ -154,7 +154,6 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   }, [progressive, batchSize, batchDelayMs, rowValues.length, data]);
 
   const visibleRows = progressive ? rowValues.slice(0, visibleCount) : rowValues;
-  console.log('visibleRows', visibleRows);
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -228,6 +227,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     scope="col"
                     className={clsx(styles.cell, styles.bold)}
                     title={measure.label}
+                    style={{ minWidth: columnWidth ? columnWidth : undefined }}
                   >
                     <Typography> {measure.label}</Typography>
                   </th>
