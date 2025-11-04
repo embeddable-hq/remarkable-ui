@@ -6,10 +6,12 @@ import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 import { Theme } from '../../theme/theme.types';
 import { useTheme } from '@embeddable.com/react';
 import { useMemo } from 'react';
+import quarterOfYear from 'dayjs/plugin/quarterOfYear.js';
 
 dayjs.extend(utc);
 dayjs.extend(isoWeek);
 dayjs.extend(isSameOrBefore);
+dayjs.extend(quarterOfYear);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type DataRecord = { [key: string]: any };
