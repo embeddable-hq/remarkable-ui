@@ -78,7 +78,9 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
           subtitle={subtitle}
           rightContent={
             <div data-no-export className={styles.rightContent}>
-              <div className={clsx(styles.fixedContent, isLoading && styles.loading)}>
+              <div
+                className={clsx(styles.fixedContent, isLoading ? styles.loading : styles.hidden)}
+              >
                 <ChartCardLoading />
               </div>
               <div className={styles.fixedContent}>

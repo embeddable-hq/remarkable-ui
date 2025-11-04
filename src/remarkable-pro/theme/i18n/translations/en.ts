@@ -22,6 +22,9 @@ export const en: ResourceLanguage = {
       tablePaginated: {
         pagination: 'Page {{page}} of {{totalPages}}',
       },
+      pivotTable: {
+        total: 'Total',
+      },
     },
     editors: {
       errorTitle: 'Something went wrong.',

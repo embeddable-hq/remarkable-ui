@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { TablePagination } from './components/TablePagination/TablePagination';
 import { TableHeader } from './components/TableHeader/TableHeader';
 import { TableBody } from './components/TableBody/TableBody';
-import { TablePaginatedProps } from './tables.types';
+import { TablePaginatedProps } from './table.types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedProps<any>>(

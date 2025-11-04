@@ -35,11 +35,13 @@ export { KpiChart } from './charts/kpis/KpiChart';
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
 export { defaultPieChartOptions } from './charts/pies/pies.constants';
-export { TablePaginated } from './charts/tables/TablePaginated';
-export * from './charts/tables/tables.types';
+export { TablePaginated } from './charts/tables/Table/TablePaginated';
+export * from './charts/tables/Table/table.types';
+export { PivotTable } from './charts/tables/PivotTable/PivotTable';
+export * from './charts/tables/PivotTable/PivotTable.types';
 
 // Chart Utils
-export { getTableTotalPages } from './charts/tables/components/TablePagination/TablePagination';
+export { getTableTotalPages } from './charts/tables/Table/components/TablePagination/TablePagination';
 
 // Constants
 export { chartColors } from './charts/charts.constants';

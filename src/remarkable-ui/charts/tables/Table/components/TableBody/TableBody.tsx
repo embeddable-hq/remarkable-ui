@@ -1,8 +1,8 @@
 import styles from './TableBody.module.css';
-import { Typography } from '../../../../shared/Typography/Typography';
-import { TableHeaderAlign, TableHeaderItem, TablePaginatedProps } from '../../tables.types';
+import { Typography } from '../../../../../shared/Typography/Typography';
+import { TableHeaderAlign, TableHeaderItem, TablePaginatedProps } from '../../table.types';
 import clsx from 'clsx';
-import { IconButton } from '../../../../shared/IconButton/IconButton';
+import { IconButton } from '../../../../../shared/IconButton/IconButton';
 import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
 import { useState } from 'react';
 

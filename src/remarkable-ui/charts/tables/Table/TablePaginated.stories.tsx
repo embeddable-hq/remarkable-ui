@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TablePaginated } from './TablePaginated';
 import { useArgs } from 'storybook/internal/preview-api';
-import { TableHeaderItem } from './tables.types';
-import { Typography } from '../../shared/Typography/Typography';
+import { TableHeaderItem } from './table.types';
+import { Typography } from '../../../shared/Typography/Typography';
 
 const teams = ['Design', 'Engineering', 'Ops', 'Marketing'] as const;
 const titles = ['IC', 'Lead', 'Manager', 'Director'] as const;
