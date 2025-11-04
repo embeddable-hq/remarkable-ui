@@ -1,4 +1,4 @@
-import { CssSize } from '../../types/css.types';
+import { CssSize } from '../../../types/css.types';
 
 export const TableSortDirection = {
   ASC: 'asc',

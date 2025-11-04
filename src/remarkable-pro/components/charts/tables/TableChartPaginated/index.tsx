@@ -7,7 +7,7 @@ import { DataResponse, Dimension, DimensionOrMeasure, OrderDirection } from '@em
 import { getStyleNumber, getTableTotalPages, TablePaginated } from '../../../../../remarkable-ui';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
-import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table.hooks';
+import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table/Table.hooks';
 import { getTableHeaders, getTableRows } from '../tables.utils';
 import { ChartCardMenuProOptionOnClickProps } from '../../shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 import { useDebounce } from '../../../../../remarkable-ui/hooks/useDebounce.hook';

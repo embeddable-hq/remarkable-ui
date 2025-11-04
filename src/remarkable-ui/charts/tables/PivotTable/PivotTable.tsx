@@ -1,8 +1,8 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import styles from './PivotTable.module.css';
-import { Typography } from '../../shared/Typography/Typography';
 import clsx from 'clsx';
 import { PivotTableProps } from './PivotTable.types';
+import { Typography } from '../../../shared/Typography/Typography';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 

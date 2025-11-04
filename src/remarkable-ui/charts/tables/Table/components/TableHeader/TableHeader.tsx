@@ -1,5 +1,5 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
-import { Typography } from '../../../../shared/Typography/Typography';
+import { Typography } from '../../../../../shared/Typography/Typography';
 import styles from './TableHeader.module.css';
 import { TableHeaderItem, TablePaginatedProps, TableSortDirection } from '../../tables.types';
 
