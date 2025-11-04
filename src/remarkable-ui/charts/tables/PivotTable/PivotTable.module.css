@@ -24,8 +24,8 @@
 }
 
 /* measure values right align */
-.table tbody td:not(:first-of-type),
-.table tfoot td:not(:first-of-type) {
+.table tbody td,
+.table tfoot td {
   text-align: right;
 }
 
@@ -35,6 +35,7 @@
   bottom: 0;
   z-index: 1;
 
+  th,
   td {
     border-top: var(--em-table-border-width-default, 1px) solid
       var(--em-table-border-color-default, #ededf1);
@@ -44,6 +45,7 @@
 }
 
 /* remove bottom border from last body row  */
+.table tbody tr:last-of-type th,
 .table tbody tr:last-of-type td {
   border-bottom: unset;
 }
@@ -57,8 +59,8 @@
 
 /* 1st column */
 .table thead tr th:first-of-type,
-.table tbody tr td:first-of-type,
-.table tfoot tr td:first-of-type {
+.table tbody tr th:first-of-type,
+.table tfoot tr th:first-of-type {
   position: sticky;
   left: 0;
   z-index: 1;
