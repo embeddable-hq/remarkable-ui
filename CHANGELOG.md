@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.37
+
+### Patch Changes
+
+- 8daf412: Window guard on remarkable pro styles utils
+
 ## 0.1.36
 
 ### Patch Changes
