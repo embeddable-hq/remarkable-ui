@@ -36,7 +36,7 @@ export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
 export { defaultPieChartOptions } from './charts/pies/pies.constants';
 export { TablePaginated } from './charts/tables/Table/TablePaginated';
-export * from './charts/tables/Table/tables.types';
+export * from './charts/tables/Table/table.types';
 export { PivotTable } from './charts/tables/PivotTable/PivotTable';
 export * from './charts/tables/PivotTable/PivotTable.types';
 

@@ -8,7 +8,7 @@ import { IconButton } from '../../../../../shared/IconButton/IconButton';
 import { Typography } from '../../../../../shared/Typography/Typography';
 import styles from './TablePagination.module.css';
 import { FC, useEffect } from 'react';
-import { TablePaginatedProps } from '../../tables.types';
+import { TablePaginatedProps } from '../../table.types';
 
 export type TablePaginationProps = Pick<
   TablePaginatedProps<unknown>,
