@@ -7,7 +7,10 @@ import { SelectListOptions } from '../shared/SelectList/SelectListOptions/Select
 import {
   SelectListOption,
   SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
+import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
 import { debounce } from '../../../utils/debounce.utils';
 import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
@@ -15,7 +18,7 @@ import styles from './SingleSelectField.module.css';
 import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type SingleSelectFieldProps = {
-  options: SelectListOptionProps[];
+  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   startIcon?: TablerIcon;
   value?: string;
   disabled?: boolean;
@@ -71,6 +74,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
+  const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
+
   const handleChange = (newValue?: string) => {
     setSearchValue('');
     onChange(newValue ?? '');
@@ -125,14 +130,28 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             />
           )}
           <SelectListOptions disabled={isLoading}>
-            {displayOptions.map((option) => (
-              <SelectListOption
-                key={option?.value ?? option.label}
-                onClick={() => handleChange(option?.value)}
-                isSelected={option.value === value}
-                {...option}
-              />
-            ))}
+            {groupedOptions
+              ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
+                  <div key={category}>
+                    <SelectListCategory label={category} />
+                    {categoryOptions.map((option) => (
+                      <SelectListOption
+                        key={option?.value ?? option.label}
+                        onClick={() => handleChange(option?.value)}
+                        isSelected={option.value === value}
+                        {...option}
+                      />
+                    ))}
+                  </div>
+                ))
+              : displayOptions.map((option) => (
+                  <SelectListOption
+                    key={option?.value ?? option.label}
+                    onClick={() => handleChange(option?.value)}
+                    isSelected={option.value === value}
+                    {...option}
+                  />
+                ))}
             {options.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
