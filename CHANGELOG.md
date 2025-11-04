@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.38
+
+### Patch Changes
+
+- 04f14b3: Fix line comparison first load
+
 ## 0.1.37
 
 ### Patch Changes
