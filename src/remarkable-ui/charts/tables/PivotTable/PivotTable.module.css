@@ -80,7 +80,6 @@
   cursor: pointer;
   height: var(--em-table-size-cell-height_R, 2.5rem);
   max-height: var(--em-table-size-cell-height_R, 2.5rem);
-  min-width: var(--em-table-size-min-width_R, 3rem);
   padding: var(--em-table-padding-medium_R, 0.5rem);
   border-bottom: var(--em-table-border-width-default, 1px) solid
     var(--em-table-border-color-default, #ededf1);
