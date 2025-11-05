@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { ReactElement } from 'react';
+
 export type PivotTablePropsMeasure<T> = {
   key: Extract<keyof T, string>;
   label: string;
   showAsPercentage?: boolean;
   percentageDecimalPlaces?: number;
   accessor?: (row: Record<string, any>) => any;
-  cell?: (props: { value: any; className?: string }) => React.ReactElement<HTMLTableCellElement>;
+  cell?: (props: { value: any; className?: string }) => ReactElement<HTMLTableCellElement>;
 };
 
 export type PivotTablePropsRowDimension<T> = {
