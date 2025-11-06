@@ -18,16 +18,13 @@
 }
 
 .listItem .leftContent {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  display: flex;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .listItem .rightContent {
-  flex: 0 0 auto;
-  max-width: 50%;
-  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .listItem .leftContent p,
@@ -35,6 +32,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.listItem .rightContent p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
 }
 
 .listItem:hover,

@@ -10,18 +10,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-function demoData(rows = 6, cols = 14) {
-  const out: number[][] = [];
-  for (let r = 0; r < rows; r++) {
-    const row: number[] = [];
-    for (let c = 0; c < cols; c++) {
-      const v = Math.random() * 200;
-      row.push(Math.round(v));
-    }
-    out.push(row);
-  }
-  return out;
-}
 type Data = {
   country: string;
   month: string;

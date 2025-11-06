@@ -1,9 +1,7 @@
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
 import styles from './HeatMap.module.css';
 import clsx from 'clsx';
 import { Typography } from '../../../shared/Typography/Typography';
-
-// To discuss with harry
 
 type HeatMapPropsDimension<T> = {
   key: Extract<keyof T, string>;
