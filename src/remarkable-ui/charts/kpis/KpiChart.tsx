@@ -20,7 +20,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   const hasComparisonValue = comparisonValue !== undefined;
   const equalComparison = hasComparisonValue && comparisonValue === value;
 
-  const displayValue = valueFormatter ? valueFormatter(value) : value;
+  const displayValue = value === undefined ? '' : valueFormatter ? valueFormatter(value) : value;
 
   return (
     <div className={styles.kpiChartContainer}>
