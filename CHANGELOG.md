@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.40
+
+### Patch Changes
+
+- 0c8abc2: Fix max width for select field
+
 ## 0.1.39
 
 ### Patch Changes
