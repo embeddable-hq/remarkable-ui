@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.41
+
+### Patch Changes
+
+- 36badf0: Fix NaN on KPI + increase number of rows for line charts
+
 ## 0.1.40
 
 ### Patch Changes
