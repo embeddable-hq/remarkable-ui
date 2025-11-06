@@ -1,0 +1,77 @@
+.heatMapContainer {
+  background: var(--em-table-background-color-default-header, #fff);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 100%;
+
+  border: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+  border-radius: var(--em-table-border-radius-default, 0.75rem);
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.heatMapTable {
+  min-width: 100%;
+  border-spacing: 0;
+  background: var(--em-table-background-color-default-header, #fff);
+  box-sizing: content-box;
+
+  th {
+    min-width: 50px;
+  }
+
+  tbody tr:last-of-type th,
+  tbody tr:last-of-type td {
+    border-bottom: unset;
+  }
+
+  thead th:last-of-type,
+  tbody td:last-of-type {
+    border-right: unset;
+  }
+
+  th:first-of-type {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    width: 150px;
+    max-width: 150px;
+    min-width: 150px;
+  }
+}
+
+.heatMapCell {
+  box-sizing: border-box;
+  cursor: pointer;
+  height: var(--em-table-size-cell-height_R, 2.5rem);
+  max-height: var(--em-table-size-cell-height_R, 2.5rem);
+  padding: var(--em-table-padding-medium_R, 0.5rem);
+  border-bottom: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+  border-right: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+  background: var(--em-table-background-color-default-header, #fff);
+  min-width: 50px;
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--em-table-font-family, Inter, sans-serif);
+    font-size: var(--em-table-font-size, 0.75rem);
+    font-weight: var(--em-table-font-font-weight-regular, 400);
+    font-style: normal;
+    line-height: var(--em-table-font-line-height, 0.875rem);
+    padding: 0 var(--em-table-padding-small, 0.25rem);
+    /* color: var(--em-table-text-default, #212129); */
+  }
+}
+
+.heatMapCell.header p {
+  color: var(--em-table-text-default, #212129);
+  font-weight: var(--em-table-font-font-weight-medium, 500);
+}
