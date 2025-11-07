@@ -74,15 +74,6 @@
     }
   }
 
-  /* Hover states */
-  &:not(.disabled):hover .switchTrack {
-    background: var(--em-switch-track-background-color-hover, #e4e4ea);
-  }
-
-  &:not(.disabled).checked:hover .switchTrack {
-    background: var(--em-switch-track-background-color-hover-checked, #212129);
-  }
-
   /* Disabled state */
   &.disabled {
     cursor: not-allowed;
