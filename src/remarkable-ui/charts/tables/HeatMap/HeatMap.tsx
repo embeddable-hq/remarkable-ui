@@ -1,53 +1,54 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import styles from './HeatMap.module.css';
 import clsx from 'clsx';
 import { Typography } from '../../../shared/Typography/Typography';
 
-type HeatMapPropsDimension<T> = {
+type Dimension<T> = {
   key: Extract<keyof T, string>;
   label: string;
-  format?: (value: any) => string;
+  format?: (value: string) => string;
 };
 
-type HeatMapPropsMeasure<T> = {
+type Measure<T> = {
   key: Extract<keyof T, string>;
   label: string;
-  format?: (value: any) => any;
-  formatRaw?: (value: any) => any;
+  format?: (value: number) => string;
+  formatRaw?: (value: unknown) => number | null | undefined;
 };
 
-const getCellMinWidthStyle = (width: number | undefined) => {
-  return {
-    minWidth: width ? `${width}px` : undefined,
-  };
-};
+type Threshold = number | `${number}%` | undefined;
 
-export type HeatMapProps<T> = {
+export type HeatMapProps<T extends Record<string, unknown>> = {
   data: T[];
-  measure: HeatMapPropsMeasure<T>;
-  rowDimension: HeatMapPropsDimension<T>;
-  columnDimension: HeatMapPropsDimension<T>;
+  measure: Measure<T>;
+  rowDimension: Dimension<T>;
+  columnDimension: Dimension<T>;
   showValues?: boolean;
   onCellClick?: (row: number, col: number, value: number) => void;
   className?: string;
-  minPercentThreshold?: number; // percentage domain min (0..100)
-  maxPercentThreshold?: number; // percentage domain max (0..100)
+
+  /** Color thresholds — number = raw value, "NN%" = percentage of [min..max]. */
+  minThreshold?: Threshold;
+  maxThreshold?: Threshold;
+
   minColor: string;
   midColor: string;
   maxColor: string;
   columnWidth?: number;
   firstColumnWidth?: number;
+  missingCellColor?: string;
 };
 
-// Utility functions
+// ─────────────────────────── Utilities ───────────────────────────
+
 const clamp01 = (t: number) => Math.max(0, Math.min(1, t));
-const clampPct01 = (p: number) => Math.max(0, Math.min(1, p));
-const clampPct = (p: number) => Math.max(0, Math.min(100, p));
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+const easeOutQuad = (x: number) => 1 - (1 - x) * (1 - x);
+const OUTSIDE_DARKEN_MAX = 0.35;
 
 const CSS_RGB_REGEX = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i;
+const idOf = (v: unknown) => String(v ?? '');
 
-const cssToHex = (color: string): string => {
+const parseCssColorToHex = (color: string): string => {
   if (typeof document === 'undefined') return color;
   const ctx = document.createElement('canvas').getContext('2d');
   if (!ctx) return color;
@@ -79,14 +80,16 @@ const rgbToHex = (r: number, g: number, b: number) => {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
 
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
 const lerpColor = (a: string, b: string, t: number) => {
-  const A = hexToRgb(cssToHex(a));
-  const B = hexToRgb(cssToHex(b));
+  const A = hexToRgb(parseCssColorToHex(a));
+  const B = hexToRgb(parseCssColorToHex(b));
   return rgbToHex(lerp(A.r, B.r, t), lerp(A.g, B.g, t), lerp(A.b, B.b, t));
 };
 
 const getBrightness = (hex: string) => {
-  const { r, g, b } = hexToRgb(cssToHex(hex));
+  const { r, g, b } = hexToRgb(parseCssColorToHex(hex));
   return (r * 299 + g * 587 + b * 114) / 1000;
 };
 
@@ -100,14 +103,24 @@ const makeDiverging = (minC: string, midC: string, maxC: string, midpoint = 0.5)
   };
 };
 
-// Normalize keys for Map indexing
-const idOf = (v: unknown) => String(v ?? '');
+const parsePercentString = (s: string): number | null => {
+  const trimmed = s.trim();
+  if (!trimmed.endsWith('%')) return null;
+  const n = Number.parseFloat(trimmed.slice(0, -1));
+  return Number.isFinite(n) ? clamp01(n / 100) : null;
+};
 
-// Easing to keep near-threshold colors bright (for outside-domain darkening)
-const easeOutQuad = (x: number) => 1 - (1 - x) * (1 - x);
+/** Convert flexible threshold → raw domain value */
+const thresholdToRaw = (t: Threshold, rawMin: number, rawMax: number, fallback: number): number => {
+  if (t == null) return fallback;
+  if (typeof t === 'number' && Number.isFinite(t)) return t;
+  const asPct = typeof t === 'string' ? parsePercentString(t) : null;
+  if (asPct != null) return rawMin + asPct * (rawMax - rawMin);
+  const maybe = Number(t as unknown as string);
+  return Number.isFinite(maybe) ? maybe : fallback;
+};
 
-// Max darkness applied outside the domain (0..1). Lower -> lighter tails.
-const OUTSIDE_DARKEN_MAX = 0.35;
+// ─────────────────────────── Component ───────────────────────────
 
 export function HeatMap<T extends Record<string, unknown>>({
   data,
@@ -117,134 +130,133 @@ export function HeatMap<T extends Record<string, unknown>>({
   columnDimension,
   rowDimension,
   measure,
-  minPercentThreshold, // interpreted as percentage domain min (0..100)
-  maxPercentThreshold, // interpreted as percentage domain max (0..100)
+  minThreshold,
+  maxThreshold,
   minColor,
   midColor,
   maxColor,
   columnWidth,
   firstColumnWidth,
+  missingCellColor = '#ffffff',
 }: HeatMapProps<T>) {
   const isEmpty = !data || data.length === 0;
 
-  // 1) RAW domain from data (only used to compute base percentages)
+  // 1) Extract data domain
   const { rawMin, rawMax } = useMemo(() => {
     let min = Infinity;
     let max = -Infinity;
     for (const d of data) {
-      const v = Number(d[measure.key]);
-      if (Number.isFinite(v)) {
-        if (v < min) min = v;
-        if (v > max) max = v;
+      const vRaw = d[measure.key];
+      const v = measure.formatRaw ? measure.formatRaw(vRaw) : (vRaw as number);
+      const num = Number(v);
+      if (Number.isFinite(num)) {
+        if (num < min) min = num;
+        if (num > max) max = num;
       }
     }
-    if (!Number.isFinite(min) || !Number.isFinite(max)) {
-      min = 0;
-      max = 0;
-    }
+    if (!Number.isFinite(min) || !Number.isFinite(max)) return { rawMin: 0, rawMax: 0 };
     return { rawMin: min, rawMax: max };
-  }, [data, measure.key]);
+  }, [data, measure.key, measure.formatRaw]);
 
-  // 2) Percentage domain (min/max are PERCENTAGES)
-  const { minValue, maxValue } = useMemo(() => {
-    const minPct = clampPct(minPercentThreshold ?? 0);
-    const maxPct = clampPct(maxPercentThreshold ?? 100);
-    return {
-      minValue: Math.min(minPct, maxPct),
-      maxValue: Math.max(minPct, maxPct),
-    };
-  }, [minPercentThreshold, maxPercentThreshold]);
+  // 2) Resolve thresholds to a raw domain
+  const { domainMin, domainMax } = useMemo(() => {
+    const domMin = thresholdToRaw(minThreshold, rawMin, rawMax, rawMin);
+    const domMax = thresholdToRaw(maxThreshold, rawMin, rawMax, rawMax);
+    return domMin <= domMax
+      ? { domainMin: domMin, domainMax: domMax }
+      : { domainMin: domMax, domainMax: domMin };
+  }, [minThreshold, maxThreshold, rawMin, rawMax]);
 
-  // 3) Midpoint (percentage → fraction)
+  // 3) Compute midpoint fraction for diverging scale
   const midpoint = useMemo(() => {
-    const domain = maxValue - minValue;
-    if (domain === 0) return 0.5;
-    const target = clampPct((minValue + maxValue) / 2);
-    return (target - minValue) / domain; // fraction 0..1 within percentage domain
-  }, [minValue, maxValue]);
+    const range = domainMax - domainMin;
+    if (range === 0) return 0.5;
+    const midRaw = (domainMin + domainMax) / 2;
+    return (midRaw - domainMin) / range;
+  }, [domainMin, domainMax]);
 
   const scale = useMemo(
-    () => makeDiverging(minColor!, midColor!, maxColor!, midpoint),
+    () => makeDiverging(minColor, midColor, maxColor, midpoint),
     [minColor, midColor, maxColor, midpoint],
   );
 
+  // 4) Dimension ordering
   const columnValues = useMemo(() => {
-    const s = new Set<string>();
+    const seen = new Set<string>();
+    const out: string[] = [];
     for (const d of data) {
-      const columnValue = d[columnDimension.key];
-      if (columnValue !== undefined && columnValue !== null) s.add(idOf(columnValue));
+      const val = d[columnDimension.key];
+      if (val !== undefined && val !== null) {
+        const id = idOf(val);
+        if (!seen.has(id)) {
+          seen.add(id);
+          out.push(id);
+        }
+      }
     }
-    return Array.from(s);
+    return out;
   }, [data, columnDimension.key]);
 
   const rowValues = useMemo(() => {
-    const s = new Set<string>();
+    const seen = new Set<string>();
+    const out: string[] = [];
     for (const d of data) {
-      const rowValue = d[rowDimension.key];
-      if (rowValue !== undefined && rowValue !== null) s.add(idOf(rowValue));
+      const val = d[rowDimension.key];
+      if (val !== undefined && val !== null) {
+        const id = idOf(val);
+        if (!seen.has(id)) {
+          seen.add(id);
+          out.push(id);
+        }
+      }
     }
-    return Array.from(s);
+    return out;
   }, [data, rowDimension.key]);
 
-  // Map cells
   const cellMap = useMemo(() => {
-    const map = new Map<string, Map<string, Record<string, any>>>();
+    const map = new Map<string, Map<string, Record<string, unknown>>>();
     for (const d of data) {
       const r = idOf(d[rowDimension.key]);
       const c = idOf(d[columnDimension.key]);
       if (!map.has(r)) map.set(r, new Map());
-      map.get(r)!.set(c, d as Record<string, any>);
+      map.get(r)!.set(c, d as Record<string, unknown>);
     }
     return map;
   }, [data, rowDimension.key, columnDimension.key]);
 
-  // Convert RAW value -> percentage (can be <0 or >100). Used for display and then clamped for color.
-  const rawToPercent = (v: number) => {
-    const denom = rawMax - rawMin;
-    if (denom === 0) return 50;
-    return ((v - rawMin) / denom) * 100;
-  };
+  // 5) Map value → background color (based on new domain)
+  const colorForValue = useCallback(
+    (v: number) => {
+      const range = domainMax - domainMin;
+      if (range === 0) return scale(0.5);
+      const t = (v - domainMin) / range;
 
-  // Color mapping with capped, eased darkening outside the domain.
-  const colorForPercent = (percentClamped01: number) => {
-    // percentClamped01 is a 0..1 value (i.e., clamped percent / 100)
-    const p01 = clampPct01(percentClamped01);
-    const min01 = minValue / 100;
-    const max01 = maxValue / 100;
-    const domain01 = max01 - min01;
+      if (t <= 0) {
+        const leftTail = Math.max(1e-6, domainMin - rawMin);
+        const dist = Math.max(0, domainMin - v) / leftTail;
+        const strength = easeOutQuad(clamp01(dist)) * OUTSIDE_DARKEN_MAX;
+        return strength > 0 ? lerpColor(minColor, '#000000', strength) : minColor;
+      }
+      if (t >= 1) {
+        const rightTail = Math.max(1e-6, rawMax - domainMax);
+        const dist = Math.max(0, v - domainMax) / rightTail;
+        const strength = easeOutQuad(clamp01(dist)) * OUTSIDE_DARKEN_MAX;
+        return strength > 0 ? lerpColor(maxColor, '#000000', strength) : maxColor;
+      }
 
-    // Below domain: darken from minColor as we move away, but cap & ease it
-    if (p01 < min01) {
-      const tailLen = Math.max(1e-6, min01); // avoid /0 when min=0
-      const dist = (min01 - p01) / tailLen; // 0..1
-      const strength = easeOutQuad(clamp01(dist)) * OUTSIDE_DARKEN_MAX;
-      return lerpColor(minColor, '#000000', strength);
-    }
+      return scale(t);
+    },
+    [domainMin, domainMax, rawMin, rawMax, minColor, maxColor, scale],
+  );
 
-    // Above domain: darken from maxColor as we move away, but cap & ease it
-    if (p01 > max01) {
-      const tailLen = Math.max(1e-6, 1 - max01); // avoid /0 when max=1
-      const dist = (p01 - max01) / tailLen; // 0..1
-      const strength = easeOutQuad(clamp01(dist)) * OUTSIDE_DARKEN_MAX;
-      return lerpColor(maxColor, '#000000', strength);
-    }
-
-    // Inside domain: interpolate normally (t=0 -> minColor, t=1 -> maxColor)
-    const t = domain01 === 0 ? 0.5 : (p01 - min01) / domain01;
-    return scale(t);
-  };
-
-  // Render text
-  const renderValue = (v: number | string) => {
-    if (!showValues) return null;
-
-    console.log('typeof', typeof v, v);
-    if (typeof v == 'string') {
-      return v;
-    }
-
-    return measure.format ? measure.format(v) : String(v);
-  };
+  const renderValue = useCallback(
+    (value: number | null | undefined) => {
+      if (!showValues) return null;
+      if (value == null || Number.isNaN(value)) return '—';
+      return measure.format ? measure.format(value) : String(value);
+    },
+    [showValues, measure],
+  );
 
   if (isEmpty) {
     return (
@@ -254,6 +266,7 @@ export function HeatMap<T extends Record<string, unknown>>({
     );
   }
 
+  // ─────────────────────────── Render ───────────────────────────
   return (
     <div className={clsx(styles.heatMapContainer, className)}>
       <table className={styles.heatMapTable} aria-label="Heat map">
@@ -261,50 +274,41 @@ export function HeatMap<T extends Record<string, unknown>>({
           <tr>
             <th
               className={clsx(styles.heatMapCell, styles.header)}
-              style={getCellMinWidthStyle(firstColumnWidth)}
+              style={{ minWidth: firstColumnWidth ? `${firstColumnWidth}px` : undefined }}
             >
-              <Typography>{columnDimension.label}</Typography>
+              <Typography>{measure.label}</Typography>
             </th>
             {columnValues.map((cv, index) => (
               <th
                 key={`col-${cv}-${index}`}
                 className={clsx(styles.heatMapCell, styles.header)}
-                scope="col"
-                style={getCellMinWidthStyle(columnWidth)}
+                style={{ minWidth: columnWidth ? `${columnWidth}px` : undefined }}
               >
                 <Typography>{columnDimension.format ? columnDimension.format(cv) : cv}</Typography>
               </th>
             ))}
           </tr>
         </thead>
+
         <tbody>
           {rowValues.map((rv, rowIndex) => (
             <tr key={`row-${rv}`}>
               <th className={clsx(styles.heatMapCell, styles.header)} scope="row">
                 <Typography>{rowDimension.format ? rowDimension.format(rv) : rv}</Typography>
               </th>
+
               {columnValues.map((cv, colIndex) => {
-                const object = cellMap.get(rv)?.get(cv);
-                const rawRawValue = object?.[measure.key];
-                const rawValue = measure.formatRaw ? measure.formatRaw(rawRawValue) : rawRawValue;
-                const numericValue = rawValue;
+                const obj = cellMap.get(rv)?.get(cv);
+                const raw = obj?.[measure.key];
+                const val: number | null | undefined = measure.formatRaw
+                  ? measure.formatRaw(raw)
+                  : (raw as number);
 
                 const isMissing =
-                  rawValue == null || Number.isNaN(numericValue) || !Number.isFinite(numericValue);
+                  val == null || Number.isNaN(val) || !Number.isFinite(val as number);
 
-                // Base percent from RAW domain (may be <0 or >100)
-                const basePercent = isMissing ? 0 : rawToPercent(numericValue as number);
-
-                // Clamped 0..100 for color only
-                const clampedPercent = clampPct(basePercent);
-                const clampedPercent01 = clampedPercent / 100;
-
-                // Background color
-                const background = isMissing ? '#fff' : colorForPercent(clampedPercent01);
-
-                // Text color for contrast
+                const background = isMissing ? missingCellColor : colorForValue(val as number);
                 const color = getBrightness(background) < 150 ? '#fff' : '#212129';
-
                 const interactive = !!onCellClick && !isMissing;
 
                 return (
@@ -312,7 +316,11 @@ export function HeatMap<T extends Record<string, unknown>>({
                     key={`cell-${rv}-${cv}`}
                     className={clsx(styles.heatMapCell)}
                     style={{ background, color }}
-                    onClick={interactive ? () => onCellClick?.(rowIndex, colIndex, 1) : undefined}
+                    onClick={
+                      interactive
+                        ? () => onCellClick?.(rowIndex, colIndex, val as number)
+                        : undefined
+                    }
                     role={interactive ? 'button' : undefined}
                     tabIndex={interactive ? 0 : undefined}
                     onKeyDown={
@@ -320,13 +328,13 @@ export function HeatMap<T extends Record<string, unknown>>({
                         ? (e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
                               e.preventDefault();
-                              onCellClick?.(rowIndex, colIndex, 1);
+                              onCellClick?.(rowIndex, colIndex, val as number);
                             }
                           }
                         : undefined
                     }
                   >
-                    <Typography>{renderValue(numericValue)}</Typography>
+                    <Typography>{renderValue(isMissing ? null : val)}</Typography>
                   </td>
                 );
               })}

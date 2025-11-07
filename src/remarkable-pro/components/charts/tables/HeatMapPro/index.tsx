@@ -25,8 +25,8 @@ type HeatMapProProps = {
   midColor: string;
   minColor: string;
   showValues?: boolean;
-  minPercentThreshold?: number;
-  maxPercentThreshold?: number;
+  minThreshold?: number;
+  maxThreshold?: number;
 };
 
 export const getHeatMeasure = (
@@ -78,8 +78,8 @@ const HeatMapPro = (props: HeatMapProProps) => {
     columnWidth,
     firstColumnWidth,
     showValues,
-    minPercentThreshold,
-    maxPercentThreshold,
+    minThreshold,
+    maxThreshold,
   } = props;
 
   // Fill gaps for the column dimension
@@ -118,8 +118,8 @@ const HeatMapPro = (props: HeatMapProProps) => {
         midColor={midColor}
         minColor={minColor}
         showValues={showValues}
-        minPercentThreshold={minPercentThreshold}
-        maxPercentThreshold={maxPercentThreshold}
+        minThreshold={minThreshold}
+        maxThreshold={maxThreshold}
         columnWidth={columnWidth}
         firstColumnWidth={firstColumnWidth}
       />
