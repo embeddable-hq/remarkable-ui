@@ -6,6 +6,7 @@ import {
   dimensionTime,
   genericBoolean,
   genericTimeRange,
+  maxResults,
   measures,
   reverseXAxis,
   showLegend,
@@ -97,6 +98,7 @@ export const meta = {
       label: 'Display a comparison X-axis',
       defaultValue: true,
     },
+    maxResults,
   ],
   events: [
     {
@@ -142,6 +144,7 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
       comparisonDateRange: state?.comparisonDateRange,
       setComparisonDateRange: (comparisonDateRange: TimeRange) => setState({ comparisonDateRange }),
       results: loadData({
+        limit: inputs.maxResults,
         from: inputs.dataset,
         select: [...inputs.measures, inputs.xAxis],
         orderBy,
@@ -159,6 +162,7 @@ export default defineComponent(LineChartComparisonDefaultPro, meta, {
       resultsComparison:
         inputs.primaryDateRange && timeProperty && state?.comparisonDateRange
           ? loadData({
+              limit: inputs.maxResults,
               from: inputs.dataset,
               select: [...inputs.measures, inputs.xAxis],
               orderBy,
