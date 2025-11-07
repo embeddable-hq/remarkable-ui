@@ -12,11 +12,9 @@ const getPercentageDisplay = (percentage: number, percentageDecimalPlaces: numbe
   return `${percentage.toFixed(percentageDecimalPlaces)}%`;
 };
 
-const getCellWidthStyle = (width: number | undefined) => {
+const getCellMinWidthStyle = (width: number | undefined) => {
   return {
     minWidth: width ? `${width}px` : undefined,
-    width: width ? `${width}px` : undefined,
-    maxWidth: width ? `${width}px` : undefined,
   };
 };
 
@@ -200,7 +198,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               rowSpan={1}
               className={clsx(styles.cell, styles.header)}
               title={rowDimension.label}
-              style={getCellWidthStyle(firstColumnWidth)}
+              style={getCellMinWidthStyle(firstColumnWidth)}
             >
               <Typography>{rowDimension.label}</Typography>
             </th>
@@ -211,7 +209,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   scope="col"
                   className={clsx(styles.cell, styles.header)}
                   title={measure.label}
-                  style={getCellWidthStyle(columnWidth)}
+                  style={getCellMinWidthStyle(columnWidth)}
                 >
                   <Typography>{measure.label}</Typography>
                 </th>

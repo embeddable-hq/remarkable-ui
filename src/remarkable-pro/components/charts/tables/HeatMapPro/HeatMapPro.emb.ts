@@ -53,7 +53,7 @@ export const meta = {
     {
       ...genericNumber,
       name: 'firstColumnMinWidth',
-      label: 'First Column MinWidth',
+      label: 'First Column Min Width',
       description: 'Set the minimum width in px (e.g. 200)',
     },
     {

@@ -56,13 +56,13 @@ export const meta = {
     {
       ...genericNumber,
       name: 'firstColumnWidth',
-      label: 'First Column Width',
+      label: 'First Column Min Width',
       description: 'You can input a number in pixels e.g. 400',
     },
     {
       ...genericNumber,
       name: 'columnWidth',
-      label: 'Column Width',
+      label: 'Column Min Width',
       description: 'You can input a number in pixels e.g. 400',
     },
 
