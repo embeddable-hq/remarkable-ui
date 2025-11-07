@@ -4,6 +4,7 @@ import {
   description,
   dimensionWithDateBounds,
   genericBoolean,
+  maxResults,
   measures,
   reverseXAxis,
   showLegend,
@@ -53,6 +54,7 @@ export const meta = {
     reverseXAxis,
     yAxisRangeMin,
     yAxisRangeMax,
+    maxResults,
   ],
   events: [
     {
@@ -74,6 +76,7 @@ export default defineComponent(LineChartDefaultPro, meta, {
     return {
       ...inputs,
       results: loadData({
+        limit: inputs.maxResults,
         from: inputs.dataset,
         select: [...inputs.measures, inputs.xAxis],
       }),

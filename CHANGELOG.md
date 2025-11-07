@@ -1,5 +1,23 @@
 # @embeddable/remarkable-ui
 
+## 0.1.42
+
+### Patch Changes
+
+- 9f3acd7: Max results input not required
+
+## 0.1.41
+
+### Patch Changes
+
+- 36badf0: Fix NaN on KPI + increase number of rows for line charts
+
+## 0.1.40
+
+### Patch Changes
+
+- 0c8abc2: Fix max width for select field
+
 ## 0.1.39
 
 ### Patch Changes
