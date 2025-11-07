@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.42
+
+### Patch Changes
+
+- 9f3acd7: Max results input not required
+
 ## 0.1.41
 
 ### Patch Changes
