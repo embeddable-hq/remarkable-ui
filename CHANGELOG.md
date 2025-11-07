@@ -1,5 +1,12 @@
 # @embeddable/remarkable-ui
 
+## 0.1.43
+
+### Patch Changes
+
+- 5af1227: Fix Select List items color
+- 5af1227: Remove switch hover effect
+
 ## 0.1.42
 
 ### Patch Changes
