@@ -18,13 +18,16 @@
 }
 
 .listItem .leftContent {
+  display: flex;
   flex: 0 0 auto;
   white-space: nowrap;
+  color: var(--em-select-list-item-left-label-color-default, #212129);
 }
 
 .listItem .rightContent {
   flex: 1 1 auto;
   min-width: 0;
+  color: var(--em-select-list-item-right-label-color-default, #5c5c66);
 }
 
 .listItem .leftContent p,
