@@ -224,7 +224,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     scope="col"
                     className={clsx(styles.cell, styles.bold)}
                     title={measure.label}
-                    style={getCellWidthStyle(columnWidth)}
+                    style={getCellMinWidthStyle(columnWidth)}
                   >
                     <Typography>{measure.label}</Typography>
                   </th>
