@@ -301,7 +301,6 @@ export const maxResults = {
   label: 'Max results',
   category: 'Component Settings',
   defaultValue: 1000,
-  required: true,
 } as const;
 
 export const showLegend = {
