@@ -19,8 +19,8 @@ type HeatMapProProps = {
   rowDimension: Dimension;
   columnDimension: Dimension;
   displayNullAs?: string;
-  columnWidth?: number;
-  firstColumnWidth?: number;
+  columnMinWidth?: number;
+  firstColumnMinWidth?: number;
   maxColor: string;
   midColor: string;
   minColor: string;
@@ -75,8 +75,8 @@ const HeatMapPro = (props: HeatMapProProps) => {
     midColor,
     minColor,
     displayNullAs,
-    columnWidth,
-    firstColumnWidth,
+    columnMinWidth,
+    firstColumnMinWidth,
     showValues,
     minThreshold,
     maxThreshold,
@@ -120,8 +120,8 @@ const HeatMapPro = (props: HeatMapProProps) => {
         showValues={showValues}
         minThreshold={minThreshold}
         maxThreshold={maxThreshold}
-        columnWidth={columnWidth}
-        firstColumnWidth={firstColumnWidth}
+        columnMinWidth={columnMinWidth}
+        firstColumnMinWidth={firstColumnMinWidth}
       />
     </ChartCard>
   );

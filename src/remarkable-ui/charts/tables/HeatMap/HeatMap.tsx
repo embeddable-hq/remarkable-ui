@@ -34,8 +34,8 @@ export type HeatMapProps<T extends Record<string, unknown>> = {
   minColor: string;
   midColor: string;
   maxColor: string;
-  columnWidth?: number;
-  firstColumnWidth?: number;
+  columnMinWidth?: number;
+  firstColumnMinWidth?: number;
   missingCellColor?: string;
 };
 
@@ -135,8 +135,8 @@ export function HeatMap<T extends Record<string, unknown>>({
   minColor,
   midColor,
   maxColor,
-  columnWidth,
-  firstColumnWidth,
+  columnMinWidth,
+  firstColumnMinWidth,
   missingCellColor = '#ffffff',
 }: HeatMapProps<T>) {
   const isEmpty = !data || data.length === 0;
@@ -274,7 +274,7 @@ export function HeatMap<T extends Record<string, unknown>>({
           <tr>
             <th
               className={clsx(styles.heatMapCell, styles.header)}
-              style={{ minWidth: firstColumnWidth ? `${firstColumnWidth}px` : undefined }}
+              style={{ minWidth: firstColumnMinWidth ? `${firstColumnMinWidth}px` : undefined }}
             >
               <Typography>{measure.label}</Typography>
             </th>
@@ -282,7 +282,7 @@ export function HeatMap<T extends Record<string, unknown>>({
               <th
                 key={`col-${cv}-${index}`}
                 className={clsx(styles.heatMapCell, styles.header)}
-                style={{ minWidth: columnWidth ? `${columnWidth}px` : undefined }}
+                style={{ minWidth: columnMinWidth ? `${columnMinWidth}px` : undefined }}
               >
                 <Typography>{columnDimension.format ? columnDimension.format(cv) : cv}</Typography>
               </th>
