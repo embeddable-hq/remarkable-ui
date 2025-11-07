@@ -38,9 +38,14 @@
     position: sticky;
     left: 0;
     z-index: 1;
-    width: 150px;
-    max-width: 150px;
     min-width: 150px;
+  }
+
+  /* header */
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
   }
 }
 

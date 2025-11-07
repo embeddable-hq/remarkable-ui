@@ -64,8 +64,6 @@
   position: sticky;
   left: 0;
   z-index: 1;
-  width: 150px;
-  max-width: 150px;
   min-width: 150px;
 }
 
@@ -86,8 +84,6 @@
   border-right: var(--em-table-border-width-default, 1px) solid
     var(--em-table-border-color-default, #ededf1);
   background: var(--em-table-background-color-default-header, #fff);
-  width: 100px;
-  max-width: 100px;
   min-width: 100px;
 
   p {

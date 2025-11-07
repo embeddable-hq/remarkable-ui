@@ -13,9 +13,16 @@ type HeatMapPropsMeasure<T> = {
   key: Extract<keyof T, string>;
   label: string;
   format?: (value: any) => any;
+  formatRaw?: (value: any) => any;
 };
 
-type HeatMapProps<T> = {
+const getCellMinWidthStyle = (width: number | undefined) => {
+  return {
+    minWidth: width ? `${width}px` : undefined,
+  };
+};
+
+export type HeatMapProps<T> = {
   data: T[];
   measure: HeatMapPropsMeasure<T>;
   rowDimension: HeatMapPropsDimension<T>;
@@ -23,12 +30,13 @@ type HeatMapProps<T> = {
   showValues?: boolean;
   onCellClick?: (row: number, col: number, value: number) => void;
   className?: string;
-  minValueUntil?: number; // percentage domain min (0..100)
-  maxValueFrom?: number; // percentage domain max (0..100)
+  minPercentThreshold?: number; // percentage domain min (0..100)
+  maxPercentThreshold?: number; // percentage domain max (0..100)
   minColor: string;
   midColor: string;
   maxColor: string;
-  displayNullAs?: string;
+  columnWidth?: number;
+  firstColumnWidth?: number;
 };
 
 // Utility functions
@@ -109,12 +117,13 @@ export function HeatMap<T extends Record<string, unknown>>({
   columnDimension,
   rowDimension,
   measure,
-  minValueUntil, // interpreted as percentage domain min (0..100)
-  maxValueFrom, // interpreted as percentage domain max (0..100)
+  minPercentThreshold, // interpreted as percentage domain min (0..100)
+  maxPercentThreshold, // interpreted as percentage domain max (0..100)
   minColor,
   midColor,
   maxColor,
-  displayNullAs,
+  columnWidth,
+  firstColumnWidth,
 }: HeatMapProps<T>) {
   const isEmpty = !data || data.length === 0;
 
@@ -138,13 +147,13 @@ export function HeatMap<T extends Record<string, unknown>>({
 
   // 2) Percentage domain (min/max are PERCENTAGES)
   const { minValue, maxValue } = useMemo(() => {
-    const minPct = clampPct(minValueUntil ?? 0);
-    const maxPct = clampPct(maxValueFrom ?? 100);
+    const minPct = clampPct(minPercentThreshold ?? 0);
+    const maxPct = clampPct(maxPercentThreshold ?? 100);
     return {
       minValue: Math.min(minPct, maxPct),
       maxValue: Math.max(minPct, maxPct),
     };
-  }, [minValueUntil, maxValueFrom]);
+  }, [minPercentThreshold, maxPercentThreshold]);
 
   // 3) Midpoint (percentage → fraction)
   const midpoint = useMemo(() => {
@@ -229,6 +238,7 @@ export function HeatMap<T extends Record<string, unknown>>({
   const renderValue = (v: number | string) => {
     if (!showValues) return null;
 
+    console.log('typeof', typeof v, v);
     if (typeof v == 'string') {
       return v;
     }
@@ -249,7 +259,10 @@ export function HeatMap<T extends Record<string, unknown>>({
       <table className={styles.heatMapTable} aria-label="Heat map">
         <thead>
           <tr>
-            <th className={clsx(styles.heatMapCell, styles.header)}>
+            <th
+              className={clsx(styles.heatMapCell, styles.header)}
+              style={getCellMinWidthStyle(firstColumnWidth)}
+            >
               <Typography>{columnDimension.label}</Typography>
             </th>
             {columnValues.map((cv, index) => (
@@ -257,6 +270,7 @@ export function HeatMap<T extends Record<string, unknown>>({
                 key={`col-${cv}-${index}`}
                 className={clsx(styles.heatMapCell, styles.header)}
                 scope="col"
+                style={getCellMinWidthStyle(columnWidth)}
               >
                 <Typography>{columnDimension.format ? columnDimension.format(cv) : cv}</Typography>
               </th>
@@ -271,12 +285,10 @@ export function HeatMap<T extends Record<string, unknown>>({
               </th>
               {columnValues.map((cv, colIndex) => {
                 const object = cellMap.get(rv)?.get(cv);
-                const rawValue = object?.[measure.key];
-                const numericValue = rawValue
-                  ? Number(rawValue)
-                  : displayNullAs
-                    ? displayNullAs
-                    : '';
+                const rawRawValue = object?.[measure.key];
+                const rawValue = measure.formatRaw ? measure.formatRaw(rawRawValue) : rawRawValue;
+                const numericValue = rawValue;
+
                 const isMissing =
                   rawValue == null || Number.isNaN(numericValue) || !Number.isFinite(numericValue);
 
@@ -314,7 +326,7 @@ export function HeatMap<T extends Record<string, unknown>>({
                         : undefined
                     }
                   >
-                    {renderValue(numericValue)}
+                    <Typography>{renderValue(numericValue)}</Typography>
                   </td>
                 );
               })}

@@ -1,0 +1,81 @@
+import { loadData } from '@embeddable.com/core';
+import { defineComponent, EmbeddedComponentMeta, Inputs } from '@embeddable.com/react';
+import HeatMapPro from './index';
+import {
+  dataset,
+  description,
+  title,
+  maxResults,
+  genericString,
+  dimensionWithDateBounds,
+  genericNumber,
+  measure,
+  inputColor,
+  genericBoolean,
+} from '../../../component.constants';
+
+export const meta = {
+  name: 'HeatMapPro',
+  label: 'Heat Map',
+  category: 'Table Charts',
+  inputs: [
+    dataset,
+    measure,
+    {
+      ...dimensionWithDateBounds,
+      label: 'Row Dimension',
+      name: 'rowDimension',
+    },
+    {
+      ...dimensionWithDateBounds,
+      label: 'Column Dimension',
+      name: 'columnDimension',
+    },
+    title,
+    description,
+    { ...genericString, name: 'displayNullAs', label: 'Display Null As' },
+    { ...inputColor, name: 'maxColor', label: 'Max Color', defaultValue: 'green', required: true },
+    { ...inputColor, name: 'midColor', label: 'Mid Color', defaultValue: 'yellow', required: true },
+    { ...inputColor, name: 'minColor', label: 'Min Color', defaultValue: 'red', required: true },
+    {
+      ...genericNumber,
+      name: 'minPercentThreshold',
+      label: 'Min Percent Threshold',
+      description: 'Minimum percentage threshold (0-100) for color scaling.',
+    },
+    {
+      ...genericNumber,
+      name: 'maxPercentThreshold',
+      label: 'Max Percent Threshold',
+      description: 'Maximum percentage threshold (0-100) for color scaling.',
+    },
+    { ...genericBoolean, name: 'showValues', label: 'Show Values', defaultValue: true },
+    {
+      ...genericNumber,
+      name: 'firstColumnWidth',
+      label: 'First Column Width',
+      description: 'You can input a number in pixels e.g. 400',
+    },
+    {
+      ...genericNumber,
+      name: 'columnWidth',
+      label: 'Column Width',
+      description: 'You can input a number in pixels e.g. 400',
+    },
+    maxResults,
+  ],
+} as const satisfies EmbeddedComponentMeta;
+
+export default defineComponent(HeatMapPro, meta, {
+  props: (inputs: Inputs<typeof meta>) => {
+    return {
+      ...inputs,
+      results: loadData({
+        from: inputs.dataset,
+        select: [inputs.rowDimension, inputs.columnDimension, inputs.measure],
+        limit: inputs.maxResults,
+        countRows: true,
+      }),
+    };
+  },
+});
