@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.45
+
+### Patch Changes
+
+- d60f59c: Fix Minor styling issues
+
 ## 0.1.44
 
 ### Patch Changes
