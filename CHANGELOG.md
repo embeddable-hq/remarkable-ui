@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.46
+
+### Patch Changes
+
+- 34ed504: Generate CSS vars host file
+
 ## 0.1.45
 
 ### Patch Changes
