@@ -7,7 +7,6 @@ import { createRequire } from 'module';
 // Configuration
 const sourcePath = path.join(process.cwd(), 'src/remarkable-ui/styles/styles.constants.ts');
 const mainCssPath = path.join(process.cwd(), 'dist/remarkable-ui.css');
-const hostCssPath = path.join(process.cwd(), 'dist/remarkable-ui-host.css');
 const tempDir = path.join(process.cwd(), 'temp-css-vars');
 
 // Cleanup function
@@ -51,10 +50,7 @@ try {
   console.log(`✅ Found ${Object.keys(styles).length} CSS variables`);
 
   // Generate CSS variables
-  const cssVariables = `:root {\n${Object.entries(styles)
-    .map(([key, value]) => `  ${key}: ${value};`)
-    .join('\n')}\n}`;
-  const hostCssVariables = `:host {\n${Object.entries(styles)
+  const cssVariables = `:root, :host {\n${Object.entries(styles)
     .map(([key, value]) => `  ${key}: ${value};`)
     .join('\n')}\n}`;
 
@@ -65,10 +61,8 @@ try {
 
   const mainCss = fs.readFileSync(mainCssPath, 'utf8');
   fs.writeFileSync(mainCssPath, cssVariables + '\n' + mainCss);
-  fs.writeFileSync(hostCssPath, hostCssVariables);
 
   console.log('✅ Successfully merged CSS variables into remarkable-ui.css');
-  console.log(`✅ Generated host CSS variables file: ${hostCssPath}`);
   console.log(`📁 Final CSS: ${mainCssPath}`);
 } catch (error) {
   console.error('❌ Error processing CSS variables:');
