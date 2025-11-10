@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.44
+
+### Patch Changes
+
+- 868af87: Fix SelectListOption on selected state color
+
 ## 0.1.43
 
 ### Patch Changes
