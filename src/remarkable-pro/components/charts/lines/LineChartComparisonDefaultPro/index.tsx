@@ -11,7 +11,7 @@ import {
   getLineChartComparisonProData,
   getLineChartComparisonProOptions,
 } from './LineChartComparisonDefaultPro.utils';
-import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { useFillGaps } from '../../charts.fillGaps.hooks';
 import { LineChartProOptionsClick } from '../lines.utils';
 
 type LineChartComparisonDefaultProProps = {

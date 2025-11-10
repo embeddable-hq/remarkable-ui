@@ -9,7 +9,7 @@ import {
   getLineChartGroupedProData,
   getLineChartGroupedProOptions,
 } from './LineChartGroupedPro.utils';
-import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { useFillGaps } from '../../charts.fillGaps.hooks';
 import { LineChartProOptionsClick } from '../lines.utils';
 
 export type LineChartGroupedProPropsOnLineClicked = {
