@@ -6,7 +6,7 @@ import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { PivotTable } from '../../../../../remarkable-ui';
 import { useRef } from 'react';
-import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { useFillGaps } from '../../charts.fillGaps.hooks';
 import { getPivotColumnTotalsFor, getPivotDimension, getPivotMeasures } from './PivotPro.utils';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
