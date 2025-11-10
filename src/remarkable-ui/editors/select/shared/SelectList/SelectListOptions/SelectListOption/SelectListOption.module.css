@@ -78,6 +78,9 @@
 .listItem.selected {
   background: var(--em-select-list-item-background-color-selected, #212129);
   color: var(--em-select-list-item-left-label-color-selected, #fff);
+  span {
+    color: var(--em-select-list-item-left-label-color-selected, #fff);
+  }
 }
 
 .listItem.selected .leftContent p,

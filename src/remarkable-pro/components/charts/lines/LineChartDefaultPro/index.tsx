@@ -6,7 +6,7 @@ import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
 import { getLineChartProData, getLineChartProOptions } from './LineChartDefaultPro.utils';
-import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { useFillGaps } from '../../charts.fillGaps.hooks';
 import { LineChartProOptionsClick } from '../lines.utils';
 
 export type LineChartProPropsOnLineClicked = { axisDimensionValue: string | null };
