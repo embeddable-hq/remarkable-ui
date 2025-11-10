@@ -41,11 +41,7 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
     return (
       <button
         ref={ref}
-        className={clsx(
-          styles.button,
-          showClearButton && styles.hasValue,
-          error && styles.buttonError,
-        )}
+        className={clsx(styles.button, valueLabel && styles.hasValue, error && styles.buttonError)}
         {...props}
       >
         <span className={styles.leftContent}>
