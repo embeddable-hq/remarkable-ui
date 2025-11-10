@@ -50,7 +50,7 @@ try {
   console.log(`✅ Found ${Object.keys(styles).length} CSS variables`);
 
   // Generate CSS variables
-  const cssVariables = `:root {\n${Object.entries(styles)
+  const cssVariables = `:root, :host {\n${Object.entries(styles)
     .map(([key, value]) => `  ${key}: ${value};`)
     .join('\n')}\n}`;
 
