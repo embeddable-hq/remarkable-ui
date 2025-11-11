@@ -6,31 +6,31 @@ import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { HeatMap, HeatMapProps } from '../../../../../remarkable-ui';
 import { useRef } from 'react';
-import { useFillGaps } from '../../charts.newFillGaps.hooks';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
+import { useFillGaps } from '../../charts.fillGaps.hooks';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 type HeatMapProProps = {
-  title: string;
-  description: string;
-  results: DataResponse;
-  measure: Measure;
-  rowDimension: Dimension;
   columnDimension: Dimension;
-  displayNullAs?: string;
   columnMinWidth?: number;
+  description: string;
+  displayNullAs?: string;
   firstColumnMinWidth?: number;
   maxColor: string;
+  maxThreshold?: number;
+  measure: Measure;
   midColor: string;
   minColor: string;
-  showValues?: boolean;
   minThreshold?: number;
-  maxThreshold?: number;
+  results: DataResponse;
+  rowDimension: Dimension;
+  showValues?: boolean;
+  title: string;
 };
 
 export const getHeatMeasure = (
-  props: { measure: Measure; displayNullAs?: string },
+  props: { measure: Measure },
   theme: Theme,
 ): HeatMapProps<any>['measure'] => {
   const themeFormatter = getThemeFormatter(theme);
@@ -40,11 +40,6 @@ export const getHeatMeasure = (
     label: themeFormatter.dimensionOrMeasureTitle(props.measure),
     format: (value) => {
       return themeFormatter.data(props.measure, value);
-    },
-    formatRaw: (value) => {
-      const test = value == null ? props.displayNullAs : value;
-      const newValue = Number(test);
-      return Number.isNaN(newValue) ? test : newValue;
     },
   };
 };
@@ -96,7 +91,7 @@ const HeatMapPro = (props: HeatMapProProps) => {
 
   const cardContentRef = useRef<HTMLDivElement>(null);
 
-  const pivotMeasures = getHeatMeasure({ measure, displayNullAs }, theme);
+  const pivotMeasures = getHeatMeasure({ measure }, theme);
   const pivotRowDimension = getHeatDimension({ dimension: rowDimension }, theme);
   const pivotColumnDimension = getHeatDimension({ dimension: columnDimension }, theme);
 
@@ -122,6 +117,7 @@ const HeatMapPro = (props: HeatMapProProps) => {
         maxThreshold={maxThreshold}
         columnMinWidth={columnMinWidth}
         firstColumnMinWidth={firstColumnMinWidth}
+        displayNullAs={displayNullAs}
       />
     </ChartCard>
   );

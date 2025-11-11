@@ -13,7 +13,6 @@ type Measure<T> = {
   key: Extract<keyof T, string>;
   label: string;
   format?: (value: number) => string;
-  formatRaw?: (value: unknown) => number | null | undefined;
 };
 
 type Threshold = number | `${number}%` | undefined;
@@ -24,8 +23,8 @@ export type HeatMapProps<T extends Record<string, unknown>> = {
   rowDimension: Dimension<T>;
   columnDimension: Dimension<T>;
   showValues?: boolean;
-  onCellClick?: (row: number, col: number, value: number) => void;
   className?: string;
+  displayNullAs?: string | number;
 
   /** Color thresholds — number = raw value, "NN%" = percentage of [min..max]. */
   minThreshold?: Threshold;
@@ -125,7 +124,6 @@ const thresholdToRaw = (t: Threshold, rawMin: number, rawMax: number, fallback: 
 export function HeatMap<T extends Record<string, unknown>>({
   data,
   showValues = false,
-  onCellClick,
   className,
   columnDimension,
   rowDimension,
@@ -138,25 +136,24 @@ export function HeatMap<T extends Record<string, unknown>>({
   columnMinWidth,
   firstColumnMinWidth,
   missingCellColor = '#ffffff',
+  displayNullAs,
 }: HeatMapProps<T>) {
-  const isEmpty = !data || data.length === 0;
-
   // 1) Extract data domain
   const { rawMin, rawMax } = useMemo(() => {
     let min = Infinity;
     let max = -Infinity;
     for (const d of data) {
-      const vRaw = d[measure.key];
-      const v = measure.formatRaw ? measure.formatRaw(vRaw) : (vRaw as number);
-      const num = Number(v);
-      if (Number.isFinite(num)) {
-        if (num < min) min = num;
-        if (num > max) max = num;
+      const value = d[measure.key] ?? displayNullAs;
+
+      const valueNumber = Number(value);
+      if (Number.isFinite(valueNumber)) {
+        if (valueNumber < min) min = valueNumber;
+        if (valueNumber > max) max = valueNumber;
       }
     }
     if (!Number.isFinite(min) || !Number.isFinite(max)) return { rawMin: 0, rawMax: 0 };
     return { rawMin: min, rawMax: max };
-  }, [data, measure.key, measure.formatRaw]);
+  }, [data, measure.key, displayNullAs]);
 
   // 2) Resolve thresholds to a raw domain
   const { domainMin, domainMax } = useMemo(() => {
@@ -249,22 +246,17 @@ export function HeatMap<T extends Record<string, unknown>>({
     [domainMin, domainMax, rawMin, rawMax, minColor, maxColor, scale],
   );
 
-  const renderValue = useCallback(
-    (value: number | null | undefined) => {
-      if (!showValues) return null;
-      if (value == null || Number.isNaN(value)) return '—';
-      return measure.format ? measure.format(value) : String(value);
-    },
-    [showValues, measure],
-  );
+  const getDisplayValue = (value: number | string | undefined) => {
+    if (!showValues) {
+      return null;
+    }
 
-  if (isEmpty) {
-    return (
-      <div className={clsx(styles.heatMapContainer, className)}>
-        <Typography>No data</Typography>
-      </div>
-    );
-  }
+    if (typeof value === 'string' || value == null || Number.isNaN(value)) {
+      return value;
+    }
+
+    return measure?.format ? measure.format(Number(value)) : value;
+  };
 
   // ─────────────────────────── Render ───────────────────────────
   return (
@@ -291,50 +283,35 @@ export function HeatMap<T extends Record<string, unknown>>({
         </thead>
 
         <tbody>
-          {rowValues.map((rv, rowIndex) => (
+          {rowValues.map((rv) => (
             <tr key={`row-${rv}`}>
               <th className={clsx(styles.heatMapCell, styles.header)} scope="row">
                 <Typography>{rowDimension.format ? rowDimension.format(rv) : rv}</Typography>
               </th>
 
-              {columnValues.map((cv, colIndex) => {
+              {columnValues.map((cv) => {
                 const obj = cellMap.get(rv)?.get(cv);
-                const raw = obj?.[measure.key];
-                const val: number | null | undefined = measure.formatRaw
-                  ? measure.formatRaw(raw)
-                  : (raw as number);
+                const value = obj?.[measure.key] as string | number | undefined;
 
-                const isMissing =
-                  val == null || Number.isNaN(val) || !Number.isFinite(val as number);
+                const fallback =
+                  displayNullAs && Number.isFinite(Number(displayNullAs))
+                    ? Number(displayNullAs)
+                    : displayNullAs;
 
-                const background = isMissing ? missingCellColor : colorForValue(val as number);
+                const rawRaw = toFiniteOrSelf(value ?? fallback);
+
+                const isMissing = typeof rawRaw !== 'number';
+
+                const background = isMissing ? missingCellColor : colorForValue(rawRaw as number);
                 const color = getBrightness(background) < 150 ? '#fff' : '#212129';
-                const interactive = !!onCellClick && !isMissing;
 
                 return (
                   <td
                     key={`cell-${rv}-${cv}`}
                     className={clsx(styles.heatMapCell)}
                     style={{ background, color }}
-                    onClick={
-                      interactive
-                        ? () => onCellClick?.(rowIndex, colIndex, val as number)
-                        : undefined
-                    }
-                    role={interactive ? 'button' : undefined}
-                    tabIndex={interactive ? 0 : undefined}
-                    onKeyDown={
-                      interactive
-                        ? (e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault();
-                              onCellClick?.(rowIndex, colIndex, val as number);
-                            }
-                          }
-                        : undefined
-                    }
                   >
-                    <Typography>{renderValue(isMissing ? null : val)}</Typography>
+                    <Typography>{getDisplayValue(rawRaw)}</Typography>
                   </td>
                 );
               })}
@@ -345,3 +322,16 @@ export function HeatMap<T extends Record<string, unknown>>({
     </div>
   );
 }
+
+const toFiniteOrSelf = (v: number | string | undefined): number | string | undefined => {
+  if (v == null) {
+    return v;
+  } // leave null/undefined untouched
+
+  const n = Number(v);
+  // valid finite number → return number
+  if (Number.isFinite(n)) return n;
+
+  // otherwise, return original value (non-numeric string, object, etc.)
+  return v;
+};
