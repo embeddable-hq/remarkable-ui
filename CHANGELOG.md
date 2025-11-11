@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.48
+
+### Patch Changes
+
+- 836b410: Push to root and host
+
 ## 0.1.47
 
 ### Patch Changes
