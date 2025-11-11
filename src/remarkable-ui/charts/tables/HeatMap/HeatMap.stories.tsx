@@ -38,30 +38,22 @@ const data: Data[] = [
   { country: 'United States', month: 'Aug 25', orders: 112 },
 ];
 
-export const HeatMap1Color: Story = {
-  render: (args) => {
-    return (
-      <div
-        style={{
-          resize: 'both',
-          flex: 1,
-          overflow: 'auto',
-        }}
-      >
-        <HeatMap {...args} />
-      </div>
-    );
-  },
+export const Default: Story = {
   args: {
     data,
     columnDimension: { key: 'country', label: 'Country' },
     rowDimension: { key: 'month', label: 'Month' },
     measure: { key: 'orders', label: 'Orders' },
+    maxColor: 'green',
+    midColor: 'yellow',
+    minColor: 'red',
     showValues: true,
+    minThreshold: undefined,
+    maxThreshold: undefined,
   },
 };
 
-export const HeatMap3Colors: Story = {
+export const HeatMapPlay: Story = {
   render: (args) => {
     return (
       <div
@@ -84,7 +76,7 @@ export const HeatMap3Colors: Story = {
     midColor: 'yellow',
     minColor: 'red',
     showValues: true,
-    minValueUntil: undefined,
-    maxValueFrom: undefined,
+    minThreshold: undefined,
+    maxThreshold: undefined,
   },
 };

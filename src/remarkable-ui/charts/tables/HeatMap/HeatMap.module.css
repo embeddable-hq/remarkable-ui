@@ -21,7 +21,7 @@
   box-sizing: content-box;
 
   th {
-    min-width: 50px;
+    min-width: var(--em-heatmap-table-column-min-width, 50px);
   }
 
   tbody tr:last-of-type th,
@@ -34,11 +34,11 @@
     border-right: unset;
   }
 
-  th:first-of-type {
+  thead th:first-of-type {
     position: sticky;
     left: 0;
     z-index: 1;
-    min-width: 150px;
+    min-width: var(--em-heatmap-table-first-column-min-width, 150px);
   }
 
   /* header */
@@ -62,21 +62,19 @@
   background: var(--em-table-background-color-default-header, #fff);
   min-width: 50px;
 
-  p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-family: var(--em-table-font-family, Inter, sans-serif);
-    font-size: var(--em-table-font-size, 0.75rem);
-    font-weight: var(--em-table-font-font-weight-regular, 400);
-    font-style: normal;
-    line-height: var(--em-table-font-line-height, 0.875rem);
-    padding: 0 var(--em-table-padding-small, 0.25rem);
-    /* color: var(--em-table-text-default, #212129); */
-  }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--em-table-font-family, Inter, sans-serif);
+  font-size: var(--em-table-font-size, 0.75rem);
+  font-weight: var(--em-table-font-font-weight-regular, 400);
+  font-style: normal;
+  line-height: var(--em-table-font-line-height, 0.875rem);
+  padding: 0 var(--em-table-padding-small, 0.25rem);
+  text-align: center;
 }
 
-.heatMapCell.header p {
+.heatMapCell.header {
   color: var(--em-table-text-default, #212129);
   font-weight: var(--em-table-font-font-weight-medium, 500);
 }
