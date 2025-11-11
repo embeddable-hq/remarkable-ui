@@ -125,3 +125,44 @@ export const WithStartIcon: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+export const WithError: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
+  args: {
+    value: 42,
+    error: true,
+    errorMessage: 'Please enter a number between 0 and 100',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithErrorEmpty: Story = {
+  render: (args) => {
+    const [{ value }, updateArgs] = useArgs();
+
+    return (
+      <NumberField
+        {...args}
+        value={value}
+        onChange={(newValue) => updateArgs({ value: newValue })}
+      />
+    );
+  },
+  args: {
+    value: null,
+    error: true,
+    errorMessage: 'This field is required',
+    placeholder: 'Enter number',
+    onChange: (value) => console.log('onChange', value),
+  },
+};

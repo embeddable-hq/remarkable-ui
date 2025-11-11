@@ -18,6 +18,9 @@ export type SelectListOptionProps = {
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
+export type SelectListOptionPropsWithCategory = SelectListOptionProps & {
+  category: string;
+};
 
 export const SelectListOption: FC<SelectListOptionProps> = ({
   value,

@@ -11,7 +11,7 @@ import {
   getLineChartComparisonProData,
   getLineChartComparisonProOptions,
 } from './LineChartComparisonDefaultPro.utils';
-import { useFillGaps } from '../../charts.newFillGaps.hooks';
+import { useFillGaps } from '../../charts.fillGaps.hooks';
 import { LineChartProOptionsClick } from '../lines.utils';
 
 type LineChartComparisonDefaultProProps = {
@@ -104,10 +104,11 @@ const LineChartComparisonDefaultPro = (props: LineChartComparisonDefaultProProps
   );
 
   const resultsCombined: DataResponse = {
-    isLoading: results.isLoading,
-    data: results.isLoading
-      ? undefined
-      : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
+    isLoading: Boolean(results.isLoading || resultsComparison?.isLoading),
+    data:
+      !results?.data && !resultsComparison?.data
+        ? undefined
+        : [...(results.data ?? []), ...(resultsComparison?.data ?? [])],
   };
 
   return (

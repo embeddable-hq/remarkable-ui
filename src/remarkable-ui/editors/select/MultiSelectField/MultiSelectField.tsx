@@ -2,17 +2,21 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
 import { debounce } from '../../../utils/debounce.utils';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectButton } from '../shared/SelectButton/SelectButton';
 import { SelectList } from '../shared/SelectList/SelectList';
+import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
 import { TextField } from '../../TextField/TextField';
 import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
 import { IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
 import { Button } from '../../../shared/Button/Button';
 import styles from './MultiSelectField.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
+import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type MultiSelectFieldProps = {
   disabled?: boolean;
@@ -20,12 +24,14 @@ export type MultiSelectFieldProps = {
   isLoading?: boolean;
   isSearchable?: boolean;
   noOptionsMessage?: string;
-  options: SelectListOptionProps[];
+  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   placeholder?: string;
   submitLabel?: string;
   values?: string[];
   onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
+  error?: boolean;
+  errorMessage?: string;
 };
 
 export const MultiSelectField: FC<MultiSelectFieldProps> = ({
@@ -40,6 +46,8 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   values = [],
   onChange,
   onSearch,
+  error = false,
+  errorMessage,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -80,6 +88,8 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
+  const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
+
   const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
@@ -117,60 +127,88 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     onChange([]);
   };
 
+  const hasError = error || !!errorMessage;
+
   return (
-    <Dropdown
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      disabled={disabled}
-      triggerComponent={
-        <SelectButton
-          aria-label="Select options"
-          placeholder={placeholder}
-          disabled={disabled}
-          valueLabel={selectedLabel}
-          onClear={handleClearAll}
-          isClearable={isClearable}
-          isLoading={isLoading}
-        />
-      }
-    >
-      <SelectList>
-        {isSearchable && (
-          <TextField
-            ref={searchFieldRef}
-            startIcon={IconSearch}
-            aria-label="Search options"
-            placeholder="Search…"
-            role="searchbox"
-            value={searchValue}
-            onKeyDown={(e) => e.stopPropagation()}
-            onChange={handleSearch}
+    <div className={styles.selectField}>
+      <Dropdown
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        disabled={disabled}
+        triggerComponent={
+          <SelectButton
+            aria-label="Select options"
+            placeholder={placeholder}
+            disabled={disabled}
+            valueLabel={selectedLabel}
+            onClear={handleClearAll}
+            isClearable={isClearable}
+            isLoading={isLoading}
+            error={hasError}
           />
-        )}
-        <SelectListOptions disabled={isLoading}>
-          {displayOptions.map((option) => (
-            <SelectListOption
-              key={option?.value ?? option.label}
-              onClick={(e) => handleSelectOption(e, option.value)}
-              startIcon={
-                preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
-              }
-              {...option}
+        }
+      >
+        <SelectList>
+          {isSearchable && (
+            <TextField
+              ref={searchFieldRef}
+              startIcon={IconSearch}
+              aria-label="Search options"
+              placeholder="Search…"
+              role="searchbox"
+              value={searchValue}
+              onKeyDown={(e) => e.stopPropagation()}
+              onChange={handleSearch}
             />
-          ))}
-          {noOptionsMessage && <SelectListOption disabled value="empty" label={noOptionsMessage} />}
-        </SelectListOptions>
-        <Button
-          className={styles.submitButton}
-          disabled={isSubmitDisabled || isLoading}
-          variant="primary"
-          size="medium"
-          onClick={() => handleSave(preValues)}
-          role="button"
-        >
-          {submitLabel}
-        </Button>
-      </SelectList>
-    </Dropdown>
+          )}
+          <SelectListOptions disabled={isLoading}>
+            {groupedOptions
+              ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
+                  <div key={category}>
+                    <SelectListCategory label={category} />
+                    {categoryOptions.map((option) => (
+                      <SelectListOption
+                        key={option?.value ?? option.label}
+                        onClick={(e) => handleSelectOption(e, option.value)}
+                        startIcon={
+                          preValues.includes(option.value!) ? (
+                            <IconSquareCheckFilled />
+                          ) : (
+                            <IconSquare />
+                          )
+                        }
+                        {...option}
+                      />
+                    ))}
+                  </div>
+                ))
+              : displayOptions.map((option) => (
+                  <SelectListOption
+                    key={option?.value ?? option.label}
+                    onClick={(e) => handleSelectOption(e, option.value)}
+                    startIcon={
+                      preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
+                    }
+                    {...option}
+                  />
+                ))}
+            {noOptionsMessage && displayOptions.length === 0 && (
+              <SelectListOption disabled value="empty" label={noOptionsMessage} />
+            )}
+          </SelectListOptions>
+          <Button
+            className={styles.submitButton}
+            disabled={isSubmitDisabled || isLoading}
+            variant="primary"
+            size="medium"
+            onClick={() => handleSave(preValues)}
+            role="button"
+          >
+            {submitLabel}
+          </Button>
+        </SelectList>
+      </Dropdown>
+      {errorMessage && <FieldErrorMessage message={errorMessage} />}
+    </div>
   );
 };

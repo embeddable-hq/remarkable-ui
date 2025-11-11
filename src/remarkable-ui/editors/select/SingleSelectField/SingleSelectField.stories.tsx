@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
 import { SingleSelectField } from './SingleSelectField';
-import { SelectListOptionProps } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import {
+  SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
+} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { IconPalette } from '@tabler/icons-react';
 
 const meta = {
@@ -152,6 +155,53 @@ export const WithState: Story = {
     isClearable: true,
     isSearchable: true,
     options: mockOptions,
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    value: '',
+    error: true,
+    errorMessage: 'Please select an option',
+    isSearchable: true,
+    options: mockOptions,
+    placeholder: 'Select a color',
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+export const WithErrorAndValue: Story = {
+  args: {
+    value: mockOptions[0]!.value,
+    error: true,
+    errorMessage: 'This selection is not available',
+    isSearchable: true,
+    isClearable: true,
+    options: mockOptions,
+    onChange: (value) => console.log('onChange', value),
+  },
+};
+
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+  { value: 'red', label: 'Red', category: 'Primary Colors' },
+  { value: 'green', label: 'Green', category: 'Primary Colors' },
+  { value: 'blue', label: 'Blue', category: 'Primary Colors' },
+  { value: 'yellow', label: 'Yellow', category: 'Secondary Colors' },
+  { value: 'orange', label: 'Orange', category: 'Secondary Colors' },
+  { value: 'purple', label: 'Purple', category: 'Secondary Colors' },
+  { value: 'pink', label: 'Pink', category: 'Tertiary Colors' },
+  { value: 'brown', label: 'Brown', category: 'Tertiary Colors' },
+  { value: 'gray', label: 'Gray', category: 'Tertiary Colors' },
+  { value: 'black', label: 'Black', category: 'Tertiary Colors' },
+];
+
+export const WithCategories: Story = {
+  args: {
+    value: '',
+    isSearchable: true,
+    isClearable: true,
+    options: mockOptionsWithCategories,
     onChange: (value) => console.log('onChange', value),
   },
 };

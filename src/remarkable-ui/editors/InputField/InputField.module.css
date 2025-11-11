@@ -76,7 +76,9 @@
 }
 
 .inputContainer {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--em-form-padding-small, 0.5rem);
 }
 
 .requiredText {
@@ -90,4 +92,9 @@
   line-height: var(--em-form-form-font-line-height, 1rem);
   color: var(--em-form-section-font-font-color, #212129);
   background: red;
+}
+
+.inputError {
+  border: var(--em-text-input-border-width-error, 2px) solid
+    var(--em-text-input-border-color-error, #bc1010);
 }

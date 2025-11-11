@@ -7,6 +7,7 @@ export type ChartCardMenuProOptionOnClickProps = {
   dimensionsAndMeasures?: (Dimension | Measure)[];
   containerRef?: React.RefObject<HTMLDivElement | null>;
   theme: Theme;
+  onCustomDownload?: (props: (props: ChartCardMenuProOptionOnClickProps) => void) => void;
 };
 
 export type ChartCardMenuProOption = {

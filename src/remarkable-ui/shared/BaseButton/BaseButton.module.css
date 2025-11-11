@@ -31,7 +31,6 @@
   background: var(--em-btn-pr-background-disabled, #ededf1);
   color: var(--em-btn-pr-text-disabled, #b8b8bd);
 }
-
 .secondary {
   background: var(--em-secondary-btn-background-color-default, #ededf1);
   color: var(--em-secondary-btn-label-color-default, #212129);

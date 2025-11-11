@@ -1,5 +1,7 @@
 // ATENTION: THESE OBJECTS SHOULD NEVER BE TOUCHED
 
+import AlignType from './types/Align.type.emb';
+
 // Generics
 export const genericBoolean = {
   name: 'boolean',
@@ -29,6 +31,20 @@ export const genericString = {
   category: 'Component Settings',
 } as const;
 
+export const subInputWidth = {
+  ...genericNumber,
+  name: 'width',
+  label: 'Width',
+  description: 'You can input a number in pixels e.g. 400',
+};
+
+export const subInputAlign = {
+  name: 'align',
+  type: AlignType,
+  label: 'Align',
+  category: 'Component Settings',
+};
+
 export const subInputColor = {
   ...genericString,
   name: 'color',
@@ -54,6 +70,19 @@ export const subInputDisplayName = {
   name: 'displayName',
   type: 'string',
   label: 'Display name',
+} as const;
+
+export const subInputGenericBoolean = {
+  name: 'boolean',
+  type: 'boolean',
+  defaultValue: false,
+  label: 'Boolean',
+} as const;
+
+export const subInputGenericNumber = {
+  name: 'number',
+  type: 'number',
+  label: 'Number',
 } as const;
 
 // TODO: Update SDK to export the needed types
@@ -154,6 +183,18 @@ export const dimension = {
   inputs: subInputs,
 } as const;
 
+export const dimensionSimple = {
+  name: 'dimensionSimple',
+  type: 'dimension',
+  label: 'Dimension',
+  config: {
+    dataset: 'dataset',
+    hideGranularity: true,
+  },
+  required: true,
+  category: 'Component Data',
+} as const;
+
 export const dimensionTime = {
   name: 'dimensionTime',
   type: 'dimension',
@@ -187,6 +228,30 @@ export const dimensions = {
     dataset: 'dataset',
   },
   required: true,
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
+export const dimensionOrMeasure = {
+  name: 'dimensionOrMeasure',
+  type: 'dimensionOrMeasure',
+  label: 'Dimension or Measure',
+  config: {
+    dataset: 'dataset',
+  },
+  category: 'Component Data',
+  inputs: subInputs,
+} as const;
+
+export const dimensionsAndMeasures = {
+  name: 'dimensionsAndMeasures',
+  type: 'dimensionOrMeasure',
+  label: 'Dimensions and Measures',
+  array: true,
+  required: true,
+  config: {
+    dataset: 'dataset',
+  },
   category: 'Component Data',
   inputs: subInputs,
 } as const;
@@ -236,7 +301,6 @@ export const maxResults = {
   label: 'Max results',
   category: 'Component Settings',
   defaultValue: 1000,
-  required: true,
 } as const;
 
 export const showLegend = {

@@ -28,13 +28,17 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
   }
 
   const startAction = (onClick: () => void | Promise<void>) => {
-    setIsLoading(true);
     setTimeout(() => {
       Promise.resolve(onClick()).finally(() => setIsLoading(false));
     }, 100);
   };
 
   const handleExport = (onClick: (props: ChartCardMenuProOptionOnClickProps) => void) => {
+    setIsLoading(true);
+    if (props.onCustomDownload) {
+      props.onCustomDownload((args) => startAction(() => onClick(args)));
+      return;
+    }
     startAction(() => onClick({ ...props, theme }));
   };
 

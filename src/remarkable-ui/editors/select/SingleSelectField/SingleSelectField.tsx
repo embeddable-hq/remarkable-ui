@@ -7,13 +7,18 @@ import { SelectListOptions } from '../shared/SelectList/SelectListOptions/Select
 import {
   SelectListOption,
   SelectListOptionProps,
+  SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
+import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
 import { debounce } from '../../../utils/debounce.utils';
 import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
+import styles from './SingleSelectField.module.css';
+import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type SingleSelectFieldProps = {
-  options: SelectListOptionProps[];
+  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   startIcon?: TablerIcon;
   value?: string;
   disabled?: boolean;
@@ -24,6 +29,8 @@ export type SingleSelectFieldProps = {
   noOptionsMessage?: string;
   onChange: (value: string) => void;
   onSearch?: (search: string) => void;
+  error?: boolean;
+  errorMessage?: string;
 };
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
@@ -38,6 +45,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   noOptionsMessage = 'No options available',
   onChange,
   onSearch,
+  error = false,
+  errorMessage,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -65,6 +74,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
+  const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
+
   const handleChange = (newValue?: string) => {
     setSearchValue('');
     onChange(newValue ?? '');
@@ -83,51 +94,71 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
     debouncedSearch?.(newSearch);
   };
 
+  const hasError = error || !!errorMessage;
+
   return (
-    <Dropdown
-      open={isOpen}
-      onOpenChange={setIsOpen}
-      disabled={disabled}
-      triggerComponent={
-        <SelectButton
-          startIcon={startIcon}
-          aria-label="Select option"
-          placeholder={placeholder}
-          disabled={disabled}
-          valueLabel={selectedLabel}
-          onClear={() => handleChange('')}
-          isClearable={isClearable}
-          isLoading={isLoading}
-        />
-      }
-    >
-      <SelectList>
-        {isSearchable && (
-          <TextField
-            ref={searchFieldRef}
-            startIcon={IconSearch}
-            aria-label="Search options"
-            placeholder="Search…"
-            role="searchbox"
-            value={searchValue}
-            onKeyDown={(e) => e.stopPropagation()}
-            onChange={handleSearch}
+    <div className={styles.selectField}>
+      <Dropdown
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        disabled={disabled}
+        triggerComponent={
+          <SelectButton
+            startIcon={startIcon}
+            aria-label="Select option"
+            placeholder={placeholder}
+            disabled={disabled}
+            valueLabel={selectedLabel}
+            onClear={() => handleChange('')}
+            isClearable={isClearable}
+            isLoading={isLoading}
+            error={hasError}
           />
-        )}
-        <SelectListOptions disabled={isLoading}>
-          {displayOptions.map((option) => (
-            <SelectListOption
-              key={option?.value ?? option.label}
-              onClick={() => handleChange(option?.value)}
-              isSelected={option.value === value}
-              {...option}
+        }
+      >
+        <SelectList>
+          {isSearchable && (
+            <TextField
+              ref={searchFieldRef}
+              startIcon={IconSearch}
+              aria-label="Search options"
+              placeholder="Search…"
+              role="searchbox"
+              value={searchValue}
+              onKeyDown={(e) => e.stopPropagation()}
+              onChange={handleSearch}
             />
-          ))}
-          {options.length === 0 && (
-            <SelectListOption disabled value="empty" label={noOptionsMessage} />
           )}
-        </SelectListOptions>
-      </SelectList>
-    </Dropdown>
+          <SelectListOptions disabled={isLoading}>
+            {groupedOptions
+              ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
+                  <div key={category}>
+                    <SelectListCategory label={category} />
+                    {categoryOptions.map((option) => (
+                      <SelectListOption
+                        key={option?.value ?? option.label}
+                        onClick={() => handleChange(option?.value)}
+                        isSelected={option.value === value}
+                        {...option}
+                      />
+                    ))}
+                  </div>
+                ))
+              : displayOptions.map((option) => (
+                  <SelectListOption
+                    key={option?.value ?? option.label}
+                    onClick={() => handleChange(option?.value)}
+                    isSelected={option.value === value}
+                    {...option}
+                  />
+                ))}
+            {options.length === 0 && (
+              <SelectListOption disabled value="empty" label={noOptionsMessage} />
+            )}
+          </SelectListOptions>
+        </SelectList>
+      </Dropdown>
+      {errorMessage && <FieldErrorMessage message={errorMessage} />}
+    </div>
   );
 };
