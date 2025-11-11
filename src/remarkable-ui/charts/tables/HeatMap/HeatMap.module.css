@@ -1,8 +1,13 @@
 .heatMapContainer {
-  background: var(--em-table-background-color-default-header, #fff);
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  height: 100%;
+}
+
+.heatMapTableContainer {
+  background: var(--em-table-background-color-default-header, #fff);
+  width: fit-content;
+  max-width: 100%;
+  height: fit-content;
   max-height: 100%;
 
   border: var(--em-table-border-width-default, 1px) solid
@@ -15,14 +20,9 @@
 }
 
 .heatMapTable {
-  min-width: 100%;
   border-spacing: 0;
   background: var(--em-table-background-color-default-header, #fff);
   box-sizing: content-box;
-
-  th {
-    min-width: var(--em-heatmap-table-column-min-width, 50px);
-  }
 
   tbody tr:last-of-type th,
   tbody tr:last-of-type td {
@@ -34,11 +34,11 @@
     border-right: unset;
   }
 
-  thead th:first-of-type {
+  thead th:first-of-type,
+  tbody th:first-of-type {
     position: sticky;
     left: 0;
     z-index: 1;
-    min-width: var(--em-heatmap-table-first-column-min-width, 150px);
   }
 
   /* header */
@@ -60,7 +60,6 @@
   border-right: var(--em-table-border-width-default, 1px) solid
     var(--em-table-border-color-default, #ededf1);
   background: var(--em-table-background-color-default-header, #fff);
-  min-width: 50px;
 
   overflow: hidden;
   text-overflow: ellipsis;

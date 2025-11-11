@@ -12,6 +12,14 @@ import {
   thresholdToRaw,
 } from './HeatMap.utils';
 
+const getCellWidthStyle = (width: number | undefined) => {
+  return {
+    minWidth: width ? `${width}px` : undefined,
+    maxWidth: width ? `${width}px` : undefined,
+    width: width ? `${width}px` : undefined,
+  };
+};
+
 export const HeatMap = <T extends Record<string, unknown>>({
   data,
   showValues = false,
@@ -109,54 +117,64 @@ export const HeatMap = <T extends Record<string, unknown>>({
 
   return (
     <div className={clsx(styles.heatMapContainer, className)}>
-      <table className={styles.heatMapTable} aria-label="Heat map">
-        <thead>
-          <tr>
-            <th
-              className={clsx(styles.heatMapCell, styles.header)}
-              style={{ minWidth: firstColumnMinWidth ? `${firstColumnMinWidth}px` : undefined }}
-            >
-              {measure.label}
-            </th>
-            {columnValues.map((cv, index) => (
+      <div className={styles.heatMapTableContainer}>
+        <table className={styles.heatMapTable} aria-label="Heat map">
+          <thead>
+            <tr>
               <th
-                key={`col-${cv}-${index}`}
                 className={clsx(styles.heatMapCell, styles.header)}
-                style={{ minWidth: columnMinWidth ? `${columnMinWidth}px` : undefined }}
+                style={getCellWidthStyle(firstColumnMinWidth)}
               >
-                {columnDimension.format ? columnDimension.format(cv) : cv}
+                {measure.label}
               </th>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {rowValues.map((rv) => (
-            <tr key={`row-${rv}`}>
-              <th className={clsx(styles.heatMapCell, styles.header)} scope="row">
-                {rowDimension.format ? rowDimension.format(rv) : rv}
-              </th>
-
-              {columnValues.map((cv) => {
-                const obj = cellMap.get(rv)?.get(cv);
-                const value = getCellValue(obj?.[measure.key], displayNullAs);
-                const background = getCellBackground(value, colorForValue);
-                const color = getCellColor(background);
-
-                return (
-                  <td
-                    key={`cell-${rv}-${cv}`}
-                    className={clsx(styles.heatMapCell)}
-                    style={{ background, color }}
-                  >
-                    {getCellDisplayValue(value, showValues, measure)}
-                  </td>
-                );
-              })}
+              {columnValues.map((cv, index) => (
+                <th
+                  key={`col-${cv}-${index}`}
+                  className={clsx(styles.heatMapCell, styles.header)}
+                  style={getCellWidthStyle(columnMinWidth)}
+                >
+                  {columnDimension.format ? columnDimension.format(cv) : cv}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+
+          <tbody>
+            {rowValues.map((rv) => (
+              <tr key={`row-${rv}`}>
+                <th
+                  className={clsx(styles.heatMapCell, styles.header)}
+                  scope="row"
+                  style={getCellWidthStyle(firstColumnMinWidth)}
+                >
+                  {rowDimension.format ? rowDimension.format(rv) : rv}
+                </th>
+
+                {columnValues.map((cv) => {
+                  const obj = cellMap.get(rv)?.get(cv);
+                  const value = getCellValue(obj?.[measure.key], displayNullAs);
+                  const background = getCellBackground(value, colorForValue);
+                  const color = getCellColor(background);
+
+                  return (
+                    <td
+                      key={`cell-${rv}-${cv}`}
+                      className={clsx(styles.heatMapCell)}
+                      style={{
+                        background,
+                        color,
+                        ...getCellWidthStyle(columnMinWidth),
+                      }}
+                    >
+                      {getCellDisplayValue(value, showValues, measure)}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
