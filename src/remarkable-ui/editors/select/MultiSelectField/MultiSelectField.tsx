@@ -27,6 +27,7 @@ export type MultiSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   placeholder?: string;
   submitLabel?: string;
+  stickyCategoryLabels?: boolean;
   values?: string[];
   onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
@@ -43,6 +44,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   options,
   placeholder,
   submitLabel = 'Apply',
+  stickyCategoryLabels = false,
   values = [],
   onChange,
   onSearch,
@@ -165,7 +167,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
             {groupedOptions
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <div key={category}>
-                    <SelectListCategory label={category} />
+                    <SelectListCategory label={category} sticky={stickyCategoryLabels} />
                     {categoryOptions.map((option) => (
                       <SelectListOption
                         key={option?.value ?? option.label}

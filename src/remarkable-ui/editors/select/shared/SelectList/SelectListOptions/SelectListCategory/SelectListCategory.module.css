@@ -6,6 +6,11 @@
   background: var(--em-select-list-item-isolate-background-color-default, #ededf1);
 }
 
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
 .categoryLabel {
   color: var(--em-select-list-item-isolate-label-color-default, #212129);
   font-family: var(--em-select-list-item-isolate-label-font-font-family, Inter);

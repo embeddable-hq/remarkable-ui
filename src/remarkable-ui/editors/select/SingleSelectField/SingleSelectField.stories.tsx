@@ -205,3 +205,38 @@ export const WithCategories: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
+
+const mockOptionsWithManyCategoriesForSticky: SelectListOptionPropsWithCategory[] = [
+  { value: 'red', label: 'Red', category: 'Primary Colors' },
+  { value: 'green', label: 'Green', category: 'Primary Colors' },
+  { value: 'blue', label: 'Blue', category: 'Primary Colors' },
+  { value: 'yellow', label: 'Yellow', category: 'Secondary Colors' },
+  { value: 'orange', label: 'Orange', category: 'Secondary Colors' },
+  { value: 'purple', label: 'Purple', category: 'Secondary Colors' },
+  { value: 'pink', label: 'Pink', category: 'Tertiary Colors' },
+  { value: 'brown', label: 'Brown', category: 'Tertiary Colors' },
+  { value: 'gray', label: 'Gray', category: 'Tertiary Colors' },
+  { value: 'black', label: 'Black', category: 'Tertiary Colors' },
+  { value: 'white', label: 'White', category: 'Tertiary Colors' },
+  { value: 'cyan', label: 'Cyan', category: 'Quaternary Colors' },
+  { value: 'magenta', label: 'Magenta', category: 'Quaternary Colors' },
+  { value: 'lime', label: 'Lime', category: 'Quaternary Colors' },
+  { value: 'indigo', label: 'Indigo', category: 'Quaternary Colors' },
+  { value: 'violet', label: 'Violet', category: 'Quaternary Colors' },
+  { value: 'turquoise', label: 'Turquoise', category: 'Additional Colors' },
+  { value: 'coral', label: 'Coral', category: 'Additional Colors' },
+  { value: 'salmon', label: 'Salmon', category: 'Additional Colors' },
+  { value: 'peach', label: 'Peach', category: 'Additional Colors' },
+  { value: 'mint', label: 'Mint', category: 'Additional Colors' },
+];
+
+export const WithStickyCategories: Story = {
+  args: {
+    value: '',
+    isSearchable: true,
+    isClearable: true,
+    stickyCategoryLabels: true,
+    options: mockOptionsWithManyCategoriesForSticky,
+    onChange: (value) => console.log('onChange', value),
+  },
+};
