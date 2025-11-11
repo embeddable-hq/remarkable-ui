@@ -12,6 +12,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const OUTSIDE_DARKEN_MAX = 0.35;
 /** Darkest color to lerp toward when outside domain (kept as const for tree-shakeability). */
 const LERP_DARKEST_COLOR = '#000000';
+const LERP_LIGHTEST_COLOR = '#FFFFFF';
 
 export const idOf = (v: unknown) => String(v ?? '');
 
@@ -254,7 +255,7 @@ export const createColorForValue = ({
     if (t <= 0) {
       const dist = Math.max(0, domainMin - v) / leftTailLen;
       const strength = easeOutQuad(clamp01(dist)) * OUTSIDE_DARKEN_MAX;
-      return strength > 0 ? lerpColor(minColor, LERP_DARKEST_COLOR, strength) : minColor;
+      return strength > 0 ? lerpColor(minColor, LERP_LIGHTEST_COLOR, strength) : minColor;
     }
 
     if (t >= 1) {
