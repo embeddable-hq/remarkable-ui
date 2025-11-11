@@ -1,15 +1,13 @@
 import { FC } from 'react';
-import clsx from 'clsx';
 import styles from './SelectListCategory.module.css';
 
 type SelectListCategoryProps = {
   label: string;
-  sticky?: boolean;
 };
 
-export const SelectListCategory: FC<SelectListCategoryProps> = ({ label, sticky = false }) => {
+export const SelectListCategory: FC<SelectListCategoryProps> = ({ label }) => {
   return (
-    <div className={clsx(styles.category, sticky && styles.sticky)}>
+    <div className={styles.category}>
       <span className={styles.categoryLabel}>{label}</span>
     </div>
   );

@@ -131,14 +131,3 @@ export const WithCategories: Story = {
     onChange: (value) => console.log('onChange', value),
   },
 };
-
-export const WithStickyCategories: Story = {
-  args: {
-    values: [],
-    isSearchable: true,
-    isClearable: true,
-    stickyCategoryLabels: true,
-    options: mockOptionsWithCategories,
-    onChange: (value) => console.log('onChange', value),
-  },
-};

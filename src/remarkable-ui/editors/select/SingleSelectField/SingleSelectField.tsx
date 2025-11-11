@@ -27,7 +27,6 @@ export type SingleSelectFieldProps = {
   isClearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
-  stickyCategoryLabels?: boolean;
   onChange: (value: string) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
@@ -44,7 +43,6 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   isClearable,
   isLoading,
   noOptionsMessage = 'No options available',
-  stickyCategoryLabels = false,
   onChange,
   onSearch,
   error = false,
@@ -135,7 +133,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             {groupedOptions
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <div key={category}>
-                    <SelectListCategory label={category} sticky={stickyCategoryLabels} />
+                    <SelectListCategory label={category} />
                     {categoryOptions.map((option) => (
                       <SelectListOption
                         key={option?.value ?? option.label}
