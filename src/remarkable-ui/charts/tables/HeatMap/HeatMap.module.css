@@ -6,6 +6,7 @@
 .heatMapTableContainer {
   background: var(--em-table-background-color-default-header, #fff);
   width: fit-content;
+
   max-width: 100%;
   height: fit-content;
   max-height: 100%;
@@ -17,6 +18,10 @@
   overflow-y: auto;
   position: relative;
   box-sizing: border-box;
+}
+
+.heatMapTableContainer.fullWidth {
+  width: 100%;
 }
 
 .heatMapTable {

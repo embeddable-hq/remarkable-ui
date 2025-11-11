@@ -14,9 +14,9 @@ import {
 
 const getCellWidthStyle = (width: number | undefined) => {
   return {
-    minWidth: width ? `${width}px` : undefined,
-    maxWidth: width ? `${width}px` : undefined,
-    width: width ? `${width}px` : undefined,
+    minWidth: width ? `${width}px` : '100%',
+    maxWidth: width ? `${width}px` : '100%',
+    width: width ? `${width}px` : '100%',
   };
 };
 
@@ -117,7 +117,12 @@ export const HeatMap = <T extends Record<string, unknown>>({
 
   return (
     <div className={clsx(styles.heatMapContainer, className)}>
-      <div className={styles.heatMapTableContainer}>
+      <div
+        className={clsx(
+          styles.heatMapTableContainer,
+          (!columnMinWidth || !firstColumnMinWidth) && styles.fullWidth,
+        )}
+      >
         <table className={styles.heatMapTable} aria-label="Heat map">
           <thead>
             <tr>

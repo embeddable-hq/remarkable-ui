@@ -30,10 +30,7 @@ type ChartCardProps = {
 };
 
 export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
-  (
-    { title, subtitle, children, data, errorMessage, dimensionsAndMeasures = [], ...props },
-    ref,
-  ) => {
+  ({ title, subtitle, children, data, errorMessage, dimensionsAndMeasures = [], ...props }) => {
     const theme: Theme = useTheme() as Theme;
     i18nSetup(theme);
 
@@ -96,7 +93,7 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
           }
         />
 
-        <CardContent ref={ref}>{getDisplay()}</CardContent>
+        <CardContent ref={chartRef}>{getDisplay()}</CardContent>
       </Card>
     );
   },
