@@ -4,6 +4,8 @@
   flex: 1 0 0;
   border-radius: var(--em-select-list-item-isolate-border-radius-default, 2px);
   background: var(--em-select-list-item-isolate-background-color-default, #ededf1);
+  position: sticky;
+  top: 0;
 }
 
 .categoryLabel {
