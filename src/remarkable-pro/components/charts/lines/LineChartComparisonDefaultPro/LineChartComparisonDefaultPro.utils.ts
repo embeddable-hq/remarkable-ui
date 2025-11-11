@@ -97,7 +97,13 @@ export const getLineChartComparisonProData = (
   theme: Theme,
 ): ChartData<'line'> => {
   if (!props.data) {
-    return { labels: [], datasets: [{ data: [] }] };
+    return {
+      labels: [],
+      datasets: [
+        { xAxisID: AXIS_ID_MAIN, data: [] },
+        { xAxisID: AXIS_ID_COMPARISON, data: [] },
+      ],
+    };
   }
 
   const { data, dataComparison, dimension, measures, hasMinMaxYAxisRange } = props;

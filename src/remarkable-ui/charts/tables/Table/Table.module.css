@@ -1,0 +1,57 @@
+.tableContainer {
+  background: var(--em-table-background-color-default-header, #fff);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+  box-sizing: border-box;
+  border-radius: var(--em-table-border-radius-default, 0.75rem);
+}
+
+.scrollX {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: var(--em-table-border-width-default, 1px) solid
+    var(--em-table-border-color-default, #ededf1);
+  box-sizing: border-box;
+  cursor: pointer;
+  height: var(--em-table-size-cell-height_R, 2.5rem);
+  max-height: var(--em-table-size-cell-height_R, 2.5rem);
+  min-width: var(--em-table-size-min-width_R, 3rem);
+  padding: var(--em-table-padding-medium_R, 0.5rem);
+}
+
+.table th:hover,
+.table th:focus-within {
+  background: var(--em-table-background-color-hover-header_R, #f7f7f8);
+}
+
+.table tr:has(td:hover) {
+  background: var(--em-table-background-color-hover-row_R, #fafafa);
+}
+
+.table th:first-child,
+.table td:first-child {
+  border-left: none;
+}
+.table th:last-child,
+.table td:last-child {
+  border-right: none;
+}
+.table tr:first-child th,
+.table tr:first-child td {
+  border-top: none;
+}

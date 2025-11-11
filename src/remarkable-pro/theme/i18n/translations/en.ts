@@ -19,6 +19,12 @@ export const en: ResourceLanguage = {
       errorMessage: 'An error occurred while loading the chart.',
       emptyTitle: "It's a bit empty here.",
       emptyMessage: 'Try adding something.',
+      tablePaginated: {
+        pagination: 'Page {{page}} of {{totalPages}}',
+      },
+      pivotTable: {
+        total: 'Total',
+      },
     },
     editors: {
       errorTitle: 'Something went wrong.',

@@ -17,16 +17,17 @@
 }
 
 .listItem .leftContent {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
   display: flex;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--em-select-list-item-left-label-color-default, #212129);
+  align-items: center;
 }
 
 .listItem .rightContent {
-  flex: 0 0 auto;
-  max-width: 50%;
-  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--em-select-list-item-right-label-color-default, #5c5c66);
 }
 
 .listItem .leftContent p,
@@ -34,6 +35,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.listItem .rightContent p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
 }
 
 .listItem:hover,
@@ -69,8 +76,11 @@
 }
 
 .listItem.selected {
-  background: var(--em-sl-item-background-color-selected, #212129);
-  color: var(--em-sl-item-left-label-text-default, #fff);
+  background: var(--em-select-list-item-background-color-selected, #212129);
+  color: var(--em-select-list-item-left-label-color-selected, #fff);
+  span {
+    color: var(--em-select-list-item-left-label-color-selected, #fff);
+  }
 }
 
 .listItem.selected .leftContent p,

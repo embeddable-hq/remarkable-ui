@@ -1,5 +1,114 @@
 # @embeddable/remarkable-ui
 
+## 0.1.47
+
+### Patch Changes
+
+- d4423d8: Support sticky category labels in Select field
+
+## 0.1.46
+
+### Patch Changes
+
+- 34ed504: Generate CSS vars host file
+
+## 0.1.45
+
+### Patch Changes
+
+- d60f59c: Fix Minor styling issues
+
+## 0.1.44
+
+### Patch Changes
+
+- 868af87: Fix SelectListOption on selected state color
+
+## 0.1.43
+
+### Patch Changes
+
+- 5af1227: Fix Select List items color
+- 5af1227: Remove switch hover effect
+
+## 0.1.42
+
+### Patch Changes
+
+- 9f3acd7: Max results input not required
+
+## 0.1.41
+
+### Patch Changes
+
+- 36badf0: Fix NaN on KPI + increase number of rows for line charts
+
+## 0.1.40
+
+### Patch Changes
+
+- 0c8abc2: Fix max width for select field
+
+## 0.1.39
+
+### Patch Changes
+
+- 696ba64: PivotTablePro component
+
+## 0.1.38
+
+### Patch Changes
+
+- 04f14b3: Fix line comparison first load
+
+## 0.1.37
+
+### Patch Changes
+
+- 8daf412: Window guard on remarkable pro styles utils
+
+## 0.1.36
+
+### Patch Changes
+
+- 424886e: Enable Grouping on Select Fields
+
+## 0.1.35
+
+### Patch Changes
+
+- 18fb3bd: Fix an issue with MultiSelect No Options message
+
+## 0.1.34
+
+### Patch Changes
+
+- 11f6269: Table Paginated Pro
+
+## 0.1.33
+
+### Patch Changes
+
+- 3a2646b: Add error state to input fields
+
+## 0.1.32
+
+### Patch Changes
+
+- 38aea79: Hide comparison if chart is still loading
+
+## 0.1.31
+
+### Patch Changes
+
+- d7e0a62: Fix kpi, useeFillGaps and dateRangeSelect update
+
+## 0.1.30
+
+### Patch Changes
+
+- 6b0bb08: Add Ghost Button
+
 ## 0.1.29
 
 ### Patch Changes

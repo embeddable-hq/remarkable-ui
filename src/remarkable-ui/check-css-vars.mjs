@@ -4,6 +4,8 @@
 // Reports missing vars as compact, clickable links that jump to line/column
 // (VS Code/JetBrains aware; OSC 8 hyperlinks for clean console output).
 
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
