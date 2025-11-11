@@ -70,7 +70,6 @@
   font-weight: var(--em-table-font-font-weight-regular, 400);
   font-style: normal;
   line-height: var(--em-table-font-line-height, 0.875rem);
-  padding: 0 var(--em-table-padding-small, 0.25rem);
   text-align: center;
 }
 

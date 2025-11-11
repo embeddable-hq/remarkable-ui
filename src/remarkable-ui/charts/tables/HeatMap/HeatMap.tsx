@@ -35,7 +35,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
     for (const d of data) {
       const value = getCellValue(d[measure.key], displayNullAs);
 
-      if (value && typeof value === 'number' && Number.isFinite(value)) {
+      if (value != null && typeof value === 'number' && Number.isFinite(value)) {
         if (value < min) min = value;
         if (value > max) max = value;
       }
@@ -104,7 +104,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
         maxColor,
       })(v);
     },
-    [domainMin, domainMax, rawMin, rawMax, minColor, maxColor],
+    [domainMin, domainMax, rawMin, rawMax, minColor, midColor, maxColor],
   );
 
   return (
