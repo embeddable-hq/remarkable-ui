@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.47
+
+### Patch Changes
+
+- d4423d8: Support sticky category labels in Select field
+
 ## 0.1.46
 
 ### Patch Changes
