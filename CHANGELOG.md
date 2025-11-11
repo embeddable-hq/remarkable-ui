@@ -1,5 +1,23 @@
 # @embeddable/remarkable-ui
 
+## 0.1.47
+
+### Patch Changes
+
+- d4423d8: Support sticky category labels in Select field
+
+## 0.1.46
+
+### Patch Changes
+
+- 34ed504: Generate CSS vars host file
+
+## 0.1.45
+
+### Patch Changes
+
+- d60f59c: Fix Minor styling issues
+
 ## 0.1.44
 
 ### Patch Changes
