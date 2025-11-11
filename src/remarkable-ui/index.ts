@@ -40,7 +40,7 @@ export * from './charts/tables/Table/table.types';
 export { PivotTable } from './charts/tables/PivotTable/PivotTable';
 export * from './charts/tables/PivotTable/PivotTable.types';
 export { HeatMap } from './charts/tables/HeatMap/HeatMap';
-export type { HeatMapProps } from './charts/tables/HeatMap/HeatMap.types';
+export * from './charts/tables/HeatMap/HeatMap.types';
 
 // Chart Utils
 export { getTableTotalPages } from './charts/tables/Table/components/TablePagination/TablePagination';

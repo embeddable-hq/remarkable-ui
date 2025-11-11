@@ -4,12 +4,10 @@ import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
-import { HeatMap, HeatMapProps } from '../../../../../remarkable-ui';
+import { HeatMap, HeatMapPropsDimension, HeatMapPropsMeasure } from '../../../../../remarkable-ui';
 import { useRef } from 'react';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { useFillGaps } from '../../charts.fillGaps.hooks';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 type HeatMapProProps = {
   columnDimension: Dimension;
@@ -32,7 +30,8 @@ type HeatMapProProps = {
 export const getHeatMeasure = (
   props: { measure: Measure },
   theme: Theme,
-): HeatMapProps<any>['measure'] => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): HeatMapPropsMeasure<any> => {
   const themeFormatter = getThemeFormatter(theme);
 
   return {
@@ -47,7 +46,8 @@ export const getHeatMeasure = (
 export const getHeatDimension = (
   props: { dimension: Dimension },
   theme: Theme,
-): HeatMapProps<any>['rowDimension' | 'columnDimension'] => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): HeatMapPropsDimension<any> => {
   const themeFormatter = getThemeFormatter(theme);
 
   return {

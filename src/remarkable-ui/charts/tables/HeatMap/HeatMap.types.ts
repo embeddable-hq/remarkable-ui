@@ -1,4 +1,4 @@
-type HeatMapPropsDimension<T> = {
+export type HeatMapPropsDimension<T> = {
   key: Extract<keyof T, string>;
   label: string;
   format?: (value: string) => string;
