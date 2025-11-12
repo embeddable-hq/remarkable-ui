@@ -11,10 +11,10 @@ import { useFillGaps } from '../../charts.fillGaps.hooks';
 
 type HeatMapProProps = {
   columnDimension: Dimension;
-  columnMinWidth?: number;
+  columnWidth?: number;
   description: string;
   displayNullAs?: string;
-  firstColumnMinWidth?: number;
+  firstColumnWidth?: number;
   maxColor: string;
   maxThreshold?: string;
   measure: Measure;
@@ -70,8 +70,8 @@ const HeatMapPro = (props: HeatMapProProps) => {
     midColor,
     minColor,
     displayNullAs,
-    columnMinWidth,
-    firstColumnMinWidth,
+    columnWidth,
+    firstColumnWidth,
     showValues,
     minThreshold,
     maxThreshold,
@@ -115,8 +115,8 @@ const HeatMapPro = (props: HeatMapProProps) => {
         showValues={showValues}
         minThreshold={minThreshold}
         maxThreshold={maxThreshold}
-        columnMinWidth={columnMinWidth}
-        firstColumnMinWidth={firstColumnMinWidth}
+        columnWidth={columnWidth}
+        firstColumnWidth={firstColumnWidth}
         displayNullAs={displayNullAs}
       />
     </ChartCard>

@@ -3,6 +3,7 @@ import styles from './PivotTable.module.css';
 import clsx from 'clsx';
 import { PivotTableProps } from './PivotTable.types';
 import { Typography } from '../../../shared/Typography/Typography';
+import { getTableCellWidthStyle } from '../tables.utils';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -10,12 +11,6 @@ const isNumber = (v: any) => typeof v === 'number' && !Number.isNaN(v);
 
 const getPercentageDisplay = (percentage: number, percentageDecimalPlaces: number) => {
   return `${percentage.toFixed(percentageDecimalPlaces)}%`;
-};
-
-const getCellMinWidthStyle = (width: number | undefined) => {
-  return {
-    minWidth: width ? `${width}px` : undefined,
-  };
 };
 
 export const PivotTable: FC<PivotTableProps<any>> = ({
@@ -31,6 +26,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   rowTotalsFor = [],
   columnTotalsFor = [],
   totalLabel = 'Total',
+  className,
 }) => {
   const rowValues = useMemo(() => {
     const s = new Set<string>();
@@ -149,135 +145,214 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   const visibleRows = progressive ? rowValues.slice(0, visibleCount) : rowValues;
 
   return (
-    <div className={styles.tableContainer}>
-      <table
-        className={styles.table}
-        aria-label={`${rowDimension.label} by ${columnDimension.label}`}
+    <div className={clsx(styles.pivotTableContainer, className)}>
+      <div
+        className={clsx(
+          styles.tableContainer,
+          (!columnWidth || !firstColumnWidth) && styles.fullWidth,
+        )}
       >
-        <thead>
-          <tr>
-            <th
-              scope="col"
-              rowSpan={1}
-              className={clsx(styles.cell, styles.header)}
-              title={columnDimension.label}
-            >
-              <Typography>{columnDimension.label}</Typography>
-            </th>
-            {columnValues.map((columnValue) => {
-              const columnValueDisplay = columnDimension.formatValue
-                ? columnDimension.formatValue(columnValue)
-                : columnValue;
-              return (
-                <th
-                  key={`col-${columnValue}`}
-                  scope="colgroup"
-                  colSpan={measures.length}
-                  className={clsx(styles.cell, styles.header)}
-                  title={columnValueDisplay}
-                >
-                  <Typography>{columnValueDisplay}</Typography>
-                </th>
-              );
-            })}
-            {hasRowTotals && (
+        <table
+          className={styles.table}
+          aria-label={`${rowDimension.label} by ${columnDimension.label}`}
+        >
+          <thead>
+            <tr>
               <th
-                key="col-total-group"
-                scope="colgroup"
-                colSpan={Array.from(rowTotalsSet).length}
-                className={clsx(styles.cell, styles.bold)}
-                title={totalLabel}
+                scope="col"
+                rowSpan={1}
+                className={clsx(styles.cell, styles.header)}
+                title={columnDimension.label}
               >
-                <Typography>{totalLabel}</Typography>
+                <Typography>{columnDimension.label}</Typography>
               </th>
-            )}
-          </tr>
-          <tr>
-            <th
-              scope="col"
-              rowSpan={1}
-              className={clsx(styles.cell, styles.header)}
-              title={rowDimension.label}
-              style={getCellMinWidthStyle(firstColumnWidth)}
-            >
-              <Typography>{rowDimension.label}</Typography>
-            </th>
-            {columnValues.flatMap((col) =>
-              measures.map((measure, idx) => (
-                <th
-                  key={`sub-${String(col)}-${measure.key}-${idx}`}
-                  scope="col"
-                  className={clsx(styles.cell, styles.header)}
-                  title={measure.label}
-                  style={getCellMinWidthStyle(columnWidth)}
-                >
-                  <Typography>{measure.label}</Typography>
-                </th>
-              )),
-            )}
-            {hasRowTotals &&
-              measures
-                .filter((measure) => rowTotalsSet.has(measure.key))
-                .map((measure, idx) => (
+              {columnValues.map((columnValue) => {
+                const columnValueDisplay = columnDimension.formatValue
+                  ? columnDimension.formatValue(columnValue)
+                  : columnValue;
+                return (
                   <th
-                    key={`sub-total-${measure.key}-${idx}`}
+                    key={`col-${columnValue}`}
+                    scope="colgroup"
+                    colSpan={measures.length}
+                    className={clsx(styles.cell, styles.header)}
+                    title={columnValueDisplay}
+                  >
+                    <Typography>{columnValueDisplay}</Typography>
+                  </th>
+                );
+              })}
+              {hasRowTotals && (
+                <th
+                  key="col-total-group"
+                  scope="colgroup"
+                  colSpan={Array.from(rowTotalsSet).length}
+                  className={clsx(styles.cell, styles.bold)}
+                  title={totalLabel}
+                >
+                  <Typography>{totalLabel}</Typography>
+                </th>
+              )}
+            </tr>
+            <tr>
+              <th
+                scope="col"
+                rowSpan={1}
+                className={clsx(styles.cell, styles.header)}
+                title={rowDimension.label}
+                style={getTableCellWidthStyle(firstColumnWidth)}
+              >
+                <Typography>{rowDimension.label}</Typography>
+              </th>
+              {columnValues.flatMap((col) =>
+                measures.map((measure, idx) => (
+                  <th
+                    key={`sub-${String(col)}-${measure.key}-${idx}`}
                     scope="col"
-                    className={clsx(styles.cell, styles.bold)}
+                    className={clsx(styles.cell, styles.header)}
                     title={measure.label}
-                    style={getCellMinWidthStyle(columnWidth)}
+                    style={getTableCellWidthStyle(columnWidth)}
                   >
                     <Typography>{measure.label}</Typography>
                   </th>
-                ))}
-          </tr>
-        </thead>
-        <tbody>
-          {visibleRows.map((row) => {
-            const rowDimensionValue = rowDimension.formatValue
-              ? rowDimension.formatValue(row)
-              : row;
-            return (
-              <tr key={`row-${row}`}>
-                <th
-                  scope="row"
-                  className={clsx(styles.cell, styles.header)}
-                  title={rowDimensionValue}
-                >
-                  <Typography>{rowDimensionValue}</Typography>
+                )),
+              )}
+              {hasRowTotals &&
+                measures
+                  .filter((measure) => rowTotalsSet.has(measure.key))
+                  .map((measure, idx) => (
+                    <th
+                      key={`sub-total-${measure.key}-${idx}`}
+                      scope="col"
+                      className={clsx(styles.cell, styles.bold)}
+                      title={measure.label}
+                      style={getTableCellWidthStyle(columnWidth)}
+                    >
+                      <Typography>{measure.label}</Typography>
+                    </th>
+                  ))}
+            </tr>
+          </thead>
+          <tbody>
+            {visibleRows.map((row) => {
+              const rowDimensionValue = rowDimension.formatValue
+                ? rowDimension.formatValue(row)
+                : row;
+              return (
+                <tr key={`row-${row}`}>
+                  <th
+                    scope="row"
+                    className={clsx(styles.cell, styles.header)}
+                    title={rowDimensionValue}
+                  >
+                    <Typography>{rowDimensionValue}</Typography>
+                  </th>
+
+                  {columnValues.flatMap((columnValue) =>
+                    measures.map((measure, idx) => {
+                      const object = cellMap.get(row)?.get(columnValue) ?? {};
+                      const value = object?.[measure.key];
+
+                      const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
+                      const getDisplayValue = () => {
+                        if (measure.showAsPercentage) {
+                          const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
+                          const totalsForCol =
+                            colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                          const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
+
+                          const shouldShowPct =
+                            measure.showAsPercentage &&
+                            isNumber(Number(value)) &&
+                            isNumber(colTotal) &&
+                            colTotal > 0;
+
+                          if (shouldShowPct) {
+                            const percentage = (value / colTotal) * 100;
+                            return `${percentage.toFixed(measure.percentageDecimalPlaces ?? 0)}%`;
+                          }
+                        }
+
+                        return measure.accessor ? measure.accessor(object) : value;
+                      };
+
+                      const columnValueDisplay = getDisplayValue();
+
+                      return (
+                        <td key={key} className={clsx(styles.cell)} title={columnValueDisplay}>
+                          <Typography>{columnValueDisplay}</Typography>
+                        </td>
+                      );
+                    }),
+                  )}
+
+                  {hasRowTotals &&
+                    measures
+                      .filter((measure) => rowTotalsSet.has(measure.key))
+                      .map((measure, idx) => {
+                        const totalsForRow = rowTotals.get(row) ?? measures.map(() => 0);
+                        const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
+                        const key = `row-total-${String(row)}-${measure.key}-${idx}`;
+                        const value: number =
+                          measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
+                        let displayValue: any = value;
+
+                        if (measure.showAsPercentage) {
+                          displayValue = getPercentageDisplay(
+                            (value / (grandTotals[measureIndex] || 1)) * 100,
+                            measure.percentageDecimalPlaces ?? 0,
+                          );
+                        } else if (measure.accessor) {
+                          displayValue = measure.accessor({ [measure.key]: value });
+                        }
+
+                        return (
+                          <td
+                            key={key}
+                            className={clsx(styles.cell, styles.bold)}
+                            title={displayValue}
+                          >
+                            <Typography>{displayValue}</Typography>
+                          </td>
+                        );
+                      })}
+                </tr>
+              );
+            })}
+          </tbody>
+          <tfoot>
+            {hasColumnTotals && (
+              <tr key="totals-row">
+                <th scope="row" className={clsx(styles.cell, styles.bold)} title={totalLabel}>
+                  <Typography>{totalLabel}</Typography>
                 </th>
 
                 {columnValues.flatMap((columnValue) =>
                   measures.map((measure, idx) => {
-                    const object = cellMap.get(row)?.get(columnValue) ?? {};
-                    const value = object?.[measure.key];
+                    const show = columnTotalsSet.has(String(measure.key));
+                    const totalsForCol =
+                      colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                    const mi = measures.findIndex((mm) => String(mm.key) === String(measure.key));
+                    const key = `col-total-${String(columnValue)}-${measure.key}-${idx}`;
+                    const value: number = totalsForCol[mi] ?? 0;
+                    let displayValue: any = value;
 
-                    const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
-                    const getDisplayValue = () => {
-                      if (measure.showAsPercentage) {
-                        const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-                        const totalsForCol =
-                          colTotals.get(String(columnValue)) ?? measures.map(() => 0);
-                        const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
-
-                        const shouldShowPct =
-                          measure.showAsPercentage &&
-                          isNumber(Number(value)) &&
-                          isNumber(colTotal) &&
-                          colTotal > 0;
-
-                        if (shouldShowPct) {
-                          const percentage = (value / colTotal) * 100;
-                          return `${percentage.toFixed(measure.percentageDecimalPlaces ?? 0)}%`;
-                        }
-                      }
-
-                      return measure.accessor ? measure.accessor(object) : value;
-                    };
-
-                    const columnValueDisplay = getDisplayValue();
+                    if (measure.showAsPercentage) {
+                      displayValue = getPercentageDisplay(
+                        100,
+                        measure.percentageDecimalPlaces ?? 0,
+                      );
+                    } else if (measure.accessor) {
+                      displayValue = measure.accessor({ [measure.key]: value });
+                    }
+                    const columnValueDisplay = show ? displayValue : '';
 
                     return (
-                      <td key={key} className={clsx(styles.cell)} title={columnValueDisplay}>
+                      <td
+                        key={key}
+                        className={clsx(styles.cell, styles.bold)}
+                        title={columnValueDisplay}
+                      >
                         <Typography>{columnValueDisplay}</Typography>
                       </td>
                     );
@@ -288,16 +363,14 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   measures
                     .filter((measure) => rowTotalsSet.has(measure.key))
                     .map((measure, idx) => {
-                      const totalsForRow = rowTotals.get(row) ?? measures.map(() => 0);
-                      const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
-                      const key = `row-total-${String(row)}-${measure.key}-${idx}`;
-                      const value: number =
-                        measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
+                      const measureIndex = measures.findIndex((m) => String(m.key) === measure.key);
+                      const key = `grand-total-${measure.key}-${idx}`;
+                      const value: number = grandTotals[measureIndex] ?? 0;
                       let displayValue: any = value;
 
                       if (measure.showAsPercentage) {
                         displayValue = getPercentageDisplay(
-                          (value / (grandTotals[measureIndex] || 1)) * 100,
+                          100,
                           measure.percentageDecimalPlaces ?? 0,
                         );
                       } else if (measure.accessor) {
@@ -315,72 +388,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                       );
                     })}
               </tr>
-            );
-          })}
-        </tbody>
-        <tfoot>
-          {hasColumnTotals && (
-            <tr key="totals-row">
-              <th scope="row" className={clsx(styles.cell, styles.bold)} title={totalLabel}>
-                <Typography>{totalLabel}</Typography>
-              </th>
-
-              {columnValues.flatMap((columnValue) =>
-                measures.map((measure, idx) => {
-                  const show = columnTotalsSet.has(String(measure.key));
-                  const totalsForCol = colTotals.get(String(columnValue)) ?? measures.map(() => 0);
-                  const mi = measures.findIndex((mm) => String(mm.key) === String(measure.key));
-                  const key = `col-total-${String(columnValue)}-${measure.key}-${idx}`;
-                  const value: number = totalsForCol[mi] ?? 0;
-                  let displayValue: any = value;
-
-                  if (measure.showAsPercentage) {
-                    displayValue = getPercentageDisplay(100, measure.percentageDecimalPlaces ?? 0);
-                  } else if (measure.accessor) {
-                    displayValue = measure.accessor({ [measure.key]: value });
-                  }
-                  const columnValueDisplay = show ? displayValue : '';
-
-                  return (
-                    <td
-                      key={key}
-                      className={clsx(styles.cell, styles.bold)}
-                      title={columnValueDisplay}
-                    >
-                      <Typography>{columnValueDisplay}</Typography>
-                    </td>
-                  );
-                }),
-              )}
-
-              {hasRowTotals &&
-                measures
-                  .filter((measure) => rowTotalsSet.has(measure.key))
-                  .map((measure, idx) => {
-                    const measureIndex = measures.findIndex((m) => String(m.key) === measure.key);
-                    const key = `grand-total-${measure.key}-${idx}`;
-                    const value: number = grandTotals[measureIndex] ?? 0;
-                    let displayValue: any = value;
-
-                    if (measure.showAsPercentage) {
-                      displayValue = getPercentageDisplay(
-                        100,
-                        measure.percentageDecimalPlaces ?? 0,
-                      );
-                    } else if (measure.accessor) {
-                      displayValue = measure.accessor({ [measure.key]: value });
-                    }
-
-                    return (
-                      <td key={key} className={clsx(styles.cell, styles.bold)} title={displayValue}>
-                        <Typography>{displayValue}</Typography>
-                      </td>
-                    );
-                  })}
-            </tr>
-          )}
-        </tfoot>
-      </table>
+            )}
+          </tfoot>
+        </table>
+      </div>
     </div>
   );
 };

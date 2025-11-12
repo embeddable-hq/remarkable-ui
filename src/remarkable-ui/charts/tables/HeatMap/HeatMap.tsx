@@ -11,14 +11,7 @@ import {
   idOf,
   thresholdToRaw,
 } from './HeatMap.utils';
-
-const getCellWidthStyle = (width: number | undefined) => {
-  return {
-    minWidth: width ? `${width}px` : '100%',
-    maxWidth: width ? `${width}px` : '100%',
-    width: width ? `${width}px` : '100%',
-  };
-};
+import { getTableCellWidthStyle } from '../tables.utils';
 
 export const HeatMap = <T extends Record<string, unknown>>({
   data,
@@ -32,8 +25,8 @@ export const HeatMap = <T extends Record<string, unknown>>({
   minColor,
   midColor,
   maxColor,
-  columnMinWidth,
-  firstColumnMinWidth,
+  columnWidth,
+  firstColumnWidth,
   displayNullAs,
 }: HeatMapProps<T>) => {
   // 1. Get raw min/max from data
@@ -119,16 +112,16 @@ export const HeatMap = <T extends Record<string, unknown>>({
     <div className={clsx(styles.heatMapContainer, className)}>
       <div
         className={clsx(
-          styles.heatMapTableContainer,
-          (!columnMinWidth || !firstColumnMinWidth) && styles.fullWidth,
+          styles.tableContainer,
+          (!columnWidth || !firstColumnWidth) && styles.fullWidth,
         )}
       >
-        <table className={styles.heatMapTable} aria-label="Heat map">
+        <table className={styles.table} aria-label="Heat map">
           <thead>
             <tr>
               <th
                 className={clsx(styles.heatMapCell, styles.header)}
-                style={getCellWidthStyle(firstColumnMinWidth)}
+                style={getTableCellWidthStyle(firstColumnWidth)}
               >
                 {measure.label}
               </th>
@@ -136,7 +129,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
                 <th
                   key={`col-${cv}-${index}`}
                   className={clsx(styles.heatMapCell, styles.header)}
-                  style={getCellWidthStyle(columnMinWidth)}
+                  style={getTableCellWidthStyle(columnWidth)}
                 >
                   {columnDimension.format ? columnDimension.format(cv) : cv}
                 </th>
@@ -150,7 +143,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
                 <th
                   className={clsx(styles.heatMapCell, styles.header)}
                   scope="row"
-                  style={getCellWidthStyle(firstColumnMinWidth)}
+                  style={getTableCellWidthStyle(firstColumnWidth)}
                 >
                   {rowDimension.format ? rowDimension.format(rv) : rv}
                 </th>
@@ -168,7 +161,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
                       style={{
                         background,
                         color,
-                        ...getCellWidthStyle(columnMinWidth),
+                        ...getTableCellWidthStyle(columnWidth),
                       }}
                     >
                       {getCellDisplayValue(value, showValues, measure)}

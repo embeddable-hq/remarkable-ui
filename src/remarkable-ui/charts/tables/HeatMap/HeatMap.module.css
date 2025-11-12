@@ -3,7 +3,7 @@
   height: 100%;
 }
 
-.heatMapTableContainer {
+.tableContainer {
   background: var(--em-table-background-color-default-header, #fff);
   width: fit-content;
 
@@ -18,13 +18,17 @@
   overflow-y: auto;
   position: relative;
   box-sizing: border-box;
+
+  &.fullWidth {
+    width: 100%;
+
+    .table {
+      width: 100%;
+    }
+  }
 }
 
-.heatMapTableContainer.fullWidth {
-  width: 100%;
-}
-
-.heatMapTable {
+.table {
   border-spacing: 0;
   background: var(--em-table-background-color-default-header, #fff);
   box-sizing: content-box;
