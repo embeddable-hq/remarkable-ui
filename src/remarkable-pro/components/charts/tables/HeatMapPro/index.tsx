@@ -5,7 +5,6 @@ import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { HeatMap, HeatMapPropsDimension, HeatMapPropsMeasure } from '../../../../../remarkable-ui';
-import { useRef } from 'react';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { useFillGaps } from '../../charts.fillGaps.hooks';
 
@@ -89,15 +88,12 @@ const HeatMapPro = (props: HeatMapProProps) => {
     dimension: rowDimension,
   });
 
-  const cardContentRef = useRef<HTMLDivElement>(null);
-
   const pivotMeasures = getHeatMeasure({ measure }, theme);
   const pivotRowDimension = getHeatDimension({ dimension: rowDimension }, theme);
   const pivotColumnDimension = getHeatDimension({ dimension: columnDimension }, theme);
 
   return (
     <ChartCard
-      ref={cardContentRef}
       title={title}
       subtitle={description}
       data={props.results}
