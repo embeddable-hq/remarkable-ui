@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.50
+
+### Patch Changes
+
+- 8a9915f: Add heatmap component
+
 ## 0.1.49
 
 ### Patch Changes
