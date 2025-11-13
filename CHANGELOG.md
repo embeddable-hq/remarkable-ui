@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 0.1.49
+
+### Patch Changes
+
+- 310dcc1: Revert pushing the styles to host
+
 ## 0.1.48
 
 ### Patch Changes
