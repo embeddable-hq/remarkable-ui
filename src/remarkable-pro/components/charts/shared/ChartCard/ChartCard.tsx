@@ -96,7 +96,7 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
           }
         />
 
-        <CardContent ref={ref}>{getDisplay()}</CardContent>
+        <CardContent ref={props.onCustomDownload ? ref : chartRef}>{getDisplay()}</CardContent>
       </Card>
     );
   },

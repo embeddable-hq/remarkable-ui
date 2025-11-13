@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--em-card-title-padding-default, 1rem);
+  width: 100%;
 }
 
 .title {
@@ -37,6 +38,7 @@
   font-style: normal;
   font-weight: var(--em-card-title-font-weight, 700);
   line-height: var(--em-card-title-font-line-height, 1.1875rem);
+  overflow-wrap: break-word;
 }
 
 .subtitle {
@@ -46,4 +48,5 @@
   font-style: normal;
   font-weight: var(--em-card-subtitle-font-weight, 400);
   line-height: var(--em-card-subtitle-font-line-height, 0.875rem);
+  overflow-wrap: break-word;
 }

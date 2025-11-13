@@ -140,7 +140,7 @@ const dataOthersFormatter = (theme: Theme, key: DimensionOrMeasure): StringForma
 
   return {
     format: (value: string) => {
-      if (!value) {
+      if (value == null) {
         return '';
       }
 
