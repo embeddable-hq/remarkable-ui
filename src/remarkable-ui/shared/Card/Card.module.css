@@ -38,9 +38,7 @@
   font-style: normal;
   font-weight: var(--em-card-title-font-weight, 700);
   line-height: var(--em-card-title-font-line-height, 1.1875rem);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
 }
 
 .subtitle {
@@ -50,7 +48,5 @@
   font-style: normal;
   font-weight: var(--em-card-subtitle-font-weight, 400);
   line-height: var(--em-card-subtitle-font-line-height, 0.875rem);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: break-word;
 }
