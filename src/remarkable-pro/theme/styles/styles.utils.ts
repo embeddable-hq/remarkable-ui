@@ -9,7 +9,7 @@ const generateCssVariables = (variables: Record<string, string>) => {
 
 // TODO: check the possibility of injecting via CSS (future)
 export const injectCssVariables = (styles: Record<string, string>) => {
-  const css = `:root, :host {\n${generateCssVariables(styles)}}`;
+  const css = `:root {\n${generateCssVariables(styles)}}`;
   const styleId = 'remarkable-ui-embeddable-style';
   let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;
 
