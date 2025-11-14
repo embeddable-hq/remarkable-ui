@@ -17,7 +17,7 @@ const ColorInput: FC<ColorInputProps> = ({ value, onChange }) => {
       return;
     }
     setColor(value);
-  }, [value, setColor]);
+  }, [value, setColor, onChange]);
 
   return (
     <input
