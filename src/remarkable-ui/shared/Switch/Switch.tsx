@@ -32,30 +32,33 @@ export const Switch: React.FC<SwitchProps> = ({
   }
 
   return (
-    <div className={clsx(styles.switchContainer, className)}>
-      <label
-        className={clsx(styles.switchLabel, checked && styles.checked, disabled && styles.disabled)}
-      >
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-          disabled={disabled}
-          className={styles.switchInput}
-          role="switch"
-          aria-checked={checked}
-          aria-disabled={disabled}
-          {...props}
-        />
-        <span className={styles.switchTrack} aria-hidden="true">
-          <span className={styles.switchThumb} aria-hidden="true" />
-        </span>
-        {label && (
-          <Typography as="span" className={clsx(styles.labelText, disabled && styles.disabled)}>
-            {label}
-          </Typography>
-        )}
-      </label>
-    </div>
+    <label
+      className={clsx(
+        className,
+        styles.switchLabel,
+        checked && styles.checked,
+        disabled && styles.disabled,
+      )}
+    >
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={handleChange}
+        disabled={disabled}
+        className={styles.switchInput}
+        role="switch"
+        aria-checked={checked}
+        aria-disabled={disabled}
+        {...props}
+      />
+      <span className={styles.switchTrack} aria-hidden="true">
+        <span className={styles.switchThumb} aria-hidden="true" />
+      </span>
+      {label && (
+        <Typography as="span" className={clsx(styles.labelText, disabled && styles.disabled)}>
+          {label}
+        </Typography>
+      )}
+    </label>
   );
 };

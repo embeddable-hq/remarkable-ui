@@ -1,10 +1,3 @@
-.switchContainer {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--em-switch-container-gap, 0.75rem);
-}
-
 .switchLabel {
   position: relative;
   display: inline-block;
@@ -16,24 +9,6 @@
     opacity: 0;
     width: 0;
     height: 0;
-
-    /* Focus styles for keyboard navigation */
-    &:focus + .switchTrack {
-      outline: var(--em-border-width-default) solid var(--em-switch-focus-color, #0066cc);
-      outline-offset: var(--em-border-width-default);
-    }
-
-    &:focus:not(:focus-visible) + .switchTrack {
-      outline: none;
-    }
-
-    /* High contrast mode support */
-    @media (prefers-contrast: high) {
-      &:focus + .switchTrack {
-        outline: var(--em-border-width-default, 0.0625rem) solid;
-        outline-offset: var(--em-border-width-default, 0.0625rem);
-      }
-    }
   }
 
   .switchTrack {
