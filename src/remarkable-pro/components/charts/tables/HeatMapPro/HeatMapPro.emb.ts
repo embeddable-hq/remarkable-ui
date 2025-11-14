@@ -90,6 +90,7 @@ export const meta = {
 } as const satisfies EmbeddedComponentMeta;
 
 export default defineComponent(HeatMapPro, meta, {
+  /* @ts-expect-error - to be fixed in @embeddable.com/react */
   props: (inputs: Inputs<typeof meta>) => {
     return {
       ...inputs,

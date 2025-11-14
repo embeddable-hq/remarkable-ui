@@ -10,7 +10,7 @@ export const meta = {
   type: ColorType,
 };
 
-// @ts-expect-error needs SDK improvements
+/* @ts-expect-error - to be fixed in @embeddable.com/react */
 export default defineEditor(Component, meta, {
   inputs: (value, setter) => {
     return {
