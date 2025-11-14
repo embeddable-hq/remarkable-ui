@@ -6,7 +6,7 @@
 .error svg,
 .error h2,
 .error p {
-  color: var(--em-card-error-subtitle-color-default, #d03109);
+  color: var(--em-card-error-text-default, #bc1010);
 }
 
 .rightContent {

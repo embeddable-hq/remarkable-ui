@@ -32,44 +32,44 @@ export const chartjsAxisOptionsPlugins: Partial<ChartOptions['plugins']> = {
 
 export const chartjsAxisOptionsScalesTicksDefault: Partial<CartesianTickOptions> = {
   display: true,
-  color: getStyle('--em-chart-grid-font-color-default'),
+  color: getStyle('--em-chart-grid-text-default'),
   font: {
-    size: getStyleNumber('--em-chart-grid-font-subtitle-size'),
-    weight: getStyleNumber('--em-chart-grid-font-label-weight'),
-    lineHeight: `${getStyleNumber('--em-chart-grid-font-line-height')}px`,
+    size: getStyleNumber('--em-chart-grid-font-size-subtitle'),
+    weight: getStyleNumber('--em-chart-grid-font-weight-subtitle'),
+    lineHeight: getStyleNumber('--em-chart-grid-font-line-height'),
     // TODO: fix family on dedicated ticket
-    // family: getStyle('--em-chart-grid-font-font-family'),
+    family: 'Inter, sans-serif',
   },
 };
 
 export const chartjsAxisOptionsScalesTicksMuted: Partial<CartesianTickOptions> = {
   display: true,
-  color: getStyle('--em-chart-grid-font-color-muted'),
+  color: getStyle('--em-chart-grid-text-muted'),
   font: {
-    size: getStyleNumber('--em-chart-grid-font-subtitle-size'),
-    weight: getStyleNumber('--em-chart-grid-font-label-weight'),
-    lineHeight: `${getStyleNumber('--em-chart-grid-font-line-height')}px`,
+    size: getStyleNumber('--em-chart-grid-font-size-subtitle'),
+    weight: getStyleNumber('--em-chart-grid-font-weight-subtitle'),
+    lineHeight: getStyleNumber('--em-chart-grid-font-line-height'),
     // TODO: fix family on dedicated ticket
-    // family: getStyle('--em-chart-grid-font-font-family'),
+    family: 'Inter, sans-serif',
   },
 };
 
 // TODO: replace type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const chartjsAxisOptionsScalesTitle: any = {
-  color: getStyle('--em-chart-grid-font-color-default'),
+  color: getStyle('--em-chart-grid-text-default'),
   font: {
-    size: getStyleNumber('--em-chart-grid-font-title-size'),
-    weight: getStyleNumber('--em-chart-grid-font-title-weight'),
-    lineHeight: `${getStyleNumber('--em-chart-grid-font-line-height')}px`,
+    size: getStyleNumber('--em-chart-grid-font-size-title'),
+    weight: getStyleNumber('--em-chart-grid-font-weight-title'),
+    lineHeight: getStyleNumber('--em-chart-grid-font-line-height'),
     // TODO: fix family on dedicated ticket
-    // family: getStyle('--em-chart-grid-font-font-family'),
+    family: 'Inter, sans-serif',
   },
 };
 
 export const chartjsAxisOptionsScalesGrid: Partial<GridLineOptions> = {
   color: getStyle('--em-chart-grid-line-color-light'),
-  lineWidth: getStyleNumber('--em-chart-grid-line-width-default'),
+  lineWidth: getStyleNumber('--em-chart-grid-line-width-100'),
 };
 
 export const chartjsAxisOptionsScales: Partial<ChartOptions['scales']> = {

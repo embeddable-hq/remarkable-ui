@@ -1,11 +1,11 @@
 import { stylesTokensCore } from '../../styles/styles.tokensCore.constants';
 
 export default {
-  title: 'Foundations/Colors',
+  title: 'Foundations/Size',
 };
 
-const stylesColors = Object.fromEntries(
-  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-color-')),
+const stylesSize = Object.fromEntries(
+  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-size-')),
 );
 
 export const Default = () => {
@@ -18,7 +18,7 @@ export const Default = () => {
         </tr>
       </thead>
       <tbody>
-        {Object.entries(stylesColors).map(([key, value]) => (
+        {Object.entries(stylesSize).map(([key, value]) => (
           <tr key={key}>
             <td>
               <code>{key}</code>
@@ -26,9 +26,9 @@ export const Default = () => {
             <td>
               <div
                 style={{
-                  width: '150px',
-                  height: '100px',
-                  backgroundColor: value,
+                  width: value,
+                  height: '50px',
+                  backgroundColor: stylesTokensCore['--em-core-color-gray-300'],
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',

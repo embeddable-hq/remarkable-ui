@@ -11,10 +11,10 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
       right: getStyleNumber('--em-label-padding-left-right'),
       left: getStyleNumber('--em-label-padding-left-right'),
     },
-    color: getStyle('--em-label-label-font-color-default'),
+    color: getStyle('--em-label-text-default'),
     font: {
-      size: getStyleNumber('--em-label-label-font-size'),
-      weight: getStyleNumber('--em-label-label-font-weight'),
+      size: getStyleNumber('--em-label-font-size'),
+      weight: getStyleNumber('--em-label-font-weight'),
       // TODO: fix family on dedicated ticket
       family: 'Inter, sans-serif',
     },
@@ -22,15 +22,15 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
   legend: {
     position: 'bottom',
     labels: {
-      boxWidth: getStyleNumber('--em-category-indicator-size-width'),
-      boxHeight: getStyleNumber('--em-category-indicator-size-height'),
+      boxWidth: getStyleNumber('--em-cat-indicator-size-width'),
+      boxHeight: getStyleNumber('--em-cat-indicator-size-height'),
       usePointStyle: true,
-      color: getStyle('--em-category-group-item-label-color-default'),
+      color: getStyle('--em-cat-indicator-color-default'),
       padding: getStyleNumber('--em-chart-gap-default'),
       font: {
-        size: getStyleNumber('--em-category-group-item-label-font-size'),
-        weight: getStyleNumber('--em-category-group-item-label-font-weight'),
-        lineHeight: getStyleNumber('--em-category-group-item-label-font-line-height'),
+        size: getStyleNumber('--em-cat-group-item-label-font-size'),
+        weight: getStyleNumber('--em-cat-group-item-label-font-weight'),
+        lineHeight: getStyleNumber('--em-cat-group-item-label-font-line-height'),
       },
     },
   },
@@ -42,12 +42,12 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     cornerRadius: getStyleNumber('--em-chart-tooltip-border-radius-default'),
     padding: getStyleNumber('--em-chart-tooltip-padding-default'),
     displayColors: true,
-    bodyColor: getStyle('--em-foreground-color-inverted'),
+    bodyColor: getStyle('--em-sem-text-inverted'),
     bodyAlign: 'left',
-    boxPadding: getStyleNumber('--em-category-indicator-gap-default'),
+    boxPadding: getStyleNumber('--em-cat-indicator-gap-default'),
     bodyFont: {
-      size: getStyleNumber('--em-category-group-item-label-font-size'),
-      weight: getStyleNumber('--em-category-group-item-label-font-weight'),
+      size: getStyleNumber('--em-cat-group-item-label-font-size'),
+      weight: getStyleNumber('--em-cat-group-item-label-font-weight'),
       // TODO: fix family on dedicated ticket
       family: 'Inter, sans-serif',
     },

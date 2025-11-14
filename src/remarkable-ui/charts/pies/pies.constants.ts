@@ -36,8 +36,8 @@ export const defaultDonutLabelChartOptions: Partial<ChartOptions<'pie'>> = {
             },
           ],
           color: [
-            getStyle('--em-pie-chart-donut-number-color-default'),
-            getStyle('--em-pie-chart-donut-label-color-default'),
+            getStyle('--em-pie-chart-donut-number-text-default'),
+            getStyle('--em-pie-chart-donut-label-text-default'),
           ],
         },
         // According to the last comment, a fix should be coming in the next release:

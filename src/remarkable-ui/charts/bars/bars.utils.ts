@@ -80,14 +80,14 @@ const getBarVerticalChartOptions = (
       x: {
         grid: { display: false },
         ticks: {
-          color: getStyle('--em-chart-grid-font-color-default'),
+          color: getStyle('--em-chart-grid-text-default'),
         },
         reverse: config.reverseXAxis,
       },
       y: {
         grid: { display: true },
         ticks: {
-          color: getStyle('--em-chart-grid-font-color-muted'),
+          color: getStyle('--em-chart-grid-text-muted'),
         },
         min: config.yAxisRangeMin,
         max: config.yAxisRangeMax,
@@ -134,7 +134,7 @@ const getBarHorizontalChartOptions = (
       x: {
         grid: { display: true },
         ticks: {
-          color: getStyle('--em-chart-grid-font-color-muted'),
+          color: getStyle('--em-chart-grid-text-muted'),
         },
         min: config.xAxisRangeMin,
         max: config.xAxisRangeMax,
@@ -143,7 +143,7 @@ const getBarHorizontalChartOptions = (
       y: {
         grid: { display: false },
         ticks: {
-          color: getStyle('--em-chart-grid-font-color-default'),
+          color: getStyle('--em-chart-grid-text-default'),
         },
         reverse: config.reverseYAxis,
       },

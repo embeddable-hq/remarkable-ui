@@ -1,8 +1,8 @@
 .kpiChartChangeContainer {
   display: flex;
   align-items: center;
-  gap: var(--em-chart-grid-padding-default, 0.5rem);
-  color: var(--em-chart-grid-font-color-default, #000);
+  gap: var(--em-chart-grid-padding-200, 0.5rem);
+  color: var(--em-chart-grid-text-default, #000);
 }
 
 .kpiChartChangeContainer > p {
@@ -19,26 +19,25 @@
 }
 
 .kpiChangeBadge > svg {
-  width: 1em; /* 100% of --em-kpi-trend-font-font-size */
-  height: 1em; /* 100% of --em-kpi-trend-font-font-size */
+  width: var(--em-kpi-trend-icon-size-width, 1rem);
+  height: var(--em-kpi-trend-icon-size-height, 1rem);
 }
 
 .kpiChangeBadge > p {
-  padding: 0 var(--em-kpi-trend-padding-default, 0.25rem);
-  /* TODO: implement on the font ticket */
-  /* font-family: var(--em-kpi-trend-font-font-family, Inter); */
-  font-size: 1em; /* 100% of --em-kpi-trend-font-font-size */
   font-style: normal;
-  font-weight: var(--em-kpi-trend-font-font-weight, 500);
+  padding: 0 var(--em-kpi-trend-padding-default, 0.25rem);
+  font-family: var(--em-kpi-kpi-font-family, Inter, sans-serif);
+  font-size: var(--em-kpi-trend-font-size, 1rem);
+  font-weight: var(--em-kpi-trend-font-weight, 500);
   line-height: var(--em-kpi-trend-font-line-height, 1rem);
 }
 
 .kpiChangeBadge.positive {
   background: var(--em-kpi-trend-background-color-positive, #e1f0e9);
-  color: var(--em-kpi-trend-label-color-positive, #0f955a);
+  color: var(--em-kpi-trend-label-text-positive, #0f955a);
 }
 
 .kpiChangeBadge.negative {
   background: var(--em-kpi-trend-background-color-negative, #f6e2e2);
-  color: var(--em-kpi-trend-label-color-negative, #bc1010);
+  color: var(--em-kpi-trend-label-text-negative, #bc1010);
 }

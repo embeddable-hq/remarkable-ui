@@ -25,7 +25,7 @@
 
 .buttonTextMedium {
   /* TODO: on specify font family ticket */
-  /* font-family: var(--em-primary-btn-label-font-default-font-family, Inter); */
+  font-family: var(--em-primary-btn-label-font-default-font-family, Inter, sans-serif);
   font-size: var(--em-primary-btn-label-font-default-size, 0.875rem);
   font-style: normal;
   font-weight: var(--em-primary-btn-label-font-default-weight, 700);
@@ -34,7 +34,7 @@
 
 .buttonTextSmall {
   /* TODO: on specify font family ticket */
-  /* font-family: var(--em-primary-btn-label-font-default-font-family, Inter); */
+  font-family: var(--em-primary-btn-label-font-default-font-family, Inter, sans-serif);
   font-size: var(--em-primary-btn-label-font-small-size, 0.75rem);
   font-style: normal;
   font-weight: var(--em-primary-btn-label-font-small-weight, 500);

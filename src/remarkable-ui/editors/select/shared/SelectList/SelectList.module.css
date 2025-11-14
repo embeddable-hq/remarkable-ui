@@ -5,16 +5,18 @@
   box-sizing: border-box;
   max-width: max(
     var(--radix-dropdown-menu-trigger-width),
-    var(--em-select-menu-size-width-max-width, 25rem)
+    var(--em-sl-menu-size-width-max-width, 25rem)
   );
   min-width: var(--radix-dropdown-menu-trigger-width);
-  padding: var(--em-select-menu-list-padding-default, 0.5rem);
+  padding: var(--em-sl-menu-padding-default, 0.5rem);
+  /* DENIS MISSED */
   max-height: var(--em-select-menu-list-size-max-height, 20rem);
+  /* DENIS MISSED */
   gap: var(--em-select-menu-list-gap-default, 0.5rem);
-  border-radius: var(--em-select-menu-list-border-radius-default, 0.75rem);
-  background: var(--em-background-color-neutral, #fff);
-  box-shadow: var(--em-box-shadow-default-position-x, 0)
-    var(--em-box-shadow-default-position-y, 1px) var(--em-box-shadow-default-blur, 40px)
-    var(--em-box-shadow-default-spread, 0)
-    var(--em-box-shadow-default-color, rgba(33, 33, 41, 0.25));
+  border-radius: var(--em-sl-menu-border-radius-default, 0.75rem);
+  background: var(--em-sl-menu-background-color-default, #fff);
+  box-shadow: var(--em-core-shadow-default-position-x, 0)
+    var(--em-core-shadow-default-position-y, 1px) var(--em-core-shadow-default-blur, 40px)
+    var(--em-core-shadow-default-spread, 0)
+    var(--em-core-shadow-default-color, rgba(33, 33, 41, 0.25));
 }
