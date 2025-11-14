@@ -10,9 +10,9 @@ import {
   dimensionWithDateBounds,
   genericNumber,
   measure,
-  inputColor,
   genericBoolean,
 } from '../../../component.constants';
+import ColorType from '../../../../editors/ColorEditor/Color.type.emb';
 
 export const meta = {
   name: 'HeatMapPro',
@@ -34,9 +34,32 @@ export const meta = {
     title,
     description,
     { ...genericString, name: 'displayNullAs', label: 'Display Null As' },
-    { ...inputColor, name: 'maxColor', label: 'Max Color', defaultValue: 'green', required: true },
-    { ...inputColor, name: 'midColor', label: 'Mid Color', defaultValue: 'yellow', required: true },
-    { ...inputColor, name: 'minColor', label: 'Min Color', defaultValue: 'red', required: true },
+
+    {
+      type: ColorType,
+      name: 'maxColor',
+      label: 'Max Color',
+      defaultValue: 'green',
+      required: true,
+      category: 'Component Settings',
+    },
+    {
+      type: ColorType,
+      name: 'midColor',
+      label: 'Mid Color',
+      defaultValue: 'yellow',
+      required: true,
+      category: 'Component Settings',
+    },
+    {
+      type: ColorType,
+      name: 'minColor',
+      label: 'Min Color',
+      defaultValue: 'red',
+      required: true,
+      category: 'Component Settings',
+    },
+
     {
       ...genericString,
       name: 'minThreshold',

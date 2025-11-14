@@ -13,7 +13,6 @@ import {
   showLogarithmicScale,
   showTooltips,
   showValueLabels,
-  subInputColor,
   title,
   xAxisLabel,
   yAxisLabel,
@@ -24,6 +23,7 @@ import LineChartComparisonDefaultPro from './index';
 import { loadData, OrderBy, TimeRange, Value } from '@embeddable.com/core';
 import ComparisonPeriodType from '../../../types/ComparisonPeriod.type.emb';
 import { LineChartProOptionsClickArg } from '../lines.utils';
+import ColorType from '../../../../editors/ColorEditor/Color.type.emb';
 
 export const meta = {
   name: 'LineChartComparisonDefaultPro',
@@ -37,11 +37,17 @@ export const meta = {
         ...measures.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
         {
-          ...subInputColor,
+          type: ColorType,
+          category: 'Component Settings',
           name: 'lineColor',
           label: 'Line color',
         },
-        { ...subInputColor, name: 'previousLineColor', label: 'Previous line color' },
+        {
+          type: ColorType,
+          category: 'Component Settings',
+          name: 'previousLineColor',
+          label: 'Previous line color',
+        },
         {
           ...genericBoolean,
           name: 'lineDashed',
