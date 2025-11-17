@@ -2,7 +2,7 @@ import styles from './TableBody.module.css';
 import { Typography } from '../../../../../shared/Typography/Typography';
 import { TableHeaderAlign, TableHeaderItem, TablePaginatedProps } from '../../table.types';
 import clsx from 'clsx';
-import { IconButton } from '../../../../../shared/IconButton/IconButton';
+import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
 import { useState } from 'react';
 
@@ -81,7 +81,7 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
       style={{ textAlign: header.align }}
       onMouseLeave={() => setIsPressedCopy(false)}
     >
-      <IconButton
+      <ActionIcon
         title={`Copy: ${String(value)}`}
         onMouseDown={handleCopy}
         size="small"

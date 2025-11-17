@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { GhostButton } from './GhostButton';
 import { IconBoltFilled } from '@tabler/icons-react';
-import { storybookArgTypesIcon } from '../../storybook.constants';
+import { storybookArgTypesIconNullable } from '../../storybook.constants';
 
 const meta = {
   title: 'shared/✅ GhostButton',
@@ -14,8 +14,8 @@ const meta = {
     endIcon: undefined,
   },
   argTypes: {
-    startIcon: storybookArgTypesIcon,
-    endIcon: storybookArgTypesIcon,
+    startIcon: storybookArgTypesIconNullable,
+    endIcon: storybookArgTypesIconNullable,
   },
 } satisfies Meta<typeof GhostButton>;
 

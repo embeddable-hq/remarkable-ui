@@ -6,7 +6,7 @@ import styles from './ConfirmCancelModal.module.css';
 import type { ConfirmCancelModalProps } from './ConfirmCancelModal.types';
 import { PageOverlay } from '../PageOverlay';
 import { IconX } from '@tabler/icons-react';
-import { IconButton } from '../IconButton/IconButton';
+import { ActionIcon } from '../ActionIcon/ActionIcon';
 
 export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
   title,
@@ -20,7 +20,7 @@ export const ConfirmCancelModal: React.FC<ConfirmCancelModalProps> = ({
   return (
     <PageOverlay>
       <Card className={className}>
-        <CardHeader title={title} rightContent={<IconButton icon={IconX} onClick={onCancel} />} />
+        <CardHeader title={title} rightContent={<ActionIcon icon={IconX} onClick={onCancel} />} />
         <CardContent>
           <Typography as="span">{message}</Typography>
           <div className={styles.actions}>

@@ -6,7 +6,7 @@ import { i18n, i18nSetup } from '../../../../../theme/i18n/i18n';
 import { Theme } from '../../../../../theme/theme.types';
 import {
   Dropdown,
-  IconButton,
+  ActionIcon,
   SelectList,
   SelectListOption,
 } from '../../../../../../remarkable-ui';
@@ -46,7 +46,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
     <Dropdown
       side="bottom"
       align="end"
-      triggerComponent={isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
+      triggerComponent={isLoading ? <ChartCardLoading /> : <ActionIcon icon={IconDotsVertical} />}
     >
       <SelectList className={styles.list} autoFocus>
         {options.map((option, index) => {

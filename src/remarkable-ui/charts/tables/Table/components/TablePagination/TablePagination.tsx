@@ -4,7 +4,7 @@ import {
   IconChevronsLeft,
   IconChevronsRight,
 } from '@tabler/icons-react';
-import { IconButton } from '../../../../../shared/IconButton/IconButton';
+import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import { Typography } from '../../../../../shared/Typography/Typography';
 import styles from './TablePagination.module.css';
 import { FC, useEffect } from 'react';
@@ -44,7 +44,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
     <div className={styles.tablePagination} aria-label="Table pagination controls">
       <div className={styles.tablePaginationCentral}>
         <div className={styles.tablePaginationCentralButtons}>
-          <IconButton
+          <ActionIcon
             icon={IconChevronsLeft}
             onClick={() => {
               onPageChange(0);
@@ -52,7 +52,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
             disabled={disabledPrev}
             aria-label="First page"
           />
-          <IconButton
+          <ActionIcon
             icon={IconChevronLeft}
             onClick={() => {
               onPageChange(page - 1);
@@ -63,7 +63,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
         </div>
         <Typography>{paginationLabel ?? `Page ${page + 1} of ${totalPages ?? '?'}`}</Typography>
         <div className={styles.tablePaginationCentralButtons}>
-          <IconButton
+          <ActionIcon
             icon={IconChevronRight}
             onClick={() => {
               onPageChange(page + 1);
@@ -71,7 +71,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
             disabled={disabledNext}
             aria-label="Next page"
           />
-          <IconButton
+          <ActionIcon
             icon={IconChevronsRight}
             onClick={() => totalPages && onPageChange(totalPages - 1)}
             disabled={disabledNext}
