@@ -39,7 +39,7 @@ export const WithEndIcon: Story = {
   },
 };
 
-export const WithBothIcons: Story = {
+export const WithStartEndIcon: Story = {
   args: {
     children: 'Ghost Button Start End Icon',
     startIcon: IconBoltFilled,

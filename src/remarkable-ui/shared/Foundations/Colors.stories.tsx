@@ -1,40 +1,43 @@
+import { storybookStyleLabel } from '../../storybook.constants';
 import { stylesTokensCore } from '../../styles/styles.tokensCore.constants';
 
 export default {
-  title: 'Foundations/Colors',
+  title: 'Foundations/✅ Colors',
 };
 
 const stylesColors = Object.fromEntries(
-  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--TEMP-core-color-')),
+  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-color-')),
 );
+
+const style = {
+  width: '200px',
+  height: '50px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 export const Default = () => {
   return (
-    <table>
+    <table className="storybook-table">
       <thead>
         <tr>
-          <th>Token</th>
-          <th>Value</th>
+          <th>Variable Name</th>
+          <th>Value/Preview</th>
         </tr>
       </thead>
       <tbody>
         {Object.entries(stylesColors).map(([key, value]) => (
           <tr key={key}>
-            <td>
-              <code>{key}</code>
-            </td>
+            <td>{key}</td>
             <td>
               <div
                 style={{
-                  width: '150px',
-                  height: '100px',
+                  ...style,
                   backgroundColor: value,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
                 }}
               >
-                {value}
+                <div style={storybookStyleLabel}>{value}</div>
               </div>
             </td>
           </tr>
