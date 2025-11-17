@@ -51,7 +51,6 @@
     }
 
     &:disabled {
-      color: var(--em-buttonicon-color--disabled, #b8b8bd);
       background: var(--em-buttonicon-background--secondary--disabled, #ededf1);
     }
   }
