@@ -1,15 +1,15 @@
 /* TODO: REVIEW ALL CSS VARIABLE WITH DENIS AND COMPLETE THE MISSING ONES */
 
 .tableContainer {
-  background: var(--em-table-background-color-default-header, #fff);
+  background: var(--TEMP-table-background-color-default-header, #fff);
   display: flex;
   flex-direction: column;
   width: 100%;
   max-height: 100%;
 
-  border: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
-  border-radius: var(--em-table-border-radius-default, 0.75rem);
+  border: var(--TEMP-table-border-width-default, 1px) solid
+    var(--TEMP-table-border-color-default, #ededf1);
+  border-radius: var(--TEMP-table-border-radius-default, 0.75rem);
   overflow-x: auto;
   overflow-y: auto;
   position: relative;
@@ -19,7 +19,7 @@
 .table {
   width: 100%;
   border-spacing: 0;
-  background: var(--em-table-background-color-default-header, #fff);
+  background: var(--TEMP-table-background-color-default-header, #fff);
   box-sizing: content-box;
 }
 
@@ -37,8 +37,8 @@
 
   th,
   td {
-    border-top: var(--em-table-border-width-default, 1px) solid
-      var(--em-table-border-color-default, #ededf1);
+    border-top: var(--TEMP-table-border-width-default, 1px) solid
+      var(--TEMP-table-border-color-default, #ededf1);
     border-bottom: unset;
     font-weight: bold;
   }
@@ -78,14 +78,14 @@
 .cell {
   box-sizing: border-box;
   cursor: pointer;
-  height: var(--em-table-size-cell-height_R, 2.5rem);
-  max-height: var(--em-table-size-cell-height_R, 2.5rem);
-  padding: var(--em-table-padding-medium_R, 0.5rem);
-  border-bottom: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
-  border-right: var(--em-table-border-width-default, 1px) solid
-    var(--em-table-border-color-default, #ededf1);
-  background: var(--em-table-background-color-default-header, #fff);
+  height: var(--TEMP-table-size-cell-height_R, 2.5rem);
+  max-height: var(--TEMP-table-size-cell-height_R, 2.5rem);
+  padding: var(--TEMP-table-padding-medium_R, 0.5rem);
+  border-bottom: var(--TEMP-table-border-width-default, 1px) solid
+    var(--TEMP-table-border-color-default, #ededf1);
+  border-right: var(--TEMP-table-border-width-default, 1px) solid
+    var(--TEMP-table-border-color-default, #ededf1);
+  background: var(--TEMP-table-background-color-default-header, #fff);
   width: 100px;
   max-width: 100px;
   min-width: 100px;
@@ -94,20 +94,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-family: var(--em-table-font-family, Inter, sans-serif);
-    font-size: var(--em-table-font-size, 0.75rem);
-    font-weight: var(--em-table-font-font-weight-regular, 400);
+    font-family: var(--TEMP-table-font-family, Inter, sans-serif);
+    font-size: var(--TEMP-table-font-size, 0.75rem);
+    font-weight: var(--TEMP-table-font-font-weight-regular, 400);
     font-style: normal;
-    line-height: var(--em-table-font-line-height, 0.875rem);
-    color: var(--em-table-text-default, #212129);
+    line-height: var(--TEMP-table-font-line-height, 0.875rem);
+    color: var(--TEMP-table-text-default, #212129);
   }
 }
 
 .cell.header p {
-  color: var(--em-table-text-default, #212129);
-  font-weight: var(--em-table-font-font-weight-medium, 500);
+  color: var(--TEMP-table-text-default, #212129);
+  font-weight: var(--TEMP-table-font-font-weight-medium, 500);
 }
 
 .cell.bold p {
-  font-weight: var(--em-table-font-font-weight-medium, 700);
+  font-weight: var(--TEMP-table-font-font-weight-medium, 700);
 }

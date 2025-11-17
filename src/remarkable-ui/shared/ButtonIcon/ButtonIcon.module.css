@@ -1,18 +1,18 @@
 .icon {
-  width: var(--em-icon-btn-icon-size-width, 1rem);
-  height: var(--em-icon-btn-icon-size-height, 1rem);
+  width: var(--TEMP-icon-btn-icon-size-width, 1rem);
+  height: var(--TEMP-icon-btn-icon-size-height, 1rem);
 }
 
 .iconPrimary {
-  color: var(--em-primary-btn-icon-color-default, #ffffff);
+  color: var(--TEMP-primary-btn-icon-color-default, #ffffff);
 }
 .iconSecondary {
-  color: var(--em-secondary-btn-icon-color-default, #212129);
+  color: var(--TEMP-secondary-btn-icon-color-default, #212129);
 }
 .buttonIcon {
-  height: var(--em-primary-btn-size-default-height, 2.5rem);
-  padding: var(--em-primary-btn-padding-default-top, 0.75rem)
-    var(--em-primary-btn-padding-default-right, 0.75rem)
-    var(--em-primary-btn-padding-default-bottom, 0.75rem)
-    var(--em-primary-btn-padding-default-left, 0.75rem);
+  height: var(--TEMP-primary-btn-size-default-height, 2.5rem);
+  padding: var(--TEMP-primary-btn-padding-default-top, 0.75rem)
+    var(--TEMP-primary-btn-padding-default-right, 0.75rem)
+    var(--TEMP-primary-btn-padding-default-bottom, 0.75rem)
+    var(--TEMP-primary-btn-padding-default-left, 0.75rem);
 }

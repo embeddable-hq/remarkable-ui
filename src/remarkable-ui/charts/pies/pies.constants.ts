@@ -23,21 +23,21 @@ export const defaultDonutLabelChartOptions: Partial<ChartOptions<'pie'>> = {
           type: 'doughnutLabel',
           font: [
             {
-              size: getStyleNumber('--em-pie-chart-donut-number-font-size'),
-              weight: getStyleNumber('--em-pie-chart-donut-number-font-weight'),
-              height: getStyleNumber('--em-pie-chart-donut-number-font-line-height'),
+              size: getStyleNumber('--TEMP-pie-chart-donut-number-font-size'),
+              weight: getStyleNumber('--TEMP-pie-chart-donut-number-font-weight'),
+              height: getStyleNumber('--TEMP-pie-chart-donut-number-font-line-height'),
               family: 'Inter, sans-serif',
             },
             {
-              size: getStyleNumber('--em-pie-chart-donut-label-font-size'),
-              weight: getStyleNumber('--em-pie-chart-donut-label-font-weight'),
-              height: getStyleNumber('--em-pie-chart-donut-label-font-line-height'),
+              size: getStyleNumber('--TEMP-pie-chart-donut-label-font-size'),
+              weight: getStyleNumber('--TEMP-pie-chart-donut-label-font-weight'),
+              height: getStyleNumber('--TEMP-pie-chart-donut-label-font-line-height'),
               family: 'Inter, sans-serif',
             },
           ],
           color: [
-            getStyle('--em-pie-chart-donut-number-text-default'),
-            getStyle('--em-pie-chart-donut-label-text-default'),
+            getStyle('--TEMP-pie-chart-donut-number-text-default'),
+            getStyle('--TEMP-pie-chart-donut-label-text-default'),
           ],
         },
         // According to the last comment, a fix should be coming in the next release:

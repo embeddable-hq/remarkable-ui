@@ -13,46 +13,46 @@
 }
 
 .primary {
-  background: var(--em-primary-btn-background-color-default, #5c5c66);
-  color: var(--em-primary-btn-label-color-default, #fff);
-  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
+  background: var(--TEMP-primary-btn-background-color-default, #5c5c66);
+  color: var(--TEMP-primary-btn-label-color-default, #fff);
+  border-radius: var(--TEMP-primary-btn-border-radius-default, 624.9375rem);
 }
 
 .primary:hover,
 .primary:focus {
-  background: var(--em-primary-btn-background-color-hover, #212129);
+  background: var(--TEMP-primary-btn-background-color-hover, #212129);
 }
 
 .primary:active {
-  background: var(--em-primary-btn-background-color-pressed, #000);
+  background: var(--TEMP-primary-btn-background-color-pressed, #000);
 }
 
 .primary:disabled {
-  background: var(--em-primary-btn-background-color-disabled, #ededf1);
-  color: var(--em-primary-btn-label-color-disabled, #b8b8bd);
+  background: var(--TEMP-primary-btn-background-color-disabled, #ededf1);
+  color: var(--TEMP-primary-btn-label-color-disabled, #b8b8bd);
 }
 .secondary {
-  background: var(--em-secondary-btn-background-color-default, #ededf1);
-  color: var(--em-secondary-btn-label-color-default, #212129);
-  border-radius: var(--em-primary-btn-border-radius-default, 624.9375rem);
+  background: var(--TEMP-secondary-btn-background-color-default, #ededf1);
+  color: var(--TEMP-secondary-btn-label-color-default, #212129);
+  border-radius: var(--TEMP-primary-btn-border-radius-default, 624.9375rem);
 }
 
 .secondary:hover,
 .secondary:focus {
-  background: var(--em-secondary-btn-background-color-hover, #e4e4ea);
+  background: var(--TEMP-secondary-btn-background-color-hover, #e4e4ea);
 }
 
 .secondary:active {
-  background: var(--em-secondary-btn-background-color-pressed, #d2d2d5);
+  background: var(--TEMP-secondary-btn-background-color-pressed, #d2d2d5);
 }
 
 .secondary:disabled {
-  background: var(--em-secondary-btn-background-color-disabled, #ededf1);
-  color: var(--em-secondary-btn-label-color-disabled, #b8b8bd);
+  background: var(--TEMP-secondary-btn-background-color-disabled, #ededf1);
+  color: var(--TEMP-secondary-btn-label-color-disabled, #b8b8bd);
 }
 
 /* Common icon styles */
 .icon {
-  width: var(--em-primary-btn-icon-size-width, 1rem);
-  height: var(--em-primary-btn-icon-size-height, 1rem);
+  width: var(--TEMP-primary-btn-icon-size-width, 1rem);
+  height: var(--TEMP-primary-btn-icon-size-height, 1rem);
 }

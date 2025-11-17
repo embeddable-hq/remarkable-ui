@@ -1,4 +1,4 @@
 .typography {
-  font-family: var(--em-font-default, 'Inter', sans-serif);
+  font-family: var(--TEMP-font-default, 'Inter', sans-serif);
   margin: unset;
 }

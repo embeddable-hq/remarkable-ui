@@ -49,7 +49,7 @@ export const getLineChartGroupedProData = (
       rawLabel: groupByItem,
       backgroundColor: setColorAlpha(
         backgroundColor,
-        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
+        getStyleNumber('--TEMP-line-chart-line-fill-opacity') as number,
       ),
       pointBackgroundColor: backgroundColor,
       fill: measure.inputs?.['fillUnderLine'],

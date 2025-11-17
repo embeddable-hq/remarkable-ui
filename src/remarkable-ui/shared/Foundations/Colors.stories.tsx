@@ -5,7 +5,7 @@ export default {
 };
 
 const stylesColors = Object.fromEntries(
-  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-color-')),
+  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--TEMP-core-color-')),
 );
 
 export const Default = () => {

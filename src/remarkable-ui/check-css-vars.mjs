@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // scripts/check-css-vars.mjs
-// Checks **/*.module.css for var(--em-*) usage against a TS export (flat or nested).
+// Checks **/*.module.css for var(--TEMP-*) usage against a TS export (flat or nested).
 // Reports missing vars as compact, clickable links that jump to line/column
 // (VS Code/JetBrains aware; OSC 8 hyperlinks for clean console output).
 
@@ -61,8 +61,8 @@ if (!files.length) {
   cleanupAndExit(0);
 }
 
-// only check vars that start with --em-
-const varUseRe = /var\(\s*(--em-[A-Za-z0-9_-]+)\s*(?:,[^)]+)?\)/g;
+// only check vars that start with --TEMP-
+const varUseRe = /var\(\s*(--TEMP-[A-Za-z0-9_-]+)\s*(?:,[^)]+)?\)/g;
 // report: filePath -> Array<{var: string, line: number, col: number}>
 const report = new Map();
 
@@ -89,7 +89,7 @@ for (const abs of files) {
 
 // ---------- output ----------
 if (!report.size) {
-  console.log('✅ All --em-* CSS variables are defined in your TS variable list.');
+  console.log('✅ All --TEMP-* CSS variables are defined in your TS variable list.');
   cleanupAndExit(0);
 }
 

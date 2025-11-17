@@ -1,7 +1,7 @@
 .error svg,
 .error h2,
 .error p {
-  color: var(--em-card-error-text-default, #bc1010);
+  color: var(--TEMP-card-error-text-default, #bc1010);
 }
 
 .card {

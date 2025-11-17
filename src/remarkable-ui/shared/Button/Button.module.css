@@ -1,42 +1,42 @@
 .icon {
-  width: var(--em-primary-btn-icon-size-width, 1rem);
-  height: var(--em-primary-btn-icon-size-height, 1rem);
+  width: var(--TEMP-primary-btn-icon-size-width, 1rem);
+  height: var(--TEMP-primary-btn-icon-size-height, 1rem);
 }
 
 .buttonMedium {
-  height: var(--em-primary-btn-size-default-height, 2.5rem);
-  padding: var(--em-primary-btn-padding-default-top, 0.75rem)
-    var(--em-primary-btn-padding-default-right, 0.75rem)
-    var(--em-primary-btn-padding-default-bottom, 0.75rem)
-    var(--em-primary-btn-padding-default-left, 0.75rem);
+  height: var(--TEMP-primary-btn-size-default-height, 2.5rem);
+  padding: var(--TEMP-primary-btn-padding-default-top, 0.75rem)
+    var(--TEMP-primary-btn-padding-default-right, 0.75rem)
+    var(--TEMP-primary-btn-padding-default-bottom, 0.75rem)
+    var(--TEMP-primary-btn-padding-default-left, 0.75rem);
 }
 
 .buttonSmall {
-  height: var(--em-primary-btn-size-small-height, 2rem);
-  padding: var(--em-primary-btn-padding-small-top, 0.375rem)
-    var(--em-primary-btn-padding-small-right, 0.375rem)
-    var(--em-primary-btn-padding-small-bottom, 0.375rem)
-    var(--em-primary-btn-padding-small-left, 0.375rem);
+  height: var(--TEMP-primary-btn-size-small-height, 2rem);
+  padding: var(--TEMP-primary-btn-padding-small-top, 0.375rem)
+    var(--TEMP-primary-btn-padding-small-right, 0.375rem)
+    var(--TEMP-primary-btn-padding-small-bottom, 0.375rem)
+    var(--TEMP-primary-btn-padding-small-left, 0.375rem);
 }
 
 .buttonText {
-  padding: 0 var(--em-primary-btn-label-padding-default, 0.5rem);
+  padding: 0 var(--TEMP-primary-btn-label-padding-default, 0.5rem);
 }
 
 .buttonTextMedium {
   /* TODO: on specify font family ticket */
-  /* font-family: var(--em-primary-btn-label-font-default-font-family, Inter); */
-  font-size: var(--em-primary-btn-label-font-default-size, 0.875rem);
+  /* font-family: var(--TEMP-primary-btn-label-font-default-font-family, Inter); */
+  font-size: var(--TEMP-primary-btn-label-font-default-size, 0.875rem);
   font-style: normal;
-  font-weight: var(--em-primary-btn-label-font-default-weight, 700);
-  line-height: var(--em-primary-btn-label-font-default-line-height, 1rem); /* 114.286% */
+  font-weight: var(--TEMP-primary-btn-label-font-default-weight, 700);
+  line-height: var(--TEMP-primary-btn-label-font-default-line-height, 1rem); /* 114.286% */
 }
 
 .buttonTextSmall {
   /* TODO: on specify font family ticket */
-  /* font-family: var(--em-primary-btn-label-font-default-font-family, Inter); */
-  font-size: var(--em-primary-btn-label-font-small-size, 0.75rem);
+  /* font-family: var(--TEMP-primary-btn-label-font-default-font-family, Inter); */
+  font-size: var(--TEMP-primary-btn-label-font-small-size, 0.75rem);
   font-style: normal;
-  font-weight: var(--em-primary-btn-label-font-small-weight, 500);
-  line-height: var(--em-primary-btn-label-font-small-line-height, 0.875rem);
+  font-weight: var(--TEMP-primary-btn-label-font-small-weight, 500);
+  line-height: var(--TEMP-primary-btn-label-font-small-line-height, 0.875rem);
 }

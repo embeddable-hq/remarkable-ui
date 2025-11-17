@@ -5,7 +5,7 @@ export default {
 };
 
 const stylesBorderRadius = Object.fromEntries(
-  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-border-radius-')),
+  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--TEMP-core-border-radius-')),
 );
 
 export const Default = () => {
@@ -29,7 +29,7 @@ export const Default = () => {
                   width: '150px',
                   height: '100px',
                   borderRadius: value,
-                  backgroundColor: stylesTokensCore['--em-core-color-gray-300'],
+                  backgroundColor: stylesTokensCore['--TEMP-core-color-gray-300'],
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',

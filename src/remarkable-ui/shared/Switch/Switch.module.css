@@ -16,35 +16,35 @@
     display: inline-flex;
     justify-content: flex-end;
     align-items: center;
-    width: var(--em-switch-size-width, 2rem);
-    height: var(--em-switch-size-height, 1rem);
-    border-radius: var(--em-border-radius-500, 624.9375rem);
-    background: var(--em-switch-background-color-off, #e4e4ea);
+    width: var(--TEMP-switch-size-width, 2rem);
+    height: var(--TEMP-switch-size-height, 1rem);
+    border-radius: var(--TEMP-border-radius-500, 624.9375rem);
+    background: var(--TEMP-switch-background-color-off, #e4e4ea);
     transition: all 0.2s ease-in-out;
     vertical-align: middle;
 
     .switchThumb {
       position: absolute;
       top: 50%;
-      left: var(--em-switch-thumb-padding, 0.125rem);
+      left: var(--TEMP-switch-thumb-padding, 0.125rem);
       transform: translateY(-50%);
-      background: var(--em-switch-thumb-background-color, #ffffff);
+      background: var(--TEMP-switch-thumb-background-color, #ffffff);
       border-radius: 50%;
       transition: all 0.2s ease-in-out;
-      box-shadow: var(--em-switch-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
-      width: var(--em-switch-slider-size-width, 0.75rem);
-      height: var(--em-switch-slider-size-height, 0.75rem);
+      box-shadow: var(--TEMP-switch-thumb-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+      width: var(--TEMP-switch-slider-size-width, 0.75rem);
+      height: var(--TEMP-switch-slider-size-height, 0.75rem);
     }
   }
 
   /* Checked state */
   &.checked {
     .switchTrack {
-      background: var(--em-switch-background-color-on, #212129);
+      background: var(--TEMP-switch-background-color-on, #212129);
     }
 
     .switchThumb {
-      left: calc(100% - var(--em-switch-padding, 0.125rem));
+      left: calc(100% - var(--TEMP-switch-padding, 0.125rem));
       transform: translate(-100%, -50%);
     }
   }
@@ -54,32 +54,32 @@
     cursor: not-allowed;
 
     .switchTrack {
-      background: var(--em-switch-track-background-color-disabled, #f5f5f6);
+      background: var(--TEMP-switch-track-background-color-disabled, #f5f5f6);
       cursor: not-allowed;
     }
 
     .switchThumb {
-      background: var(--em-switch-thumb-background-color-disabled, #d2d2d5);
+      background: var(--TEMP-switch-thumb-background-color-disabled, #d2d2d5);
       box-shadow: none;
     }
 
     .labelText {
-      color: var(--em-switch-label-color-disabled, #b8b8bd);
+      color: var(--TEMP-switch-label-color-disabled, #b8b8bd);
       cursor: not-allowed;
     }
   }
 
   .labelText {
     /* TODO: To enable once we have a font family */
-    /* font-family: var(--em-form-section-font-font-family, Inter); */
-    color: var(--em-form-section-font-font-color, #212129);
-    font-size: var(--em-form-form-font-font-size-title, 0.875rem);
+    /* font-family: var(--TEMP-form-section-font-font-family, Inter); */
+    color: var(--TEMP-form-section-font-font-color, #212129);
+    font-size: var(--TEMP-form-form-font-font-size-title, 0.875rem);
     font-style: normal;
-    font-weight: var(--em-form-form-font-font-weight, 400);
-    line-height: var(--em-form-form-font-line-height, 1rem);
+    font-weight: var(--TEMP-form-form-font-font-weight, 400);
+    line-height: var(--TEMP-form-form-font-line-height, 1rem);
     display: inline-block;
     vertical-align: middle;
-    margin-left: var(--em-form-padding-small, 0.5rem);
+    margin-left: var(--TEMP-form-padding-small, 0.5rem);
   }
 }
 

@@ -65,13 +65,13 @@ export const getLineChartProData = (
         data: values,
         backgroundColor: setColorAlpha(
           backgroundColor,
-          getStyleNumber('--em-line-chart-line-fill-opacity') as number,
+          getStyleNumber('--TEMP-line-chart-line-fill-opacity') as number,
         ),
         pointBackgroundColor: backgroundColor,
         borderDash: measure.inputs?.['dashedLine']
           ? [
-              getStyleNumber('--em-line-chart-line-dash-length'),
-              getStyleNumber('--em-line-chart-line-gap-length'),
+              getStyleNumber('--TEMP-line-chart-line-dash-length'),
+              getStyleNumber('--TEMP-line-chart-line-gap-length'),
             ]
           : undefined,
         borderColor,

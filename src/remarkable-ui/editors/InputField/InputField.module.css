@@ -3,28 +3,28 @@
   align-items: center;
   box-sizing: border-box;
 
-  height: var(--em-text-input-size-height, 2rem);
+  height: var(--TEMP-text-input-size-height, 2rem);
   width: 100%;
-  padding: var(--em-text-input-padding-default, 0.5rem);
-  border-radius: var(--em-text-input-border-radius-default, 0.5rem);
-  border: var(--em-text-input-border-width-default, 1px) solid
-    var(--em-text-input-border-color-default, #d2d2d5);
-  background: var(--em-text-input-background-color-default, #f7f7f8);
-  color: var(--em-text-input-label-color-filled, #212129);
+  padding: var(--TEMP-text-input-padding-default, 0.5rem);
+  border-radius: var(--TEMP-text-input-border-radius-default, 0.5rem);
+  border: var(--TEMP-text-input-border-width-default, 1px) solid
+    var(--TEMP-text-input-border-color-default, #d2d2d5);
+  background: var(--TEMP-text-input-background-color-default, #f7f7f8);
+  color: var(--TEMP-text-input-label-color-filled, #212129);
 }
 
 .input:hover {
-  background: var(--em-text-input-background-color-hover, #e4e4ea);
-  color: var(--em-text-input-label-color-hover, #5c5c66);
+  background: var(--TEMP-text-input-background-color-hover, #e4e4ea);
+  color: var(--TEMP-text-input-label-color-hover, #5c5c66);
 }
 .input:focus-within {
-  background: var(--em-text-input-background-color-hover, #e4e4ea);
-  color: var(--em-text-input-label-color-focused, #212129);
+  background: var(--TEMP-text-input-background-color-hover, #e4e4ea);
+  color: var(--TEMP-text-input-label-color-focused, #212129);
 }
 
 .input svg {
-  width: var(--em-select-menu-icon-size-width, 1rem);
-  height: var(--em-select-menu-icon-size-height, 1rem);
+  width: var(--TEMP-select-menu-icon-size-width, 1rem);
+  height: var(--TEMP-select-menu-icon-size-height, 1rem);
 }
 
 .input input {
@@ -37,31 +37,31 @@
   color: inherit;
   width: 100%;
 
-  padding: 0 var(--em-text-input-padding-default, 0.5rem);
-  /* font-family: var(--em-text-input-label-font-font-family, Inter); */
-  font-size: var(--em-text-input-label-font-size, 0.75rem);
+  padding: 0 var(--TEMP-text-input-padding-default, 0.5rem);
+  /* font-family: var(--TEMP-text-input-label-font-font-family, Inter); */
+  font-size: var(--TEMP-text-input-label-font-size, 0.75rem);
   font-style: normal;
-  font-weight: var(--em-text-input-label-font-weight, 500);
-  line-height: var(--em-text-input-label-font-line-height, 0.875rem); /* 116.667% */
+  font-weight: var(--TEMP-text-input-label-font-weight, 500);
+  line-height: var(--TEMP-text-input-label-font-line-height, 0.875rem); /* 116.667% */
 }
 
 .input input:focus {
-  color: var(--em-text-input-label-color-focused, #212129);
+  color: var(--TEMP-text-input-label-color-focused, #212129);
 }
 
 .input:has(input:disabled) {
-  color: var(--em-text-input-label-color-disabled, #b8b8bd);
-  border: var(--em-text-input-border-width-default, 1px) solid
-    var(--em-text-input-border-color-default, #d2d2d5);
-  background: var(--em-text-input-background-color-disabled, #fff);
+  color: var(--TEMP-text-input-label-color-disabled, #b8b8bd);
+  border: var(--TEMP-text-input-border-width-default, 1px) solid
+    var(--TEMP-text-input-border-color-default, #d2d2d5);
+  background: var(--TEMP-text-input-background-color-disabled, #fff);
 }
 
 .input input::placeholder {
-  color: var(--em-text-input-label-color-default, #5c5c66);
+  color: var(--TEMP-text-input-label-color-default, #5c5c66);
 }
 
 .input input:disabled::placeholder {
-  color: var(--em-text-input-label-color-disabled, #b8b8bd);
+  color: var(--TEMP-text-input-label-color-disabled, #b8b8bd);
 }
 
 .input div {
@@ -75,21 +75,21 @@
 .inputContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--em-form-padding-small, 0.5rem);
+  gap: var(--TEMP-form-padding-small, 0.5rem);
 }
 
 .requiredText {
-  padding-bottom: var(--em-form-padding-small, 0.5rem);
+  padding-bottom: var(--TEMP-form-padding-small, 0.5rem);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  font-size: var(--em-form-form-font-font-size-required, 0.75rem);
-  font-weight: var(--em-form-form-font-font-weight, 400);
-  line-height: var(--em-form-form-font-line-height, 1rem);
-  color: var(--em-form-section-font-font-color, #212129);
+  font-size: var(--TEMP-form-form-font-font-size-required, 0.75rem);
+  font-weight: var(--TEMP-form-form-font-font-weight, 400);
+  line-height: var(--TEMP-form-form-font-line-height, 1rem);
+  color: var(--TEMP-form-section-font-font-color, #212129);
 }
 
 .inputError {
-  border: var(--em-text-input-border-width-error, 2px) solid
-    var(--em-text-input-border-color-error, #bc1010);
+  border: var(--TEMP-text-input-border-width-error, 2px) solid
+    var(--TEMP-text-input-border-color-error, #bc1010);
 }

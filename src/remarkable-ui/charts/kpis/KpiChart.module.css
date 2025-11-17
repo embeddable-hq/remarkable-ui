@@ -15,11 +15,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  color: var(--em-kpi-kpi-font-font-color, #212129);
+  color: var(--TEMP-kpi-kpi-font-font-color, #212129);
   /* TODO: implement on the font ticket */
-  /* font-family: var(--em-kpi-kpi-font-font-family, Inter); */
+  /* font-family: var(--TEMP-kpi-kpi-font-font-family, Inter); */
   font-style: normal;
-  font-weight: var(--em-kpi-kpi-font-font-weight, 700);
+  font-weight: var(--TEMP-kpi-kpi-font-font-weight, 700);
   line-height: normal;
 }
 
@@ -29,19 +29,19 @@
   display: flex;
   flex-direction: column;
 
-  padding: var(--em-chart-grid-padding-lg, 1rem) 0 0 0;
-  gap: var(--em-chart-grid-padding-default, 0.5rem);
-  font-size: var(--em-kpi-trend-font-font-size, 1rem);
+  padding: var(--TEMP-chart-grid-padding-lg, 1rem) 0 0 0;
+  gap: var(--TEMP-chart-grid-padding-default, 0.5rem);
+  font-size: var(--TEMP-kpi-trend-font-font-size, 1rem);
 }
 
 .kpiComparisonContainer > p {
   text-align: center;
   /* TODO: implement on the font ticket */
-  /* font-family: var(--em-kpi-trend-font-font-family, Inter); */
-  color: var(--em-chart-grid-text-default, #000);
-  font-size: 0.875em; /* 87.5% of --em-kpi-trend-font-font-size */
+  /* font-family: var(--TEMP-kpi-trend-font-font-family, Inter); */
+  color: var(--TEMP-chart-grid-text-default, #000);
+  font-size: 0.875em; /* 87.5% of --TEMP-kpi-trend-font-font-size */
   font-style: normal;
-  font-weight: var(--em-kpi-trend-font-font-weight, 500);
+  font-weight: var(--TEMP-kpi-trend-font-font-weight, 500);
 }
 
 .kpiChangeHidden {

@@ -1,11 +1,11 @@
 .listItem {
   box-sizing: border-box;
-  height: var(--em-sl-item-size-height, 2rem);
-  max-height: var(--em-sl-item-size-height, 2rem);
-  padding: var(--em-sl-item-padding-default, 0.5rem);
-  border-radius: var(--em-sl-item-border-radius-default, 0.5rem);
-  background: var(--em-sl-item-background-color-default, #fff);
-  color: var(--em-sl-item-left-label-text-default, #212129);
+  height: var(--TEMP-sl-item-size-height, 2rem);
+  max-height: var(--TEMP-sl-item-size-height, 2rem);
+  padding: var(--TEMP-sl-item-padding-default, 0.5rem);
+  border-radius: var(--TEMP-sl-item-border-radius-default, 0.5rem);
+  background: var(--TEMP-sl-item-background-color-default, #fff);
+  color: var(--TEMP-sl-item-left-label-text-default, #212129);
   font-style: normal;
   display: flex;
   outline: none;
@@ -20,14 +20,14 @@
   display: flex;
   flex: 0 0 auto;
   white-space: nowrap;
-  color: var(--em-select-list-item-left-label-color-default, #212129);
+  color: var(--TEMP-select-list-item-left-label-color-default, #212129);
   align-items: center;
 }
 
 .listItem .rightContent {
   flex: 1 1 auto;
   min-width: 0;
-  color: var(--em-select-list-item-right-label-color-default, #5c5c66);
+  color: var(--TEMP-select-list-item-right-label-color-default, #5c5c66);
 }
 
 .listItem .leftContent p,
@@ -45,41 +45,41 @@
 
 .listItem:hover,
 .listItem:focus {
-  background: var(--em-sl-item-background-color-hover, #f7f7f8);
+  background: var(--TEMP-sl-item-background-color-hover, #f7f7f8);
 }
 
 .listItem:active {
-  background: var(--em-sl-item-background-color-hover, #ededf1);
+  background: var(--TEMP-sl-item-background-color-hover, #ededf1);
 }
 
 .listItem.disabled {
-  color: var(--em-sl-item-left-label-text-disabled, #b8b8bd);
+  color: var(--TEMP-sl-item-left-label-text-disabled, #b8b8bd);
   pointer-events: none;
   user-select: none;
 }
 
 .listItem .leftContent p {
-  padding: 0 var(--em-sl-item-label-padding-default, 0.5rem);
-  font-size: var(--em-sl-item-left-label-font-size, 0.75rem);
-  font-weight: var(--em-sl-item-left-label-font-weight, 500);
-  line-height: var(--em-sl-item-left-label-font-line-height, 0.875rem);
-  font-family: var(--em-sl-item-left-label-font-family, 'Inter');
+  padding: 0 var(--TEMP-sl-item-label-padding-default, 0.5rem);
+  font-size: var(--TEMP-sl-item-left-label-font-size, 0.75rem);
+  font-weight: var(--TEMP-sl-item-left-label-font-weight, 500);
+  line-height: var(--TEMP-sl-item-left-label-font-line-height, 0.875rem);
+  font-family: var(--TEMP-sl-item-left-label-font-family, 'Inter');
 }
 
 .listItem .rightContent p {
-  color: var(--em-sl-item-right-label-text-default, #5c5c66);
-  padding: 0 var(--em-sl-item-label-padding-default, 0.5rem);
-  font-size: var(--em-sl-item-right-label-font-size, 0.75rem);
-  font-weight: var(--em-sl-item-right-label-font-weight, 400);
-  line-height: var(--em-sl-item-right-label-font-line-height, 0.875rem);
-  font-family: var(--em-sl-item-right-label-font-family, 'Inter');
+  color: var(--TEMP-sl-item-right-label-text-default, #5c5c66);
+  padding: 0 var(--TEMP-sl-item-label-padding-default, 0.5rem);
+  font-size: var(--TEMP-sl-item-right-label-font-size, 0.75rem);
+  font-weight: var(--TEMP-sl-item-right-label-font-weight, 400);
+  line-height: var(--TEMP-sl-item-right-label-font-line-height, 0.875rem);
+  font-family: var(--TEMP-sl-item-right-label-font-family, 'Inter');
 }
 
 .listItem.selected {
-  background: var(--em-select-list-item-background-color-selected, #212129);
-  color: var(--em-select-list-item-left-label-color-selected, #fff);
+  background: var(--TEMP-select-list-item-background-color-selected, #212129);
+  color: var(--TEMP-select-list-item-left-label-color-selected, #fff);
   span {
-    color: var(--em-select-list-item-left-label-color-selected, #fff);
+    color: var(--TEMP-select-list-item-left-label-color-selected, #fff);
   }
 }
 
@@ -90,7 +90,7 @@
 
 .listItem svg,
 .listItem img {
-  width: var(--em-sl-item-icon-size-width, 1rem);
-  height: var(--em-sl-item-icon-size-height, 1rem);
+  width: var(--TEMP-sl-item-icon-size-width, 1rem);
+  height: var(--TEMP-sl-item-icon-size-height, 1rem);
   color: inherit;
 }

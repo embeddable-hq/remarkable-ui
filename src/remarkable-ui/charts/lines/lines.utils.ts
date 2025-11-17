@@ -35,12 +35,12 @@ export const getLineChartOptions = (
     },
     elements: {
       point: {
-        radius: getStyleNumber('--em-line-chart-point-size-default')! / 2,
-        hoverRadius: getStyleNumber('--em-line-chart-point-size-hover')! / 2,
+        radius: getStyleNumber('--TEMP-line-chart-point-size-default')! / 2,
+        hoverRadius: getStyleNumber('--TEMP-line-chart-point-size-hover')! / 2,
       },
       line: {
-        tension: getStyleNumber('--em-line-chart-line-tension'),
-        borderWidth: getStyleNumber('--em-line-chart-border-width-default'),
+        tension: getStyleNumber('--TEMP-line-chart-line-tension'),
+        borderWidth: getStyleNumber('--TEMP-line-chart-border-width-default'),
       },
     },
     layout: {

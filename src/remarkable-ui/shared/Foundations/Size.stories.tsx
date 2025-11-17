@@ -5,7 +5,7 @@ export default {
 };
 
 const stylesSize = Object.fromEntries(
-  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--em-core-size-')),
+  Object.entries(stylesTokensCore).filter(([k]) => k.startsWith('--TEMP-core-size-')),
 );
 
 export const Default = () => {
@@ -28,7 +28,7 @@ export const Default = () => {
                 style={{
                   width: value,
                   height: '50px',
-                  backgroundColor: stylesTokensCore['--em-core-color-gray-300'],
+                  backgroundColor: stylesTokensCore['--TEMP-core-color-gray-300'],
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',

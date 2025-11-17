@@ -5,42 +5,42 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--em-ghost-btn-size-height, 1.25rem);
-  padding: var(--em-ghost-btn-padding-default, 0.125rem);
+  height: var(--TEMP-ghost-btn-size-height, 1.25rem);
+  padding: var(--TEMP-ghost-btn-padding-default, 0.125rem);
   flex-shrink: 0;
   background: transparent;
-  color: var(--em-ghost-btn-label-color-default, #212129);
-  font-family: var(--em-ghost-btn-label-font-default-font-family, Inter);
-  font-size: var(--em-ghost-btn-label-font-default-size, 0.75rem);
+  color: var(--TEMP-ghost-btn-label-color-default, #212129);
+  font-family: var(--TEMP-ghost-btn-label-font-default-font-family, Inter);
+  font-size: var(--TEMP-ghost-btn-label-font-default-size, 0.75rem);
   font-style: normal;
-  font-weight: var(--em-ghost-btn-label-font-default-weight, 400);
-  line-height: var(--em-ghost-btn-label-font-default-line-height, 0.875rem);
+  font-weight: var(--TEMP-ghost-btn-label-font-default-weight, 400);
+  line-height: var(--TEMP-ghost-btn-label-font-default-line-height, 0.875rem);
 }
 
 .ghostButton:hover,
 .ghostButton:focus {
-  border-radius: var(--em-border-radius-100, 0.25rem);
-  background: var(--em-ghost-btn-background-color-hover, #f7f7f8);
+  border-radius: var(--TEMP-border-radius-100, 0.25rem);
+  background: var(--TEMP-ghost-btn-background-color-hover, #f7f7f8);
 }
 
 .ghostButton:active {
-  border-radius: var(--em-border-radius-100, 0.25rem);
-  background: var(--em-ghost-btn-background-color-pressed, #ededf1);
+  border-radius: var(--TEMP-border-radius-100, 0.25rem);
+  background: var(--TEMP-ghost-btn-background-color-pressed, #ededf1);
 }
 
 .ghostButton:disabled {
   cursor: unset;
   pointer-events: none;
   background: transparent;
-  color: var(--em-ghost-btn-label-color-disabled, #b8b8bd);
+  color: var(--TEMP-ghost-btn-label-color-disabled, #b8b8bd);
 }
 
 .icon {
-  width: var(--em-ghost-btn-icon-size-width, 0.75rem);
-  height: var(--em-ghost-btn-icon-size-height, 0.75rem);
+  width: var(--TEMP-ghost-btn-icon-size-width, 0.75rem);
+  height: var(--TEMP-ghost-btn-icon-size-height, 0.75rem);
 }
 .label {
   display: flex;
-  padding: 0 var(--em-ghost-btn-label-padding-default, 0.25rem);
+  padding: 0 var(--TEMP-ghost-btn-label-padding-default, 0.25rem);
   align-items: center;
 }

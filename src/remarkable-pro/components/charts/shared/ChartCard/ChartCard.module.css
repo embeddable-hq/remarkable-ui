@@ -6,7 +6,7 @@
 .error svg,
 .error h2,
 .error p {
-  color: var(--em-card-error-text-default, #bc1010);
+  color: var(--TEMP-card-error-text-default, #bc1010);
 }
 
 .rightContent {
@@ -16,7 +16,7 @@
 
 .fixedContent {
   z-index: 3;
-  background: var(--em-background-color-default, #f7f7f8);
+  background: var(--TEMP-background-color-default, #f7f7f8);
   position: absolute;
   top: 50%;
   left: 50%;
