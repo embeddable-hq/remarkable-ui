@@ -13,6 +13,7 @@ const meta = {
   },
   argTypes: {
     icon: storybookArgTypesIcon,
+    onClick: { action: 'clicked' },
   },
 } satisfies Meta<typeof ActionIcon>;
 

@@ -16,6 +16,7 @@ const meta = {
   argTypes: {
     startIcon: storybookArgTypesIconNullable,
     endIcon: storybookArgTypesIconNullable,
+    onClick: { action: 'clicked' },
   },
 } satisfies Meta<typeof GhostButton>;
 
