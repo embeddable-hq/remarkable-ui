@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Card.module.css';
 import clsx from 'clsx';
-import { Typography } from '../Typography/Typography';
 
 type CardProps = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;

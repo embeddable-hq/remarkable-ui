@@ -30,7 +30,34 @@ export const LongTitle = () => (
 );
 
 export const FeedbackInfo = () => (
-  <div>
+  <Card>
+    <CardHeader title="Title" subtitle="Subtitle" />
+    <CardContent>
+      <CardFeedback
+        icon={IconBoltFilled}
+        title="It's a bit empty here."
+        message="Try adding something."
+      />
+    </CardContent>
+  </Card>
+);
+
+export const FeedbackError = () => (
+  <Card>
+    <CardHeader title="Title" subtitle="Subtitle" />
+    <CardContent>
+      <CardFeedback
+        variant="error"
+        icon={IconBoltFilled}
+        title="Something went wrong"
+        message="Please try again."
+      />
+    </CardContent>
+  </Card>
+);
+
+export const Resize = () => (
+  <div style={{ width: '250px', height: '250px', resize: 'both', overflow: 'auto' }}>
     <Card>
       <CardHeader title="Title" subtitle="Subtitle" />
       <CardContent>
@@ -38,22 +65,6 @@ export const FeedbackInfo = () => (
           icon={IconBoltFilled}
           title="It's a bit empty here."
           message="Try adding something."
-        />
-      </CardContent>
-    </Card>
-  </div>
-);
-
-export const FeedbackError = () => (
-  <div>
-    <Card>
-      <CardHeader title="Title" subtitle="Subtitle" />
-      <CardContent>
-        <CardFeedback
-          variant="error"
-          icon={IconBoltFilled}
-          title="Something went wrong"
-          message="Please try again."
         />
       </CardContent>
     </Card>

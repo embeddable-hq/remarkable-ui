@@ -10,7 +10,7 @@
 .skeleton {
   animation: shimmer 1.5s infinite;
   background: linear-gradient(
-    90deg,
+    270deg,
     rgba(237, 237, 241, 0.4) 29%,
     rgba(210, 210, 213, 0.4) 46.21%,
     rgba(237, 237, 241, 0.4) 78.5%
@@ -18,5 +18,5 @@
   background-size: 200% 100%;
   height: 100%;
   width: 100%;
-  border-radius: var(--TEMP-border-radius-300, 12px);
+  border-radius: var(--em-skeleton-border-radius, 0.75rem);
 }
