@@ -38,4 +38,5 @@ export type PivotTableProps<T> = {
   percentageDecimalPlaces?: number;
   columnWidth?: number;
   firstColumnWidth?: number;
+  className?: string;
 };

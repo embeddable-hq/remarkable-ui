@@ -1,5 +1,29 @@
 # @embeddable/remarkable-ui
 
+## 0.1.51
+
+### Patch Changes
+
+- 316be9f: Update exports
+
+## 0.1.50
+
+### Patch Changes
+
+- 8a9915f: Add heatmap component
+
+## 0.1.49
+
+### Patch Changes
+
+- 310dcc1: Revert pushing the styles to host
+
+## 0.1.48
+
+### Patch Changes
+
+- 836b410: Push to root and host
+
 ## 0.1.47
 
 ### Patch Changes

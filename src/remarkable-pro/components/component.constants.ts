@@ -52,6 +52,15 @@ export const subInputColor = {
   description:
     'You can input Hex e.g. #00FF00, RGB and RGBA e.g. rgb(0, 255, 0), HSL e.g. hsl(120, 100%, 50%), or CSS color names like green, red, blue',
 };
+
+export const inputColor = {
+  ...genericString,
+  name: 'color',
+  label: 'Color',
+  description:
+    'You can input Hex e.g. #00FF00, RGB and RGBA e.g. rgb(0, 255, 0), HSL e.g. hsl(120, 100%, 50%), or CSS color names like green, red, blue',
+};
+
 export const subInputPrefix = {
   name: 'prefix',
   type: 'string',
