@@ -6,23 +6,23 @@ type ButtonProps = {
   startIcon?: TablerIcon;
   endIcon?: TablerIcon;
   children: string;
-  size: 'small' | 'medium';
-  variant: 'primary' | 'secondary';
+  size?: 'small' | 'medium';
+  variant?: 'primary' | 'secondary';
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button: React.FC<ButtonProps> = ({
-  variant,
+  children,
+  variant = 'primary',
+  size = 'medium',
   startIcon: StartIcon,
   endIcon: EndIcon,
-  children,
-  size,
   className,
   ...props
 }) => {
   return (
     <button className={clsx(styles.button, styles[variant], styles[size], className)} {...props}>
       {StartIcon && <StartIcon />}
-      {children}
+      <span>{children}</span>
       {EndIcon && <EndIcon />}
     </button>
   );

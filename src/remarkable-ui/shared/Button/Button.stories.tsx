@@ -1,60 +1,75 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { Button } from './Button';
+import { storybookArgTypesIcon } from '../../storybook.constants';
 import { IconBoltFilled } from '@tabler/icons-react';
 
 const meta = {
+  title: 'Shared/✅ Button',
   component: Button,
+  args: {
+    children: 'Button',
+    size: 'medium',
+    variant: 'primary',
+    startIcon: IconBoltFilled,
+    endIcon: IconBoltFilled,
+    disabled: false,
+  },
+  argTypes: {
+    startIcon: storybookArgTypesIcon,
+    endIcon: storybookArgTypesIcon,
+    size: {
+      control: { type: 'radio' },
+      options: ['small', 'medium'],
+    },
+    variant: {
+      control: { type: 'radio' },
+      options: ['primary', 'secondary'],
+    },
+    onClick: { action: 'clicked' },
+  },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const PrimaryMedium: Story = {
+export const Playground: Story = {};
+
+export const Primary: Story = {
   args: {
-    children: 'Primary Medium Button',
-    variant: 'primary',
-    size: 'medium',
     startIcon: IconBoltFilled,
-    endIcon: IconBoltFilled,
-    disabled: false,
-    onClick: () => console.log('Button clicked!'),
+    variant: 'primary',
   },
 };
 
-export const PrimarySmall: Story = {
+export const Secondary: Story = {
   args: {
-    children: 'Primary Small Button',
+    startIcon: IconBoltFilled,
+    variant: 'secondary',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    startIcon: IconBoltFilled,
     variant: 'primary',
     size: 'small',
-    startIcon: IconBoltFilled,
-    endIcon: IconBoltFilled,
-    disabled: false,
-    onClick: () => console.log('Button clicked!'),
   },
 };
 
-export const SecondaryMedium: Story = {
+export const Medium: Story = {
   args: {
-    children: 'Secondary Medium Button',
-    variant: 'secondary',
+    startIcon: IconBoltFilled,
+    variant: 'primary',
     size: 'medium',
-    startIcon: IconBoltFilled,
-    endIcon: IconBoltFilled,
-    disabled: false,
-    onClick: () => console.log('Button clicked!'),
   },
 };
 
-export const SecondarySmall: Story = {
+export const Disabled: Story = {
   args: {
-    children: 'Secondary Small Button',
-    variant: 'secondary',
-    size: 'small',
     startIcon: IconBoltFilled,
-    endIcon: IconBoltFilled,
-    disabled: false,
-    onClick: () => console.log('Button clicked!'),
+    variant: 'primary',
+    disabled: true,
   },
 };
