@@ -30,11 +30,18 @@ export { TextField } from './editors/TextField/TextField';
 export { NumberField } from './editors/NumberField/NumberField';
 
 // Charts
+export { BarChart } from './charts/bars/BarChart';
+export { getBarChartData, getBarChartOptions } from './charts/bars/bars.utils';
 export { LineChart } from './charts/lines/LineChart';
+export { getLineChartData, getLineChartOptions } from './charts/lines/lines.utils';
 export { KpiChart } from './charts/kpis/KpiChart';
 export { DonutChart } from './charts/pies/DonutChart';
 export { PieChart } from './charts/pies/PieChart';
-export { defaultPieChartOptions } from './charts/pies/pies.constants';
+export {
+  defaultPieChartOptions,
+  defaultDonutChartOptions,
+  defaultDonutLabelChartOptions,
+} from './charts/pies/pies.constants';
 export { TablePaginated } from './charts/tables/Table/TablePaginated';
 export * from './charts/tables/Table/table.types';
 export { PivotTable } from './charts/tables/PivotTable/PivotTable';
