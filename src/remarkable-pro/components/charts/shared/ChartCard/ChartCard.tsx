@@ -3,7 +3,7 @@ import { IconAlertCircle } from '@tabler/icons-react';
 import {
   Card,
   CardContent,
-  CardContentInfo,
+  CardFeedback,
   CardHeader,
   Skeleton,
 } from '../../../../../remarkable-ui';
@@ -50,8 +50,8 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
 
       if (errorMessage) {
         return (
-          <CardContentInfo
-            className={styles.error}
+          <CardFeedback
+            variant="error"
             icon={IconAlertCircle}
             title={i18n.t('charts.errorTitle')}
             message={errorMessage}
@@ -61,7 +61,7 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
 
       if (!hasData) {
         return (
-          <CardContentInfo
+          <CardFeedback
             title={i18n.t('charts.emptyTitle')}
             message={i18n.t('charts.emptyMessage')}
           />

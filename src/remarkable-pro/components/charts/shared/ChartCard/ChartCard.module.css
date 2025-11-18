@@ -3,12 +3,6 @@
   width: 100%;
 }
 
-.error svg,
-.error h2,
-.error p {
-  color: var(--TEMP-card-error-text-default, #bc1010);
-}
-
 .rightContent {
   position: relative;
   right: 0;

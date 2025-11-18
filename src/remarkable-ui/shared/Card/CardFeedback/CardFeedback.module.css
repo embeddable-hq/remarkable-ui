@@ -1,0 +1,40 @@
+.feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  gap: var(--em-card-feedback-gap, 0.75rem);
+}
+
+.feedback svg {
+  width: var(--em-card-feedback-icon-size, 1rem);
+  height: var(--em-card-feedback-icon-size, 1rem);
+}
+
+.feedback h2 {
+  margin: unset;
+  text-align: center;
+  font-style: normal;
+  color: var(--em-card-feedback-title-color, #212129);
+  font-family: var(--em-card-info-font-family, sans-serif);
+  font-size: var(--em-card-feedback-font-size, 0.875rem);
+  font-weight: var(--em-card-feedback-title-font-weight, 500);
+  line-height: var(--em-card-feedback-line-height, 1rem);
+}
+
+.feedback p {
+  margin: unset;
+  text-align: center;
+  font-style: normal;
+  color: var(--em-card-feedback-subtitle-color, #5c5c66);
+  font-family: var(--em-card-info-font-family, sans-serif);
+  font-size: var(--em-card-feedback-font-size, 0.875rem);
+  font-weight: var(--em-card-feedback-subtitle-font-weight, 400);
+  line-height: var(--em-card-feedback-line-height, 1rem);
+}
+
+.feedback.error,
+.feedback.error h2,
+.feedback.error p {
+  color: var(--em-card-feedback-color--error, #bc1010);
+}

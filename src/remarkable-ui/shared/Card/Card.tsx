@@ -31,18 +31,10 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightCo
   }
 
   return (
-    <div className={styles.header}>
-      <div className={styles.titles}>
-        {title && (
-          <Typography as="h1" className={styles.title}>
-            {title}
-          </Typography>
-        )}
-        {subtitle && (
-          <Typography as="p" className={styles.subtitle}>
-            {subtitle}
-          </Typography>
-        )}
+    <div className={styles.cardHeader}>
+      <div className={styles.leftContent}>
+        {title && <h1>{title}</h1>}
+        {subtitle && <p>{subtitle}</p>}
       </div>
       {rightContent}
     </div>
@@ -56,7 +48,7 @@ type CardContentProps = {
 export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   ({ children }, ref) => {
     return (
-      <div className={styles.content} ref={ref}>
+      <div className={styles.cardContent} ref={ref}>
         {children}
       </div>
     );

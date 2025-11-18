@@ -2,7 +2,7 @@
 export { Skeleton } from './shared/Skeleton/Skeleton';
 export { EmptyStateSkeleton } from './shared/EmptyStateSkeleton/EmptyStateSkeleton';
 export { Card, CardContent, CardHeader } from './shared/Card/Card';
-export { CardContentInfo } from './shared/Card/CardContentInfo/CardContentInfo';
+export { CardFeedback } from './shared/Card/CardFeedback/CardFeedback';
 export { Typography } from './shared/Typography/Typography';
 export { FieldErrorMessage } from './shared/FieldErrorMessage/FieldErrorMessage';
 export { ActionIcon } from './shared/ActionIcon/ActionIcon';
