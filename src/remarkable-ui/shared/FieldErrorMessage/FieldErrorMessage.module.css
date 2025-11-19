@@ -1,6 +1,10 @@
 .errorMessage {
-  color: var(--TEMP-text-input-label-color-error, #bc1010);
-  font-family: var(--TEMP-text-input-label-font-font-family, Inter);
-  font-size: var(--TEMP-text-input-label-font-size, 0.75rem);
-  font-weight: var(--TEMP-text-input-label-font-weight-default, 500);
+  margin: unset;
+  font-style: normal;
+  color: var(--em-textfield-feedback-color--error, #bc1010);
+  font-family: var(--em-textfield-feedback-font-family, sans-serif);
+  font-size: var(--em-textfield-feedback-font-size, 0.75rem);
+  font-weight: var(--em-textfield-feedback-font-weight--error, 500);
+  line-height: var(--em-textfield-feedback-line-height, 1rem);
+  padding-top: var(--em-textfield-feedback-padding-top, 0.5rem);
 }

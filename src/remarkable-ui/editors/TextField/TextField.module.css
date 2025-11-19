@@ -1,14 +1,10 @@
-.textField {
-  display: flex;
-  flex-direction: column;
-  gap: var(--TEMP-form-padding-small, 0.5rem);
-  .characterCount {
-    display: flex;
-    justify-content: flex-start;
-    font-family: var(--TEMP-form-section-font-font-family, Inter);
-    font-size: var(--TEMP-form-form-font-font-size-required, 0.75rem);
-    font-weight: var(--TEMP-form-form-font-font-weight, 400);
-    line-height: var(--TEMP-form-form-font-line-height, 1rem);
-    color: var(--TEMP-form-section-font-font-color, #212129);
-  }
+.characterCount {
+  margin: unset;
+  font-style: normal;
+  color: var(--em-textfield-feedback-color, #5c5c66);
+  font-family: var(--em-textfield-feedback-font-family, sans-serif);
+  font-size: var(--em-textfield-feedback-font-size, 0.75rem);
+  font-weight: var(--em-textfield-feedback-font-weight, 400);
+  line-height: var(--em-textfield-feedback-line-height, 1rem);
+  padding-top: var(--em-textfield-feedback-padding-top, 0.5rem);
 }

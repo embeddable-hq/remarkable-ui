@@ -1,4 +1,3 @@
-import { Typography } from '../Typography/Typography';
 import styles from './FieldErrorMessage.module.css';
 
 export type FieldErrorMessageProps = {
@@ -6,9 +5,5 @@ export type FieldErrorMessageProps = {
 };
 
 export const FieldErrorMessage = ({ message }: FieldErrorMessageProps) => {
-  return (
-    <Typography as="span" className={styles.errorMessage}>
-      {message}
-    </Typography>
-  );
+  return <p className={styles.errorMessage}>{message}</p>;
 };

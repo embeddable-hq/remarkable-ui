@@ -2,7 +2,6 @@ import { IconX, TablerIcon } from '@tabler/icons-react';
 import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { Typography } from '../../shared/Typography/Typography';
 import { FieldErrorMessage } from '../../shared/FieldErrorMessage/FieldErrorMessage';
 
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
@@ -29,7 +28,6 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       className,
       clearable = false,
       type = 'text',
-      required = false,
       error = false,
       errorMessage,
       ...props
@@ -38,14 +36,10 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   ) => {
     const hasError = error || !!errorMessage;
     const showClearButton = value && clearable;
+
     return (
-      <div className={styles.inputContainer}>
-        {required && (
-          <Typography as="span" className={styles.requiredText}>
-            Required
-          </Typography>
-        )}
-        <div className={clsx(styles.input, hasError && styles.inputError, className)}>
+      <div className={clsx(styles.field)}>
+        <div className={clsx(styles.input, hasError && styles.error, className)}>
           {StartIcon && <StartIcon />}
           <input
             type={type}
@@ -57,11 +51,8 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             ref={ref}
             {...props}
           />
-          <div>
-            {showClearButton && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
-
-            {EndIcon && <EndIcon />}
-          </div>
+          {showClearButton && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
+          {EndIcon && <EndIcon />}
         </div>
         {errorMessage && <FieldErrorMessage message={errorMessage} />}
       </div>
