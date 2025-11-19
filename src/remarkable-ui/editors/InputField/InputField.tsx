@@ -2,7 +2,8 @@ import { IconX, TablerIcon } from '@tabler/icons-react';
 import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { FieldErrorMessage } from '../../shared/FieldErrorMessage/FieldErrorMessage';
+import { FieldHeader, FieldHeaderProps } from '../../shared/Field/FieldHeader';
+import { FieldFeedback } from '../../shared/Field/FieldFeedback';
 
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
@@ -13,11 +14,13 @@ export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 
   clearable?: boolean;
   error?: boolean;
   errorMessage?: string;
-};
+} & FieldHeaderProps;
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
     {
+      label,
+      required,
       value = '',
       disabled,
       placeholder = 'Enter text',
@@ -30,32 +33,37 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       type = 'text',
       error = false,
       errorMessage,
+      requiredLabel,
       ...props
     },
     ref,
   ) => {
-    const hasError = error || !!errorMessage;
     const showClearButton = value && clearable;
-
+    const hasError = error || errorMessage;
     return (
-      <div className={clsx(styles.field)}>
+      <>
+        <FieldHeader label={label} required={required} requiredLabel={requiredLabel} />
         <div className={clsx(styles.input, hasError && styles.error, className)}>
           {StartIcon && <StartIcon />}
           <input
+            ref={ref}
             type={type}
             role={role}
             value={value}
             disabled={disabled}
             placeholder={placeholder}
             onChange={(e) => onChange(e.target.value)}
-            ref={ref}
+            required={required}
             {...props}
           />
-          {showClearButton && <IconX className={styles.clearIcon} onClick={() => onChange('')} />}
+          <IconX
+            className={clsx(styles.clearIcon, showClearButton && styles.clearIconVisible)}
+            onClick={() => onChange('')}
+          />
           {EndIcon && <EndIcon />}
         </div>
-        {errorMessage && <FieldErrorMessage message={errorMessage} />}
-      </div>
+        {errorMessage && <FieldFeedback variant="error" message={errorMessage} />}
+      </>
     );
   },
 );

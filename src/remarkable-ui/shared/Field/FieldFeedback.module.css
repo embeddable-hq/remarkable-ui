@@ -1,4 +1,4 @@
-.characterCount {
+.fieldFeedback {
   margin: unset;
   font-style: normal;
   color: var(--em-textfield-feedback-color, #5c5c66);
@@ -7,4 +7,11 @@
   font-weight: var(--em-textfield-feedback-font-weight, 400);
   line-height: var(--em-textfield-feedback-line-height, 1rem);
   padding-top: var(--em-textfield-feedback-padding-top, 0.5rem);
+}
+
+.fieldFeedback.error {
+  font-style: normal;
+  color: var(--em-textfield-feedback-color--error, #bc1010);
+  font-family: var(--em-textfield-font-family, sans-serif);
+  font-weight: var(--em-textfield-feedback-font-weight--error, 500);
 }

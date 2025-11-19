@@ -7,13 +7,19 @@ type NumberFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
   min?: number;
   max?: number;
   onChange?: (value: number | null) => void;
-  error?: boolean;
-  errorMessage?: string;
 };
 
 export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
   (
-    { value = null, placeholder = 'Enter number', onChange, error, errorMessage, ...props },
+    {
+      value = null,
+      placeholder = 'Enter number',
+      onChange,
+      error,
+      errorMessage,
+      clearable,
+      ...props
+    },
     ref,
   ) => {
     const handleChange = (value: string) => {
@@ -35,7 +41,7 @@ export const NumberField = forwardRef<HTMLInputElement, NumberFieldProps>(
         placeholder={placeholder}
         onChange={handleChange}
         type="number"
-        clearable={false}
+        clearable={clearable}
         error={error}
         errorMessage={errorMessage}
         ref={ref}

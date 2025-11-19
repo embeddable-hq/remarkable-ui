@@ -42,6 +42,11 @@
 
 .input svg.clearIcon {
   cursor: pointer;
+  visibility: hidden;
+}
+
+.input svg.clearIcon.clearIconVisible {
+  visibility: visible;
 }
 
 .input input {

@@ -9,6 +9,8 @@ const meta = {
   title: 'Editors/✅ TextField',
   component: TextField,
   args: {
+    label: 'Label',
+    required: true,
     value: '',
     disabled: false,
     clearable: false,
@@ -41,18 +43,26 @@ export const Playground: Story = {
   },
 };
 
-export const Empty: Story = {
+export const Basic: Story = {
   args: {
-    placeholder: 'Enter your value',
+    label: undefined,
+    required: false,
   },
 };
 
-export const Filled: Story = {
-  args: { value: 'This is your value' },
+export const WithIcons: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    startIcon: IconBoltFilled,
+    endIcon: IconBoltFilled,
+  },
 };
 
 export const Disabled: Story = {
   args: {
+    label: undefined,
+    required: false,
     value: 'Disabled',
     disabled: true,
   },
@@ -60,41 +70,33 @@ export const Disabled: Story = {
 
 export const Clearable: Story = {
   args: {
-    value: 'Clearable',
+    label: undefined,
+    required: false,
+    value: 'This is your value',
     clearable: true,
   },
 };
 
-export const StartIcon: Story = {
+export const WithCharCounter: Story = {
   args: {
-    startIcon: IconBoltFilled,
-    value: 'Start icon',
-  },
-};
-
-export const EndIcon: Story = {
-  args: {
-    endIcon: IconBoltFilled,
-    value: 'End icon',
-  },
-};
-
-export const StartEndIcon: Story = {
-  args: {
-    startIcon: IconBoltFilled,
-    endIcon: IconBoltFilled,
-    value: 'Start and end icon',
-  },
-};
-
-export const ChartCount: Story = {
-  args: {
+    label: undefined,
+    required: false,
     maxLength: 20,
   },
 };
 
 export const Error: Story = {
   args: {
+    label: undefined,
+    required: false,
+    error: true,
+  },
+};
+
+export const ErrorMessage: Story = {
+  args: {
+    label: undefined,
+    required: false,
     errorMessage: 'Value is invalid',
   },
 };
