@@ -15,7 +15,7 @@
 
   color: var(--em-ghostbutton-color, #212129);
 
-  font-family: var(--em-ghostbutton-font-family, Inter, sans-serif);
+  font-family: var(--em-ghostbutton-font-family, sans-serif);
   font-size: var(--em-ghostbutton-font-size, 0.75rem);
   font-weight: var(--em-ghostbutton-font-weight, 400);
   line-height: var(--em-ghostbutton-line-height, 0.875rem);

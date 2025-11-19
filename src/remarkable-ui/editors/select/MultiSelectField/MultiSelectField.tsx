@@ -13,14 +13,16 @@ import {
 } from '../shared/SelectFieldContent/SelectFieldContent';
 import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
 import { TextField } from '../../TextField/TextField';
-import { IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
+import { IconSearch, IconSquare, IconSquareCheckFilled, TablerIcon } from '@tabler/icons-react';
 import { Button } from '../../../shared/Button/Button';
 import styles from './MultiSelectField.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
 import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
 import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
+import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 
 export type MultiSelectFieldProps = {
+  startIcon?: TablerIcon;
   disabled?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
@@ -34,9 +36,12 @@ export type MultiSelectFieldProps = {
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
-};
+} & FieldHeaderProps;
 
 export const MultiSelectField: FC<MultiSelectFieldProps> = ({
+  startIcon,
+  label,
+  required,
   disabled,
   isClearable,
   isLoading,
@@ -132,13 +137,15 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   const hasError = error || !!errorMessage;
 
   return (
-    <div className={styles.selectField}>
+    <div>
+      <FieldHeader label={label} required={required} />
       <Dropdown
         open={isOpen}
         onOpenChange={setIsOpen}
         disabled={disabled}
         triggerComponent={
           <SelectFieldTrigger
+            startIcon={startIcon}
             aria-label="Select options"
             placeholder={placeholder}
             disabled={disabled}
