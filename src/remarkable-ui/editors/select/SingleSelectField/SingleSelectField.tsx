@@ -1,21 +1,24 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { TextField } from '../../TextField/TextField';
 import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
-import { SelectList } from '../shared/SelectList/SelectList';
-import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
+import {
+  SelectFieldContent,
+  SelectFieldContentList,
+} from '../shared/SelectFieldContent/SelectFieldContent';
 import {
   SelectListOption,
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
-import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
-import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
+} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
 import { debounce } from '../../../utils/debounce.utils';
 import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
+import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import styles from './SingleSelectField.module.css';
-import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
+import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 
 export type SingleSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
@@ -31,9 +34,11 @@ export type SingleSelectFieldProps = {
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
-};
+} & FieldHeaderProps;
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
+  label,
+  required,
   value = '',
   startIcon,
   options,
@@ -97,7 +102,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   const hasError = error || !!errorMessage;
 
   return (
-    <div className={styles.selectField}>
+    <div>
+      <FieldHeader label={label} required={required} />
       <Dropdown
         open={isOpen}
         onOpenChange={setIsOpen}
@@ -116,7 +122,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
           />
         }
       >
-        <SelectList>
+        <SelectFieldContent>
           {isSearchable && (
             <TextField
               ref={searchFieldRef}
@@ -127,13 +133,14 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
               value={searchValue}
               onKeyDown={(e) => e.stopPropagation()}
               onChange={handleSearch}
+              className={styles.searchField}
             />
           )}
-          <SelectListOptions disabled={isLoading}>
+          <SelectFieldContentList disabled={isLoading}>
             {groupedOptions
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
-                  <div key={category}>
-                    <SelectListCategory label={category} />
+                  <Fragment key={category}>
+                    <SelectFieldCategory label={category} />
                     {categoryOptions.map((option) => (
                       <SelectListOption
                         key={option?.value ?? option.label}
@@ -142,7 +149,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                         {...option}
                       />
                     ))}
-                  </div>
+                  </Fragment>
                 ))
               : displayOptions.map((option) => (
                   <SelectListOption
@@ -155,10 +162,10 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             {options.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
-          </SelectListOptions>
-        </SelectList>
+          </SelectFieldContentList>
+        </SelectFieldContent>
       </Dropdown>
-      {errorMessage && <FieldErrorMessage message={errorMessage} />}
+      {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
     </div>
   );
 };

@@ -1,15 +1,11 @@
-.field {
-  height: var(--em-textfield-height, 2.5rem);
-  min-width: var(--em-textfield-min-width, 10rem);
-  width: 100%;
-}
-
 .input {
   height: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  height: var(--em-textfield-height, 2.5rem);
+  min-width: var(--em-textfield-min-width, 10rem);
   padding: var(--em-textfield-padding, 0.5rem);
   border-radius: var(--em-textfield-border-radius, 0.5rem);
   border: var(--em-textfield-border-width, 1px) solid var(--em-textfield-border-color, #b8b8bd);

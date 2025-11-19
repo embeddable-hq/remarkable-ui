@@ -41,7 +41,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     const showClearButton = value && clearable;
     const hasError = error || errorMessage;
     return (
-      <>
+      <div>
         <FieldHeader label={label} required={required} requiredLabel={requiredLabel} />
         <div className={clsx(styles.input, hasError && styles.error, className)}>
           {StartIcon && <StartIcon />}
@@ -63,7 +63,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           {EndIcon && <EndIcon />}
         </div>
         {errorMessage && <FieldFeedback variant="error" message={errorMessage} />}
-      </>
+      </div>
     );
   },
 );

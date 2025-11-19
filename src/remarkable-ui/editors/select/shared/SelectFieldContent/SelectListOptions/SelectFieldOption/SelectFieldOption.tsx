@@ -1,7 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FC, ImgHTMLAttributes, SVGProps } from 'react';
-import styles from './SelectListOption.module.css';
-import { Typography } from '../../../../../../shared/Typography/Typography';
+import styles from './SelectFieldOption.module.css';
 import clsx from 'clsx';
 
 type SelectListOptionIcon =
@@ -34,16 +33,20 @@ export const SelectListOption: FC<SelectListOptionProps> = ({
 }) => {
   return (
     <DropdownMenu.Item
-      className={clsx(styles.listItem, disabled && styles.disabled, isSelected && styles.selected)}
+      className={clsx(
+        styles.selectFieldOption,
+        disabled && styles.disabled,
+        isSelected && styles.selected,
+      )}
       data-value={value}
       {...props}
     >
       <span className={styles.leftContent}>
         {startIcon}
-        <Typography title={label}>{label}</Typography>
+        <span title={label}>{label}</span>
       </span>
       <span className={styles.rightContent}>
-        <Typography title={rightLabel}>{rightLabel}</Typography>
+        <span title={rightLabel}>{rightLabel}</span>
         {endIcon}
       </span>
     </DropdownMenu.Item>

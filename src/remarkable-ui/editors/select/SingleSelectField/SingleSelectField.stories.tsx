@@ -4,67 +4,176 @@ import { SingleSelectField } from './SingleSelectField';
 import {
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
-import { IconPalette } from '@tabler/icons-react';
+} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../storybook.constants';
 
-const mockLongOptions: SelectListOptionProps[] = [
-  {
-    value: 'red',
-    label:
-      'Red - The color of passion and energy, often associated with excitement, love, and intensity.',
-  },
-  {
-    value: 'green',
-    label: 'Green - The color of nature and growth, symbolizing renewal, harmony, and freshness.',
-  },
-  { value: 'yellow', label: 'Yellow - The color of sunshine, happiness, and optimism.' },
-  {
-    value: 'orange',
-    label: 'Orange - A vibrant color representing enthusiasm, creativity, and encouragement.',
-  },
-  { value: 'purple', label: 'Purple - Associated with royalty, luxury, and ambition.' },
-  { value: 'pink', label: 'Pink - The color of compassion, nurturing, and love.' },
-  { value: 'brown', label: 'Brown - The color of stability, reliability, and comfort.' },
-  { value: 'gray', label: 'Gray - A neutral color representing balance and calm.' },
-  { value: 'black', label: 'Black - The color of elegance, mystery, and sophistication.' },
-];
-
 const mockOptions: SelectListOptionProps[] = [
-  { value: 'red', label: 'Red', rightLabel: 'This is color Red' },
-  { value: 'green', label: 'Green', rightLabel: 'This is color Green' },
-  { value: 'blue', label: 'Blue', rightLabel: 'This is color Blue' },
-  { value: 'yellow', label: 'Yellow', rightLabel: 'This is color Yellow' },
-  { value: 'orange', label: 'Orange', rightLabel: 'This is color Orange' },
-  { value: 'purple', label: 'Purple', rightLabel: 'This is color Purple' },
-  { value: 'pink', label: 'Pink', rightLabel: 'This is color Pink' },
-  { value: 'brown', label: 'Brown', rightLabel: 'This is color Brown' },
-  { value: 'gray', label: 'Gray', rightLabel: 'This is color Gray' },
-  { value: 'black', label: 'Black', rightLabel: 'This is color Black' },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'red',
+    label: 'Red',
+    rightLabel: 'This is color Red',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'green',
+    label: 'Green',
+    rightLabel: 'This is color Green',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'blue',
+    label: 'Blue',
+    rightLabel: 'This is color Blue',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'yellow',
+    label: 'Yellow',
+    rightLabel: 'This is color Yellow',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'orange',
+    label: 'Orange',
+    rightLabel: 'This is color Orange',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'purple',
+    label: 'Purple',
+    rightLabel: 'This is color Purple',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'pink',
+    label: 'Pink',
+    rightLabel: 'This is color Pink',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'brown',
+    label: 'Brown',
+    rightLabel: 'This is color Brown',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'gray',
+    label: 'Gray',
+    rightLabel: 'This is color Gray',
+    endIcon: <IconBoltFilled />,
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'black',
+    label: 'Black',
+    rightLabel: 'This is color Black',
+    endIcon: <IconBoltFilled />,
+  },
 ];
 
-const mockOptionsWithRightLabel: SelectListOptionProps[] = [
-  { value: 'red', label: 'Red', rightLabel: 'This is color Red' },
-  { value: 'green', label: 'Green', rightLabel: 'This is color Green' },
-  { value: 'blue', label: 'Blue', rightLabel: 'This is color Blue' },
-  { value: 'yellow', label: 'Yellow', rightLabel: 'This is color Yellow' },
-  { value: 'orange', label: 'Orange', rightLabel: 'This is color Orange' },
-  { value: 'purple', label: 'Purple', rightLabel: 'This is color Purple' },
-  { value: 'pink', label: 'Pink', rightLabel: 'This is color Pink' },
-  { value: 'brown', label: 'Brown', rightLabel: 'This is color Brown' },
-  { value: 'gray', label: 'Gray', rightLabel: 'This is color Gray' },
-  { value: 'black', label: 'Black', rightLabel: 'This is color Black' },
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'red',
+    label: 'Red',
+    rightLabel: 'This is color Red',
+    endIcon: <IconBoltFilled />,
+    category: 'Warm Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'green',
+    label: 'Green',
+    rightLabel: 'This is color Green',
+    endIcon: <IconBoltFilled />,
+    category: 'Cool Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'blue',
+    label: 'Blue',
+    rightLabel: 'This is color Blue',
+    endIcon: <IconBoltFilled />,
+    category: 'Cool Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'yellow',
+    label: 'Yellow',
+    rightLabel: 'This is color Yellow',
+    endIcon: <IconBoltFilled />,
+    category: 'Warm Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'orange',
+    label: 'Orange',
+    rightLabel: 'This is color Orange',
+    endIcon: <IconBoltFilled />,
+    category: 'Warm Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'purple',
+    label: 'Purple',
+    rightLabel: 'This is color Purple',
+    endIcon: <IconBoltFilled />,
+    category: 'Cool Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'pink',
+    label: 'Pink',
+    rightLabel: 'This is color Pink',
+    endIcon: <IconBoltFilled />,
+    category: 'Neutral Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'brown',
+    label: 'Brown',
+    rightLabel: 'This is color Brown',
+    endIcon: <IconBoltFilled />,
+    category: 'Neutral Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'gray',
+    label: 'Gray',
+    rightLabel: 'This is color Gray',
+    endIcon: <IconBoltFilled />,
+    category: 'Neutral Colors',
+  },
+  {
+    startIcon: <IconBoltFilled />,
+    value: 'black',
+    label: 'Black',
+    rightLabel: 'This is color Black',
+    endIcon: <IconBoltFilled />,
+    category: 'Neutral Colors',
+  },
 ];
 
 const meta = {
   title: 'Editors/✅ SingleSelectField',
   component: SingleSelectField,
   args: {
-    // label: 'Label',
-    // required: true,
+    label: 'Label',
+    required: true,
     value: '',
     disabled: false,
-    // clearable: false,
+    isSearchable: false,
+    isClearable: false,
     options: mockOptions,
     onChange: (value: string) => value,
   },
@@ -95,145 +204,66 @@ export const Playground: Story = {
   },
 };
 
-// export const Empty: Story = {
-//   args: {
-//     value: '',
-//     isSearchable: true,
-//     options: mockOptions,
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
+export const Basic: Story = {
+  args: {
+    label: undefined,
+    required: false,
+  },
+};
 
-// export const Filled: Story = {
-//   args: {
-//     value: mockOptions[0]!.value,
-//     options: mockOptions,
-//     isSearchable: true,
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
+export const WithIcons: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    startIcon: IconBoltFilled,
+  },
+};
 
-// export const Disabled: Story = {
-//   args: {
-//     disabled: true,
-//     value: '',
-//     options: mockOptions,
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
+export const Disabled: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    disabled: true,
+  },
+};
 
-// export const SmallButtonLongText = () => (
-//   <div style={{ width: 200 }}>
-//     <SingleSelectField
-//       isClearable
-//       value={mockLongOptions[0]!.value}
-//       options={mockLongOptions}
-//       isSearchable
-//       onChange={(value) => console.log('onChange', value)}
-//     />
-//   </div>
-// );
+export const Clearable: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    value: 'red',
+    isClearable: true,
+  },
+};
 
-// export const SmallButtonSmallText = () => (
-//   <div style={{ width: 200 }}>
-//     <SingleSelectField
-//       isClearable
-//       value={mockOptions[0]!.value}
-//       options={mockOptions}
-//       isSearchable
-//       onChange={(value) => console.log('onChange', value)}
-//     />
-//   </div>
-// );
+export const Searchable: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    isSearchable: true,
+  },
+};
 
-// export const SmallButtonRightSideLabel = () => (
-//   <div style={{ width: 200 }}>
-//     <SingleSelectField
-//       isClearable
-//       value={mockOptionsWithRightLabel[0]!.value}
-//       options={mockOptionsWithRightLabel}
-//       isSearchable
-//       onChange={(value) => console.log('onChange', value)}
-//     />
-//   </div>
-// );
+export const WithCategories: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    options: mockOptionsWithCategories,
+  },
+};
 
-// export const WithStartIcon: Story = {
-//   args: {
-//     value: '',
-//     startIcon: IconPalette,
-//     isSearchable: true,
-//     isClearable: true,
-//     options: mockOptions,
-//     placeholder: 'Select a color',
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
+export const Error: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    error: true,
+  },
+};
 
-// export const WithState: Story = {
-//   render: (args) => {
-//     const [{ value }, updateArgs] = useArgs();
-
-//     return (
-//       <SingleSelectField
-//         {...args}
-//         value={value}
-//         onChange={(newValue) => updateArgs({ value: newValue })}
-//       />
-//     );
-//   },
-//   args: {
-//     value: '',
-//     isClearable: true,
-//     isSearchable: true,
-//     options: mockOptions,
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
-
-// export const WithError: Story = {
-//   args: {
-//     value: '',
-//     error: true,
-//     errorMessage: 'Please select an option',
-//     isSearchable: true,
-//     options: mockOptions,
-//     placeholder: 'Select a color',
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
-
-// export const WithErrorAndValue: Story = {
-//   args: {
-//     value: mockOptions[0]!.value,
-//     error: true,
-//     errorMessage: 'This selection is not available',
-//     isSearchable: true,
-//     isClearable: true,
-//     options: mockOptions,
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
-
-// const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
-//   { value: 'red', label: 'Red', category: 'Primary Colors' },
-//   { value: 'green', label: 'Green', category: 'Primary Colors' },
-//   { value: 'blue', label: 'Blue', category: 'Primary Colors' },
-//   { value: 'yellow', label: 'Yellow', category: 'Secondary Colors' },
-//   { value: 'orange', label: 'Orange', category: 'Secondary Colors' },
-//   { value: 'purple', label: 'Purple', category: 'Secondary Colors' },
-//   { value: 'pink', label: 'Pink', category: 'Tertiary Colors' },
-//   { value: 'brown', label: 'Brown', category: 'Tertiary Colors' },
-//   { value: 'gray', label: 'Gray', category: 'Tertiary Colors' },
-//   { value: 'black', label: 'Black', category: 'Tertiary Colors' },
-// ];
-
-// export const WithCategories: Story = {
-//   args: {
-//     value: '',
-//     isSearchable: true,
-//     isClearable: true,
-//     options: mockOptionsWithCategories,
-//     onChange: (value) => console.log('onChange', value),
-//   },
-// };
+export const errorMessage: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    errorMessage: 'Value is invalid',
+  },
+};

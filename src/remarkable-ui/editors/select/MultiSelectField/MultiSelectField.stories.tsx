@@ -4,7 +4,7 @@ import { MultiSelectField } from './MultiSelectField';
 import {
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
+} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
 
 const meta = {
   component: MultiSelectField,

@@ -1,5 +1,4 @@
-.selectField {
-  display: flex;
-  flex-direction: column;
-  gap: var(--TEMP-form-padding-small, 0.5rem);
+.searchField {
+  position: sticky;
+  top: 0;
 }

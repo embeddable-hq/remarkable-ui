@@ -3,20 +3,22 @@ import {
   SelectListOption,
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
-import { SelectListCategory } from '../shared/SelectList/SelectListOptions/SelectListCategory/SelectListCategory';
+} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
 import { debounce } from '../../../utils/debounce.utils';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
-import { SelectButton } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
-import { SelectList } from '../shared/SelectList/SelectList';
-import { groupOptionsByCategory } from '../shared/SelectList/selectList.utils';
+import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
+import {
+  SelectFieldContent,
+  SelectFieldContentList,
+} from '../shared/SelectFieldContent/SelectFieldContent';
+import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
 import { TextField } from '../../TextField/TextField';
-import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
 import { IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
 import { Button } from '../../../shared/Button/Button';
 import styles from './MultiSelectField.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
-import { FieldErrorMessage } from '../../../shared/FieldErrorMessage/FieldErrorMessage';
+import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 
 export type MultiSelectFieldProps = {
   disabled?: boolean;
@@ -136,7 +138,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         onOpenChange={setIsOpen}
         disabled={disabled}
         triggerComponent={
-          <SelectButton
+          <SelectFieldTrigger
             aria-label="Select options"
             placeholder={placeholder}
             disabled={disabled}
@@ -148,7 +150,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           />
         }
       >
-        <SelectList>
+        <SelectFieldContent>
           {isSearchable && (
             <TextField
               ref={searchFieldRef}
@@ -161,11 +163,11 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
               onChange={handleSearch}
             />
           )}
-          <SelectListOptions disabled={isLoading}>
+          <SelectFieldContentList disabled={isLoading}>
             {groupedOptions
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <div key={category}>
-                    <SelectListCategory label={category} />
+                    <SelectFieldCategory label={category} />
                     {categoryOptions.map((option) => (
                       <SelectListOption
                         key={option?.value ?? option.label}
@@ -195,7 +197,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
             {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
-          </SelectListOptions>
+          </SelectFieldContentList>
           <Button
             className={styles.submitButton}
             disabled={isSubmitDisabled || isLoading}
@@ -206,9 +208,9 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           >
             {submitLabel}
           </Button>
-        </SelectList>
+        </SelectFieldContent>
       </Dropdown>
-      {errorMessage && <FieldErrorMessage message={errorMessage} />}
+      {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
     </div>
   );
 };

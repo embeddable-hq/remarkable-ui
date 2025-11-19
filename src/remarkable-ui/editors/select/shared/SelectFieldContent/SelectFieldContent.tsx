@@ -1,14 +1,18 @@
-import { useEffect, useRef } from 'react';
-import styles from './SelectList.module.css';
+import { FC, useEffect, useRef, ReactNode } from 'react';
+import styles from './SelectFieldContent.module.css';
 import clsx from 'clsx';
 
-type SelectListProps = {
-  children: React.ReactNode;
+type SelectFieldContentProps = {
+  children: ReactNode;
   autoFocus?: boolean;
   className?: string;
 };
 
-export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, className }) => {
+export const SelectFieldContent: FC<SelectFieldContentProps> = ({
+  children,
+  autoFocus,
+  className,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
 
@@ -64,7 +68,22 @@ export const SelectList: React.FC<SelectListProps> = ({ children, autoFocus, cla
   }, [autoFocus, children]);
 
   return (
-    <div ref={containerRef} tabIndex={-1} className={clsx(styles.list, className)}>
+    <div ref={containerRef} tabIndex={-1} className={clsx(styles.selectFieldContent, className)}>
+      {children}
+    </div>
+  );
+};
+
+type SelectFieldContentListProps = {
+  children: React.ReactNode;
+  autoFocus?: boolean;
+  className?: string;
+  disabled?: boolean;
+};
+
+export const SelectFieldContentList: FC<SelectFieldContentListProps> = ({ children, disabled }) => {
+  return (
+    <div className={clsx(styles.selectFieldContentList, disabled && styles.disabled)}>
       {children}
     </div>
   );
