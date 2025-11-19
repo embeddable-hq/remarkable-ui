@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { TextField } from '../../TextField/TextField';
-import { SelectButton } from '../shared/SelectButton/SelectButton';
+import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectList } from '../shared/SelectList/SelectList';
 import { SelectListOptions } from '../shared/SelectList/SelectListOptions/SelectListOptions';
@@ -103,7 +103,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         onOpenChange={setIsOpen}
         disabled={disabled}
         triggerComponent={
-          <SelectButton
+          <SelectFieldTrigger
             startIcon={startIcon}
             aria-label="Select option"
             placeholder={placeholder}

@@ -6,14 +6,7 @@ import {
   SelectListOptionPropsWithCategory,
 } from '../shared/SelectList/SelectListOptions/SelectListOption/SelectListOption';
 import { IconPalette } from '@tabler/icons-react';
-
-const meta = {
-  component: SingleSelectField,
-} satisfies Meta<typeof SingleSelectField>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
+import { storybookArgTypesIcon } from '../../../storybook.constants';
 
 const mockLongOptions: SelectListOptionProps[] = [
   {
@@ -63,145 +56,184 @@ const mockOptionsWithRightLabel: SelectListOptionProps[] = [
   { value: 'black', label: 'Black', rightLabel: 'This is color Black' },
 ];
 
-export const Empty: Story = {
+const meta = {
+  title: 'Editors/✅ SingleSelectField',
+  component: SingleSelectField,
   args: {
+    // label: 'Label',
+    // required: true,
     value: '',
-    isSearchable: true,
+    disabled: false,
+    // clearable: false,
     options: mockOptions,
-    onChange: (value) => console.log('onChange', value),
+    onChange: (value: string) => value,
   },
-};
-
-export const Filled: Story = {
-  args: {
-    value: mockOptions[0]!.value,
-    options: mockOptions,
-    isSearchable: true,
-    onChange: (value) => console.log('onChange', value),
+  argTypes: {
+    startIcon: storybookArgTypesIcon,
+    // endIcon: storybookArgTypesIcon,
+    onChange: { action: 'onChange' },
   },
-};
+} satisfies Meta<typeof SingleSelectField>;
 
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-    value: '',
-    options: mockOptions,
-    onChange: (value) => console.log('onChange', value),
-  },
-};
+export default meta;
 
-export const SmallButtonLongText = () => (
-  <div style={{ width: 200 }}>
-    <SingleSelectField
-      isClearable
-      value={mockLongOptions[0]!.value}
-      options={mockLongOptions}
-      isSearchable
-      onChange={(value) => console.log('onChange', value)}
-    />
-  </div>
-);
+type Story = StoryObj<typeof meta>;
 
-export const SmallButtonSmallText = () => (
-  <div style={{ width: 200 }}>
-    <SingleSelectField
-      isClearable
-      value={mockOptions[0]!.value}
-      options={mockOptions}
-      isSearchable
-      onChange={(value) => console.log('onChange', value)}
-    />
-  </div>
-);
-
-export const SmallButtonRightSideLabel = () => (
-  <div style={{ width: 200 }}>
-    <SingleSelectField
-      isClearable
-      value={mockOptionsWithRightLabel[0]!.value}
-      options={mockOptionsWithRightLabel}
-      isSearchable
-      onChange={(value) => console.log('onChange', value)}
-    />
-  </div>
-);
-
-export const WithStartIcon: Story = {
-  args: {
-    value: '',
-    startIcon: IconPalette,
-    isSearchable: true,
-    isClearable: true,
-    options: mockOptions,
-    placeholder: 'Select a color',
-    onChange: (value) => console.log('onChange', value),
-  },
-};
-
-export const WithState: Story = {
+export const Playground: Story = {
   render: (args) => {
-    const [{ value }, updateArgs] = useArgs();
+    const [, updateArgs] = useArgs();
 
     return (
       <SingleSelectField
         {...args}
-        value={value}
-        onChange={(newValue) => updateArgs({ value: newValue })}
+        onChange={(val) => {
+          updateArgs({ value: val });
+          args.onChange?.(val);
+        }}
       />
     );
   },
-  args: {
-    value: '',
-    isClearable: true,
-    isSearchable: true,
-    options: mockOptions,
-    onChange: (value) => console.log('onChange', value),
-  },
 };
 
-export const WithError: Story = {
-  args: {
-    value: '',
-    error: true,
-    errorMessage: 'Please select an option',
-    isSearchable: true,
-    options: mockOptions,
-    placeholder: 'Select a color',
-    onChange: (value) => console.log('onChange', value),
-  },
-};
+// export const Empty: Story = {
+//   args: {
+//     value: '',
+//     isSearchable: true,
+//     options: mockOptions,
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
 
-export const WithErrorAndValue: Story = {
-  args: {
-    value: mockOptions[0]!.value,
-    error: true,
-    errorMessage: 'This selection is not available',
-    isSearchable: true,
-    isClearable: true,
-    options: mockOptions,
-    onChange: (value) => console.log('onChange', value),
-  },
-};
+// export const Filled: Story = {
+//   args: {
+//     value: mockOptions[0]!.value,
+//     options: mockOptions,
+//     isSearchable: true,
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
 
-const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
-  { value: 'red', label: 'Red', category: 'Primary Colors' },
-  { value: 'green', label: 'Green', category: 'Primary Colors' },
-  { value: 'blue', label: 'Blue', category: 'Primary Colors' },
-  { value: 'yellow', label: 'Yellow', category: 'Secondary Colors' },
-  { value: 'orange', label: 'Orange', category: 'Secondary Colors' },
-  { value: 'purple', label: 'Purple', category: 'Secondary Colors' },
-  { value: 'pink', label: 'Pink', category: 'Tertiary Colors' },
-  { value: 'brown', label: 'Brown', category: 'Tertiary Colors' },
-  { value: 'gray', label: 'Gray', category: 'Tertiary Colors' },
-  { value: 'black', label: 'Black', category: 'Tertiary Colors' },
-];
+// export const Disabled: Story = {
+//   args: {
+//     disabled: true,
+//     value: '',
+//     options: mockOptions,
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
 
-export const WithCategories: Story = {
-  args: {
-    value: '',
-    isSearchable: true,
-    isClearable: true,
-    options: mockOptionsWithCategories,
-    onChange: (value) => console.log('onChange', value),
-  },
-};
+// export const SmallButtonLongText = () => (
+//   <div style={{ width: 200 }}>
+//     <SingleSelectField
+//       isClearable
+//       value={mockLongOptions[0]!.value}
+//       options={mockLongOptions}
+//       isSearchable
+//       onChange={(value) => console.log('onChange', value)}
+//     />
+//   </div>
+// );
+
+// export const SmallButtonSmallText = () => (
+//   <div style={{ width: 200 }}>
+//     <SingleSelectField
+//       isClearable
+//       value={mockOptions[0]!.value}
+//       options={mockOptions}
+//       isSearchable
+//       onChange={(value) => console.log('onChange', value)}
+//     />
+//   </div>
+// );
+
+// export const SmallButtonRightSideLabel = () => (
+//   <div style={{ width: 200 }}>
+//     <SingleSelectField
+//       isClearable
+//       value={mockOptionsWithRightLabel[0]!.value}
+//       options={mockOptionsWithRightLabel}
+//       isSearchable
+//       onChange={(value) => console.log('onChange', value)}
+//     />
+//   </div>
+// );
+
+// export const WithStartIcon: Story = {
+//   args: {
+//     value: '',
+//     startIcon: IconPalette,
+//     isSearchable: true,
+//     isClearable: true,
+//     options: mockOptions,
+//     placeholder: 'Select a color',
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
+
+// export const WithState: Story = {
+//   render: (args) => {
+//     const [{ value }, updateArgs] = useArgs();
+
+//     return (
+//       <SingleSelectField
+//         {...args}
+//         value={value}
+//         onChange={(newValue) => updateArgs({ value: newValue })}
+//       />
+//     );
+//   },
+//   args: {
+//     value: '',
+//     isClearable: true,
+//     isSearchable: true,
+//     options: mockOptions,
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
+
+// export const WithError: Story = {
+//   args: {
+//     value: '',
+//     error: true,
+//     errorMessage: 'Please select an option',
+//     isSearchable: true,
+//     options: mockOptions,
+//     placeholder: 'Select a color',
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
+
+// export const WithErrorAndValue: Story = {
+//   args: {
+//     value: mockOptions[0]!.value,
+//     error: true,
+//     errorMessage: 'This selection is not available',
+//     isSearchable: true,
+//     isClearable: true,
+//     options: mockOptions,
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };
+
+// const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+//   { value: 'red', label: 'Red', category: 'Primary Colors' },
+//   { value: 'green', label: 'Green', category: 'Primary Colors' },
+//   { value: 'blue', label: 'Blue', category: 'Primary Colors' },
+//   { value: 'yellow', label: 'Yellow', category: 'Secondary Colors' },
+//   { value: 'orange', label: 'Orange', category: 'Secondary Colors' },
+//   { value: 'purple', label: 'Purple', category: 'Secondary Colors' },
+//   { value: 'pink', label: 'Pink', category: 'Tertiary Colors' },
+//   { value: 'brown', label: 'Brown', category: 'Tertiary Colors' },
+//   { value: 'gray', label: 'Gray', category: 'Tertiary Colors' },
+//   { value: 'black', label: 'Black', category: 'Tertiary Colors' },
+// ];
+
+// export const WithCategories: Story = {
+//   args: {
+//     value: '',
+//     isSearchable: true,
+//     isClearable: true,
+//     options: mockOptionsWithCategories,
+//     onChange: (value) => console.log('onChange', value),
+//   },
+// };

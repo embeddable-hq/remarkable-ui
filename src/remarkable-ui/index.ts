@@ -23,7 +23,7 @@ export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectF
 export { Switch } from './shared/Switch/Switch';
 
 // Editors
-export { SelectButton } from './editors/select/shared/SelectButton/SelectButton';
+export { SelectFieldTrigger } from './editors/select/shared/SelectFieldTrigger/SelectFieldTrigger';
 export { SelectList } from './editors/select/shared/SelectList/SelectList';
 export { SingleSelectField } from './editors/select/SingleSelectField/SingleSelectField';
 export { TextField } from './editors/TextField/TextField';

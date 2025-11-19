@@ -1,10 +1,9 @@
-import styles from './SelectButton.module.css';
+import styles from './SelectFieldTrigger.module.css';
 import { IconCaretDownFilled, IconLoader2, IconX, TablerIcon } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { Typography } from '../../../../shared/Typography/Typography';
 
-type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+type SelectFieldTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   startIcon?: TablerIcon;
   valueLabel?: string;
   placeholder?: string;
@@ -14,7 +13,7 @@ type SelectButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   error?: boolean;
 };
 
-export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
+export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTriggerProps>(
   (
     {
       startIcon: StartIcon,
@@ -41,20 +40,20 @@ export const SelectButton = forwardRef<HTMLButtonElement, SelectButtonProps>(
     return (
       <button
         ref={ref}
-        className={clsx(styles.button, valueLabel && styles.hasValue, error && styles.buttonError)}
+        className={clsx(
+          styles.selectFieldTrigger,
+          valueLabel && styles.filled,
+          error && styles.error,
+        )}
         {...props}
       >
-        <span className={styles.leftContent}>
-          {StartIcon && <StartIcon />}
-          <Typography as="span">{displayValue}</Typography>
-        </span>
-        <span className={styles.rightContent}>
-          {showClearButton && <IconX onPointerDown={handleClear} />}
-          {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}
-        </span>
+        {StartIcon && <StartIcon />}
+        <span>{displayValue}</span>
+        {showClearButton && <IconX onPointerDown={handleClear} />}
+        {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}
       </button>
     );
   },
 );
 
-SelectButton.displayName = 'SelectButton';
+SelectFieldTrigger.displayName = 'SelectFieldTrigger';
