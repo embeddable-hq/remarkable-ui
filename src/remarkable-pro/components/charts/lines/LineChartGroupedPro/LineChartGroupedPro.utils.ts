@@ -5,9 +5,8 @@ import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { mergician } from 'mergician';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
 import { getColor } from '../../../../theme/styles/styles.utils';
-import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { setColorAlpha } from '../../../../utils.ts/color.utils';
-import { getStyleNumber } from '../../../../../remarkable-ui';
+import { chartContrastColors, getStyleNumber } from '../../../../../remarkable-ui';
 import { getLineChartProOptions, LineChartProOptionsClick } from '../lines.utils';
 
 export const getLineChartGroupedProData = (

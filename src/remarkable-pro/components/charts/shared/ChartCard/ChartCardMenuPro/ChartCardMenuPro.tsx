@@ -7,7 +7,7 @@ import { Theme } from '../../../../../theme/theme.types';
 import {
   Dropdown,
   ActionIcon,
-  SelectList,
+  SelectFieldContent,
   SelectListOption,
 } from '../../../../../../remarkable-ui';
 import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro.types';
@@ -48,7 +48,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
       align="end"
       triggerComponent={isLoading ? <ChartCardLoading /> : <ActionIcon icon={IconDotsVertical} />}
     >
-      <SelectList className={styles.list} autoFocus>
+      <SelectFieldContent className={styles.list} autoFocus>
         {options.map((option, index) => {
           const label = i18n.t(option.labelKey);
 
@@ -63,7 +63,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
             />
           );
         })}
-      </SelectList>
+      </SelectFieldContent>
     </Dropdown>
   );
 };

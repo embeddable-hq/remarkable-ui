@@ -3,7 +3,7 @@ import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import styles from './EditorCard.module.css';
 import { FC } from 'react';
 import { Theme } from '../../../../theme/theme.types';
-import { Card, CardContent, CardContentInfo, CardHeader } from '../../../../../remarkable-ui';
+import { Card, CardContent, CardFeedback, CardHeader } from '../../../../../remarkable-ui';
 import { IconAlertCircle } from '@tabler/icons-react';
 
 type EditorCardProps = {
@@ -26,8 +26,8 @@ export const EditorCard: FC<EditorCardProps> = ({
   const getDisplay = () => {
     if (errorMessage) {
       return (
-        <CardContentInfo
-          className={styles.error}
+        <CardFeedback
+          variant="error"
           icon={IconAlertCircle}
           title={i18n.t('editors.errorTitle')}
           message={errorMessage}

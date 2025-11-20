@@ -2,15 +2,15 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
-import { getStyleNumber } from '../../../../../remarkable-ui';
-import { Theme } from '../../../../theme/theme.types';
-import { getColor } from '../../../../theme/styles/styles.utils';
-import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
-import { i18n } from '../../../../theme/i18n/i18n';
 import {
+  chartContrastColors,
   chartjsAxisOptionsScalesTicksDefault,
   chartjsAxisOptionsScalesTitle,
-} from '../../../../../remarkable-ui/charts/chartjs.cartesian.constants';
+  getStyleNumber,
+} from '../../../../../remarkable-ui';
+import { Theme } from '../../../../theme/theme.types';
+import { getColor } from '../../../../theme/styles/styles.utils';
+import { i18n } from '../../../../theme/i18n/i18n';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
 import { getLineChartProOptions, LineChartProOptionsClick } from '../lines.utils';

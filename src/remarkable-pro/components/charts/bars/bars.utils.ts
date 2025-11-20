@@ -5,9 +5,8 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { groupTailAsOther } from '../charts.utils';
 import { getColor } from '../../../theme/styles/styles.utils';
-import { chartColors } from '../../../../remarkable-ui';
+import { chartColors, chartContrastColors } from '../../../../remarkable-ui';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
-import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
 import { Context } from 'chartjs-plugin-datalabels';
 
 export const getBarStackedChartProData = (

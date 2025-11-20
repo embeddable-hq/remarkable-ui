@@ -4,13 +4,17 @@ import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
 import { resolveI18nProps } from '../../../component.utils';
 import { DataResponse, Dimension, DimensionOrMeasure, OrderDirection } from '@embeddable.com/core';
-import { getStyleNumber, getTableTotalPages, TablePaginated } from '../../../../../remarkable-ui';
+import {
+  getStyleNumber,
+  getTableTotalPages,
+  TablePaginated,
+  useTableGetRowsPerPage,
+  useDebounce,
+} from '../../../../../remarkable-ui';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
-import { useTableGetRowsPerPage } from '../../../../../remarkable-ui/charts/tables/Table/Table.hooks';
 import { getTableHeaders, getTableRows } from '../tables.utils';
 import { ChartCardMenuProOptionOnClickProps } from '../../shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
-import { useDebounce } from '../../../../../remarkable-ui/hooks/useDebounce.hook';
 
 const hasSortChanges = (
   sort: TableChartPaginatedProState['sort'],
