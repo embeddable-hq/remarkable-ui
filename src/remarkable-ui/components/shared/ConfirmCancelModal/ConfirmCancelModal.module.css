@@ -1,7 +1,0 @@
-.actions {
-  display: flex;
-  gap: var(--TEMP-form-padding-small, 0.5rem);
-  justify-content: flex-end;
-  padding-top: var(--TEMP-card-padding-default);
-  overflow: unset;
-}

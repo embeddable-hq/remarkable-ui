@@ -13,10 +13,8 @@ export {
 } from './components/editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
 export { Button } from './components/shared/Button/Button';
 export { GhostButton } from './components/shared/GhostButton/GhostButton';
-export { PageOverlay } from './components/shared/PageOverlay';
-export type { PageOverlayProps } from './components/shared/PageOverlay';
-export { ConfirmCancelModal } from './components/shared/ConfirmCancelModal';
-export type { ConfirmCancelModalProps } from './components/shared/ConfirmCancelModal';
+export { PageOverlay } from './components/shared/PageOverlay/PageOverlay';
+export type { PageOverlayProps } from './components/shared/PageOverlay/PageOverlay.types';
 export { MultiSelectField } from './components/editors/selects/MultiSelectField/MultiSelectField';
 export { Switch } from './components/shared/Switch/Switch';
 export { FieldFeedback, FieldFeedbackProps } from './components/shared/Field/FieldFeedback';

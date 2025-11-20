@@ -3,7 +3,7 @@ import styles from './Card.module.css';
 import clsx from 'clsx';
 
 type CardProps = React.HTMLAttributes<HTMLDivElement> & {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(

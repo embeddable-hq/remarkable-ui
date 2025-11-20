@@ -4,9 +4,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--TEMP-foreground-color-neutral);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--em-pageoverlay-background, rgba(33, 33, 41, 0.8));
 }
