@@ -1,4 +1,4 @@
-// Components
+// Shared
 export { Skeleton } from './components/shared/Skeleton/Skeleton';
 export { EmptyStateSkeleton } from './components/shared/EmptyStateSkeleton/EmptyStateSkeleton';
 export { Card, CardContent, CardHeader } from './components/shared/Card/Card';
@@ -30,19 +30,20 @@ export { SingleSelectField } from './components/editors/selects/SingleSelectFiel
 export { TextField } from './components/editors/inputs/TextField/TextField';
 export { NumberField } from './components/editors/inputs/NumberField/NumberField';
 export { SelectFieldCategory } from './components/editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+
 // Charts
 export { BarChart } from './components/charts/bars/BarChart';
 export { getBarChartData, getBarChartOptions } from './components/charts/bars/bars.utils';
 export { LineChart } from './components/charts/lines/LineChart';
 export { getLineChartData, getLineChartOptions } from './components/charts/lines/lines.utils';
 export { KpiChart } from './components/charts/kpis/KpiChart';
-export { DonutChart } from './components/charts/pies/DonutChart';
-export { PieChart } from './components/charts/pies/PieChart';
+export { DonutChart } from './components/charts/pies/DonutChart/DonutChart';
+export { PieChart } from './components/charts/pies/PieChart/PieChart';
 export {
-  defaultPieChartOptions,
-  defaultDonutChartOptions,
-  defaultDonutLabelChartOptions,
-} from './components/charts/pies/pies.constants';
+  getPieChartData,
+  getPieChartOptions,
+  getDonutChartOptions,
+} from './components/charts/pies/pies.utils';
 export { TablePaginated } from './components/charts/tables/Table/TablePaginated';
 export * from './components/charts/tables/Table/table.types';
 export { PivotTable } from './components/charts/tables/PivotTable/PivotTable';
