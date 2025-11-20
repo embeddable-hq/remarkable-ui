@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { NumberField } from './NumberField';
 import { IconBoltFilled } from '@tabler/icons-react';
 import { useArgs } from 'storybook/internal/preview-api';
-import { storybookArgTypesIcon } from '../../storybook.constants';
+import { storybookArgTypesIcon } from '../../../storybook.constants';
 
 const meta = {
   title: 'Editors/✅ NumberField',

@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react-webpack5';
 
 import { EditorCard } from './EditorCard';
-import { SingleSelectField } from '../../../../../remarkable-ui/editors/select/SingleSelectField/SingleSelectField';
+import { SingleSelectField } from '../../../../../remarkable-ui/editors/selects/SingleSelectField/SingleSelectField';
 
 const meta = {
   component: EditorCard,

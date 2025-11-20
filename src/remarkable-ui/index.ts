@@ -10,28 +10,28 @@ export { Dropdown } from './shared/Dropdown/Dropdown';
 export {
   SelectListOption,
   type SelectListOptionProps,
-} from './editors/select/shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+} from './editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
 export { Button } from './shared/Button/Button';
 export { GhostButton } from './shared/GhostButton/GhostButton';
 export { PageOverlay } from './shared/PageOverlay';
 export type { PageOverlayProps } from './shared/PageOverlay';
 export { ConfirmCancelModal } from './shared/ConfirmCancelModal';
 export type { ConfirmCancelModalProps } from './shared/ConfirmCancelModal';
-export { MultiSelectField } from './editors/select/MultiSelectField/MultiSelectField';
+export { MultiSelectField } from './editors/selects/MultiSelectField/MultiSelectField';
 export { Switch } from './shared/Switch/Switch';
 export { FieldFeedback, FieldFeedbackProps } from './shared/Field/FieldFeedback';
 export { FieldHeader, FieldHeaderProps } from './shared/Field/FieldHeader';
 
 // Editors
-export { SelectFieldTrigger } from './editors/select/shared/SelectFieldTrigger/SelectFieldTrigger';
+export { SelectFieldTrigger } from './editors/selects/shared/SelectFieldTrigger/SelectFieldTrigger';
 export {
   SelectFieldContent,
   SelectFieldContentList,
-} from './editors/select/shared/SelectFieldContent/SelectFieldContent';
-export { SingleSelectField } from './editors/select/SingleSelectField/SingleSelectField';
-export { TextField } from './editors/TextField/TextField';
-export { NumberField } from './editors/NumberField/NumberField';
-export { SelectFieldCategory } from './editors/select/shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+} from './editors/selects/shared/SelectFieldContent/SelectFieldContent';
+export { SingleSelectField } from './editors/selects/SingleSelectField/SingleSelectField';
+export { TextField } from './editors/inputs/TextField/TextField';
+export { NumberField } from './editors/inputs/NumberField/NumberField';
+export { SelectFieldCategory } from './editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
 // Charts
 export { BarChart } from './charts/bars/BarChart';
 export { getBarChartData, getBarChartOptions } from './charts/bars/bars.utils';

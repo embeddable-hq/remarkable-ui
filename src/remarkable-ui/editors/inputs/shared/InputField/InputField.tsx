@@ -2,8 +2,8 @@ import { IconX, TablerIcon } from '@tabler/icons-react';
 import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
-import { FieldHeader, FieldHeaderProps } from '../../shared/Field/FieldHeader';
-import { FieldFeedback } from '../../shared/Field/FieldFeedback';
+import { FieldHeader, FieldHeaderProps } from '../../../../shared/Field/FieldHeader';
+import { FieldFeedback } from '../../../../shared/Field/FieldFeedback';
 
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
@@ -41,9 +41,9 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     const showClearButton = value && clearable;
     const hasError = error || errorMessage;
     return (
-      <div>
+      <div className={className}>
         <FieldHeader label={label} required={required} requiredLabel={requiredLabel} />
-        <div className={clsx(styles.input, hasError && styles.error, className)}>
+        <div className={clsx(styles.input, hasError && styles.error)}>
           {StartIcon && <StartIcon />}
           <input
             ref={ref}

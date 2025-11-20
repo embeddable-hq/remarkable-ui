@@ -1,53 +1,56 @@
 import { FC, Fragment, useEffect, useMemo, useRef, useState } from 'react';
-import { TextField } from '../../TextField/TextField';
-import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
-import { Dropdown } from '../../../shared/Dropdown/Dropdown';
-import {
-  SelectFieldContent,
-  SelectFieldContentList,
-} from '../shared/SelectFieldContent/SelectFieldContent';
 import {
   SelectListOption,
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
 } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
-import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
-import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
 import { debounce } from '../../../utils/debounce.utils';
-import { IconSearch, TablerIcon } from '@tabler/icons-react';
+import { Dropdown } from '../../../shared/Dropdown/Dropdown';
+import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
+import {
+  SelectFieldContent,
+  SelectFieldContentList,
+} from '../shared/SelectFieldContent/SelectFieldContent';
+import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
+import { IconSearch, IconSquare, IconSquareCheckFilled, TablerIcon } from '@tabler/icons-react';
+import { Button } from '../../../shared/Button/Button';
+import styles from '../selects.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
-import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
-import styles from './SingleSelectField.module.css';
+import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
 import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
+import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
+import { TextField } from '../../inputs/TextField/TextField';
 
-export type SingleSelectFieldProps = {
-  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
+export type MultiSelectFieldProps = {
   startIcon?: TablerIcon;
-  value?: string;
   disabled?: boolean;
-  placeholder?: string;
-  isSearchable?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
+  isSearchable?: boolean;
   noOptionsMessage?: string;
-  onChange: (value: string) => void;
+  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
+  placeholder?: string;
+  submitLabel?: string;
+  values?: string[];
+  onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
 } & FieldHeaderProps;
 
-export const SingleSelectField: FC<SingleSelectFieldProps> = ({
+export const MultiSelectField: FC<MultiSelectFieldProps> = ({
+  startIcon,
   label,
   required,
-  value = '',
-  startIcon,
-  options,
   disabled,
-  placeholder,
-  isSearchable,
   isClearable,
   isLoading,
-  noOptionsMessage = 'No options available',
+  isSearchable,
+  noOptionsMessage,
+  options,
+  placeholder,
+  submitLabel = 'Apply',
+  values = [],
   onChange,
   onSearch,
   error = false,
@@ -55,22 +58,35 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [selectedLabel, setSelectedLabel] = useState<string>(value);
+  const [preValues, setPreValues] = useState<string[]>(values);
+  const [selectedLabel, setSelectedLabel] = useState<string>('');
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {
-    if (!value) {
-      setSelectedLabel('');
+    setPreValues(values);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(values)]);
+
+  useEffect(() => {
+    if (isLoading) {
       return;
     }
 
-    const option = options.find((opt) => opt.value === value);
-    if (option) {
-      setSelectedLabel(option.label);
+    if (!values || values.length === 0) {
+      setSelectedLabel('');
+      return;
     }
-  }, [value, options]);
+    const selectedOptions = values.map(
+      (value) => options.find((o) => o.value === value)?.label ?? value,
+    );
+
+    if (selectedOptions.length > 0) {
+      const newLabel = selectedOptions.join(', ');
+      setSelectedLabel(`(${selectedOptions.length}) ${newLabel}`);
+    }
+  }, [values, options, isLoading]);
 
   const debouncedSearch = useMemo(() => (onSearch ? debounce(onSearch) : undefined), [onSearch]);
 
@@ -81,22 +97,41 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
-  const handleChange = (newValue?: string) => {
-    setSearchValue('');
-    onChange(newValue ?? '');
-    onSearch?.('');
+  const isSubmitDisabled =
+    preValues.every((preValue) => values.includes(preValue)) &&
+    values.every((value) => preValues.includes(value));
 
-    if (newValue === '') {
-      setSelectedLabel('');
+  const handleSelectOption = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    newValue?: string,
+  ) => {
+    e.preventDefault();
+
+    if (!newValue) return;
+
+    if (preValues.includes(newValue)) {
+      setPreValues(preValues.filter((v) => v !== newValue));
     } else {
-      const option = options.find((opt) => opt.value === newValue);
-      if (option) setSelectedLabel(option.label);
+      setPreValues([...preValues, newValue]);
     }
   };
 
   const handleSearch = (newSearch: string) => {
     setSearchValue(newSearch);
     debouncedSearch?.(newSearch);
+  };
+
+  const handleSave = (newValues: string[]) => {
+    onChange(newValues);
+    setIsOpen(false);
+    setSearchValue('');
+    onSearch?.('');
+  };
+
+  const handleClearAll = () => {
+    setSearchValue('');
+    onSearch?.('');
+    onChange([]);
   };
 
   const hasError = error || !!errorMessage;
@@ -111,11 +146,11 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         triggerComponent={
           <SelectFieldTrigger
             startIcon={startIcon}
-            aria-label="Select option"
+            aria-label="Select options"
             placeholder={placeholder}
             disabled={disabled}
             valueLabel={selectedLabel}
-            onClear={() => handleChange('')}
+            onClear={handleClearAll}
             isClearable={isClearable}
             isLoading={isLoading}
             error={hasError}
@@ -144,8 +179,14 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                     {categoryOptions.map((option) => (
                       <SelectListOption
                         key={option?.value ?? option.label}
-                        onClick={() => handleChange(option?.value)}
-                        isSelected={option.value === value}
+                        onClick={(e) => handleSelectOption(e, option.value)}
+                        startIcon={
+                          preValues.includes(option.value!) ? (
+                            <IconSquareCheckFilled />
+                          ) : (
+                            <IconSquare />
+                          )
+                        }
                         {...option}
                       />
                     ))}
@@ -154,15 +195,27 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
               : displayOptions.map((option) => (
                   <SelectListOption
                     key={option?.value ?? option.label}
-                    onClick={() => handleChange(option?.value)}
-                    isSelected={option.value === value}
+                    onClick={(e) => handleSelectOption(e, option.value)}
+                    startIcon={
+                      preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
+                    }
                     {...option}
                   />
                 ))}
-            {options.length === 0 && (
+            {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
           </SelectFieldContentList>
+          <Button
+            className={styles.submitButton}
+            disabled={isSubmitDisabled || isLoading}
+            variant="primary"
+            size="medium"
+            onClick={() => handleSave(preValues)}
+            role="button"
+          >
+            {submitLabel}
+          </Button>
         </SelectFieldContent>
       </Dropdown>
       {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}

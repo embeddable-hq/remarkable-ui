@@ -1,5 +1,5 @@
-import { InputField, InputFieldProps } from '../InputField/InputField';
 import { forwardRef } from 'react';
+import { InputField, InputFieldProps } from '../shared/InputField/InputField';
 
 type NumberFieldProps = Omit<InputFieldProps, 'value' | 'onChange'> & {
   value?: number | null;

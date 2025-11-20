@@ -1,5 +1,5 @@
 import { DataResponse, Dimension } from '@embeddable.com/core';
-import { SingleSelectField } from '../../../../remarkable-ui/editors/select/SingleSelectField/SingleSelectField';
+import { SingleSelectField } from '../../../../remarkable-ui/editors/selects/SingleSelectField/SingleSelectField';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme/theme.types';
