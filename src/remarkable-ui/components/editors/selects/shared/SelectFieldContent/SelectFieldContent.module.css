@@ -26,7 +26,6 @@
   position: relative;
   height: 100%;
   overflow: auto;
-  gap: var(--em-selectfield-content-gap, 0.5rem);
 }
 
 .selectFieldContentList.disabled {

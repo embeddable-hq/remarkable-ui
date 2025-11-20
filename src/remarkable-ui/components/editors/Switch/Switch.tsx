@@ -1,7 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './Switch.module.css';
-import { Typography } from '../Typography/Typography';
 
 type SwitchProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   onChange?: (checked: boolean) => void;
@@ -35,7 +34,7 @@ export const Switch: React.FC<SwitchProps> = ({
     <label
       className={clsx(
         className,
-        styles.switchLabel,
+        styles.switch,
         checked && styles.checked,
         disabled && styles.disabled,
       )}
@@ -45,7 +44,6 @@ export const Switch: React.FC<SwitchProps> = ({
         checked={checked}
         onChange={handleChange}
         disabled={disabled}
-        className={styles.switchInput}
         role="switch"
         aria-checked={checked}
         aria-disabled={disabled}
@@ -54,11 +52,7 @@ export const Switch: React.FC<SwitchProps> = ({
       <span className={styles.switchTrack} aria-hidden="true">
         <span className={styles.switchThumb} aria-hidden="true" />
       </span>
-      {label && (
-        <Typography as="span" className={clsx(styles.labelText, disabled && styles.disabled)}>
-          {label}
-        </Typography>
-      )}
+      {label && <span className={clsx(styles.switchLabel)}>{label}</span>}
     </label>
   );
 };
