@@ -6,6 +6,19 @@ import { pieDataMock } from '../pies.mock';
 const meta = {
   title: 'Charts/✅ PieChart',
   component: PieChart,
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          width: 250,
+          height: 250,
+          display: 'flex',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     data: pieDataMock,
   },

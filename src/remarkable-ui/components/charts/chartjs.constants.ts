@@ -21,8 +21,8 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
   legend: {
     position: 'bottom',
     labels: {
-      boxWidth: getStyleNumber('--em-chart-category-size', '0.75rem'),
-      boxHeight: getStyleNumber('--em-chart-category-size', '0.75rem'),
+      boxWidth: (getStyleNumber('--em-chart-category-size', '0.75rem') as number) / 2,
+      boxHeight: (getStyleNumber('--em-chart-category-size', '0.75rem') as number) / 2,
       usePointStyle: true,
       color: getStyle('--em-chart-category-color', '#5C5C66'),
       padding: getStyleNumber('--em-chart-category-list-gap', '1rem)'),

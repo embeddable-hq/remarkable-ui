@@ -5,8 +5,10 @@ import { LineChartConfigurationProps } from './lines.types';
 import {
   chartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
+  chartjsAxisOptionsScalesGridColor,
+  chartjsAxisOptionsScalesTicksDefault,
+  chartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
-import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
 
 export const getLineChartData = (data: ChartData<'line'>) => {
   const mergedData: ChartData<'line', number[], unknown> = {
@@ -35,12 +37,12 @@ export const getLineChartOptions = (
     },
     elements: {
       point: {
-        radius: getStyleNumber('--TEMP-line-chart-point-size-default')! / 2,
-        hoverRadius: getStyleNumber('--TEMP-line-chart-point-size-hover')! / 2,
+        // radius: getStyleNumber('--TEMP-line-chart-point-size-default')! / 2,
+        // hoverRadius: getStyleNumber('--TEMP-line-chart-point-size-hover')! / 2,
       },
       line: {
-        tension: getStyleNumber('--TEMP-line-chart-line-tension'),
-        borderWidth: getStyleNumber('--TEMP-line-chart-border-width-default'),
+        // tension: getStyleNumber('--TEMP-line-chart-line-tension'),
+        // borderWidth: getStyleNumber('--TEMP-line-chart-border-width-default'),
       },
     },
     layout: {
@@ -70,9 +72,11 @@ export const getLineChartOptions = (
     },
     scales: {
       x: {
-        ticks: {
-          color: getStyle('--TEMP-chart-grid-font-color-default'),
+        grid: { display: false },
+        border: {
+          display: false,
         },
+        ticks: chartjsAxisOptionsScalesTicksDefault,
         title: {
           display: Boolean(options.xAxisLabel),
           text: options.xAxisLabel,
@@ -80,10 +84,12 @@ export const getLineChartOptions = (
         reverse: options.reverseXAxis,
       },
       y: {
-        ticks: {
-          color: getStyle('--TEMP-chart-grid-font-color-muted'),
+        beginAtZero: true,
+        ticks: chartjsAxisOptionsScalesTicksMuted,
+        grid: { display: true, color: chartjsAxisOptionsScalesGridColor },
+        border: {
+          display: false,
         },
-        grid: { display: true },
         type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
           display: Boolean(options.yAxisLabel),

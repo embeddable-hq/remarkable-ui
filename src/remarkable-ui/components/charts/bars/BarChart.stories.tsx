@@ -4,7 +4,7 @@ import { BarChart } from './BarChart';
 import { ChartData } from 'chart.js';
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-const barChartData: ChartData<'bar'> = {
+const data: ChartData<'bar'> = {
   labels,
   datasets: [
     {
@@ -27,6 +27,7 @@ const meta = {
         style={{
           width: 500,
           height: 500,
+          display: 'flex',
         }}
       >
         <Story />
@@ -34,7 +35,7 @@ const meta = {
     ),
   ],
   args: {
-    data: barChartData,
+    data,
     showValueLabels: true,
     showLegend: true,
     showTooltips: true,
@@ -78,22 +79,15 @@ export const LogarithmicScale: Story = {
   },
 };
 
+export const widthRange: Story = {
+  args: {
+    yAxisRangeMin: 10,
+    yAxisRangeMax: 70,
+  },
+};
+
 export const Horizontal: Story = {
   args: {
-    horizontal: true,
-  },
-};
-
-export const HorizontalStacked: Story = {
-  args: {
-    stacked: true,
-    horizontal: true,
-  },
-};
-
-export const HorizontalLogarithmicScale: Story = {
-  args: {
-    showLogarithmicScale: true,
     horizontal: true,
   },
 };
