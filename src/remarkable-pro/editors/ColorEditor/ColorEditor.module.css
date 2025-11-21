@@ -1,0 +1,24 @@
+.colorInput {
+  height: var(--space-500, 2.5rem);
+  width: var(--space-500, 2.5rem);
+  padding: var(--space-100, 0.5rem);
+  gap: var(--space-100, 0.5rem);
+  border-radius: var(--radius-050, 0.25rem);
+  background: var(--backdrop-elevation-0, #fff);
+  color: var(--content-default, #3a3e45);
+  border: var(--border-xsmall, 0.0625rem) solid var(--dividers-default, #a8acb5);
+}
+
+.colorInput::-webkit-color-swatch-wrapper {
+  padding: 0; /* removes inner padding */
+}
+
+.colorInput::-webkit-color-swatch {
+  border: unset; /* INNER color box border */
+  border-radius: 50%;
+}
+
+.colorInput::-moz-color-swatch {
+  border: unset; /* Firefox INNER border */
+  border-radius: 50%;
+}

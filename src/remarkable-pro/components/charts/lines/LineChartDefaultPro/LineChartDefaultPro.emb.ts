@@ -11,7 +11,6 @@ import {
   showLogarithmicScale,
   showTooltips,
   showValueLabels,
-  subInputColor,
   title,
   xAxisLabel,
   yAxisLabel,
@@ -21,6 +20,7 @@ import {
 import LineChartDefaultPro from './index';
 import { loadData, Value } from '@embeddable.com/core';
 import { LineChartProOptionsClickArg } from '../lines.utils';
+import ColorType from '../../../../editors/ColorEditor/Color.type.emb';
 
 export const meta = {
   name: 'LineChartDefaultPro',
@@ -34,7 +34,8 @@ export const meta = {
         ...measures.inputs,
         { ...genericBoolean, name: 'fillUnderLine', label: 'Fill under line' },
         {
-          ...subInputColor,
+          type: ColorType,
+          category: 'Component Settings',
           name: 'lineColor',
           label: 'Line color',
         },
