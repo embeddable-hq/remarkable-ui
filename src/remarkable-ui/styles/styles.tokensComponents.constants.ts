@@ -1,4 +1,10 @@
 export const stylesTokensComponents = {
+  '--em-linechart-line-dash': 'var(--em-core-size--0100)',
+  '--em-linechart-line-gap': 'var(--em-core-size--0100)',
+  '--em-linechart-line-width': '2px',
+  '--em-linechart-point-size': 'var(--em-core-size--0200)',
+  '--em-linechart-point-size--hover': 'var(--em-core-size--0300)',
+
   '--em-actionicon-background': 'var(--em-sem-background--light)',
   '--em-actionicon-background--active': 'var(--em-sem-background--muted)',
   '--em-actionicon-background--hover': 'var(--em-sem-background--subtle)',

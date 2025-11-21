@@ -9,6 +9,7 @@ import {
   chartjsAxisOptionsScalesTicksDefault,
   chartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
+import { getStyleNumber } from '../../../styles/styles.utils';
 
 export const getLineChartData = (data: ChartData<'line'>) => {
   const mergedData: ChartData<'line', number[], unknown> = {
@@ -37,12 +38,12 @@ export const getLineChartOptions = (
     },
     elements: {
       point: {
-        // radius: getStyleNumber('--TEMP-line-chart-point-size-default')! / 2,
-        // hoverRadius: getStyleNumber('--TEMP-line-chart-point-size-hover')! / 2,
+        radius: getStyleNumber('--em-linechart-point-size', '0.5rem')! / 2,
+        hoverRadius: getStyleNumber('--em-linechart-point-size--hover', '0.75rem')! / 2,
       },
       line: {
-        // tension: getStyleNumber('--TEMP-line-chart-line-tension'),
-        // borderWidth: getStyleNumber('--TEMP-line-chart-border-width-default'),
+        tension: 0.2,
+        borderWidth: getStyleNumber('--em-linechart-line-width', '0.125rem'),
       },
     },
     layout: {
