@@ -6,7 +6,7 @@ import {
   chartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
 } from '../chartjs.cartesian.constants';
-import { getStyleNumber } from '../../../styles/styles.utils';
+import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
 
 export const getLineChartData = (data: ChartData<'line'>) => {
   const mergedData: ChartData<'line', number[], unknown> = {
@@ -70,6 +70,9 @@ export const getLineChartOptions = (
     },
     scales: {
       x: {
+        ticks: {
+          color: getStyle('--TEMP-chart-grid-font-color-default'),
+        },
         title: {
           display: Boolean(options.xAxisLabel),
           text: options.xAxisLabel,
@@ -77,6 +80,9 @@ export const getLineChartOptions = (
         reverse: options.reverseXAxis,
       },
       y: {
+        ticks: {
+          color: getStyle('--TEMP-chart-grid-font-color-muted'),
+        },
         grid: { display: true },
         type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
         title: {
