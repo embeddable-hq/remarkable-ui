@@ -69,13 +69,13 @@ const getLineChartComparisonDataset = (
     data: processedData,
     backgroundColor: setColorAlpha(
       lineColor,
-      getStyleNumber('--TEMP-line-chart-line-fill-opacity') as number,
+      getStyleNumber('--em-linechart-line-fill-opacity', '0.5') as number,
     ),
     pointBackgroundColor: lineColor,
     borderDash: isLineDashed
       ? [
-          getStyleNumber('--TEMP-line-chart-line-dash-length'),
-          getStyleNumber('--TEMP-line-chart-line-gap-length'),
+          getStyleNumber('--em-linechart-line-dash', '0.25rem'),
+          getStyleNumber('--em-linechart-line-gap', '0.25rem'),
         ]
       : undefined,
     borderColor: lineColor,

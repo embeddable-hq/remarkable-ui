@@ -11,7 +11,6 @@ import {
   chartjsAxisOptionsScalesTicksDefault,
   chartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
-import { chartjsOptions } from '../chartjs.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   return {

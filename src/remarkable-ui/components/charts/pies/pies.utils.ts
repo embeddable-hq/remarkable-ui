@@ -55,7 +55,7 @@ export const getDonutChartOptions = (
               {
                 size: getStyleNumber('--em-piechart-donut-number-line-height', '2.375rem'),
                 weight: getStyleNumber('--em-piechart-donut-number-font-weight', '700'),
-                height: getStyleNumber('--em-pie-chart-donut-number-font-line-height', '2.375rem'),
+                height: getStyleNumber('--em-piechart-donut-number-line-height', '2.375rem'),
                 family: getStyle('--em-piechart-font-family', 'sans-serif'),
               },
               {

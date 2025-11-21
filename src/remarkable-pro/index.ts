@@ -26,7 +26,6 @@ export { resolveI18nProps } from './components/component.utils';
 // Components charts
 export { ChartCard } from './components/charts/shared/ChartCard/ChartCard';
 export * from './components/component.constants';
-export * from './components/charts/pies/pies.utils';
 export * from './components/charts/pies/pies.types';
 export * as PieChartPro from './components/charts/pies/PieChartPro';
 export * as DonutChartPro from './components/charts/pies/DonutChartPro';
