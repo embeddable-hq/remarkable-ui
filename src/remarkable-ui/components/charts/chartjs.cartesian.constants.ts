@@ -32,44 +32,37 @@ export const chartjsAxisOptionsPlugins: Partial<ChartOptions['plugins']> = {
 
 export const chartjsAxisOptionsScalesTicksDefault: Partial<CartesianTickOptions> = {
   display: true,
-  color: getStyle('--TEMP-chart-grid-text-default'),
+  color: getStyle('--em-chart-grid-color', '#212129'),
   font: {
-    size: getStyleNumber('--TEMP-chart-grid-font-size-subtitle'),
-    weight: getStyleNumber('--TEMP-chart-grid-font-weight-subtitle'),
-    lineHeight: getStyleNumber('--TEMP-chart-grid-font-line-height'),
-    // TODO: fix family on dedicated ticket
-    family: 'Inter, sans-serif',
+    size: getStyleNumber('--em-chart-grid-label-font-size', '0.75rem'),
+    family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
+    weight: getStyleNumber('--em-chart-grid-label-font-weight', '400'),
   },
 };
 
 export const chartjsAxisOptionsScalesTicksMuted: Partial<CartesianTickOptions> = {
   display: true,
-  color: getStyle('--TEMP-chart-grid-text-muted'),
+  color: getStyle('--em-chart-grid-color--muted', '#5C5C66'),
   font: {
-    size: getStyleNumber('--TEMP-chart-grid-font-size-subtitle'),
-    weight: getStyleNumber('--TEMP-chart-grid-font-weight-subtitle'),
-    lineHeight: getStyleNumber('--TEMP-chart-grid-font-line-height'),
-    // TODO: fix family on dedicated ticket
-    family: 'Inter, sans-serif',
+    size: getStyleNumber('--em-chart-grid-label-font-size', '0.75rem'),
+    family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
+    weight: getStyleNumber('--em-chart-grid-label-font-weight', '400'),
   },
 };
 
-// TODO: replace type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const chartjsAxisOptionsScalesTitle: any = {
-  color: getStyle('--TEMP-chart-grid-text-default'),
+  color: getStyle('--em-chart-grid-color', '#212129'),
   font: {
-    size: getStyleNumber('--TEMP-chart-grid-font-size-title'),
-    weight: getStyleNumber('--TEMP-chart-grid-font-weight-title'),
-    lineHeight: getStyleNumber('--TEMP-chart-grid-font-line-height'),
-    // TODO: fix family on dedicated ticket
-    family: 'Inter, sans-serif',
+    size: getStyleNumber('--em-chart-grid-title-font-size', '0.875rem'),
+    weight: getStyleNumber('--em-chart-grid-title-font-weight', '700'),
+    family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
   },
 };
 
 export const chartjsAxisOptionsScalesGrid: Partial<GridLineOptions> = {
-  color: getStyle('--TEMP-chart-grid-line-color-light'),
-  lineWidth: getStyleNumber('--TEMP-chart-grid-line-width-100'),
+  color: getStyle('--em-chart-grid-color--light', '#EDEDF1'),
+  lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
 };
 
 export const chartjsAxisOptionsScales: Partial<ChartOptions['scales']> = {
@@ -91,3 +84,21 @@ export const chartjsAxisOptions: Partial<ChartOptions> = mergician(chartjsOption
 });
 
 export const chartjsAxisOptionsLayoutPadding: number = 30;
+
+function isMixedValues(values: number[]): boolean {
+  const hasPos = values.some((v) => v > 0);
+  const hasNeg = values.some((v) => v < 0);
+  return hasPos && hasNeg;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const chartjsAxisOptionsScalesGridColor = (ctx: any) => {
+  if (ctx.tick.value === 0) {
+    const values = ctx.chart.data.datasets[0].data;
+    if (isMixedValues(values)) {
+      return getStyle('--em-chart-grid-color', '#212129');
+    }
+    return getStyle('--em-chart-grid-color--subtle', '#B8B8BD');
+  }
+  return getStyle('--em-chart-grid-color--light', '#EDEDF1');
+};

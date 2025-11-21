@@ -1,13 +1,17 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { chartContrastColors } from '../charts.constants';
-import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
+import { getStyleNumber } from '../../../styles/styles.utils';
 import { mergician } from 'mergician';
 import { BarChartConfigurationProps, BarChartHorizontalConfigurationProps } from './bars.types';
 import { Context } from 'chartjs-plugin-datalabels';
 import {
   chartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
+  chartjsAxisOptionsScalesGridColor,
+  chartjsAxisOptionsScalesTicksDefault,
+  chartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
+import { chartjsOptions } from '../chartjs.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
   return {
@@ -79,16 +83,22 @@ const getBarVerticalChartOptions = (
     scales: {
       x: {
         grid: { display: false },
-        ticks: {
-          color: getStyle('--TEMP-chart-grid-text-default'),
+        border: {
+          display: false,
         },
+        ticks: chartjsAxisOptionsScalesTicksDefault,
         reverse: config.reverseXAxis,
       },
       y: {
-        grid: { display: true },
-        ticks: {
-          color: getStyle('--TEMP-chart-grid-text-muted'),
+        beginAtZero: true,
+        grid: {
+          display: true,
+          color: chartjsAxisOptionsScalesGridColor,
         },
+        border: {
+          display: false,
+        },
+        ticks: chartjsAxisOptionsScalesTicksMuted,
         min: config.yAxisRangeMin,
         max: config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
@@ -132,19 +142,19 @@ const getBarHorizontalChartOptions = (
     },
     scales: {
       x: {
-        grid: { display: true },
-        ticks: {
-          color: getStyle('--TEMP-chart-grid-text-muted'),
-        },
+        grid: { display: true, color: chartjsAxisOptionsScalesGridColor },
+        border: { display: false },
+        ticks: chartjsAxisOptionsScalesTicksMuted,
         min: config.xAxisRangeMin,
         max: config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
       },
       y: {
         grid: { display: false },
-        ticks: {
-          color: getStyle('--TEMP-chart-grid-text-default'),
+        border: {
+          display: false,
         },
+        ticks: chartjsAxisOptionsScalesTicksDefault,
         reverse: config.reverseYAxis,
       },
     },
@@ -157,7 +167,7 @@ export const getBarChartOptions = (
   const baseBarChartOptions: Partial<ChartOptions<'bar'>> = {
     elements: {
       bar: {
-        borderRadius: getStyleNumber('--TEMP-chart-style-border-radius-default'),
+        borderRadius: getStyleNumber('--em-barchart-border-raidus', '0.375rem'),
       },
     },
     plugins: {

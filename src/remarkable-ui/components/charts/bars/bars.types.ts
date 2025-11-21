@@ -9,7 +9,7 @@ export type BarChartDefaultConfigurationProps = {
   showTotalLabels?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
-  stacked?: 'stacked'; // TODO: Add the stacked option "percentage"
+  stacked?: boolean;
 };
 
 export type BarChartConfigurationProps = BarChartDefaultConfigurationProps & {

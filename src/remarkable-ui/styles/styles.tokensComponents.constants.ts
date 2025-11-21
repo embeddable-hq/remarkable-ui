@@ -10,7 +10,8 @@ export const stylesTokensComponents = {
   '--em-actionicon-padding-left-right': 'var(--em-core-spacing--0050)',
   '--em-actionicon-padding-top-bottom': 'var(--em-core-spacing--0200)',
   '--em-actionicon-width': 'var(--em-core-size--0500)',
-
+  '--em-barchart-border-raidus': 'var(--em-core-border-radius--150)',
+  '--em-barchart-label-gap': 'var(--em-core-spacing--0200)',
   '--em-button-background--disabled': 'var(--em-sem-background--light)',
   '--em-button-background--primary': 'var(--em-sem-text--muted)',
   '--em-button-background--primary--active': 'var(--em-sem-text--neutral)',
@@ -37,7 +38,6 @@ export const stylesTokensComponents = {
   '--em-button-padding-left-right--small': 'var(--em-core-spacing--0150)',
   '--em-button-padding-top-bottom--medium': 'var(--em-core-spacing--0300)',
   '--em-button-padding-top-bottom--small': 'var(--em-core-spacing--0150)',
-
   '--em-buttonicon-background--primary': 'var(--em-sem-text--muted)',
   '--em-buttonicon-background--primary--active': 'var(--em-sem-text--neutral)',
   '--em-buttonicon-background--primary--disabled': 'var(--em-sem-background--light)',
@@ -57,7 +57,6 @@ export const stylesTokensComponents = {
   '--em-buttonicon-padding-left-right--small': 'var(--em-core-spacing--0150)',
   '--em-buttonicon-padding-top-bottom--medium': 'var(--em-core-spacing--0300)',
   '--em-buttonicon-padding-top-bottom--small': 'var(--em-core-spacing--0150)',
-
   '--em-card-background': 'var(--em-sem-background)',
   '--em-card-border-radius': 'var(--em-core-border-radius--400)',
   '--em-card-feedback-color--error': 'var(--em-sem-status-error-text)',
@@ -86,8 +85,6 @@ export const stylesTokensComponents = {
   '--em-card-title-font-size': 'var(--em-core-font-size--md)',
   '--em-card-title-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-card-title-line-height': 'var(--em-core-line-height--l)',
-
-  '--em-chart-category-list-gap': '1rem',
   '--em-chart-category-color': 'var(--em-sem-text--muted)',
   '--em-chart-category-font-family': 'var(--em-core-font-family--base)',
   '--em-chart-category-font-size': 'var(--em-core-font-size--xs)',
@@ -96,7 +93,24 @@ export const stylesTokensComponents = {
   '--em-chart-category-indicator-border-raidus': 'var(--em-core-border-radius--500)',
   '--em-chart-category-indicator-color': 'var(--em-sem-chart-color--1)',
   '--em-chart-category-line-height': 'var(--em-core-line-height--sm)',
+  '--em-chart-category-list-gap': 'var(--em-core-spacing--0400)',
   '--em-chart-category-size': 'var(--em-core-size--0300)',
+  '--em-chart-grid-color': 'var(--em-sem-text)',
+  '--em-chart-grid-color--light': 'var(--em-sem-background--light)',
+  '--em-chart-grid-color--muted': 'var(--em-sem-text--muted)',
+  '--em-chart-grid-color--subtle': 'var(--em-sem-text--subtle)',
+  '--em-chart-grid-font-family': 'var(--em-core-font-family--base)',
+  '--em-chart-grid-label-font-size': 'var(--em-core-font-size--xs)',
+  '--em-chart-grid-label-font-weight': 'var(--em-core-font-weight--regular)',
+  '--em-chart-grid-label-line-height': 'var(--em-core-line-height--sm)',
+  '--em-chart-grid-line-width--medium': '2px',
+  '--em-chart-grid-line-width--thick': '4px',
+  '--em-chart-grid-line-width--thin': '1px',
+  '--em-chart-grid-tick-lenght': 'var(--em-core-size--0100)',
+  '--em-chart-grid-tick-width': '1px',
+  '--em-chart-grid-title-font-size': 'var(--em-core-font-size--sm)',
+  '--em-chart-grid-title-font-weight': 'var(--em-core-font-weight--bold)',
+  '--em-chart-grid-title-line-height': 'var(--em-core-line-height--sm)',
   '--em-chart-label-background': 'var(--em-sem-background--neutral)',
   '--em-chart-label-border-radius': 'var(--em-core-border-radius--500)',
   '--em-chart-label-color': 'var(--em-sem-text)',
@@ -115,7 +129,6 @@ export const stylesTokensComponents = {
   '--em-chart-tooltip-title-font-size': 'var(--em-core-font-size--sm)',
   '--em-chart-tooltip-title-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-chart-tooltip-title-line-height': 'var(--em-core-line-height--md)',
-
   '--em-field-feedback-color': 'var(--em-sem-text--muted)',
   '--em-field-feedback-color--error': 'var(--em-sem-status-error-text)',
   '--em-field-feedback-error-font-size': 'var(--em-core-font-size--xs)',
@@ -135,7 +148,6 @@ export const stylesTokensComponents = {
   '--em-field-header-title-font-size': 'var(--em-core-font-size--sm)',
   '--em-field-header-title-font-weight': 'var(--em-core-font-weight--medium)',
   '--em-field-header-title-line-height': 'var(--em-core-line-height--md)',
-
   '--em-ghostbutton-background--active': 'var(--em-sem-background--light)',
   '--em-ghostbutton-background--hover': 'var(--em-sem-background)',
   '--em-ghostbutton-border-radius': 'var(--em-core-border-radius--100)',
@@ -150,9 +162,7 @@ export const stylesTokensComponents = {
   '--em-ghostbutton-label-padding-right': 'var(--em-core-spacing--0100)',
   '--em-ghostbutton-line-height': 'var(--em-core-line-height--sm)',
   '--em-ghostbutton-padding': 'var(--em-core-spacing--0050)',
-
   '--em-overlay-background': 'rgb(33 33 41 / 80%)',
-
   '--em-piechart-donut-color': 'var(--em-sem-text)',
   '--em-piechart-donut-label-font-size': 'var(--em-core-font-size--md)',
   '--em-piechart-donut-label-font-weight': 'var(--em-core-font-weight--medium)',
@@ -161,8 +171,6 @@ export const stylesTokensComponents = {
   '--em-piechart-donut-number-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-piechart-donut-number-line-height': 'var(--em-core-line-height--xl)',
   '--em-piechart-font-family': 'var(--em-core-font-family--base)',
-  '--em-pie-chart-donut-number-font-line-height': 700,
-
   '--em-selectfield-category-background': 'var(--em-sem-background--subtle)',
   '--em-selectfield-category-border-radius': 'var(--em-core-border-radius--150)',
   '--em-selectfield-category-color': 'var(--em-sem-text--neutral)',
@@ -171,7 +179,6 @@ export const stylesTokensComponents = {
   '--em-selectfield-category-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-selectfield-category-line-height': 'var(--em-core-line-height--sm)',
   '--em-selectfield-category-padding': 'var(--em-core-spacing--0100)',
-
   '--em-selectfield-content-background': 'var(--em-sem-background--neutral)',
   '--em-selectfield-content-border-radius': 'var(--em-core-border-radius--300)',
   '--em-selectfield-content-gap': 'var(--em-core-spacing--0200)',
@@ -184,7 +191,6 @@ export const stylesTokensComponents = {
   '--em-selectfield-content-shadow-position-x': 'var(--em-core-shadow-position-x)',
   '--em-selectfield-content-shadow-position-y': 'var(--em-core-shadow-position-y)',
   '--em-selectfield-content-shadow-spread': 'var(--em-core-shadow-spread)',
-
   '--em-selectfield-item-background': 'var(--em-sem-background--neutral)',
   '--em-selectfield-item-background--active': 'var(--em-sem-background--light)',
   '--em-selectfield-item-background--hover': 'var(--em-sem-background)',
@@ -210,7 +216,6 @@ export const stylesTokensComponents = {
   '--em-selectfield-item-label-right-font-weight': 'var(--em-core-font-weight--regular)',
   '--em-selectfield-item-label-right-line-height': 'var(--em-core-line-height--sm)',
   '--em-selectfield-item-padding': 'var(--em-core-spacing--0200)',
-
   '--em-selectfield-trigger-background': 'var(--em-sem-background--neutral)',
   '--em-selectfield-trigger-background--active': 'var(--em-sem-background--light)',
   '--em-selectfield-trigger-background--filled': 'var(--em-sem-background--inverted)',
@@ -232,9 +237,7 @@ export const stylesTokensComponents = {
   '--em-selectfield-trigger-line-height': 'var(--em-core-line-height--sm)',
   '--em-selectfield-trigger-min-width': '64px',
   '--em-selectfield-trigger-padding': 'var(--em-core-spacing--0300)',
-
   '--em-skeleton-border-radius': 'var(--em-core-border-radius--300)',
-
   '--em-switch-label-color': 'var(--em-sem-text)',
   '--em-switch-label-color--disabled': 'var(--em-sem-text--subtle)',
   '--em-switch-label-color-font-size': 'var(--em-core-font-size--md)',
@@ -255,7 +258,6 @@ export const stylesTokensComponents = {
   '--em-switch-thumb-background': 'var(--em-sem-background--neutral)',
   '--em-switch-thumb-background--disabled': 'var(--em-sem-background--light)',
   '--em-switch-thumb-padding': 'var(--em-core-spacing--0050)',
-
   '--em-textfield-background': 'var(--em-sem-background)',
   '--em-textfield-background--active': 'var(--em-sem-background--subtle)',
   '--em-textfield-background--disabled': 'var(--em-sem-background--neutral)',
