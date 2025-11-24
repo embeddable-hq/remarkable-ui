@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { TablePaginated } from './TablePaginated';
+import { TablePaginated as TablePaginatedChart } from './TablePaginated';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableHeaderItem } from './table.types';
-import { Typography } from '../../../shared/Typography/Typography';
 
 const teams = ['Design', 'Engineering', 'Ops', 'Marketing'] as const;
 const titles = ['IC', 'Lead', 'Manager', 'Director'] as const;
@@ -17,11 +16,14 @@ const makeClients = (count = 3): Client[] =>
         team: teams[(i + 2) % teams.length],
         age: 22 + ((i + 3) % 28),
         salary: 52000 + ((i + 5) % 20) * 2500,
+        email: `person${i + 1}@example.com`,
+        location: `City ${((i + 4) % 10) + 1}`,
       }) as Client,
   );
 
 const meta: Meta = {
-  component: TablePaginated,
+  title: 'Charts/✅ Table',
+  component: TablePaginatedChart,
   argTypes: {
     rowHeight: { control: { type: 'number' } },
     headerHeight: { control: { type: 'number' } },
@@ -39,17 +41,19 @@ type Client = {
   title: string;
   team: string;
   salary: number;
+  email: string;
+  location: string;
 };
 
 const headers: TableHeaderItem<Client>[] = [
   {
+    id: 'id',
+    title: 'ID',
+    align: 'right',
+  },
+  {
     id: 'name',
     title: 'Name',
-    cell: (props) => (
-      <td style={{ background: 'yellow' }} className={props.className}>
-        <Typography>{props.value} 💅</Typography>
-      </td>
-    ),
   },
   { id: 'title', title: 'Title', align: 'right' },
   { id: 'team', title: 'Team', align: 'left' },
@@ -58,11 +62,20 @@ const headers: TableHeaderItem<Client>[] = [
     id: 'salary',
     title: 'Salary',
     align: 'right',
-    accessor: (row) => `$${row.salary.toLocaleString()}`,
+  },
+  {
+    id: 'email',
+    title: 'Email',
+    align: 'left',
+  },
+  {
+    id: 'location',
+    title: 'Location',
+    align: 'left',
   },
 ];
 
-export const Basic: Story = {
+export const TablePaginated: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
 
@@ -71,7 +84,7 @@ export const Basic: Story = {
     const rows = makeClients(args.total).slice(start, end);
 
     return (
-      <TablePaginated
+      <TablePaginatedChart
         showIndex={args.showIndex}
         headers={args.headers}
         page={args.page}

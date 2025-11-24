@@ -5,7 +5,6 @@ import {
   IconChevronsRight,
 } from '@tabler/icons-react';
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
-import { Typography } from '../../../../../shared/Typography/Typography';
 import styles from './TablePagination.module.css';
 import { FC, useEffect } from 'react';
 import { TablePaginatedProps } from '../../table.types';
@@ -61,7 +60,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
             aria-label="Previous page"
           />
         </div>
-        <Typography>{paginationLabel ?? `Page ${page + 1} of ${totalPages ?? '?'}`}</Typography>
+        <span>{paginationLabel ?? `Page ${page + 1} of ${totalPages ?? '?'}`}</span>
         <div className={styles.tablePaginationCentralButtons}>
           <ActionIcon
             icon={IconChevronRight}

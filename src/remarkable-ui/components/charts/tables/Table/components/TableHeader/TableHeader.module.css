@@ -1,54 +1,55 @@
-.tableHead tr th {
+.tableHeaderCellIndex {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+  font-style: normal;
+  text-align: left;
+  color: var(--em-table-text-muted, #5c5c66);
+  font-family: var(--em-tablechart-font-family, Inter);
+  font-size: var(--em-tablechart-font-size, 0.75rem);
+  font-weight: var(--em-table-font-font-weight-regular, 400);
+  line-height: var(--em-tablechart-line-height, 0.875rem);
+}
+
+.tableHeaderCellIndex::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: calc(-1 * var(--em-tablechart-border-width, 1px));
+  width: var(--em-tablechart-border-width, 1px);
+  background: var(--em-tablechart-border-color, #ededf1);
+}
+
+.tableHeader .tableHeaderCell {
   padding: unset;
+}
 
-  &.tableHeadIndex {
-    position: sticky;
-    left: 0;
-    z-index: 1;
-    pointer-events: none;
+.tableHeaderCell button {
+  width: 100%;
+  display: flex;
+  border: unset;
+  cursor: pointer;
+  font-style: normal;
+  white-space: nowrap;
+  background-color: unset;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--em-tablechart-cell-padding, 0.5rem) var(--em-tablechart-cell-padding, 0.5rem)
+    var(--em-tablechart-cell-padding, 0.5rem)
+    calc(
+      var(--em-tablechart-cell-padding, 0.5rem) + var(--em-tablechart-padding-left-right, 0.25rem)
+    );
+  color: var(--em-tablechart-color, #212129);
+  font-family: var(--em-tablechart-font-family, sans-serif);
+  font-size: var(--em-tablechart-font-size, 0.75rem);
+  font-weight: var(--em-tablechart-font-weight--medium, 500);
+  line-height: var(--em-tablechart-line-height, 0.875rem);
+  gap: var(--em-tablechart-cell-padding, 0.5rem);
+}
 
-    min-width: var(--TEMP-table-size-min-width_R, 3rem);
-    width: var(--TEMP-table-size-min-width_R, 3rem);
-    background: var(--TEMP-table-background-color-default-header_R, #fff);
-
-    button p {
-      color: var(--TEMP-table-text-muted, #5c5c66);
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: calc(-1 * var(--TEMP-table-border-width-default, 1px));
-      width: var(--TEMP-table-border-width-default, 1px);
-      background: var(--TEMP-table-border-color-default, #ededf1);
-    }
-  }
-
-  .tableHeadCell {
-    cursor: pointer;
-    width: 100%;
-    border: unset;
-    background-color: unset;
-    display: flex;
-    justify-content: space-between;
-    padding: var(--TEMP-table-padding-medium_R, 0.5rem);
-
-    svg {
-      width: var(--TEMP-table-icon-size-width, 1rem);
-      height: var(--TEMP-table-icon-size-height, 1rem);
-    }
-
-    p {
-      white-space: nowrap;
-      padding: 0 var(--TEMP-table-padding-small, 0.25rem);
-      /* font-family: var(--TEMP-table-font-family, Inter); */
-      color: var(--TEMP-table-text-default, #212129);
-      font-size: var(--TEMP-table-font-size, 0.75rem);
-      font-style: normal;
-      font-weight: var(--TEMP-table-font-font-weight-medium, 500);
-      line-height: var(--TEMP-table-font-line-height, 0.875rem);
-    }
-  }
+.tableHeaderCell button svg {
+  width: var(--em-table-icon-size, 1rem);
+  height: var(--em-table-icon-size, 1rem);
 }

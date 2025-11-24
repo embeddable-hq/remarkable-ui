@@ -1,14 +1,13 @@
 .tableContainer {
-  background: var(--TEMP-table-background-color-default-header, #fff);
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border: var(--TEMP-table-border-width-default, 1px) solid
-    var(--TEMP-table-border-color-default, #ededf1);
   box-sizing: border-box;
-  border-radius: var(--TEMP-table-border-radius-default, 0.75rem);
+  background: var(--em-tablechart-header-background, #fff);
+  border: var(--em-tablechart-border-width, 1px) solid var(--em-tablechart-border-color, #ededf1);
+  border-radius: var(--em-tablechart-border-radius, 0.75rem);
 }
 
 .scrollX {
@@ -24,23 +23,26 @@
 
 .table th,
 .table td {
-  border: var(--TEMP-table-border-width-default, 1px) solid
-    var(--TEMP-table-border-color-default, #ededf1);
-  box-sizing: border-box;
   cursor: pointer;
-  height: var(--TEMP-table-size-cell-height_R, 2.5rem);
-  max-height: var(--TEMP-table-size-cell-height_R, 2.5rem);
-  min-width: var(--TEMP-table-size-min-width_R, 3rem);
-  padding: var(--TEMP-table-padding-medium_R, 0.5rem);
+  box-sizing: border-box;
+  background: var(--em-tablechart-header-background, #fff);
+  padding: var(--em-tablechart-cell-padding, 0.5rem)
+    calc(
+      var(--em-tablechart-cell-padding, 0.5rem) + var(--em-tablechart-padding-left-right, 0.25rem)
+    );
+  border: var(--em-tablechart-border-width, 1px) solid var(--em-tablechart-border-color, #ededf1);
+  height: var(--em-tablechart-cell-height, 2.5rem);
+  max-height: var(--em-tablechart-cell-height, 2.5rem);
+  min-width: var(--em-tablechart-cell-min-width, 3rem);
 }
 
 .table th:hover,
 .table th:focus-within {
-  background: var(--TEMP-table-background-color-hover-header_R, #f7f7f8);
+  background-color: var(--em-tablechart-cell-background--hover, #f7f7f8);
 }
 
 .table tr:has(td:hover) {
-  background: var(--TEMP-table-background-color-hover-row_R, #fafafa);
+  background-color: var(--em-tablechart-cell-background--hover, #f7f7f8);
 }
 
 .table th:first-child,

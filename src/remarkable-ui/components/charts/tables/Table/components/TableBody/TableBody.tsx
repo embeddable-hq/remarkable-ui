@@ -1,5 +1,4 @@
 import styles from './TableBody.module.css';
-import { Typography } from '../../../../../shared/Typography/Typography';
 import { TableHeaderAlign, TableHeaderItem, TablePaginatedProps } from '../../table.types';
 import clsx from 'clsx';
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
@@ -24,9 +23,7 @@ export const TableBody = <T,>({
       {rows.map((row, rowIndex) => (
         <tr key={rowIndex} onClick={() => onRowIndexClick?.(rowIndex)}>
           {showIndex && (
-            <td className={clsx(styles.tableBodyCell, styles.tableBodyCellIndex)}>
-              <Typography>{pageSize * page + rowIndex + 1}</Typography>
-            </td>
+            <td className={styles.tableBodyCellIndex}>{pageSize * page + rowIndex + 1}</td>
           )}
           {headers.map((header, cellIndex) => (
             <TableBodyCell
@@ -92,7 +89,7 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
         )}
         onClick={handleCopy}
       />
-      <Typography>{value}</Typography>
+      {value}
     </td>
   );
 };

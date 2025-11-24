@@ -1,28 +1,27 @@
 .tablePagination {
-  /* Replace by css variable */
-  height: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--em-tablechart-pagination-height, 3rem);
+  padding: var(--em-tablechart-cell-padding, 0.5rem);
 }
 
 .tablePaginationCentral {
-  gap: 1rem;
   display: flex;
   align-items: center;
-
-  /* Typography */
-  /* font-family: var(--TEMP-table-font-font-family, Inter); */
-  color: var(--TEMP-table-text-default_R, #212129);
-  font-size: var(--TEMP-table-font-font-size_R, 0.75rem);
   font-style: normal;
-  font-weight: var(--TEMP-table-font-font-weight-medium_R, 500);
-  line-height: var(--TEMP-table-font-line-height_R, 0.875rem);
+  gap: var(--em-tablechart-pagination-label-padding-left-right, 1rem);
+  color: var(--em-table-text-default, #212129);
+  font-family: var(--em-table-font-font-family, sans-serif);
+  font-size: var(--em-table-font-font-size, 0.75rem);
+  font-weight: var(--em-table-font-font-weight-medium, 500);
+  line-height: var(--em-table-font-line-height, 0.875rem);
 }
 
 .tablePaginationCentralButtons {
   display: flex;
   align-items: center;
-  gap: var(--TEMP-table-padding-medium_R, 0.5rem);
+  gap: var(--em-tablechart-pagination-button-gap, 0.5rem);
 }

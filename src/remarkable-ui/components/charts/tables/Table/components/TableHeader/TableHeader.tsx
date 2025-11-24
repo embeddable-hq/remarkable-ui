@@ -1,5 +1,4 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
-import { Typography } from '../../../../../shared/Typography/Typography';
 import styles from './TableHeader.module.css';
 import { TableHeaderItem, TablePaginatedProps, TableSortDirection } from '../../table.types';
 
@@ -67,28 +66,22 @@ export const TableHeader = <T,>({
   };
 
   return (
-    <thead className={styles.tableHead}>
+    <thead className={styles.tableHeader}>
       <tr>
-        {showIndex && (
-          <th className={styles.tableHeadIndex}>
-            <div className={styles.tableHeadCell}>
-              <Typography>#</Typography>
-            </div>
-          </th>
-        )}
+        {showIndex && <th className={styles.tableHeaderCellIndex}>#</th>}
         {headers.map((header) => (
           <th
+            className={styles.tableHeaderCell}
             key={header.id as string}
             style={{ minWidth: header.minWidth }}
             scope="col"
             aria-sort={getHeaderAriaSort(sort, header)}
           >
             <button
-              className={styles.tableHeadCell}
               onClick={() => handleSort(header.id)}
               aria-label={getHeaderAriaLabel(sort, header)}
             >
-              <Typography>{header.title}</Typography>
+              {header.title}
               {getSortIcon(header)}
             </button>
           </th>
