@@ -62,10 +62,7 @@ export const getLineChartProData = (
         clip: props.hasMinMaxYAxisRange,
         label: themeFormatter.dimensionOrMeasureTitle(measure),
         data: values,
-        backgroundColor: setColorAlpha(
-          backgroundColor,
-          getStyleNumber('--TEMP-line-chart-line-fill-opacity') as number,
-        ),
+        backgroundColor: setColorAlpha(backgroundColor, 0.5),
         pointBackgroundColor: backgroundColor,
         borderDash: measure.inputs?.['dashedLine']
           ? [

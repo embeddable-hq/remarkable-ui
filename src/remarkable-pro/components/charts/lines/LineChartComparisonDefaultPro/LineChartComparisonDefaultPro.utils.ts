@@ -67,10 +67,7 @@ const getLineChartComparisonDataset = (
     rawLabel,
     label: (isPreviousPeriod ? `${i18n.t('common.compared')} ` : '') + rawLabel,
     data: processedData,
-    backgroundColor: setColorAlpha(
-      lineColor,
-      getStyleNumber('--em-linechart-line-fill-opacity', '0.5') as number,
-    ),
+    backgroundColor: setColorAlpha(lineColor, 0.5),
     pointBackgroundColor: lineColor,
     borderDash: isLineDashed
       ? [
