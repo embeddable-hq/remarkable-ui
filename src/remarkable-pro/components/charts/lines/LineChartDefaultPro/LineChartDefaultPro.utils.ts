@@ -69,8 +69,8 @@ export const getLineChartProData = (
         pointBackgroundColor: backgroundColor,
         borderDash: measure.inputs?.['dashedLine']
           ? [
-              getStyleNumber('--TEMP-line-chart-line-dash-length'),
-              getStyleNumber('--TEMP-line-chart-line-gap-length'),
+              getStyleNumber('--em-linechart-line-dash', '0.25rem'),
+              getStyleNumber('--em-linechart-line-gap', '0.25rem'),
             ]
           : undefined,
         borderColor,
