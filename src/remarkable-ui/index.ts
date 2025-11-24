@@ -1,6 +1,5 @@
 // Shared
 export { Skeleton } from './components/shared/Skeleton/Skeleton';
-export { EmptyStateSkeleton } from './components/shared/EmptyStateSkeleton/EmptyStateSkeleton';
 export { Card, CardContent, CardHeader } from './components/shared/Card/Card';
 export { CardFeedback } from './components/shared/Card/CardFeedback/CardFeedback';
 export { Typography } from './components/shared/Typography/Typography';
