@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './Table.module.css';
+import styles from '../tables.module.css';
 import clsx from 'clsx';
 import { TablePagination } from './components/TablePagination/TablePagination';
 import { TableHeader } from './components/TableHeader/TableHeader';
@@ -30,7 +30,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
 
     return (
       <div ref={ref} className={clsx(styles.tableContainer, className)}>
-        <div className={styles.scrollX}>
+        <div className={styles.tableContainerScroll}>
           <table className={styles.table}>
             <TableHeader
               showIndex={showIndex}

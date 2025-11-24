@@ -1,8 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react';
-import styles from './PivotTable.module.css';
+import tableStyles from '../tables.module.css';
 import clsx from 'clsx';
 import { PivotTableProps } from './PivotTable.types';
-import { Typography } from '../../../shared/Typography/Typography';
 import { getTableCellWidthStyle } from '../tables.utils';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -145,15 +144,15 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   const visibleRows = progressive ? rowValues.slice(0, visibleCount) : rowValues;
 
   return (
-    <div className={clsx(styles.pivotTableContainer, className)}>
+    <div className={clsx(tableStyles.tableFullContainer, className)}>
       <div
         className={clsx(
-          styles.tableContainer,
-          (!columnWidth || !firstColumnWidth) && styles.fullWidth,
+          tableStyles.tableAdjustedContainer,
+          (!columnWidth || !firstColumnWidth) && tableStyles.fullWidth,
         )}
       >
         <table
-          className={styles.table}
+          className={tableStyles.table}
           aria-label={`${rowDimension.label} by ${columnDimension.label}`}
         >
           <thead>
@@ -161,10 +160,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               <th
                 scope="col"
                 rowSpan={1}
-                className={clsx(styles.cell, styles.header)}
                 title={columnDimension.label}
+                className={tableStyles.stickyFirstColumn}
               >
-                <Typography>{columnDimension.label}</Typography>
+                {columnDimension.label}
               </th>
               {columnValues.map((columnValue) => {
                 const columnValueDisplay = columnDimension.formatValue
@@ -175,10 +174,9 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     key={`col-${columnValue}`}
                     scope="colgroup"
                     colSpan={measures.length}
-                    className={clsx(styles.cell, styles.header)}
                     title={columnValueDisplay}
                   >
-                    <Typography>{columnValueDisplay}</Typography>
+                    {columnValueDisplay}
                   </th>
                 );
               })}
@@ -187,10 +185,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   key="col-total-group"
                   scope="colgroup"
                   colSpan={Array.from(rowTotalsSet).length}
-                  className={clsx(styles.cell, styles.bold)}
+                  className={tableStyles.boltCell}
                   title={totalLabel}
                 >
-                  <Typography>{totalLabel}</Typography>
+                  {totalLabel}
                 </th>
               )}
             </tr>
@@ -198,22 +196,21 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               <th
                 scope="col"
                 rowSpan={1}
-                className={clsx(styles.cell, styles.header)}
                 title={rowDimension.label}
+                className={tableStyles.stickyFirstColumn}
                 style={getTableCellWidthStyle(firstColumnWidth)}
               >
-                <Typography>{rowDimension.label}</Typography>
+                {rowDimension.label}
               </th>
               {columnValues.flatMap((col) =>
                 measures.map((measure, idx) => (
                   <th
                     key={`sub-${String(col)}-${measure.key}-${idx}`}
                     scope="col"
-                    className={clsx(styles.cell, styles.header)}
                     title={measure.label}
                     style={getTableCellWidthStyle(columnWidth)}
                   >
-                    <Typography>{measure.label}</Typography>
+                    {measure.label}
                   </th>
                 )),
               )}
@@ -224,11 +221,11 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     <th
                       key={`sub-total-${measure.key}-${idx}`}
                       scope="col"
-                      className={clsx(styles.cell, styles.bold)}
+                      className={tableStyles.boltCell}
                       title={measure.label}
                       style={getTableCellWidthStyle(columnWidth)}
                     >
-                      <Typography>{measure.label}</Typography>
+                      {measure.label}
                     </th>
                   ))}
             </tr>
@@ -242,10 +239,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                 <tr key={`row-${row}`}>
                   <th
                     scope="row"
-                    className={clsx(styles.cell, styles.header)}
                     title={rowDimensionValue}
+                    className={tableStyles.stickyFirstColumn}
                   >
-                    <Typography>{rowDimensionValue}</Typography>
+                    {rowDimensionValue}
                   </th>
 
                   {columnValues.flatMap((columnValue) =>
@@ -279,8 +276,8 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                       const columnValueDisplay = getDisplayValue();
 
                       return (
-                        <td key={key} className={clsx(styles.cell)} title={columnValueDisplay}>
-                          <Typography>{columnValueDisplay}</Typography>
+                        <td key={key} title={columnValueDisplay}>
+                          {columnValueDisplay}
                         </td>
                       );
                     }),
@@ -307,24 +304,22 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                         }
 
                         return (
-                          <td
-                            key={key}
-                            className={clsx(styles.cell, styles.bold)}
-                            title={displayValue}
-                          >
-                            <Typography>{displayValue}</Typography>
+                          <td key={key} className={tableStyles.boltCell} title={displayValue}>
+                            {displayValue}
                           </td>
                         );
                       })}
                 </tr>
               );
             })}
-          </tbody>
-          <tfoot>
             {hasColumnTotals && (
-              <tr key="totals-row">
-                <th scope="row" className={clsx(styles.cell, styles.bold)} title={totalLabel}>
-                  <Typography>{totalLabel}</Typography>
+              <tr key="totals-row" className={tableStyles.stickyLastRow}>
+                <th
+                  scope="row"
+                  className={clsx(tableStyles.stickyFirstColumn, tableStyles.boltCell)}
+                  title={totalLabel}
+                >
+                  {totalLabel}
                 </th>
 
                 {columnValues.flatMap((columnValue) =>
@@ -348,12 +343,8 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     const columnValueDisplay = show ? displayValue : '';
 
                     return (
-                      <td
-                        key={key}
-                        className={clsx(styles.cell, styles.bold)}
-                        title={columnValueDisplay}
-                      >
-                        <Typography>{columnValueDisplay}</Typography>
+                      <td key={key} className={tableStyles.boltCell} title={columnValueDisplay}>
+                        {columnValueDisplay}
                       </td>
                     );
                   }),
@@ -378,18 +369,14 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                       }
 
                       return (
-                        <td
-                          key={key}
-                          className={clsx(styles.cell, styles.bold)}
-                          title={displayValue}
-                        >
-                          <Typography>{displayValue}</Typography>
+                        <td key={key} className={tableStyles.boltCell} title={displayValue}>
+                          {displayValue}
                         </td>
                       );
                     })}
               </tr>
             )}
-          </tfoot>
+          </tbody>
         </table>
       </div>
     </div>

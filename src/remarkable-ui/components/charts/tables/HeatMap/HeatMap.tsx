@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from 'react';
-import styles from './HeatMap.module.css';
+import tableStyles from '../tables.module.css';
 import clsx from 'clsx';
 import { HeatMapProps } from './HeatMap.types';
 import {
@@ -12,6 +12,7 @@ import {
   thresholdToRaw,
 } from './HeatMap.utils';
 import { getTableCellWidthStyle } from '../tables.utils';
+import { getStyle } from '../../../../styles/styles.utils';
 
 export const HeatMap = <T extends Record<string, unknown>>({
   data,
@@ -23,7 +24,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
   minThreshold,
   maxThreshold,
   minColor,
-  midColor,
+  midColor = getStyle('--em-tablechart-heatmap-color', '#FF5400'),
   maxColor,
   columnWidth,
   firstColumnWidth,
@@ -109,28 +110,24 @@ export const HeatMap = <T extends Record<string, unknown>>({
   );
 
   return (
-    <div className={clsx(styles.heatMapContainer, className)}>
+    <div className={clsx(tableStyles.tableFullContainer, className)}>
       <div
         className={clsx(
-          styles.tableContainer,
-          (!columnWidth || !firstColumnWidth) && styles.fullWidth,
+          tableStyles.tableAdjustedContainer,
+          (!columnWidth || !firstColumnWidth) && tableStyles.fullWidth,
         )}
       >
-        <table className={styles.table} aria-label="Heat map">
+        <table className={tableStyles.table} aria-label="Heat map">
           <thead>
             <tr>
               <th
-                className={clsx(styles.heatMapCell, styles.header)}
+                className={tableStyles.stickyFirstColumn}
                 style={getTableCellWidthStyle(firstColumnWidth)}
               >
                 {measure.label}
               </th>
               {columnValues.map((cv, index) => (
-                <th
-                  key={`col-${cv}-${index}`}
-                  className={clsx(styles.heatMapCell, styles.header)}
-                  style={getTableCellWidthStyle(columnWidth)}
-                >
+                <th key={`col-${cv}-${index}`} style={getTableCellWidthStyle(columnWidth)}>
                   {columnDimension.format ? columnDimension.format(cv) : cv}
                 </th>
               ))}
@@ -141,8 +138,8 @@ export const HeatMap = <T extends Record<string, unknown>>({
             {rowValues.map((rv) => (
               <tr key={`row-${rv}`}>
                 <th
-                  className={clsx(styles.heatMapCell, styles.header)}
                   scope="row"
+                  className={tableStyles.stickyFirstColumn}
                   style={getTableCellWidthStyle(firstColumnWidth)}
                 >
                   {rowDimension.format ? rowDimension.format(rv) : rv}
@@ -157,10 +154,10 @@ export const HeatMap = <T extends Record<string, unknown>>({
                   return (
                     <td
                       key={`cell-${rv}-${cv}`}
-                      className={clsx(styles.heatMapCell)}
                       style={{
                         background,
                         color,
+                        textAlign: 'center',
                         ...getTableCellWidthStyle(columnWidth),
                       }}
                     >

@@ -1,6 +1,8 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import styles from './TableHeader.module.css';
 import { TableHeaderItem, TablePaginatedProps, TableSortDirection } from '../../table.types';
+import tableStyles from '../../../tables.module.css';
+import clsx from 'clsx';
 
 export type TableHeaderProps<T> = Pick<
   TablePaginatedProps<T>,
@@ -68,7 +70,9 @@ export const TableHeader = <T,>({
   return (
     <thead className={styles.tableHeader}>
       <tr>
-        {showIndex && <th className={styles.tableHeaderCellIndex}>#</th>}
+        {showIndex && (
+          <th className={clsx(tableStyles.mutedCell, tableStyles.stickyFirstColumn)}>#</th>
+        )}
         {headers.map((header) => (
           <th
             className={styles.tableHeaderCell}

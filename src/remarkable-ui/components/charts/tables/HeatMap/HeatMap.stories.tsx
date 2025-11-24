@@ -2,14 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { HeatMap } from './HeatMap';
 
-const meta = {
-  component: HeatMap,
-} satisfies Meta<typeof HeatMap>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
 type Data = {
   country: string;
   month: string;
@@ -38,45 +30,35 @@ const data: Data[] = [
   { country: 'United States', month: 'Aug 25', orders: 112 },
 ];
 
-export const Default: Story = {
+const meta = {
+  title: 'Charts/✅ HeatMap',
+  component: HeatMap,
   args: {
     data,
     columnDimension: { key: 'country', label: 'Country' },
     rowDimension: { key: 'month', label: 'Month' },
     measure: { key: 'orders', label: 'Orders' },
-    maxColor: 'green',
+    maxColor: 'white',
     midColor: 'yellow',
-    minColor: 'red',
+    minColor: 'orange',
     showValues: true,
     minThreshold: undefined,
     maxThreshold: undefined,
   },
-};
+} satisfies Meta<typeof HeatMap>;
 
-export const HeatMapPlay: Story = {
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const Resize: Story = {
   render: (args) => {
     return (
-      <div
-        style={{
-          resize: 'both',
-          flex: 1,
-          overflow: 'auto',
-        }}
-      >
+      <div style={{ width: '400px', height: '200px', resize: 'both', overflow: 'auto' }}>
         <HeatMap {...args} />
       </div>
     );
-  },
-  args: {
-    data,
-    columnDimension: { key: 'country', label: 'Country' },
-    rowDimension: { key: 'month', label: 'Month' },
-    measure: { key: 'orders', label: 'Orders' },
-    maxColor: 'green',
-    midColor: 'yellow',
-    minColor: 'red',
-    showValues: true,
-    minThreshold: undefined,
-    maxThreshold: undefined,
   },
 };

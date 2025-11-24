@@ -6,6 +6,8 @@
   box-sizing: border-box;
   height: var(--em-tablechart-pagination-height, 3rem);
   padding: var(--em-tablechart-cell-padding, 0.5rem);
+  border-top: var(--em-tablechart-border-width, 1px) solid
+    var(--em-tablechart-border-color, #ededf1);
 }
 
 .tablePaginationCentral {

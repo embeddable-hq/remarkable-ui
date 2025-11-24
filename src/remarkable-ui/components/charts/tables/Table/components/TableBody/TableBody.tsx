@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
 import { useState } from 'react';
+import tableStyles from '../../../tables.module.css';
 
 export type TableBodyProps<T> = Pick<
   TablePaginatedProps<T>,
@@ -23,7 +24,9 @@ export const TableBody = <T,>({
       {rows.map((row, rowIndex) => (
         <tr key={rowIndex} onClick={() => onRowIndexClick?.(rowIndex)}>
           {showIndex && (
-            <td className={styles.tableBodyCellIndex}>{pageSize * page + rowIndex + 1}</td>
+            <td className={clsx(tableStyles.mutedCell, tableStyles.stickyFirstColumn)}>
+              {pageSize * page + rowIndex + 1}
+            </td>
           )}
           {headers.map((header, cellIndex) => (
             <TableBodyCell
@@ -73,7 +76,6 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
   return (
     <td
       key={`${rowIndex}-${cellIndex}`}
-      className={styles.tableBodyCell}
       title={value}
       style={{ textAlign: header.align }}
       onMouseLeave={() => setIsPressedCopy(false)}

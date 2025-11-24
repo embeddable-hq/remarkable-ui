@@ -2,24 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PivotTable } from './PivotTable';
 import { PivotTableProps } from './PivotTable.types';
 
-const meta = {
-  component: PivotTable,
-  argTypes: {
-    columnTotalsFor: {
-      options: ['orders', 'cost'],
-      control: { type: 'check' },
-    },
-    rowTotalsFor: {
-      options: ['orders', 'cost'],
-      control: { type: 'check' },
-    },
-  },
-} satisfies Meta<typeof PivotTable>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
 type Data = {
   country: string;
   month: string;
@@ -92,7 +74,9 @@ const columnDimension: PivotTableProps<Data>['columnDimension'] = {
   label: 'Month',
 };
 
-export const Default: Story = {
+const meta = {
+  title: 'Charts/✅ PivotTable',
+  component: PivotTable,
   args: {
     data,
     measures,
@@ -104,9 +88,32 @@ export const Default: Story = {
     firstColumnWidth: 150,
     columnWidth: 100,
   },
+  argTypes: {
+    columnTotalsFor: {
+      options: ['orders', 'cost'],
+      control: { type: 'check' },
+    },
+    rowTotalsFor: {
+      options: ['orders', 'cost'],
+      control: { type: 'check' },
+    },
+  },
+} satisfies Meta<typeof PivotTable>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const WithTotals: Story = {
+  args: {
+    rowTotalsFor: ['orders', 'cost'],
+    columnTotalsFor: ['orders', 'cost'],
+  },
 };
 
-export const PivotTablePlay: Story = {
+export const Resize: Story = {
   render: (args) => {
     return (
       <div
@@ -114,21 +121,12 @@ export const PivotTablePlay: Story = {
           resize: 'both',
           flex: 1,
           overflow: 'auto',
+          height: '300px',
+          width: '500px',
         }}
       >
         <PivotTable {...args} />
       </div>
     );
-  },
-  args: {
-    data,
-    measures,
-    rowDimension,
-    columnDimension,
-    rowTotalsFor: [],
-    columnTotalsFor: [],
-    totalLabel: 'Total',
-    firstColumnWidth: 150,
-    columnWidth: 100,
   },
 };

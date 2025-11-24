@@ -1,27 +1,3 @@
-.tableHeaderCellIndex {
-  position: sticky;
-  left: 0;
-  z-index: 1;
-  pointer-events: none;
-  font-style: normal;
-  text-align: left;
-  color: var(--em-table-text-muted, #5c5c66);
-  font-family: var(--em-tablechart-font-family, Inter);
-  font-size: var(--em-tablechart-font-size, 0.75rem);
-  font-weight: var(--em-table-font-font-weight-regular, 400);
-  line-height: var(--em-tablechart-line-height, 0.875rem);
-}
-
-.tableHeaderCellIndex::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: calc(-1 * var(--em-tablechart-border-width, 1px));
-  width: var(--em-tablechart-border-width, 1px);
-  background: var(--em-tablechart-border-color, #ededf1);
-}
-
 .tableHeader .tableHeaderCell {
   padding: unset;
 }
