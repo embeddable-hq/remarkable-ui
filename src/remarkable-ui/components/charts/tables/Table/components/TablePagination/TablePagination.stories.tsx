@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TablePagination } from './TablePagination';
 
 const meta = {
+  title: 'Charts/✅ Table/TablePagination',
   component: TablePagination,
 } satisfies Meta<typeof TablePagination>;
 

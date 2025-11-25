@@ -21,30 +21,6 @@ const makeClients = (count = 3): Client[] =>
       }) as Client,
   );
 
-const meta: Meta = {
-  title: 'Charts/✅ Table',
-  component: TablePaginatedChart,
-  argTypes: {
-    rowHeight: { control: { type: 'number' } },
-    headerHeight: { control: { type: 'number' } },
-    footerHeight: { control: { type: 'number' } },
-  },
-};
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-type Client = {
-  id: number;
-  name: string;
-  age: number;
-  title: string;
-  team: string;
-  salary: number;
-  email: string;
-  location: string;
-};
-
 const headers: TableHeaderItem<Client>[] = [
   {
     id: 'id',
@@ -75,6 +51,37 @@ const headers: TableHeaderItem<Client>[] = [
   },
 ];
 
+const meta: Meta = {
+  title: 'Charts/✅ Table',
+  component: TablePaginatedChart,
+  args: {
+    showIndex: true,
+    pageSize: 3,
+    page: 0,
+    headers,
+    total: 100,
+  },
+  argTypes: {
+    rowHeight: { control: { type: 'number' } },
+    headerHeight: { control: { type: 'number' } },
+    footerHeight: { control: { type: 'number' } },
+  },
+};
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+type Client = {
+  id: number;
+  name: string;
+  age: number;
+  title: string;
+  team: string;
+  salary: number;
+  email: string;
+  location: string;
+};
+
 export const TablePaginated: Story = {
   render: (args) => {
     const [, updateArgs] = useArgs();
@@ -96,11 +103,29 @@ export const TablePaginated: Story = {
       />
     );
   },
-  args: {
-    showIndex: true,
-    pageSize: 3,
-    page: 0,
-    headers,
-    total: 100,
+};
+
+export const Resize: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    const start = args.page * args.pageSize;
+    const end = start + args.pageSize;
+    const rows = makeClients(args.total).slice(start, end);
+
+    return (
+      <div style={{ width: '400px', height: '200px', resize: 'both', overflow: 'auto' }}>
+        <TablePaginatedChart
+          showIndex={args.showIndex}
+          headers={args.headers}
+          page={args.page}
+          pageSize={args.pageSize}
+          total={args.total}
+          rows={rows}
+          onPageChange={(value) => updateArgs({ page: value })}
+          onSortChange={() => null}
+        />
+      </div>
+    );
   },
 };

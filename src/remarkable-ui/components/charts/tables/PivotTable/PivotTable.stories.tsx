@@ -116,15 +116,7 @@ export const WithTotals: Story = {
 export const Resize: Story = {
   render: (args) => {
     return (
-      <div
-        style={{
-          resize: 'both',
-          flex: 1,
-          overflow: 'auto',
-          height: '300px',
-          width: '500px',
-        }}
-      >
+      <div style={{ width: '400px', height: '200px', resize: 'both', overflow: 'auto' }}>
         <PivotTable {...args} />
       </div>
     );
