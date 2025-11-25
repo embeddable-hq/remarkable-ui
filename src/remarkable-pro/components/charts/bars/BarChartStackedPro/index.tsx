@@ -99,7 +99,7 @@ const BarChartStackedPro = (props: BarChartStackedProProps) => {
         yAxisRangeMax={yAxisRangeMax}
         showTotalLabels={showTotalLabels}
         options={options}
-        stacked="stacked"
+        stacked
       />
     </ChartCard>
   );

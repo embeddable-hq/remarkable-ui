@@ -5,9 +5,8 @@ import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { mergician } from 'mergician';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
 import { getColor } from '../../../../theme/styles/styles.utils';
-import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { setColorAlpha } from '../../../../utils.ts/color.utils';
-import { getStyleNumber } from '../../../../../remarkable-ui';
+import { chartContrastColors } from '../../../../../remarkable-ui';
 import { getLineChartProOptions, LineChartProOptionsClick } from '../lines.utils';
 
 export const getLineChartGroupedProData = (
@@ -47,10 +46,7 @@ export const getLineChartGroupedProData = (
       clip: hasMinMaxYAxisRange,
       label: themeFormatter.data(groupDimension, groupByItem),
       rawLabel: groupByItem,
-      backgroundColor: setColorAlpha(
-        backgroundColor,
-        getStyleNumber('--em-line-chart-line-fill-opacity') as number,
-      ),
+      backgroundColor: setColorAlpha(backgroundColor, 0.5),
       pointBackgroundColor: backgroundColor,
       fill: measure.inputs?.['fillUnderLine'],
       borderColor,

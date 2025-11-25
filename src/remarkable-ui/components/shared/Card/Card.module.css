@@ -1,0 +1,55 @@
+.card {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  box-sizing: border-box;
+  gap: var(--em-card-gap, 2rem);
+  padding: var(--em-card-padding, 2rem);
+  border-radius: var(--em-card-border-radius, 2rem);
+  background: var(--em-card-background, #f7f7f8);
+}
+
+.card .cardHeader {
+  width: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--em-card-header-gap, 1rem);
+}
+
+.card .cardHeader .leftContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--em-card-header-gap, 1rem);
+}
+
+.card .cardHeader .leftContent h1 {
+  margin: unset;
+  overflow-wrap: break-word;
+  font-style: normal;
+  color: var(--em-card-title-color, #212129);
+  font-family: var(--em-card-font-family, sans-serif);
+  font-size: var(--em-card-title-font-size, 1rem);
+  font-weight: var(--em-card-title-font-weight, 700);
+  line-height: var(--em-card-title-line-height, 1.1875rem);
+}
+
+.card .cardHeader .leftContent p {
+  margin: unset;
+  overflow-wrap: break-word;
+  font-style: normal;
+  color: var(--em-card-subtitle-color, #5c5c66);
+  font-family: var(--em-card-font-family, sans-serif);
+  font-size: var(--em-card-subtitle-font-size, 0.875rem);
+  font-weight: var(--em-card-subtitle-font-weight, 400);
+  line-height: var(--em-card-subtitle-line-height, 1.1875rem);
+}
+
+.card .cardContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}

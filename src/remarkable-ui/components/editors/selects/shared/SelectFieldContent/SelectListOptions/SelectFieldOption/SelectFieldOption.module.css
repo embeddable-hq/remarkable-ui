@@ -1,0 +1,95 @@
+.selectFieldOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: var(--em-selectfield-item-height, 2rem);
+  height: var(--em-selectfield-item-height, 2rem);
+  max-height: var(--em-selectfield-item-height, 2rem);
+  padding: var(--em-selectfield-item-padding, 0.5rem);
+  border-radius: var(--em-selectfield-item-border-radius, 0.5rem);
+  background: var(--em-selectfield-item-background, #fff);
+}
+
+.selectFieldOption .leftContent {
+  display: flex;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  align-items: center;
+  font-style: normal;
+  color: var(--em-selectfield-item-label-left-color, #212129);
+  font-family: var(--em-selectfield-item-font-family, sans-serif);
+  font-size: var(--em-selectfield-item-label-left-font-size, 0.75rem);
+  font-weight: var(--em-selectfield-item-label-left-font-weight, 500);
+  line-height: var(--em-selectfield-item-label-left-line-height, 0.875rem);
+}
+
+.selectFieldOption .rightContent {
+  display: flex;
+  min-width: 0;
+  font-style: normal;
+  color: var(--em-selectfield-item-label-right-color, #5c5c66);
+  font-family: var(--em-selectfield-item-font-family, sans-serif);
+  font-size: var(--em-selectfield-item-label-right-font-size, 0.75rem);
+  font-weight: var(--em-selectfield-item-label-right-font-weight, 400);
+  line-height: var(--em-selectfield-item-label-right-line-height, 0.875rem);
+}
+
+.selectFieldOption .leftContent span,
+.selectFieldOption .rightContent span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 var(--em-selectfield-item-label-padding-left-right, 0.5rem);
+}
+
+.selectFieldOption .rightContent span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+
+.selectFieldOption:hover,
+.selectFieldOption:focus {
+  background: var(--em-selectfield-item-background--hover, #f7f7f8);
+}
+
+.selectFieldOption:active {
+  background: var(--em-selectfield-item-background--active, #ededf1);
+}
+
+.selectFieldOption.disabled {
+  pointer-events: none;
+  user-select: none;
+  color: var(--em-selectfield-item-label-left-color--disabled, #b8b8bd);
+  background: var(--em-selectfield-item-background, #fff);
+}
+
+.selectFieldOption.selected {
+  background: var(--em-selectfield-item-background--selected, #212129);
+}
+
+.selectFieldOption.selected svg {
+  color: var(--em-selectfield-item-icon-color--selected, #fff);
+}
+
+.selectFieldOption.selected .leftContent,
+.selectFieldOption.selected .rightContent {
+  color: var(--em-selectfield-item-label-left-color--selected, #fff);
+}
+
+.selectFieldOption svg,
+.selectFieldOption img {
+  flex-shrink: 0;
+  width: var(--em-selectfield-item-icon-size, 1rem);
+  height: var(--em-selectfield-item-icon-size, 1rem);
+  color: var(--em-selectfield-item-icon-color, #212129);
+}
+
+.selectFieldOption.disabled svg,
+.selectFieldOption.disabled img {
+  color: var(--em-selectfield-item-icon-color--disabled, #b8b8bd);
+}

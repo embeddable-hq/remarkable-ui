@@ -6,8 +6,8 @@ import { i18n, i18nSetup } from '../../../../../theme/i18n/i18n';
 import { Theme } from '../../../../../theme/theme.types';
 import {
   Dropdown,
-  IconButton,
-  SelectList,
+  ActionIcon,
+  SelectFieldContent,
   SelectListOption,
 } from '../../../../../../remarkable-ui';
 import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro.types';
@@ -46,9 +46,9 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
     <Dropdown
       side="bottom"
       align="end"
-      triggerComponent={isLoading ? <ChartCardLoading /> : <IconButton icon={IconDotsVertical} />}
+      triggerComponent={isLoading ? <ChartCardLoading /> : <ActionIcon icon={IconDotsVertical} />}
     >
-      <SelectList className={styles.list} autoFocus>
+      <SelectFieldContent className={styles.list} autoFocus>
         {options.map((option, index) => {
           const label = i18n.t(option.labelKey);
 
@@ -63,7 +63,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
             />
           );
         })}
-      </SelectList>
+      </SelectFieldContent>
     </Dropdown>
   );
 };

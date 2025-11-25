@@ -1,0 +1,78 @@
+.input {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--em-textfield-height, 2.5rem);
+  min-width: var(--em-textfield-min-width, 10rem);
+  padding: var(--em-textfield-padding, 0.5rem);
+  border-radius: var(--em-textfield-border-radius, 0.5rem);
+  border: var(--em-textfield-border-width, 1px) solid var(--em-textfield-border-color, #b8b8bd);
+  background: var(--em-textfield-background, #f7f7f8);
+}
+
+.input:hover {
+  background: var(--em-textfield-background--active, #e4e4ea);
+}
+
+.input.error {
+  border: var(--em-textfield-border-width--error, 2px) solid
+    var(--em-textfield-border-color--error, #bc1010);
+}
+.input:focus-within input {
+  color: var(--em-textfield-color--filled, #212129);
+  font-weight: var(--em-textfield-font-weight--filled, 500);
+}
+
+.input svg {
+  flex-shrink: 0;
+  width: var(--em-textfield-icon-size, 1rem);
+  height: var(--em-textfield-icon-size, 1rem);
+  color: var(--em-textfield-color, #5c5c66);
+}
+
+.input:focus-within svg {
+  color: var(--em-textfield-color--filled, #212129);
+}
+
+.input svg.clearIcon {
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.input svg.clearIcon.clearIconVisible {
+  visibility: visible;
+}
+
+.input input {
+  height: inherit;
+  border: unset;
+  background: unset;
+  margin: unset;
+  width: 100%;
+  padding: 0 var(--em-textfield-label-padding, 0.5rem);
+  color: var(--em-textfield-color, #5c5c66);
+  font-family: var(--em-textfield-font-family, Inter);
+  font-size: var(--em-textfield-font-size, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-textfield-font-weight, 400);
+  line-height: var(--em-textfield-line-height, 1rem);
+}
+
+.input:has(input:not(:placeholder-shown)) {
+  background: var(--em-textfield-background--filled, #ededf1);
+}
+
+.input:has(input:disabled) {
+  background: var(--em-textfield-background--disabled, #fff);
+}
+
+.input:has(input:disabled) svg,
+.input:has(input:disabled) input {
+  color: var(--em-textfield-color--disabled, #b8b8bd);
+}
+
+.input input:focus {
+  outline: none;
+}

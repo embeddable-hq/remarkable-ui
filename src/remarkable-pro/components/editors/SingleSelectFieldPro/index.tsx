@@ -1,11 +1,11 @@
 import { DataResponse, Dimension } from '@embeddable.com/core';
-import { SingleSelectField } from '../../../../remarkable-ui/editors/select/SingleSelectField/SingleSelectField';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../theme/theme.types';
 import { EditorCard } from '../shared/EditorCard/EditorCard';
 import { resolveI18nProps } from '../../component.utils';
 import { i18n } from '../../../theme/i18n/i18n';
+import { SingleSelectField } from '../../../../remarkable-ui';
 
 export const MAX_OPTIONS = 200;
 
@@ -58,7 +58,7 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
         options={options}
         placeholder={placeholder}
         noOptionsMessage={showNoOptionsMessage ? i18n.t('common.noOptionsFound') : undefined}
-        onChange={(newValue) => onChange?.(newValue)}
+        onChange={(newValue: string) => onChange?.(newValue)}
         onSearch={setSearchValue}
       />
     </EditorCard>

@@ -1,6 +1,6 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
-import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
 import { DefaultPieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
@@ -30,15 +30,7 @@ const DonutChartPro = (props: DonutChartProProps) => {
   const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
 
   const options = mergician(
-    getDefaultPieChartOptions(
-      {
-        measure,
-        showTooltips,
-        showLegend,
-        showValueLabels,
-      } as DefaultPieChartOptions,
-      theme,
-    ),
+    getDefaultPieChartOptions(measure, theme),
     theme.charts.donutChartPro?.options ?? {},
   );
 
@@ -56,7 +48,14 @@ const DonutChartPro = (props: DonutChartProProps) => {
       subtitle={description}
       title={title}
     >
-      <DonutChart data={data} options={options} onSegmentClick={handleSegmentClick} />
+      <DonutChart
+        data={data}
+        options={options}
+        showLegend={showLegend}
+        showTooltips={showTooltips}
+        showValueLabels={showValueLabels}
+        onSegmentClick={handleSegmentClick}
+      />
     </ChartCard>
   );
 };

@@ -3,9 +3,8 @@ import { Theme } from '../../../../theme/theme.types';
 import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
-import { getStyleNumber } from '../../../../../remarkable-ui';
+import { chartContrastColors, getStyleNumber } from '../../../../../remarkable-ui';
 import { getColor } from '../../../../theme/styles/styles.utils';
-import { chartContrastColors } from '../../../../../remarkable-ui/charts/charts.constants';
 import { mergician } from 'mergician';
 import { isColorValid, setColorAlpha } from '../../../../utils.ts/color.utils';
 import { LineChartProOptionsClick } from '../lines.utils';
@@ -63,15 +62,12 @@ export const getLineChartProData = (
         clip: props.hasMinMaxYAxisRange,
         label: themeFormatter.dimensionOrMeasureTitle(measure),
         data: values,
-        backgroundColor: setColorAlpha(
-          backgroundColor,
-          getStyleNumber('--em-line-chart-line-fill-opacity') as number,
-        ),
+        backgroundColor: setColorAlpha(backgroundColor, 0.5),
         pointBackgroundColor: backgroundColor,
         borderDash: measure.inputs?.['dashedLine']
           ? [
-              getStyleNumber('--em-line-chart-line-dash-length'),
-              getStyleNumber('--em-line-chart-line-gap-length'),
+              getStyleNumber('--em-linechart-line-dash', '0.25rem'),
+              getStyleNumber('--em-linechart-line-gap', '0.25rem'),
             ]
           : undefined,
         borderColor,
