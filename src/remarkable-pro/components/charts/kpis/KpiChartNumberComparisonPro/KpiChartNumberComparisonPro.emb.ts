@@ -55,7 +55,7 @@ export const meta = {
       label: 'Reverse Positive/Negative Colors',
       defaultValue: false,
     },
-    { ...genericNumber, name: 'fontSize', label: 'Font Size', defaultValue: 44, required: true },
+    { ...genericNumber, name: 'fontSize', label: 'Font Size' },
     {
       ...genericNumber,
       name: 'changeFontSize',

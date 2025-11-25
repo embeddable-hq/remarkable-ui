@@ -22,7 +22,11 @@ export const TableBody = <T,>({
   return (
     <tbody className={styles.tableBody}>
       {rows.map((row, rowIndex) => (
-        <tr key={rowIndex} onClick={() => onRowIndexClick?.(rowIndex)}>
+        <tr
+          key={rowIndex}
+          onClick={() => onRowIndexClick?.(rowIndex)}
+          className={clsx(rowIndex === rows.length - 1 && tableStyles.tableLastRow)}
+        >
           {showIndex && (
             <td className={clsx(tableStyles.mutedCell, tableStyles.stickyFirstColumn)}>
               {pageSize * page + rowIndex + 1}

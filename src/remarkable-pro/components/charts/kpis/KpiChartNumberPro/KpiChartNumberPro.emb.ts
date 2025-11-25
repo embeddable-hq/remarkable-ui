@@ -12,7 +12,7 @@ export const meta = {
     measure,
     title,
     description,
-    { ...genericNumber, name: 'fontSize', label: 'Font Size', defaultValue: 44, required: true },
+    { ...genericNumber, name: 'fontSize', label: 'Font Size' },
   ],
 } as const satisfies EmbeddedComponentMeta;
 

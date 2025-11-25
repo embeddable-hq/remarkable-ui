@@ -170,3 +170,8 @@
   height: var(--em-tablechart-border-width, 1px);
   background: var(--em-tablechart-border-color, #ededf1);
 }
+
+.table tbody tr.tableLastRow td {
+  border-bottom: var(--em-tablechart-border-width, 1px) solid
+    var(--em-tablechart-border-color, #ededf1);
+}
