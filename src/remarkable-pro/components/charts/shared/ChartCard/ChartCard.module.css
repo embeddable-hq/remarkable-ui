@@ -23,4 +23,5 @@
   width: 2rem;
   height: 2rem;
   position: relative;
+  align-self: flex-start;
 }

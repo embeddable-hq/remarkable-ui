@@ -85,7 +85,7 @@ export const WithCharCounter: Story = {
   },
 };
 
-export const Error: Story = {
+export const WithError: Story = {
   args: {
     label: undefined,
     required: false,
@@ -93,7 +93,7 @@ export const Error: Story = {
   },
 };
 
-export const ErrorMessage: Story = {
+export const WithErrorMessage: Story = {
   args: {
     label: undefined,
     required: false,
