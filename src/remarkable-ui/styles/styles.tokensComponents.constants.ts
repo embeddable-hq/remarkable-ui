@@ -96,7 +96,7 @@ export const stylesTokensComponents = {
   '--em-chart-category-font-size': 'var(--em-core-font-size--xs)',
   '--em-chart-category-font-weight': 'var(--em-core-font-weight--medium)',
   '--em-chart-category-gap': 'var(--em-core-spacing--0100)',
-  '--em-chart-category-indicator-border-raidus': 'var(--em-core-border-radius--500)',
+  '--em-chart-category-indicator-border-radius': 'var(--em-core-border-radius--500)',
   '--em-chart-category-indicator-color': 'var(--em-sem-chart-color--1)',
   '--em-chart-category-line-height': 'var(--em-core-line-height--sm)',
   '--em-chart-category-list-gap': 'var(--em-core-spacing--0400)',

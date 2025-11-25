@@ -31,9 +31,9 @@ const hasSortChanges = (
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const headerHeight = getStyleNumber('--TEMP-table-size-cell-height_R' as any, '2.5rem') as number;
-const rowHeight = getStyleNumber('--TEMP-table-size-cell-height_R' as any, '2.5rem') as number;
-const footerHeight = getStyleNumber('--TEMP-table-size-footer-height_R' as any, '3rem') as number;
+const headerHeight = getStyleNumber('--em-tablechart-cell-height', '2.5rem') as number;
+const rowHeight = getStyleNumber('--em-tablechart-cell-height', '2.5rem') as number;
+const footerHeight = getStyleNumber('--em-tablechart-pagination-height', '3rem') as number;
 
 let downloadData: (data: DataResponse['data']) => void;
 

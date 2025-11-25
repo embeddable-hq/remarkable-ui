@@ -25,7 +25,7 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
       boxHeight: getStyleNumber('--em-chart-category-size', '0.75rem')! / 2,
       usePointStyle: true,
       color: getStyle('--em-chart-category-color', '#5C5C66'),
-      padding: getStyleNumber('--em-chart-category-list-gap', '1rem)'),
+      padding: getStyleNumber('--em-chart-category-list-gap', '1rem'),
       font: {
         family: getStyle('--em-chart-category-font-family', 'san-serif'),
         size: getStyleNumber('--em-chart-category-font-size', '0.75rem'),

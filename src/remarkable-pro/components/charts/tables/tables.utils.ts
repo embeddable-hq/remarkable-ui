@@ -34,14 +34,14 @@ export const getTableHeaderMinWidth = (dimOrMeas: DimensionOrMeasure): CssSize =
   // Get width by native type
   switch (dimOrMeas.nativeType) {
     case 'string':
-      return getStyleNumber('--TEMP-table-min-width-string_R' as any, '8.75rem') as number;
+      return getStyleNumber('--em-tablechart-min-width--string' as any, '8.75rem') as number;
     case 'number':
-      return getStyleNumber('--TEMP-table-min-width-number_R' as any, '5.625rem') as number;
+      return getStyleNumber('--em-tablechart-min-width--number' as any, '5.625rem') as number;
     case 'time':
-      return getStyleNumber('--TEMP-table-min-width-time_R' as any, '8.75rem') as number;
+      return getStyleNumber('--em-tablechart-min-width--time' as any, '8.75rem') as number;
     case 'boolean':
     default:
-      return getStyleNumber('--TEMP-table-min-width-boolean_R' as any, '5.625rem') as number;
+      return getStyleNumber('--em-tablechart-min-width--boolean' as any, '5.625rem') as number;
   }
 };
 
