@@ -23,6 +23,7 @@ export const ChartLoaded = () => {
   return (
     <ChartCard
       title="Chart Title"
+      subtitle="Chart Title"
       data={{ data: [{}], isLoading: false }}
       style={{ height: '300px' }}
     >

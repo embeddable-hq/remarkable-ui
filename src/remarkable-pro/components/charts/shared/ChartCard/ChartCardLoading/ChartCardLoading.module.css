@@ -5,8 +5,9 @@
 }
 
 .loading {
+  animation: spin 2s linear infinite;
   padding: var(--em-card-loader-padding, 0.25rem);
   width: var(--em-card-loader-size, 1.5rem);
   height: var(--em-card-loader-size, 1.5rem);
-  animation: spin 2s linear infinite;
+  background: var(--em-card-background, #f7f7f8);
 }

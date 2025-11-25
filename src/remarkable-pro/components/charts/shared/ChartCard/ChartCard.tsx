@@ -77,13 +77,15 @@ export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(
           title={title}
           subtitle={subtitle}
           rightContent={
-            <div data-no-export className={styles.rightContent}>
+            <div className={styles.chartCardRightContent}>
               <div
                 className={clsx(styles.fixedContent, isLoading ? styles.loading : styles.hidden)}
               >
                 <ChartCardLoading />
               </div>
-              <div className={styles.fixedContent}>
+              <div
+                className={clsx(styles.fixedContent, isLoading ? styles.hidden : styles.visible)}
+              >
                 <ChartCardMenuPro
                   title={title}
                   containerRef={chartRef}
