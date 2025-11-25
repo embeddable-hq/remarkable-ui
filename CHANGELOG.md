@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 1.0.0
+
+### Major Changes
+
+- 1de8226: New Css Variables + Restructure + Storybook Complete
+
 ## 0.1.52
 
 ### Patch Changes
