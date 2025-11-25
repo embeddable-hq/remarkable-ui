@@ -26,6 +26,6 @@
 }
 
 .tableHeaderCell button svg {
-  width: var(--em-table-icon-size, 1rem);
-  height: var(--em-table-icon-size, 1rem);
+  width: var(--em-tablechart-icon-size, 1rem);
+  height: var(--em-tablechart-icon-size, 1rem);
 }

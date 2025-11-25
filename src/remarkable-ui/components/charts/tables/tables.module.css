@@ -71,7 +71,7 @@
     var(--em-tablechart-border-color, #ededf1);
   height: var(--em-tablechart-cell-height, 2.5rem);
   max-height: var(--em-tablechart-cell-height, 2.5rem);
-  min-width: var(--em-tablechart-cell-min-width, 3rem);
+  /* min-width: var(--em-tablechart-cell-min-width, 3rem); DENIS */
 }
 
 .table th:last-of-type,
@@ -121,8 +121,8 @@
 
 /* Muted Cells */
 .table .mutedCell {
-  color: var(--em-table-text-muted, #5c5c66);
-  font-weight: var(--em-table-font-font-weight-regular, 400);
+  color: var(--em-tablechart-color--muted, #5c5c66);
+  font-weight: var(--em-tablechart-font-weight, 400);
 }
 
 /* Sticky first column */

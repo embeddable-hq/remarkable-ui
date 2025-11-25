@@ -43,7 +43,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 var(--em-selectfield-item-label-padding-rigth-left, 0.5rem);
+  padding: 0 var(--em-selectfield-item-label-padding-left-right, 0.5rem);
 }
 
 .selectFieldOption .rightContent span {

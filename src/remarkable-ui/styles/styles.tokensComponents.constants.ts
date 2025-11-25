@@ -10,8 +10,10 @@ export const stylesTokensComponents = {
   '--em-actionicon-padding-left-right': 'var(--em-core-spacing--0050)',
   '--em-actionicon-padding-top-bottom': 'var(--em-core-spacing--0200)',
   '--em-actionicon-width': 'var(--em-core-size--0500)',
+
   '--em-barchart-border-raidus': 'var(--em-core-border-radius--150)',
   '--em-barchart-label-gap': 'var(--em-core-spacing--0200)',
+
   '--em-button-background--disabled': 'var(--em-sem-background--light)',
   '--em-button-background--primary': 'var(--em-sem-text--muted)',
   '--em-button-background--primary--active': 'var(--em-sem-text--neutral)',
@@ -38,6 +40,7 @@ export const stylesTokensComponents = {
   '--em-button-padding-left-right--small': 'var(--em-core-spacing--0150)',
   '--em-button-padding-top-bottom--medium': 'var(--em-core-spacing--0300)',
   '--em-button-padding-top-bottom--small': 'var(--em-core-spacing--0150)',
+
   '--em-buttonicon-background--primary': 'var(--em-sem-text--muted)',
   '--em-buttonicon-background--primary--active': 'var(--em-sem-text--neutral)',
   '--em-buttonicon-background--primary--disabled': 'var(--em-sem-background--light)',
@@ -57,6 +60,7 @@ export const stylesTokensComponents = {
   '--em-buttonicon-padding-left-right--small': 'var(--em-core-spacing--0150)',
   '--em-buttonicon-padding-top-bottom--medium': 'var(--em-core-spacing--0300)',
   '--em-buttonicon-padding-top-bottom--small': 'var(--em-core-spacing--0150)',
+
   '--em-card-background': 'var(--em-sem-background)',
   '--em-card-border-radius': 'var(--em-core-border-radius--400)',
   '--em-card-feedback-color--error': 'var(--em-sem-status-error-text)',
@@ -69,6 +73,7 @@ export const stylesTokensComponents = {
   '--em-card-feedback-subtitle-font-weight': 'var(--em-core-font-weight--regular)',
   '--em-card-feedback-title-color': 'var(--em-sem-text)',
   '--em-card-feedback-title-font-weight': 'var(--em-core-font-weight--medium)',
+  '--em-card-font-family': 'var(--em-core-font-family--base)',
   '--em-card-gap': 'var(--em-core-spacing--0800)',
   '--em-card-header-gap': 'var(--em-core-spacing--0400)',
   '--em-card-loader-background': 'var(--em-sem-background--neutral)',
@@ -85,6 +90,7 @@ export const stylesTokensComponents = {
   '--em-card-title-font-size': 'var(--em-core-font-size--md)',
   '--em-card-title-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-card-title-line-height': 'var(--em-core-line-height--l)',
+
   '--em-chart-category-color': 'var(--em-sem-text--muted)',
   '--em-chart-category-font-family': 'var(--em-core-font-family--base)',
   '--em-chart-category-font-size': 'var(--em-core-font-size--xs)',
@@ -95,6 +101,7 @@ export const stylesTokensComponents = {
   '--em-chart-category-line-height': 'var(--em-core-line-height--sm)',
   '--em-chart-category-list-gap': 'var(--em-core-spacing--0400)',
   '--em-chart-category-size': 'var(--em-core-size--0300)',
+
   '--em-chart-grid-color': 'var(--em-sem-text)',
   '--em-chart-grid-color--light': 'var(--em-sem-background--light)',
   '--em-chart-grid-color--muted': 'var(--em-sem-text--muted)',
@@ -109,6 +116,7 @@ export const stylesTokensComponents = {
   '--em-chart-grid-tick-width': '1px',
   '--em-chart-grid-title-font-size': 'var(--em-core-font-size--sm)',
   '--em-chart-grid-title-font-weight': 'var(--em-core-font-weight--bold)',
+
   '--em-chart-label-background': 'var(--em-sem-background--neutral)',
   '--em-chart-label-border-radius': 'var(--em-core-border-radius--500)',
   '--em-chart-label-color': 'var(--em-sem-text)',
@@ -118,6 +126,7 @@ export const stylesTokensComponents = {
   '--em-chart-label-line-height': 'var(--em-core-line-height--sm)',
   '--em-chart-label-padding-left-right': 'var(--em-core-spacing--0100)',
   '--em-chart-label-padding-top-bottom': 'var(--em-core-spacing--0050)',
+
   '--em-chart-tooltip-background': 'var(--em-sem-background--inverted)',
   '--em-chart-tooltip-border-radius': 'var(--em-core-border-radius--300)',
   '--em-chart-tooltip-family': 'var(--em-core-font-family--base)',
@@ -127,6 +136,7 @@ export const stylesTokensComponents = {
   '--em-chart-tooltip-title-font-size': 'var(--em-core-font-size--sm)',
   '--em-chart-tooltip-title-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-chart-tooltip-title-line-height': 'var(--em-core-line-height--md)',
+
   '--em-field-feedback-color': 'var(--em-sem-text--muted)',
   '--em-field-feedback-color--error': 'var(--em-sem-status-error-text)',
   '--em-field-feedback-error-font-size': 'var(--em-core-font-size--xs)',
@@ -146,6 +156,7 @@ export const stylesTokensComponents = {
   '--em-field-header-title-font-size': 'var(--em-core-font-size--sm)',
   '--em-field-header-title-font-weight': 'var(--em-core-font-weight--medium)',
   '--em-field-header-title-line-height': 'var(--em-core-line-height--md)',
+
   '--em-ghostbutton-background--active': 'var(--em-sem-background--light)',
   '--em-ghostbutton-background--hover': 'var(--em-sem-background)',
   '--em-ghostbutton-border-radius': 'var(--em-core-border-radius--100)',
@@ -160,6 +171,7 @@ export const stylesTokensComponents = {
   '--em-ghostbutton-label-padding-right': 'var(--em-core-spacing--0100)',
   '--em-ghostbutton-line-height': 'var(--em-core-line-height--sm)',
   '--em-ghostbutton-padding': 'var(--em-core-spacing--0050)',
+
   '--em-kpichart-color': 'var(--em-sem-text)',
   '--em-kpichart-font-family': 'var(--em-core-font-family--base)',
   '--em-kpichart-gap': 'var(--em-core-spacing--0600)',
@@ -181,12 +193,15 @@ export const stylesTokensComponents = {
   '--em-kpichart-trend-icon-size': 'var(--em-core-size--0400)',
   '--em-kpichart-trend-line-height': 'var(--em-core-line-height--md)',
   '--em-kpichart-trend-padding': 'var(--em-core-spacing--0100)',
+
   '--em-linechart-line-dash': 'var(--em-core-size--0100)',
   '--em-linechart-line-gap': 'var(--em-core-size--0100)',
   '--em-linechart-line-width': '2px',
   '--em-linechart-point-size': 'var(--em-core-size--0200)',
   '--em-linechart-point-size--hover': 'var(--em-core-size--0300)',
+
   '--em-overlay-background': 'rgb(33 33 41 / 80%)',
+
   '--em-piechart-donut-color': 'var(--em-sem-text)',
   '--em-piechart-donut-label-font-size': 'var(--em-core-font-size--md)',
   '--em-piechart-donut-label-font-weight': 'var(--em-core-font-weight--medium)',
@@ -195,6 +210,7 @@ export const stylesTokensComponents = {
   '--em-piechart-donut-number-font-weight': 'var(--em-core-font-weight--bold)',
   '--em-piechart-donut-number-line-height': 'var(--em-core-line-height--xl)',
   '--em-piechart-font-family': 'var(--em-core-font-family--base)',
+
   '--em-selectfield-category-background': 'var(--em-sem-background--subtle)',
   '--em-selectfield-category-border-radius': 'var(--em-core-border-radius--150)',
   '--em-selectfield-category-color': 'var(--em-sem-text--neutral)',
@@ -240,6 +256,7 @@ export const stylesTokensComponents = {
   '--em-selectfield-item-label-right-font-weight': 'var(--em-core-font-weight--regular)',
   '--em-selectfield-item-label-right-line-height': 'var(--em-core-line-height--sm)',
   '--em-selectfield-item-padding': 'var(--em-core-spacing--0200)',
+
   '--em-selectfield-trigger-background': 'var(--em-sem-background--neutral)',
   '--em-selectfield-trigger-background--active': 'var(--em-sem-background--light)',
   '--em-selectfield-trigger-background--filled': 'var(--em-sem-background--inverted)',
@@ -261,10 +278,14 @@ export const stylesTokensComponents = {
   '--em-selectfield-trigger-line-height': 'var(--em-core-line-height--sm)',
   '--em-selectfield-trigger-min-width': '64px',
   '--em-selectfield-trigger-padding': 'var(--em-core-spacing--0300)',
+
   '--em-skeleton-border-radius': 'var(--em-core-border-radius--300)',
+
   '--em-switch-background--disabled': 'var(--em-sem-background--subtle)',
   '--em-switch-background--off': 'var(--em-sem-background--inverted)',
   '--em-switch-background--on': 'var(--em-sem-background--subtle)',
+  '--em-switch-font-family': 'var(--em-core-font-family--base)',
+  '--em-switch-height': 'var(--em-core-size--0400)',
   '--em-switch-label-color': 'var(--em-sem-text)',
   '--em-switch-label-color--disabled': 'var(--em-sem-text--subtle)',
   '--em-switch-label-color-font-size': 'var(--em-core-font-size--md)',
@@ -277,11 +298,13 @@ export const stylesTokensComponents = {
   '--em-switch-shadow-position-y': 'var(--em-core-shadow-position-y)',
   '--em-switch-shadow-spread': 'var(--em-core-shadow-spread)',
   '--em-switch-size-border-radius': 'var(--em-core-border-radius--500)',
-  '--em-switch-size-height': 'var(--em-core-size--0400)',
-  '--em-switch-size-width': 'var(--em-core-size--0800)',
   '--em-switch-thumb-background': 'var(--em-sem-background--neutral)',
   '--em-switch-thumb-background--disabled': 'var(--em-sem-background--light)',
+  '--em-switch-thumb-background--off': 'var(--em-sem-text--muted)',
   '--em-switch-thumb-padding': 'var(--em-core-spacing--0050)',
+  '--em-switch-thumb-size': 'var(--em-core-size--0300)',
+  '--em-switch-width': 'var(--em-core-size--0800)',
+
   '--em-tablechart-border-color': 'var(--em-sem-background--light)',
   '--em-tablechart-border-radius': 'var(--em-core-border-radius--300)',
   '--em-tablechart-border-width': '1px',
@@ -291,6 +314,7 @@ export const stylesTokensComponents = {
   '--em-tablechart-cell-min-width': 'var(--em-core-size--1200)',
   '--em-tablechart-cell-padding': 'var(--em-core-spacing--0200)',
   '--em-tablechart-color': 'var(--em-sem-text)',
+  '--em-tablechart-color--muted': 'var(--em-sem-text--muted)',
   '--em-tablechart-font-family': 'var(--em-core-font-family--base)',
   '--em-tablechart-font-size': 'var(--em-core-font-size--xs)',
   '--em-tablechart-font-weight': 'var(--em-core-font-weight--regular)',
@@ -305,6 +329,7 @@ export const stylesTokensComponents = {
   '--em-tablechart-pagination-button-gap': 'var(--em-core-spacing--0200)',
   '--em-tablechart-pagination-height': 'var(--em-core-size--1200)',
   '--em-tablechart-pagination-label-padding-left-right': 'var(--em-core-spacing--0400)',
+
   '--em-textfield-background': 'var(--em-sem-background)',
   '--em-textfield-background--active': 'var(--em-sem-background--subtle)',
   '--em-textfield-background--disabled': 'var(--em-sem-background--neutral)',

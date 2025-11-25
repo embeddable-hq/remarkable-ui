@@ -20,10 +20,10 @@
   position: relative;
   display: flex;
   box-sizing: border-box;
-  width: var(--em-switch-size-width, 2rem);
-  height: var(--em-switch-size-height, 1rem);
+  width: var(--em-switch-width, 2rem);
+  height: var(--em-switch-height, 1rem);
   border-radius: var(--em-switch-size-border-radius, 624.9375rem);
-  background: var(--em-switch-size-background--on, #e4e4ea);
+  background: var(--em-switch-background--on, #e4e4ea);
   padding: var(--em-switch-thumb-padding, 0.125rem);
 }
 
@@ -33,23 +33,24 @@
   flex-shrink: 0;
   border-radius: 50%;
   left: var(--em-switch-thumb-padding, 0.125rem);
-  background: var(--em-switch-thumb-background, #fff);
-  width: var(--em-switch-slider-size-width, 0.75rem);
-  height: var(--em-switch-slider-size-height, 0.75rem);
+  background: var(--em-switch-thumb-background--off, #5c5c66);
+  width: var(--em-switch-thumb-size, 0.75rem);
+  height: var(--em-switch-thumb-size, 0.75rem);
 }
 
 .switch.checked .switchTrack {
-  background: var(--em-switch-size-background--off, #212129);
+  background: var(--em-switch-background--off, #212129);
 }
 
 .switch.checked .switchThumb {
+  background: var(--em-switch-thumb-background, #fff);
   left: calc(
-    100% - var(--em-switch-slider-size-width, 0.75rem) - var(--em-switch-thumb-padding, 0.125rem)
+    100% - var(--em-switch-thumb-size, 0.75rem) - var(--em-switch-thumb-padding, 0.125rem)
   );
 }
 
 .switch.disabled .switchTrack {
-  background: var(--em-switch-size-background--disabled, #e4e4ea);
+  background: var(--em-switch-background--disabled, #e4e4ea);
 }
 
 .switch.disabled .switchThumb {
@@ -59,8 +60,8 @@
 .switchLabel {
   font-style: normal;
   color: var(--em-switch-label-color, #212129);
-  font-family: var(--em-form-section-font-family, sans-serif);
-  font-size: var(--em-form-section-font-size, 16px);
+  font-family: var(--em-switch-font-family, sans-serif);
+  font-size: var(--em-switch-label-color-font-size, 1rem);
   font-weight: var(--em-switch-label-color-font-weight, 500);
   line-height: var(--em-switch-label-color-line-height, 16px);
 }

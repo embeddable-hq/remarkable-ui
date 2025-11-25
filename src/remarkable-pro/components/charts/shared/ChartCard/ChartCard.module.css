@@ -10,7 +10,7 @@
 
 .fixedContent {
   z-index: 3;
-  background: var(--TEMP-background-color-default, #f7f7f8);
+  background: inherit;
   position: absolute;
   top: 50%;
   left: 50%;

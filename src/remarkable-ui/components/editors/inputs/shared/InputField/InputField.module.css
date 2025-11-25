@@ -57,7 +57,7 @@
   font-size: var(--em-textfield-font-size, 0.75rem);
   font-style: normal;
   font-weight: var(--em-textfield-font-weight, 400);
-  line-height: var(--em-text-input-label-font-line-height, 0.875rem);
+  line-height: var(--em-textfield-line-height, 1rem);
 }
 
 .input:has(input:not(:placeholder-shown)) {

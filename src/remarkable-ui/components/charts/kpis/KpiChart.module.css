@@ -30,6 +30,6 @@
   flex-direction: column;
   text-align: center;
   font-style: normal;
-  font-size: var(--em-kpi-trend-font-size, 1rem);
+  font-size: var(--em-kpichart-trend-font-size, 1rem);
   font-style: normal;
 }

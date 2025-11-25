@@ -30,7 +30,7 @@
   overflow-wrap: break-word;
   font-style: normal;
   color: var(--em-card-title-color, #212129);
-  font-family: var(--em-card-title-font-family, sans-serif);
+  font-family: var(--em-card-font-family, sans-serif);
   font-size: var(--em-card-title-font-size, 1rem);
   font-weight: var(--em-card-title-font-weight, 700);
   line-height: var(--em-card-title-line-height, 1.1875rem);
@@ -41,7 +41,7 @@
   overflow-wrap: break-word;
   font-style: normal;
   color: var(--em-card-subtitle-color, #5c5c66);
-  font-family: var(--em-card-subtitle-font-family, sans-serif);
+  font-family: var(--em-card-font-family, sans-serif);
   font-size: var(--em-card-subtitle-font-size, 0.875rem);
   font-weight: var(--em-card-subtitle-font-weight, 400);
   line-height: var(--em-card-subtitle-line-height, 1.1875rem);

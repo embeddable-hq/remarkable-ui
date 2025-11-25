@@ -5,10 +5,8 @@
 }
 
 .loading {
-  padding: var(--TEMP-card-loader-padding-default, 0.25rem);
-  border-radius: var(--TEMP-card-loader-border-radius-default, 9999px);
-  background: var(--TEMP-sem-background-default, #f7f7f8);
-  width: var(--TEMP-card-loader-icon-size-width, 1.5rem);
-  height: var(--TEMP-card-loader-icon-size-height, 1.5rem);
+  padding: var(--em-card-loader-padding, 0.25rem);
+  width: var(--em-card-loader-size, 1.5rem);
+  height: var(--em-card-loader-size, 1.5rem);
   animation: spin 2s linear infinite;
 }

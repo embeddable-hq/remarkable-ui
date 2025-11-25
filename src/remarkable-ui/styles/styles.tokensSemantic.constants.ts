@@ -5,7 +5,6 @@ export const stylesTokensSemantic = {
   '--em-sem-background--muted': 'var(--em-core-color-gray--0300)',
   '--em-sem-background--neutral': 'var(--em-core-color-gray--0000)',
   '--em-sem-background--subtle': 'var(--em-core-color-gray--0200)',
-
   '--em-sem-chart-color--1': 'var(--em-core-color-orange--900)',
   '--em-sem-chart-color--10': 'var(--em-core-color-orange--050)',
   '--em-sem-chart-color--2': 'var(--em-core-color-orange--800)',
@@ -16,12 +15,10 @@ export const stylesTokensSemantic = {
   '--em-sem-chart-color--7': 'var(--em-core-color-orange--300)',
   '--em-sem-chart-color--8': 'var(--em-core-color-orange--200)',
   '--em-sem-chart-color--9': 'var(--em-core-color-orange--100)',
-
   '--em-sem-status-error-background': 'rgb(246 226 226)',
   '--em-sem-status-error-text': 'rgb(188 16 16)',
-  '--em-sem-status-positive-background': 'rgb(225 240 233)',
+  '--em-sem-status-success-background': 'rgb(225 240 233)',
   '--em-sem-status-success-text': 'rgb(15 149 90)',
-
   '--em-sem-text': 'var(--em-core-color-gray--0900)',
   '--em-sem-text--inverted': 'var(--em-core-color-gray--0000)',
   '--em-sem-text--muted': 'var(--em-core-color-gray--0700)',

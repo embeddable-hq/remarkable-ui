@@ -6,7 +6,7 @@
   font-size: var(--em-textfield-feedback-font-size, 0.75rem);
   font-weight: var(--em-textfield-feedback-font-weight, 400);
   line-height: var(--em-textfield-feedback-line-height, 1rem);
-  padding-top: var(--em-textfield-feedback-padding-top, 0.5rem);
+  padding-top: var(--em-field-feedback-padding-top, 0.5rem);
 }
 
 .fieldFeedback.error {
