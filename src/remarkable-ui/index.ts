@@ -16,8 +16,8 @@ export { PageOverlay } from './components/shared/PageOverlay/PageOverlay';
 export type { PageOverlayProps } from './components/shared/PageOverlay/PageOverlay.types';
 export { MultiSelectField } from './components/editors/selects/MultiSelectField/MultiSelectField';
 export { Switch } from './components/editors/Switch/Switch';
-export { FieldFeedback, FieldFeedbackProps } from './components/shared/Field/FieldFeedback';
-export { FieldHeader, FieldHeaderProps } from './components/shared/Field/FieldHeader';
+export { FieldFeedback } from './components/shared/Field/FieldFeedback';
+export { FieldHeader } from './components/shared/Field/FieldHeader';
 
 // Editors
 export { SelectFieldTrigger } from './components/editors/selects/shared/SelectFieldTrigger/SelectFieldTrigger';
