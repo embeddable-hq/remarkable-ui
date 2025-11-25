@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styles from './KpiChartChange.module.css';
 import clsx from 'clsx';
-import { Typography } from '../../../shared/Typography/Typography';
 import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 import { KpiChartProps } from '../KpiChart.types';
 
@@ -20,8 +19,11 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   comparisonLabel,
   valueFormatter,
   percentageDecimalPlaces = 1,
+  equalComparisonLabel,
   className,
 }) => {
+  const equalComparison = comparisonValue === value;
+
   const difference = value - comparisonValue;
   const isPositive = difference > 0;
 
@@ -40,11 +42,18 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
 
   return (
     <div className={clsx(className, styles.kpiChartChangeContainer)}>
-      <div className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}>
-        <Icon />
-        <Typography>{displayValue}</Typography>
-      </div>
-      {comparisonLabel && <Typography>{comparisonLabel}</Typography>}
+      {!equalComparison && (
+        <span
+          className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}
+        >
+          <Icon />
+          <span>{displayValue}</span>
+        </span>
+      )}
+
+      <span className={styles.kpiComparisonLabel}>
+        {equalComparison ? equalComparisonLabel : comparisonLabel}
+      </span>
     </div>
   );
 };

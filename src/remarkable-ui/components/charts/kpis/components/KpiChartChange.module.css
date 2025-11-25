@@ -1,44 +1,53 @@
 .kpiChartChangeContainer {
-  display: flex;
+  display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--TEMP-chart-grid-padding-default, 0.5rem);
-  color: var(--TEMP-chart-grid-font-color-default, #000);
-}
-
-.kpiChartChangeContainer > p {
-  font-size: 0.875em; /* 87.5% of --TEMP-kpi-trend-font-font-size */
-  color: inherit;
+  justify-content: center;
+  gap: var(--em-kpichart-label-gap, 0.5rem);
+  margin-top: var(--em-kpichart-gap, 1.5rem);
 }
 
 .kpiChangeBadge {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--TEMP-kpi-trend-padding-default, 0.25rem);
-  border-radius: var(--TEMP-kpi-trend-border-radius-default, 0.375rem);
+  padding: var(--em-kpi-trend-padding-default, 0.25rem);
+  border-radius: var(--em-kpi-trend-border-radius-default, 0.375rem);
+  width: min-content;
 }
 
 .kpiChangeBadge > svg {
-  width: 1em; /* 100% of --TEMP-kpi-trend-font-font-size */
-  height: 1em; /* 100% of --TEMP-kpi-trend-font-font-size */
+  width: 1em; /* 87.5% of the parent font-size */
+  height: 1em; /* 87.5% of the parent font-size */
 }
 
-.kpiChangeBadge > p {
-  padding: 0 var(--TEMP-kpi-trend-padding-default, 0.25rem);
-  /* TODO: implement on the font ticket */
-  /* font-family: var(--TEMP-kpi-trend-font-font-family, Inter); */
-  font-size: 1em; /* 100% of --TEMP-kpi-trend-font-font-size */
+.kpiChangeBadge > span {
+  color: inherit;
   font-style: normal;
-  font-weight: var(--TEMP-kpi-trend-font-font-weight, 500);
-  line-height: var(--TEMP-kpi-trend-font-line-height, 1rem);
+  font-size: 1em;
+  padding: 0 var(--em-kpi-trend-padding-default, 0.25rem);
+  font-family: var(--em-kpi-kpi-font-family, sans-serif);
+  font-weight: var(--em-kpi-trend-font-weight, 500);
+  line-height: var(--em-kpi-trend-font-line-height, 1rem);
 }
 
 .kpiChangeBadge.positive {
-  background: var(--TEMP-kpi-trend-background-color-positive, #e1f0e9);
-  color: var(--TEMP-kpi-trend-label-color-positive, #0f955a);
+  background: var(--em-kpi-trend-background-color-positive, #e1f0e9);
+  color: var(--em-kpi-trend-label-text-positive, #0f955a);
 }
 
 .kpiChangeBadge.negative {
-  background: var(--TEMP-kpi-trend-background-color-negative, #f6e2e2);
-  color: var(--TEMP-kpi-trend-label-color-negative, #bc1010);
+  background: var(--em-kpichart-trend-background--negative, #f6e2e2);
+  color: var(--em-kpichart-trend-color--negative, #bc1010);
+}
+
+.kpiComparisonLabel {
+  text-align: center;
+  font-style: normal;
+  font-size: 0.875em; /* 87.5% of the parent font-size */
+  color: var(--em-kpichart-color, #212129);
+  font-family: var(--em-kpichart-font-family, sans-serif);
+  font-weight: var(--em-kpichart-label-font-weight, 400);
+  line-height: var(--em-kpichart-label-line-height, 0.875rem);
+  white-space: nowrap;
 }

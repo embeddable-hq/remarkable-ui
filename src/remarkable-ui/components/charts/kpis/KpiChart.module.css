@@ -1,26 +1,26 @@
 .kpiChartContainer {
+  width: 100%;
+  height: 100%;
+  font-style: normal;
+  text-align: center;
+  display: flex;
+}
+
+.kpiChartCenter {
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
 }
 
-.kpiChartContainer > p {
-  width: 100%;
-  font-size: 52px;
-  text-align: center;
+.kpiChartCenter h2 {
+  margin: unset;
   overflow: hidden;
+  width: min-content;
   text-overflow: ellipsis;
-  white-space: nowrap;
-
-  color: var(--TEMP-kpi-kpi-font-font-color, #212129);
-  /* TODO: implement on the font ticket */
-  /* font-family: var(--TEMP-kpi-kpi-font-font-family, Inter); */
-  font-style: normal;
-  font-weight: var(--TEMP-kpi-kpi-font-font-weight, 700);
-  line-height: normal;
+  color: var(--em-kpichart-color, #212129);
+  font-family: var(--em-kpichart-font-family, sans-serif);
+  font-weight: var(--em-kpichart-number-font-weight, 700);
 }
 
 .kpiComparisonContainer {
@@ -28,22 +28,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-
-  padding: var(--TEMP-chart-grid-padding-lg, 1rem) 0 0 0;
-  gap: var(--TEMP-chart-grid-padding-default, 0.5rem);
-  font-size: var(--TEMP-kpi-trend-font-font-size, 1rem);
-}
-
-.kpiComparisonContainer > p {
   text-align: center;
-  /* TODO: implement on the font ticket */
-  /* font-family: var(--TEMP-kpi-trend-font-font-family, Inter); */
-  color: var(--TEMP-chart-grid-text-default, #000);
-  font-size: 0.875em; /* 87.5% of --TEMP-kpi-trend-font-font-size */
   font-style: normal;
-  font-weight: var(--TEMP-kpi-trend-font-font-weight, 500);
-}
-
-.kpiChangeHidden {
-  visibility: hidden;
+  font-size: var(--em-kpi-trend-font-size, 1rem);
+  font-style: normal;
 }

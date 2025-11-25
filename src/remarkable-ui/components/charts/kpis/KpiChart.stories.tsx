@@ -4,6 +4,21 @@ import { KpiChart } from './KpiChart';
 
 const meta = {
   component: KpiChart,
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          width: '400px',
+          height: '200px',
+          resize: 'both',
+          overflow: 'auto',
+          border: '1px solid #ccc',
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     valueFontSize: {
       control: {
@@ -17,13 +32,31 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Simple: Story = {
+export const Default: Story = {
   args: {
     value: 100,
   },
 };
 
-export const KpiComparisonEqual: Story = {
+export const PositiveComparison: Story = {
+  args: {
+    value: 100,
+    comparisonValue: 50,
+    comparisonLabel: 'vs previous period.',
+    equalComparisonLabel: 'No change',
+  },
+};
+
+export const NegativeComparison: Story = {
+  args: {
+    value: 100,
+    comparisonValue: 150,
+    comparisonLabel: 'vs previous period.',
+    equalComparisonLabel: 'No change',
+  },
+};
+
+export const Equal: Story = {
   args: {
     value: 100,
     comparisonValue: 100,
@@ -32,69 +65,12 @@ export const KpiComparisonEqual: Story = {
   },
 };
 
-export const KpiComparisonNegative: Story = {
+export const Percentage: Story = {
   args: {
     value: 100,
-    comparisonValue: 150,
+    comparisonValue: 75,
     comparisonLabel: 'vs previous period.',
     equalComparisonLabel: 'No change',
-  },
-};
-
-export const KpiComparisonNegativePercentage: Story = {
-  args: {
-    value: 100,
-    comparisonValue: 150,
     showChangeAsPercentage: true,
-    comparisonLabel: 'vs previous period.',
-    equalComparisonLabel: 'No change',
-  },
-};
-
-export const KpiComparisonPositive: Story = {
-  args: {
-    value: 100,
-    comparisonValue: 75,
-    comparisonLabel: 'vs previous period.',
-    equalComparisonLabel: 'No change',
-  },
-};
-
-export const KpiComparisonPositivePercentage: Story = {
-  args: {
-    value: 100,
-    comparisonValue: 75,
-    showChangeAsPercentage: true,
-    comparisonLabel: 'vs previous period.',
-    equalComparisonLabel: 'No change',
-  },
-};
-
-export const KpiComparisonPositiveInvertedColors: Story = {
-  args: {
-    value: 100,
-    comparisonValue: 75,
-    invertChangeColors: true,
-    comparisonLabel: 'vs previous period.',
-    equalComparisonLabel: 'No change',
-  },
-};
-
-export const KpiComparisonNegativeInvertedColors: Story = {
-  args: {
-    value: 100,
-    comparisonValue: 150,
-    invertChangeColors: true,
-    comparisonLabel: 'vs previous period.',
-    equalComparisonLabel: 'No change',
-  },
-};
-
-export const KpiComparisonZero: Story = {
-  args: {
-    value: 0,
-    comparisonValue: 0,
-    comparisonLabel: 'vs previous period.',
-    equalComparisonLabel: 'No change',
   },
 };
