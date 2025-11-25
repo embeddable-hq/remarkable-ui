@@ -52,7 +52,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
       )}
 
       <span className={styles.kpiComparisonLabel}>
-        {equalComparison ? equalComparisonLabel : comparisonLabel}
+        {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
       </span>
     </div>
   );

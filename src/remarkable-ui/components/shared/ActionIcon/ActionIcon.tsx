@@ -6,7 +6,6 @@ import { TablerIcon } from '@tabler/icons-react';
 type ActionIconProps = {
   className?: string;
   icon: TablerIcon;
-  size?: 'small' | 'medium';
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const ActionIcon: React.FC<ActionIconProps> = ({ icon: Icon, className, ...props }) => {

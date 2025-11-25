@@ -87,7 +87,6 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
       <ActionIcon
         title={`Copy: ${String(value)}`}
         onMouseDown={handleCopy}
-        size="small"
         icon={isPressedCopy ? IconCopyCheckFilled : IconCopy}
         className={clsx(
           styles.copyButton,

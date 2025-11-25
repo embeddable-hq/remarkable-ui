@@ -15,7 +15,7 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     font: {
       size: getStyleNumber('--em-chart-label-font-size', '0.75rem'),
       weight: getStyleNumber('--em-chart-label-font-weight', '500'),
-      family: getStyle('--em-chart-label-font-family', 'san-serif'),
+      family: getStyle('--em-chart-label-font-family', 'sans-serif'),
     },
   },
   legend: {
@@ -27,7 +27,7 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
       color: getStyle('--em-chart-category-color', '#5C5C66'),
       padding: getStyleNumber('--em-chart-category-list-gap', '1rem'),
       font: {
-        family: getStyle('--em-chart-category-font-family', 'san-serif'),
+        family: getStyle('--em-chart-category-font-family', 'sans-serif'),
         size: getStyleNumber('--em-chart-category-font-size', '0.75rem'),
         weight: getStyleNumber('--em-chart-category-font-weight', '500'),
       },
@@ -47,14 +47,14 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
     bodyFont: {
       size: getStyleNumber('--em-chart-category-font-size', '0.75rem'),
       weight: getStyleNumber('--em-chart-category-font-weight', '500'),
-      family: getStyle('--em-chart-tooltip-family', 'san-serif'),
+      family: getStyle('--em-chart-tooltip-family', 'sans-serif'),
     },
     titleAlign: 'left',
     titleColor: getStyle('--em-chart-tooltip-title-color', '#FFF'),
     titleFont: {
       size: getStyleNumber('--em-chart-tooltip-title-font-size', '0.875rem'),
       weight: getStyleNumber('--em-chart-tooltip-title-font-weight', '700'),
-      family: getStyle('--em-chart-tooltip-family', 'san-serif'),
+      family: getStyle('--em-chart-tooltip-family', 'sans-serif'),
     },
   },
 };

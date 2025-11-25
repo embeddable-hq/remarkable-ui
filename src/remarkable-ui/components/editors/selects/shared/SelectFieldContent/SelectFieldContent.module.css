@@ -9,7 +9,6 @@
     var(--em-selectfield-content-max-width, 25rem)
   );
   min-width: var(--radix-dropdown-menu-trigger-width);
-  max-width: var(--em-selectfield-content-max-width, 25rem);
   max-height: var(--em-selectfield-content-max-height, 20rem);
   padding: var(--em-selectfield-content-padding, 0.5rem);
   border-radius: var(--em-selectfield-content-border-radius, 0.75rem);

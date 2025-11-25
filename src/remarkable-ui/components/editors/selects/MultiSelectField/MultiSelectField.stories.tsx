@@ -232,7 +232,7 @@ export const WithCategories: Story = {
   },
 };
 
-export const Error: Story = {
+export const WithError: Story = {
   args: {
     label: undefined,
     required: false,
@@ -240,7 +240,7 @@ export const Error: Story = {
   },
 };
 
-export const errorMessage: Story = {
+export const WithErrorMessage: Story = {
   args: {
     label: undefined,
     required: false,

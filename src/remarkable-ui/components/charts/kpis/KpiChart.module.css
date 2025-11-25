@@ -26,10 +26,8 @@
 .kpiComparisonContainer {
   display: flex;
   align-items: center;
-  display: flex;
   flex-direction: column;
   text-align: center;
   font-style: normal;
   font-size: var(--em-kpichart-trend-font-size, 1rem);
-  font-style: normal;
 }
