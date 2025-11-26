@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 1.0.2
+
+### Patch Changes
+
+- cd281db: Allow false values on Line and Bar charts
+
 ## 1.0.1
 
 ### Patch Changes
