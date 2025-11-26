@@ -32,7 +32,7 @@ export const chartjsAxisOptionsPlugins: Partial<ChartOptions['plugins']> = {
 
 export const chartjsAxisOptionsScalesTicksDefault: Partial<CartesianTickOptions> = {
   display: true,
-  color: getStyle('--em-chart-grid-color', '#212129'),
+  color: getStyle('--em-chart-grid-label-color', '#212129'),
   font: {
     size: getStyleNumber('--em-chart-grid-label-font-size', '0.75rem'),
     family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
@@ -42,7 +42,7 @@ export const chartjsAxisOptionsScalesTicksDefault: Partial<CartesianTickOptions>
 
 export const chartjsAxisOptionsScalesTicksMuted: Partial<CartesianTickOptions> = {
   display: true,
-  color: getStyle('--em-chart-grid-color--muted', '#5C5C66'),
+  color: getStyle('--em-chart-grid-label-color--muted', '#5C5C66'),
   font: {
     size: getStyleNumber('--em-chart-grid-label-font-size', '0.75rem'),
     family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
@@ -52,7 +52,7 @@ export const chartjsAxisOptionsScalesTicksMuted: Partial<CartesianTickOptions> =
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const chartjsAxisOptionsScalesTitle: any = {
-  color: getStyle('--em-chart-grid-color', '#212129'),
+  color: getStyle('--em-chart-grid-label-color', '#212129'),
   font: {
     size: getStyleNumber('--em-chart-grid-title-font-size', '0.875rem'),
     weight: getStyleNumber('--em-chart-grid-title-font-weight', '700'),
@@ -61,7 +61,7 @@ export const chartjsAxisOptionsScalesTitle: any = {
 };
 
 export const chartjsAxisOptionsScalesGrid: Partial<GridLineOptions> = {
-  color: getStyle('--em-chart-grid-color--light', '#EDEDF1'),
+  color: getStyle('--em-chart-grid-line-color--light', '#EDEDF1'),
   lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
 };
 
@@ -96,9 +96,9 @@ export const chartjsAxisOptionsScalesGridColor = (ctx: any) => {
   if (ctx.tick.value === 0) {
     const values = ctx.chart.data.datasets[0].data;
     if (isMixedValues(values)) {
-      return getStyle('--em-chart-grid-color', '#212129');
+      return getStyle('--em-chart-grid-line-color', '#212129');
     }
-    return getStyle('--em-chart-grid-color--subtle', '#B8B8BD');
+    return getStyle('--em-chart-grid-line-color--subtle', '#B8B8BD');
   }
-  return getStyle('--em-chart-grid-color--light', '#EDEDF1');
+  return getStyle('--em-chart-grid-line-color--light', '#EDEDF1');
 };

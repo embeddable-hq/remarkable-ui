@@ -18,6 +18,7 @@
   overflow: hidden;
   width: min-content;
   text-overflow: ellipsis;
+  white-space: nowrap;
   color: var(--em-kpichart-color, #212129);
   font-family: var(--em-kpichart-font-family, sans-serif);
   font-weight: var(--em-kpichart-number-font-weight, 700);

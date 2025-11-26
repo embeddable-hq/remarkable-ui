@@ -60,8 +60,6 @@ export const meta = {
       ...genericNumber,
       name: 'changeFontSize',
       label: 'Change Font Size',
-      defaultValue: 16,
-      required: true,
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
