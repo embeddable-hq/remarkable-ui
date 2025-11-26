@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 1.0.4
+
+### Patch Changes
+
+- 198f526: HeatMap and PivotTable full width when no column width is provided + Remove scroll auto from CharCard content
+
 ## 1.0.3
 
 ### Patch Changes
