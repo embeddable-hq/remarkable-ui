@@ -1,3 +1,9 @@
+const stylesTokensCoreFontWeights = {
+  '--em-core-font-weight--bold': '700',
+  '--em-core-font-weight--medium': '500',
+  '--em-core-font-weight--regular': '400',
+};
+
 export const stylesTokensCore = {
   '--em-core-border-radius--000': '0px',
   '--em-core-border-radius--050': '2px',
@@ -44,10 +50,6 @@ export const stylesTokensCore = {
   '--em-core-font-size--xs': '12px',
   '--em-core-font-size--xxl': '32px',
 
-  '--em-core-font-weight--bold': '700px',
-  '--em-core-font-weight--medium': '500px',
-  '--em-core-font-weight--regular': '400px',
-
   '--em-core-line-height--l': '19px',
   '--em-core-line-height--md': '16px',
   '--em-core-line-height--sm': '14px',
@@ -92,6 +94,7 @@ export const stylesTokensCore = {
   '--em-core-spacing--1200': '48px',
   '--em-core-spacing--1600': '64px',
   '--em-core-spacing--2000': '80px',
+  ...stylesTokensCoreFontWeights,
 };
 
 type StylesTokensCore = typeof stylesTokensCore;
