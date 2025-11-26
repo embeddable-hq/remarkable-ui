@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 1.0.5
+
+### Patch Changes
+
+- 87ff966: Chartjs config as functions
+
 ## 1.0.4
 
 ### Patch Changes
