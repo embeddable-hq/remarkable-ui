@@ -35,11 +35,11 @@
   flex: 1;
 }
 
-.tableContainerScroll.fullWidth {
+.tableAdjustedContainer.fullWidth {
   width: 100%;
 }
 
-.tableContainerScroll.fullWidth .table {
+.tableAdjustedContainer.fullWidth .table {
   width: 100%;
 }
 
