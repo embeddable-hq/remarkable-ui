@@ -30,6 +30,7 @@ export * from './components/charts/pies/pies.types';
 export * as PieChartPro from './components/charts/pies/PieChartPro';
 export * as DonutChartPro from './components/charts/pies/DonutChartPro';
 export * as DonutLabelChartPro from './components/charts/pies/DonutLabelChartPro';
+export * from './components/charts/pies/pies.utils';
 
 //Components editors
 export { EditorCard } from './components/editors/shared/EditorCard/EditorCard';

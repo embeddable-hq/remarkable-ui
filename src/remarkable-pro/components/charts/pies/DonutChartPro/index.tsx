@@ -1,6 +1,6 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
-import { getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { getPieChartProOptions, getPieChartProData } from '../pies.utils';
 import { DefaultPieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
@@ -27,10 +27,13 @@ const DonutChartPro = (props: DonutChartProProps) => {
     onSegmentClick,
   } = resolveI18nProps(props);
 
-  const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
+  const data = getPieChartProData(
+    { data: results.data, dimension, measure, maxLegendItems },
+    theme,
+  );
 
   const options = mergician(
-    getDefaultPieChartOptions(measure, theme),
+    getPieChartProOptions(measure, theme),
     theme.charts.donutChartPro?.options ?? {},
   );
 
