@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 1.0.1
+
+### Patch Changes
+
+- 75f0194: Improve process-css-variable script
+
 ## 1.0.0
 
 ### Major Changes
