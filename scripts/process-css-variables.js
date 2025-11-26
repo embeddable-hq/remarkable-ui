@@ -25,10 +25,7 @@ try {
   // Create temp directory and compile TypeScript
   fs.mkdirSync(tempDir, { recursive: true });
 
-  fs.writeFileSync(
-    path.join(tempDir, 'package.json'),
-    JSON.stringify({ type: 'commonjs' }),
-  );
+  fs.writeFileSync(path.join(tempDir, 'package.json'), JSON.stringify({ type: 'commonjs' }));
 
   execSync(
     `npx tsc "${sourcePath}" --outDir "${tempDir}" --target es2022 --module commonjs --esModuleInterop`,
@@ -47,7 +44,6 @@ try {
   if (!styles || typeof styles !== 'object' || Object.keys(styles).length === 0) {
     throw new Error('No valid styles found in constants file');
   }
-
 
   // Generate CSS variables
   const cssVariables = `:root {\n${Object.entries(styles)
