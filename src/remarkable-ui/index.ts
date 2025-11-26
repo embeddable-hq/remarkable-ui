@@ -59,10 +59,7 @@ export { chartColors, chartContrastColors } from './components/charts/charts.con
 export { styles, type Styles } from './styles/styles.constants';
 
 // Chartjs
-export {
-  chartjsAxisOptionsScalesTicksDefault,
-  chartjsAxisOptionsScalesTitle,
-} from './components/charts/chartjs.cartesian.constants';
+export * from './components/charts/chartjs.cartesian.constants';
 
 // Utils
 export { getStyle, getStyleNumber } from './styles/styles.utils';
