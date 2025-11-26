@@ -5,9 +5,9 @@ import { LineChartConfigurationProps } from './lines.types';
 import {
   chartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
-  chartjsAxisOptionsScalesGridColor,
-  chartjsAxisOptionsScalesTicksDefault,
-  chartjsAxisOptionsScalesTicksMuted,
+  getChartjsAxisOptionsScalesGridColor,
+  getChartjsAxisOptionsScalesTicksDefault,
+  getChartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
 import { getStyleNumber } from '../../../styles/styles.utils';
 
@@ -77,7 +77,7 @@ export const getLineChartOptions = (
         border: {
           display: false,
         },
-        ticks: chartjsAxisOptionsScalesTicksDefault,
+        ticks: getChartjsAxisOptionsScalesTicksDefault(),
         title: {
           display: Boolean(options.xAxisLabel),
           text: options.xAxisLabel,
@@ -86,8 +86,8 @@ export const getLineChartOptions = (
       },
       y: {
         beginAtZero: true,
-        ticks: chartjsAxisOptionsScalesTicksMuted,
-        grid: { display: true, color: chartjsAxisOptionsScalesGridColor },
+        ticks: getChartjsAxisOptionsScalesTicksMuted(),
+        grid: { display: true, color: getChartjsAxisOptionsScalesGridColor },
         border: {
           display: false,
         },

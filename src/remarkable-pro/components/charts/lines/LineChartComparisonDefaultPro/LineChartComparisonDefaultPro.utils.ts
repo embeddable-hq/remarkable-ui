@@ -4,8 +4,8 @@ import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
 import { getObjectStableKey } from '../../../../utils.ts/object.utils';
 import {
   chartContrastColors,
-  chartjsAxisOptionsScalesTicksDefault,
-  chartjsAxisOptionsScalesTitle,
+  getChartjsAxisOptionsScalesTicksDefault,
+  getChartjsAxisOptionsScalesTitle,
   getStyleNumber,
 } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
@@ -213,13 +213,13 @@ const getLineChartComparisonNonTimeOptions = (
       },
       [AXIS_ID_MAIN]: {
         title: {
-          ...chartjsAxisOptionsScalesTitle,
+          ...getChartjsAxisOptionsScalesTitle(),
           text: xAxisLabel,
           display: Boolean(xAxisLabel),
         },
         grid: { display: false },
         ticks: {
-          ...chartjsAxisOptionsScalesTicksDefault,
+          ...getChartjsAxisOptionsScalesTicksDefault(),
           callback(index) {
             return themeFormatter.data(dimension, data.labels?.[index as number]);
           },
@@ -311,7 +311,7 @@ const getLineChartComparisonTimeOptions = (
       x: { display: false },
       [AXIS_ID_MAIN]: {
         title: {
-          ...chartjsAxisOptionsScalesTitle,
+          ...getChartjsAxisOptionsScalesTitle(),
           text: xAxisLabel,
           display: Boolean(
             (!showComparisonAxis || comparisonDimensionLabels.length === 0) && xAxisLabel,
@@ -319,7 +319,7 @@ const getLineChartComparisonTimeOptions = (
         },
         grid: { display: false },
         ticks: {
-          ...chartjsAxisOptionsScalesTicksDefault,
+          ...getChartjsAxisOptionsScalesTicksDefault(),
           callback: (index) => {
             return themeFormatter.data(dimension, mainDimensionLabels[Number(index)]);
           },
@@ -327,14 +327,14 @@ const getLineChartComparisonTimeOptions = (
       },
       [AXIS_ID_COMPARISON]: {
         title: {
-          ...chartjsAxisOptionsScalesTitle,
+          ...getChartjsAxisOptionsScalesTitle(),
           text: xAxisLabel,
           display: Boolean(xAxisLabel),
         },
         grid: { display: false },
         display: showComparisonAxis && comparisonDimensionLabels.length > 0,
         ticks: {
-          ...chartjsAxisOptionsScalesTicksDefault,
+          ...getChartjsAxisOptionsScalesTicksDefault(),
           callback: (index) => {
             if (comparisonDimensionLabels.length === 0) {
               return '';

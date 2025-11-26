@@ -30,7 +30,7 @@ export const chartjsAxisOptionsPlugins: Partial<ChartOptions['plugins']> = {
   },
 };
 
-export const chartjsAxisOptionsScalesTicksDefault: Partial<CartesianTickOptions> = {
+export const getChartjsAxisOptionsScalesTicksDefault = (): Partial<CartesianTickOptions> => ({
   display: true,
   color: getStyle('--em-chart-grid-label-color', '#212129'),
   font: {
@@ -38,9 +38,9 @@ export const chartjsAxisOptionsScalesTicksDefault: Partial<CartesianTickOptions>
     family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
     weight: getStyleNumber('--em-chart-grid-label-font-weight', '400'),
   },
-};
+});
 
-export const chartjsAxisOptionsScalesTicksMuted: Partial<CartesianTickOptions> = {
+export const getChartjsAxisOptionsScalesTicksMuted = (): Partial<CartesianTickOptions> => ({
   display: true,
   color: getStyle('--em-chart-grid-label-color--muted', '#5C5C66'),
   font: {
@@ -48,33 +48,33 @@ export const chartjsAxisOptionsScalesTicksMuted: Partial<CartesianTickOptions> =
     family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
     weight: getStyleNumber('--em-chart-grid-label-font-weight', '400'),
   },
-};
+});
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const chartjsAxisOptionsScalesTitle: any = {
+export const getChartjsAxisOptionsScalesTitle = (): any => ({
   color: getStyle('--em-chart-grid-label-color', '#212129'),
   font: {
     size: getStyleNumber('--em-chart-grid-title-font-size', '0.875rem'),
     weight: getStyleNumber('--em-chart-grid-title-font-weight', '700'),
     family: getStyle('--em-chart-grid-font-family', 'sans-serif'),
   },
-};
+});
 
-export const chartjsAxisOptionsScalesGrid: Partial<GridLineOptions> = {
+export const getChartjsAxisOptionsScalesGrid = (): Partial<GridLineOptions> => ({
   color: getStyle('--em-chart-grid-line-color--light', '#EDEDF1'),
   lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
-};
+});
 
 export const chartjsAxisOptionsScales: Partial<ChartOptions['scales']> = {
   x: {
-    grid: chartjsAxisOptionsScalesGrid,
-    title: chartjsAxisOptionsScalesTitle,
-    ticks: chartjsAxisOptionsScalesTicksDefault,
+    grid: getChartjsAxisOptionsScalesGrid(),
+    title: getChartjsAxisOptionsScalesTitle(),
+    ticks: getChartjsAxisOptionsScalesTicksDefault(),
   },
   y: {
-    grid: chartjsAxisOptionsScalesGrid,
-    title: chartjsAxisOptionsScalesTitle,
-    ticks: chartjsAxisOptionsScalesTicksMuted,
+    grid: getChartjsAxisOptionsScalesGrid(),
+    title: getChartjsAxisOptionsScalesTitle(),
+    ticks: getChartjsAxisOptionsScalesTicksMuted(),
   },
 };
 
@@ -92,7 +92,7 @@ function isMixedValues(values: number[]): boolean {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const chartjsAxisOptionsScalesGridColor = (ctx: any) => {
+export const getChartjsAxisOptionsScalesGridColor = (ctx: any) => {
   if (ctx.tick.value === 0) {
     const values = ctx.chart.data.datasets[0].data;
     if (isMixedValues(values)) {

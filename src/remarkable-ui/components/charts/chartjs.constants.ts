@@ -1,7 +1,7 @@
 import { ChartOptions } from 'chart.js';
 import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 
-export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
+export const getChartjsOptionsPlugins = (): Partial<ChartOptions['plugins']> => ({
   datalabels: {
     backgroundColor: getStyle('--em-chart-label-background', '#FFF'),
     borderRadius: getStyleNumber('--em-chart-label-border-radius', '624.9375rem'),
@@ -57,7 +57,7 @@ export const chartjsOptionsPlugins: Partial<ChartOptions['plugins']> = {
       family: getStyle('--em-chart-tooltip-family', 'sans-serif'),
     },
   },
-};
+});
 
 export const chartjsOptionsScales: Partial<ChartOptions['scales']> = {
   x: {
@@ -75,5 +75,5 @@ export const chartjsOptionsScales: Partial<ChartOptions['scales']> = {
 export const chartjsOptions: Partial<ChartOptions> = {
   responsive: true,
   maintainAspectRatio: false,
-  plugins: chartjsOptionsPlugins,
+  plugins: getChartjsOptionsPlugins(),
 };

@@ -7,9 +7,9 @@ import { Context } from 'chartjs-plugin-datalabels';
 import {
   chartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
-  chartjsAxisOptionsScalesGridColor,
-  chartjsAxisOptionsScalesTicksDefault,
-  chartjsAxisOptionsScalesTicksMuted,
+  getChartjsAxisOptionsScalesGridColor,
+  getChartjsAxisOptionsScalesTicksDefault,
+  getChartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
@@ -85,19 +85,19 @@ const getBarVerticalChartOptions = (
         border: {
           display: false,
         },
-        ticks: chartjsAxisOptionsScalesTicksDefault,
+        ticks: getChartjsAxisOptionsScalesTicksDefault(),
         reverse: config.reverseXAxis,
       },
       y: {
         beginAtZero: true,
         grid: {
           display: true,
-          color: chartjsAxisOptionsScalesGridColor,
+          color: getChartjsAxisOptionsScalesGridColor,
         },
         border: {
           display: false,
         },
-        ticks: chartjsAxisOptionsScalesTicksMuted,
+        ticks: getChartjsAxisOptionsScalesTicksMuted(),
         min: config.yAxisRangeMin,
         max: config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
@@ -141,9 +141,9 @@ const getBarHorizontalChartOptions = (
     },
     scales: {
       x: {
-        grid: { display: true, color: chartjsAxisOptionsScalesGridColor },
+        grid: { display: true, color: getChartjsAxisOptionsScalesGridColor },
         border: { display: false },
-        ticks: chartjsAxisOptionsScalesTicksMuted,
+        ticks: getChartjsAxisOptionsScalesTicksMuted(),
         min: config.xAxisRangeMin,
         max: config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
@@ -153,7 +153,7 @@ const getBarHorizontalChartOptions = (
         border: {
           display: false,
         },
-        ticks: chartjsAxisOptionsScalesTicksDefault,
+        ticks: getChartjsAxisOptionsScalesTicksDefault(),
         reverse: config.reverseYAxis,
       },
     },
