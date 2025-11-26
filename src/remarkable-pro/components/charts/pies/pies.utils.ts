@@ -9,7 +9,7 @@ import { chartColors } from '../../../../remarkable-ui';
 import { i18n } from '../../../theme/i18n/i18n';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
 
-export const getPieChartData = (
+export const getPieChartProData = (
   props: {
     data: DataResponse['data'];
     dimension: Dimension;
@@ -74,7 +74,7 @@ export const getPieChartData = (
   };
 };
 
-export const getDefaultPieChartOptions = (
+export const getPieChartProOptions = (
   measure: Measure,
   theme: Theme = remarkableTheme,
 ): Partial<ChartOptions<'pie'>> => {

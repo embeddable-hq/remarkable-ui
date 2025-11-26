@@ -21,9 +21,9 @@ export const getBarStackedChartProData = (
   const themeFormatter = getThemeFormatter(theme);
   const { data = [], dimension, groupDimension, measure } = props;
 
-  const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
+  const axis = [...new Set(data.map((d) => d[dimension.name]).filter((d) => d != null))].sort();
   const groupDimensionName = `${groupDimension.name}${groupDimension.inputs?.granularity ? `.${groupDimension.inputs.granularity}` : ''}`;
-  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter(Boolean);
+  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter((d) => d != null);
 
   const themeKey = getObjectStableKey(theme);
 

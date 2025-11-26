@@ -22,8 +22,8 @@ export const getLineChartGroupedProData = (
   const themeFormatter = getThemeFormatter(theme);
   const { data = [], dimension, groupDimension, measure, hasMinMaxYAxisRange } = props;
 
-  const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
-  const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))].filter(Boolean);
+  const axis = [...new Set(data.map((d) => d[dimension.name]).filter((d) => d != null))].sort();
+  const groupBy = [...new Set(data.map((d) => d[groupDimension.name]))].filter((d) => d != null);
 
   const themeKey = getObjectStableKey(theme);
 
