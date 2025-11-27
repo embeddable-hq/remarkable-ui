@@ -12,8 +12,7 @@ export {
 } from './components/editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
 export { Button } from './components/shared/Button/Button';
 export { GhostButton } from './components/shared/GhostButton/GhostButton';
-export { PageOverlay } from './components/shared/PageOverlay/PageOverlay';
-export type { PageOverlayProps } from './components/shared/PageOverlay/PageOverlay.types';
+export { PageOverlay, PageOverlayProps } from './components/shared/Overlay/Overlay';
 export { MultiSelectField } from './components/editors/selects/MultiSelectField/MultiSelectField';
 export { Switch } from './components/editors/Switch/Switch';
 export { FieldFeedback } from './components/shared/Field/FieldFeedback';

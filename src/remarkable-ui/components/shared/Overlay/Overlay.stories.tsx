@@ -1,9 +1,9 @@
 import type { Meta } from '@storybook/react-webpack5';
-import { PageOverlay } from './PageOverlay';
+import { PageOverlay } from './Overlay';
 import { Card } from '../Card/Card';
 
 const meta = {
-  title: 'Shared/✅⚠️ PageOverlay',
+  title: 'Shared/✅ Overlay',
   component: PageOverlay,
 } satisfies Meta<typeof PageOverlay>;
 
