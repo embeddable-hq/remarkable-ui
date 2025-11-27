@@ -119,16 +119,16 @@ const dataDateTimeFormatter = (theme: Theme, key: DimensionOrMeasure): DateTimeF
     }
     case 'month':
       return new Intl.DateTimeFormat(locale, { year, month });
+    case 'week':
+    case 'day':
+      return new Intl.DateTimeFormat(locale, { year, month, day });
     case 'hour':
       return new Intl.DateTimeFormat(locale, { year, month, day, hour });
     case 'minute':
       return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute });
     case 'second':
-      return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute, second });
     default:
-    case 'week':
-    case 'day':
-      return new Intl.DateTimeFormat(locale, { year, month, day });
+      return new Intl.DateTimeFormat(locale, { year, month, day, hour, minute, second });
   }
 };
 

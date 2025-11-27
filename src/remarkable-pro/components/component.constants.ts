@@ -132,6 +132,7 @@ export const subInputGranularity: any = {
   type: 'granularity',
   label: 'Granularity',
   supportedTypes: ['time'],
+  defaultValue: 'day',
 } as const;
 
 const subInputs = [
