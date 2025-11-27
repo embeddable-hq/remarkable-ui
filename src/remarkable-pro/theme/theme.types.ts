@@ -2,9 +2,9 @@ import { Resource } from 'i18next';
 import { ThemeFormatter } from './formatter/formatter.types';
 import { ThemeStyles } from './styles/styles.types';
 import { ChartOptions } from 'chart.js';
-import { ChartCardMenuProOption } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 import { ComparisonPeriodOption } from './defaults/defaults.ComparisonPeriods.constants';
 import { DateRangeOption } from './defaults/defaults.DateRanges.constants';
+import { ChartCardMenuOption } from './defaults/defaults.ChartCardMenu.constants';
 
 export type ThemeI18n = { language: string; translations: Resource };
 
@@ -14,7 +14,6 @@ export type ThemeCharts = {
   backgroundColors?: string[];
   borderColors?: string[];
   legendPosition: ThemeChartsLegendPosition;
-  chartCardMenuPro: { options: ChartCardMenuProOption[] };
 
   // Charts overrides
   pieChartPro?: { options: Partial<ChartOptions<'pie'>> };
@@ -34,6 +33,7 @@ export type ThemeCharts = {
 export type ThemeDefaults = {
   comparisonPeriodsOptions: ComparisonPeriodOption[];
   dateRangesOptions: DateRangeOption[];
+  chartMenuOptions: ChartCardMenuOption[];
 };
 
 export type Theme = {

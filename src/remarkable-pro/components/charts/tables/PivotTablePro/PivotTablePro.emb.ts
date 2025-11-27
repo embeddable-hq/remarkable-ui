@@ -7,7 +7,6 @@ import {
   title,
   maxResults,
   measures,
-  genericBoolean,
   subInputGenericBoolean,
   genericString,
   dimensionWithDateBounds,
@@ -32,6 +31,11 @@ export const meta = {
         },
         {
           ...subInputGenericBoolean,
+          name: 'showRowTotal',
+          label: 'Show Row Total',
+        },
+        {
+          ...subInputGenericBoolean,
           name: 'showAsPercentage',
           label: 'Show As Percentage',
           description: 'If turned on, other measures may be ignored',
@@ -51,7 +55,6 @@ export const meta = {
     },
     title,
     description,
-    { ...genericBoolean, name: 'showRowTotals', label: 'Show Row Totals' },
     { ...genericString, name: 'displayNullAs', label: 'Display Null As' },
     {
       ...genericNumber,

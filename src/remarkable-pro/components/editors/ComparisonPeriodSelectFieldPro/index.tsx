@@ -61,7 +61,7 @@ const DateComparisonSelectFieldPro = (props: DateComparisonSelectFieldPro) => {
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
         startIcon={IconCalendarTime}
-        isClearable
+        clearable
         placeholder={placeholder}
         value={comparisonPeriodAvailable ? comparisonPeriod : undefined}
         onChange={onChange}

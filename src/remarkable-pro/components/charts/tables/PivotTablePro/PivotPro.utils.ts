@@ -41,8 +41,14 @@ export const getPivotDimension = (
   };
 };
 
-export const getPivotColumnTotalsFor = (props: {
-  measures: Measure[];
-}): PivotTableProps<any>['columnTotalsFor'] | undefined => {
-  return props.measures.filter((m) => m.inputs?.showColumnTotal).map((m) => m.name);
+export const getPivotColumnTotalsFor = (
+  measures: Measure[],
+): PivotTableProps<any>['columnTotalsFor'] | undefined => {
+  return measures.filter((m) => m.inputs?.showColumnTotal).map((m) => m.name);
+};
+
+export const getPivotRowTotalsFor = (
+  measures: Measure[],
+): PivotTableProps<any>['rowTotalsFor'] | undefined => {
+  return measures.filter((m) => m.inputs?.showRowTotal).map((m) => m.name);
 };

@@ -51,8 +51,8 @@ const SingleSelectFieldPro = (props: SingleSelectFieldProProps) => {
   return (
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
-        isClearable
-        isSearchable
+        clearable
+        searchable
         isLoading={results.isLoading}
         value={selectedValue}
         options={options}

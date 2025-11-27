@@ -3,7 +3,7 @@ import {
   SelectListOption,
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+} from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
 import {
@@ -15,7 +15,7 @@ import { IconSearch, IconSquare, IconSquareCheckFilled, TablerIcon } from '@tabl
 import { Button } from '../../../shared/Button/Button';
 import styles from '../selects.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
-import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
 import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import { TextField } from '../../inputs/TextField/TextField';

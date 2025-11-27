@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { KpiChart } from './KpiChart';
-import { ChartCard } from '../../../../remarkable-pro';
 
 const meta = {
   title: 'Charts/✅ KpiChart',
@@ -17,13 +16,7 @@ const meta = {
           border: '1px solid #ccc',
         }}
       >
-        <ChartCard
-          title="KPI Chart Example"
-          subtitle="An example of a KPI chart inside a ChartCard"
-          data={{ data: [{}], isLoading: false }}
-        >
-          <Story />
-        </ChartCard>
+        <Story />
       </div>
     ),
   ],

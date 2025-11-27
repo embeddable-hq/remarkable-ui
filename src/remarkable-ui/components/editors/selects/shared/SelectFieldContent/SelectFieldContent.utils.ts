@@ -1,7 +1,7 @@
 import {
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from './SelectListOptions/SelectFieldOption/SelectFieldOption';
+} from './SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 
 type GroupedOptions = {
   [category: string]: SelectListOptionPropsWithCategory[];

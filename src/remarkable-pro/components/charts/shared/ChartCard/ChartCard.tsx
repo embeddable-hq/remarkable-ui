@@ -14,8 +14,8 @@ import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
 import { ChartCardMenuPro } from './ChartCardMenuPro/ChartCardMenuPro';
 import { Theme } from '../../../../theme/theme.types';
 import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
-import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro/ChartCardMenuPro.types';
 import clsx from 'clsx';
+import { ChartCardMenuOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenu.constants';
 
 type ChartCardProps = {
   title: string;
@@ -26,7 +26,7 @@ type ChartCardProps = {
   errorMessage?: string;
   style?: CSSProperties;
   dimensionsAndMeasures?: (Dimension | Measure)[];
-  onCustomDownload?: (props: (props: ChartCardMenuProOptionOnClickProps) => void) => void;
+  onCustomDownload?: (props: (props: ChartCardMenuOptionOnClickProps) => void) => void;
 };
 
 export const ChartCard = React.forwardRef<HTMLDivElement, ChartCardProps>(

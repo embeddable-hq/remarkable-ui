@@ -4,7 +4,7 @@ import { SingleSelectField } from './SingleSelectField';
 import {
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+} from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
 
@@ -172,8 +172,8 @@ const meta = {
     required: true,
     value: '',
     disabled: false,
-    isSearchable: false,
-    isClearable: false,
+    searchable: false,
+    clearable: false,
     options: mockOptions,
     onChange: (value: string) => value,
   },
@@ -232,7 +232,7 @@ export const Clearable: Story = {
     label: undefined,
     required: false,
     value: 'red',
-    isClearable: true,
+    clearable: true,
   },
 };
 
@@ -240,7 +240,7 @@ export const Searchable: Story = {
   args: {
     label: undefined,
     required: false,
-    isSearchable: true,
+    searchable: true,
   },
 };
 

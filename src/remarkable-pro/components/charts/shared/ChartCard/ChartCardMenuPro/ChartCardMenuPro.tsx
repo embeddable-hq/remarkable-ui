@@ -10,10 +10,21 @@ import {
   SelectFieldContent,
   SelectListOption,
 } from '../../../../../../remarkable-ui';
-import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro.types';
 import styles from './ChartCardMenuPro.module.css';
+import { ChartCardMenuOptionOnClickProps } from '../../../../../theme/defaults/defaults.ChartCardMenu.constants';
 
-type ChartCardMenuProProps = Omit<ChartCardMenuProOptionOnClickProps, 'theme'>;
+type InlineSvgFromDataProps = React.HTMLAttributes<HTMLSpanElement> & {
+  src: string;
+};
+
+export function InlineSvgFromData({ src, className, ...rest }: InlineSvgFromDataProps) {
+  // Remove prefix and URL-decode the SVG markup
+  const svgMarkup = decodeURIComponent(src.replace(/^data:image\/svg\+xml,/, ''));
+
+  return <div className={className} {...rest} dangerouslySetInnerHTML={{ __html: svgMarkup }} />;
+}
+
+type ChartCardMenuProProps = Omit<ChartCardMenuOptionOnClickProps, 'theme'>;
 
 export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
   const theme: Theme = useTheme() as Theme;
@@ -21,7 +32,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const options = theme.charts?.chartCardMenuPro?.options ?? [];
+  const options = theme.defaults.chartMenuOptions ?? [];
 
   if (options.length === 0) {
     return null;
@@ -33,7 +44,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
     }, 100);
   };
 
-  const handleExport = (onClick: (props: ChartCardMenuProOptionOnClickProps) => void) => {
+  const handleExport = (onClick: (props: ChartCardMenuOptionOnClickProps) => void) => {
     setIsLoading(true);
     if (props.onCustomDownload) {
       props.onCustomDownload((args) => startAction(() => onClick(args)));
@@ -57,9 +68,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
               key={index}
               label={label}
               onClick={() => handleExport(option.onClick)}
-              startIcon={
-                option.iconSrc ? <img src={option.iconSrc} alt={`${label} icon`} /> : undefined
-              }
+              startIcon={option.iconSrc ? <InlineSvgFromData src={option.iconSrc} /> : undefined}
             />
           );
         })}
