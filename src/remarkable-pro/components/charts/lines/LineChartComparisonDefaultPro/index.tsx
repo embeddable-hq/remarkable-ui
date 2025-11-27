@@ -4,7 +4,6 @@ import { DataResponse, Dimension, Measure, TimeRange } from '@embeddable.com/cor
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { resolveI18nProps } from '../../../component.utils';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
-import { LineChart } from '../../../../../remarkable-ui/charts/lines/LineChart';
 import { useEffect } from 'react';
 import { getComparisonPeriodDateRange } from '../../../utils/timeRange.utils';
 import {
@@ -13,6 +12,7 @@ import {
 } from './LineChartComparisonDefaultPro.utils';
 import { useFillGaps } from '../../charts.fillGaps.hooks';
 import { LineChartProOptionsClick } from '../lines.utils';
+import { LineChart } from '../../../../../remarkable-ui';
 
 type LineChartComparisonDefaultProProps = {
   description: string;

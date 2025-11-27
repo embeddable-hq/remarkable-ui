@@ -1,6 +1,0 @@
-.errorMessage {
-  color: var(--em-text-input-label-color-error, #bc1010);
-  font-family: var(--em-text-input-label-font-font-family, Inter);
-  font-size: var(--em-text-input-label-font-size, 0.75rem);
-  font-weight: var(--em-text-input-label-font-weight-default, 500);
-}

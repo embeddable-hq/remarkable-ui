@@ -1,0 +1,80 @@
+.selectFieldTrigger {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--em-selectfield-trigger-height, 2.5rem);
+  min-width: var(--em-selectfield-trigger-min-width, 4rem);
+  padding: var(--em-selectfield-trigger-padding, 0.75rem);
+  border-radius: var(--em-selectfield-trigger-border-radius, 0.5rem);
+  border: var(--em-selectfield-trigger-border-width, 1px) solid
+    var(--em-selectfield-trigger-border-color, #d2d2d5);
+  background: var(--em-selectfield-trigger-background, #fff);
+  color: var(--em-selectfield-trigger-color, #212129);
+}
+
+.selectFieldTrigger:hover {
+  background: var(--em-selectfield-trigger-background--hover, #f7f7f8);
+}
+
+.selectFieldTrigger:active {
+  background: var(--em-selectfield-trigger-background--active, #ededf1);
+}
+
+.selectFieldTrigger.filled {
+  color: var(--em-selectfield-trigger-color--filled, #fff);
+  background: var(--em-selectfield-trigger-background--filled, #212129);
+}
+
+.selectFieldTrigger:disabled {
+  pointer-events: none;
+  color: var(--em-selectfield-trigger-color--disabled, #b8b8bd);
+  background: var(--em-selectfield-trigger-background, #fff);
+}
+
+.selectFieldTrigger.error {
+  border: var(--em-selectfield-trigger-border-width--error, 2px) solid
+    var(--em-selectfield-trigger-border-color--error, #bc1010);
+}
+
+.selectFieldTrigger span {
+  width: 100%;
+  text-align: start;
+  font-style: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--em-selectfield-trigger-color, #212129);
+  padding: 0 var(--em-selectfield-trigger-label-padding-left-right, 0.5rem);
+  font-family: var(--em-selectfield-trigger-font-family, sans-serif);
+  font-size: var(--em-selectfield-trigger-font-size, 0.75rem);
+  font-weight: var(--em-selectfield-trigger-font-weight, 500);
+  line-height: var(--em-selectfield-trigger-line-height, 0.875rem); /* 116.667% */
+}
+
+.selectFieldTrigger.filled span {
+  color: var(--em-selectfield-trigger-color--filled, #fff);
+}
+
+.selectFieldTrigger:disabled span {
+  color: var(--em-selectfield-trigger-color--disabled, #b8b8bd);
+}
+
+.selectFieldTrigger svg {
+  width: var(--em-selectfield-trigger-icon-size, 1rem);
+  height: var(--em-selectfield-trigger-icon-size, 1rem);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  animation: spin 1s linear infinite;
+}

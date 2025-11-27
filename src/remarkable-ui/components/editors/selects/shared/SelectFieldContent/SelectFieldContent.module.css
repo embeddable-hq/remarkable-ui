@@ -1,0 +1,34 @@
+.selectFieldContent {
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  box-sizing: border-box;
+
+  max-width: max(
+    var(--radix-dropdown-menu-trigger-width),
+    var(--em-selectfield-content-max-width, 25rem)
+  );
+  min-width: var(--radix-dropdown-menu-trigger-width);
+  max-height: var(--em-selectfield-content-max-height, 20rem);
+  padding: var(--em-selectfield-content-padding, 0.5rem);
+  border-radius: var(--em-selectfield-content-border-radius, 0.75rem);
+  background: var(--em-selectfield-content-background, #fff);
+  box-shadow: var(--em-selectfield-content-shadow-position-x, 0)
+    var(--em-selectfield-content-shadow-position-y, 1px)
+    var(--em-selectfield-content-shadow-blur, 40px) var(--em-selectfield-content-shadow-spread, 0)
+    var(--em-selectfield-content-shadow-color, rgba(33, 33, 41, 0.25));
+}
+
+.selectFieldContentList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+.selectFieldContentList.disabled {
+  opacity: var(--em-selectfield-content-opacity--loading, 0.5);
+  pointer-events: none;
+  user-select: none;
+}

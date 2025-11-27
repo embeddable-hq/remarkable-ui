@@ -1,0 +1,27 @@
+.tablePagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--em-tablechart-pagination-height, 3rem);
+  padding: var(--em-tablechart-cell-padding, 0.5rem);
+}
+
+.tablePaginationCentral {
+  display: flex;
+  align-items: center;
+  font-style: normal;
+  gap: var(--em-tablechart-pagination-label-padding-left-right, 1rem);
+  color: var(--em-tablechart-color, #212129);
+  font-family: var(--em-tablechart-font-family, sans-serif);
+  font-size: var(--em-tablechart-font-size, 0.75rem);
+  font-weight: var(--em-tablechart-font-weight--medium, 500);
+  line-height: var(--em-tablechart-line-height, 0.875rem);
+}
+
+.tablePaginationCentralButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--em-tablechart-pagination-button-gap, 0.5rem);
+}

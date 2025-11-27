@@ -1,7 +1,7 @@
 import { useTheme } from '@embeddable.com/react';
 import { PieChart } from '../../../../../remarkable-ui';
 import { Theme } from '../../../../theme/theme.types';
-import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { getPieChartProOptions, getPieChartProData } from '../pies.utils';
 import { DefaultPieChartProps } from '../pies.types';
 import { i18nSetup } from '../../../../theme/i18n/i18n';
 import { ChartCard } from '../../shared/ChartCard/ChartCard';
@@ -27,18 +27,13 @@ const PieChartPro = (props: PieChartProProps) => {
     onSegmentClick,
   } = resolveI18nProps(props);
 
-  const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
+  const data = getPieChartProData(
+    { data: results.data, dimension, measure, maxLegendItems },
+    theme,
+  );
 
   const options = mergician(
-    getDefaultPieChartOptions(
-      {
-        measure,
-        showTooltips,
-        showLegend,
-        showValueLabels,
-      } as DefaultPieChartOptions,
-      theme,
-    ),
+    getPieChartProOptions(measure, theme),
     theme.charts.pieChartPro?.options ?? {},
   );
 
@@ -56,7 +51,14 @@ const PieChartPro = (props: PieChartProProps) => {
       subtitle={description}
       title={title}
     >
-      <PieChart data={data} options={options} onSegmentClick={handleSegmentClick} />
+      <PieChart
+        data={data}
+        options={options}
+        showLegend={showLegend}
+        showTooltips={showTooltips}
+        showValueLabels={showValueLabels}
+        onSegmentClick={handleSegmentClick}
+      />
     </ChartCard>
   );
 };

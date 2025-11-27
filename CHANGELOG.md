@@ -1,5 +1,53 @@
 # @embeddable/remarkable-ui
 
+## 1.0.5
+
+### Patch Changes
+
+- 87ff966: Chartjs config as functions
+
+## 1.0.4
+
+### Patch Changes
+
+- 198f526: HeatMap and PivotTable full width when no column width is provided + Remove scroll auto from CharCard content
+
+## 1.0.3
+
+### Patch Changes
+
+- ede42eb: Separate font-weight from figma exports (wrong context)
+
+## 1.0.2
+
+### Patch Changes
+
+- cd281db: Allow false values on Line and Bar charts
+
+## 1.0.1
+
+### Patch Changes
+
+- 75f0194: Improve process-css-variable script
+
+## 1.0.0
+
+### Major Changes
+
+- 1de8226: New Css Variables + Restructure + Storybook Complete
+
+## 0.1.52
+
+### Patch Changes
+
+- 3cf56c8: Fix line chart color update
+
+## 0.1.51
+
+### Patch Changes
+
+- 316be9f: Update exports
+
 ## 0.1.50
 
 ### Patch Changes

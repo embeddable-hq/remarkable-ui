@@ -1,0 +1,67 @@
+.buttonIcon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border: unset;
+  justify-content: center;
+  border-radius: var(--em-buttonicon-border-radius, 624.9375rem);
+}
+
+.buttonIcon.small {
+  height: var(--em-buttonicon-height--small, 2rem);
+  width: var(--em-buttonicon-height--small, 2rem);
+  padding: var(--em-buttonicon-padding-top-bottom--small, 0.375rem)
+    var(--em-buttonicon-padding-left-right--small, 0.375rem);
+}
+
+.buttonIcon.medium {
+  height: var(--em-buttonicon-height--medium, 2.5rem);
+  width: var(--em-buttonicon-height--medium, 2.5rem);
+  padding: var(--em-buttonicon-padding-top-bottom--medium, 0.75rem)
+    var(--em-buttonicon-padding-left-right--medium, 0.75rem);
+}
+
+.buttonIcon.primary {
+  color: var(--em-buttonicon-color--primary, #fff);
+  background: var(--em-buttonicon-background--primary, #5c5c66);
+}
+
+.buttonIcon.primary:hover {
+  background: var(--em-buttonicon-background--primary--hover, #212129);
+}
+
+.buttonIcon.primary:active {
+  background: var(--em-buttonicon-background--primary--active, #000);
+}
+
+.buttonIcon.primary:disabled {
+  background: var(--em-buttonicon-background--primary--disabled, #ededf1);
+}
+
+.buttonIcon.secondary {
+  color: var(--em-buttonicon-color--secondary, #212129);
+  background: var(--em-buttonicon-background--secondary, #ededf1);
+}
+
+.buttonIcon.secondary:hover {
+  background: var(--em-buttonicon-background--secondary--hover, #e4e4ea);
+}
+
+.buttonIcon.secondary:active {
+  background: var(--em-buttonicon-background--secondary--active, #d2d2d5);
+}
+
+.buttonIcon.secondary:disabled {
+  background: var(--em-buttonicon-background--secondary--disabled, #ededf1);
+}
+
+.buttonIcon:disabled {
+  pointer-events: none;
+  color: var(--em-buttonicon-color--disabled, #b8b8bd);
+}
+
+.buttonIcon svg {
+  width: var(--em-buttonicon-icon-size, 1rem);
+  height: var(--em-buttonicon-icon-size, 1rem);
+}

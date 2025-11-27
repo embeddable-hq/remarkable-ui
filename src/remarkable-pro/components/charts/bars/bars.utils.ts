@@ -5,9 +5,8 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { getThemeFormatter } from '../../../theme/formatter/formatter.utils';
 import { groupTailAsOther } from '../charts.utils';
 import { getColor } from '../../../theme/styles/styles.utils';
-import { chartColors } from '../../../../remarkable-ui';
+import { chartColors, chartContrastColors } from '../../../../remarkable-ui';
 import { getObjectStableKey } from '../../../utils.ts/object.utils';
-import { chartContrastColors } from '../../../../remarkable-ui/charts/charts.constants';
 import { Context } from 'chartjs-plugin-datalabels';
 
 export const getBarStackedChartProData = (
@@ -22,9 +21,9 @@ export const getBarStackedChartProData = (
   const themeFormatter = getThemeFormatter(theme);
   const { data = [], dimension, groupDimension, measure } = props;
 
-  const axis = [...new Set(data.map((d) => d[dimension.name]).filter(Boolean))].sort();
+  const axis = [...new Set(data.map((d) => d[dimension.name]).filter((d) => d != null))].sort();
   const groupDimensionName = `${groupDimension.name}${groupDimension.inputs?.granularity ? `.${groupDimension.inputs.granularity}` : ''}`;
-  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter(Boolean);
+  const groupBy = [...new Set(data.map((d) => d[groupDimensionName]))].filter((d) => d != null);
 
   const themeKey = getObjectStableKey(theme);
 

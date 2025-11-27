@@ -1,0 +1,52 @@
+.kpiChartChangeContainer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--em-kpichart-label-gap, 0.5rem);
+  margin-top: var(--em-kpichart-gap, 1.5rem);
+}
+
+.kpiChangeBadge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--em-kpichart-trend-padding, 0.25rem);
+  border-radius: var(--em-kpichart-trend-border-radius, 0.375rem);
+  width: min-content;
+}
+
+.kpiChangeBadge > svg {
+  width: 1em; /* 87.5% of the parent font-size */
+  height: 1em; /* 87.5% of the parent font-size */
+}
+
+.kpiChangeBadge > span {
+  color: inherit;
+  font-style: normal;
+  font-size: 1em;
+  padding: 0 var(--em-kpichart-trend-padding, 0.25rem);
+  font-weight: var(--em-kpichart-trend-font-weight, 500);
+  line-height: var(--em-kpichart-trend-line-height, 1rem);
+}
+
+.kpiChangeBadge.positive {
+  background: var(--em-kpichart-trend-background--positive, #e1f0e9);
+  color: var(--em-kpichart-trend-color--positive, #0f955a);
+}
+
+.kpiChangeBadge.negative {
+  background: var(--em-kpichart-trend-background--negative, #f6e2e2);
+  color: var(--em-kpichart-trend-color--negative, #bc1010);
+}
+
+.kpiComparisonLabel {
+  text-align: center;
+  font-style: normal;
+  font-size: 0.875em; /* 87.5% of the parent font-size */
+  color: var(--em-kpichart-color, #212129);
+  font-family: var(--em-kpichart-font-family, sans-serif);
+  font-weight: var(--em-kpichart-label-font-weight, 400);
+  line-height: var(--em-kpichart-label-line-height, 0.875rem);
+  white-space: nowrap;
+}

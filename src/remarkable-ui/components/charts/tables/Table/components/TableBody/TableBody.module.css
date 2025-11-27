@@ -1,0 +1,16 @@
+.copyButton {
+  position: absolute;
+  top: 50%;
+  right: var(--em-tablechart-cell-padding, 0.5rem);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.copyButton.leftAlign {
+  left: var(--em-tablechart-cell-padding, 0.5rem);
+  right: auto;
+}
+
+.tableBodyCell:hover .copyButton {
+  opacity: 1;
+}

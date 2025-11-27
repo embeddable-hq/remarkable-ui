@@ -19,9 +19,9 @@ const getStyleValue = (variableName: StylesKeys): string => {
   return computedStyle.getPropertyValue(variableName).trim();
 };
 
-export const getStyle = (variableName: StylesKeys): string => {
+export const getStyle = (variableName: StylesKeys, fallbackValue?: string): string => {
   const rawValue = getStyleValue(variableName);
-  if (!rawValue) return rawValue;
+  if (!rawValue) return fallbackValue ?? rawValue;
 
   // Colors
   const firstChar = rawValue.charAt(0);

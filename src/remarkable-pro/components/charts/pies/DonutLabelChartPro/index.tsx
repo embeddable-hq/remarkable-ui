@@ -1,6 +1,6 @@
 import { useTheme } from '@embeddable.com/react';
 import { Theme } from '../../../../theme/theme.types';
-import { DefaultPieChartOptions, getDefaultPieChartOptions, getPieChartData } from '../pies.utils';
+import { getPieChartProOptions, getPieChartProData } from '../pies.utils';
 import { DefaultPieChartProps } from '../pies.types';
 import { DataResponse, Measure } from '@embeddable.com/core';
 import { getThemeFormatter } from '../../../../theme/formatter/formatter.utils';
@@ -37,7 +37,10 @@ const DonutChartPro = (props: DonutLabelChartProProps) => {
     onSegmentClick,
   } = resolveI18nProps(props);
 
-  const data = getPieChartData({ data: results.data, dimension, measure, maxLegendItems }, theme);
+  const data = getPieChartProData(
+    { data: results.data, dimension, measure, maxLegendItems },
+    theme,
+  );
 
   const handleSegmentClick = (index: number | undefined) => {
     onSegmentClick({
@@ -51,15 +54,7 @@ const DonutChartPro = (props: DonutLabelChartProProps) => {
   );
 
   const options = mergician(
-    getDefaultPieChartOptions(
-      {
-        measure,
-        showTooltips,
-        showLegend,
-        showValueLabels,
-      } as DefaultPieChartOptions,
-      theme,
-    ),
+    getPieChartProOptions(measure, theme),
     theme.charts.donutLabelChartPro?.options ?? {},
   );
 
@@ -76,6 +71,9 @@ const DonutChartPro = (props: DonutLabelChartProProps) => {
         subLabel={innerLabelText}
         data={data}
         options={options}
+        showLegend={showLegend}
+        showTooltips={showTooltips}
+        showValueLabels={showValueLabels}
         onSegmentClick={handleSegmentClick}
       />
     </ChartCard>

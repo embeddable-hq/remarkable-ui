@@ -1,0 +1,4 @@
+.typography {
+  font-family: var(--em-core-font-family--base, sans-serif);
+  margin: unset;
+}

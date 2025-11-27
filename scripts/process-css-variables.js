@@ -13,7 +13,6 @@ const tempDir = path.join(process.cwd(), 'temp-css-vars');
 const cleanup = () => {
   if (fs.existsSync(tempDir)) {
     fs.rmSync(tempDir, { recursive: true, force: true });
-    console.log('🧹 Cleaned up temporary files');
   }
 };
 
@@ -25,7 +24,8 @@ try {
 
   // Create temp directory and compile TypeScript
   fs.mkdirSync(tempDir, { recursive: true });
-  console.log('Compiling TypeScript constants...');
+
+  fs.writeFileSync(path.join(tempDir, 'package.json'), JSON.stringify({ type: 'commonjs' }));
 
   execSync(
     `npx tsc "${sourcePath}" --outDir "${tempDir}" --target es2022 --module commonjs --esModuleInterop`,
@@ -36,18 +36,14 @@ try {
 
   // Import compiled module
   const tempCompiledPath = path.join(tempDir, 'styles.constants.js');
-  const tempCjsPath = tempCompiledPath.replace('.js', '.cjs');
-  fs.renameSync(tempCompiledPath, tempCjsPath);
 
   const require = createRequire(import.meta.url);
-  const { styles } = require(tempCjsPath);
+  const { styles } = require(tempCompiledPath);
 
   // Validate and process styles
   if (!styles || typeof styles !== 'object' || Object.keys(styles).length === 0) {
     throw new Error('No valid styles found in constants file');
   }
-
-  console.log(`✅ Found ${Object.keys(styles).length} CSS variables`);
 
   // Generate CSS variables
   const cssVariables = `:root {\n${Object.entries(styles)
@@ -62,8 +58,7 @@ try {
   const mainCss = fs.readFileSync(mainCssPath, 'utf8');
   fs.writeFileSync(mainCssPath, cssVariables + '\n' + mainCss);
 
-  console.log('✅ Successfully merged CSS variables into remarkable-ui.css');
-  console.log(`📁 Final CSS: ${mainCssPath}`);
+  console.log(`✔ Merged CSS variables into remarkable-ui.css: ${mainCssPath}`);
 } catch (error) {
   console.error('❌ Error processing CSS variables:');
   console.error(`   ${error.message}`);
