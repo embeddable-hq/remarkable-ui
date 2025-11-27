@@ -74,8 +74,8 @@
   /* min-width: var(--em-tablechart-cell-min-width, 3rem); DENIS */
 }
 
-.table th:last-of-type,
-.table td:last-of-type {
+.table thead th:last-of-type,
+.table tbody td:last-of-type {
   border-right: unset;
 }
 
