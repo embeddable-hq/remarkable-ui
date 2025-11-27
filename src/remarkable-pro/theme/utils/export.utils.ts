@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import domtoimage from 'dom-to-image-more';
 import { Theme } from '../theme.types';
 import { getThemeFormatter } from '../formatter/formatter.utils';
-import { ChartCardMenuProOptionOnClickProps } from '../../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
+import { ChartCardMenuProOptionOnClickProps } from '../defaults/defaults.ChartCardMenuPro.constants';
 
 // RFC4180 cell-escaping: wrap in quotes and double any inner quotes
 const escapeCell = (val: unknown): string => {

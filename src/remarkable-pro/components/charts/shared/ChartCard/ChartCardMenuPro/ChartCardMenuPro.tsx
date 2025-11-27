@@ -10,8 +10,8 @@ import {
   SelectFieldContent,
   SelectListOption,
 } from '../../../../../../remarkable-ui';
-import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro.types';
 import styles from './ChartCardMenuPro.module.css';
+import { ChartCardMenuProOptionOnClickProps } from '../../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
 
 type ChartCardMenuProProps = Omit<ChartCardMenuProOptionOnClickProps, 'theme'>;
 
@@ -58,7 +58,15 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
               label={label}
               onClick={() => handleExport(option.onClick)}
               startIcon={
-                option.iconSrc ? <img src={option.iconSrc} alt={`${label} icon`} /> : undefined
+                option.iconSrc ? (
+                  <div
+                    className={styles.listIcon}
+                    style={{
+                      WebkitMask: `url(${option.iconSrc}) no-repeat center / contain`,
+                      mask: `url(${option.iconSrc}) no-repeat center / contain`,
+                    }}
+                  />
+                ) : undefined
               }
             />
           );

@@ -14,7 +14,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
 import { getTableHeaders, getTableRows } from '../tables.utils';
-import { ChartCardMenuProOptionOnClickProps } from '../../shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
+import { ChartCardMenuProOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
 
 const hasSortChanges = (
   sort: TableChartPaginatedProState['sort'],

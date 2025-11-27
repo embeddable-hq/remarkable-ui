@@ -14,8 +14,8 @@ import { ChartCardLoading } from './ChartCardLoading/ChartCardLoading';
 import { ChartCardMenuPro } from './ChartCardMenuPro/ChartCardMenuPro';
 import { Theme } from '../../../../theme/theme.types';
 import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
-import { ChartCardMenuProOptionOnClickProps } from './ChartCardMenuPro/ChartCardMenuPro.types';
 import clsx from 'clsx';
+import { ChartCardMenuProOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
 
 type ChartCardProps = {
   title: string;

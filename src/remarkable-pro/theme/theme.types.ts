@@ -2,9 +2,9 @@ import { Resource } from 'i18next';
 import { ThemeFormatter } from './formatter/formatter.types';
 import { ThemeStyles } from './styles/styles.types';
 import { ChartOptions } from 'chart.js';
-import { ChartCardMenuProOption } from '../components/charts/shared/ChartCard/ChartCardMenuPro/ChartCardMenuPro.types';
 import { ComparisonPeriodOption } from './defaults/defaults.ComparisonPeriods.constants';
 import { DateRangeOption } from './defaults/defaults.DateRanges.constants';
+import { ChartCardMenuProOption } from './defaults/defaults.ChartCardMenuPro.constants';
 
 export type ThemeI18n = { language: string; translations: Resource };
 
