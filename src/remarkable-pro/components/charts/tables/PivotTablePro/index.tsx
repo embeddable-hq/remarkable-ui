@@ -7,7 +7,12 @@ import { DataResponse, Dimension, Measure } from '@embeddable.com/core';
 import { PivotTable } from '../../../../../remarkable-ui';
 import { useRef } from 'react';
 import { useFillGaps } from '../../charts.fillGaps.hooks';
-import { getPivotColumnTotalsFor, getPivotDimension, getPivotMeasures } from './PivotPro.utils';
+import {
+  getPivotColumnTotalsFor,
+  getPivotDimension,
+  getPivotMeasures,
+  getPivotRowTotalsFor,
+} from './PivotPro.utils';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -18,7 +23,6 @@ type PivotTableProProps = {
   measures: Measure[];
   rowDimension: Dimension;
   columnDimension: Dimension;
-  showRowTotals?: boolean;
   displayNullAs?: string;
   columnWidth?: number;
   firstColumnWidth?: number;
@@ -29,15 +33,8 @@ const PivotTablePro = (props: PivotTableProProps) => {
   i18nSetup(theme);
 
   const { description, title } = resolveI18nProps(props);
-  const {
-    measures,
-    rowDimension,
-    columnDimension,
-    showRowTotals,
-    displayNullAs,
-    columnWidth,
-    firstColumnWidth,
-  } = props;
+  const { measures, rowDimension, columnDimension, displayNullAs, columnWidth, firstColumnWidth } =
+    props;
 
   // Fill gaps for the column dimension
   const resultsColumnDimensionFillGaps = useFillGaps({
@@ -56,8 +53,8 @@ const PivotTablePro = (props: PivotTableProProps) => {
   const pivotMeasures = getPivotMeasures({ measures, displayNullAs }, theme);
   const pivotRowDimension = getPivotDimension({ dimension: rowDimension }, theme);
   const pivotColumnDimension = getPivotDimension({ dimension: columnDimension }, theme);
-  const pivotColumnTotalsFor = getPivotColumnTotalsFor({ measures });
-  const pivotRowTotalsFor = showRowTotals ? measures.map((m) => m.name) : [];
+  const pivotColumnTotalsFor = getPivotColumnTotalsFor(measures);
+  const pivotRowTotalsFor = getPivotRowTotalsFor(measures);
 
   return (
     <ChartCard
