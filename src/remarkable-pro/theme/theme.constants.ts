@@ -17,14 +17,12 @@ const remarkableThemeI18n = {
 
 const remarkableThemeCharts: ThemeCharts = {
   legendPosition: 'bottom',
-  chartCardMenuPro: {
-    options: defaultChartMenuProOptions,
-  },
 };
 
 const remarkableThemeDefaults: ThemeDefaults = {
   comparisonPeriodsOptions: defaultComparisonPeriodOptions,
   dateRangesOptions: defaultDateRangeOptions,
+  chartMenuOptions: defaultChartMenuProOptions,
 };
 
 export const remarkableTheme: Theme = {

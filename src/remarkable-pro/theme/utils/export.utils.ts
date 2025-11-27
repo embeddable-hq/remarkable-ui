@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import domtoimage from 'dom-to-image-more';
 import { Theme } from '../theme.types';
 import { getThemeFormatter } from '../formatter/formatter.utils';
-import { ChartCardMenuProOptionOnClickProps } from '../defaults/defaults.ChartCardMenuPro.constants';
+import { ChartCardMenuOptionOnClickProps } from '../defaults/defaults.ChartCardMenuPro.constants';
 
 // RFC4180 cell-escaping: wrap in quotes and double any inner quotes
 const escapeCell = (val: unknown): string => {
@@ -51,7 +51,7 @@ export function exportCSV({
   dimensionsAndMeasures = [],
   title,
   theme,
-}: ChartCardMenuProOptionOnClickProps) {
+}: ChartCardMenuOptionOnClickProps) {
   const csvData = formatData(data, dimensionsAndMeasures, theme)
     .map((row) => row.map(escapeCell).join(','))
     .join('\r\n');
@@ -65,7 +65,7 @@ export function exportXLSX({
   dimensionsAndMeasures = [],
   title,
   theme,
-}: ChartCardMenuProOptionOnClickProps) {
+}: ChartCardMenuOptionOnClickProps) {
   const xlsxData = formatData(data, dimensionsAndMeasures, theme);
 
   const worksheet = XLSX.utils.aoa_to_sheet(xlsxData);
@@ -78,7 +78,7 @@ export function exportXLSX({
 export async function exportPNG({
   title,
   containerRef,
-}: ChartCardMenuProOptionOnClickProps): Promise<void> {
+}: ChartCardMenuOptionOnClickProps): Promise<void> {
   const element = containerRef?.current;
   if (!element) {
     throw new Error('exportPNG: element is undefined');

@@ -4,22 +4,22 @@ import PhotoDown from '../../assets/icons/photo-down.svg';
 import { exportCSV, exportPNG, exportXLSX } from '../utils/export.utils';
 import { Theme } from '../theme.types';
 
-export type ChartCardMenuProOptionOnClickProps = {
+export type ChartCardMenuOptionOnClickProps = {
   title?: string;
   data?: DataResponse['data'];
   dimensionsAndMeasures?: (Dimension | Measure)[];
   containerRef?: React.RefObject<HTMLDivElement | null>;
   theme: Theme;
-  onCustomDownload?: (props: (props: ChartCardMenuProOptionOnClickProps) => void) => void;
+  onCustomDownload?: (props: (props: ChartCardMenuOptionOnClickProps) => void) => void;
 };
 
-export type ChartCardMenuProOption = {
+export type ChartCardMenuOption = {
   labelKey: string;
   iconSrc?: string;
-  onClick: (props: ChartCardMenuProOptionOnClickProps) => void;
+  onClick: (props: ChartCardMenuOptionOnClickProps) => void;
 };
 
-export const defaultChartMenuProOptions: ChartCardMenuProOption[] = [
+export const defaultChartMenuProOptions: ChartCardMenuOption[] = [
   {
     labelKey: 'charts.menuOptions.downloadCSV',
     onClick: exportCSV,

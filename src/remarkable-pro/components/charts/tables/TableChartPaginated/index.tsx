@@ -14,7 +14,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useObserverHeight } from '../../../../../remarkable-ui/hooks/useObserverHeight.hook';
 import { getTableHeaders, getTableRows } from '../tables.utils';
-import { ChartCardMenuProOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
+import { ChartCardMenuOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
 
 const hasSortChanges = (
   sort: TableChartPaginatedProState['sort'],
@@ -105,9 +105,7 @@ const TableChartPaginatedPro = (props: TableChartPaginatedProProps) => {
     [setState],
   );
 
-  const handleCustomDownload = (
-    onDownload: (props: ChartCardMenuProOptionOnClickProps) => void,
-  ) => {
+  const handleCustomDownload = (onDownload: (props: ChartCardMenuOptionOnClickProps) => void) => {
     setIsDownloadingData(true);
     handleUpdateEmbeddableState({ isLoadingDownloadData: true });
 

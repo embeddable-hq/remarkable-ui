@@ -11,9 +11,9 @@ import {
   SelectListOption,
 } from '../../../../../../remarkable-ui';
 import styles from './ChartCardMenuPro.module.css';
-import { ChartCardMenuProOptionOnClickProps } from '../../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
+import { ChartCardMenuOptionOnClickProps } from '../../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
 
-type ChartCardMenuProProps = Omit<ChartCardMenuProOptionOnClickProps, 'theme'>;
+type ChartCardMenuProProps = Omit<ChartCardMenuOptionOnClickProps, 'theme'>;
 
 export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
   const theme: Theme = useTheme() as Theme;
@@ -21,7 +21,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const options = theme.charts?.chartCardMenuPro?.options ?? [];
+  const options = theme.defaults.chartMenuOptions ?? [];
 
   if (options.length === 0) {
     return null;
@@ -33,7 +33,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
     }, 100);
   };
 
-  const handleExport = (onClick: (props: ChartCardMenuProOptionOnClickProps) => void) => {
+  const handleExport = (onClick: (props: ChartCardMenuOptionOnClickProps) => void) => {
     setIsLoading(true);
     if (props.onCustomDownload) {
       props.onCustomDownload((args) => startAction(() => onClick(args)));
