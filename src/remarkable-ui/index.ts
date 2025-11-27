@@ -9,7 +9,7 @@ export { Dropdown } from './components/shared/Dropdown/Dropdown';
 export {
   SelectListOption,
   type SelectListOptionProps,
-} from './components/editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+} from './components/editors/selects/shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 export { Button } from './components/shared/Button/Button';
 export { GhostButton } from './components/shared/GhostButton/GhostButton';
 export { PageOverlay, PageOverlayProps } from './components/shared/Overlay/Overlay';
@@ -27,7 +27,7 @@ export {
 export { SingleSelectField } from './components/editors/selects/SingleSelectField/SingleSelectField';
 export { TextField } from './components/editors/inputs/TextField/TextField';
 export { NumberField } from './components/editors/inputs/NumberField/NumberField';
-export { SelectFieldCategory } from './components/editors/selects/shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+export { SelectFieldCategory } from './components/editors/selects/shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
 
 // Charts
 export { BarChart } from './components/charts/bars/BarChart';

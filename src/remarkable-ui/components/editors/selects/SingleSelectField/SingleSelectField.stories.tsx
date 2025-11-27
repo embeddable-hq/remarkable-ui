@@ -4,7 +4,7 @@ import { SingleSelectField } from './SingleSelectField';
 import {
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
+} from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
 

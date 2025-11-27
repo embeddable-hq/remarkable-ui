@@ -9,8 +9,8 @@ import {
   SelectListOption,
   SelectListOptionProps,
   SelectListOptionPropsWithCategory,
-} from '../shared/SelectFieldContent/SelectListOptions/SelectFieldOption/SelectFieldOption';
-import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectListOptions/SelectFieldCategory/SelectFieldCategory';
+} from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
+import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
 import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
 import { IconSearch, TablerIcon } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
