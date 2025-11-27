@@ -16,13 +16,14 @@ type DateRangeSelectFieldProProps = {
   placeholder?: string;
   selectedValue: TimeRange;
   title?: string;
+  clearable?: boolean;
 };
 
 const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
   const theme: Theme = useTheme() as Theme;
   const { dayjsLocaleReady } = useLoadDayjsLocale();
 
-  const { selectedValue, onChange } = props;
+  const { selectedValue, clearable, onChange } = props;
   const [internalValue, setInternalValue] = useState<string | undefined>(
     selectedValue?.relativeTimeString,
   );
@@ -74,7 +75,7 @@ const DateRangeSelectFieldPro = (props: DateRangeSelectFieldProProps) => {
     <EditorCard title={title} subtitle={description}>
       <SingleSelectField
         startIcon={IconCalendarFilled}
-        isClearable
+        clearable={clearable}
         placeholder={placeholder}
         value={internalValue}
         onChange={(value) => setInternalValue(value || undefined)}

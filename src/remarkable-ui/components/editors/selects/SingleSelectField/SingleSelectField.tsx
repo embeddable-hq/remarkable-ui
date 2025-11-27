@@ -26,8 +26,8 @@ export type SingleSelectFieldProps = {
   value?: string;
   disabled?: boolean;
   placeholder?: string;
-  isSearchable?: boolean;
-  isClearable?: boolean;
+  searchable?: boolean;
+  clearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
   onChange: (value: string) => void;
@@ -44,8 +44,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   options,
   disabled,
   placeholder,
-  isSearchable,
-  isClearable,
+  searchable,
+  clearable,
   isLoading,
   noOptionsMessage = 'No options available',
   onChange,
@@ -75,7 +75,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   const debouncedSearch = useMemo(() => (onSearch ? debounce(onSearch) : undefined), [onSearch]);
 
   const displayOptions =
-    isSearchable && !onSearch
+    searchable && !onSearch
       ? options.filter((option) => option.label.toLowerCase().includes(searchValue.toLowerCase()))
       : options;
 
@@ -116,14 +116,14 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             disabled={disabled}
             valueLabel={selectedLabel}
             onClear={() => handleChange('')}
-            isClearable={isClearable}
+            isClearable={clearable}
             isLoading={isLoading}
             error={hasError}
           />
         }
       >
         <SelectFieldContent>
-          {isSearchable && (
+          {searchable && (
             <TextField
               ref={searchFieldRef}
               startIcon={IconSearch}
