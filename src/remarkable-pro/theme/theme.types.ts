@@ -4,7 +4,7 @@ import { ThemeStyles } from './styles/styles.types';
 import { ChartOptions } from 'chart.js';
 import { ComparisonPeriodOption } from './defaults/defaults.ComparisonPeriods.constants';
 import { DateRangeOption } from './defaults/defaults.DateRanges.constants';
-import { ChartCardMenuOption } from './defaults/defaults.ChartCardMenuPro.constants';
+import { ChartCardMenuOption } from './defaults/defaults.ChartCardMenu.constants';
 
 export type ThemeI18n = { language: string; translations: Resource };
 

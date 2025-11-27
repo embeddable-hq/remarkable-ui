@@ -15,7 +15,7 @@ import { ChartCardMenuPro } from './ChartCardMenuPro/ChartCardMenuPro';
 import { Theme } from '../../../../theme/theme.types';
 import { i18n, i18nSetup } from '../../../../theme/i18n/i18n';
 import clsx from 'clsx';
-import { ChartCardMenuOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
+import { ChartCardMenuOptionOnClickProps } from '../../../../theme/defaults/defaults.ChartCardMenu.constants';
 
 type ChartCardProps = {
   title: string;

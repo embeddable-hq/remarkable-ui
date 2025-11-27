@@ -11,7 +11,18 @@ import {
   SelectListOption,
 } from '../../../../../../remarkable-ui';
 import styles from './ChartCardMenuPro.module.css';
-import { ChartCardMenuOptionOnClickProps } from '../../../../../theme/defaults/defaults.ChartCardMenuPro.constants';
+import { ChartCardMenuOptionOnClickProps } from '../../../../../theme/defaults/defaults.ChartCardMenu.constants';
+
+type InlineSvgFromDataProps = React.HTMLAttributes<HTMLSpanElement> & {
+  src: string;
+};
+
+export function InlineSvgFromData({ src, className, ...rest }: InlineSvgFromDataProps) {
+  // Remove prefix and URL-decode the SVG markup
+  const svgMarkup = decodeURIComponent(src.replace(/^data:image\/svg\+xml,/, ''));
+
+  return <div className={className} {...rest} dangerouslySetInnerHTML={{ __html: svgMarkup }} />;
+}
 
 type ChartCardMenuProProps = Omit<ChartCardMenuOptionOnClickProps, 'theme'>;
 
@@ -57,17 +68,7 @@ export const ChartCardMenuPro: React.FC<ChartCardMenuProProps> = (props) => {
               key={index}
               label={label}
               onClick={() => handleExport(option.onClick)}
-              startIcon={
-                option.iconSrc ? (
-                  <div
-                    className={styles.listIcon}
-                    style={{
-                      WebkitMask: `url(${option.iconSrc}) no-repeat center / contain`,
-                      mask: `url(${option.iconSrc}) no-repeat center / contain`,
-                    }}
-                  />
-                ) : undefined
-              }
+              startIcon={option.iconSrc ? <InlineSvgFromData src={option.iconSrc} /> : undefined}
             />
           );
         })}

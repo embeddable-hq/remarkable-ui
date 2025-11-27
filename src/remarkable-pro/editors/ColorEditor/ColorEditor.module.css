@@ -1,3 +1,9 @@
+.colorInputContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--em-textfield-padding--space-100, 0.5rem);
+}
+
 .colorInput {
   cursor: pointer;
   height: var(--em-textfield-height, 2.5rem);
