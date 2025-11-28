@@ -6,13 +6,14 @@ import { KpiChartProps } from './KpiChart.types';
 export const KpiChart: FC<KpiChartProps> = ({
   value,
   valueFontSize,
-  changeFontSize,
+  trendFontSize,
   comparisonValue,
   comparisonLabel,
   invertChangeColors,
   showChangeAsPercentage,
   percentageDecimalPlaces = 1,
   equalComparisonLabel = 'No change',
+  noPreviousDataLabel = 'No previous data',
   valueFormatter,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -53,11 +54,10 @@ export const KpiChart: FC<KpiChartProps> = ({
         >
           {displayValue}
         </h2>
-        <div className={styles.kpiComparisonContainer} style={{ fontSize: changeFontSize }}>
+        <div className={styles.kpiComparisonContainer} style={{ fontSize: trendFontSize }}>
           {hasComparisonValue && (
             <KpiChartChange
               equalComparisonLabel={equalComparisonLabel}
-              changeFontSize={changeFontSize}
               comparisonLabel={comparisonLabel}
               comparisonValue={comparisonValue}
               invertChangeColors={invertChangeColors}
@@ -65,6 +65,7 @@ export const KpiChart: FC<KpiChartProps> = ({
               showChangeAsPercentage={showChangeAsPercentage}
               value={value}
               valueFormatter={valueFormatter}
+              noPreviousDataLabel={noPreviousDataLabel}
             />
           )}
         </div>

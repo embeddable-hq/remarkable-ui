@@ -104,11 +104,12 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
         comparisonValue={resultsCombined.isLoading ? undefined : comparisonValue}
         valueFormatter={valueFormatter}
         valueFontSize={fontSize}
-        changeFontSize={changeFontSize}
+        trendFontSize={changeFontSize}
         invertChangeColors={reversePositiveNegativeColors}
         showChangeAsPercentage={displayChangeAsPercentage}
         comparisonLabel={comparisonLabel}
         percentageDecimalPlaces={percentageDecimalPlaces}
+        noPreviousDataLabel={i18n.t('charts.kpiChart.noPreviousData')}
       />
     </ChartCard>
   );
