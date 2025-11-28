@@ -6,7 +6,7 @@ import { KpiChartProps } from './KpiChart.types';
 export const KpiChart: FC<KpiChartProps> = ({
   value,
   valueFontSize,
-  changeFontSize,
+  trendFontSize,
   comparisonValue,
   comparisonLabel,
   invertChangeColors,
@@ -53,11 +53,10 @@ export const KpiChart: FC<KpiChartProps> = ({
         >
           {displayValue}
         </h2>
-        <div className={styles.kpiComparisonContainer} style={{ fontSize: changeFontSize }}>
+        <div className={styles.kpiComparisonContainer} style={{ fontSize: trendFontSize }}>
           {hasComparisonValue && (
             <KpiChartChange
               equalComparisonLabel={equalComparisonLabel}
-              changeFontSize={changeFontSize}
               comparisonLabel={comparisonLabel}
               comparisonValue={comparisonValue}
               invertChangeColors={invertChangeColors}

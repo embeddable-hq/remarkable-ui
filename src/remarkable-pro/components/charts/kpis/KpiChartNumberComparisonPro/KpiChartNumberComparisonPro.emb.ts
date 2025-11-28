@@ -58,8 +58,8 @@ export const meta = {
     { ...genericNumber, name: 'fontSize', label: 'Font Size' },
     {
       ...genericNumber,
-      name: 'changeFontSize',
-      label: 'Change Font Size',
+      name: 'trendFontSize',
+      label: 'Trend Font Size',
     },
   ],
 } as const satisfies EmbeddedComponentMeta;
