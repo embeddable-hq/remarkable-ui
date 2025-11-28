@@ -1,5 +1,11 @@
 # @embeddable/remarkable-ui
 
+## 1.0.6
+
+### Patch Changes
+
+- aa331dc: KPI inifity percentage fix
+
 ## 1.0.5
 
 ### Patch Changes
