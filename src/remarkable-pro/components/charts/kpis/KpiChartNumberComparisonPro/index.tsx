@@ -13,7 +13,7 @@ import {
 } from '../../../utils/timeRange.utils';
 
 type KpiChartNumberComparisonProProp = {
-  trendFontSize: number;
+  changeFontSize: number;
   comparisonPeriod?: string;
   description: string;
   displayChangeAsPercentage?: boolean;
@@ -35,7 +35,7 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
 
   const { title, description } = resolveI18nProps(props);
   const {
-    trendFontSize,
+    changeFontSize,
     comparisonPeriod,
     comparisonDateRange,
     displayChangeAsPercentage,
@@ -104,11 +104,12 @@ const KpiChartNumberComparisonPro = (props: KpiChartNumberComparisonProProp) => 
         comparisonValue={resultsCombined.isLoading ? undefined : comparisonValue}
         valueFormatter={valueFormatter}
         valueFontSize={fontSize}
-        trendFontSize={trendFontSize}
+        trendFontSize={changeFontSize}
         invertChangeColors={reversePositiveNegativeColors}
         showChangeAsPercentage={displayChangeAsPercentage}
         comparisonLabel={comparisonLabel}
         percentageDecimalPlaces={percentageDecimalPlaces}
+        noPreviousDataLabel={i18n.t('charts.kpiChart.noPreviousData')}
       />
     </ChartCard>
   );

@@ -58,7 +58,7 @@ export const meta = {
     { ...genericNumber, name: 'fontSize', label: 'Font Size' },
     {
       ...genericNumber,
-      name: 'trendFontSize',
+      name: 'changeFontSize',
       label: 'Trend Font Size',
     },
   ],

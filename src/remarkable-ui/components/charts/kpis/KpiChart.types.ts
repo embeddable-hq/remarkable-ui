@@ -10,5 +10,6 @@ export type KpiChartProps = {
   equalComparisonLabel?: string;
   percentageDecimalPlaces?: number;
   valueFontSize?: CssSize;
+  noPreviousDataLabel?: string;
   valueFormatter?: (value: number) => string;
 };

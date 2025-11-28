@@ -36,6 +36,9 @@ export const de: ResourceLanguage = {
       pivotTable: {
         total: 'Gesamt',
       },
+      kpiChart: {
+        noPreviousData: 'Keine vorherigen Daten',
+      },
     },
     editors: {
       errorTitle: 'Etwas ist schiefgelaufen.',

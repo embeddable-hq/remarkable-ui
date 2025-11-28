@@ -13,6 +13,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   showChangeAsPercentage,
   percentageDecimalPlaces = 1,
   equalComparisonLabel = 'No change',
+  noPreviousDataLabel = 'No previous data',
   valueFormatter,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,6 +65,7 @@ export const KpiChart: FC<KpiChartProps> = ({
               showChangeAsPercentage={showChangeAsPercentage}
               value={value}
               valueFormatter={valueFormatter}
+              noPreviousDataLabel={noPreviousDataLabel}
             />
           )}
         </div>
