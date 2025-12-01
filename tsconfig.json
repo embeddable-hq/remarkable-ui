@@ -6,7 +6,8 @@
     "jsx": "react-jsx",
 
     /* Modules */
-    "module": "commonjs",
+    "module": "ESNext", // ⬅️ ESM output
+    "moduleResolution": "Node", // or "NodeNext", both fine for bundlers
     "rootDir": "src",
 
     /* Emit */

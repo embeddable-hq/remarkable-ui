@@ -1,10 +1,20 @@
 {
   "name": "@embeddable.com/remarkable-ui",
-  "author": "embeddable (https://embeddable.com)",
-  "version": "1.0.6",
+  "version": "0.0.18",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles": {
+      "import": "./dist/styles.js",
+      "types": "./dist/styles.d.ts"
+    }
+  },
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "README.md"
@@ -13,17 +23,11 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
-    "process:css-variables": "node scripts/process-css-variables.js",
+    "build": "tsup --config tsup.config.ts",
+    "prepublishOnly": "npm run build",
     "build-storybook": "storybook build",
     "circular:check": "madge --circular .",
     "deploy-storybook": "gh-pages -d storybook-static",
-    "embeddable:build": "embeddable build",
-    "embeddable:dev": "embeddable dev",
-    "embeddable:login": "embeddable login",
-    "embeddable:package": "embeddable buildPackage && npm run process:css-variables",
-    "embeddable:push": "embeddable push",
-    "embeddable:upgrade": "npx npm-check-updates -u \"/embeddable/\"",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint --fix --quiet .",
     "lint:staged": "lint-staged",
@@ -32,15 +36,14 @@
     "prettier:write": "prettier . --write",
     "release": "npm run embeddable:package && changeset publish",
     "storybook": "storybook dev -p 6006",
-    "types:check": "tsc --noEmit --incremental false",
-    "postinstall": "node -e \"try{require('child_process').execSync('xattr -dr com.apple.quarantine node_modules/@swc || true',{stdio:'inherit'})}catch(e){}\""
+    "types:check": "tsc --noEmit --incremental false"
   },
   "keywords": [
-    "embeddable",
-    "embeddable-components",
-    "embeddable-ui",
+    "remarkable-ui",
     "remarkable-components",
-    "remarkable-ui"
+    "embeddable",
+    "embeddable-ui",
+    "embeddable-components"
   ],
   "engines": {
     "npm": ">=9.0.0",
@@ -56,33 +59,20 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.29.6",
-    "@embeddable.com/core": "^2.13.0",
-    "@embeddable.com/react": "^2.12.0",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@tabler/icons-react": "^3.34.1",
     "chart.js": "^4.5.0",
     "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "chroma-js": "^3.1.2",
     "clsx": "^2.1.1",
-    "dayjs": "^1.11.14",
-    "dom-to-image-more": "^3.6.3",
-    "i18next": "^25.3.2",
     "mergician": "^2.0.2",
-    "react-chartjs-2": "^5.3.0",
-    "xlsx": "^0.18.5"
+    "react-chartjs-2": "^5.3.0"
   },
   "devDependencies": {
-    "@embeddable.com/sdk-core": "^4.1.3",
-    "@embeddable.com/sdk-react": "^4.0.7",
     "@eslint/css": "^0.13.0",
     "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
     "@storybook/react": "^9.0.18",
     "@storybook/react-webpack5": "^9.0.17",
-    "@swc-node/core": "1.14.1",
-    "@swc/cli": "^0.4.0",
-    "@swc/core": "1.13.5",
-    "@types/chroma-js": "^3.1.1",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "esbuild-register": "^3.6.0",
@@ -102,6 +92,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "storybook": "^9.0.17",
+    "tsup": "^8.5.1",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.37.0"
   },
