@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true, // tsup handles emit
+    "module": "esnext", // tsup will bundle; module here is mostly for type-checking
+    "moduleResolution": "bundler"
+  },
+  "include": ["src"]
+}

@@ -75,6 +75,19 @@ export default defineConfig([
     },
   },
 
+  // Node scripts (CJS/JS in scripts/)
+  {
+    files: ['scripts/**/*.{js,cjs,mjs}'],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: 'script',
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-var-requires': 'off',
+    },
+  },
+
   // Prettier integration
   configPrettier,
 
