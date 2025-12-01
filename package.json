@@ -34,7 +34,7 @@
     "prepare": "husky",
     "prettier:check": "prettier . --check",
     "prettier:write": "prettier . --write",
-    "release": "changeset publish",
+    "release": "npm run prepublishOnly && changeset publish",
     "storybook": "storybook dev -p 6006",
     "types:check": "tsc --noEmit --incremental false"
   },
