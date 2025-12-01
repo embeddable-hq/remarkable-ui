@@ -36,8 +36,7 @@
     "prettier:write": "prettier . --write",
     "release": "npm run embeddable:package && changeset publish",
     "storybook": "storybook dev -p 6006",
-    "types:check": "tsc --noEmit --incremental false",
-    "postinstall": "node -e \"try{require('child_process').execSync('xattr -dr com.apple.quarantine node_modules/@swc || true',{stdio:'inherit'})}catch(e){}\""
+    "types:check": "tsc --noEmit --incremental false"
   },
   "keywords": [
     "remarkable-ui",
@@ -65,24 +64,15 @@
     "chart.js": "^4.5.0",
     "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "chroma-js": "^3.1.2",
     "clsx": "^2.1.1",
-    "dayjs": "^1.11.14",
-    "dom-to-image-more": "^3.6.3",
-    "i18next": "^25.3.2",
     "mergician": "^2.0.2",
-    "react-chartjs-2": "^5.3.0",
-    "xlsx": "^0.18.5"
+    "react-chartjs-2": "^5.3.0"
   },
   "devDependencies": {
     "@eslint/css": "^0.13.0",
     "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
     "@storybook/react": "^9.0.18",
     "@storybook/react-webpack5": "^9.0.17",
-    "@swc-node/core": "1.14.1",
-    "@swc/cli": "^0.4.0",
-    "@swc/core": "1.13.5",
-    "@types/chroma-js": "^3.1.1",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "esbuild-register": "^3.6.0",

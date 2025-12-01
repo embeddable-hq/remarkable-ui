@@ -21,14 +21,9 @@ export default defineConfig({
     'chart.js',
     'chartjs-plugin-annotation',
     'chartjs-plugin-datalabels',
-    'chroma-js',
     'clsx',
-    'dayjs',
-    'dom-to-image-more',
-    'i18next',
     'mergician',
     'react-chartjs-2',
-    'xlsx',
   ],
 
   // Let bundlers (CRA, Vite, Embeddable) handle CSS modules
