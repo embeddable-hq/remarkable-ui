@@ -57,7 +57,7 @@ core = {
 
 component = {
   ...component,
-  "--em-selectfield-content-opacity--loading": "0.5"
+  '--em-selectfield-content-opacity--loading': '0.5',
 };
 
 // Build output file path
