@@ -62,7 +62,6 @@ export * from './components/charts/chartjs.cartesian.constants';
 
 // Utils
 export { getStyle, getStyleNumber } from './styles/styles.utils';
-export { useDebounce } from './hooks/useDebounce.hook';
 
 // Types
 export * from './types/css.types';

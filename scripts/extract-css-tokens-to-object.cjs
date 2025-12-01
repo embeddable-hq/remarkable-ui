@@ -10,7 +10,7 @@ const path = require('path');
 const inputPath = process.argv[2];
 
 if (!inputPath) {
-  console.error('Usage: node split-tokens.js <input-file.css>');
+  console.error('Usage: node scripts/extract-css-tokens-to-object.cjs <input-file.css>');
   process.exit(1);
 }
 
@@ -19,8 +19,8 @@ const lines = css.split(/\r?\n/);
 
 // Token buckets
 let core = {};
-const semantics = {};
-const component = {};
+let semantics = {};
+let component = {};
 
 // Parse lines that contain CSS custom properties
 for (const rawLine of lines) {
@@ -53,6 +53,11 @@ core = {
   '--em-core-font-weight--bold': '700',
   '--em-core-font-weight--medium': '500',
   '--em-core-font-weight--regular': '400',
+};
+
+component = {
+  ...component,
+  "--em-selectfield-content-opacity--loading": "0.5"
 };
 
 // Build output file path

@@ -320,7 +320,7 @@ export const stylesTokensComponents = {
   '--em-selectfield-content-gap': 'var(--em-core-spacing--0200)',
   '--em-selectfield-content-max-height': '320px',
   '--em-selectfield-content-max-width': '400px',
-  '--em-selectfield-content-opacity--loading': '50px',
+  '--em-selectfield-content-opacity--loading': '0.5',
   '--em-selectfield-content-padding': 'var(--em-core-spacing--0200)',
   '--em-selectfield-content-shadow-blur': 'var(--em-core-shadow-blur)',
   '--em-selectfield-content-shadow-color': 'var(--em-core-shadow-color)',
