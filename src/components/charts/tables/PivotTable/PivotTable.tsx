@@ -31,7 +31,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     const s = new Set<string>();
     for (const d of data) {
       const rowValue = d[rowDimension.key];
-      if (rowValue) s.add(rowValue);
+      if (rowValue != null) s.add(rowValue);
     }
     return Array.from(s);
   }, [data, rowDimension.key]);
@@ -40,7 +40,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     const s = new Set<string>();
     for (const d of data) {
       const columnValue = d[columnDimension.key];
-      if (columnValue) s.add(columnValue as string);
+      if (columnValue != null) s.add(columnValue as string);
     }
     return Array.from(s);
   }, [data, columnDimension.key]);
