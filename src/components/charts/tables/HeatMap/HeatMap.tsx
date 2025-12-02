@@ -157,7 +157,6 @@ export const HeatMap = <T extends Record<string, unknown>>({
                       style={{
                         background,
                         color,
-                        textAlign: 'center',
                         ...getTableCellWidthStyle(columnWidth),
                       }}
                     >
