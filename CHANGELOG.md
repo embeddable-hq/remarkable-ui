@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.2
+
+### Patch Changes
+
+- 346fe87: Table charts default cell alignment to the center
+
 ## 2.0.1
 
 ### Patch Changes
