@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.4
+
+### Patch Changes
+
+- 298778f: README.md
+
 ## 2.0.3
 
 ### Patch Changes
