@@ -1,4 +1,4 @@
-# Remarkable UI Library
+# Remarkable UI
 
 [**Remarkable UI**](https://www.npmjs.com/package/@embeddable.com/remarkable-ui) is a library of beautiful analytics components—charts, controls, tables, and more—designed to be styled through **granular CSS variables**.
 
