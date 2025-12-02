@@ -60,6 +60,18 @@ import 'your-file-here.css';
 import { Button, Card } from '@embeddable.com/remarkable-ui';
 ```
 
+## 📁 Project Structure
+
+```
+scripts/         # Automation scripts
+src/
+  components/    # Chart, editor and shared components
+  hooks/         # Reusable hooks used by the components
+  styles/        # Global css and types for the exising css variables
+  types/         # Shared TypeScript types
+  utils.ts/      # Utility functions
+```
+
 ## 🛠 Contributing
 
 We welcome feedback and contributions!
