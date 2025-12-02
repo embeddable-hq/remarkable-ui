@@ -247,7 +247,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
                   {columnValues.flatMap((columnValue) =>
                     measures.map((measure, idx) => {
-                      const object = cellMap.get(row)?.get(columnValue) ?? {};
+                      const object = cellMap.get(String(row))?.get(String(columnValue)) ?? {};
                       const value = object?.[measure.key];
 
                       const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
@@ -287,7 +287,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                     measures
                       .filter((measure) => rowTotalsSet.has(measure.key))
                       .map((measure, idx) => {
-                        const totalsForRow = rowTotals.get(row) ?? measures.map(() => 0);
+                        const totalsForRow = rowTotals.get(String(row)) ?? measures.map(() => 0);
                         const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
                         const key = `row-total-${String(row)}-${measure.key}-${idx}`;
                         const value: number =
