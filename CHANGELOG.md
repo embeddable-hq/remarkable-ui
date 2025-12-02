@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.3
+
+### Patch Changes
+
+- ee784f7: Fix PivotTable zero rows and column values
+
 ## 2.0.2
 
 ### Patch Changes
