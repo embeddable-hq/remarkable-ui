@@ -30,7 +30,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithLabels: Story = {
+export const WithTotal: Story = {
+  args: {
+    label: 'Total',
+  },
+};
+
+export const WithTotalAndLabel: Story = {
   args: {
     label: 'Total',
     subLabel: (pieDataMock.datasets[0]?.data ?? []).reduce((a, b) => a + b, 0).toString(),
