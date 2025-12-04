@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.5
+
+### Patch Changes
+
+- 6d88a83: Fix DonutChart center alignment
+
 ## 2.0.4
 
 ### Patch Changes
