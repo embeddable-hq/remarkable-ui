@@ -50,7 +50,7 @@ export const getDonutChartOptions = (
       annotation: {
         annotations: {
           innerlabel: {
-            content: [options.label ?? '', options.subLabel ?? ''],
+            content: [options.label, options.subLabel].filter(Boolean),
             type: 'doughnutLabel',
             font: [
               {
