@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.6
+
+### Patch Changes
+
+- cddd509: Test new release process
+
 ## 2.0.5
 
 ### Patch Changes
