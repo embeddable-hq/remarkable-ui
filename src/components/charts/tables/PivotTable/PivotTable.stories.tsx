@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PivotTable } from './PivotTable';
 import { PivotTableProps } from './PivotTable.types';
+import { decoratorsResizeCard } from '../../../../storybook.constants';
 
 type Data = {
   country: string;
@@ -114,11 +115,5 @@ export const WithTotals: Story = {
 };
 
 export const Resize: Story = {
-  render: (args) => {
-    return (
-      <div style={{ width: '400px', height: '200px', resize: 'both', overflow: 'auto' }}>
-        <PivotTable {...args} />
-      </div>
-    );
-  },
+  decorators: decoratorsResizeCard,
 };

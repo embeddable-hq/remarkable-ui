@@ -2,23 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { DonutChart } from './DonutChart';
 import { pieDataMock } from '../pies.mock';
+import { decoratorsResizeCard, decoratorsSquare } from '../../../../storybook.constants';
 
 const meta = {
   title: 'Charts/DonutChart',
   component: DonutChart,
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          width: 250,
-          height: 250,
-          display: 'flex',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     data: pieDataMock,
   },
@@ -28,12 +16,15 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  decorators: decoratorsSquare,
+};
 
 export const WithTotal: Story = {
   args: {
     label: 'Total',
   },
+  decorators: decoratorsSquare,
 };
 
 export const WithTotalAndLabel: Story = {
@@ -41,4 +32,9 @@ export const WithTotalAndLabel: Story = {
     label: 'Total',
     subLabel: (pieDataMock.datasets[0]?.data ?? []).reduce((a, b) => a + b, 0).toString(),
   },
+  decorators: decoratorsSquare,
+};
+
+export const Resize: Story = {
+  decorators: decoratorsResizeCard,
 };

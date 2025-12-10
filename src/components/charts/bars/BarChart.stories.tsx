@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { BarChart } from './BarChart';
 import { ChartData } from 'chart.js';
+import { decoratorsResizeCard, decoratorsSquare } from '../../../storybook.constants';
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 const data: ChartData<'bar'> = {
@@ -21,19 +22,6 @@ const data: ChartData<'bar'> = {
 const meta = {
   title: 'Charts/BarChart',
   component: BarChart,
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          width: 500,
-          height: 500,
-          display: 'flex',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
   args: {
     data,
     showValueLabels: true,
@@ -65,18 +53,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  decorators: decoratorsSquare,
+};
 
 export const Stacked: Story = {
   args: {
     stacked: true,
   },
+  decorators: decoratorsSquare,
 };
 
 export const LogarithmicScale: Story = {
   args: {
     showLogarithmicScale: true,
   },
+  decorators: decoratorsSquare,
 };
 
 export const widthRange: Story = {
@@ -84,10 +76,16 @@ export const widthRange: Story = {
     yAxisRangeMin: 10,
     yAxisRangeMax: 70,
   },
+  decorators: decoratorsSquare,
 };
 
 export const Horizontal: Story = {
   args: {
     horizontal: true,
   },
+  decorators: decoratorsSquare,
+};
+
+export const Resize: Story = {
+  decorators: decoratorsResizeCard,
 };

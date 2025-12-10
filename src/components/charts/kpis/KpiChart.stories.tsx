@@ -1,25 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { KpiChart } from './KpiChart';
+import { decoratorsResizeCard, decoratorsSquare } from '../../../storybook.constants';
 
 const meta = {
   title: 'Charts/KpiChart',
   component: KpiChart,
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          width: '400px',
-          height: '200px',
-          resize: 'both',
-          overflow: 'auto',
-          border: '1px solid #ccc',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
   argTypes: {
     valueFontSize: {
       control: {
@@ -37,6 +23,7 @@ export const Default: Story = {
   args: {
     value: 100,
   },
+  decorators: decoratorsSquare,
 };
 
 export const PositiveComparison: Story = {
@@ -46,6 +33,7 @@ export const PositiveComparison: Story = {
     comparisonLabel: 'vs previous period.',
     equalComparisonLabel: 'No change',
   },
+  decorators: decoratorsSquare,
 };
 
 export const NegativeComparison: Story = {
@@ -55,6 +43,7 @@ export const NegativeComparison: Story = {
     comparisonLabel: 'vs previous period.',
     equalComparisonLabel: 'No change',
   },
+  decorators: decoratorsSquare,
 };
 
 export const Equal: Story = {
@@ -64,6 +53,7 @@ export const Equal: Story = {
     comparisonLabel: 'vs previous period.',
     equalComparisonLabel: 'No change',
   },
+  decorators: decoratorsSquare,
 };
 
 export const Percentage: Story = {
@@ -74,4 +64,16 @@ export const Percentage: Story = {
     equalComparisonLabel: 'No change',
     showChangeAsPercentage: true,
   },
+  decorators: decoratorsSquare,
+};
+
+export const Resize: Story = {
+  args: {
+    value: 100,
+    comparisonValue: 75,
+    comparisonLabel: 'vs previous period.',
+    equalComparisonLabel: 'No change',
+    showChangeAsPercentage: true,
+  },
+  decorators: decoratorsResizeCard,
 };

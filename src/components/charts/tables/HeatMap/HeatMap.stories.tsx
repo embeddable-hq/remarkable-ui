@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { HeatMap } from './HeatMap';
+import { decoratorsResizeCard } from '../../../../storybook.constants';
 
 type Data = {
   country: string;
@@ -54,11 +55,5 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 export const Resize: Story = {
-  render: (args) => {
-    return (
-      <div style={{ width: '400px', height: '200px', resize: 'both', overflow: 'auto' }}>
-        <HeatMap {...args} />
-      </div>
-    );
-  },
+  decorators: decoratorsResizeCard,
 };

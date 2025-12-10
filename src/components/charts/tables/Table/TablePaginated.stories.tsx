@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TablePaginated as TablePaginatedChart } from './TablePaginated';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableHeaderItem } from './table.types';
+import { decoratorsResizeCard } from '../../../../storybook.constants';
 
 const teams = ['Design', 'Engineering', 'Ops', 'Marketing'] as const;
 const titles = ['IC', 'Lead', 'Manager', 'Director'] as const;
@@ -114,18 +115,17 @@ export const Resize: Story = {
     const rows = makeClients(args.total).slice(start, end);
 
     return (
-      <div style={{ width: '400px', height: '200px', resize: 'both', overflow: 'auto' }}>
-        <TablePaginatedChart
-          showIndex={args.showIndex}
-          headers={args.headers}
-          page={args.page}
-          pageSize={args.pageSize}
-          total={args.total}
-          rows={rows}
-          onPageChange={(value) => updateArgs({ page: value })}
-          onSortChange={() => null}
-        />
-      </div>
+      <TablePaginatedChart
+        showIndex={args.showIndex}
+        headers={args.headers}
+        page={args.page}
+        pageSize={args.pageSize}
+        total={args.total}
+        rows={rows}
+        onPageChange={(value) => updateArgs({ page: value })}
+        onSortChange={() => null}
+      />
     );
   },
+  decorators: decoratorsResizeCard,
 };

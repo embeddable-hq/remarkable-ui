@@ -46,6 +46,11 @@ export const getDonutChartOptions = (
 ): Partial<ChartOptions<'pie'>> => {
   const donutChartOptions: Partial<ChartOptions<'pie'>> = {
     cutout: '60%',
+    elements: {
+      arc: {
+        borderWidth: 1,
+      },
+    },
     plugins: {
       annotation: {
         annotations: {

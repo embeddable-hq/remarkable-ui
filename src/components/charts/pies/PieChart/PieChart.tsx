@@ -7,8 +7,9 @@ import { getSegmentIndexClicked } from '../../chartjs.utils';
 import { mergician } from 'mergician';
 import { BasePieChartProps } from '../pies.types';
 import styles from '../../charts.module.css';
+import AnnotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
 
 export type PieChartProps = BasePieChartProps;
 
