@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.7
+
+### Patch Changes
+
+- 6a58676: Test new release process
+
 ## 2.0.6
 
 ### Patch Changes
