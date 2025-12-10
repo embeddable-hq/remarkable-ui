@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { LineChart } from './LineChart';
 import { ChartData } from 'chart.js';
+import { decoratorsResizeCard, decoratorsSquare } from '../../../storybook.constants';
 
 const data: ChartData<'line'> = {
   labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
@@ -32,30 +33,24 @@ const meta = {
     reverseXAxis: false,
     showLogarithmicScale: false,
   },
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          width: 500,
-          height: 500,
-          display: 'flex',
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof LineChart>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  decorators: decoratorsSquare,
+};
 
 export const widthRange: Story = {
   args: {
     yAxisRangeMin: 10,
     yAxisRangeMax: 70,
   },
+  decorators: decoratorsSquare,
+};
+
+export const Resize: Story = {
+  decorators: decoratorsResizeCard,
 };
