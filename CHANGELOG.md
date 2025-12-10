@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.10
+
+### Patch Changes
+
+- f5b3a92: New release process
+
 ## 2.0.9
 
 ### Patch Changes
