@@ -1,5 +1,5 @@
 .kpiChartContainer {
-  width: 100%;
+  width: auto;
   height: 100%;
   font-style: normal;
   text-align: center;
@@ -11,12 +11,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .kpiChartCenter h2 {
   margin: unset;
   overflow: hidden;
-  width: min-content;
+  width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--em-kpichart-color, #212129);
