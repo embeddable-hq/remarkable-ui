@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.11
+
+### Patch Changes
+
+- 40af84d: DonutChart hides if not enough available space + New resize hook
+
 ## 2.0.10
 
 ### Patch Changes
