@@ -1,41 +1,51 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
-export const useObserverHeight = (elRef: React.RefObject<HTMLDivElement | null>): number => {
-  const [height, setHeight] = useState(0);
+type Size = {
+  width: number;
+  height: number;
+};
+
+export const useResizeObserver = <T extends HTMLElement>(
+  elRef: React.RefObject<T | null>,
+  timeout = 100,
+): Size => {
+  const [size, setSize] = useState<Size>({ width: 0, height: 0 });
   const timeoutRef = useRef<number | undefined>(undefined);
 
   useLayoutEffect(() => {
     const el = elRef.current;
     if (!el) return;
 
-    const updateHeight = (newHeight: number) => {
-      setHeight(Math.max(0, newHeight));
+    const updateSize = (rect: DOMRectReadOnly | DOMRect) => {
+      setSize({
+        width: Math.max(0, rect.width),
+        height: Math.max(0, rect.height),
+      });
     };
 
     const ro = new ResizeObserver((entries) => {
       const entry = entries[0];
       if (!entry) return;
 
-      // clear previous debounce
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
 
-      // wait 100ms before updating
       timeoutRef.current = window.setTimeout(() => {
-        updateHeight(entry.contentRect.height);
-      }, 100);
+        updateSize(entry.contentRect);
+      }, timeout);
     });
 
     ro.observe(el);
-    // initial height
-    updateHeight(el.getBoundingClientRect().height || 0);
+
+    // initial size
+    updateSize(el.getBoundingClientRect());
 
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       ro.disconnect();
     };
-  }, [elRef]);
+  }, [elRef, timeout]);
 
-  return height;
+  return size;
 };
