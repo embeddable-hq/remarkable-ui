@@ -68,4 +68,4 @@ export * from './types/css.types';
 
 // Hooks
 export * from './hooks/useDebounce.hook';
-export * from './hooks/useObserverHeight.hook';
+export * from './hooks/useResizeObserver.hook';
