@@ -11,7 +11,7 @@ import {
   SelectFieldContentList,
 } from '../shared/SelectFieldContent/SelectFieldContent';
 import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
-import { IconSearch, IconSquare, IconSquareCheckFilled, TablerIcon } from '@tabler/icons-react';
+import { IconProps, IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
 import { Button } from '../../../shared/Button/Button';
 import styles from '../selects.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
@@ -22,7 +22,7 @@ import { TextField } from '../../inputs/TextField/TextField';
 import { debounce } from '../../../../utils/debounce.utils';
 
 export type MultiSelectFieldProps = {
-  startIcon?: TablerIcon;
+  startIcon?: React.ComponentType<IconProps>;
   disabled?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;

@@ -1,10 +1,10 @@
-import { TablerIcon } from '@tabler/icons-react';
+import { IconProps } from '@tabler/icons-react';
 import styles from './Button.module.css';
 import clsx from 'clsx';
 
 type ButtonProps = {
-  startIcon?: TablerIcon;
-  endIcon?: TablerIcon;
+  startIcon?: React.ComponentType<IconProps>;
+  endIcon?: React.ComponentType<IconProps>;
   children: string;
   size?: 'small' | 'medium';
   variant?: 'primary' | 'secondary';

@@ -2,7 +2,7 @@ import { CssSize } from '../../../types/css.types';
 
 export type KpiChartProps = {
   value: number;
-  changeFontSize?: number;
+  trendFontSize?: number;
   comparisonValue?: number;
   showChangeAsPercentage?: boolean;
   invertChangeColors?: boolean;
@@ -10,5 +10,6 @@ export type KpiChartProps = {
   equalComparisonLabel?: string;
   percentageDecimalPlaces?: number;
   valueFontSize?: CssSize;
+  noPreviousDataLabel?: string;
   valueFormatter?: (value: number) => string;
 };

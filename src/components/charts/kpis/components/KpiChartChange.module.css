@@ -5,6 +5,8 @@
   justify-content: center;
   gap: var(--em-kpichart-label-gap, 0.5rem);
   margin-top: var(--em-kpichart-gap, 1.5rem);
+  flex: 0 0 auto;
+  flex-shrink: 0;
 }
 
 .kpiChangeBadge {

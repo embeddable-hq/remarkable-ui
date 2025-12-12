@@ -12,7 +12,7 @@ import {
 } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
 import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
-import { IconSearch, TablerIcon } from '@tabler/icons-react';
+import { IconProps, IconSearch } from '@tabler/icons-react';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
 import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import styles from '../selects.module.css';
@@ -22,7 +22,7 @@ import { debounce } from '../../../../utils/debounce.utils';
 
 export type SingleSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
-  startIcon?: TablerIcon;
+  startIcon?: React.ComponentType<IconProps>;
   value?: string;
   disabled?: boolean;
   placeholder?: string;
