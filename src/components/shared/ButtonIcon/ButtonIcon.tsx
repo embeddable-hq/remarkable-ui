@@ -1,12 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './ButtonIcon.module.css';
-import { TablerIcon } from '@tabler/icons-react';
+import { IconProps } from '@tabler/icons-react';
 
 type ButtonIconProps = {
   variant?: 'primary' | 'secondary';
   size?: 'small' | 'medium';
-  icon: TablerIcon;
+  icon: React.ComponentType<IconProps>;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const ButtonIcon: React.FC<ButtonIconProps> = ({

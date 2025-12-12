@@ -20,6 +20,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   valueFormatter,
   percentageDecimalPlaces = 1,
   equalComparisonLabel,
+  noPreviousDataLabel,
   className,
 }) => {
   const equalComparison = comparisonValue === value;
@@ -30,7 +31,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   let differenceLabel: string;
 
   if (showChangeAsPercentage) {
-    const percentage = comparisonValue === 0 ? 0 : (difference / comparisonValue) * 100;
+    const percentage = (difference / comparisonValue) * 100;
     differenceLabel = `${percentage.toFixed(percentageDecimalPlaces)}%`;
   } else {
     differenceLabel = valueFormatter ? valueFormatter(difference) : difference.toString();
@@ -42,18 +43,26 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
 
   return (
     <div className={clsx(className, styles.kpiChartChangeContainer)}>
-      {!equalComparison && (
-        <span
-          className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}
-        >
-          <Icon />
-          <span>{displayValue}</span>
-        </span>
+      {showChangeAsPercentage && Number(comparisonValue) === 0 ? (
+        <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
+      ) : (
+        <>
+          {!equalComparison && (
+            <span
+              className={clsx(
+                styles.kpiChangeBadge,
+                getChangeClass(isPositive, invertChangeColors),
+              )}
+            >
+              <Icon />
+              <span>{displayValue}</span>
+            </span>
+          )}
+          <span className={styles.kpiComparisonLabel}>
+            {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
+          </span>
+        </>
       )}
-
-      <span className={styles.kpiComparisonLabel}>
-        {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
-      </span>
     </div>
   );
 };

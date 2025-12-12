@@ -1,10 +1,10 @@
-import { TablerIcon } from '@tabler/icons-react';
+import { IconProps } from '@tabler/icons-react';
 import clsx from 'clsx';
 import styles from './CardFeedback.module.css';
 
 type CardFeedbackProps = {
   className?: string;
-  icon?: TablerIcon;
+  icon?: React.ComponentType<IconProps>;
   title: string;
   message: string;
   variant?: 'error' | 'info';

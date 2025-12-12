@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import React from 'react';
 import styles from './ActionIcon.module.css';
-import { TablerIcon } from '@tabler/icons-react';
+import { IconProps } from '@tabler/icons-react';
 
 type ActionIconProps = {
   className?: string;
-  icon: TablerIcon;
+  icon: React.ComponentType<IconProps>;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const ActionIcon: React.FC<ActionIconProps> = ({ icon: Icon, className, ...props }) => {

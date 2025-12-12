@@ -1,10 +1,10 @@
 import styles from './SelectFieldTrigger.module.css';
-import { IconCaretDownFilled, IconLoader2, IconX, TablerIcon } from '@tabler/icons-react';
+import { IconCaretDownFilled, IconLoader2, IconProps, IconX } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
 type SelectFieldTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  startIcon?: TablerIcon;
+  startIcon?: React.ComponentType<IconProps>;
   valueLabel?: string;
   placeholder?: string;
   isClearable?: boolean;

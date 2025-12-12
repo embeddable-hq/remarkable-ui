@@ -1,22 +1,28 @@
 .kpiChartContainer {
-  width: 100%;
-  height: 100%;
-  font-style: normal;
-  text-align: center;
-  display: flex;
-}
-
-.kpiChartCenter {
-  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.kpiChartCenter h2 {
+.kpiChartValueContainer {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* eslint-disable-next-line css/no-important */
+  align-items: center !important;
+  text-align: center;
+}
+
+.kpiChartValueContainer h2 {
+  width: 100%;
   margin: unset;
   overflow: hidden;
-  width: min-content;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--em-kpichart-color, #212129);

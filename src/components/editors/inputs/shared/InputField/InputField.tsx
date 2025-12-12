@@ -1,4 +1,4 @@
-import { IconX, TablerIcon } from '@tabler/icons-react';
+import { IconProps, IconX } from '@tabler/icons-react';
 import styles from './InputField.module.css';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
@@ -8,8 +8,8 @@ import { FieldFeedback } from '../../../../shared/Field/FieldFeedback';
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   value?: string;
   placeholder?: string;
-  startIcon?: TablerIcon;
-  endIcon?: TablerIcon;
+  startIcon?: React.ComponentType<IconProps>;
+  endIcon?: React.ComponentType<IconProps>;
   onChange: (value: string) => void;
   clearable?: boolean;
   error?: boolean;

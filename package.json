@@ -65,6 +65,7 @@
     "@changesets/cli": "^2.29.6",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@tabler/icons-react": "^3.34.1",
+    "auto-text-size": "^0.2.3",
     "chart.js": "^4.5.0",
     "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
