@@ -43,7 +43,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
   return (
-    <div className={styles.kpiChangeContainerSizeGuie}>
+    <div className={styles.kpiChangeContainerSizeGuide}>
       {/* This is responsible to setting the size of the container */}
       <div className={clsx(styles.kpiChartChangeContainer, styles.hidden)}>
         <span
