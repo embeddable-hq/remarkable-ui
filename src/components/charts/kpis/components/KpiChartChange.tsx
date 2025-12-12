@@ -21,7 +21,6 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   percentageDecimalPlaces = 1,
   equalComparisonLabel,
   noPreviousDataLabel,
-  className,
 }) => {
   const equalComparison = comparisonValue === value;
 
@@ -41,28 +40,45 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
 
   const Icon = isPositive ? IconTrendingUp : IconTrendingDown;
 
+  const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
+
   return (
-    <div className={clsx(className, styles.kpiChartChangeContainer)}>
-      {showChangeAsPercentage && Number(comparisonValue) === 0 ? (
-        <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
-      ) : (
-        <>
-          {!equalComparison && (
-            <span
-              className={clsx(
-                styles.kpiChangeBadge,
-                getChangeClass(isPositive, invertChangeColors),
+    <div className={styles.kpiChangeContainerSizeGuide}>
+      {/* This is responsible to setting the size of the container */}
+      <div className={clsx(styles.kpiChartChangeContainer, styles.hidden)}>
+        <span
+          className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}
+        >
+          <Icon />
+          <span>{displayValue}</span>
+        </span>
+        <span className={styles.kpiComparisonLabel}>{comparisonLabel}</span>
+      </div>
+      {/* This is responsible for displaying the content on the available size of the container */}
+      <div className={styles.kpiAbsoluteContainer}>
+        <div className={styles.kpiChartChangeContainer}>
+          {showNoPreviousData ? (
+            <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
+          ) : (
+            <>
+              {!equalComparison && (
+                <span
+                  className={clsx(
+                    styles.kpiChangeBadge,
+                    getChangeClass(isPositive, invertChangeColors),
+                  )}
+                >
+                  <Icon />
+                  <span>{displayValue}</span>
+                </span>
               )}
-            >
-              <Icon />
-              <span>{displayValue}</span>
-            </span>
+              <span className={styles.kpiComparisonLabel}>
+                {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
+              </span>
+            </>
           )}
-          <span className={styles.kpiComparisonLabel}>
-            {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
-          </span>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 };

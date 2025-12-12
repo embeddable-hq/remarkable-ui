@@ -46,7 +46,7 @@ export const KpiChart: FC<KpiChartProps> = ({
       </div>
 
       <div className={styles.kpiComparisonContainer} style={{ fontSize: trendFontSize }}>
-        {hasComparisonValue && (
+        <div style={{ visibility: hasComparisonValue ? 'visible' : 'hidden' }}>
           <KpiChartChange
             equalComparisonLabel={equalComparisonLabel}
             comparisonLabel={comparisonLabel}
@@ -58,7 +58,7 @@ export const KpiChart: FC<KpiChartProps> = ({
             valueFormatter={valueFormatter}
             noPreviousDataLabel={noPreviousDataLabel}
           />
-        )}
+        </div>
       </div>
     </div>
   );
