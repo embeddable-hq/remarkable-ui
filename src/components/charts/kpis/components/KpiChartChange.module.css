@@ -1,12 +1,16 @@
 .kpiChartChangeContainer {
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: var(--em-kpichart-label-gap, 0.5rem);
-  margin-top: var(--em-kpichart-gap, 1.5rem);
   flex: 0 0 auto;
   flex-shrink: 0;
+}
+
+.kpiChangeContainerSizeGuie {
+  height: 100%;
+  position: relative;
 }
 
 .kpiChangeBadge {
@@ -49,6 +53,15 @@
   color: var(--em-kpichart-color, #212129);
   font-family: var(--em-kpichart-font-family, sans-serif);
   font-weight: var(--em-kpichart-label-font-weight, 400);
-  line-height: var(--em-kpichart-label-line-height, 0.875rem);
   white-space: nowrap;
+}
+
+.hidden,
+.hidden * {
+  visibility: hidden;
+}
+
+.kpiAbsoluteContainer {
+  position: absolute;
+  inset: 0;
 }

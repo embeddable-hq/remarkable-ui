@@ -40,7 +40,8 @@
     "prettier:write": "prettier . --write",
     "release": "npm run prepublishOnly && changeset publish",
     "storybook": "storybook dev -p 6006",
-    "types:check": "tsc --noEmit --incremental false"
+    "types:check": "tsc --noEmit --incremental false",
+    "convert:css-tokens-to-object": "node scripts/convert-css-tokens-to-object.cjs src/styles/global.css"
   },
   "keywords": [
     "remarkable-ui",
