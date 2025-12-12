@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.12
+
+### Patch Changes
+
+- 4857fe4: Improve KPI chart resize
+
 ## 2.0.11
 
 ### Patch Changes
