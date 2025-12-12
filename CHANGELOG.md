@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.13
+
+### Patch Changes
+
+- cce4ac7: Improve KPI resize behavior
+
 ## 2.0.12
 
 ### Patch Changes
