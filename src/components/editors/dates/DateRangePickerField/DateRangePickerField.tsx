@@ -103,7 +103,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
         <SelectFieldContent fitContent>
           <DateRangePicker
             numberOfMonths={numberOfMonths}
-            dateRange={currentDateRange}
+            value={currentDateRange}
             onChange={setCurrentDateRange}
           />
           <Button

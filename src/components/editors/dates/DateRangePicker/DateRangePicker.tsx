@@ -8,12 +8,12 @@ import * as rdpLocales from 'react-day-picker/locale';
 type DateRangePickerProps = {
   numberOfMonths?: number;
   locale?: string;
-  dateRange?: DateRange;
+  value?: DateRange;
   onChange: (dateRange: DateRange | undefined) => void;
 };
 
 export const DateRangePicker: React.FC<DateRangePickerProps> = ({
-  dateRange,
+  value,
   numberOfMonths = 1,
   locale = 'en',
   onChange,
@@ -34,7 +34,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       mode="range"
       navLayout="around"
       onSelect={handleChange}
-      selected={dateRange}
+      selected={value}
       timeZone="UTC"
       showOutsideDays
     />
