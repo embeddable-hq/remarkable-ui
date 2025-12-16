@@ -19,6 +19,11 @@
     var(--em-selectfield-content-shadow-color, rgba(33, 33, 41, 0.25));
 }
 
+.selectFieldContent.fitContent {
+  min-width: unset;
+  max-height: unset;
+}
+
 .selectFieldContentList {
   display: flex;
   flex-direction: column;

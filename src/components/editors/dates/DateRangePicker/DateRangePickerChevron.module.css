@@ -1,0 +1,25 @@
+.chevron {
+  width: var(--em-cal-nav-size, 2rem);
+  height: var(--em-cal-nav-size, 2rem);
+  padding: var(--em-cal-nav-padding-default, 0.5rem);
+  border-radius: var(--em-cal-nav-border-radius-default, 0.5rem);
+  background: var(--em-cal-nav-background-default, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: unset;
+  cursor: pointer;
+}
+.chevron svg {
+  flex-shrink: 0;
+  width: var(--em-icon-width, 1rem);
+  height: var(--em-icon-height, 1rem);
+}
+
+.chevron:hover {
+  background: var(--em-cal-nav-background-hover, #f7f7f8);
+}
+
+.chevron:active {
+  background: var(--em-cal-nav-background-pressed, #ededf1);
+}
