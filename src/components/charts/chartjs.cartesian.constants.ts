@@ -95,6 +95,10 @@ function isMixedValues(values: number[]): boolean {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getChartjsAxisOptionsScalesGridColor = (ctx: any) => {
   if (ctx.tick.value === 0) {
+    if (ctx.chart.data.datasets.length === 0) {
+      return undefined;
+    }
+
     const values = ctx.chart.data.datasets[0].data;
     if (isMixedValues(values)) {
       return getStyle('--em-chart-grid-line-color', '#212129');
