@@ -81,4 +81,5 @@
 
 .button span {
   padding: 0 var(--em-button-label-padding, 0.5rem);
+  margin: auto;
 }

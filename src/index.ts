@@ -28,6 +28,9 @@ export { SingleSelectField } from './components/editors/selects/SingleSelectFiel
 export { TextField } from './components/editors/inputs/TextField/TextField';
 export { NumberField } from './components/editors/inputs/NumberField/NumberField';
 export { SelectFieldCategory } from './components/editors/selects/shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
+export { DateRangePicker } from './components/editors/dates/DateRangePicker/DateRangePicker';
+export { DateRangePickerField } from './components/editors/dates/DateRangePickerField/DateRangePickerField';
+export { type DateRange } from 'react-day-picker';
 
 // Charts
 export { BarChart } from './components/charts/bars/BarChart';
