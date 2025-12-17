@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.14
+
+### Patch Changes
+
+- 90a6196: Improve getChartjsAxisOptionsScalesGridColor
+
 ## 2.0.13
 
 ### Patch Changes
