@@ -481,6 +481,6 @@
   --em-daterangepicker-chevron-border-radius: var(--em-core-border-radius--200);
   --em-daterangepicker-chevron-background: var(--em-sem-background--light);
   --em-daterangepicker-chevron-icon-size: var(--em-core-size--0400);
-  --em-cal-nav-background--hover: var(--em-sem-background--subtle);
-  --em-cal-nav-background--pressed: var(--em-sem-background--muted);
+  --em-daterangepicker-chevron--hover: var(--em-sem-background--subtle);
+  --em-daterangepicker-chevron--active: var(--em-sem-background--muted);
 }

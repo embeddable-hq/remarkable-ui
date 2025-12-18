@@ -18,9 +18,9 @@
 }
 
 .chevron:hover {
-  background: var(--em-cal-nav-background--hover, #f7f7f8);
+  background: var(--em-daterangepicker-chevron--hover, #f7f7f8);
 }
 
 .chevron:active {
-  background: var(--em-cal-nav-background--pressed, #ededf1);
+  background: var(--em-daterangepicker-chevron--active, #ededf1);
 }
