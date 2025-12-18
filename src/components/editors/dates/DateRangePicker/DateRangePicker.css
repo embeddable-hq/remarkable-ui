@@ -6,17 +6,23 @@
 
 .rdp-root {
   --rdp-accent-color: var(
-    --em-cal-day-background-selected,
+    --em-daterangepicker-accent-color,
     #212129
   ); /* The accent color used for selected days and UI elements. */
   --rdp-accent-background-color: #f0f0ff; /* The accent background color used for selected days and UI elements. */
 
-  --rdp-day-height: var(--em-cal-nav-size, 2rem); /* The height of the day cells. */
-  --rdp-day-width: var(--em-cal-nav-size, 2rem); /* The width of the day cells. */
+  --rdp-day-height: var(--em-daterangepicker-day-size, 2rem); /* The height of the day cells. */
+  --rdp-day-width: var(--em-daterangepicker-day-size, 2rem); /* The width of the day cells. */
 
   --rdp-day_button-border-radius: 100%; /* The border radius of the day cells. */
-  --rdp-day_button-height: var(--em-cal-nav-size, 2rem); /* The height of the day cells. */
-  --rdp-day_button-width: var(--em-cal-nav-size, 2rem); /* The width of the day cells. */
+  --rdp-day_button-height: var(
+    --em-daterangepicker-day-size,
+    2rem
+  ); /* The height of the day cells. */
+  --rdp-day_button-width: var(
+    --em-daterangepicker-day-size,
+    2rem
+  ); /* The width of the day cells. */
 
   --rdp-selected-border: 2px solid var(--rdp-accent-color); /* The border of the selected days. */
   --rdp-disabled-opacity: 0.5; /* The opacity of the disabled days. */
@@ -29,23 +35,33 @@
   --rdp-nav_button-disabled-opacity: 0.5; /* The opacity of the disabled navigation buttons. */
   --rdp-nav_button-height: 2.25rem; /* The height of the navigation buttons. */
   --rdp-nav_button-width: 2.25rem; /* The width of the navigation buttons. */
-  --rdp-nav-height: var(--em-cal-nav-size, 2rem); /* The height of the navigation bar. */
+  --rdp-nav-height: var(
+    --em-daterangepicker-day-size,
+    2rem
+  ); /* The height of the navigation bar. */
 
   --rdp-range_middle-background-color: var(
-    --em-cal-day-background-ranged,
+    --em-daterangepicker-day-range-background,
     #ededf1
   ); /* The color of the background for days in the middle of a range. */
-  --rdp-range_middle-color: inherit; /* The color of the range text. */
+  --rdp-range_middle-color: var(
+    --em-daterangepicker-day-color,
+    #212129
+  ); /* The color of the range text. */
 
   --rdp-range_start-color: var(
-    --em-cal-day-selected-color,
+    --em-daterangepicker-day-range-limit-color,
     #fff
   ); /* The color of the range text. */
   --rdp-range_start-date-background-color: var(
     --rdp-accent-color
   ); /* The background color of the date when at the start of the selected range. */
 
-  --rdp-range_end-color: white; /* The color of the range text. */
+  --rdp-range_end-color: var(
+    --em-daterangepicker-day-range-limit-color,
+    #fff
+  ); /* The color of the range text. */
+
   --rdp-range_end-date-background-color: var(
     --rdp-accent-color
   ); /* The background color of the date when at the end of the selected range. */
@@ -109,10 +125,10 @@
   height: var(--rdp-day_button-height);
   border-radius: var(--rdp-day_button-border-radius);
 
-  color: var(--em-cal-day-current-month-color, #212129);
-  font-family: var(--em-calendar-dates-font-font-family, sans-serif);
-  font-size: var(--em-calendar-dates-font-font-size, 0.875rem);
-  font-weight: var(--em-calendar-dates-font-font-weight, 500);
+  color: var(--em-daterangepicker-day-color, #212129);
+  font-family: var(--em-daterangepicker-day-font-family, sans-serif);
+  font-size: var(--em-daterangepicker-day-font-size, 0.875rem);
+  font-weight: var(--em-daterangepicker-day-font-weight, 500);
 }
 
 .rdp-day_button:disabled {
@@ -129,10 +145,10 @@
   white-space: nowrap;
   border: 0;
 
-  color: var(--em-cal-view-date-color, #212129);
-  font-family: var(--em-cal-view-font-font-family, sans-serif);
-  font-size: var(--em-cal-view-font-font-size, 0.875rem);
-  font-weight: var(--em-cal-view-font-font-weight, 500);
+  color: var(--em-daterangepicker-label-color, #212129);
+  font-family: var(--em-daterangepicker-label-font-family, sans-serif);
+  font-size: var(--em-daterangepicker-label-font-size, 0.875rem);
+  font-weight: var(--em-daterangepicker-label-font-weight, 500);
 }
 
 .rdp-dropdown:focus-visible ~ .rdp-caption_label {
@@ -283,10 +299,10 @@
   text-align: var(--rdp-weekday-text-align);
   text-transform: var(--rdp-weekday-text-transform);
 
-  color: var(--em-cal-day-name-color, #5c5c66);
-  font-family: var(--em-calendar-dates-font-font-family, sans-serif);
-  font-size: var(--em-calendar-dates-font-font-size, 0.875rem);
-  font-weight: var(--em-calendar-dates-font-font-weight, 500);
+  color: var(--em-daterangepicker-weekday-color, #5c5c66);
+  font-family: var(--em-daterangepicker-weekday-font-family, sans-serif);
+  font-size: var(--em-daterangepicker-weekday-font-size, 0.875rem);
+  font-weight: var(--em-daterangepicker-weekday-font-weight, 500);
 }
 
 .rdp-week_number {
@@ -306,7 +322,7 @@
 }
 
 .rdp-outside .rdp-day_button {
-  color: var(--em-cal-day-previous-month-color, #b8b8bd);
+  color: var(--em-daterangepicker-day-outside, #b8b8bd);
 }
 
 .rdp-disabled:not(.rdp-selected) {
@@ -323,7 +339,8 @@
   color: var(--rdp-range_start-color);
 
   border: unset;
-  border-radius: var(--em-border-radius-200, 0.5rem) 0 0 var(--em-border-radius-200, 0.5rem);
+  border-radius: var(--em-daterangepicker-day-range-limit-border-radius, 0.5rem) 0 0
+    var(--em-daterangepicker-day-range-limit-border-radius, 0.5rem);
 }
 
 .rdp-range_middle {
@@ -345,10 +362,11 @@
   background-color: var(--rdp-range_end-date-background-color);
 
   border: unset;
-  border-radius: 0 var(--em-border-radius-200, 0.5rem) var(--em-border-radius-200, 0.5rem) 0;
+  border-radius: 0 var(--em-daterangepicker-day-range-limit-border-radius, 0.5rem)
+    var(--em-daterangepicker-day-range-limit-border-radius, 0.5rem) 0;
 }
 .rdp-range_start.rdp-range_end .rdp-day_button {
-  border-radius: var(--em-border-radius-200, 0.5rem);
+  border-radius: var(--em-daterangepicker-day-range-limit-border-radius, 0.5rem);
 }
 
 .rdp-range_start.rdp-range_end {
