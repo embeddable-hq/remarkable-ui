@@ -1,9 +1,10 @@
 .chevron {
-  width: var(--em-cal-nav-size, 2rem);
-  height: var(--em-cal-nav-size, 2rem);
-  padding: var(--em-cal-nav-padding-default, 0.5rem);
-  border-radius: var(--em-cal-nav-border-radius-default, 0.5rem);
-  background: var(--em-cal-nav-background-default, #fff);
+  width: var(--em-daterangepicker-chevron-size, 2rem);
+  height: var(--em-daterangepicker-chevron-size, 2rem);
+  padding: var(--em-daterangepicker-chevron-padding, 0.5rem);
+  border-radius: var(--em-daterangepicker-chevron-border-radius, 0.5rem);
+  background: var(--em-daterangepicker-chevron-background, #fff);
+  color: var(--em-daterangepicker-chevron-color, #fff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,14 +13,14 @@
 }
 .chevron svg {
   flex-shrink: 0;
-  width: var(--em-icon-width, 1rem);
-  height: var(--em-icon-height, 1rem);
+  width: var(--em-daterangepicker-chevron-icon-size, 1rem);
+  height: var(--em-daterangepicker-chevron-icon-size, 1rem);
 }
 
 .chevron:hover {
-  background: var(--em-cal-nav-background-hover, #f7f7f8);
+  background: var(--em-daterangepicker-chevron--hover, #f7f7f8);
 }
 
 .chevron:active {
-  background: var(--em-cal-nav-background-pressed, #ededf1);
+  background: var(--em-daterangepicker-chevron--active, #ededf1);
 }
