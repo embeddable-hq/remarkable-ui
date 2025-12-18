@@ -22,6 +22,7 @@
 .selectFieldContent.fitContent {
   min-width: unset;
   max-height: unset;
+  max-width: unset;
 }
 
 .selectFieldContentList {
