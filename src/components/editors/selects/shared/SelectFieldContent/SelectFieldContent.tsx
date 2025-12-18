@@ -6,12 +6,15 @@ type SelectFieldContentProps = {
   children: ReactNode;
   autoFocus?: boolean;
   className?: string;
+  fitContent?: boolean;
 };
 
 export const SelectFieldContent: FC<SelectFieldContentProps> = ({
   children,
   autoFocus,
   className,
+  fitContent = false,
+  ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentIndex = useRef(0);
@@ -68,7 +71,12 @@ export const SelectFieldContent: FC<SelectFieldContentProps> = ({
   }, [autoFocus, children]);
 
   return (
-    <div ref={containerRef} tabIndex={-1} className={clsx(styles.selectFieldContent, className)}>
+    <div
+      ref={containerRef}
+      tabIndex={-1}
+      className={clsx(styles.selectFieldContent, fitContent && styles.fitContent, className)}
+      {...props}
+    >
       {children}
     </div>
   );
