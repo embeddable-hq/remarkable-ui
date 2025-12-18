@@ -469,6 +469,14 @@ export const stylesTokensComponents = {
   '--em-daterangepicker-weekday-font-weight': 'var(--em-core-font-weight--medium)',
   '--em-daterangepicker-day-range-limit-border-radius': 'var(--em-core-border-radius--200)',
   '--em-daterangepicker-day-outside': 'var(--em-sem-text--subtle)',
+  '--em-daterangepicker-chevron-color': 'var(--em-sem-text)',
+  '--em-daterangepicker-chevron-size': 'var(--em-core-size--0800)',
+  '--em-daterangepicker-chevron-padding': 'var(--em-core-spacing--0200)',
+  '--em-daterangepicker-chevron-border-radius': 'var(--em-core-border-radius--200)',
+  '--em-daterangepicker-chevron-background': 'var(--em-sem-background--light)',
+  '--em-daterangepicker-chevron-icon-size': 'var(--em-core-size--0400)',
+  '--em-cal-nav-background--hover': 'var(--em-sem-background--subtle)',
+  '--em-cal-nav-background--pressed': 'var(--em-sem-background--muted)',
 };
 
 type StylesTokensCore = typeof stylesTokensCore;
