@@ -5,14 +5,13 @@ import { SelectFieldTrigger } from '../../selects/shared/SelectFieldTrigger/Sele
 import { IconProps } from '@tabler/icons-react';
 import { SelectFieldContent } from '../../selects/shared/SelectFieldContent/SelectFieldContent';
 import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
-import { DateRangePicker } from '../DateRangePicker/DateRangePicker';
+import { DateRangePicker, DateRangePickerProps } from '../DateRangePicker/DateRangePicker';
 import { DateRange } from 'react-day-picker';
 import { Button } from '../../../shared/Button/Button';
 import styles from './DateRangePickerField.module.css';
 import { isSameDateRange } from '../../../../utils/date.utils';
 
 type DateRangePickerFieldProps = {
-  locale?: string;
   displayValue?: string;
   startIcon?: React.ComponentType<IconProps>;
   placeholder?: string;
@@ -21,10 +20,9 @@ type DateRangePickerFieldProps = {
   errorMessage?: string;
   clearable?: boolean;
   onChange: (dateRange: DateRange | undefined) => void;
-  numberOfMonths?: number;
   submitLabel?: string;
-  value?: DateRange;
-} & FieldHeaderProps;
+} & FieldHeaderProps &
+  DateRangePickerProps;
 
 const getDateRangePickerLabel = (dateRange: DateRange | undefined, displayValue?: string) => {
   if (dateRange === undefined) return undefined;

@@ -5,7 +5,7 @@ import { DateRangePickerChevron } from './DateRangePickerChevron';
 import { endOfDayUTC } from '../../../../utils/date.utils';
 import * as rdpLocales from 'react-day-picker/locale';
 
-type DateRangePickerProps = {
+export type DateRangePickerProps = {
   numberOfMonths?: number;
   locale?: string;
   value?: DateRange;
