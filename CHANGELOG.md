@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.15
+
+### Patch Changes
+
+- 3a37423: New DateRangePicker components
+
 ## 2.0.14
 
 ### Patch Changes
