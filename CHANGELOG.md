@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.16
+
+### Patch Changes
+
+- 739f086: Implement DateRangePicker css variables
+
 ## 2.0.15
 
 ### Patch Changes
