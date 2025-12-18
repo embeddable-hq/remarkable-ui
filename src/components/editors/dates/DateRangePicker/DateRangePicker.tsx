@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DateRange, DayPicker } from 'react-day-picker';
 import './DateRangePicker.css';
 import { DateRangePickerChevron } from './DateRangePickerChevron';
@@ -18,6 +18,8 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   locale = 'en',
   onChange,
 }) => {
+  const [month, setMonth] = useState<Date>(value?.from ?? new Date());
+
   const handleChange = (range: DateRange | undefined) => {
     if (range?.to) {
       range.to = endOfDayUTC(range.to);
@@ -27,6 +29,8 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
 
   return (
     <DayPicker
+      month={month}
+      onMonthChange={setMonth}
       numberOfMonths={numberOfMonths}
       components={{ Chevron: DateRangePickerChevron }}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

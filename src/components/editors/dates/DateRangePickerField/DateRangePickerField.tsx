@@ -12,6 +12,7 @@ import styles from './DateRangePickerField.module.css';
 import { isSameDateRange } from '../../../../utils/date.utils';
 
 type DateRangePickerFieldProps = {
+  locale?: string;
   displayValue?: string;
   startIcon?: React.ComponentType<IconProps>;
   placeholder?: string;
@@ -25,20 +26,20 @@ type DateRangePickerFieldProps = {
   value?: DateRange;
 } & FieldHeaderProps;
 
-const getDateRangePickerLabel = (
-  dateRange: DateRange | undefined,
-  displayValue?: string,
-  placeholder?: string,
-) => {
-  if (dateRange === undefined) return placeholder || '';
+const getDateRangePickerLabel = (dateRange: DateRange | undefined, displayValue?: string) => {
+  if (dateRange === undefined) return undefined;
 
   if (displayValue) return displayValue;
 
   const { from, to } = dateRange;
+
+  if (!from || !to) return undefined;
+
   return `${from ? from.toLocaleDateString() : ''} - ${to ? to.toLocaleDateString() : ''}`;
 };
 
 export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
+  locale,
   displayValue,
   value,
   startIcon,
@@ -56,7 +57,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange | undefined>(value);
 
-  const selectedLabel = getDateRangePickerLabel(value, displayValue, placeholder);
+  const valueLabel = getDateRangePickerLabel(value, displayValue);
   const hasError = error || !!errorMessage;
 
   const handleChange = () => {
@@ -93,7 +94,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
             aria-label="Select options"
             placeholder={placeholder}
             disabled={disabled}
-            valueLabel={selectedLabel}
+            valueLabel={valueLabel}
             onClear={handleClear}
             isClearable={clearable}
             error={hasError}
@@ -102,6 +103,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
       >
         <SelectFieldContent fitContent>
           <DateRangePicker
+            locale={locale}
             numberOfMonths={numberOfMonths}
             value={currentDateRange}
             onChange={setCurrentDateRange}
