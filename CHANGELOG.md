@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.17
+
+### Patch Changes
+
+- fe62ebf: Improve DateRangePickerField display value
+
 ## 2.0.16
 
 ### Patch Changes
