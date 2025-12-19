@@ -24,10 +24,13 @@ type DateRangePickerFieldProps = {
 } & FieldHeaderProps &
   DateRangePickerProps;
 
-const getDateRangePickerLabel = (dateRange: DateRange | undefined, displayValue?: string) => {
-  if (dateRange === undefined) return undefined;
+const getDateRangePickerLabel = (
+  dateRange: DateRange | undefined,
+  displayValue?: string,
+): string | undefined => {
+  if (!dateRange) return undefined;
 
-  if (displayValue) return displayValue;
+  if (displayValue || displayValue === '') return displayValue;
 
   const { from, to } = dateRange;
 

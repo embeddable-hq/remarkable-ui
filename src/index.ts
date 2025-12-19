@@ -42,20 +42,17 @@ export * from './components/charts/tables/PivotTable/PivotTable.types';
 export * from './components/charts/tables/HeatMap/HeatMap';
 export * from './components/charts/tables/HeatMap/HeatMap.types';
 export * from './components/charts/tables/Table/Table.hooks';
-
-// Chart Utils
-export { getTableTotalPages } from './components/charts/tables/Table/components/TablePagination/TablePagination';
+export * from './components/charts/charts.constants';
+export * from './components/charts/tables/Table/components/TablePagination/TablePagination';
+export * from './components/charts/chartjs.cartesian.constants';
 
 // Constants
-export * from './components/charts/charts.constants';
 export * from './styles/styles.constants';
-
-// Chartjs
-export * from './components/charts/chartjs.cartesian.constants';
 
 // Utils
 export * from './styles/styles.utils';
 export * from './utils/date.utils';
+export * from './utils/object.utils';
 
 // Types
 export * from './types/css.types';
