@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.18
+
+### Patch Changes
+
+- 95b8c28: Add DateRange animations and year select
+
 ## 2.0.17
 
 ### Patch Changes
