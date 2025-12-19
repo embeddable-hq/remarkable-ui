@@ -24,3 +24,15 @@
 .chevron:active {
   background: var(--em-daterangepicker-chevron--active, #ededf1);
 }
+
+.chevron.small {
+  background: unset;
+  width: calc(var(--em-daterangepicker-chevron-size, 2rem) / 2);
+  height: calc(var(--em-daterangepicker-chevron-size, 2rem) / 2);
+  padding: calc(var(--em-daterangepicker-chevron-padding, 0.5rem) / 2);
+}
+
+.chevron.small svg {
+  width: calc(var(--em-daterangepicker-chevron-icon-size, 1rem) / 2);
+  height: calc(var(--em-daterangepicker-chevron-icon-size, 1rem) / 2);
+}
