@@ -27,6 +27,9 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     onChange(range);
   };
 
+  const now = new Date();
+  const endMonth = new Date(now.getFullYear() + 2, now.getMonth());
+
   return (
     <DayPicker
       month={month}
@@ -41,6 +44,9 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       selected={value}
       timeZone="UTC"
       showOutsideDays
+      captionLayout="dropdown-years"
+      endMonth={endMonth}
+      animate
     />
   );
 };
