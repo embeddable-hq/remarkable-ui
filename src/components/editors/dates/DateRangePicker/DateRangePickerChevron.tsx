@@ -14,7 +14,6 @@ export const DateRangePickerChevron = ({
   orientation,
   size,
 }: DateRangePickerChevronProps): React.JSX.Element => {
-  console.log('size', size);
   const rotation =
     orientation === 'left'
       ? 'rotate(90deg)'
