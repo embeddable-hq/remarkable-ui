@@ -58,6 +58,8 @@ core = {
 component = {
   ...component,
   '--em-selectfield-content-opacity--loading': '0.5',
+  // TODO: Get this fixed in Figma
+  '--em-tablechart-cell-max-width': 'calc(3 * var(--em-core-size--2000))',
 };
 
 // Build output file path

@@ -28,4 +28,5 @@
 .tableHeaderCell button svg {
   width: var(--em-tablechart-icon-size, 1rem);
   height: var(--em-tablechart-icon-size, 1rem);
+  flex-shrink: 0;
 }

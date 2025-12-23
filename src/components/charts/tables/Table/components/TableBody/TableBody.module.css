@@ -14,3 +14,8 @@
 .tableBody td:hover .copyButton {
   opacity: 1;
 }
+
+.tableBody td {
+  /* TODO: Get this fixed in Figma */
+  max-width: var(--em-tablechart-cell-max-width, calc(3 * var(--em-core-size--2000)));
+}

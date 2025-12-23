@@ -49,10 +49,6 @@
   box-sizing: border-box;
 }
 
-.table.fixedLayout {
-  table-layout: fixed;
-}
-
 .table thead {
   position: sticky;
   top: 0;

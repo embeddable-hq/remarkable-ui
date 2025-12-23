@@ -477,6 +477,7 @@ export const stylesTokensComponents = {
   '--em-daterangepicker-chevron-icon-size': 'var(--em-core-size--0400)',
   '--em-daterangepicker-chevron--hover': 'var(--em-sem-background--subtle)',
   '--em-daterangepicker-chevron--active': 'var(--em-sem-background--muted)',
+  '--em-tablechart-cell-max-width': 'calc(3 * var(--em-core-size--2000))',
 };
 
 type StylesTokensCore = typeof stylesTokensCore;
