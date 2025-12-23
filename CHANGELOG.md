@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.20
+
+### Patch Changes
+
+- 8280488: Improve table.module.css styles
+
 ## 2.0.19
 
 ### Patch Changes
