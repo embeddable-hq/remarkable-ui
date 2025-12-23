@@ -47,6 +47,7 @@
   width: 100%;
   border-spacing: 0;
   box-sizing: border-box;
+  table-layout: fixed;
 }
 
 .table thead {
@@ -78,6 +79,9 @@
 
 .table td {
   background: var(--em-tablechart-cell-background, #fff);
+  white-space: nowrap; /* single line */
+  overflow: hidden; /* hide overflow */
+  text-overflow: ellipsis; /* show … */
 }
 
 .table thead th:last-of-type,
