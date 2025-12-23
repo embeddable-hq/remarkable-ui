@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.19
+
+### Patch Changes
+
+- e0adda8: HeatMap accepts with single color
+
 ## 2.0.18
 
 ### Patch Changes
