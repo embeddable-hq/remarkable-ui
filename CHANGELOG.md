@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.21
+
+### Patch Changes
+
+- 2b6aad9: Fix max width of the TableBody
+
 ## 2.0.20
 
 ### Patch Changes
