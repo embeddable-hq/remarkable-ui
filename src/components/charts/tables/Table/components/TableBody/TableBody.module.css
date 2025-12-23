@@ -11,6 +11,6 @@
   right: auto;
 }
 
-.tableBodyCell:hover .copyButton {
+.tableBody td:hover .copyButton {
   opacity: 1;
 }

@@ -18,6 +18,7 @@ const makeClients = (count = 3): Client[] =>
         age: 22 + ((i + 3) % 28),
         salary: 52000 + ((i + 5) % 20) * 2500,
         email: `person${i + 1}@example.com`,
+        object: `{"query": {"limit": 100, "total": false, "filters": [{"member": "events.event_id", "operator": "set"}], "measures": ["event_views.event_views"], "timezone": "UTC", "dimensions": [], "renewQuery": false, "timeDimensions": []}`,
         location: `City ${((i + 4) % 10) + 1}`,
       }) as Client,
   );
@@ -48,6 +49,11 @@ const headers: TableHeaderItem<Client>[] = [
   {
     id: 'location',
     title: 'Location',
+    align: 'left',
+  },
+  {
+    id: 'object',
+    title: 'Object',
     align: 'left',
   },
 ];
@@ -81,6 +87,7 @@ type Client = {
   salary: number;
   email: string;
   location: string;
+  object: string;
 };
 
 export const TablePaginated: Story = {

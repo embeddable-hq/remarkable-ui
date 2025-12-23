@@ -25,9 +25,9 @@ export type HeatMapProps<T extends Record<string, unknown>> = {
   minThreshold?: HeatMapPropsThreshold;
   maxThreshold?: HeatMapPropsThreshold;
 
-  minColor: string;
-  midColor: string;
-  maxColor: string;
+  minColor?: string;
+  midColor?: string;
+  maxColor?: string;
   columnWidth?: number;
   firstColumnWidth?: number;
   missingCellColor?: string;
