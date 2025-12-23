@@ -31,7 +31,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
     return (
       <div ref={ref} className={clsx(styles.tableContainer, className)}>
         <div className={styles.tableContainerScroll}>
-          <table className={styles.table}>
+          <table className={clsx(styles.table, styles.fixedLayout)}>
             <TableHeader
               showIndex={showIndex}
               headers={headers}
