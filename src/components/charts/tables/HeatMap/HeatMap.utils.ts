@@ -231,10 +231,13 @@ export const createColorForValue = ({
   domainMax: number;
   rawMin: number;
   rawMax: number;
-  minColor: string;
+  minColor?: string;
   midColor: string;
-  maxColor: string;
+  maxColor?: string;
 }) => {
+  minColor = minColor ?? lerpColor(midColor, LERP_LIGHTEST_COLOR, 0.5);
+  maxColor = maxColor ?? lerpColor(midColor, LERP_DARKEST_COLOR, 0.5);
+
   const midPoint = getMidPoint(domainMin, domainMax);
   const scale = makeDiverging(minColor, midColor, maxColor, midPoint);
 
