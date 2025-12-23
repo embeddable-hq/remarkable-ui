@@ -14,3 +14,7 @@
 .tableBody td:hover .copyButton {
   opacity: 1;
 }
+
+.tableBody td {
+  max-width: var(--em-tablechart-cell-max-width, calc(3 * var(--em-core-size--2000)));
+}
