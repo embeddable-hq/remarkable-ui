@@ -1,10 +1,25 @@
 import * as React from 'react';
-import styles from '../tables.module.css';
+import styles from '../../tables.module.css';
 import clsx from 'clsx';
-import { TablePagination } from './components/TablePagination/TablePagination';
-import { TableHeader } from './components/TableHeader/TableHeader';
-import { TableBody } from './components/TableBody/TableBody';
-import { TablePaginatedProps } from './table.types';
+import { TableHeaderItem, TableSort } from '../table.types';
+import { TableHeader } from '../components/TableHeader/TableHeader';
+import { TableBody } from '../components/TableBody/TableBody';
+import { TablePagination } from '../components/TablePagination/TablePagination';
+
+export type TablePaginatedProps<T> = {
+  showIndex?: boolean;
+  className?: string;
+  headers: TableHeaderItem<T>[];
+  rows: T[];
+  page: number;
+  pageSize: number;
+  paginationLabel?: string;
+  total?: number;
+  sort?: TableSort<T>;
+  onRowIndexClick?: (rowIndex: number) => void;
+  onPageChange: (page: number) => void;
+  onSortChange?: (value: TableSort<T> | undefined) => void;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedProps<any>>(

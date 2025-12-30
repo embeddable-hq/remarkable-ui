@@ -33,18 +33,3 @@ export type TableHeaderItem<T> = {
   accessor?: (row: T) => React.ReactNode;
   cell?: TableHeaderCell;
 };
-
-export type TablePaginatedProps<T> = {
-  showIndex?: boolean;
-  className?: string;
-  headers: TableHeaderItem<T>[];
-  rows: T[];
-  page: number;
-  pageSize: number;
-  paginationLabel?: string;
-  total?: number;
-  sort?: TableSort<T>;
-  onRowIndexClick?: (rowIndex: number) => void;
-  onPageChange: (page: number) => void;
-  onSortChange?: (value: TableSort<T> | undefined) => void;
-};

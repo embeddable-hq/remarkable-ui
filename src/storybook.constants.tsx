@@ -55,3 +55,16 @@ export const decoratorsResizeCard: Meta['decorators'] = [
     </div>
   ),
 ];
+
+export const decoratorsResizeCardLarge: Meta['decorators'] = [
+  (Story) => (
+    <div style={{ width: '800px', height: '800px', resize: 'both', overflow: 'auto' }}>
+      <Card style={{ width: '100%', height: '100%' }}>
+        <CardHeader title="Resize Card Large" />
+        <CardContent>
+          <Story />
+        </CardContent>
+      </Card>
+    </div>
+  ),
+];
