@@ -34,7 +34,7 @@ export const TableHeader = <T,>({
   showIndex,
   onSortChange,
 }: TableHeaderProps<T>) => {
-  const [localSort, setLocalSort] = useState(sort);
+  const [currentSort, setCurrentSort] = useState(sort);
 
   const debouncedUpdateState = useDebounce((value) => {
     if (value === undefined && value === sort) {
@@ -48,16 +48,16 @@ export const TableHeader = <T,>({
   });
 
   useEffect(() => {
-    debouncedUpdateState(localSort);
-  }, [localSort]);
+    debouncedUpdateState(currentSort);
+  }, [currentSort, debouncedUpdateState]);
 
   const getSortIcon = (header: TableHeaderItem<T>) => {
-    if (!localSort) return <IconCaretUpDownFilled />;
+    if (!currentSort) return <IconCaretUpDownFilled />;
 
-    if (localSort.id === header.id) {
-      if (localSort.direction === TableSortDirection.ASC) {
+    if (currentSort.id === header.id) {
+      if (currentSort.direction === TableSortDirection.ASC) {
         return <IconCaretUpFilled />;
-      } else if (localSort.direction === TableSortDirection.DESC) {
+      } else if (currentSort.direction === TableSortDirection.DESC) {
         return <IconCaretDownFilled />;
       }
     }
@@ -66,20 +66,20 @@ export const TableHeader = <T,>({
 
   const handleNewSortClick = (clickedHeader: keyof T | undefined) => {
     // Un-select sort
-    if (!clickedHeader) return setLocalSort(undefined);
+    if (!clickedHeader) return setCurrentSort(undefined);
 
     // New sort
-    if (localSort?.id !== clickedHeader)
-      return setLocalSort({ id: clickedHeader, direction: TableSortDirection.ASC });
+    if (currentSort?.id !== clickedHeader)
+      return setCurrentSort({ id: clickedHeader, direction: TableSortDirection.ASC });
 
     // Change current sort direction
-    if (localSort?.direction === undefined)
-      return setLocalSort({ id: clickedHeader, direction: TableSortDirection.ASC });
-    if (localSort?.direction === TableSortDirection.ASC)
-      return setLocalSort({ id: clickedHeader, direction: TableSortDirection.DESC });
+    if (currentSort?.direction === undefined)
+      return setCurrentSort({ id: clickedHeader, direction: TableSortDirection.ASC });
+    if (currentSort?.direction === TableSortDirection.ASC)
+      return setCurrentSort({ id: clickedHeader, direction: TableSortDirection.DESC });
 
     // Remove sort
-    return setLocalSort(undefined);
+    return setCurrentSort(undefined);
   };
 
   return (

@@ -41,7 +41,7 @@ export const TableBody = <T,>({
     <tbody className={styles.tableBody}>
       {rows.map((row, rowIndex) => (
         <tr
-          key={JSON.stringify(row)}
+          key={rowIndex}
           onClick={() => onRowIndexClick?.(rowIndex)}
           className={clsx(rowIndex === rows.length - 1 && tableStyles.tableLastRow)}
         >

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TableScrollable as TableScrollableChart } from './TableScrollable';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableHeaderItem } from './table.types';
-import { decoratorsResizeCardLarge } from '../../../../storybook.constants';
+import { decoratorsResizeCard } from '../../../../storybook.constants';
 
 const teams = ['Design', 'Engineering', 'Ops', 'Marketing'] as const;
 const titles = ['IC', 'Lead', 'Manager', 'Director'] as const;
@@ -98,53 +98,51 @@ const pages = Array.from({ length: Math.ceil(allClients.length / pageSize) }, (_
   allClients.slice(i * pageSize, (i + 1) * pageSize),
 );
 
-export const TableScrollable: Story = {
-  render: (args) => {
-    console.log('args are', args.page);
-    const [, updateArgs] = useArgs();
+const renderScrollable: Story['render'] = (args) => {
+  const [, updateArgs] = useArgs();
 
-    const handleNext = () => {
-      console.log('next page is', args.page, pages[args.page]);
-      setTimeout(() => {
-        const rows = (args.rows || []).concat(pages[args.page] || []);
-        updateArgs({ rows, page: args.page + 1 });
-      }, 0);
-    };
+  const handleNext = async () => {
+    if (args.isLoading) return;
 
-    return (
-      <TableScrollableChart
-        {...args}
-        onNextPage={handleNext}
-        headers={args.headers}
-        page={args.page}
-        rows={args.rows ?? makeClients(1000).slice(0, 10)}
-        onSortChange={() => null}
-      />
-    );
-  },
-  decorators: decoratorsResizeCardLarge,
+    updateArgs({ isLoading: true });
+
+    const delay = 300 + Math.floor(Math.random() * 900);
+    await new Promise((r) => setTimeout(r, delay));
+
+    const nextPage = args.page ?? 0;
+    const nextRows = pages[nextPage] ?? [];
+
+    const currentRows = args.rows ?? makeClients(1000).slice(0, 10);
+    const rows = currentRows.concat(nextRows);
+
+    const hasMoreData = nextPage + 1 < pages.length;
+
+    updateArgs({
+      rows,
+      page: nextPage + 1,
+      isLoading: false,
+      hasMoreData,
+    });
+  };
+
+  return (
+    <TableScrollableChart
+      {...args}
+      onNextPage={handleNext}
+      headers={args.headers}
+      rows={args.rows ?? makeClients(1000).slice(0, 10)}
+      onSortChange={() => null}
+      hasMoreData={args.hasMoreData ?? true}
+      isLoading={args.isLoading ?? false}
+    />
+  );
 };
 
-// export const Resize: Story = {
-//   render: (args) => {
-//     const [, updateArgs] = useArgs();
+export const Basic: Story = {
+  render: renderScrollable,
+};
 
-//     const start = args.page * args.pageSize;
-//     const end = start + args.pageSize;
-//     const rows = makeClients(args.total).slice(start, end);
-
-//     return (
-//       <TableScrollableChart
-//         showIndex={args.showIndex}
-//         headers={args.headers}
-//         page={args.page}
-//         pageSize={args.pageSize}
-//         total={args.total}
-//         rows={rows}
-//         onPageChange={(value) => updateArgs({ page: value })}
-//         onSortChange={() => null}
-//       />
-//     );
-//   },
-//   decorators: decoratorsResizeCard,
-// };
+export const Resize: Story = {
+  render: renderScrollable,
+  decorators: decoratorsResizeCard,
+};

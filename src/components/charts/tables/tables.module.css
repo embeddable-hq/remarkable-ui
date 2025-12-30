@@ -16,6 +16,12 @@
   border-radius: var(--em-tablechart-border-radius, 0.75rem);
 }
 
+.tableContainerScroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1;
+}
+
 .tableAdjustedContainer {
   max-width: 100%;
   max-height: 100%;
@@ -27,16 +33,6 @@
   box-sizing: border-box;
   border: var(--em-tablechart-border-width, 1px) solid var(--em-tablechart-border-color, #ededf1);
   border-radius: var(--em-tablechart-border-radius, 0.75rem);
-}
-
-.tableAdjustedContainer.fullWidth {
-  width: 100%;
-}
-
-.tableContainerScroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex: 1;
 }
 
 .tableAdjustedContainer.fullWidth {
@@ -82,9 +78,9 @@
 
 .table td {
   background: var(--em-tablechart-cell-background, #fff);
-  white-space: nowrap; /* single line */
-  overflow: hidden; /* hide overflow */
-  text-overflow: ellipsis; /* show … */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .table.cellWrap td {

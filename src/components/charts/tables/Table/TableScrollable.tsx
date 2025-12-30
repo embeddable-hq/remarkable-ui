@@ -7,19 +7,18 @@ import { useInfiniteScroll } from './components/TableBody/useInfiniteScroll';
 import { useRef } from 'react';
 
 export type TableScrollableProps<T> = {
-  showIndex?: boolean;
+  bottomDistanceToPrefetch?: number;
   className?: string;
-  headers: TableHeaderItem<T>[];
-  rows: T[];
-  sort?: TableSort<T>;
-  page: number;
-  onRowIndexClick?: (rowIndex: number) => void;
-  onNextPage: () => void;
-  onSortChange?: (value: TableSort<T> | undefined) => void;
   hasMoreData?: boolean;
+  headers: TableHeaderItem<T>[];
   isLoading?: boolean;
   loadingLabel?: string;
-  bottomDistanceToPrefetch?: number;
+  rows: T[];
+  showIndex?: boolean;
+  sort?: TableSort<T>;
+  onNextPage: () => void;
+  onRowIndexClick?: (rowIndex: number) => void;
+  onSortChange?: (value: TableSort<T> | undefined) => void;
 };
 
 export const TableScrollable = ({
