@@ -1,10 +1,11 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import styles from './TableHeader.module.css';
-import { TableHeaderItem, TablePaginatedProps, TableSortDirection } from '../../table.types';
+import { TableHeaderItem, TableSortDirection } from '../../table.types';
 import tableStyles from '../../../tables.module.css';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { useDebounce } from '../../../../../../hooks/useDebounce.hook';
+import { TablePaginatedProps } from '../../TablePaginated/TablePaginated';
 
 export type TableHeaderProps<T> = Pick<
   TablePaginatedProps<T>,

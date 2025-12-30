@@ -33,7 +33,7 @@ export function useInfiniteScroll({
       }
     };
 
-    onScroll(); // in case already near bottom
+    onScroll(); // When is near to bottom
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
   }, [enabled, onPrefetch, rootRef, bottomDistanceToPrefetch]);

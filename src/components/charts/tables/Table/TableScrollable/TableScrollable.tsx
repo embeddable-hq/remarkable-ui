@@ -1,9 +1,9 @@
 import clsx from 'clsx';
-import tableStyles from '../tables.module.css';
-import { TableHeaderItem, TableSort } from './table.types';
-import { TableHeader } from './components/TableHeader/TableHeader';
-import { TableBody } from './components/TableBody/TableBody';
-import { useInfiniteScroll } from './components/TableBody/useInfiniteScroll';
+import tableStyles from '../../tables.module.css';
+import { TableHeaderItem, TableSort } from '../table.types';
+import { TableHeader } from '../components/TableHeader/TableHeader';
+import { TableBody } from '../components/TableBody/TableBody';
+import { useInfiniteScroll } from './TableScrollable.hooks';
 import { useRef } from 'react';
 
 export type TableScrollableProps<T> = {

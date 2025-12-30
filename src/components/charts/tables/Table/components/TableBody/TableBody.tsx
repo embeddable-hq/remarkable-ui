@@ -1,15 +1,11 @@
 import styles from './TableBody.module.css';
-import {
-  TableHeaderAlign,
-  TableHeaderItem,
-  TableHeaderItemAlign,
-  TablePaginatedProps,
-} from '../../table.types';
+import { TableHeaderAlign, TableHeaderItem, TableHeaderItemAlign } from '../../table.types';
 import clsx from 'clsx';
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
 import { FC, RefObject, useState } from 'react';
 import tableStyles from '../../../tables.module.css';
+import { TablePaginatedProps } from '../../TablePaginated/TablePaginated';
 
 export type TableBodyProps<T> = Pick<
   TablePaginatedProps<T>,
@@ -64,7 +60,7 @@ export const TableBody = <T,>({
 
       {!isLoading && hasMoreData && bottomRef !== undefined && (
         <tr>
-          <td colSpan={(showIndex ? 1 : 0) + headers.length} style={{ padding: 0, border: 0 }}>
+          <td colSpan={(showIndex ? 1 : 0) + headers.length} className={tableStyles.bottomRefCell}>
             <div ref={bottomRef} style={{ height: 1 }} />
           </td>
         </tr>
@@ -72,9 +68,7 @@ export const TableBody = <T,>({
 
       {isLoading && (
         <tr>
-          <td colSpan={(showIndex ? 1 : 0) + headers.length} style={{ padding: 12 }}>
-            {loadingLabel}
-          </td>
+          <td colSpan={(showIndex ? 1 : 0) + headers.length}>{loadingLabel}</td>
         </tr>
       )}
     </tbody>
@@ -110,8 +104,7 @@ const TableBodyCell = <T,>({ header, row }: TableBodyCellProps<T>) => {
 };
 
 type TableBodyCellWithCopyProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: any;
+  value: string;
   align?: TableHeaderItemAlign;
   children: React.ReactNode;
 };
@@ -130,11 +123,7 @@ export const TableBodyCellWithCopy: FC<TableBodyCellWithCopyProps> = ({
   };
 
   return (
-    <td
-      title={String(value)}
-      style={{ textAlign: align }}
-      onMouseLeave={() => setIsPressedCopy(false)}
-    >
+    <td title={value} style={{ textAlign: align }} onMouseLeave={() => setIsPressedCopy(false)}>
       <ActionIcon
         title={`Copy: ${String(value)}`}
         onMouseDown={handleCopy}
