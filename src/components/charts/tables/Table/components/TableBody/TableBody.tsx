@@ -1,15 +1,27 @@
 import styles from './TableBody.module.css';
-import { TableHeaderAlign, TableHeaderItem, TablePaginatedProps } from '../../table.types';
+import {
+  TableHeaderAlign,
+  TableHeaderItem,
+  TableHeaderItemAlign,
+  TablePaginatedProps,
+} from '../../table.types';
 import clsx from 'clsx';
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
-import { useState } from 'react';
+import { FC, RefObject, useState } from 'react';
 import tableStyles from '../../../tables.module.css';
 
 export type TableBodyProps<T> = Pick<
   TablePaginatedProps<T>,
-  'showIndex' | 'headers' | 'rows' | 'pageSize' | 'page' | 'onRowIndexClick'
->;
+  'showIndex' | 'headers' | 'rows' | 'onRowIndexClick'
+> & {
+  pageSize?: number;
+  page?: number;
+  bottomRef?: RefObject<HTMLDivElement | null>;
+  isLoading?: boolean;
+  loadingLabel?: string;
+  hasMoreData?: boolean;
+};
 
 export const TableBody = <T,>({
   headers,
@@ -18,18 +30,24 @@ export const TableBody = <T,>({
   page,
   showIndex,
   onRowIndexClick,
+  bottomRef,
+  isLoading,
+  loadingLabel,
+  hasMoreData,
 }: TableBodyProps<T>) => {
+  const hasPaginatedIndex = pageSize !== undefined && page !== undefined;
+
   return (
     <tbody className={styles.tableBody}>
       {rows.map((row, rowIndex) => (
         <tr
-          key={rowIndex}
+          key={JSON.stringify(row)}
           onClick={() => onRowIndexClick?.(rowIndex)}
           className={clsx(rowIndex === rows.length - 1 && tableStyles.tableLastRow)}
         >
           {showIndex && (
             <td className={clsx(tableStyles.mutedCell, tableStyles.stickyFirstColumn)}>
-              {pageSize * page + rowIndex + 1}
+              {hasPaginatedIndex ? pageSize * page + rowIndex + 1 : rowIndex + 1}
             </td>
           )}
           {headers.map((header, cellIndex) => (
@@ -43,6 +61,22 @@ export const TableBody = <T,>({
           ))}
         </tr>
       ))}
+
+      {!isLoading && hasMoreData && bottomRef !== undefined && (
+        <tr>
+          <td colSpan={(showIndex ? 1 : 0) + headers.length} style={{ padding: 0, border: 0 }}>
+            <div ref={bottomRef} style={{ height: 1 }} />
+          </td>
+        </tr>
+      )}
+
+      {isLoading && (
+        <tr>
+          <td colSpan={(showIndex ? 1 : 0) + headers.length} style={{ padding: 12 }}>
+            {loadingLabel}
+          </td>
+        </tr>
+      )}
     </tbody>
   );
 };
@@ -54,9 +88,7 @@ type TableBodyCellProps<T> = {
   cellIndex: number;
 };
 
-const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellProps<T>) => {
-  const [isPressedCopy, setIsPressedCopy] = useState(false);
-
+const TableBodyCell = <T,>({ header, row }: TableBodyCellProps<T>) => {
   const value =
     header.accessor !== undefined
       ? header.accessor(row)
@@ -70,6 +102,26 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
     return header.cell({ value, className: styles.tableBodyCell });
   }
 
+  return (
+    <TableBodyCellWithCopy align={header.align} value={value}>
+      {value}
+    </TableBodyCellWithCopy>
+  );
+};
+
+type TableBodyCellWithCopyProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+  align?: TableHeaderItemAlign;
+  children: React.ReactNode;
+};
+export const TableBodyCellWithCopy: FC<TableBodyCellWithCopyProps> = ({
+  value,
+  align = 'left',
+  children,
+}) => {
+  const [isPressedCopy, setIsPressedCopy] = useState(false);
+
   const handleCopy = () => {
     setIsPressedCopy(true);
     if (value !== undefined) {
@@ -79,22 +131,18 @@ const TableBodyCell = <T,>({ header, row, rowIndex, cellIndex }: TableBodyCellPr
 
   return (
     <td
-      key={`${rowIndex}-${cellIndex}`}
-      title={value}
-      style={{ textAlign: header.align }}
+      title={String(value)}
+      style={{ textAlign: align }}
       onMouseLeave={() => setIsPressedCopy(false)}
     >
       <ActionIcon
         title={`Copy: ${String(value)}`}
         onMouseDown={handleCopy}
         icon={isPressedCopy ? IconCopyCheckFilled : IconCopy}
-        className={clsx(
-          styles.copyButton,
-          header.align === TableHeaderAlign.RIGHT && styles.leftAlign,
-        )}
+        className={clsx(styles.copyButton, align === TableHeaderAlign.RIGHT && styles.leftAlign)}
         onClick={handleCopy}
       />
-      {value}
+      {children}
     </td>
   );
 };

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { TablePaginated as TablePaginatedChart } from './TablePaginated';
+import { TableScrollable as TableScrollableChart } from './TableScrollable';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableHeaderItem } from './table.types';
-import { decoratorsResizeCard } from '../../../../storybook.constants';
+import { decoratorsResizeCardLarge } from '../../../../storybook.constants';
 
 const teams = ['Design', 'Engineering', 'Ops', 'Marketing'] as const;
 const titles = ['IC', 'Lead', 'Manager', 'Director'] as const;
@@ -59,15 +59,14 @@ const headers: TableHeaderItem<Client>[] = [
 ];
 
 const meta: Meta = {
-  title: 'Charts/Table',
-  component: TablePaginatedChart,
+  title: 'Charts/TableScrollable',
+  component: TableScrollableChart,
   args: {
     showIndex: true,
     pageSize: 3,
     page: 0,
     headers,
     total: 100,
-    sort: undefined,
   },
   argTypes: {
     rowHeight: { control: { type: 'number' } },
@@ -91,53 +90,61 @@ type Client = {
   object: string;
 };
 
-export const TablePaginated: Story = {
+const allClients = makeClients(1000);
+
+const pageSize = 10;
+
+const pages = Array.from({ length: Math.ceil(allClients.length / pageSize) }, (_, i) =>
+  allClients.slice(i * pageSize, (i + 1) * pageSize),
+);
+
+export const TableScrollable: Story = {
   render: (args) => {
+    console.log('args are', args.page);
     const [, updateArgs] = useArgs();
 
-    const start = args.page * args.pageSize;
-    const end = start + args.pageSize;
-    const rows = makeClients(args.total).slice(start, end);
+    const handleNext = () => {
+      console.log('next page is', args.page, pages[args.page]);
+      setTimeout(() => {
+        const rows = (args.rows || []).concat(pages[args.page] || []);
+        updateArgs({ rows, page: args.page + 1 });
+      }, 0);
+    };
 
     return (
-      <TablePaginatedChart
-        showIndex={args.showIndex}
+      <TableScrollableChart
+        {...args}
+        onNextPage={handleNext}
         headers={args.headers}
         page={args.page}
-        pageSize={args.pageSize}
-        total={args.total}
-        rows={rows}
-        onPageChange={(value) => updateArgs({ page: value })}
-        onSortChange={(value) => {
-          updateArgs({ sort: value });
-          console.log('sort changed to', value);
-        }}
-        sort={args.sort}
-      />
-    );
-  },
-};
-
-export const Resize: Story = {
-  render: (args) => {
-    const [, updateArgs] = useArgs();
-
-    const start = args.page * args.pageSize;
-    const end = start + args.pageSize;
-    const rows = makeClients(args.total).slice(start, end);
-
-    return (
-      <TablePaginatedChart
-        showIndex={args.showIndex}
-        headers={args.headers}
-        page={args.page}
-        pageSize={args.pageSize}
-        total={args.total}
-        rows={rows}
-        onPageChange={(value) => updateArgs({ page: value })}
+        rows={args.rows ?? makeClients(1000).slice(0, 10)}
         onSortChange={() => null}
       />
     );
   },
-  decorators: decoratorsResizeCard,
+  decorators: decoratorsResizeCardLarge,
 };
+
+// export const Resize: Story = {
+//   render: (args) => {
+//     const [, updateArgs] = useArgs();
+
+//     const start = args.page * args.pageSize;
+//     const end = start + args.pageSize;
+//     const rows = makeClients(args.total).slice(start, end);
+
+//     return (
+//       <TableScrollableChart
+//         showIndex={args.showIndex}
+//         headers={args.headers}
+//         page={args.page}
+//         pageSize={args.pageSize}
+//         total={args.total}
+//         rows={rows}
+//         onPageChange={(value) => updateArgs({ page: value })}
+//         onSortChange={() => null}
+//       />
+//     );
+//   },
+//   decorators: decoratorsResizeCard,
+// };

@@ -44,7 +44,10 @@ export * from './components/charts/tables/HeatMap/HeatMap.types';
 export * from './components/charts/tables/Table/Table.hooks';
 export * from './components/charts/charts.constants';
 export * from './components/charts/tables/Table/components/TablePagination/TablePagination';
+export * from './components/charts/tables/Table/TableScrollable';
 export * from './components/charts/chartjs.cartesian.constants';
+export * from './components/charts/tables/Table/components/TableBody/TableBody';
+export * from './components/charts/tables/Table/components/TableHeader/TableHeader';
 
 // Constants
 export * from './styles/styles.constants';
