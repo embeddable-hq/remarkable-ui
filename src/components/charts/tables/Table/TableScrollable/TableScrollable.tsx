@@ -4,7 +4,12 @@ import { TableHeaderItem, TableSort } from '../table.types';
 import { TableHeader } from '../components/TableHeader/TableHeader';
 import { TableBody } from '../components/TableBody/TableBody';
 import { useInfiniteScroll } from './TableScrollable.hooks';
-import { useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
+
+export type TableScrollableHandle = {
+  scrollToTop: (behavior?: ScrollBehavior) => void;
+  getScrollElement: () => HTMLDivElement | null;
+};
 
 export type TableScrollableProps<T> = {
   bottomDistanceToPrefetch?: number;
@@ -21,60 +26,80 @@ export type TableScrollableProps<T> = {
   onSortChange?: (value: TableSort<T> | undefined) => void;
 };
 
-export const TableScrollable = ({
-  sort,
-  onSortChange,
-  showIndex,
-  headers,
-  rows,
-  onNextPage,
-  hasMoreData = true,
-  className,
-  onRowIndexClick,
-  isLoading = false,
-  loadingLabel = 'Loading...',
-  bottomDistanceToPrefetch,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: TableScrollableProps<any>) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const sentinelRef = useRef<HTMLDivElement | null>(null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const TableScrollable = forwardRef<TableScrollableHandle, TableScrollableProps<any>>(
+  (
+    {
+      sort,
+      onSortChange,
+      showIndex,
+      headers,
+      rows,
+      onNextPage,
+      hasMoreData = true,
+      className,
+      onRowIndexClick,
+      isLoading = false,
+      loadingLabel = 'Loading...',
+      bottomDistanceToPrefetch,
+    },
+    ref,
+  ) => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-  useInfiniteScroll({
-    rootRef: scrollRef,
-    enabled: hasMoreData && !isLoading,
-    onPrefetch: onNextPage,
-    bottomDistanceToPrefetch,
-  });
+    // Expose imperative API to parent
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollToTop: (behavior: ScrollBehavior = 'auto') => {
+          scrollRef.current?.scrollTo({ top: 0, behavior });
+        },
+        getScrollElement: () => scrollRef.current,
+      }),
+      [],
+    );
 
-  return (
-    <div className={clsx(tableStyles.tableFullContainer, className)}>
-      <div
-        ref={scrollRef}
-        className={clsx(tableStyles.tableAdjustedContainer, tableStyles.fullWidth)}
-      >
-        <table
-          className={clsx(tableStyles.table, tableStyles.cellWrap)}
-          aria-label="Scrollable table"
+    useInfiniteScroll({
+      rootRef: scrollRef,
+      enabled: hasMoreData && !isLoading,
+      onPrefetch: onNextPage,
+      bottomDistanceToPrefetch,
+    });
+
+    return (
+      <div className={clsx(tableStyles.tableFullContainer, className)}>
+        <div
+          ref={scrollRef}
+          className={clsx(tableStyles.tableAdjustedContainer, tableStyles.fullWidth)}
         >
-          <TableHeader
-            showIndex={showIndex}
-            headers={headers}
-            sort={sort}
-            onSortChange={onSortChange}
-          />
+          <table
+            className={clsx(tableStyles.table, tableStyles.cellWrap)}
+            aria-label="Scrollable table"
+          >
+            <TableHeader
+              showIndex={showIndex}
+              headers={headers}
+              sort={sort}
+              onSortChange={onSortChange}
+            />
 
-          <TableBody
-            showIndex={showIndex}
-            headers={headers}
-            rows={rows}
-            onRowIndexClick={onRowIndexClick}
-            bottomRef={sentinelRef}
-            isLoading={isLoading}
-            loadingLabel={loadingLabel}
-            hasMoreData={hasMoreData}
-          />
-        </table>
+            <TableBody
+              showIndex={showIndex}
+              headers={headers}
+              rows={rows}
+              onRowIndexClick={onRowIndexClick}
+              bottomRef={sentinelRef}
+              isLoading={isLoading}
+              hasMoreData={hasMoreData}
+            />
+          </table>
+
+          {isLoading && <div className={tableStyles.loadingIndicator}>{loadingLabel}</div>}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
+
+TableScrollable.displayName = 'TableScrollable';

@@ -15,7 +15,6 @@ export type TableBodyProps<T> = Pick<
   page?: number;
   bottomRef?: RefObject<HTMLDivElement | null>;
   isLoading?: boolean;
-  loadingLabel?: string;
   hasMoreData?: boolean;
 };
 
@@ -28,10 +27,10 @@ export const TableBody = <T,>({
   onRowIndexClick,
   bottomRef,
   isLoading,
-  loadingLabel,
   hasMoreData,
 }: TableBodyProps<T>) => {
   const hasPaginatedIndex = pageSize !== undefined && page !== undefined;
+  const showBottomRef = !isLoading && hasMoreData && bottomRef !== undefined;
 
   return (
     <tbody className={styles.tableBody}>
@@ -57,18 +56,11 @@ export const TableBody = <T,>({
           ))}
         </tr>
       ))}
-
-      {!isLoading && hasMoreData && bottomRef !== undefined && (
+      {showBottomRef && (
         <tr>
           <td colSpan={(showIndex ? 1 : 0) + headers.length} className={tableStyles.bottomRefCell}>
             <div ref={bottomRef} style={{ height: 1 }} />
           </td>
-        </tr>
-      )}
-
-      {isLoading && (
-        <tr>
-          <td colSpan={(showIndex ? 1 : 0) + headers.length}>{loadingLabel}</td>
         </tr>
       )}
     </tbody>
