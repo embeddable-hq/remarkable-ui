@@ -195,13 +195,20 @@
 }
 
 .loadingIndicator {
-  text-align: center;
   position: sticky;
   bottom: 0;
   left: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+  box-sizing: border-box;
 
-  padding: var(--em-tablechart-loading-indicator-padding, 1rem);
-  font-size: var(--em-tablechart-loading-indicator-font-size, 1rem);
+  padding: var(--em-tablechart-loading-indicator-padding, 0.75rem);
+  border-top: var(--em-tablechart-border-width, 1px) solid
+    var(--em-tablechart-border-color, #ededf1);
+  background: var(--em-card-background, #f7f7f8);
+  color: var(--em-tablechart-loading-indicator-color, #000);
   font-family: var(--em-tablechart-loading-indicator-font-family, sans-serif);
-  color: var(--em-tablechart-loading-indicator-color, #212129);
+  font-size: var(--em-tablechart-loading-indicator-font-size, 0.75rem);
+  font-weight: var(--em-tablechart-loading-indicator-font-weight, 700);
 }

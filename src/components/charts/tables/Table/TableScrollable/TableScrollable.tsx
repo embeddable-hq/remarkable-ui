@@ -94,7 +94,6 @@ export const TableScrollable = forwardRef<TableScrollableHandle, TableScrollable
               hasMoreData={hasMoreData}
             />
           </table>
-
           {isLoading && <div className={tableStyles.loadingIndicator}>{loadingLabel}</div>}
         </div>
       </div>
