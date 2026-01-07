@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.23
+
+### Patch Changes
+
+- f2593e9: Update package-lock
+
 ## 2.0.22
 
 ### Patch Changes
