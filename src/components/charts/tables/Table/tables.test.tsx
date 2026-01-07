@@ -44,7 +44,16 @@ export const mockTableHeaders: TableHeaderItem<MockEmployee>[] = [
   },
   { id: 'title', title: 'Title', align: 'right' },
   { id: 'team', title: 'Team', align: 'left' },
-  { id: 'age', title: 'Age', align: 'right' },
+  {
+    id: 'age',
+    title: 'Age',
+    align: 'right',
+    cell: (cell) => (
+      <td style={{ background: cell.value > 29 ? 'lightgreen' : 'lightcoral' }}>
+        {cell.value} yrs
+      </td>
+    ),
+  },
   {
     id: 'salary',
     title: 'Salary',
