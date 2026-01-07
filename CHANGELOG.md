@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.22
+
+### Patch Changes
+
+- cecb93e: TableScrollable
+
 ## 2.0.21
 
 ### Patch Changes
