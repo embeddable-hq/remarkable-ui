@@ -4,7 +4,7 @@
   padding: var(--em-daterangepicker-chevron-padding, 0.5rem);
   border-radius: var(--em-daterangepicker-chevron-border-radius, 0.5rem);
   background: var(--em-daterangepicker-chevron-background, #fff);
-  color: var(--em-daterangepicker-chevron-color, #fff);
+  color: var(--em-daterangepicker-chevron-color, #212129);
   display: flex;
   align-items: center;
   justify-content: center;
