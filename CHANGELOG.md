@@ -1,5 +1,12 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.24
+
+### Patch Changes
+
+- ac14faa: Fix calendar arrow styles
+- 10899ed: Fix publish pipeline
+
 ## 2.0.23
 
 ### Patch Changes
