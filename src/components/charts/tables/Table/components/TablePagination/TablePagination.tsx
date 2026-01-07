@@ -7,7 +7,7 @@ import {
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import styles from './TablePagination.module.css';
 import { FC, useEffect } from 'react';
-import { TablePaginatedProps } from '../../table.types';
+import { TablePaginatedProps } from '../../TablePaginated/TablePaginated';
 
 export type TablePaginationProps = Pick<
   TablePaginatedProps<unknown>,

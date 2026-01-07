@@ -1,8 +1,11 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import styles from './TableHeader.module.css';
-import { TableHeaderItem, TablePaginatedProps, TableSortDirection } from '../../table.types';
+import { TableHeaderItem, TableSortDirection } from '../../table.types';
 import tableStyles from '../../../tables.module.css';
 import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '../../../../../../hooks/useDebounce.hook';
+import { TablePaginatedProps } from '../../TablePaginated/TablePaginated';
 
 export type TableHeaderProps<T> = Pick<
   TablePaginatedProps<T>,
@@ -32,39 +35,52 @@ export const TableHeader = <T,>({
   showIndex,
   onSortChange,
 }: TableHeaderProps<T>) => {
-  const getSortIcon = (header: TableHeaderItem<T>) => {
-    if (!sort) return <IconCaretUpDownFilled />;
+  const [currentSort, setCurrentSort] = useState(sort);
 
-    if (sort.id === header.id) {
-      if (sort.direction === TableSortDirection.ASC) {
+  const debouncedUpdateState = useDebounce((value) => {
+    if (value === undefined && value === sort) {
+      return;
+    }
+    if (value?.id === sort?.id && value?.direction === sort?.direction) {
+      return;
+    }
+
+    onSortChange?.(value);
+  });
+
+  useEffect(() => {
+    debouncedUpdateState(currentSort);
+  }, [currentSort, debouncedUpdateState]);
+
+  const getSortIcon = (header: TableHeaderItem<T>) => {
+    if (!currentSort) return <IconCaretUpDownFilled />;
+
+    if (currentSort.id === header.id) {
+      if (currentSort.direction === TableSortDirection.ASC) {
         return <IconCaretUpFilled />;
-      } else if (sort.direction === TableSortDirection.DESC) {
+      } else if (currentSort.direction === TableSortDirection.DESC) {
         return <IconCaretDownFilled />;
       }
     }
     return <IconCaretUpDownFilled />;
   };
 
-  const handleSort = (id: keyof T) => {
-    if (!onSortChange) return;
+  const handleNewSortClick = (clickedHeader: keyof T | undefined) => {
+    // Un-select sort
+    if (!clickedHeader) return setCurrentSort(undefined);
 
-    if (!sort) {
-      return onSortChange({ id, direction: TableSortDirection.ASC });
-    }
+    // New sort
+    if (currentSort?.id !== clickedHeader)
+      return setCurrentSort({ id: clickedHeader, direction: TableSortDirection.ASC });
 
-    if (sort) {
-      // New sort
-      if (sort.id !== id) {
-        return onSortChange({ id, direction: TableSortDirection.ASC });
-      }
+    // Change current sort direction
+    if (currentSort?.direction === undefined)
+      return setCurrentSort({ id: clickedHeader, direction: TableSortDirection.ASC });
+    if (currentSort?.direction === TableSortDirection.ASC)
+      return setCurrentSort({ id: clickedHeader, direction: TableSortDirection.DESC });
 
-      // Toggle sort direction
-      if (sort.direction === TableSortDirection.ASC) {
-        return onSortChange({ id, direction: TableSortDirection.DESC });
-      } else if (sort.direction === TableSortDirection.DESC) {
-        return onSortChange(undefined); // Remove sort after DESC
-      }
-    }
+    // Remove sort
+    return setCurrentSort(undefined);
   };
 
   return (
@@ -82,7 +98,7 @@ export const TableHeader = <T,>({
             aria-sort={getHeaderAriaSort(sort, header)}
           >
             <button
-              onClick={() => handleSort(header.id)}
+              onClick={() => handleNewSortClick(header.id)}
               aria-label={getHeaderAriaLabel(sort, header)}
             >
               {header.title}

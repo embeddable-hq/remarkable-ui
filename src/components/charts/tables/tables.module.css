@@ -16,6 +16,12 @@
   border-radius: var(--em-tablechart-border-radius, 0.75rem);
 }
 
+.tableContainerScroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 1;
+}
+
 .tableAdjustedContainer {
   max-width: 100%;
   max-height: 100%;
@@ -27,12 +33,6 @@
   box-sizing: border-box;
   border: var(--em-tablechart-border-width, 1px) solid var(--em-tablechart-border-color, #ededf1);
   border-radius: var(--em-tablechart-border-radius, 0.75rem);
-}
-
-.tableContainerScroll {
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex: 1;
 }
 
 .tableAdjustedContainer.fullWidth {
@@ -60,10 +60,14 @@
   cursor: pointer;
   position: relative;
   box-sizing: border-box;
-  padding: var(--em-tablechart-cell-padding, 0.5rem)
-    calc(
-      var(--em-tablechart-cell-padding, 0.5rem) + var(--em-tablechart-padding-left-right, 0.25rem)
-    );
+  padding-top: var(--em-tablechart-cell-padding, 0.5rem);
+  padding-bottom: var(--em-tablechart-cell-padding, 0.5rem);
+  padding-left: calc(
+    var(--em-tablechart-cell-padding, 0.5rem) + var(--em-tablechart-padding-left-right, 0.25rem)
+  );
+  padding-right: calc(
+    var(--em-tablechart-cell-padding, 0.5rem) + var(--em-tablechart-padding-left-right, 0.25rem)
+  );
   border-bottom: var(--em-tablechart-border-width, 1px) solid
     var(--em-tablechart-border-color, #ededf1);
   border-right: var(--em-tablechart-border-width, 1px) solid
@@ -78,9 +82,13 @@
 
 .table td {
   background: var(--em-tablechart-cell-background, #fff);
-  white-space: nowrap; /* single line */
-  overflow: hidden; /* hide overflow */
-  text-overflow: ellipsis; /* show … */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table.cellWrap td {
+  white-space: wrap;
 }
 
 .table thead th:last-of-type,
@@ -184,4 +192,23 @@
 .table tbody tr.tableLastRow td {
   border-bottom: var(--em-tablechart-border-width, 1px) solid
     var(--em-tablechart-border-color, #ededf1);
+}
+
+.loadingIndicator {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+  box-sizing: border-box;
+
+  padding: var(--em-tablechart-loading-indicator-padding, 0.75rem);
+  border-top: var(--em-tablechart-border-width, 1px) solid
+    var(--em-tablechart-border-color, #ededf1);
+  background: var(--em-card-background, #f7f7f8);
+  color: var(--em-tablechart-loading-indicator-color, #000);
+  font-family: var(--em-tablechart-loading-indicator-font-family, sans-serif);
+  font-size: var(--em-tablechart-loading-indicator-font-size, 0.75rem);
+  font-weight: var(--em-tablechart-loading-indicator-font-weight, 700);
 }

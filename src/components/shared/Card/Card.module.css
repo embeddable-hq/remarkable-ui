@@ -7,6 +7,7 @@
   padding: var(--em-card-padding, 2rem);
   border-radius: var(--em-card-border-radius, 2rem);
   background: var(--em-card-background, #f7f7f8);
+  border: var(--em-card-border-width, 0px) solid var(--em-card-border-color, rgb(255 255 255 / 0%));
 }
 
 .card .cardHeader {
