@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.25
+
+### Patch Changes
+
+- da8e49d: Introduce table cell styles
+
 ## 2.0.24
 
 ### Patch Changes
