@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { CssSize } from '../../../../types/css.types';
 
 export const TableSortDirection = {
@@ -23,6 +24,12 @@ export type TableHeaderCell = (props: {
   className?: string;
 }) => React.ReactElement<HTMLTableCellElement>;
 
+export type TableHeaderCellStyle = (props: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+  className?: string;
+}) => CSSProperties | undefined;
+
 export type TableHeaderItem<T> = {
   id: keyof T;
   title: React.ReactNode;
@@ -32,4 +39,5 @@ export type TableHeaderItem<T> = {
   sort?: TableSort<T>;
   accessor?: (row: T) => React.ReactNode;
   cell?: TableHeaderCell;
+  cellStyle?: TableHeaderCellStyle;
 };
