@@ -21,21 +21,17 @@ Card.displayName = 'Card';
 type CardHeaderProps = {
   title?: string;
   subtitle?: string;
-  rightContent?: React.ReactNode;
 };
 
-export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, rightContent }) => {
-  if (!title && !subtitle && !rightContent) {
+export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle }) => {
+  if (!title && !subtitle) {
     return null;
   }
 
   return (
     <div className={styles.cardHeader}>
-      <div className={styles.leftContent}>
-        {title && <h1>{title}</h1>}
-        {subtitle && <p>{subtitle}</p>}
-      </div>
-      {rightContent}
+      {title && <h1>{title}</h1>}
+      {subtitle && <p>{subtitle}</p>}
     </div>
   );
 };

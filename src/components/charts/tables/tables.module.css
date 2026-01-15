@@ -178,15 +178,10 @@
   pointer-events: none;
 }
 
-.table tbody tr.stickyLastRow th::before,
-.table tbody tr.stickyLastRow td::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(-1 * var(--em-tablechart-border-width, 1px));
-  height: var(--em-tablechart-border-width, 1px);
-  background: var(--em-tablechart-border-color, #ededf1);
+.table tbody tr.stickyLastRow th,
+.table tbody tr.stickyLastRow td {
+  border-top: var(--em-tablechart-border-width, 1px) solid
+    var(--em-tablechart-border-color, #ededf1);
 }
 
 .table tbody tr.tableLastRow td {
