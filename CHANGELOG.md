@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.28
+
+### Patch Changes
+
+- 002b753: Update ChartHeader Styles
+
 ## 2.0.27
 
 ### Patch Changes
