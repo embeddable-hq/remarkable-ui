@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.27
+
+### Patch Changes
+
+- 0a252ef: Update Design System Semantics
+
 ## 2.0.26
 
 ### Patch Changes
