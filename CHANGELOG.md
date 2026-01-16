@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.26
+
+### Patch Changes
+
+- 9953064: Cleanup CardHeader
+
 ## 2.0.25
 
 ### Patch Changes
