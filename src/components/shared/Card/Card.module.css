@@ -19,14 +19,14 @@
   gap: var(--em-card-header-gap, 1rem);
 }
 
-.card .cardHeader .leftContent {
+.card .cardHeader {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--em-card-header-gap, 1rem);
 }
 
-.card .cardHeader .leftContent h1 {
+.card .cardHeader h1 {
   margin: unset;
   overflow-wrap: break-word;
   font-style: normal;
@@ -37,7 +37,7 @@
   line-height: var(--em-card-title-line-height, 1.1875rem);
 }
 
-.card .cardHeader .leftContent p {
+.card .cardHeader p {
   margin: unset;
   overflow-wrap: break-word;
   font-style: normal;
