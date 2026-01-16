@@ -23,6 +23,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: start;
   gap: var(--em-card-header-gap, 1rem);
 }
 
