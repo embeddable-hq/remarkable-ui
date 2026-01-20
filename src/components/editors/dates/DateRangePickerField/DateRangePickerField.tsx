@@ -21,6 +21,7 @@ type DateRangePickerFieldProps = {
   clearable?: boolean;
   onChange: (dateRange: DateRange | undefined) => void;
   submitLabel?: string;
+  avoidCollisions?: boolean;
 } & FieldHeaderProps &
   DateRangePickerProps;
 
@@ -53,6 +54,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
   clearable,
   numberOfMonths = 1,
   submitLabel = 'Apply',
+  avoidCollisions,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -89,6 +91,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
         open={isOpen}
         onOpenChange={handleOpenChange}
         disabled={disabled}
+        avoidCollisions={avoidCollisions}
         triggerComponent={
           <SelectFieldTrigger
             startIcon={startIcon}

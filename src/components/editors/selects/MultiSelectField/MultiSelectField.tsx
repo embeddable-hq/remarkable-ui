@@ -32,6 +32,7 @@ export type MultiSelectFieldProps = {
   placeholder?: string;
   submitLabel?: string;
   values?: string[];
+  avoidCollisions?: boolean;
   onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
@@ -51,6 +52,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   placeholder,
   submitLabel = 'Apply',
   values = [],
+  avoidCollisions,
   onChange,
   onSearch,
   error = false,
@@ -143,6 +145,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         disabled={disabled}
+        avoidCollisions={avoidCollisions}
         triggerComponent={
           <SelectFieldTrigger
             startIcon={startIcon}
