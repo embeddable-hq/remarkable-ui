@@ -34,6 +34,7 @@ export type SingleSelectFieldProps = {
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
+  avoidCollisions?: boolean;
 } & FieldHeaderProps;
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
@@ -47,6 +48,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   searchable,
   clearable,
   isLoading,
+  avoidCollisions,
   noOptionsMessage = 'No options available',
   onChange,
   onSearch,
@@ -108,6 +110,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         open={isOpen}
         onOpenChange={setIsOpen}
         disabled={disabled}
+        avoidCollisions={avoidCollisions}
         triggerComponent={
           <SelectFieldTrigger
             startIcon={startIcon}

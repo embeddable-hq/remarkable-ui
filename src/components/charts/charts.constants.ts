@@ -12,10 +12,3 @@ export const getChartColors = (): string[] => [
   getStyle('--em-sem-chart-color--9'),
   getStyle('--em-sem-chart-color--10'),
 ];
-
-export const getChartContrastColors = (): string[] => [
-  getStyle('--em-sem-chart-color--1'),
-  getStyle('--em-sem-chart-color--2'),
-  getStyle('--em-sem-chart-color--3'),
-  getStyle('--em-sem-chart-color--5'),
-];
