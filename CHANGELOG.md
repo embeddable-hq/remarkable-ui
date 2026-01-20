@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.29
+
+### Patch Changes
+
+- 2cfb816: Add avoidCollisions to the components to use the Dropdown + the Dropdown
+
 ## 2.0.28
 
 ### Patch Changes
