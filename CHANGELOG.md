@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.30
+
+### Patch Changes
+
+- 2a75fc3: Allow numbers and booleans on SingleSelectField and MultiSelectField
+
 ## 2.0.29
 
 ### Patch Changes
