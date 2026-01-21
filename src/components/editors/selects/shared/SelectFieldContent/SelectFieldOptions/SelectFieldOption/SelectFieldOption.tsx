@@ -2,13 +2,14 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FC, ImgHTMLAttributes, SVGProps } from 'react';
 import styles from './SelectFieldOption.module.css';
 import clsx from 'clsx';
+import { SelectFieldValue } from '../../../../selects.types';
 
 type SelectListOptionIcon =
   | React.ReactElement<SVGProps<SVGSVGElement>>
   | React.ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
 
 export type SelectListOptionProps = {
-  value?: string;
+  value?: SelectFieldValue;
   isSelected?: boolean;
   label: string;
   rightLabel?: string;
