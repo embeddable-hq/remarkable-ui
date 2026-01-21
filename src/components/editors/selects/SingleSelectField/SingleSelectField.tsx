@@ -19,18 +19,19 @@ import styles from '../selects.module.css';
 import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 import { TextField } from '../../inputs/TextField/TextField';
 import { debounce } from '../../../../utils/debounce.utils';
+import { SelectFieldValue } from '../selects.types';
 
 export type SingleSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   startIcon?: React.ComponentType<IconProps>;
-  value?: string;
+  value?: SelectFieldValue;
   disabled?: boolean;
   placeholder?: string;
   searchable?: boolean;
   clearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
-  onChange: (value: string) => void;
+  onChange: (value: SelectFieldValue) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
@@ -40,7 +41,7 @@ export type SingleSelectFieldProps = {
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   label,
   required,
-  value = '',
+  value,
   startIcon,
   options,
   disabled,
@@ -57,20 +58,22 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [selectedLabel, setSelectedLabel] = useState<string>(value);
+  const [selectedLabel, setSelectedLabel] = useState<string>(value?.toString() ?? '');
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {
-    if (!value) {
+    if (value == null) {
       setSelectedLabel('');
       return;
     }
 
-    const option = options.find((opt) => opt.value === value);
-    if (option) {
-      setSelectedLabel(option.label);
+    const selectedOption = options.find((opt) => opt.value === value);
+    if (selectedOption) {
+      setSelectedLabel(selectedOption.label);
+    } else {
+      setSelectedLabel('');
     }
   }, [value, options]);
 
@@ -83,16 +86,16 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
-  const handleChange = (newValue?: string) => {
+  const handleChange = (newValue?: SelectFieldValue) => {
     setSearchValue('');
-    onChange(newValue ?? '');
+    onChange(newValue);
     onSearch?.('');
 
-    if (newValue === '') {
-      setSelectedLabel('');
+    const selectedOption = options.find((opt) => opt.value === newValue);
+    if (selectedOption) {
+      setSelectedLabel(selectedOption.label);
     } else {
-      const option = options.find((opt) => opt.value === newValue);
-      if (option) setSelectedLabel(option.label);
+      setSelectedLabel('');
     }
   };
 
@@ -118,7 +121,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             valueLabel={selectedLabel}
-            onClear={() => handleChange('')}
+            onClear={() => handleChange(undefined)}
             isClearable={clearable}
             isLoading={isLoading}
             error={hasError}
@@ -146,7 +149,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                     <SelectFieldCategory label={category} />
                     {categoryOptions.map((option) => (
                       <SelectListOption
-                        key={option?.value ?? option.label}
+                        key={option?.value ? option.value.toString() : option.label}
                         onClick={() => handleChange(option?.value)}
                         isSelected={option.value === value}
                         {...option}
@@ -156,7 +159,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                 ))
               : displayOptions.map((option) => (
                   <SelectListOption
-                    key={option?.value ?? option.label}
+                    key={option?.value ? option.value.toString() : option.label}
                     onClick={() => handleChange(option?.value)}
                     isSelected={option.value === value}
                     {...option}
