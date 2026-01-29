@@ -1,3 +1,6 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import * as esbuild from 'esbuild';
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
@@ -29,5 +32,16 @@ export default defineConfig({
   // Let bundlers (CRA, Vite, Embeddable) handle CSS modules
   loader: {
     '.css': 'copy', // keep `import "./x.css"` in output, copy file to dist
+  },
+
+  // Copy and minify global.css to dist for package export "./global.css"
+  onSuccess: async () => {
+    const cwd = process.cwd();
+    const css = readFileSync(join(cwd, 'src/styles/global.css'), 'utf8');
+    const result = await esbuild.transform(css, {
+      loader: 'css',
+      minify: true,
+    });
+    writeFileSync(join(cwd, 'dist/global.css'), result.code, 'utf8');
   },
 });
