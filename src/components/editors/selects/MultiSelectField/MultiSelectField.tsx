@@ -20,7 +20,6 @@ import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import { TextField } from '../../inputs/TextField/TextField';
 import { debounce } from '../../../../utils/debounce.utils';
-import { SelectFieldValue } from '../selects.types';
 
 export type MultiSelectFieldProps = {
   startIcon?: React.ComponentType<IconProps>;
@@ -32,9 +31,9 @@ export type MultiSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   placeholder?: string;
   submitLabel?: string;
-  values?: SelectFieldValue[];
+  values?: string[];
   avoidCollisions?: boolean;
-  onChange: (value: SelectFieldValue[]) => void;
+  onChange: (value: string[]) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
@@ -61,7 +60,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [preValues, setPreValues] = useState<SelectFieldValue[]>(values);
+  const [preValues, setPreValues] = useState<string[]>(values);
   const [selectedLabel, setSelectedLabel] = useState<string>('');
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
@@ -106,11 +105,11 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
 
   const handleSelectOption = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    newValue?: SelectFieldValue,
+    newValue?: string,
   ) => {
     e.preventDefault();
 
-    if (newValue == null) return;
+    if (!newValue) return;
 
     if (preValues.includes(newValue)) {
       setPreValues(preValues.filter((v) => v !== newValue));
@@ -124,7 +123,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     debouncedSearch?.(newSearch);
   };
 
-  const handleSave = (newValues: SelectFieldValue[]) => {
+  const handleSave = (newValues: string[]) => {
     onChange(newValues);
     setIsOpen(false);
     setSearchValue('');
@@ -182,7 +181,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
                     <SelectFieldCategory label={category} />
                     {categoryOptions.map((option) => (
                       <SelectListOption
-                        key={option?.value ? option.value.toString() : option.label}
+                        key={option?.value ?? option.label}
                         onClick={(e) => handleSelectOption(e, option.value)}
                         startIcon={
                           preValues.includes(option.value!) ? (
@@ -198,7 +197,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
                 ))
               : displayOptions.map((option) => (
                   <SelectListOption
-                    key={option?.value ? option.value.toString() : option.label}
+                    key={option?.value ?? option.label}
                     onClick={(e) => handleSelectOption(e, option.value)}
                     startIcon={
                       preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />

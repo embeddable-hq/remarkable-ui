@@ -7,7 +7,6 @@ import {
 } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
-import { SelectFieldValue } from '../selects.types';
 
 const mockOptions: SelectListOptionProps[] = [
   {
@@ -176,7 +175,7 @@ const meta = {
     searchable: false,
     clearable: false,
     options: mockOptions,
-    onChange: (value: SelectFieldValue) => value,
+    onChange: (value: string) => value,
   },
   argTypes: {
     startIcon: storybookArgTypesIcon,
@@ -209,26 +208,6 @@ export const Basic: Story = {
   args: {
     label: undefined,
     required: false,
-  },
-};
-
-export const BooleanValues: Story = {
-  args: {
-    options: [
-      { label: 'false', value: false },
-      { label: 'true', value: true },
-    ],
-  },
-};
-
-export const NumberValues: Story = {
-  args: {
-    options: [
-      { label: '1', value: 1 },
-      { label: '2', value: 2 },
-      { label: '3', value: 3 },
-      { label: '4', value: 4 },
-    ],
   },
 };
 
