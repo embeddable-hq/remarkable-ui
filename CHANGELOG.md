@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.31
+
+### Patch Changes
+
+- abd6df7: Include global.css in the package
+
 ## 2.0.30
 
 ### Patch Changes
