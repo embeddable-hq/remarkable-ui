@@ -16,7 +16,8 @@
     "./styles": {
       "import": "./dist/styles.js",
       "types": "./dist/styles.d.ts"
-    }
+    },
+    "./global.css": "./dist/global.css"
   },
   "types": "./dist/index.d.ts",
   "files": [
@@ -79,6 +80,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@eslint/css": "^0.13.0",
+    "esbuild": "^0.24.0",
     "@storybook/addon-webpack5-compiler-swc": "^3.0.0",
     "@storybook/react": "^9.0.18",
     "@storybook/react-webpack5": "^9.0.17",
