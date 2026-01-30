@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.32
+
+### Patch Changes
+
+- 29a43d4: Add ghost variant to the SingleSelectField
+
 ## 2.0.31
 
 ### Patch Changes
