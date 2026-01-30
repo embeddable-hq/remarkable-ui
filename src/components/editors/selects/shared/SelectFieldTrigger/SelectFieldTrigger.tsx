@@ -2,6 +2,7 @@ import styles from './SelectFieldTrigger.module.css';
 import { IconCaretDownFilled, IconLoader2, IconProps, IconX } from '@tabler/icons-react';
 import clsx from 'clsx';
 import { forwardRef } from 'react';
+import { GhostButton } from '../../../../shared/GhostButton/GhostButton';
 
 type SelectFieldTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   startIcon?: React.ComponentType<IconProps>;
@@ -11,6 +12,7 @@ type SelectFieldTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
   onClear?: () => void;
   error?: boolean;
+  variant?: 'default' | 'ghost';
 };
 
 export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTriggerProps>(
@@ -23,6 +25,7 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
       isLoading,
       onClear,
       error = false,
+      variant = 'default',
       ...props
     },
     ref,
@@ -36,6 +39,15 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
       e.preventDefault();
       onClear?.();
     };
+
+    if (variant === 'ghost') {
+      return (
+        <GhostButton ref={ref} endIcon={isLoading ? IconLoader2 : IconCaretDownFilled} {...props}>
+          {displayValue}
+          {showClearButton && <IconX onPointerDown={handleClear} />}
+        </GhostButton>
+      );
+    }
 
     return (
       <button

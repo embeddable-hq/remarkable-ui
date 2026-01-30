@@ -8,18 +8,15 @@ type GhostButtonProps = {
   endIcon?: Icon;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const GhostButton: React.FC<GhostButtonProps> = ({
-  startIcon: StartIcon,
-  endIcon: EndIcon,
-  children,
-  className,
-  ...props
-}) => {
-  return (
-    <button className={clsx(styles.ghostButton, className)} {...props}>
-      {StartIcon && <StartIcon />}
-      <span>{children}</span>
-      {EndIcon && <EndIcon />}
-    </button>
-  );
-};
+export const GhostButton = React.forwardRef<HTMLButtonElement, GhostButtonProps>(
+  ({ startIcon: StartIcon, endIcon: EndIcon, children, className, ...props }, ref) => {
+    return (
+      <button ref={ref} className={clsx(styles.ghostButton, className)} {...props}>
+        {StartIcon && <StartIcon />}
+        <span>{children}</span>
+        {EndIcon && <EndIcon />}
+      </button>
+    );
+  },
+);
+GhostButton.displayName = 'GhostButton';
