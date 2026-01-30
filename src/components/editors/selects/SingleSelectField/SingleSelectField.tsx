@@ -1,6 +1,6 @@
 import { FC, Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
-import { Dropdown } from '../../../shared/Dropdown/Dropdown';
+import { Dropdown, DropdownProps } from '../../../shared/Dropdown/Dropdown';
 import {
   SelectFieldContent,
   SelectFieldContentList,
@@ -35,7 +35,9 @@ export type SingleSelectFieldProps = {
   error?: boolean;
   errorMessage?: string;
   avoidCollisions?: boolean;
-} & FieldHeaderProps;
+  variant?: 'default' | 'ghost';
+} & FieldHeaderProps &
+  Pick<DropdownProps, 'side' | 'align'>;
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   label,
@@ -54,6 +56,9 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   onSearch,
   error = false,
   errorMessage,
+  side,
+  align,
+  variant,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -111,6 +116,8 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         onOpenChange={setIsOpen}
         disabled={disabled}
         avoidCollisions={avoidCollisions}
+        side={side}
+        align={align}
         triggerComponent={
           <SelectFieldTrigger
             startIcon={startIcon}
@@ -122,6 +129,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
             isClearable={clearable}
             isLoading={isLoading}
             error={hasError}
+            variant={variant}
           />
         }
       >
