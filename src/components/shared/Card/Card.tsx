@@ -34,12 +34,20 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip
   return (
     <div className={styles.cardHeader}>
       <div className={styles.cardHeaderTitle}>
+        {title && <h1>{title}</h1>}
         {tooltip && (
-          <Tooltip side="top" align="center" trigger={<IconInfoCircle />}>
+          <Tooltip
+            side="top"
+            align="center"
+            trigger={
+              <button className={styles.cardHeaderTooltipButton} aria-label="Info">
+                <IconInfoCircle />
+              </button>
+            }
+          >
             {tooltip}
           </Tooltip>
         )}
-        {title && <h1>{title}</h1>}
       </div>
       {subtitle && <p>{subtitle}</p>}
     </div>

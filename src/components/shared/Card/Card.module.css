@@ -34,7 +34,16 @@
   color: var(--em-card-title-color, #212129);
 }
 
-.card .cardHeader .cardHeaderTitle svg {
+.card .cardHeader .cardHeaderTitle .cardHeaderTooltipButton {
+  background: unset;
+  border: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: unset;
+}
+
+.card .cardHeader .cardHeaderTitle .cardHeaderTooltipButton svg {
   width: var(--em-card-info-icon-size, 1rem);
   height: var(--em-card-info-icon-size, 1rem);
 }
