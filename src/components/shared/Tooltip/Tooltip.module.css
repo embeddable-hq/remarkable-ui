@@ -1,0 +1,70 @@
+.tooltipContent {
+  text-align: center;
+  font-style: normal;
+
+  padding: var(--em-tooltip-padding-top-bottom, 0.375rem)
+    var(--em-tooltip-padding-left-right, 0.5rem);
+  border-radius: var(--em-tooltip-border-radius, 0.375rem);
+  background: var(--em-tooltip-background, #212129);
+  color: var(--em-tooltip-color, #fff);
+  font-family: var(--em-tooltip-font-family, sans-serif);
+  font-size: var(--em-tooltip-font-size, 0.75rem);
+  font-weight: var(--em-tooltip-font-weight, 700);
+  line-height: var(--em-tooltip-line-height, 0.875rem);
+}
+.tooltipContent[data-state='delayed-open'][data-side='top'] {
+  animation-name: slideDownAndFade;
+}
+.tooltipContent[data-state='delayed-open'][data-side='right'] {
+  animation-name: slideLeftAndFade;
+}
+.tooltipContent[data-state='delayed-open'][data-side='bottom'] {
+  animation-name: slideUpAndFade;
+}
+.tooltipContent[data-state='delayed-open'][data-side='left'] {
+  animation-name: slideRightAndFade;
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

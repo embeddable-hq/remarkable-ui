@@ -17,6 +17,13 @@ export const Default = () => (
   </Card>
 );
 
+export const WithTooltip = () => (
+  <Card>
+    <CardHeader title="Title" subtitle="Subtitle" tooltip="Tooltip" />
+    <CardContent>This is the content of the card.</CardContent>
+  </Card>
+);
+
 export const LongTitle = () => (
   <div style={{ maxWidth: 300 }}>
     <Card>

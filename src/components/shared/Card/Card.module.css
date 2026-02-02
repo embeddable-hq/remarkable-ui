@@ -27,11 +27,22 @@
   gap: var(--em-card-header-gap, 1rem);
 }
 
-.card .cardHeader h1 {
+.card .cardHeader .cardHeaderTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--em-card-info-icon-gap, 0.25rem);
+  color: var(--em-card-title-color, #212129);
+}
+
+.card .cardHeader .cardHeaderTitle svg {
+  width: var(--em-card-info-icon-size, 1rem);
+  height: var(--em-card-info-icon-size, 1rem);
+}
+
+.card .cardHeader .cardHeaderTitle h1 {
   margin: unset;
   overflow-wrap: break-word;
   font-style: normal;
-  color: var(--em-card-title-color, #212129);
   font-family: var(--em-card-font-family, sans-serif);
   font-size: var(--em-card-title-font-size, 1rem);
   font-weight: var(--em-card-title-font-weight, 700);
