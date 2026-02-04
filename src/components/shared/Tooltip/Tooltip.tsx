@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
-import styles from './Tooltip.module.css';
+import { getOrCreateTooltipOverlayContainer, tooltipContentStyle } from './Tooltip.utils';
 
 type TooltipProps = {
   side?: RadixTooltip.TooltipContentProps['side'];
@@ -21,15 +21,16 @@ export const Tooltip: FC<TooltipProps> = ({
     <RadixTooltip.Provider>
       <RadixTooltip.Root delayDuration={delayDuration}>
         <RadixTooltip.Trigger asChild>{trigger}</RadixTooltip.Trigger>
-        <RadixTooltip.Content
-          side={side}
-          align={align}
-          style={{ zIndex: 5 }}
-          className={styles.tooltipContent}
-          sideOffset={4}
-        >
-          {children}
-        </RadixTooltip.Content>
+        <RadixTooltip.Portal container={getOrCreateTooltipOverlayContainer() ?? undefined}>
+          <RadixTooltip.Content
+            side={side}
+            align={align}
+            style={tooltipContentStyle}
+            sideOffset={4}
+          >
+            {children}
+          </RadixTooltip.Content>
+        </RadixTooltip.Portal>
       </RadixTooltip.Root>
     </RadixTooltip.Provider>
   );
