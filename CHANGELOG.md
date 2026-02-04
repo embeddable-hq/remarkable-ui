@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.33
+
+### Patch Changes
+
+- a6897ef: Introduce card tooltip
+
 ## 2.0.32
 
 ### Patch Changes
