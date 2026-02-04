@@ -37,8 +37,8 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip
         {title && <h1>{title}</h1>}
         {tooltip && (
           <Tooltip
-            side="top"
-            align="center"
+            side="right"
+            align="start"
             trigger={
               <button className={styles.cardHeaderTooltipButton} aria-label="Info">
                 <IconInfoCircle />

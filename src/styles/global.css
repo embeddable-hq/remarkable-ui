@@ -341,7 +341,7 @@
   --em-linechart-line-width: 2px;
   --em-linechart-point-size: var(--em-core-size--0200);
   --em-linechart-point-size--hover: var(--em-core-size--0300);
-  --em-overlay-background: rgb(33 33 41 / 80%);
+  --em-overlay-background: rgb(33 33 41 / 90%);
   --em-piechart-donut-color: var(--em-sem-text);
   --em-piechart-donut-label-font-size: var(--em-core-font-size--md);
   --em-piechart-donut-label-font-weight: var(--em-core-font-weight--medium);
