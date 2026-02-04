@@ -1,20 +1,19 @@
-const EMBEDDABLE_OVERLAY_ATTR = 'embeddable-radix-overlays';
-const MAX_Z_INDEX = 2147483647;
+const EMBEDDABLE_RADIX_OVERLAY_ATTR = 'embeddable-radix-overlays';
 
 export const getOrCreateTooltipOverlayContainer = (): HTMLElement | null => {
   if (typeof document === 'undefined') return null;
 
-  let el = document.querySelector<HTMLElement>(`[${EMBEDDABLE_OVERLAY_ATTR}]`);
+  let el = document.querySelector<HTMLElement>(`[${EMBEDDABLE_RADIX_OVERLAY_ATTR}]`);
   if (el) return el;
 
   el = document.createElement('div');
-  el.setAttribute(EMBEDDABLE_OVERLAY_ATTR, 'true');
+  el.setAttribute(EMBEDDABLE_RADIX_OVERLAY_ATTR, 'true');
 
   // Positioning / stacking
   el.style.position = 'fixed';
   el.style.inset = '0';
   el.style.pointerEvents = 'none';
-  el.style.zIndex = MAX_Z_INDEX.toString();
+  el.style.zIndex = '1000';
 
   document.body.appendChild(el);
 
