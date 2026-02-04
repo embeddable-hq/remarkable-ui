@@ -55,6 +55,7 @@ export * from './components/shared/GhostButton/GhostButton';
 export * from './components/shared/Overlay/Overlay';
 export * from './components/shared/Skeleton/Skeleton';
 export * from './components/shared/Typography/Typography';
+export * from './components/shared/Tooltip/Tooltip';
 
 // Types
 export * from './types/css.types';

@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './Card.module.css';
 import clsx from 'clsx';
+import { IconInfoCircle } from '@tabler/icons-react';
+import { Tooltip } from '../Tooltip/Tooltip';
 
 type CardProps = React.HTMLAttributes<HTMLDivElement> & {
   children?: React.ReactNode;
@@ -21,16 +23,32 @@ Card.displayName = 'Card';
 type CardHeaderProps = {
   title?: string;
   subtitle?: string;
+  tooltip?: React.ReactNode;
 };
 
-export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle }) => {
-  if (!title && !subtitle) {
+export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip }) => {
+  if (!title && !subtitle && !tooltip) {
     return null;
   }
 
   return (
     <div className={styles.cardHeader}>
-      {title && <h1>{title}</h1>}
+      <div className={styles.cardHeaderTitle}>
+        {title && <h1>{title}</h1>}
+        {tooltip && (
+          <Tooltip
+            side="top"
+            align="center"
+            trigger={
+              <button className={styles.cardHeaderTooltipButton} aria-label="Info">
+                <IconInfoCircle />
+              </button>
+            }
+          >
+            {tooltip}
+          </Tooltip>
+        )}
+      </div>
       {subtitle && <p>{subtitle}</p>}
     </div>
   );
