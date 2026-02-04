@@ -2,4 +2,4 @@
 '@embeddable.com/remarkable-ui': patch
 ---
 
-Update Cart tooltip display
+Update Card tooltip display
