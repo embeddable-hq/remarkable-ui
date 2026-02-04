@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.36
+
+### Patch Changes
+
+- 2318678: Adjust Card tooltip position
+
 ## 2.0.35
 
 ### Patch Changes
