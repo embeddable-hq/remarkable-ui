@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.35
+
+### Patch Changes
+
+- f9003ad: Update Card tooltip display
+
 ## 2.0.34
 
 ### Patch Changes
