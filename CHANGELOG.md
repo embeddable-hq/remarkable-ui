@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.37
+
+### Patch Changes
+
+- 23077c8: Update ActionIcon styles
+
 ## 2.0.36
 
 ### Patch Changes
