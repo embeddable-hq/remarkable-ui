@@ -2,20 +2,18 @@
   cursor: pointer;
   border: none;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-shrink: 0;
 
   color: var(--em-actionicon-color, #212129);
   border-radius: var(--em-actionicon-border-radius, 624.9375rem);
   background-color: var(--em-actionicon-background, #ededf1);
   width: var(--em-actionicon-width, 1.25rem);
   height: var(--em-actionicon-height, 2rem);
-  padding: var(--em-actionicon-padding-top-bottom, 0.5rem)
-    var(--em-actionicon-padding-left-right, 0.125rem);
 }
 
 .actionIcon svg {
+  flex-shrink: 0;
   width: var(--em-actionicon-icon-size, 1rem);
   height: var(--em-actionicon-icon-size, 1rem);
 }
