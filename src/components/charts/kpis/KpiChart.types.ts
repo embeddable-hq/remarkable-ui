@@ -11,5 +11,6 @@ export type KpiChartProps = {
   percentageDecimalPlaces?: number;
   valueFontSize?: CssSize;
   noPreviousDataLabel?: string;
+  displayNullAs?: string;
   valueFormatter?: (value: number) => string;
 };

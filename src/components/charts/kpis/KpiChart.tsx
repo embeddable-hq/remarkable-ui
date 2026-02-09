@@ -16,11 +16,13 @@ export const KpiChart: FC<KpiChartProps> = ({
   percentageDecimalPlaces = 1,
   equalComparisonLabel = 'No change',
   noPreviousDataLabel = 'No previous data',
+  displayNullAs = '',
   valueFormatter,
 }) => {
   const hasComparisonValue = comparisonValue !== undefined;
 
-  const displayValue = value === undefined ? '' : valueFormatter ? valueFormatter(value) : value;
+  const displayValue =
+    value == null ? displayNullAs : valueFormatter?.(value) ?? value;
 
   const autoResizeValueFontSize = !valueFontSize;
   return (
@@ -35,7 +37,7 @@ export const KpiChart: FC<KpiChartProps> = ({
           )}
         >
           <h2
-            title={displayValue.toString()}
+            title={displayValue?.toString()}
             style={{
               fontSize: valueFontSize,
             }}
