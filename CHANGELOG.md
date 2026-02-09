@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.38
+
+### Patch Changes
+
+- 2438001: KPI charts display null as
+
 ## 2.0.37
 
 ### Patch Changes
