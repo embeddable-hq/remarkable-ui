@@ -22,7 +22,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   const hasComparisonValue = comparisonValue !== undefined;
 
   const displayValue =
-    value == null ? displayNullAs : valueFormatter ? valueFormatter(value) : value;
+    value == null ? displayNullAs : valueFormatter?.(value) ?? value;
 
   const autoResizeValueFontSize = !valueFontSize;
   return (
