@@ -21,8 +21,7 @@ export const KpiChart: FC<KpiChartProps> = ({
 }) => {
   const hasComparisonValue = comparisonValue !== undefined;
 
-  const displayValue =
-    value == null ? displayNullAs : valueFormatter?.(value) ?? value;
+  const displayValue = value == null ? displayNullAs : (valueFormatter?.(value) ?? value);
 
   const autoResizeValueFontSize = !valueFontSize;
   return (
@@ -36,12 +35,7 @@ export const KpiChart: FC<KpiChartProps> = ({
             </AutoTextSize>
           )}
         >
-          <h2
-            title={displayValue?.toString()}
-            style={{
-              fontSize: valueFontSize,
-            }}
-          >
+          <h2 title={displayValue?.toString()} style={{ fontSize: valueFontSize }}>
             {displayValue}
           </h2>
         </ConditionalWrapper>

@@ -34,6 +34,7 @@
   padding: 0 var(--em-kpichart-trend-padding, 0.25rem);
   font-weight: var(--em-kpichart-trend-font-weight, 500);
   line-height: var(--em-kpichart-trend-line-height, 1rem);
+  white-space: nowrap;
 }
 
 .kpiChangeBadge.positive {
