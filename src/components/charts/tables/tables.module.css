@@ -249,13 +249,7 @@
 .table .subRow td,
 .table .subRow th {
   font-weight: var(--em-tablechart-font-weight, 400);
-  /* background: var(--em-tablechart-subrow-background, #f9f9fa); */
 }
-
-/* .table .subRow:hover td,
-.table .subRow:hover th {
-  background-color: var(--em-tablechart-subrow-background--hover, #f2f2f4);
-} */
 
 /* Spinner animation */
 .subRowLoading {
