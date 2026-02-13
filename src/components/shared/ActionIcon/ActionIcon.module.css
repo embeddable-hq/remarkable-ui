@@ -10,6 +10,8 @@
   background-color: var(--em-actionicon-background, #ededf1);
   width: var(--em-actionicon-width, 1.25rem);
   height: var(--em-actionicon-height, 2rem);
+  border: var(--em-actionicon-border-width, 0rem) solid;
+  border-color: var(--em-actionicon-border-color, rgb(255 255 255 / 0%));
 }
 
 .actionIcon svg {
@@ -20,13 +22,16 @@
 
 .actionIcon:hover {
   background-color: var(--em-actionicon-background--hover, #e4e4ea);
+  border-color: var(--em-actionicon-border-color--hover, rgb(255 255 255 / 0%));
 }
 
 .actionIcon:active {
   background-color: var(--em-actionicon-background--active, #d2d2d5);
+  border-color: var(--em-actionicon-border-color--active, rgb(255 255 255 / 0%));
 }
 
 .actionIcon:disabled {
   pointer-events: none;
   color: var(--em-actionicon-color--disabled, #b8b8bd);
+  border-color: var(--em-actionicon-border-color--disabled, rgb(255 255 255 / 0%));
 }

@@ -1,7 +1,6 @@
 .chevron {
   width: var(--em-daterangepicker-chevron-size, 2rem);
   height: var(--em-daterangepicker-chevron-size, 2rem);
-  padding: var(--em-daterangepicker-chevron-padding, 0.5rem);
   border-radius: var(--em-daterangepicker-chevron-border-radius, 0.5rem);
   background: var(--em-daterangepicker-chevron-background, #fff);
   color: var(--em-daterangepicker-chevron-color, #212129);
@@ -29,7 +28,6 @@
   background: unset;
   width: calc(var(--em-daterangepicker-chevron-size, 2rem) / 2);
   height: calc(var(--em-daterangepicker-chevron-size, 2rem) / 2);
-  padding: calc(var(--em-daterangepicker-chevron-padding, 0.5rem) / 2);
 }
 
 .chevron.small svg {

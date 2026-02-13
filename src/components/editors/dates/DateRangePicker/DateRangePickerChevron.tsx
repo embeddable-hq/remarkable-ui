@@ -1,4 +1,4 @@
-import { IconCaretDownFilled } from '@tabler/icons-react';
+import { IconCaretLeftFilled } from '@tabler/icons-react';
 import styles from './DateRangePickerChevron.module.css';
 import clsx from 'clsx';
 
@@ -15,11 +15,7 @@ export const DateRangePickerChevron = ({
   size,
 }: DateRangePickerChevronProps): React.JSX.Element => {
   const rotation =
-    orientation === 'left'
-      ? 'rotate(90deg)'
-      : orientation === 'right'
-        ? 'rotate(-90deg)'
-        : undefined;
+    orientation === 'left' ? 'undefined' : orientation === 'right' ? 'rotate(180deg)' : undefined;
 
   const isSmallChevron = size === SMALL_SIZE;
 
@@ -30,7 +26,7 @@ export const DateRangePickerChevron = ({
         transform: rotation,
       }}
     >
-      <IconCaretDownFilled />
+      <IconCaretLeftFilled />
     </button>
   );
 };
