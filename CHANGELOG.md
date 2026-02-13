@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.39
+
+### Patch Changes
+
+- 523977f: Fix KPI font change on value change
+
 ## 2.0.38
 
 ### Patch Changes
