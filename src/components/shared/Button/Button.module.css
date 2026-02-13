@@ -2,7 +2,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: unset;
   border-radius: var(--em-button-border-radius, 624.9375rem);
   border: var(--em-button-border-width, 0rem) solid;
 }

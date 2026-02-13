@@ -1,12 +1,10 @@
 .ghostButton {
-  border: none;
   cursor: pointer;
   outline: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-
   background-color: transparent;
   font-style: normal;
 

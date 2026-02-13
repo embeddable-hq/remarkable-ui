@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  border: unset;
   justify-content: center;
   border-radius: var(--em-buttonicon-border-radius, 624.9375rem);
   border: var(--em-buttonicon-border-width, 0rem) solid;

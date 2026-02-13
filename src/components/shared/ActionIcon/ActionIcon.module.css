@@ -10,8 +10,8 @@
   background-color: var(--em-actionicon-background, #ededf1);
   width: var(--em-actionicon-width, 1.25rem);
   height: var(--em-actionicon-height, 2rem);
-  border: var(--em-actionicon-border-width, 0rem) solid;
-  border-color: var(--em-actionicon-border-color, rgb(255 255 255 / 0%));
+  border: var(--em-actionicon-border-width, 0rem) solid
+    var(--em-actionicon-border-color, rgb(255 255 255 / 0%));
 }
 
 .actionIcon svg {
