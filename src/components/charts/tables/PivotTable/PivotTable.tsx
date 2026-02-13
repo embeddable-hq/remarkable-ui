@@ -107,7 +107,6 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     progressive,
     batchSize,
     batchDelayMs,
-    data,
   });
 
   const renderMeasureCells = (
@@ -309,7 +308,6 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                 <Fragment key={`row-group-${rowKey}`}>
                   {/* Parent row with expand button */}
                   <tr
-                    key={`row-${row}`}
                     className={clsx(isExpanded && tableStyles.expandedRow)}
                     title={rowDimensionValue}
                   >
@@ -333,7 +331,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                       style={getTableCellWidthStyle(firstColumnWidth)}
                       aria-label={ariaLabel}
                     >
-                      <div className={tableStyles.firstColumnCell}>
+                      <span className={tableStyles.firstColumnCell}>
                         {expandableRows && (
                           <>
                             {isLoading ? (
@@ -346,7 +344,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                           </>
                         )}
                         <span>{rowDimensionValue}</span>
-                      </div>
+                      </span>
                     </th>
 
                     {renderMeasureCells(cellMap, String(row), `cell-${row}`)}

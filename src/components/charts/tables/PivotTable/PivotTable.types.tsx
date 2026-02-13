@@ -43,6 +43,5 @@ export type PivotTableProps<T> = {
   subRowsByRow?: Map<string, T[]>;
   loadingRows?: Set<string>;
   onRowExpand?: (rowKey: string) => void;
-  subRowIndent?: number;
   subRowDimension?: PivotTablePropsRowDimension<T>;
 };

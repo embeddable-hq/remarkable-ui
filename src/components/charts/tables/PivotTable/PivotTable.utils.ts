@@ -72,10 +72,9 @@ export const useProgressiveRows = (
     progressive: boolean;
     batchSize: number;
     batchDelayMs: number;
-    data: any[];
   },
 ): string[] => {
-  const { progressive, batchSize, batchDelayMs, data } = options;
+  const { progressive, batchSize, batchDelayMs } = options;
 
   const [visibleCount, setVisibleCount] = useState(() =>
     progressive ? Math.min(batchSize, rowValues.length) : rowValues.length,
@@ -88,7 +87,7 @@ export const useProgressiveRows = (
     }
     let cancelled = false;
     let t: number | null = null;
-    setVisibleCount(0);
+    setVisibleCount(Math.min(batchSize, rowValues.length));
 
     const tick = () => {
       setVisibleCount((prev) => {
@@ -106,7 +105,7 @@ export const useProgressiveRows = (
       cancelled = true;
       if (t !== null) window.clearTimeout(t);
     };
-  }, [progressive, batchSize, batchDelayMs, rowValues.length, data]);
+  }, [progressive, batchSize, batchDelayMs, rowValues.length]);
 
   return progressive ? rowValues.slice(0, visibleCount) : rowValues;
 };
