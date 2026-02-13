@@ -321,6 +321,15 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                         expandableRows && tableStyles.expandableRowCell,
                       )}
                       onClick={() => expandableRows && handleRowExpand(rowKey)}
+                      onKeyDown={(e) => {
+                        if (expandableRows && (e.key === 'Enter' || e.key === ' ')) {
+                          e.preventDefault();
+                          handleRowExpand(rowKey);
+                        }
+                      }}
+                      tabIndex={expandableRows ? 0 : undefined}
+                      role={expandableRows ? 'button' : undefined}
+                      aria-expanded={expandableRows ? isExpanded : undefined}
                       style={getTableCellWidthStyle(firstColumnWidth)}
                       aria-label={ariaLabel}
                     >
