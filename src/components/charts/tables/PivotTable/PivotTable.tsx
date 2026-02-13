@@ -1,8 +1,9 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, Fragment, useEffect, useMemo, useState } from 'react';
 import tableStyles from '../tables.module.css';
 import clsx from 'clsx';
 import { PivotTableProps } from './PivotTable.types';
 import { getTableCellWidthStyle } from '../tables.utils';
+import { IconLoader2, IconChevronDown, IconChevronRight } from '@tabler/icons-react';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -26,7 +27,14 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   columnTotalsFor = [],
   totalLabel = 'Total',
   className,
+  expandableRows = false,
+  subRowsByRow,
+  loadingRows,
+  onRowExpand,
+  subRowDimension,
 }) => {
+  // Default subRowDimension to rowDimension if not provided
+  const effectiveSubRowDimension = subRowDimension ?? rowDimension;
   const rowValues = useMemo(() => {
     const s = new Set<string>();
     for (const d of data) {
@@ -114,6 +122,29 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     progressive ? Math.min(batchSize, rowValues.length) : rowValues.length,
   );
 
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(() => new Set());
+
+  const handleRowExpand = (rowKey: string) => {
+    setExpandedRows((prev) => {
+      const next = new Set(prev);
+      const wasExpanded = next.has(rowKey);
+
+      if (wasExpanded) {
+        // Collapse the row
+        next.delete(rowKey);
+      } else {
+        // Expand the row and trigger data fetch
+        next.add(rowKey);
+        // Only call onRowExpand if we don't already have the data
+        if (!subRowsByRow?.has(rowKey)) {
+          onRowExpand?.(rowKey);
+        }
+      }
+
+      return next;
+    });
+  };
+
   useEffect(() => {
     if (!progressive) {
       setVisibleCount(rowValues.length);
@@ -162,6 +193,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                 rowSpan={1}
                 title={columnDimension.label}
                 className={tableStyles.stickyFirstColumn}
+                style={getTableCellWidthStyle(firstColumnWidth)}
               >
                 {columnDimension.label}
               </th>
@@ -232,84 +264,253 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
           </thead>
           <tbody>
             {visibleRows.map((row) => {
+              const rowKey = String(row);
+              const isExpanded = expandedRows.has(rowKey);
+              const isLoading = loadingRows?.has(rowKey) ?? false;
+              const subRows = subRowsByRow?.get(rowKey) ?? [];
+              const hasLoadedSubRows = subRows.length > 0;
+
               const rowDimensionValue = rowDimension.formatValue
                 ? rowDimension.formatValue(row)
                 : row;
+
+              const ariaLabel = expandableRows
+                ? isLoading
+                  ? 'Loading'
+                  : isExpanded
+                    ? `Collapse ${rowDimensionValue}`
+                    : `Expand ${rowDimensionValue}`
+                : '';
+
+              const showSubRows = isExpanded && !isLoading && hasLoadedSubRows;
+
               return (
-                <tr key={`row-${row}`}>
-                  <th
-                    scope="row"
+                <Fragment key={`row-group-${rowKey}`}>
+                  {/* Parent row with expand button */}
+                  <tr
+                    key={`row-${row}`}
+                    className={clsx(isExpanded && tableStyles.expandedRow)}
                     title={rowDimensionValue}
-                    className={tableStyles.stickyFirstColumn}
                   >
-                    {rowDimensionValue}
-                  </th>
+                    <th
+                      scope="row"
+                      title={rowDimensionValue}
+                      className={clsx(
+                        tableStyles.stickyFirstColumn,
+                        expandableRows && tableStyles.expandableRowCell,
+                      )}
+                      onClick={() => expandableRows && handleRowExpand(rowKey)}
+                      style={getTableCellWidthStyle(firstColumnWidth)}
+                      aria-label={ariaLabel}
+                    >
+                      <div className={tableStyles.firstColumnCell}>
+                        {expandableRows && (
+                          <>
+                            {isLoading ? (
+                              <IconLoader2 className={tableStyles.subRowLoading} />
+                            ) : isExpanded ? (
+                              <IconChevronDown />
+                            ) : (
+                              <IconChevronRight />
+                            )}
+                          </>
+                        )}
+                        <span>{rowDimensionValue}</span>
+                      </div>
+                    </th>
 
-                  {columnValues.flatMap((columnValue) =>
-                    measures.map((measure, idx) => {
-                      const object = cellMap.get(String(row))?.get(String(columnValue)) ?? {};
-                      const value = object?.[measure.key];
+                    {columnValues.flatMap((columnValue) =>
+                      measures.map((measure, idx) => {
+                        const object = cellMap.get(String(row))?.get(String(columnValue)) ?? {};
+                        const value = object?.[measure.key];
 
-                      const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
-                      const getDisplayValue = () => {
-                        if (measure.showAsPercentage) {
-                          const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-                          const totalsForCol =
-                            colTotals.get(String(columnValue)) ?? measures.map(() => 0);
-                          const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
+                        const key = `cell-${row}-${columnValue}-${measure.key}-${idx}`;
+                        const getDisplayValue = () => {
+                          if (measure.showAsPercentage) {
+                            const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
+                            const totalsForCol =
+                              colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                            const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
 
-                          const shouldShowPct =
-                            measure.showAsPercentage &&
-                            isNumber(Number(value)) &&
-                            isNumber(colTotal) &&
-                            colTotal > 0;
+                            const shouldShowPct =
+                              measure.showAsPercentage &&
+                              isNumber(Number(value)) &&
+                              isNumber(colTotal) &&
+                              colTotal > 0;
 
-                          if (shouldShowPct) {
-                            const percentage = (value / colTotal) * 100;
-                            return `${percentage.toFixed(measure.percentageDecimalPlaces ?? 0)}%`;
+                            if (shouldShowPct) {
+                              const percentage = (value / colTotal) * 100;
+                              return `${percentage.toFixed(measure.percentageDecimalPlaces ?? 0)}%`;
+                            }
                           }
-                        }
 
-                        return measure.accessor ? measure.accessor(object) : value;
-                      };
+                          return measure.accessor ? measure.accessor(object) : value;
+                        };
 
-                      const columnValueDisplay = getDisplayValue();
-
-                      return (
-                        <td key={key} title={columnValueDisplay}>
-                          {columnValueDisplay}
-                        </td>
-                      );
-                    }),
-                  )}
-
-                  {hasRowTotals &&
-                    measures
-                      .filter((measure) => rowTotalsSet.has(measure.key))
-                      .map((measure, idx) => {
-                        const totalsForRow = rowTotals.get(String(row)) ?? measures.map(() => 0);
-                        const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
-                        const key = `row-total-${String(row)}-${measure.key}-${idx}`;
-                        const value: number =
-                          measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
-                        let displayValue: any = value;
-
-                        if (measure.showAsPercentage) {
-                          displayValue = getPercentageDisplay(
-                            (value / (grandTotals[measureIndex] || 1)) * 100,
-                            measure.percentageDecimalPlaces ?? 0,
-                          );
-                        } else if (measure.accessor) {
-                          displayValue = measure.accessor({ [measure.key]: value });
-                        }
+                        const columnValueDisplay = getDisplayValue();
 
                         return (
-                          <td key={key} className={tableStyles.boltCell} title={displayValue}>
-                            {displayValue}
+                          <td key={key} title={columnValueDisplay}>
+                            {columnValueDisplay}
                           </td>
                         );
-                      })}
-                </tr>
+                      }),
+                    )}
+
+                    {hasRowTotals &&
+                      measures
+                        .filter((measure) => rowTotalsSet.has(measure.key))
+                        .map((measure, idx) => {
+                          const totalsForRow = rowTotals.get(String(row)) ?? measures.map(() => 0);
+                          const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
+                          const key = `row-total-${String(row)}-${measure.key}-${idx}`;
+                          const value: number =
+                            measureIndex >= 0 ? (totalsForRow[measureIndex] ?? 0) : 0;
+                          let displayValue: any = value;
+
+                          if (measure.showAsPercentage) {
+                            displayValue = getPercentageDisplay(
+                              (value / (grandTotals[measureIndex] || 1)) * 100,
+                              measure.percentageDecimalPlaces ?? 0,
+                            );
+                          } else if (measure.accessor) {
+                            displayValue = measure.accessor({ [measure.key]: value });
+                          }
+
+                          return (
+                            <td key={key} className={tableStyles.boltCell} title={displayValue}>
+                              {displayValue}
+                            </td>
+                          );
+                        })}
+                  </tr>
+
+                  {/* Sub-rows when expanded and loaded */}
+                  {showSubRows &&
+                    (() => {
+                      // Group sub-rows by subRowDimension.key (e.g., city)
+                      const subRowValues = Array.from(
+                        new Set(
+                          subRows
+                            .map((sr) => sr[effectiveSubRowDimension.key])
+                            .filter((v) => v != null),
+                        ),
+                      );
+
+                      // Create a cell map for sub-rows (subRowValue -> columnValue -> data)
+                      const subRowCellMap = new Map<string, Map<string, Record<string, any>>>();
+                      for (const sr of subRows) {
+                        const subR = String(sr[effectiveSubRowDimension.key]);
+                        const subC = String(sr[columnDimension.key]);
+                        if (!subRowCellMap.has(subR)) subRowCellMap.set(subR, new Map());
+                        subRowCellMap.get(subR)!.set(subC, sr as Record<string, any>);
+                      }
+
+                      return subRowValues.map((subRowValue, subRowIdx) => {
+                        const subRowDimensionValue = effectiveSubRowDimension.formatValue
+                          ? effectiveSubRowDimension.formatValue(subRowValue)
+                          : subRowValue;
+
+                        return (
+                          <tr key={`sub-${rowKey}-${subRowIdx}`} className={tableStyles.subRow}>
+                            <th
+                              scope="row"
+                              className={clsx(
+                                tableStyles.stickyFirstColumn,
+                                tableStyles.subRowFirstColumn,
+                              )}
+                              style={getTableCellWidthStyle(firstColumnWidth)}
+                              title={subRowDimensionValue}
+                            >
+                              <span>{subRowDimensionValue}</span>
+                            </th>
+
+                            {columnValues.flatMap((columnValue) =>
+                              measures.map((measure, idx) => {
+                                const subRowData =
+                                  subRowCellMap
+                                    .get(String(subRowValue))
+                                    ?.get(String(columnValue)) ?? {};
+                                const value = subRowData?.[measure.key];
+                                const key = `sub-cell-${rowKey}-${subRowIdx}-${columnValue}-${measure.key}-${idx}`;
+
+                                const getDisplayValue = () => {
+                                  if (measure.showAsPercentage) {
+                                    const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
+                                    const totalsForCol =
+                                      colTotals.get(String(columnValue)) ?? measures.map(() => 0);
+                                    const colTotal = mi >= 0 ? (totalsForCol[mi] ?? 0) : 0;
+
+                                    const shouldShowPct =
+                                      measure.showAsPercentage &&
+                                      isNumber(Number(value)) &&
+                                      isNumber(colTotal) &&
+                                      colTotal > 0;
+
+                                    if (shouldShowPct) {
+                                      const percentage = (value / colTotal) * 100;
+                                      return `${percentage.toFixed(measure.percentageDecimalPlaces ?? 0)}%`;
+                                    }
+                                  }
+
+                                  return measure.accessor ? measure.accessor(subRowData) : value;
+                                };
+
+                                const columnValueDisplay = getDisplayValue();
+
+                                return (
+                                  <td key={key} title={columnValueDisplay}>
+                                    {columnValueDisplay}
+                                  </td>
+                                );
+                              }),
+                            )}
+
+                            {hasRowTotals &&
+                              measures
+                                .filter((measure) => rowTotalsSet.has(measure.key))
+                                .map((measure, idx) => {
+                                  // Calculate total for this sub-row across all columns
+                                  let total = 0;
+                                  for (const columnValue of columnValues) {
+                                    const subRowData =
+                                      subRowCellMap
+                                        .get(String(subRowValue))
+                                        ?.get(String(columnValue)) ?? {};
+                                    const val = Number(subRowData?.[measure.key]);
+                                    if (!Number.isNaN(val)) {
+                                      total += val;
+                                    }
+                                  }
+
+                                  let displayValue: any = total;
+
+                                  if (measure.showAsPercentage) {
+                                    const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
+                                    const grandTotal = grandTotals[measureIndex] || 1;
+                                    displayValue = getPercentageDisplay(
+                                      (total / grandTotal) * 100,
+                                      measure.percentageDecimalPlaces ?? 0,
+                                    );
+                                  } else if (measure.accessor) {
+                                    displayValue = measure.accessor({ [measure.key]: total });
+                                  }
+
+                                  return (
+                                    <td
+                                      key={`sub-total-${rowKey}-${subRowIdx}-${measure.key}-${idx}`}
+                                      className={tableStyles.boltCell}
+                                      title={displayValue}
+                                    >
+                                      {displayValue}
+                                    </td>
+                                  );
+                                })}
+                          </tr>
+                        );
+                      });
+                    })()}
+                </Fragment>
               );
             })}
             {hasColumnTotals && (
@@ -318,6 +519,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   scope="row"
                   className={clsx(tableStyles.stickyFirstColumn, tableStyles.boltCell)}
                   title={totalLabel}
+                  style={getTableCellWidthStyle(firstColumnWidth)}
                 >
                   {totalLabel}
                 </th>

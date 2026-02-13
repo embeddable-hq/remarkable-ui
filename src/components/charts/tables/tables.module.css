@@ -57,7 +57,7 @@
 
 .table th,
 .table td {
-  cursor: pointer;
+  cursor: default;
   position: relative;
   box-sizing: border-box;
   padding-top: var(--em-tablechart-cell-padding, 0.5rem);
@@ -100,7 +100,9 @@
   background-color: var(--em-tablechart-cell-background--hover, #f7f7f8);
 }
 
-.table tr:has(td:hover) td {
+.table tr:has(td:hover) td,
+.table tr:has(td:hover) th,
+.table tr:has(th:hover) td {
   background-color: var(--em-tablechart-cell-background--hover, #f7f7f8);
 }
 
@@ -122,6 +124,9 @@
 .table tr th {
   color: var(--em-tablechart-color, #212129);
   font-weight: var(--em-tablechart-font-weight--medium, 500);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Body cells */
@@ -150,7 +155,35 @@
   text-align: left;
   position: sticky;
   font-style: normal;
-  pointer-events: none;
+}
+
+.table .stickyFirstColumn.expandableRowCell {
+  cursor: pointer;
+}
+
+/* Expanded row */
+.table .expandedRow td,
+.table .expandedRow span,
+.table .expandedRow svg {
+  font-weight: var(--em-tablechart-font-weight--bold, 700);
+}
+
+.table .stickyFirstColumn .firstColumnCell {
+  display: flex;
+  align-items: center;
+}
+
+.table .stickyFirstColumn .firstColumnCell span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--em-tablechart-padding-left-right, 0.25rem);
+}
+
+.table .stickyFirstColumn svg {
+  width: var(--em-tablechart-icon-size, 1rem);
+  height: var(--em-tablechart-icon-size, 1rem);
+  flex-shrink: 0;
 }
 
 .stickyFirstColumn::after {
@@ -161,6 +194,10 @@
   right: calc(-1 * var(--em-tablechart-border-width, 1px));
   width: var(--em-tablechart-border-width, 1px);
   background: var(--em-tablechart-border-color, #ededf1);
+}
+
+.table .stickyFirstColumn.subRowFirstColumn span {
+  margin-left: var(--em-tablechart-pivot-ident-padding, 1rem);
 }
 
 .table {
@@ -206,4 +243,31 @@
   font-family: var(--em-tablechart-loading-indicator-font-family, sans-serif);
   font-size: var(--em-tablechart-loading-indicator-font-size, 0.75rem);
   font-weight: var(--em-tablechart-loading-indicator-font-weight, 700);
+}
+
+/* Sub-row styling */
+.table .subRow td,
+.table .subRow th {
+  font-weight: var(--em-tablechart-font-weight, 400);
+  /* background: var(--em-tablechart-subrow-background, #f9f9fa); */
+}
+
+/* .table .subRow:hover td,
+.table .subRow:hover th {
+  background-color: var(--em-tablechart-subrow-background--hover, #f2f2f4);
+} */
+
+/* Spinner animation */
+.subRowLoading {
+  animation: spin 1s linear infinite;
+  color: inherit;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
