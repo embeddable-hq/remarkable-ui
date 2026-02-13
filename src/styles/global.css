@@ -521,9 +521,9 @@
   --em-textfield-background--active: var(--em-sem-background--subtle);
   --em-textfield-background--disabled: var(--em-sem-background--neutral);
   --em-textfield-background--filled: var(--em-sem-background--light);
-  --em-textfield-border-border-radius: var(--em-core-border-radius--200);
   --em-textfield-border-color: var(--em-sem-text--subtle);
   --em-textfield-border-color--error: var(--em-sem-status-error-text);
+  --em-textfield-border-radius: var(--em-core-border-radius--200);
   --em-textfield-border-width: var(--em-core-border-width--025);
   --em-textfield-border-width--error: var(--em-core-border-width--050);
   --em-textfield-color: var(--em-sem-text--muted);

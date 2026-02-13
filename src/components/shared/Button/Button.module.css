@@ -23,7 +23,7 @@
 
 .button.medium {
   height: var(--em-button-height--medium, 2.5rem);
-  padding-right: var(--em-button-padding-top-bottom--medium, 0.75rem);
+  padding-right: var(--em-button-padding-left-right--medium, 0.75rem);
   padding-left: var(--em-button-padding-left-right--medium, 0.75rem);
 }
 
