@@ -14,8 +14,7 @@ export const DateRangePickerChevron = ({
   orientation,
   size,
 }: DateRangePickerChevronProps): React.JSX.Element => {
-  const rotation =
-    orientation === 'left' ? 'undefined' : orientation === 'right' ? 'rotate(180deg)' : undefined;
+  const rotation = orientation === 'left' ? undefined : 'rotate(180deg)';
 
   const isSmallChevron = size === SMALL_SIZE;
 
