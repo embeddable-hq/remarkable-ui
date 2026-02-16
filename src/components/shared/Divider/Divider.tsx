@@ -25,6 +25,9 @@ const getStyle = (color?: string, thickness?: number, vertical?: boolean) => {
 
 export const Divider = ({ color, thickness, vertical, className }: DividerProps) => {
   return (
-    <div className={clsx(styles.divider, className)} style={getStyle(color, thickness, vertical)} />
+    <div
+      className={clsx(styles.divider, vertical && styles.vertical, className)}
+      style={getStyle(color, thickness, vertical)}
+    />
   );
 };
