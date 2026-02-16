@@ -2,4 +2,4 @@
 '@embeddable.com/remarkable-ui': patch
 ---
 
-Fix KPI font change on value change
+PivotTable with option of sub rows
