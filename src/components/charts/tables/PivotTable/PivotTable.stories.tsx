@@ -2,9 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { PivotTable } from './PivotTable';
 import { PivotTableProps } from './PivotTable.types';
 import { decoratorsResizeCard } from '../../../../storybook.constants';
+import { useState } from 'react';
 
 type Data = {
   country: string;
+  city?: string;
   month: string;
   orders: number | null;
   cost: number | null;
@@ -116,4 +118,78 @@ export const WithTotals: Story = {
 
 export const Resize: Story = {
   decorators: decoratorsResizeCard,
+};
+
+const ExpandableRowsStory = (args: PivotTableProps<Data>) => {
+  const [subRowsByRow, setSubRowsByRow] = useState(new Map<string, Data[]>());
+  const [loadingRows, setLoadingRows] = useState(new Set<string>());
+
+  // Split a parent value across cities so sub-rows sum to parent
+  const splitValue = (
+    parentValue: number | null,
+    cityIndex: number,
+    totalCities: number,
+  ): number | null => {
+    if (parentValue == null) return null;
+    const base = Math.floor(parentValue / totalCities);
+    const remainder = parentValue - base * totalCities;
+    return cityIndex === 0 ? base + remainder : base;
+  };
+
+  const handleRowExpand = async (rowKey: string) => {
+    setLoadingRows((prev) => new Set(prev).add(rowKey));
+
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Get parent data for this row
+    const parentRows = data.filter((d) => d.country === rowKey);
+    const cities = ['City A', 'City B'];
+
+    // Sub-row values sum to parent values so percentages add up correctly
+    const mockSubRows: Data[] = cities.flatMap((city, cityIdx) =>
+      parentRows.map((pd) => ({
+        country: rowKey,
+        city: city,
+        month: pd.month,
+        orders: splitValue(pd.orders, cityIdx, cities.length),
+        cost: splitValue(pd.cost, cityIdx, cities.length),
+      })),
+    );
+
+    setSubRowsByRow((prev) => new Map(prev).set(rowKey, mockSubRows));
+    setLoadingRows((prev) => {
+      const next = new Set(prev);
+      next.delete(rowKey);
+      return next;
+    });
+  };
+
+  const subRowDimension: PivotTableProps<Data>['subRowDimension'] = {
+    key: 'city',
+    label: 'City',
+  };
+
+  return (
+    <PivotTable
+      {...args}
+      expandableRows={true}
+      subRowsByRow={subRowsByRow}
+      loadingRows={loadingRows}
+      onRowExpand={handleRowExpand}
+      subRowDimension={subRowDimension}
+    />
+  );
+};
+
+export const WithExpandableRows: Story = {
+  render: (args) => <ExpandableRowsStory {...(args as PivotTableProps<Data>)} />,
+  args: {
+    data: data,
+    measures: measures,
+    rowDimension: rowDimension,
+    columnDimension: columnDimension,
+    firstColumnWidth: 150,
+    columnWidth: 100,
+  },
 };
