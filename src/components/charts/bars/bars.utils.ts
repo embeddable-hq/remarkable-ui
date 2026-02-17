@@ -6,6 +6,7 @@ import { BarChartConfigurationProps, BarChartHorizontalConfigurationProps } from
 import { Context } from 'chartjs-plugin-datalabels';
 import {
   chartjsAxisOptionsLayoutPadding,
+  chartjsAxisOptionsLayoutPaddingLarge,
   getChartjsAxisOptions,
   getChartjsAxisOptionsScalesGridColor,
   getChartjsAxisOptionsScalesTicksDefault,
@@ -115,7 +116,7 @@ const getBarHorizontalChartOptions = (
     layout: {
       padding: {
         right: (config.stacked ? config.showTotalLabels : config.showValueLabels)
-          ? chartjsAxisOptionsLayoutPadding
+          ? chartjsAxisOptionsLayoutPaddingLarge
           : 0,
       },
     },
