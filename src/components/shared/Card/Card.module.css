@@ -41,6 +41,7 @@
   align-items: center;
   justify-content: center;
   padding: unset;
+  color: var(--em-card-title-color, #212129);
 }
 
 .card .cardHeader .cardHeaderTitle .cardHeaderTooltipButton svg {

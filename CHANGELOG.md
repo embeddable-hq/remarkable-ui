@@ -1,5 +1,18 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.41
+
+### Patch Changes
+
+- d2d8f48: Introduce new Divider component
+
+## 2.0.40
+
+### Patch Changes
+
+- f735a47: PivotTable with option of sub rows
+- 1246393: Update buttons with the new design system
+
 ## 2.0.39
 
 ### Patch Changes
