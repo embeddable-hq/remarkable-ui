@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.41
+
+### Patch Changes
+
+- d2d8f48: Introduce new Divider component
+
 ## 2.0.40
 
 ### Patch Changes
