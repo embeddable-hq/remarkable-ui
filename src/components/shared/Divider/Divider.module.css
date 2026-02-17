@@ -1,10 +1,10 @@
 .divider {
-  height: var(--em-divider-tickness, 0.0625rem);
+  height: var(--em-divider-thickness, 0.0625rem);
   width: 100%;
   background-color: var(--em-divider-color, #e4e4ea);
 }
 
 .divider.vertical {
-  width: var(--em-divider-tickness, 0.0625rem);
+  width: var(--em-divider-thickness, 0.0625rem);
   height: 100%;
 }
