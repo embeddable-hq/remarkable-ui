@@ -44,7 +44,7 @@ const getDatalabelTotalFormatter = (_value: any, context: Context) => {
     return sum + (val || 0);
   }, 0);
 
-  return total > 0 ? total : '';
+  return total === 0 ? '' : total;
 };
 
 const getBarVerticalChartOptions = (
@@ -65,16 +65,15 @@ const getBarVerticalChartOptions = (
           total: {
             align: (context) => {
               const value = context.dataset.data[context.dataIndex] as number;
-              return value >= 0 ? 'top' : 'left';
+              return value >= 0 ? 'top' : 'bottom';
             },
           },
           value: {
-            align: (context) => {
+            align: () => {
               if (config.stacked) {
                 return 'center';
               }
-              const value = context.dataset.data[context.dataIndex] as number;
-              return value >= 0 ? 'top' : 'bottom';
+              return 'top';
             },
           },
         },
@@ -129,12 +128,11 @@ const getBarHorizontalChartOptions = (
             },
           },
           value: {
-            align: (context) => {
+            align: () => {
               if (config.stacked) {
                 return 'center';
               }
-              const value = context.dataset.data[context.dataIndex] as number;
-              return value >= 0 ? 'right' : 'left';
+              return 'right';
             },
           },
         },

@@ -60,6 +60,8 @@ export const Default: Story = {
 export const Stacked: Story = {
   args: {
     stacked: true,
+    showTotalLabels: true,
+    showValueLabels: false,
   },
   decorators: decoratorsSquare,
 };
