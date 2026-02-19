@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.42
+
+### Patch Changes
+
+- 5a8c412: Fix BarChart label alignments
+
 ## 2.0.41
 
 ### Patch Changes
