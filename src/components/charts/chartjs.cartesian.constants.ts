@@ -85,6 +85,7 @@ export const getChartjsAxisOptions = (): Partial<ChartOptions> =>
   });
 
 export const chartjsAxisOptionsLayoutPadding: number = 30;
+export const chartjsAxisOptionsLayoutPaddingLarge: number = 60;
 
 function isMixedValues(values: number[]): boolean {
   const hasPos = values.some((v) => v > 0);
