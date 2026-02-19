@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.43
+
+### Patch Changes
+
+- 88cb78b: Fix horizontal bar chart datalabel
+
 ## 2.0.42
 
 ### Patch Changes
