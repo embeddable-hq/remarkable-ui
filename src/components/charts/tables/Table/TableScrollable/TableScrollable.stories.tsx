@@ -3,7 +3,7 @@ import { TableScrollable as TableScrollableChart } from './TableScrollable';
 import { useArgs } from 'storybook/internal/preview-api';
 import { TableSort } from '../table.types';
 import { decoratorsResizeCard } from '../../../../../storybook.constants';
-import { MockEmployee, mockMakeEmployees, mockTableHeaders } from '../tables.test';
+import { MockEmployee, mockMakeEmployees, mockTableHeaders } from '../tables.test.utils';
 
 const meta: Meta = {
   title: 'Charts/TableScrollable',
