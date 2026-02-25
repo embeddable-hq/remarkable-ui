@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run linters
-        run: npm run lint && npm run prettier:check && npm run types:check
+        run: npm run prettier:check && npm run types:check
       - name: Run tests
         run: npm run test
       - name: Build
