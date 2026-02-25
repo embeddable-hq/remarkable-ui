@@ -23,9 +23,9 @@ jobs:
         with:
           node-version: ${{ vars.BUILD_NODE_VERSION }}
       - name: Run coverage
-        run: npm ci && npm run coverage
+        run: npm ci --ignore-scripts && npm run coverage
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
