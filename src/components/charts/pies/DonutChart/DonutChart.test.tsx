@@ -1,0 +1,55 @@
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
+import { DonutChart } from './DonutChart';
+
+vi.mock('react-chartjs-2', () => ({
+  Pie: vi.fn(({ onClick }: { onClick?: React.MouseEventHandler<HTMLCanvasElement> }) => (
+    <canvas data-testid="donut-chart" onClick={onClick} />
+  )),
+}));
+
+vi.mock('../../chartjs.utils', () => ({
+  getSegmentIndexClicked: vi.fn(() => 0),
+}));
+
+vi.mock('../../../../hooks/useResizeObserver.hook', () => ({
+  useResizeObserver: vi.fn(() => ({ width: 400, height: 300 })),
+}));
+
+const MOCK_DATA = {
+  labels: ['A', 'B'],
+  datasets: [{ data: [60, 40] }],
+};
+
+describe('DonutChart', () => {
+  describe('rendering', () => {
+    it('renders the chart when container has sufficient size', () => {
+      render(<DonutChart data={MOCK_DATA} />);
+
+      expect(screen.getByTestId('donut-chart')).toBeInTheDocument();
+    });
+
+    it('does not render the chart when container is too small', async () => {
+      const { useResizeObserver } = await import('../../../../hooks/useResizeObserver.hook');
+      vi.mocked(useResizeObserver).mockReturnValueOnce({ width: 5, height: 5 });
+
+      render(<DonutChart data={MOCK_DATA} />);
+
+      expect(screen.queryByTestId('donut-chart')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('onSegmentClick', () => {
+    it('calls onSegmentClick with the clicked segment index', async () => {
+      const user = userEvent.setup();
+      const handleClick = vi.fn();
+
+      render(<DonutChart data={MOCK_DATA} onSegmentClick={handleClick} />);
+
+      await user.click(screen.getByTestId('donut-chart'));
+
+      expect(handleClick).toHaveBeenCalledWith(0);
+    });
+  });
+});
