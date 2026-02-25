@@ -1,12 +1,15 @@
 node_modules
 dist
 
+# embeddable
 .embeddable
 .embeddable-build
 .embeddable-dev-build
 .embeddable-dev-tmp
 .embeddable-tmp
 
+# testing
+/coverage
 
 *storybook.log
 storybook-static
@@ -15,3 +18,4 @@ storybook-static
 
 embeddable.config.js
 .cursorindexingignore
+
