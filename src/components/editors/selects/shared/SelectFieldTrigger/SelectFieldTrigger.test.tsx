@@ -40,16 +40,21 @@ describe('SelectFieldTrigger', () => {
       expect(buttons.length).toBeGreaterThanOrEqual(1);
     });
 
+    it('shows clear button when valueLabel and isClearable are set', () => {
+      const handleClear = vi.fn();
+      render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={handleClear} />);
+      const clearIcon = document.querySelector('svg[class*="tabler-icon-x"]');
+      expect(clearIcon).not.toBeNull();
+    });
+
     it('calls onClear when clear icon is interacted with', async () => {
       const user = userEvent.setup();
       const handleClear = vi.fn();
-
       render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={handleClear} />);
-
       const svg = document.querySelector('svg[class*="tabler-icon-x"]');
-      if (svg) {
-        await user.pointer({ target: svg, keys: '[MouseLeft]' });
-      }
+      expect(svg).not.toBeNull();
+      await user.pointer({ target: svg as SVGElement, keys: '[MouseLeft]' });
+      expect(handleClear).toHaveBeenCalledOnce();
     });
   });
 

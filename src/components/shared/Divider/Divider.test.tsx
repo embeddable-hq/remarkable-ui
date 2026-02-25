@@ -27,7 +27,8 @@ describe('Divider', () => {
     it('does not apply backgroundColor when color is not provided', () => {
       const { container } = render(<Divider />);
 
-      expect(container.firstChild).not.toHaveStyle({ backgroundColor: 'rgb(0, 0, 0)' });
+      const divider = container.firstElementChild as HTMLElement;
+      expect(divider.style.backgroundColor).toBe('');
     });
   });
 

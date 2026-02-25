@@ -105,5 +105,6 @@ export default defineConfig([
     'dist',
     'node_modules',
     '**/*.d.ts',
+    'coverage',
   ]),
 ]);

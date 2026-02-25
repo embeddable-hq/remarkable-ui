@@ -109,12 +109,11 @@ describe('PivotTable', () => {
 
   describe('loading rows', () => {
     it('shows loading indicator for rows in loadingRows set', async () => {
-      const user = userEvent.setup();
       const loadingRows = new Set(['US']);
 
       render(<PivotTable {...DEFAULT_PROPS} expandableRows loadingRows={loadingRows} />);
 
-      await user.click(screen.getByRole('button', { name: /loading/i }));
+      expect(screen.getByRole('button', { name: /loading/i })).toBeInTheDocument();
     });
   });
 });

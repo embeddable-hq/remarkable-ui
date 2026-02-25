@@ -252,7 +252,7 @@ export const WithCategories: Story = {
   },
 };
 
-export const withError: Story = {
+export const WithError: Story = {
   args: {
     label: undefined,
     required: false,
@@ -260,7 +260,7 @@ export const withError: Story = {
   },
 };
 
-export const withErrorMessage: Story = {
+export const WithErrorMessage: Story = {
   args: {
     label: undefined,
     required: false,
