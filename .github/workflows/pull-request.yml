@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: ${{ vars.BUILD_NODE_VERSION }}
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
       - name: Run linters
         run: npm run prettier:check && npm run types:check
       - name: Run tests
@@ -35,7 +35,7 @@ jobs:
         env:
           NODE_ENV: production
       - name: Produce Test Report
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@6e6a65b7a0bd2c9197df7d0ae36ac5cee784230c
         if: success() || failure()
         with:
           name: Test results
