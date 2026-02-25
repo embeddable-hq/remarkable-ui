@@ -34,11 +34,3 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-      - name: Produce Test Report
-        uses: dorny/test-reporter@6e6a65b7a0bd2c9197df7d0ae36ac5cee784230c
-        if: success() || failure()
-        with:
-          name: Test results
-          path: test-results.xml
-          reporter: jest-junit
-          token: ${{ secrets.GITHUB_TOKEN }}
