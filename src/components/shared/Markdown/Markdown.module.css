@@ -1,0 +1,87 @@
+.markdown {
+  height: 100%;
+  overflow: auto;
+}
+
+.markdown h1 {
+  color: var(--em-markdown-h1-color, #212129);
+  font-family: var(--em-markdown-h1-font-family, Inter);
+  font-size: var(--em-markdown-h1-font-size, 2rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-h1-font-weight, 700);
+  line-height: var(--em-markdown-h1-line-height, 2.375rem); /* 118.75% */
+}
+
+.markdown h2 {
+  color: var(--em-markdown-h2-color, #212129);
+  font-family: var(--em-markdown-h2-font-family, Inter);
+  font-size: var(--em-markdown-h2-font-size, 1.25rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-h2-font-weight, 700);
+  line-height: var(--em-markdown-h2-line-height, 1.1875rem); /* 95% */
+}
+
+.markdown h3 {
+  color: var(--em-markdown-h3-color, #212129);
+  font-family: var(--em-markdown-h3-font-family, Inter);
+  font-size: var(--em-markdown-h3-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-h3-font-weight, 700);
+  line-height: var(--em-markdown-h3-line-height, 1rem); /* 100% */
+}
+
+.markdown p {
+  color: var(--em-markdown-p-color, #212129);
+  font-family: var(--em-markdown-p-font-family, Inter);
+  font-size: var(--em-markdown-p-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-p-font-weight--regular, 400);
+  line-height: var(--em-markdown-p-line-height, 1rem); /* 114.286% */
+}
+
+.markdown strong {
+  color: var(--em-markdown-p-color, #212129);
+  font-family: var(--em-markdown-p-font-family, Inter);
+  font-size: var(--em-markdown-p-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-p-font-weight--strong, 700);
+  line-height: var(--em-markdown-p-line-height, 1rem); /* 114.286% */
+}
+
+.markdown em {
+  color: var(--em-markdown-p-color, #212129);
+  font-family: var(--em-markdown-p-font-family, Inter);
+  font-size: var(--em-markdown-p-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-p-font-weight--italic, 700);
+  line-height: var(--em-markdown-p-line-height, 1rem); /* 114.286% */
+}
+
+.markdown code {
+  color: var(--em-markdown-p-color, #212129);
+  font-family: var(--em-markdown-code-font-family, monospace);
+  font-size: var(--em-markdown-p-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-p-font-weight--regular, 400);
+  line-height: var(--em-markdown-p-line-height, 1rem); /* 114.286% */
+}
+
+.markdown hr {
+  border-color: var(--em-divider-color, #e4e4ea);
+  border-width: var(--em-divider-thickness, 0.0625rem);
+}
+
+.markdown a {
+  color: var(--em-markdown-link-color, #212129);
+  font-family: var(--em-markdown-link-font-family, Inter);
+  font-size: var(--em-markdown-link-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-link-font-weight, 500);
+  line-height: var(--em-markdown-link-line-height, 1rem); /* 114.286% */
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}

@@ -43,6 +43,22 @@ export const decoratorsSquare: Meta['decorators'] = [
   ),
 ];
 
+export const decoratorsResize: Meta['decorators'] = [
+  (Story) => (
+    <div
+      style={{
+        width: '400px',
+        height: '400px',
+        resize: 'both',
+        overflow: 'auto',
+        background: stylesTokensCore['--em-core-color-gray--0050'],
+      }}
+    >
+      <Story />
+    </div>
+  ),
+];
+
 export const decoratorsResizeCard: Meta['decorators'] = [
   (Story) => (
     <div style={{ width: '400px', height: '400px', resize: 'both', overflow: 'auto' }}>
