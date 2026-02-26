@@ -73,7 +73,7 @@ export const LogarithmicScale: Story = {
   decorators: decoratorsSquare,
 };
 
-export const widthRange: Story = {
+export const WidthRange: Story = {
   args: {
     yAxisRangeMin: 10,
     yAxisRangeMax: 70,

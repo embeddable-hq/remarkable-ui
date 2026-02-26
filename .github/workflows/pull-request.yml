@@ -1,0 +1,36 @@
+name: Verify pull-request
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches: ['main']
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  test-application:
+    name: Test application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project sources
+        uses: actions/checkout@v6
+      - name: Setup NodeJS
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ vars.BUILD_NODE_VERSION }}
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Run linters
+        run: npm run prettier:check && npm run types:check
+      - name: Run tests
+        run: npm run test
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production

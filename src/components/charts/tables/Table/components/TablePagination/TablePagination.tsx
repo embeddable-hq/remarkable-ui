@@ -37,7 +37,7 @@ export const TablePagination: FC<TablePaginationProps> = ({
     if (totalPages && page >= totalPages) {
       onPageChange(0);
     }
-  }, [totalPages, page]);
+  }, [totalPages, page, onPageChange]);
 
   return (
     <div className={styles.tablePagination} aria-label="Table pagination controls">

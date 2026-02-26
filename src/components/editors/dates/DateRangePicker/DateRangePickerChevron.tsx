@@ -19,13 +19,14 @@ export const DateRangePickerChevron = ({
   const isSmallChevron = size === SMALL_SIZE;
 
   return (
-    <button
+    <span
+      data-testid="date-range-picker-chevron"
       className={clsx(styles.chevron, isSmallChevron && styles.small)}
       style={{
         transform: rotation,
       }}
     >
       <IconCaretLeftFilled />
-    </button>
+    </span>
   );
 };
