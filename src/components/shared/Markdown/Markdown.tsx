@@ -16,6 +16,7 @@ export const Markdown: FC<MarkdownProps> = ({ content }) => {
 
   return (
     <div className={styles.markdown}>
+      {/* // rehype-raw is intentionally omitted: raw HTML in content is escaped, not rendered */}
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{resolvedContent}</ReactMarkdown>
     </div>
   );
