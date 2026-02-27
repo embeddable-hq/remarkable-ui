@@ -58,12 +58,12 @@
 }
 
 .markdown code {
-  color: var(--em-markdown-p-color, #212129);
+  color: var(--em-markdown-code-color, #212129);
   font-family: var(--em-markdown-code-font-family, monospace);
-  font-size: var(--em-markdown-p-font-size, 0.875rem);
+  font-size: var(--em-markdown-code-font-size, 0.875rem);
   font-style: normal;
-  font-weight: var(--em-markdown-p-font-weight--regular, 400);
-  line-height: var(--em-markdown-p-line-height, 1rem); /* 114.286% */
+  font-weight: var(--em-markdown-code-font-weight--regular, 400);
+  line-height: var(--em-markdown-code-line-height, 1rem); /* 114.286% */
 }
 
 .markdown hr {
