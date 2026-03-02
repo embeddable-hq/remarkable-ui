@@ -11,8 +11,8 @@ import {
 } from '@tabler/icons-react';
 import { FC, useRef, useState } from 'react';
 import { Markdown } from '../Markdown/Markdown';
-import { ActionIcon } from '../ActionIcon/ActionIcon';
 import styles from './MarkdownEditor.module.css';
+import { GhostButtonIcon } from '../GhostButtonIcon/GhostButtonIcon';
 
 type MarkdownEditorProps = {
   value?: string;
@@ -136,7 +136,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, 
     <div className={styles.container}>
       <div className={styles.toolbar}>
         {formatItems.map(({ icon, label, action }) => (
-          <ActionIcon
+          <GhostButtonIcon
             key={label}
             icon={icon}
             aria-label={label}
@@ -146,7 +146,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, 
           />
         ))}
         <div className={styles.toolbarSpacer} />
-        <ActionIcon
+        <GhostButtonIcon
           icon={isPreview ? IconPencil : IconEye}
           aria-label={isPreview ? 'Edit' : 'Preview'}
           onMouseDown={(e) => e.preventDefault()}
