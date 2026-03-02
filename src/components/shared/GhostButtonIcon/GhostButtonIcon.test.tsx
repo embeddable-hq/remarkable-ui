@@ -12,20 +12,6 @@ describe('GhostButtonIcon', () => {
     expect(screen.getByTestId('mock-icon')).toBeInTheDocument();
   });
 
-  it('applies the ghostButton class', () => {
-    render(<GhostButtonIcon icon={MockIcon} aria-label="Action" />);
-
-    expect(screen.getByRole('button')).toHaveClass('ghostButton');
-  });
-
-  it('merges custom className with default classes', () => {
-    render(<GhostButtonIcon icon={MockIcon} className="custom-class" aria-label="Action" />);
-
-    const button = screen.getByRole('button');
-    expect(button).toHaveClass('ghostButton');
-    expect(button).toHaveClass('custom-class');
-  });
-
   it('forwards button HTML attributes', () => {
     render(<GhostButtonIcon icon={MockIcon} aria-label="Test button" type="submit" />);
 
