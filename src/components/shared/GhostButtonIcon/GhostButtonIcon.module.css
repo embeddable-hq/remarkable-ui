@@ -1,0 +1,39 @@
+.ghostButtonIcon {
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+
+  border-radius: var(--em-ghostbuttonicon-border-radius, 0.25rem);
+  border: var(--em-ghostbuttonicon-border-width, 0) solid
+    var(--em-ghostbuttonicon-border-color, rgba(255, 255, 255, 0));
+  width: var(--em-ghostbuttonicon-width, 1.25rem);
+  height: var(--em-ghostbuttonicon-height, 1.25rem);
+}
+
+.ghostButtonIcon:hover,
+.ghostButtonIcon:focus {
+  background-color: var(--em-ghostbuttonicon-background--hover, #f7f7f8);
+  border-color: var(--em-ghostbuttonicon-border-color--hover, rgb(255 255 255 / 0%));
+}
+
+.ghostButtonIcon:active {
+  background-color: var(--em-ghostbuttonicon-background--active, #ededf1);
+  border-color: var(--em-ghostbuttonicon-border-color--active, rgb(255 255 255 / 0%));
+}
+
+.ghostButtonIcon:disabled {
+  cursor: unset;
+  pointer-events: none;
+  background-color: transparent;
+  color: var(--em-ghostbuttonicon-color--disabled, #b8b8bd);
+  border-color: var(--em-ghostbuttonicon-border-color--disabled, rgb(255 255 255 / 0%));
+}
+
+.ghostButtonIcon svg {
+  width: var(--em-ghostbutton-icon-size, 1rem);
+  height: var(--em-ghostbutton-icon-size, 1rem);
+  flex-shrink: 0;
+}
