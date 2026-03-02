@@ -53,7 +53,7 @@
 }
 
 .selectFieldOption:hover,
-.selectFieldOption:focus {
+.selectFieldOption:focus-visible {
   background: var(--em-selectfield-item-background--hover, #f7f7f8);
 }
 

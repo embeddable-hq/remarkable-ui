@@ -73,6 +73,6 @@
   color: var(--em-textfield-color--disabled, #b8b8bd);
 }
 
-.input input:focus {
+.input input:focus-visible {
   outline: none;
 }
