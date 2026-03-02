@@ -14,7 +14,7 @@
 }
 
 .ghostButtonIcon:hover,
-.ghostButtonIcon:focus {
+.ghostButtonIcon:focus-visible {
   background-color: var(--em-ghostbuttonicon-background--hover, #f7f7f8);
   border-color: var(--em-ghostbuttonicon-border-color--hover, rgb(255 255 255 / 0%));
 }
