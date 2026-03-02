@@ -1,11 +1,11 @@
 .ghostButtonIcon {
   cursor: pointer;
-  outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
   background: none;
 
+  color: var(--em-ghostbuttonicon-color, #212129);
   border-radius: var(--em-ghostbuttonicon-border-radius, 0.25rem);
   border: var(--em-ghostbuttonicon-border-width, 0) solid
     var(--em-ghostbuttonicon-border-color, rgba(255, 255, 255, 0));
@@ -14,7 +14,7 @@
 }
 
 .ghostButtonIcon:hover,
-.ghostButtonIcon:focus {
+.ghostButtonIcon:focus-visible {
   background-color: var(--em-ghostbuttonicon-background--hover, #f7f7f8);
   border-color: var(--em-ghostbuttonicon-border-color--hover, rgb(255 255 255 / 0%));
 }
