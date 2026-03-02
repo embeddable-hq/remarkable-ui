@@ -33,7 +33,7 @@
 }
 
 .ghostButtonIcon svg {
-  width: var(--em-ghostbutton-icon-size, 1rem);
-  height: var(--em-ghostbutton-icon-size, 1rem);
+  width: var(--em-ghostbuttonicon-icon-size, 1rem);
+  height: var(--em-ghostbuttonicon-icon-size, 1rem);
   flex-shrink: 0;
 }
