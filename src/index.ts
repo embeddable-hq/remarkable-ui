@@ -57,6 +57,8 @@ export * from './components/shared/Skeleton/Skeleton';
 export * from './components/shared/Typography/Typography';
 export * from './components/shared/Tooltip/Tooltip';
 export * from './components/shared/Divider/Divider';
+export * from './components/shared/Markdown/Markdown';
+export * from './components/shared/MarkdownEditor/MarkdownEditor';
 
 // Types
 export * from './types/css.types';

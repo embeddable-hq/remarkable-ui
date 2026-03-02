@@ -9,7 +9,6 @@
   border: var(--em-selectfield-trigger-border-width, 1px) solid
     var(--em-selectfield-trigger-border-color, #d2d2d5);
   background: var(--em-selectfield-trigger-background, #fff);
-  resize: vertical;
 }
 
 .container:hover {
