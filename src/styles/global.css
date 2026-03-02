@@ -23,8 +23,8 @@
   --em-core-color-gray--0800: rgb(49 49 61);
   --em-core-color-gray--0900: rgb(33 33 41);
   --em-core-color-gray--1000: rgb(0 0 0);
-  --em-core-font-family--base: inter;
-  --em-core-font-family--code: monospace;
+  --em-core-font-family--base: 'inter';
+  --em-core-font-family--code: 'monospace';
   --em-core-font-size--md: 16px;
   --em-core-font-size--sm: 14px;
   --em-core-font-size--xl: 20px;
@@ -105,6 +105,7 @@
 }
 
 :root {
+  --em-Color: rgb(255 255 255);
   --em-actionicon-background: var(--em-sem-background--light);
   --em-actionicon-background--active: var(--em-sem-background--muted);
   --em-actionicon-background--hover: var(--em-sem-background--subtle);
@@ -367,6 +368,19 @@
   --em-ghostbutton-label-padding-right: var(--em-core-spacing--0100);
   --em-ghostbutton-line-height: var(--em-core-line-height--sm);
   --em-ghostbutton-padding-left-right: var(--em-core-spacing--0050);
+  --em-ghostbuttonicon-background--active: var(--em-sem-background--subtle);
+  --em-ghostbuttonicon-background--hover: var(--em-sem-background--light);
+  --em-ghostbuttonicon-border-color: rgb(255 255 255 / 0%);
+  --em-ghostbuttonicon-border-color--active: rgb(255 255 255 / 0%);
+  --em-ghostbuttonicon-border-color--disabled: rgb(255 255 255 / 0%);
+  --em-ghostbuttonicon-border-color--hover: rgb(255 255 255 / 0%);
+  --em-ghostbuttonicon-border-radius: var(--em-core-border-radius--100);
+  --em-ghostbuttonicon-border-width: 0px;
+  --em-ghostbuttonicon-color: var(--em-sem-text);
+  --em-ghostbuttonicon-color--disabled: var(--em-sem-text--subtle);
+  --em-ghostbuttonicon-height: var(--em-core-size--0500);
+  --em-ghostbuttonicon-icon-size: var(--em-core-size--0400);
+  --em-ghostbuttonicon-width: var(--em-core-size--0500);
   --em-kpichart-color: var(--em-sem-text);
   --em-kpichart-font-family: var(--em-core-font-family--base);
   --em-kpichart-gap: var(--em-core-spacing--0400);
@@ -413,11 +427,19 @@
   --em-markdown-h3-font-size: var(--em-core-font-size--md);
   --em-markdown-h3-font-weight: var(--em-core-font-weight--bold);
   --em-markdown-h3-line-height: var(--em-core-line-height--md);
+  --em-markdown-hr-border-width: 1px;
+  --em-markdown-hr-color: var(--em-sem-background--muted);
   --em-markdown-link-color: var(--em-sem-text);
   --em-markdown-link-font-family: var(--em-core-font-family--base);
   --em-markdown-link-font-size: var(--em-core-font-size--sm);
   --em-markdown-link-font-weight: var(--em-core-font-weight--medium);
   --em-markdown-link-line-height: var(--em-core-line-height--md);
+  --em-markdown-min-height: 160px;
+  --em-markdown-options-border-color: var(--em-sem-background--muted);
+  --em-markdown-options-border-radius: var(--em-core-border-radius--100);
+  --em-markdown-options-border-width: 1px;
+  --em-markdown-options-gap: var(--em-core-spacing--0100);
+  --em-markdown-options-padding: var(--em-core-spacing--0100);
   --em-markdown-p-color: var(--em-sem-text);
   --em-markdown-p-font-family: var(--em-core-font-family--base);
   --em-markdown-p-font-size: var(--em-core-font-size--sm);

@@ -52,6 +52,7 @@ export * from './components/shared/Dropdown/Dropdown';
 export * from './components/shared/Field/FieldFeedback';
 export * from './components/shared/Field/FieldHeader';
 export * from './components/shared/GhostButton/GhostButton';
+export * from './components/shared/GhostButtonIcon/GhostButtonIcon';
 export * from './components/shared/Overlay/Overlay';
 export * from './components/shared/Skeleton/Skeleton';
 export * from './components/shared/Typography/Typography';
