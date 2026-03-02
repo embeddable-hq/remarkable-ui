@@ -23,8 +23,8 @@
   --em-core-color-gray--0800: rgb(49 49 61);
   --em-core-color-gray--0900: rgb(33 33 41);
   --em-core-color-gray--1000: rgb(0 0 0);
-  --em-core-font-family--base: 'inter';
-  --em-core-font-family--code: 'monospace';
+  --em-core-font-family--base: inter;
+  --em-core-font-family--code: monospace;
   --em-core-font-size--md: 16px;
   --em-core-font-size--sm: 14px;
   --em-core-font-size--xl: 20px;

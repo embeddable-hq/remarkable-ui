@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 8rem;
+  overflow: hidden;
+  border-radius: var(--em-selectfield-trigger-border-radius, 0.5rem);
+  border: var(--em-selectfield-trigger-border-width, 1px) solid
+    var(--em-selectfield-trigger-border-color, #d2d2d5);
+  background: var(--em-selectfield-trigger-background, #fff);
+  resize: vertical;
+}
+
+.container:hover {
+  background: var(--em-selectfield-trigger-background--hover, #f7f7f8);
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-bottom: var(--em-selectfield-trigger-border-width, 1px) solid
+    var(--em-selectfield-trigger-border-color, #d2d2d5);
+}
+
+.toolbarSpacer {
+  flex: 1;
+}
+
+.preview {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--em-selectfield-trigger-padding, 0.75rem);
+}
+
+.markdownEditor {
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  padding: var(--em-selectfield-trigger-padding, 0.75rem);
+  resize: none;
+  border: none;
+  background: transparent;
+  color: var(--em-selectfield-trigger-color, #212129);
+  font-family: var(--em-selectfield-trigger-font-family, sans-serif);
+  font-size: var(--em-selectfield-trigger-font-size, 0.75rem);
+  font-style: normal;
+  font-weight: var(--em-selectfield-trigger-font-weight, 500);
+  line-height: var(--em-selectfield-trigger-line-height, 0.875rem);
+  outline: none;
+}
+
+.markdownEditor::placeholder {
+  color: var(--em-selectfield-trigger-color--disabled, #b8b8bd);
+  font-weight: var(--em-selectfield-trigger-font-weight, 500);
+}
