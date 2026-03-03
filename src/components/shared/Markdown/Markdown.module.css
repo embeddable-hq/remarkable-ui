@@ -1,6 +1,25 @@
 .markdown {
   width: 100%;
+  height: 100%;
   overflow-y: scroll;
+}
+
+/* Default scroll bar style */
+.markdown::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.markdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.markdown::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+}
+
+.markdown:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .markdown h1 {
