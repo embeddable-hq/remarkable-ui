@@ -1,6 +1,6 @@
 .markdown {
   width: 100%;
-  /* overflow-y: auto; */
+  overflow-y: scroll;
 }
 
 .markdown h1 {
