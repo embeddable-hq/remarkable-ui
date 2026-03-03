@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.44
+
+### Patch Changes
+
+- 029e4f2: Markdown component
+
 ## 2.0.43
 
 ### Patch Changes
