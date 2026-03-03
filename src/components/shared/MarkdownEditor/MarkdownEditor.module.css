@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  resize: vertical;
+  overflow: hidden;
+  border-radius: var(--em-markdown-options-border-radius, 0.25rem);
+  border: var(--em-markdown-options-border-width, 1px) solid
+    var(--em-markdown-options-border-color, #d2d2d5);
+  min-height: var(--em-markdown-min-height, 10rem);
+  background: var(--em-markdown-background, #fff);
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  gap: var(--em-markdown-options-gap, 0.25rem);
+  padding: var(--em-markdown-options-padding, 0.25rem);
+  border-bottom: var(--em-markdown-options-border-width, 1px) solid
+    var(--em-markdown-options-border-color, #d2d2d5);
+}
+
+.toolbarSpacer {
+  flex: 1;
+}
+
+.preview {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--em-markdown-options-padding, 0.25rem);
+}
+
+.markdownEditor {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+  padding: var(--em-markdown-options-padding, 0.25rem);
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border: none;
+  background: inherit;
+
+  /* Typography */
+  color: var(--em-markdown-code-color, #212129);
+  font-family: var(--em-markdown-code-font-family, monospace);
+  font-size: var(--em-markdown-code-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-code-font-weight, 400);
+  line-height: var(--em-markdown-code-line-height, 1rem);
+}
+
+.markdownEditor::placeholder {
+  color: var(--em-markdown-placeholder-color, #b8b8bd);
+}

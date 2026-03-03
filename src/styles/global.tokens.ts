@@ -26,8 +26,8 @@ export const stylesTokensCore = {
   '--em-core-color-gray--0800': 'rgb(49 49 61)',
   '--em-core-color-gray--0900': 'rgb(33 33 41)',
   '--em-core-color-gray--1000': 'rgb(0 0 0)',
-  '--em-core-font-family--base': "'inter'",
-  '--em-core-font-family--code': "'monospace'",
+  '--em-core-font-family--base': 'inter',
+  '--em-core-font-family--code': 'monospace',
   '--em-core-font-size--md': '16px',
   '--em-core-font-size--sm': '14px',
   '--em-core-font-size--xl': '20px',
@@ -108,7 +108,6 @@ export const stylesTokensSemantic = {
 };
 
 export const stylesTokensComponents = {
-  '--em-Color': 'rgb(255 255 255)',
   '--em-actionicon-background': 'var(--em-sem-background--light)',
   '--em-actionicon-background--active': 'var(--em-sem-background--muted)',
   '--em-actionicon-background--hover': 'var(--em-sem-background--subtle)',
@@ -409,12 +408,14 @@ export const stylesTokensComponents = {
   '--em-linechart-line-width': '2px',
   '--em-linechart-point-size': 'var(--em-core-size--0200)',
   '--em-linechart-point-size--hover': 'var(--em-core-size--0300)',
+  '--em-markdown-background': 'var(--em-sem-background--neutral)',
   '--em-markdown-code-color': 'var(--em-sem-text)',
   '--em-markdown-code-font-family': 'var(--em-core-font-family--code)',
   '--em-markdown-code-font-size': 'var(--em-core-font-size--sm)',
   '--em-markdown-code-font-weight--regular': 'var(--em-core-font-weight--regular)',
   '--em-markdown-code-font-weight--strong': 'var(--em-core-font-weight--bold)',
   '--em-markdown-code-line-height': 'var(--em-core-line-height--md)',
+  '--em-markdown-color--placeholder': 'var(--em-sem-background--muted)',
   '--em-markdown-h1-color': 'var(--em-sem-text)',
   '--em-markdown-h1-font-family': 'var(--em-core-font-family--base)',
   '--em-markdown-h1-font-size': 'var(--em-core-font-size--xxl)',

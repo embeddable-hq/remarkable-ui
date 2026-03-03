@@ -1,0 +1,97 @@
+.markdown {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+/* Default scroll bar style */
+.markdown::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.markdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.markdown::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+}
+
+.markdown:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.markdown h1 {
+  color: var(--em-markdown-h1-color, #212129);
+  font-family: var(--em-markdown-h1-font-family, Inter);
+  font-size: var(--em-markdown-h1-font-size, 2rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-h1-font-weight, 700);
+  line-height: var(--em-markdown-h1-line-height, 2.375rem);
+}
+
+.markdown h2 {
+  color: var(--em-markdown-h2-color, #212129);
+  font-family: var(--em-markdown-h2-font-family, Inter);
+  font-size: var(--em-markdown-h2-font-size, 1.25rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-h2-font-weight, 700);
+  line-height: var(--em-markdown-h2-line-height, 1.1875rem);
+}
+
+.markdown h3 {
+  color: var(--em-markdown-h3-color, #212129);
+  font-family: var(--em-markdown-h3-font-family, Inter);
+  font-size: var(--em-markdown-h3-font-size, 1rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-h3-font-weight, 700);
+  line-height: var(--em-markdown-h3-line-height, 1rem);
+}
+
+.markdown p,
+.markdown li {
+  color: var(--em-markdown-p-color, #212129);
+  font-family: var(--em-markdown-p-font-family, Inter);
+  font-size: var(--em-markdown-p-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-p-font-weight, 400);
+  line-height: var(--em-markdown-p-line-height, 1rem);
+}
+
+.markdown strong {
+  font-weight: bold;
+}
+
+.markdown em {
+  font-style: italic;
+}
+
+.markdown code {
+  color: var(--em-markdown-code-color, #212129);
+  font-family: var(--em-markdown-code-font-family, monospace);
+  font-size: var(--em-markdown-code-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-code-font-weight, 400);
+  line-height: var(--em-markdown-code-line-height, 1rem);
+}
+
+.markdown hr {
+  border-color: var(--em-markdown-hr-color, #e4e4ea);
+  border-width: var(--em-markdown-hr-border-width, 0.0625rem);
+}
+
+.markdown a {
+  color: var(--em-markdown-link-color, #212129);
+  font-family: var(--em-markdown-link-font-family, Inter);
+  font-size: var(--em-markdown-link-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-link-font-weight, 500);
+  line-height: var(--em-markdown-link-line-height, 1rem);
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
