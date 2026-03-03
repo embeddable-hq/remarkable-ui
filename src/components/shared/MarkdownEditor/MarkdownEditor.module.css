@@ -1,27 +1,22 @@
 .container {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 8rem;
+  resize: vertical;
   overflow: hidden;
-  border-radius: var(--em-selectfield-trigger-border-radius, 0.5rem);
-  border: var(--em-selectfield-trigger-border-width, 1px) solid
-    var(--em-selectfield-trigger-border-color, #d2d2d5);
-  background: var(--em-selectfield-trigger-background, #fff);
-}
-
-.container:hover {
-  background: var(--em-selectfield-trigger-background--hover, #f7f7f8);
+  border-radius: var(--em-markdown-options-border-radius, 0.25rem);
+  border: var(--em-markdown-options-border-width, 1px) solid
+    var(--em-markdown-options-border-color, #d2d2d5);
+  min-height: var(--em-markdown-min-height, 10rem);
+  background: var(--em-markdown-background, #fff);
 }
 
 .toolbar {
   display: flex;
   flex-direction: row;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  border-bottom: var(--em-selectfield-trigger-border-width, 1px) solid
-    var(--em-selectfield-trigger-border-color, #d2d2d5);
+  gap: var(--em-markdown-options-gap, 0.25rem);
+  padding: var(--em-markdown-options-padding, 0.25rem);
+  border-bottom: var(--em-markdown-options-border-width, 1px) solid
+    var(--em-markdown-options-border-color, #d2d2d5);
 }
 
 .toolbarSpacer {
@@ -32,28 +27,31 @@
   flex: 1;
   min-height: 0;
   overflow: auto;
-  padding: var(--em-selectfield-trigger-padding, 0.75rem);
+  padding: var(--em-markdown-options-padding, 0.25rem);
 }
 
 .markdownEditor {
-  box-sizing: border-box;
   flex: 1;
   width: 100%;
   min-height: 0;
-  padding: var(--em-selectfield-trigger-padding, 0.75rem);
   resize: none;
-  border: none;
-  background: transparent;
-  color: var(--em-selectfield-trigger-color, #212129);
-  font-family: var(--em-selectfield-trigger-font-family, sans-serif);
-  font-size: var(--em-selectfield-trigger-font-size, 0.75rem);
-  font-style: normal;
-  font-weight: var(--em-selectfield-trigger-font-weight, 500);
-  line-height: var(--em-selectfield-trigger-line-height, 0.875rem);
+  box-sizing: border-box;
   outline: none;
+  padding: var(--em-markdown-options-padding, 0.25rem);
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border: none;
+  background: inherit;
+
+  /* Typography */
+  color: var(--em-markdown-code-color, #212129);
+  font-family: var(--em-markdown-code-font-family, monospace);
+  font-size: var(--em-markdown-code-font-size, 0.875rem);
+  font-style: normal;
+  font-weight: var(--em-markdown-code-font-weight, 400);
+  line-height: var(--em-markdown-code-line-height, 1rem);
 }
 
 .markdownEditor::placeholder {
-  color: var(--em-selectfield-trigger-color--disabled, #b8b8bd);
-  font-weight: var(--em-selectfield-trigger-font-weight, 500);
+  color: var(--em-markdown-placeholder-color, #b8b8bd);
 }

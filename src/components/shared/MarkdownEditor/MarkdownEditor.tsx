@@ -13,136 +13,117 @@ import { FC, useRef, useState } from 'react';
 import { Markdown } from '../Markdown/Markdown';
 import styles from './MarkdownEditor.module.css';
 import { GhostButtonIcon } from '../GhostButtonIcon/GhostButtonIcon';
+import { applyLinePrefix, applyWrap, MAX_HISTORY } from './MarkdownEditor.utils';
 
 type MarkdownEditorProps = {
-  value?: string;
+  value?: string | null;
   onChange?: (value: string) => void;
   placeholder?: string;
 };
 
-function applyWrap(value: string, start: number, end: number, syntax: string): string {
-  return value.slice(0, start) + syntax + value.slice(start, end) + syntax + value.slice(end);
-}
+type MarkdownEditorHistory = { entries: string[]; index: number };
 
-function applyLinePrefix(value: string, start: number, prefix: string): string {
-  const lineStart = value.lastIndexOf('\n', start - 1) + 1;
-  return value.slice(0, lineStart) + prefix + value.slice(lineStart);
-}
-
-type HistoryState = { entries: string[]; index: number };
-
-export const MarkdownEditor: FC<MarkdownEditorProps> = ({ value = '', onChange, placeholder }) => {
+export const MarkdownEditor: FC<MarkdownEditorProps> = ({
+  value: valueProp,
+  onChange,
+  placeholder,
+}) => {
+  const value = valueProp ?? '';
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const isUndoRedoRef = useRef(false);
-  const [history, setHistory] = useState<HistoryState>({ entries: [value], index: 0 });
+  const [history, setHistory] = useState<MarkdownEditorHistory>({ entries: [value], index: 0 });
   const [isPreview, setIsPreview] = useState(false);
 
   const handleChange = (newValue: string) => {
-    if (!isUndoRedoRef.current) {
-      setHistory((prev) => ({
-        entries: [...prev.entries.slice(0, prev.index + 1), newValue],
-        index: prev.index + 1,
-      }));
-    }
-    isUndoRedoRef.current = false;
+    setHistory((prev) => {
+      const entries = [...prev.entries.slice(0, prev.index + 1), newValue];
+      const capped = entries.length > MAX_HISTORY ? entries.slice(-MAX_HISTORY) : entries;
+      return { entries: capped, index: capped.length - 1 };
+    });
     onChange?.(newValue);
   };
 
-  const handleWrap = (syntax: string) => {
+  const applyEdit = (
+    edit: (text: string, start: number, end: number) => { value: string; cursor: [number, number] },
+  ) => {
     const textarea = textareaRef.current;
     if (!textarea) return;
-
     const { selectionStart: start, selectionEnd: end } = textarea;
-    handleChange(applyWrap(value, start, end, syntax));
-
+    const result = edit(value, start, end);
+    handleChange(result.value);
     requestAnimationFrame(() => {
       textarea.focus();
-      textarea.setSelectionRange(start + syntax.length, end + syntax.length);
+      textarea.setSelectionRange(...result.cursor);
     });
   };
 
-  const handlePrefix = (prefix: string) => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
+  const handleWrap = (syntax: string) =>
+    applyEdit((text, start, end) => ({
+      value: applyWrap(text, start, end, syntax),
+      cursor: [start + syntax.length, end + syntax.length],
+    }));
 
-    const { selectionStart: start } = textarea;
-    handleChange(applyLinePrefix(value, start, prefix));
+  const handlePrefix = (prefix: string) =>
+    applyEdit((text, start) => ({
+      value: applyLinePrefix(text, start, prefix),
+      cursor: [start + prefix.length, start + prefix.length],
+    }));
 
-    requestAnimationFrame(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + prefix.length, start + prefix.length);
-    });
-  };
+  const handleLink = () =>
+    applyEdit((text, start, end) => ({
+      value: text.slice(0, start) + `[${text.slice(start, end)}]()` + text.slice(end),
+      cursor: [end + 3, end + 3], // cursor inside the ()
+    }));
 
-  const handleLink = () => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    const { selectionStart: start, selectionEnd: end } = textarea;
-    const selected = value.slice(start, end);
-    const insertion = `[${selected}]()`;
-    handleChange(value.slice(0, start) + insertion + value.slice(end));
-
-    // place cursor inside the () ready to type the URL
-    const urlPos = start + 1 + selected.length + 2;
-    requestAnimationFrame(() => {
-      textarea.focus();
-      textarea.setSelectionRange(urlPos, urlPos);
-    });
-  };
-
-  const handleUndo = () => {
-    if (history.index <= 0) return;
-    const newIndex = history.index - 1;
+  const navigate = (delta: -1 | 1) => {
+    const newIndex = history.index + delta;
+    if (newIndex < 0 || newIndex >= history.entries.length) return;
     const entry = history.entries[newIndex];
     if (entry === undefined) return;
-    isUndoRedoRef.current = true;
-    setHistory((prev) => ({ ...prev, index: newIndex }));
-    onChange?.(entry);
-  };
-
-  const handleRedo = () => {
-    if (history.index >= history.entries.length - 1) return;
-    const newIndex = history.index + 1;
-    const entry = history.entries[newIndex];
-    if (entry === undefined) return;
-    isUndoRedoRef.current = true;
     setHistory((prev) => ({ ...prev, index: newIndex }));
     onChange?.(entry);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const isMod = e.ctrlKey || e.metaKey;
-    if (isMod && e.key === 'z' && !e.shiftKey) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    const key = `${e.shiftKey ? 'shift+' : ''}${e.key.toLowerCase()}`;
+    const actions: Record<string, () => void> = {
+      z: () => navigate(-1),
+      'shift+z': () => navigate(1),
+      y: () => navigate(1),
+      b: () => handleWrap('**'),
+      i: () => handleWrap('*'),
+      k: handleLink,
+      '`': () => handleWrap('`'),
+      'shift+x': () => handleWrap('~~'),
+    };
+    const action = actions[key];
+    if (action) {
       e.preventDefault();
-      handleUndo();
-    } else if (isMod && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) {
-      e.preventDefault();
-      handleRedo();
+      action();
     }
   };
 
-  const formatItems = [
-    { icon: IconBold, label: 'Bold', action: () => handleWrap('**') },
-    { icon: IconItalic, label: 'Italic', action: () => handleWrap('*') },
-    { icon: IconStrikethrough, label: 'Strikethrough', action: () => handleWrap('~~') },
-    { icon: IconCode, label: 'Code', action: () => handleWrap('`') },
-    { icon: IconH1, label: 'Heading', action: () => handlePrefix('# ') },
-    { icon: IconList, label: 'Bullet list', action: () => handlePrefix('- ') },
-    { icon: IconLink, label: 'Link', action: handleLink },
+  const toolbarButtons = [
+    { icon: IconBold, label: 'Bold', onClick: () => handleWrap('**') },
+    { icon: IconItalic, label: 'Italic', onClick: () => handleWrap('*') },
+    { icon: IconStrikethrough, label: 'Strikethrough', onClick: () => handleWrap('~~') },
+    { icon: IconCode, label: 'Code', onClick: () => handleWrap('`') },
+    { icon: IconH1, label: 'Heading', onClick: () => handlePrefix('# ') },
+    { icon: IconList, label: 'Bullet list', onClick: () => handlePrefix('- ') },
+    { icon: IconLink, label: 'Link', onClick: handleLink },
   ];
 
   return (
     <div className={styles.container}>
       <div className={styles.toolbar}>
-        {formatItems.map(({ icon, label, action }) => (
+        {toolbarButtons.map(({ icon, label, onClick }) => (
           <GhostButtonIcon
             key={label}
             icon={icon}
             aria-label={label}
             disabled={isPreview}
             onMouseDown={(e) => e.preventDefault()}
-            onClick={action}
+            onClick={onClick}
           />
         ))}
         <div className={styles.toolbarSpacer} />

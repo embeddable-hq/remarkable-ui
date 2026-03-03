@@ -30,7 +30,8 @@
   line-height: var(--em-markdown-h3-line-height, 1rem);
 }
 
-.markdown p {
+.markdown p,
+.markdown li {
   color: var(--em-markdown-p-color, #212129);
   font-family: var(--em-markdown-p-font-family, Inter);
   font-size: var(--em-markdown-p-font-size, 0.875rem);
