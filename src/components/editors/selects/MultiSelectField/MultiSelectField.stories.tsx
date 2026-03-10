@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { useArgs } from 'storybook/internal/preview-api';
+import { useState } from 'react';
 import { MultiSelectField } from './MultiSelectField';
 import {
   SelectListOptionProps,
@@ -152,6 +153,7 @@ const meta = {
     required: true,
     values: [],
     disabled: false,
+    disableApplyButton: false,
     isSearchable: false,
     isClearable: false,
     options: mockOptions,
@@ -161,6 +163,7 @@ const meta = {
     startIcon: storybookArgTypesIcon,
     // endIcon: storybookArgTypesIcon,
     onChange: { action: 'onChange' },
+    onPendingChange: { action: 'onPendingChange' },
   },
 } satisfies Meta<typeof MultiSelectField>;
 
@@ -245,5 +248,39 @@ export const WithErrorMessage: Story = {
     label: undefined,
     required: false,
     errorMessage: 'Value is invalid',
+  },
+};
+
+export const DisableApplyWhenEmpty: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    values: ['red'],
+    isClearable: false,
+    disableApplyButton: true,
+  },
+};
+
+export const WithOnPendingChange: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    values: ['red'],
+    isClearable: true,
+  },
+  render: (args) => {
+    const [values, setValues] = useState<string[]>(args.values ?? []);
+
+    return (
+      <MultiSelectField
+        {...args}
+        values={values}
+        onPendingChange={args.onPendingChange}
+        onChange={(val) => {
+          setValues(val);
+          args.onChange?.(val);
+        }}
+      />
+    );
   },
 };

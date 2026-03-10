@@ -210,6 +210,56 @@ describe('MultiSelectField', () => {
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
     });
+
+    it('is disabled when disableApplyButton is true', async () => {
+      const user = userEvent.setup();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple']}
+          disableApplyButton
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+
+      expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
+    });
+
+    it('stays disabled when disableApplyButton is true even after pending change', async () => {
+      const user = userEvent.setup();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple']}
+          disableApplyButton
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Banana'));
+
+      expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
+    });
+
+    it('is enabled when disableApplyButton is false and there is a pending change', async () => {
+      const user = userEvent.setup();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple']}
+          disableApplyButton={false}
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+
+      expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
+    });
   });
 
   describe('onChange', () => {
@@ -298,6 +348,60 @@ describe('MultiSelectField', () => {
       await user.type(screen.getByRole('searchbox'), 'app');
 
       expect(handleSearch).toHaveBeenCalled();
+    });
+  });
+
+  describe('onPendingChange', () => {
+    it('calls onPendingChange with values when values prop is provided', () => {
+      const handlePendingChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple', 'banana']}
+          onPendingChange={handlePendingChange}
+          onChange={vi.fn()}
+        />,
+      );
+
+      expect(handlePendingChange).toHaveBeenCalledWith(['apple', 'banana']);
+    });
+
+    it('calls onPendingChange when user selects an option', async () => {
+      const user = userEvent.setup();
+      const handlePendingChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple']}
+          onPendingChange={handlePendingChange}
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+      handlePendingChange.mockClear();
+      await user.click(screen.getByText('Banana'));
+
+      expect(handlePendingChange).toHaveBeenCalledWith(['apple', 'banana']);
+    });
+
+    it('calls onPendingChange when user deselects an option', async () => {
+      const user = userEvent.setup();
+      const handlePendingChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple']}
+          onPendingChange={handlePendingChange}
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+      handlePendingChange.mockClear();
+      await user.click(screen.getByText('Apple'));
+
+      expect(handlePendingChange).toHaveBeenCalledWith([]);
     });
   });
 });
