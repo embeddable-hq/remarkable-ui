@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.45
+
+### Patch Changes
+
+- c37bd9b: Add `disableApplyButton` to externally disable Apply and `onPendingChange` to observe pending selection changes
+
 ## 2.0.44
 
 ### Patch Changes
