@@ -24,6 +24,7 @@ import { debounce } from '../../../../utils/debounce.utils';
 export type MultiSelectFieldProps = {
   startIcon?: React.ComponentType<IconProps>;
   disabled?: boolean;
+  disableApplyButton?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
   isSearchable?: boolean;
@@ -34,6 +35,7 @@ export type MultiSelectFieldProps = {
   values?: string[];
   avoidCollisions?: boolean;
   onChange: (value: string[]) => void;
+  onPendingChange?: (values: string[]) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
@@ -44,6 +46,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   label,
   required,
   disabled,
+  disableApplyButton,
   isClearable,
   isLoading,
   isSearchable,
@@ -54,6 +57,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   values = [],
   avoidCollisions,
   onChange,
+  onPendingChange,
   onSearch,
   error = false,
   errorMessage,
@@ -68,6 +72,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
 
   useEffect(() => {
     setPreValues(values);
+    onPendingChange?.(values);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(values)]);
 
@@ -112,9 +117,13 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     if (!newValue) return;
 
     if (preValues.includes(newValue)) {
-      setPreValues(preValues.filter((v) => v !== newValue));
+      const next = preValues.filter((v) => v !== newValue);
+      setPreValues(next);
+      onPendingChange?.(next);
     } else {
-      setPreValues([...preValues, newValue]);
+      const next = [...preValues, newValue];
+      setPreValues(next);
+      onPendingChange?.(next);
     }
   };
 
@@ -133,6 +142,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   const handleClearAll = () => {
     setSearchValue('');
     onSearch?.('');
+    onPendingChange?.([]);
     onChange([]);
   };
 
@@ -211,7 +221,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
           </SelectFieldContentList>
           <Button
             className={styles.submitButton}
-            disabled={isSubmitDisabled || isLoading}
+            disabled={isSubmitDisabled || isLoading || disableApplyButton}
             variant="primary"
             size="medium"
             onClick={() => handleSave(preValues)}

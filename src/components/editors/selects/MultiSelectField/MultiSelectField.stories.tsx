@@ -152,6 +152,7 @@ const meta = {
     required: true,
     values: [],
     disabled: false,
+    disableApplyButton: false,
     isSearchable: false,
     isClearable: false,
     options: mockOptions,
