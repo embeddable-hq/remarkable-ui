@@ -39,6 +39,7 @@ export type MultiSelectFieldProps = {
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
+  triggerComponent?: React.ReactNode;
 } & FieldHeaderProps;
 
 export const MultiSelectField: FC<MultiSelectFieldProps> = ({
@@ -61,6 +62,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   onSearch,
   error = false,
   errorMessage,
+  triggerComponent,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -157,17 +159,19 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         disabled={disabled}
         avoidCollisions={avoidCollisions}
         triggerComponent={
-          <SelectFieldTrigger
-            startIcon={startIcon}
-            aria-label="Select options"
-            placeholder={placeholder}
-            disabled={disabled}
-            valueLabel={selectedLabel}
-            onClear={handleClearAll}
-            isClearable={isClearable}
-            isLoading={isLoading}
-            error={hasError}
-          />
+          triggerComponent ?? (
+            <SelectFieldTrigger
+              startIcon={startIcon}
+              aria-label="Select options"
+              placeholder={placeholder}
+              disabled={disabled}
+              valueLabel={selectedLabel}
+              onClear={handleClearAll}
+              isClearable={isClearable}
+              isLoading={isLoading}
+              error={hasError}
+            />
+          )
         }
       >
         <SelectFieldContent>

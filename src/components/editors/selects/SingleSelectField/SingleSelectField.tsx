@@ -23,26 +23,27 @@ import { debounce } from '../../../../utils/debounce.utils';
 export type SingleSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   startIcon?: React.ComponentType<IconProps>;
-  value?: string;
+  value?: string | null;
   disabled?: boolean;
   placeholder?: string;
   searchable?: boolean;
   clearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
-  onChange: (value: string) => void;
+  onChange: (value: string | null) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
   avoidCollisions?: boolean;
   variant?: 'default' | 'ghost';
+  triggerComponent?: React.ReactNode;
 } & FieldHeaderProps &
   Pick<DropdownProps, 'side' | 'align'>;
 
 export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   label,
   required,
-  value = '',
+  value = null,
   startIcon,
   options,
   disabled,
@@ -59,10 +60,11 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   side,
   align,
   variant,
+  triggerComponent,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [selectedLabel, setSelectedLabel] = useState<string>(value);
+  const [selectedLabel, setSelectedLabel] = useState<string>(value ?? '');
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
@@ -88,9 +90,9 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
-  const handleChange = (newValue?: string) => {
+  const handleChange = (newValue: string | null) => {
     setSearchValue('');
-    onChange(newValue ?? '');
+    onChange(newValue);
     onSearch?.('');
 
     if (newValue === '') {
@@ -119,18 +121,20 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
         side={side}
         align={align}
         triggerComponent={
-          <SelectFieldTrigger
-            startIcon={startIcon}
-            aria-label="Select option"
-            placeholder={placeholder}
-            disabled={disabled}
-            valueLabel={selectedLabel}
-            onClear={() => handleChange('')}
-            isClearable={clearable}
-            isLoading={isLoading}
-            error={hasError}
-            variant={variant}
-          />
+          triggerComponent ?? (
+            <SelectFieldTrigger
+              startIcon={startIcon}
+              aria-label="Select option"
+              placeholder={placeholder}
+              disabled={disabled}
+              valueLabel={selectedLabel}
+              onClear={() => handleChange(null)}
+              isClearable={clearable}
+              isLoading={isLoading}
+              error={hasError}
+              variant={variant}
+            />
+          )
         }
       >
         <SelectFieldContent>
@@ -155,7 +159,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
                     {categoryOptions.map((option) => (
                       <SelectListOption
                         key={option?.value ?? option.label}
-                        onClick={() => handleChange(option?.value)}
+                        onClick={() => handleChange(option?.value ?? null)}
                         isSelected={option.value === value}
                         {...option}
                       />
@@ -165,7 +169,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
               : displayOptions.map((option) => (
                   <SelectListOption
                     key={option?.value ?? option.label}
-                    onClick={() => handleChange(option?.value)}
+                    onClick={() => handleChange(option?.value ?? null)}
                     isSelected={option.value === value}
                     {...option}
                   />
