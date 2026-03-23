@@ -5,7 +5,7 @@ import { KpiChartProps } from './KpiChart.types';
 import { AutoTextSize } from 'auto-text-size';
 import ConditionalWrapper from '../../shared/ConditionalWrapper/ConditionalWrapper';
 
-const getDisplayValue = ({
+export const getKpiDisplayValue = ({
   value,
   displayNullAs,
   valueFormatter,
@@ -42,7 +42,7 @@ export const KpiChart: FC<KpiChartProps> = ({
 }) => {
   const hasComparisonValue = comparisonValue !== undefined;
 
-  const displayValue = getDisplayValue({ value, displayNullAs, valueFormatter });
+  const displayValue = getKpiDisplayValue({ value, displayNullAs, valueFormatter });
 
   const autoResizeValueFontSize = !valueFontSize;
   return (
