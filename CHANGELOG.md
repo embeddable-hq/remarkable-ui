@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 2.0.46
+
+### Patch Changes
+
+- 56d9c51: KPI display null formats value if it is number
+
 ## 2.0.45
 
 ### Patch Changes
