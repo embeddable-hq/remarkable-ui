@@ -15,6 +15,7 @@ const getDisplayValue = ({
   valueFormatter?: (value: number) => string;
 }): string | number => {
   if (value == null) {
+    if (displayNullAs === '') return '';
     const numericDisplayNullAs = Number(displayNullAs);
 
     return Number.isNaN(numericDisplayNullAs)
