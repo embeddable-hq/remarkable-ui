@@ -115,7 +115,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
     return (
       <SelectListOption
         key={String(optionValue)}
-        value={String(optionValue)}
+        value={optionValue}
         onClick={() => handleChange(optionValue ?? null)}
         isSelected={optionValue === value}
         {...optionRest}

@@ -176,9 +176,9 @@ export const Playground: Story = {
     return (
       <MultiSelectField
         {...args}
-        onChange={(val) => {
-          updateArgs({ values: val as string[] });
-          args.onChange?.(val);
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
         }}
       />
     );

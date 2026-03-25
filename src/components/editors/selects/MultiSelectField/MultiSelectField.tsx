@@ -89,7 +89,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
       return;
     }
     const selectedOptions = values.map(
-      (value) => options.find((o) => o.value === value)?.label ?? String(value),
+      (value) => options.find((o) => o.value === value)?.label ?? value,
     );
 
     if (selectedOptions.length > 0) {
@@ -152,7 +152,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
     return (
       <SelectListOption
         key={String(optionValue)}
-        value={String(optionValue)}
+        value={optionValue}
         onClick={(e) => handleSelectOption(e, optionValue)}
         startIcon={
           optionValue !== undefined && preValues.includes(optionValue) ? (
