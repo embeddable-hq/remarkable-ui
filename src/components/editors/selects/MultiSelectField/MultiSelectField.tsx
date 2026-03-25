@@ -89,7 +89,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
       return;
     }
     const selectedOptions = values.map(
-      (value) => options.find((o) => o.value === value)?.label ?? value,
+      (value) => options.find((o) => o.value === value)?.label ?? String(value),
     );
 
     if (selectedOptions.length > 0) {
