@@ -175,7 +175,7 @@ const meta = {
     searchable: false,
     clearable: false,
     options: mockOptions,
-    onChange: (value: string | null) => value,
+    onChange: (value) => value,
   },
   argTypes: {
     startIcon: storybookArgTypesIcon,

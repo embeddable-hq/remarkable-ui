@@ -23,14 +23,14 @@ import { debounce } from '../../../../utils/debounce.utils';
 export type SingleSelectFieldProps = {
   options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
   startIcon?: React.ComponentType<IconProps>;
-  value?: string | null;
+  value?: string | number | boolean | null;
   disabled?: boolean;
   placeholder?: string;
   searchable?: boolean;
   clearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
-  onChange: (value: string | null) => void;
+  onChange: (value: string | number | boolean | null) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
@@ -64,13 +64,13 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [selectedLabel, setSelectedLabel] = useState<string>(value ?? '');
+  const [selectedLabel, setSelectedLabel] = useState<string>('');
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {
-    if (!value) {
+    if (value === null || value === undefined) {
       setSelectedLabel('');
       return;
     }
@@ -95,7 +95,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
     onChange(newValue);
     onSearch?.('');
 
-    if (newValue === '') {
+    if (newValue === null) {
       setSelectedLabel('');
     } else {
       const option = options.find((opt) => opt.value === newValue);
@@ -109,7 +109,6 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   };
 
   const hasError = error || !!errorMessage;
-
   return (
     <div>
       <FieldHeader label={label} required={required} />
