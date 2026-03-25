@@ -70,7 +70,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   useSelectSearchFocus(isOpen, searchFieldRef);
 
   useEffect(() => {
-    if (value === null || value === undefined) {
+    if (value === null) {
       setSelectedLabel('');
       return;
     }
