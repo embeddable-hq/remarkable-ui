@@ -174,7 +174,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
                   </Fragment>
                 ))
               : displayOptions.map(renderOption)}
-            {options.length === 0 && (
+            {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
           </SelectFieldContentList>
