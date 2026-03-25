@@ -248,3 +248,46 @@ export const WithErrorMessage: Story = {
     errorMessage: 'Value is invalid',
   },
 };
+
+export const WithBooleans: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        options={[
+          { value: true, label: 'True' },
+          { value: false, label: 'False' },
+        ]}
+        onChange={(values) => {
+          console.log(values);
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
+  },
+};
+
+export const WithNumbers: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        options={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+          { value: 3, label: 'Three' },
+        ]}
+        onChange={(values) => {
+          console.log(values);
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
+  },
+};
