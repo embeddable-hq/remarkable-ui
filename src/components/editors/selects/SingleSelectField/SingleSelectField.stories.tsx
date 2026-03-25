@@ -8,7 +8,7 @@ import {
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
 
-const mockOptions: SelectListOptionProps[] = [
+const mockOptions: SelectListOptionProps<string>[] = [
   {
     startIcon: <IconBoltFilled />,
     value: 'red',
@@ -81,7 +81,7 @@ const mockOptions: SelectListOptionProps[] = [
   },
 ];
 
-const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory<string>[] = [
   {
     startIcon: <IconBoltFilled />,
     value: 'red',
@@ -175,7 +175,7 @@ const meta = {
     searchable: false,
     clearable: false,
     options: mockOptions,
-    onChange: (value: string) => value,
+    onChange: (value) => value,
   },
   argTypes: {
     startIcon: storybookArgTypesIcon,
@@ -265,5 +265,46 @@ export const WithErrorMessage: Story = {
     label: undefined,
     required: false,
     errorMessage: 'Value is invalid',
+  },
+};
+
+export const WithBooleans: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <SingleSelectField
+        {...args}
+        options={[
+          { value: true, label: 'True' },
+          { value: false, label: 'False' },
+        ]}
+        onChange={(value) => {
+          updateArgs({ value });
+          args.onChange?.(value);
+        }}
+      />
+    );
+  },
+};
+
+export const WithNumbers: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <SingleSelectField
+        {...args}
+        options={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+          { value: 3, label: 'Three' },
+        ]}
+        onChange={(value) => {
+          updateArgs({ value });
+          args.onChange?.(value);
+        }}
+      />
+    );
   },
 };

@@ -8,7 +8,7 @@ import {
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
 
-const mockOptions: SelectListOptionProps[] = [
+const mockOptions: SelectListOptionProps<string>[] = [
   {
     value: 'red',
     label: 'Red',
@@ -71,7 +71,7 @@ const mockOptions: SelectListOptionProps[] = [
   },
 ];
 
-const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory<string>[] = [
   {
     value: 'red',
     label: 'Red',
@@ -156,7 +156,7 @@ const meta = {
     isSearchable: false,
     isClearable: false,
     options: mockOptions,
-    onChange: (value: string[]) => value,
+    onChange: (value) => value,
   },
   argTypes: {
     startIcon: storybookArgTypesIcon,
@@ -176,9 +176,9 @@ export const Playground: Story = {
     return (
       <MultiSelectField
         {...args}
-        onChange={(val) => {
-          updateArgs({ values: val });
-          args.onChange?.(val);
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
         }}
       />
     );
@@ -246,5 +246,46 @@ export const WithErrorMessage: Story = {
     label: undefined,
     required: false,
     errorMessage: 'Value is invalid',
+  },
+};
+
+export const WithBooleans: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        options={[
+          { value: true, label: 'True' },
+          { value: false, label: 'False' },
+        ]}
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
+  },
+};
+
+export const WithNumbers: Story = {
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        options={[
+          { value: 1, label: 'One' },
+          { value: 2, label: 'Two' },
+          { value: 3, label: 'Three' },
+        ]}
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
   },
 };

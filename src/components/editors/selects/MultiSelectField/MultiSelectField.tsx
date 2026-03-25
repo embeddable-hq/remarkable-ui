@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
@@ -20,8 +20,9 @@ import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import { TextField } from '../../inputs/TextField/TextField';
 import { debounce } from '../../../../utils/debounce.utils';
+import { SelectOptionValue } from '../SingleSelectField/SingleSelectField';
 
-export type MultiSelectFieldProps = {
+export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   startIcon?: React.ComponentType<IconProps>;
   disabled?: boolean;
   disableApplyButton?: boolean;
@@ -29,19 +30,20 @@ export type MultiSelectFieldProps = {
   isLoading?: boolean;
   isSearchable?: boolean;
   noOptionsMessage?: string;
-  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
+  options: (SelectListOptionProps<T> | SelectListOptionPropsWithCategory<T>)[];
   placeholder?: string;
   submitLabel?: string;
-  values?: string[];
+  values?: T[];
   avoidCollisions?: boolean;
-  onChange: (value: string[]) => void;
-  onPendingChange?: (values: string[]) => void;
+  onChange: (value: T[]) => void;
+  onPendingChange?: (values: T[]) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
+  triggerComponent?: React.ReactNode;
 } & FieldHeaderProps;
 
-export const MultiSelectField: FC<MultiSelectFieldProps> = ({
+export function MultiSelectField<T extends SelectOptionValue>({
   startIcon,
   label,
   required,
@@ -61,10 +63,11 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
   onSearch,
   error = false,
   errorMessage,
-}) => {
+  triggerComponent,
+}: MultiSelectFieldProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const [preValues, setPreValues] = useState<string[]>(values);
+  const [preValues, setPreValues] = useState<T[]>(values);
   const [selectedLabel, setSelectedLabel] = useState<string>('');
 
   const searchFieldRef = useRef<HTMLInputElement>(null);
@@ -108,13 +111,10 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
 
-  const handleSelectOption = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    newValue?: string,
-  ) => {
+  const handleSelectOption = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, newValue?: T) => {
     e.preventDefault();
 
-    if (!newValue) return;
+    if (newValue === undefined) return;
 
     if (preValues.includes(newValue)) {
       const next = preValues.filter((v) => v !== newValue);
@@ -132,7 +132,7 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     debouncedSearch?.(newSearch);
   };
 
-  const handleSave = (newValues: string[]) => {
+  const handleSave = (newValues: T[]) => {
     onChange(newValues);
     setIsOpen(false);
     setSearchValue('');
@@ -146,6 +146,26 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
     onChange([]);
   };
 
+  const renderOption = (option: SelectListOptionProps<T> & { category?: string }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { value: optionValue, category: _category, ...optionRest } = option;
+    return (
+      <SelectListOption
+        key={String(optionValue)}
+        value={optionValue}
+        onClick={(e) => handleSelectOption(e, optionValue)}
+        startIcon={
+          optionValue !== undefined && preValues.includes(optionValue) ? (
+            <IconSquareCheckFilled />
+          ) : (
+            <IconSquare />
+          )
+        }
+        {...optionRest}
+      />
+    );
+  };
+
   const hasError = error || !!errorMessage;
 
   return (
@@ -157,17 +177,19 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
         disabled={disabled}
         avoidCollisions={avoidCollisions}
         triggerComponent={
-          <SelectFieldTrigger
-            startIcon={startIcon}
-            aria-label="Select options"
-            placeholder={placeholder}
-            disabled={disabled}
-            valueLabel={selectedLabel}
-            onClear={handleClearAll}
-            isClearable={isClearable}
-            isLoading={isLoading}
-            error={hasError}
-          />
+          triggerComponent ?? (
+            <SelectFieldTrigger
+              startIcon={startIcon}
+              aria-label="Select options"
+              placeholder={placeholder}
+              disabled={disabled}
+              valueLabel={selectedLabel}
+              onClear={handleClearAll}
+              isClearable={isClearable}
+              isLoading={isLoading}
+              error={hasError}
+            />
+          )
         }
       >
         <SelectFieldContent>
@@ -189,32 +211,10 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <Fragment key={category}>
                     <SelectFieldCategory label={category} />
-                    {categoryOptions.map((option) => (
-                      <SelectListOption
-                        key={option?.value ?? option.label}
-                        onClick={(e) => handleSelectOption(e, option.value)}
-                        startIcon={
-                          preValues.includes(option.value!) ? (
-                            <IconSquareCheckFilled />
-                          ) : (
-                            <IconSquare />
-                          )
-                        }
-                        {...option}
-                      />
-                    ))}
+                    {categoryOptions.map(renderOption)}
                   </Fragment>
                 ))
-              : displayOptions.map((option) => (
-                  <SelectListOption
-                    key={option?.value ?? option.label}
-                    onClick={(e) => handleSelectOption(e, option.value)}
-                    startIcon={
-                      preValues.includes(option.value!) ? <IconSquareCheckFilled /> : <IconSquare />
-                    }
-                    {...option}
-                  />
-                ))}
+              : displayOptions.map(renderOption)}
             {noOptionsMessage && displayOptions.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
@@ -234,4 +234,4 @@ export const MultiSelectField: FC<MultiSelectFieldProps> = ({
       {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
     </div>
   );
-};
+}

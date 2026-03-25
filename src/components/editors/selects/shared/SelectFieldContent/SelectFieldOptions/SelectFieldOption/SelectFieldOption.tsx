@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { FC, ImgHTMLAttributes, SVGProps } from 'react';
+import { ImgHTMLAttributes, SVGProps } from 'react';
 import styles from './SelectFieldOption.module.css';
 import clsx from 'clsx';
 
@@ -7,8 +7,8 @@ type SelectListOptionIcon =
   | React.ReactElement<SVGProps<SVGSVGElement>>
   | React.ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
 
-export type SelectListOptionProps = {
-  value?: string;
+export type SelectListOptionProps<T = string> = {
+  value?: T;
   isSelected?: boolean;
   label: string;
   rightLabel?: string;
@@ -17,11 +17,11 @@ export type SelectListOptionProps = {
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
-export type SelectListOptionPropsWithCategory = SelectListOptionProps & {
+export type SelectListOptionPropsWithCategory<T = string> = SelectListOptionProps<T> & {
   category: string;
 };
 
-export const SelectListOption: FC<SelectListOptionProps> = ({
+export const SelectListOption = <T,>({
   value,
   isSelected,
   label,
@@ -30,7 +30,7 @@ export const SelectListOption: FC<SelectListOptionProps> = ({
   endIcon,
   disabled,
   ...props
-}) => {
+}: SelectListOptionProps<T>) => {
   return (
     <DropdownMenu.Item
       className={clsx(
@@ -38,7 +38,7 @@ export const SelectListOption: FC<SelectListOptionProps> = ({
         disabled && styles.disabled,
         isSelected && styles.selected,
       )}
-      data-value={value}
+      data-value={String(value)}
       {...props}
     >
       <span className={styles.leftContent}>
