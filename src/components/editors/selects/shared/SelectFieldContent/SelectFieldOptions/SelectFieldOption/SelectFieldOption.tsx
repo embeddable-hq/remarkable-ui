@@ -7,8 +7,8 @@ type SelectListOptionIcon =
   | React.ReactElement<SVGProps<SVGSVGElement>>
   | React.ReactElement<ImgHTMLAttributes<HTMLImageElement>>;
 
-export type SelectListOptionProps = {
-  value?: string;
+export type SelectListOptionProps<T = string> = {
+  value?: T;
   isSelected?: boolean;
   label: string;
   rightLabel?: string;
@@ -17,11 +17,11 @@ export type SelectListOptionProps = {
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
-export type SelectListOptionPropsWithCategory = SelectListOptionProps & {
+export type SelectListOptionPropsWithCategory<T = string> = SelectListOptionProps<T> & {
   category: string;
 };
 
-export const SelectListOption: FC<SelectListOptionProps> = ({
+export const SelectListOption: FC<SelectListOptionProps<string>> = ({
   value,
   isSelected,
   label,

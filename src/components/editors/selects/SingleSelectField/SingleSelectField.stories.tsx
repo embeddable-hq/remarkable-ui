@@ -8,7 +8,7 @@ import {
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
 
-const mockOptions: SelectListOptionProps[] = [
+const mockOptions: SelectListOptionProps<string>[] = [
   {
     startIcon: <IconBoltFilled />,
     value: 'red',
@@ -81,7 +81,7 @@ const mockOptions: SelectListOptionProps[] = [
   },
 ];
 
-const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory<string>[] = [
   {
     startIcon: <IconBoltFilled />,
     value: 'red',

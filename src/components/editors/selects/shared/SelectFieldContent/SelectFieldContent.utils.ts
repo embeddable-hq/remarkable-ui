@@ -1,17 +1,12 @@
-import {
-  SelectListOptionProps,
-  SelectListOptionPropsWithCategory,
-} from './SelectFieldOptions/SelectFieldOption/SelectFieldOption';
-
-type GroupedOptions = {
-  [category: string]: SelectListOptionPropsWithCategory[];
+type GroupedOptions<T> = {
+  [category: string]: T[];
 };
 
-export const groupOptionsByCategory = (
-  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[],
-): GroupedOptions | null => {
-  const result = options.reduce<GroupedOptions>((acc, option) => {
-    if ('category' in option && option.category) {
+export const groupOptionsByCategory = <T extends { label: string; category?: string }>(
+  options: T[],
+): GroupedOptions<T> | null => {
+  const result = options.reduce<GroupedOptions<T>>((acc, option) => {
+    if (option.category) {
       const category = option.category;
       if (!acc[category]) {
         acc[category] = [];

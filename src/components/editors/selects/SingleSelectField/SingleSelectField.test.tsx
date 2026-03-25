@@ -158,7 +158,7 @@ describe('SingleSelectField', () => {
       const clearIcon = trigger.querySelectorAll('svg')[0];
       await user.pointer({ target: clearIcon, keys: '[MouseLeft>]' });
 
-      expect(handleChange).toHaveBeenCalledWith('');
+      expect(handleChange).toHaveBeenCalledWith(null);
     });
   });
 

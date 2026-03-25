@@ -8,7 +8,7 @@ import {
 import { IconBoltFilled } from '@tabler/icons-react';
 import { storybookArgTypesIcon } from '../../../../storybook.constants';
 
-const mockOptions: SelectListOptionProps[] = [
+const mockOptions: SelectListOptionProps<string>[] = [
   {
     value: 'red',
     label: 'Red',
@@ -71,7 +71,7 @@ const mockOptions: SelectListOptionProps[] = [
   },
 ];
 
-const mockOptionsWithCategories: SelectListOptionPropsWithCategory[] = [
+const mockOptionsWithCategories: SelectListOptionPropsWithCategory<string>[] = [
   {
     value: 'red',
     label: 'Red',
@@ -156,7 +156,7 @@ const meta = {
     isSearchable: false,
     isClearable: false,
     options: mockOptions,
-    onChange: (value: string[]) => value,
+    onChange: (value) => value,
   },
   argTypes: {
     startIcon: storybookArgTypesIcon,
@@ -177,7 +177,7 @@ export const Playground: Story = {
       <MultiSelectField
         {...args}
         onChange={(val) => {
-          updateArgs({ values: val });
+          updateArgs({ values: val as string[] });
           args.onChange?.(val);
         }}
       />

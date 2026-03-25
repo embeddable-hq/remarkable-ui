@@ -1,4 +1,4 @@
-import { FC, Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
 import { Dropdown, DropdownProps } from '../../../shared/Dropdown/Dropdown';
 import {
@@ -8,7 +8,6 @@ import {
 import {
   SelectListOption,
   SelectListOptionProps,
-  SelectListOptionPropsWithCategory,
 } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldOption/SelectFieldOption';
 import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
 import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
@@ -20,17 +19,19 @@ import { FieldFeedback } from '../../../shared/Field/FieldFeedback';
 import { TextField } from '../../inputs/TextField/TextField';
 import { debounce } from '../../../../utils/debounce.utils';
 
-export type SingleSelectFieldProps = {
-  options: (SelectListOptionProps | SelectListOptionPropsWithCategory)[];
+export type SelectOptionValue = string | number | boolean;
+
+export type SingleSelectFieldProps<T extends SelectOptionValue> = {
+  options: SelectListOptionProps<T>[];
   startIcon?: React.ComponentType<IconProps>;
-  value?: string | number | boolean | null;
+  value?: T | null;
   disabled?: boolean;
   placeholder?: string;
   searchable?: boolean;
   clearable?: boolean;
   isLoading?: boolean;
   noOptionsMessage?: string;
-  onChange: (value: string | number | boolean | null) => void;
+  onChange: (value: T | null) => void;
   onSearch?: (search: string) => void;
   error?: boolean;
   errorMessage?: string;
@@ -40,7 +41,7 @@ export type SingleSelectFieldProps = {
 } & FieldHeaderProps &
   Pick<DropdownProps, 'side' | 'align'>;
 
-export const SingleSelectField: FC<SingleSelectFieldProps> = ({
+export function SingleSelectField<T extends SelectOptionValue>({
   label,
   required,
   value = null,
@@ -61,7 +62,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   align,
   variant,
   triggerComponent,
-}) => {
+}: SingleSelectFieldProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [selectedLabel, setSelectedLabel] = useState<string>('');
@@ -90,7 +91,7 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
 
   const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
-  const handleChange = (newValue: string | null) => {
+  const handleChange = (newValue: T | null) => {
     setSearchValue('');
     onChange(newValue);
     onSearch?.('');
@@ -106,6 +107,20 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
   const handleSearch = (newSearch: string) => {
     setSearchValue(newSearch);
     debouncedSearch?.(newSearch);
+  };
+
+  const renderOption = (option: SelectListOptionProps<T> & { category?: string }) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { value: optionValue, category: _category, ...optionRest } = option;
+    return (
+      <SelectListOption
+        key={String(optionValue)}
+        value={String(optionValue)}
+        onClick={() => handleChange(optionValue ?? null)}
+        isSelected={optionValue === value}
+        {...optionRest}
+      />
+    );
   };
 
   const hasError = error || !!errorMessage;
@@ -155,24 +170,10 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <Fragment key={category}>
                     <SelectFieldCategory label={category} />
-                    {categoryOptions.map((option) => (
-                      <SelectListOption
-                        key={option?.value ?? option.label}
-                        onClick={() => handleChange(option?.value ?? null)}
-                        isSelected={option.value === value}
-                        {...option}
-                      />
-                    ))}
+                    {categoryOptions.map(renderOption)}
                   </Fragment>
                 ))
-              : displayOptions.map((option) => (
-                  <SelectListOption
-                    key={option?.value ?? option.label}
-                    onClick={() => handleChange(option?.value ?? null)}
-                    isSelected={option.value === value}
-                    {...option}
-                  />
-                ))}
+              : displayOptions.map(renderOption)}
             {options.length === 0 && (
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
@@ -182,4 +183,4 @@ export const SingleSelectField: FC<SingleSelectFieldProps> = ({
       {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
     </div>
   );
-};
+}
