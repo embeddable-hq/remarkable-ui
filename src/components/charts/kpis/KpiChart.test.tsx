@@ -1,10 +1,50 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { KpiChart } from './KpiChart';
+import { getKpiDisplayValue, KpiChart } from './KpiChart';
 
 vi.mock('auto-text-size', () => ({
   AutoTextSize: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
+
+describe('getKpiDisplayValue', () => {
+  it('returns the value when it is a number', () => {
+    expect(getKpiDisplayValue({ value: 42, displayNullAs: '' })).toBe(42);
+  });
+
+  it('returns empty string when value is null and displayNullAs is empty string', () => {
+    expect(getKpiDisplayValue({ value: null, displayNullAs: '' })).toBe('');
+  });
+
+  it('returns displayNullAs string when value is null and displayNullAs is non-numeric', () => {
+    expect(getKpiDisplayValue({ value: null, displayNullAs: 'N/A' })).toBe('N/A');
+  });
+
+  it('returns numeric displayNullAs as a number when value is null', () => {
+    expect(getKpiDisplayValue({ value: null, displayNullAs: '0' })).toBe(0);
+  });
+
+  it('applies valueFormatter to the value when provided', () => {
+    expect(
+      getKpiDisplayValue({ value: 1000, displayNullAs: '', valueFormatter: (v) => `$${v}` }),
+    ).toBe('$1000');
+  });
+
+  it('applies valueFormatter to numeric displayNullAs when value is null', () => {
+    expect(
+      getKpiDisplayValue({ value: null, displayNullAs: '0', valueFormatter: (v) => `$${v}` }),
+    ).toBe('$0');
+  });
+
+  it('does not apply valueFormatter to non-numeric displayNullAs', () => {
+    expect(
+      getKpiDisplayValue({ value: null, displayNullAs: 'N/A', valueFormatter: (v) => `$${v}` }),
+    ).toBe('N/A');
+  });
+
+  it('returns the value when undefined and displayNullAs is non-numeric', () => {
+    expect(getKpiDisplayValue({ value: undefined, displayNullAs: '–' })).toBe('–');
+  });
+});
 
 describe('KpiChart', () => {
   describe('rendering', () => {

@@ -5,6 +5,27 @@ import { KpiChartProps } from './KpiChart.types';
 import { AutoTextSize } from 'auto-text-size';
 import ConditionalWrapper from '../../shared/ConditionalWrapper/ConditionalWrapper';
 
+export const getKpiDisplayValue = ({
+  value,
+  displayNullAs,
+  valueFormatter,
+}: {
+  value: number | null | undefined;
+  displayNullAs: string | number;
+  valueFormatter?: (value: number) => string;
+}): string | number => {
+  if (value == null) {
+    if (displayNullAs === '') return '';
+    const numericDisplayNullAs = Number(displayNullAs);
+
+    return Number.isNaN(numericDisplayNullAs)
+      ? displayNullAs
+      : (valueFormatter?.(numericDisplayNullAs) ?? numericDisplayNullAs);
+  }
+
+  return valueFormatter?.(value) ?? value;
+};
+
 export const KpiChart: FC<KpiChartProps> = ({
   value,
   valueFontSize,
@@ -21,7 +42,7 @@ export const KpiChart: FC<KpiChartProps> = ({
 }) => {
   const hasComparisonValue = comparisonValue !== undefined;
 
-  const displayValue = value == null ? displayNullAs : (valueFormatter?.(value) ?? value);
+  const displayValue = getKpiDisplayValue({ value, displayNullAs, valueFormatter });
 
   const autoResizeValueFontSize = !valueFontSize;
   return (
