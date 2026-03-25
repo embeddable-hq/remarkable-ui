@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.1
+
+### Patch Changes
+
+- 708aa85: Improve MultiSelectField display value
+
 ## 3.0.0
 
 ### Major Changes
