@@ -280,7 +280,6 @@ export const WithBooleans: Story = {
           { value: false, label: 'False' },
         ]}
         onChange={(value) => {
-          console.log(value);
           updateArgs({ value });
           args.onChange?.(value);
         }}
@@ -302,7 +301,6 @@ export const WithNumbers: Story = {
           { value: 3, label: 'Three' },
         ]}
         onChange={(value) => {
-          console.log(value);
           updateArgs({ value });
           args.onChange?.(value);
         }}
