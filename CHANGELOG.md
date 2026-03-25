@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.0
+
+### Major Changes
+
+- 8575852: Improve selectfields + Introduce customTriggers
+
 ## 2.0.46
 
 ### Patch Changes
