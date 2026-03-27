@@ -51,7 +51,7 @@
   text-align: center;
   font-style: normal;
   font-size: 0.875em; /* 87.5% of the parent font-size */
-  color: var(--em-kpichart-label-color, #212129);
+  color: var(--em-kpichart-label-color, var(--em-kpichart-color, #212129));
   font-family: var(--em-kpichart-font-family, sans-serif);
   font-weight: var(--em-kpichart-label-font-weight, 400);
   white-space: nowrap;
