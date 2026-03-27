@@ -26,6 +26,8 @@ export const getKpiDisplayValue = ({
   return valueFormatter?.(value) ?? value;
 };
 
+const MIN_FONT_SIZE_PX = 12;
+
 export const KpiChart: FC<KpiChartProps> = ({
   value,
   valueFontSize,
@@ -51,7 +53,7 @@ export const KpiChart: FC<KpiChartProps> = ({
         <ConditionalWrapper
           condition={autoResizeValueFontSize}
           wrapper={(children) => (
-            <AutoTextSize mode="boxoneline" minFontSizePx={1} maxFontSizePx={999}>
+            <AutoTextSize mode="boxoneline" minFontSizePx={MIN_FONT_SIZE_PX} maxFontSizePx={999}>
               {children}
             </AutoTextSize>
           )}
