@@ -384,6 +384,7 @@ export const stylesTokensComponents = {
   '--em-ghostbuttonicon-icon-size': 'var(--em-core-size--0400)',
   '--em-ghostbuttonicon-width': 'var(--em-core-size--0500)',
   '--em-kpichart-color': 'var(--em-sem-text)',
+  '--em-kpichart-label-color': 'var(--em-sem-text)',
   '--em-kpichart-font-family': 'var(--em-core-font-family--base)',
   '--em-kpichart-gap': 'var(--em-core-spacing--0400)',
   '--em-kpichart-label-font-size': 'var(--em-core-font-size--sm)',
