@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.2
+
+### Patch Changes
+
+- b2960aa: Add Kpi label color
+
 ## 3.0.1
 
 ### Patch Changes
