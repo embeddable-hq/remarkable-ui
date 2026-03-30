@@ -108,12 +108,12 @@ describe('KpiChart', () => {
   });
 
   describe('comparison section', () => {
-    it('hides the comparison content when no comparisonValue is provided', () => {
+    it('does not render the comparison content when no comparisonValue is provided', () => {
       const { container } = render(<KpiChart value={100} />);
 
       const comparisonDiv = container.querySelector('.kpiComparisonContainer > div');
 
-      expect(comparisonDiv).toHaveStyle({ visibility: 'hidden' });
+      expect(comparisonDiv).toBeFalsy();
     });
 
     it('shows the comparison content when comparisonValue is provided', () => {
@@ -124,12 +124,12 @@ describe('KpiChart', () => {
       expect(comparisonDiv).toHaveStyle({ visibility: 'visible' });
     });
 
-    it('applies trendFontSize to the comparison container', () => {
+    it('does not render the comparison trend when trendFontSize is provided but no comparisonValue', () => {
       const { container } = render(<KpiChart value={100} trendFontSize={14} />);
 
       const comparisonContainer = container.querySelector('.kpiComparisonContainer');
 
-      expect(comparisonContainer).toHaveStyle({ fontSize: '14px' });
+      expect(comparisonContainer).toBeFalsy();
     });
   });
 });
