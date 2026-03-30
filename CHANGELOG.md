@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.3
+
+### Patch Changes
+
+- 97cec76: Update the kpi chart to skip the reserved trend space if there is none
+
 ## 3.0.2
 
 ### Patch Changes
