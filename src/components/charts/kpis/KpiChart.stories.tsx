@@ -67,7 +67,14 @@ export const Percentage: Story = {
   decorators: decoratorsSquare,
 };
 
-export const Resize: Story = {
+export const ResizeDefault: Story = {
+  args: {
+    value: 100,
+  },
+  decorators: decoratorsResizeCard,
+};
+
+export const ResizeComparison: Story = {
   args: {
     value: 100,
     comparisonValue: 75,

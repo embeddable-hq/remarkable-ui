@@ -4,6 +4,7 @@ import { KpiChartChange } from './components/KpiChartChange';
 import { KpiChartProps } from './KpiChart.types';
 import { AutoTextSize } from 'auto-text-size';
 import ConditionalWrapper from '../../shared/ConditionalWrapper/ConditionalWrapper';
+import { getStyleNumber } from '../../../styles/styles.utils';
 
 export const getKpiDisplayValue = ({
   value,
@@ -51,7 +52,11 @@ export const KpiChart: FC<KpiChartProps> = ({
         <ConditionalWrapper
           condition={autoResizeValueFontSize}
           wrapper={(children) => (
-            <AutoTextSize mode="boxoneline" minFontSizePx={1} maxFontSizePx={999}>
+            <AutoTextSize
+              mode="boxoneline"
+              minFontSizePx={getStyleNumber('--em-kpichart-number-font-size--min', '12px')}
+              maxFontSizePx={getStyleNumber('--em-kpichart-number-font-size--max', '999px')}
+            >
               {children}
             </AutoTextSize>
           )}
@@ -62,21 +67,23 @@ export const KpiChart: FC<KpiChartProps> = ({
         </ConditionalWrapper>
       </div>
 
-      <div className={styles.kpiComparisonContainer} style={{ fontSize: trendFontSize }}>
-        <div style={{ visibility: hasComparisonValue ? 'visible' : 'hidden' }}>
-          <KpiChartChange
-            equalComparisonLabel={equalComparisonLabel}
-            comparisonLabel={comparisonLabel}
-            comparisonValue={comparisonValue}
-            invertChangeColors={invertChangeColors}
-            percentageDecimalPlaces={percentageDecimalPlaces}
-            showChangeAsPercentage={showChangeAsPercentage}
-            value={value}
-            valueFormatter={valueFormatter}
-            noPreviousDataLabel={noPreviousDataLabel}
-          />
+      {hasComparisonValue && (
+        <div className={styles.kpiComparisonContainer} style={{ fontSize: trendFontSize }}>
+          <div style={{ visibility: hasComparisonValue ? 'visible' : 'hidden' }}>
+            <KpiChartChange
+              equalComparisonLabel={equalComparisonLabel}
+              comparisonLabel={comparisonLabel}
+              comparisonValue={comparisonValue}
+              invertChangeColors={invertChangeColors}
+              percentageDecimalPlaces={percentageDecimalPlaces}
+              showChangeAsPercentage={showChangeAsPercentage}
+              value={value}
+              valueFormatter={valueFormatter}
+              noPreviousDataLabel={noPreviousDataLabel}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
