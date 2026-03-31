@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.4
+
+### Patch Changes
+
+- 18a6fc2: Remove input filled css variable
+
 ## 3.0.3
 
 ### Patch Changes
