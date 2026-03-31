@@ -22,7 +22,6 @@
 }
 .input:focus-within input {
   color: var(--em-textfield-color--filled, #212129);
-  font-weight: var(--em-textfield-font-weight--filled, 500);
 }
 
 .input svg {
