@@ -65,32 +65,27 @@ export const getChartjsAxisOptionsScalesGrid = (): Partial<GridLineOptions> => (
   lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function filterIntegerTicks(scale: any): void {
+  const allValues = (scale.chart.data.datasets as { data: unknown[] }[])
+    .flatMap((ds) => ds.data)
+    .filter((v): v is number => typeof v === 'number');
+  if (!allValues.length || !allValues.every((v) => Number.isInteger(v))) return;
+  scale.ticks = scale.ticks.filter((tick: { value: number }) => Number.isInteger(tick.value));
+}
+
 export const getChartjsAxisOptionsScales = (): Partial<ChartOptions['scales']> => ({
   x: {
     grid: getChartjsAxisOptionsScalesGrid(),
     title: getChartjsAxisOptionsScalesTitle(),
     ticks: getChartjsAxisOptionsScalesTicksDefault(),
-    afterBuildTicks(scale) {
-      const allValues = scale.chart.data.datasets
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .flatMap((ds: any) => ds.data as number[])
-        .filter((v: unknown): v is number => typeof v === 'number');
-      if (!allValues.length || !allValues.every((v) => Number.isInteger(v))) return;
-      scale.ticks = scale.ticks.filter((tick) => Number.isInteger(tick.value));
-    },
+    afterBuildTicks: filterIntegerTicks,
   },
   y: {
     grid: getChartjsAxisOptionsScalesGrid(),
     title: getChartjsAxisOptionsScalesTitle(),
     ticks: getChartjsAxisOptionsScalesTicksMuted(),
-    afterBuildTicks(scale) {
-      const allValues = scale.chart.data.datasets
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .flatMap((ds: any) => ds.data as number[])
-        .filter((v: unknown): v is number => typeof v === 'number');
-      if (!allValues.length || !allValues.every((v) => Number.isInteger(v))) return;
-      scale.ticks = scale.ticks.filter((tick) => Number.isInteger(tick.value));
-    },
+    afterBuildTicks: filterIntegerTicks,
   },
 });
 
