@@ -39,7 +39,7 @@ export type LineChartProps = BaseLineChartProps;
 export const LineChart: FC<LineChartProps> = ({ options = {}, data, onSegmentClick, ...props }) => {
   const chartRef = useRef(null);
 
-  const pieOptions = mergician(getLineChartOptions(props), options);
+  const pieOptions = mergician(getLineChartOptions(props, data), options);
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const indexClicked = getSegmentIndexClicked(event, chartRef);

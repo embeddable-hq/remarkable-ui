@@ -11,6 +11,7 @@ import {
   getChartjsAxisOptionsScalesGridColor,
   getChartjsAxisOptionsScalesTicksDefault,
   getChartjsAxisOptionsScalesTicksMuted,
+  getSmallIntegerAxisStepSize,
 } from '../chartjs.cartesian.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
@@ -50,6 +51,7 @@ const getDatalabelTotalFormatter = (_value: any, context: Context) => {
 
 const getBarVerticalChartOptions = (
   config: BarChartConfigurationProps,
+  data?: ChartData<'bar'>,
 ): Partial<ChartOptions<'bar'>> => {
   return {
     indexAxis: 'x',
@@ -98,7 +100,11 @@ const getBarVerticalChartOptions = (
         border: {
           display: false,
         },
-        ticks: getChartjsAxisOptionsScalesTicksMuted(),
+        ticks: {
+          ...getChartjsAxisOptionsScalesTicksMuted(),
+          stepSize: getSmallIntegerAxisStepSize(data?.datasets),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
         min: config.yAxisRangeMin,
         max: config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
@@ -109,6 +115,7 @@ const getBarVerticalChartOptions = (
 
 const getBarHorizontalChartOptions = (
   config: BarChartHorizontalConfigurationProps,
+  data?: ChartData<'bar'>,
 ): Partial<ChartOptions<'bar'>> => {
   return {
     indexAxis: 'y',
@@ -143,7 +150,11 @@ const getBarHorizontalChartOptions = (
       x: {
         grid: { display: true, color: getChartjsAxisOptionsScalesGridColor },
         border: { display: false },
-        ticks: getChartjsAxisOptionsScalesTicksMuted(),
+        ticks: {
+          ...getChartjsAxisOptionsScalesTicksMuted(),
+          stepSize: getSmallIntegerAxisStepSize(data?.datasets),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
         min: config.xAxisRangeMin,
         max: config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
@@ -162,6 +173,7 @@ const getBarHorizontalChartOptions = (
 
 export const getBarChartOptions = (
   options: BarChartConfigurationProps,
+  data?: ChartData<'bar'>,
 ): Partial<ChartOptions<'bar'>> => {
   const baseBarChartOptions: Partial<ChartOptions<'bar'>> = {
     elements: {
@@ -225,7 +237,7 @@ export const getBarChartOptions = (
     ? getBarHorizontalChartOptions
     : getBarVerticalChartOptions;
 
-  const verticalHorizontalOptions = getVerticalHorizontalOptions(options);
+  const verticalHorizontalOptions = getVerticalHorizontalOptions(options, data);
 
   return mergician(getChartjsAxisOptions(), baseBarChartOptions, verticalHorizontalOptions);
 };

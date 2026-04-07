@@ -108,3 +108,21 @@ export const getChartjsAxisOptionsScalesGridColor = (ctx: any) => {
   }
   return getStyle('--em-chart-grid-line-color--light', '#EDEDF1');
 };
+
+/**
+ * Returns stepSize: 1 when all values are integers and max value < 8,
+ * preventing Chart.js from generating decimal Y-axis ticks for small integer ranges.
+ */
+export const getSmallIntegerAxisStepSize = (
+  datasets?: { data: unknown[] }[],
+): number | undefined => {
+  if (!datasets?.length) return undefined;
+  const allValues = datasets
+    .flatMap((ds) => ds.data)
+    .filter((v): v is number => typeof v === 'number');
+  if (!allValues.length) return undefined;
+  const maxValue = Math.max(...allValues);
+  const allIntegers = allValues.every((v) => Number.isInteger(v));
+  if (allIntegers && maxValue < 8) return 1;
+  return undefined;
+};

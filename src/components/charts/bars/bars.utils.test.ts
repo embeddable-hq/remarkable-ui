@@ -181,4 +181,47 @@ describe('getBarChartOptions', () => {
       expect(options.maintainAspectRatio).toBe(false);
     });
   });
+
+  describe('integer y-axis step size', () => {
+    it('sets stepSize to 1 on y scale when all values are integers and max < 8 (vertical)', () => {
+      const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 3] }] });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.y?.ticks as any)?.stepSize).toBe(1);
+    });
+
+    it('sets stepSize to undefined on y scale when max >= 8 (vertical)', () => {
+      const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 10] }] });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+    });
+
+    it('sets stepSize to undefined on y scale when values contain decimals (vertical)', () => {
+      const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1.5, 2] }] });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+    });
+
+    it('sets stepSize to 1 on x scale when all values are integers and max < 8 (horizontal)', () => {
+      const options = getBarChartOptions(
+        { horizontal: true },
+        { labels: [], datasets: [{ data: [1, 2, 3] }] },
+      );
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.x?.ticks as any)?.stepSize).toBe(1);
+    });
+
+    it('sets stepSize to undefined on x scale when values contain decimals (horizontal)', () => {
+      const options = getBarChartOptions(
+        { horizontal: true },
+        { labels: [], datasets: [{ data: [1.5, 2] }] },
+      );
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.x?.ticks as any)?.stepSize).toBeUndefined();
+    });
+  });
 });

@@ -8,6 +8,7 @@ import {
   getChartjsAxisOptionsScalesGridColor,
   getChartjsAxisOptionsScalesTicksDefault,
   getChartjsAxisOptionsScalesTicksMuted,
+  getSmallIntegerAxisStepSize,
 } from '../chartjs.cartesian.constants';
 import { getStyleNumber } from '../../../styles/styles.utils';
 
@@ -31,6 +32,7 @@ export const getLineChartData = (data: ChartData<'line'>) => {
 
 export const getLineChartOptions = (
   options: LineChartConfigurationProps,
+  data?: ChartData<'line'>,
 ): Partial<ChartOptions<'line'>> => {
   const newOptions: Partial<ChartOptions<'line'>> = {
     interaction: {
@@ -87,7 +89,11 @@ export const getLineChartOptions = (
       },
       y: {
         beginAtZero: true,
-        ticks: getChartjsAxisOptionsScalesTicksMuted(),
+        ticks: {
+          ...getChartjsAxisOptionsScalesTicksMuted(),
+          stepSize: getSmallIntegerAxisStepSize(data?.datasets),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any,
         grid: { display: true, color: getChartjsAxisOptionsScalesGridColor },
         border: {
           display: false,

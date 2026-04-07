@@ -173,4 +173,27 @@ describe('getLineChartOptions', () => {
       expect(options.maintainAspectRatio).toBe(false);
     });
   });
+
+  describe('integer y-axis step size', () => {
+    it('sets stepSize to 1 when all values are integers and max < 8', () => {
+      const options = getLineChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 3] }] });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.y?.ticks as any)?.stepSize).toBe(1);
+    });
+
+    it('sets stepSize to undefined when max >= 8', () => {
+      const options = getLineChartOptions({}, { labels: [], datasets: [{ data: [10, 20] }] });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+    });
+
+    it('sets stepSize to undefined when values contain decimals', () => {
+      const options = getLineChartOptions({}, { labels: [], datasets: [{ data: [1.1, 2] }] });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+    });
+  });
 });

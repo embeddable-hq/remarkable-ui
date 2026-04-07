@@ -33,7 +33,7 @@ export type BarChartProps = BaseBarChartProps;
 export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, options = {}, ...props }) => {
   const chartRef = useRef(null);
 
-  const barChartOptions = mergician(getBarChartOptions(props), options);
+  const barChartOptions = mergician(getBarChartOptions(props, data), options);
 
   const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const indexClicked = getSegmentIndexClicked(event, chartRef);
