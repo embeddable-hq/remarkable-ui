@@ -11,7 +11,7 @@ import {
   getChartjsAxisOptionsScalesGridColor,
   getChartjsAxisOptionsScalesTicksDefault,
   getChartjsAxisOptionsScalesTicksMuted,
-  getSmallIntegerAxisStepSize,
+  getIntegerAxisTickCallback,
 } from '../chartjs.cartesian.constants';
 
 export const getBarChartData = (data: ChartData<'bar'>): ChartData<'bar'> => {
@@ -102,9 +102,8 @@ const getBarVerticalChartOptions = (
         },
         ticks: {
           ...getChartjsAxisOptionsScalesTicksMuted(),
-          stepSize: getSmallIntegerAxisStepSize(data?.datasets),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
+          callback: getIntegerAxisTickCallback(data?.datasets),
+        },
         min: config.yAxisRangeMin,
         max: config.yAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',
@@ -152,9 +151,8 @@ const getBarHorizontalChartOptions = (
         border: { display: false },
         ticks: {
           ...getChartjsAxisOptionsScalesTicksMuted(),
-          stepSize: getSmallIntegerAxisStepSize(data?.datasets),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
+          callback: getIntegerAxisTickCallback(data?.datasets),
+        },
         min: config.xAxisRangeMin,
         max: config.xAxisRangeMax,
         type: config.showLogarithmicScale ? 'logarithmic' : 'linear',

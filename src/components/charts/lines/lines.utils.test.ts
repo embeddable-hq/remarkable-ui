@@ -174,26 +174,29 @@ describe('getLineChartOptions', () => {
     });
   });
 
-  describe('integer y-axis step size', () => {
-    it('sets stepSize to 1 when all values are integers and max < 8', () => {
+  describe('integer axis tick callback', () => {
+    it('sets callback on y scale when all values are integers', () => {
       const options = getLineChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 3] }] });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.y?.ticks as any)?.stepSize).toBe(1);
+      expect(typeof options.scales?.y?.ticks?.callback).toBe('function');
     });
 
-    it('sets stepSize to undefined when max >= 8', () => {
+    it('sets callback on y scale for large integer ranges', () => {
       const options = getLineChartOptions({}, { labels: [], datasets: [{ data: [10, 20] }] });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+      expect(typeof options.scales?.y?.ticks?.callback).toBe('function');
     });
 
-    it('sets stepSize to undefined when values contain decimals', () => {
+    it('sets callback to undefined when values contain decimals', () => {
       const options = getLineChartOptions({}, { labels: [], datasets: [{ data: [1.1, 2] }] });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+      expect(options.scales?.y?.ticks?.callback).toBeUndefined();
+    });
+
+    it('sets callback to undefined when no data is passed', () => {
+      const options = getLineChartOptions({});
+
+      expect(options.scales?.y?.ticks?.callback).toBeUndefined();
     });
   });
 });

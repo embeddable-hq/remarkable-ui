@@ -8,7 +8,7 @@ import {
   getChartjsAxisOptionsScalesGridColor,
   getChartjsAxisOptionsScalesTicksDefault,
   getChartjsAxisOptionsScalesTicksMuted,
-  getSmallIntegerAxisStepSize,
+  getIntegerAxisTickCallback,
 } from '../chartjs.cartesian.constants';
 import { getStyleNumber } from '../../../styles/styles.utils';
 
@@ -91,9 +91,8 @@ export const getLineChartOptions = (
         beginAtZero: true,
         ticks: {
           ...getChartjsAxisOptionsScalesTicksMuted(),
-          stepSize: getSmallIntegerAxisStepSize(data?.datasets),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } as any,
+          callback: getIntegerAxisTickCallback(data?.datasets),
+        },
         grid: { display: true, color: getChartjsAxisOptionsScalesGridColor },
         border: {
           display: false,

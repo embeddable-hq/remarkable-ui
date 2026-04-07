@@ -110,19 +110,19 @@ export const getChartjsAxisOptionsScalesGridColor = (ctx: any) => {
 };
 
 /**
- * Returns stepSize: 1 when all values are integers and max value < 8,
- * preventing Chart.js from generating decimal Y-axis ticks for small integer ranges.
+ * Returns a ticks.callback that suppresses non-integer tick labels when all
+ * data values are integers. This prevents Chart.js generating decimal ticks
+ * (e.g. 4.55, 5.56) for small integer ranges, without needing a threshold.
+ * Returns undefined (default behaviour) when any value is a decimal.
  */
-export const getSmallIntegerAxisStepSize = (
+export const getIntegerAxisTickCallback = (
   datasets?: { data: unknown[] }[],
-): number | undefined => {
+): ((value: number | string) => number | string | null) | undefined => {
   if (!datasets?.length) return undefined;
   const allValues = datasets
     .flatMap((ds) => ds.data)
     .filter((v): v is number => typeof v === 'number');
   if (!allValues.length) return undefined;
-  const maxValue = Math.max(...allValues);
-  const allIntegers = allValues.every((v) => Number.isInteger(v));
-  if (allIntegers && maxValue < 8) return 1;
-  return undefined;
+  if (!allValues.every((v) => Number.isInteger(v))) return undefined;
+  return (value) => (Number.isInteger(Number(value)) ? value : null);
 };

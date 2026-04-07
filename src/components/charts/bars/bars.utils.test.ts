@@ -182,46 +182,47 @@ describe('getBarChartOptions', () => {
     });
   });
 
-  describe('integer y-axis step size', () => {
-    it('sets stepSize to 1 on y scale when all values are integers and max < 8 (vertical)', () => {
+  describe('integer axis tick callback', () => {
+    it('sets callback on y scale when all values are integers (vertical)', () => {
       const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 3] }] });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.y?.ticks as any)?.stepSize).toBe(1);
+      expect(typeof options.scales?.y?.ticks?.callback).toBe('function');
     });
 
-    it('sets stepSize to undefined on y scale when max >= 8 (vertical)', () => {
-      const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 10] }] });
+    it('sets callback on y scale for large integer ranges (vertical)', () => {
+      const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1, 2, 100] }] });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+      expect(typeof options.scales?.y?.ticks?.callback).toBe('function');
     });
 
-    it('sets stepSize to undefined on y scale when values contain decimals (vertical)', () => {
+    it('sets callback to undefined on y scale when values contain decimals (vertical)', () => {
       const options = getBarChartOptions({}, { labels: [], datasets: [{ data: [1.5, 2] }] });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.y?.ticks as any)?.stepSize).toBeUndefined();
+      expect(options.scales?.y?.ticks?.callback).toBeUndefined();
     });
 
-    it('sets stepSize to 1 on x scale when all values are integers and max < 8 (horizontal)', () => {
+    it('sets callback to undefined on y scale when no data is passed (vertical)', () => {
+      const options = getBarChartOptions({});
+
+      expect(options.scales?.y?.ticks?.callback).toBeUndefined();
+    });
+
+    it('sets callback on x scale when all values are integers (horizontal)', () => {
       const options = getBarChartOptions(
         { horizontal: true },
         { labels: [], datasets: [{ data: [1, 2, 3] }] },
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.x?.ticks as any)?.stepSize).toBe(1);
+      expect(typeof options.scales?.x?.ticks?.callback).toBe('function');
     });
 
-    it('sets stepSize to undefined on x scale when values contain decimals (horizontal)', () => {
+    it('sets callback to undefined on x scale when values contain decimals (horizontal)', () => {
       const options = getBarChartOptions(
         { horizontal: true },
         { labels: [], datasets: [{ data: [1.5, 2] }] },
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((options.scales?.x?.ticks as any)?.stepSize).toBeUndefined();
+      expect(options.scales?.x?.ticks?.callback).toBeUndefined();
     });
   });
 });
