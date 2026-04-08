@@ -1,0 +1,460 @@
+import { ChartData, ChartDataset, ChartOptions, Scale, Tick, TooltipItem } from 'chart.js';
+import { Context } from 'chartjs-plugin-datalabels';
+import { getChartColors } from '../charts.constants';
+import { mergician } from 'mergician';
+import { ScatterChartConfigurationProps, ScatterChartInputPoint } from './scatter.types';
+import type { ScatterNullBandResult } from './scatter.nullBand.utils';
+import {
+  getChartjsAxisOptions,
+  chartjsAxisOptionsLayoutPadding,
+  getChartjsAxisOptionsScalesGrid,
+  getChartjsAxisOptionsScalesTicksDefault,
+  getChartjsAxisOptionsScalesTicksMuted,
+} from '../chartjs.cartesian.constants';
+import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
+
+const FALLBACK_POINT_COLOR = '#212129';
+
+const MIN_SCATTER_POINT_RADIUS_PX = 2;
+
+const getScatterPointRadiusPx = (): number => {
+  const r = getStyleNumber('--em-scatterchart-point-radius', '6px') ?? 6;
+  return Math.max(r, MIN_SCATTER_POINT_RADIUS_PX);
+};
+
+export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y: number }[]> & {
+  originalData?: ScatterChartInputPoint[];
+};
+
+const measureIsMissing = (v: number | null | undefined): boolean =>
+  v === null || v === undefined || (typeof v === 'number' && Number.isNaN(v));
+
+export const pointHasNullMeasure = (pt: ScatterChartInputPoint | undefined): boolean => {
+  if (!pt || typeof pt !== 'object') return false;
+  if (pt.isNull) return true;
+  return measureIsMissing(pt.x) || measureIsMissing(pt.y);
+};
+
+export function filterNumericScatterData(
+  data: ChartData<'scatter', ScatterChartInputPoint[]>,
+): ChartData<'scatter', ScatterChartInputPoint[]> {
+  return {
+    ...data,
+    datasets: data.datasets.map((ds) => ({
+      ...ds,
+      data: ds.data.filter(
+        (p) =>
+          p.x !== null &&
+          p.x !== undefined &&
+          p.y !== null &&
+          p.y !== undefined &&
+          Number.isFinite(p.x) &&
+          Number.isFinite(p.y) &&
+          (p.x as number) > 0 &&
+          (p.y as number) > 0,
+      ),
+    })),
+  };
+}
+
+export type ScatterChartDataContext = {
+  nullBand: ScatterNullBandResult | null;
+  supportsNullMeasures: boolean;
+};
+
+const getPointCaption = (raw: ScatterChartInputPoint | undefined): string | undefined => {
+  if (!raw || typeof raw !== 'object') return undefined;
+  return raw.pointLabel ?? raw.label;
+};
+
+const getOriginalScatterPoint = (context: Context): ScatterChartInputPoint | undefined => {
+  const ds = context.dataset as ScatterDatasetWithOriginal;
+  return (
+    ds.originalData?.[context.dataIndex] ??
+    (ds.data[context.dataIndex] as ScatterChartInputPoint | undefined)
+  );
+};
+
+export const applyOpacityToColor = (color: string, alpha: number): string => {
+  if (!color?.trim()) {
+    return `rgba(33, 33, 41, ${alpha})`;
+  }
+  if (typeof document === 'undefined') {
+    return color;
+  }
+
+  const el = document.createElement('span');
+  el.style.color = color;
+  document.body.appendChild(el);
+  const rgb = getComputedStyle(el).color;
+  el.remove();
+
+  const m = rgb.match(/rgba?\(\s*(\d+)\s*(?:,\s*|\s+)(\d+)\s*(?:,\s*|\s+)(\d+)/i);
+  if (!m) {
+    return `rgba(33, 33, 41, ${alpha})`;
+  }
+
+  return `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${alpha})`;
+};
+
+const resolveSeriesColor = (chartColors: string[], index: number): string => {
+  const c = chartColors[index % chartColors.length];
+  return c?.trim() ? c : FALLBACK_POINT_COLOR;
+};
+
+const userControlsPointFill = (dataset: ChartDataset<'scatter'>): boolean =>
+  dataset.pointBackgroundColor !== undefined || dataset.backgroundColor !== undefined;
+
+const mergeAxisMin = (
+  userMin: number | undefined,
+  computed: number | undefined,
+): number | undefined => {
+  if (computed === undefined) return userMin;
+  if (userMin === undefined) return computed;
+  return Math.min(userMin, computed);
+};
+
+function formatMeasure(value: number | null | undefined, nullLabel: string): string {
+  if (value === null || value === undefined) return nullLabel;
+  return String(value);
+}
+
+function scatterTooltipLabel(ctx: TooltipItem<'scatter'>, nullLabel: string): string | string[] {
+  const ds = ctx.dataset as ScatterDatasetWithOriginal;
+  const orig = ds.originalData?.[ctx.dataIndex];
+  const prefix = ds.label ? `${ds.label}: ` : '';
+  if (orig) {
+    return `${prefix}(${formatMeasure(orig.x, nullLabel)}, ${formatMeasure(orig.y, nullLabel)})`;
+  }
+  const { x, y } = ctx.parsed;
+  return `${prefix}(${x}, ${y})`;
+}
+
+export const getScatterChartData = (
+  data: ChartData<'scatter', ScatterChartInputPoint[]>,
+  ctx: ScatterChartDataContext,
+): ChartData<'scatter'> => {
+  const chartColors = getChartColors();
+  const defaultOpacity = getStyleNumber('--em-scatterchart-opacity', '0.8') ?? 0.8;
+  const nullOpacity = getStyleNumber('--em-scatterchart-null-opacity', '0.3') ?? 0.3;
+  const pointRadiusPx = getScatterPointRadiusPx();
+  const pointHoverRadiusPx = pointRadiusPx * (4 / 3);
+
+  const useNullBandMapping =
+    ctx.supportsNullMeasures &&
+    ctx.nullBand !== null &&
+    (ctx.nullBand.hasNullX || ctx.nullBand.hasNullY);
+
+  return {
+    ...data,
+    datasets:
+      data.datasets?.map((dataset, index) => {
+        const baseColor = resolveSeriesColor(chartColors, index);
+
+        const defaultDataset: Partial<ScatterDatasetWithOriginal> = {
+          showLine: false,
+          pointRadius: pointRadiusPx,
+          pointHoverRadius: pointHoverRadiusPx,
+          originalData: [...dataset.data],
+        };
+
+        if (!userControlsPointFill(dataset)) {
+          defaultDataset.pointBackgroundColor = (c) => {
+            const orig =
+              (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
+              (c.dataset.data[c.dataIndex] as ScatterChartInputPoint | undefined);
+            const alpha = pointHasNullMeasure(orig) ? nullOpacity : defaultOpacity;
+            return applyOpacityToColor(baseColor, alpha);
+          };
+          defaultDataset.pointBorderColor = (c) => {
+            const orig =
+              (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
+              (c.dataset.data[c.dataIndex] as ScatterChartInputPoint | undefined);
+            const alpha = pointHasNullMeasure(orig) ? nullOpacity : defaultOpacity;
+            return applyOpacityToColor(baseColor, alpha);
+          };
+          defaultDataset.backgroundColor = baseColor;
+          defaultDataset.borderColor = baseColor;
+        } else {
+          defaultDataset.backgroundColor = dataset.backgroundColor ?? baseColor;
+          defaultDataset.borderColor = dataset.borderColor ?? baseColor;
+        }
+
+        if (!useNullBandMapping || !ctx.nullBand) {
+          return mergician(defaultDataset, dataset) as ScatterDatasetWithOriginal;
+        }
+
+        const { xNullPos, yNullPos } = ctx.nullBand;
+        const mappedData = dataset.data.map((pt) => ({
+          x: pt.x ?? xNullPos,
+          y: pt.y ?? yNullPos,
+        }));
+        const originalData = [...dataset.data];
+
+        if (!userControlsPointFill(dataset)) {
+          const bgColors = dataset.data.map((pt) => {
+            const alpha = pointHasNullMeasure(pt) ? nullOpacity : defaultOpacity;
+            return applyOpacityToColor(baseColor, alpha);
+          });
+          return mergician(defaultDataset, dataset, {
+            data: mappedData,
+            originalData,
+            pointBackgroundColor: bgColors,
+            pointBorderColor: bgColors,
+          }) as ScatterDatasetWithOriginal;
+        }
+
+        return mergician(defaultDataset, dataset, {
+          data: mappedData,
+          originalData,
+        }) as ScatterDatasetWithOriginal;
+      }) || [],
+  };
+};
+
+const valueLabelDisplay = (context: Context, showValueLabels: boolean | undefined): boolean => {
+  if (!showValueLabels) return false;
+  const raw = getOriginalScatterPoint(context);
+  if (!raw || typeof raw !== 'object') return false;
+  const yScale = context.chart.scales.y;
+  const xScale = context.chart.scales.x;
+  if (!yScale || !xScale) return false;
+
+  const mapped = context.dataset.data[context.dataIndex] as { x: number; y: number } | undefined;
+  if (!mapped || typeof mapped.x !== 'number' || typeof mapped.y !== 'number') return false;
+  const { x: mx, y: my } = mapped;
+
+  if (yScale.type === 'logarithmic' && (my <= 0 || !Number.isFinite(my))) return false;
+  if (xScale.type === 'logarithmic' && (mx <= 0 || !Number.isFinite(mx))) return false;
+
+  return my >= yScale.min && my <= yScale.max && mx >= xScale.min && mx <= xScale.max;
+};
+
+const pointLabelDisplay = (context: Context, showPointLabels: boolean | undefined): boolean => {
+  if (!showPointLabels) return false;
+  const raw = getOriginalScatterPoint(context);
+  return Boolean(getPointCaption(raw));
+};
+
+export type ScatterChartOptionsNullContext = {
+  nullBand: ScatterNullBandResult | null;
+  nullBandLabel: string;
+};
+
+export const getScatterChartOptions = (
+  options: ScatterChartConfigurationProps,
+  nullContext?: ScatterChartOptionsNullContext,
+): Partial<ChartOptions<'scatter'>> => {
+  const pointRadius = getScatterPointRadiusPx();
+  const borderWidth = getStyleNumber('--em-scatterchart-border-width', '1px') ?? 1;
+  const labelLift = pointRadius + 6;
+
+  const nullBand = nullContext?.nullBand ?? null;
+  const nullBandLabel = nullContext?.nullBandLabel ?? 'No value';
+  const applyNullX = !options.showLogarithmicScale && Boolean(nullBand?.hasNullX);
+  const applyNullY = !options.showLogarithmicScale && Boolean(nullBand?.hasNullY);
+
+  const ticksDefault = getChartjsAxisOptionsScalesTicksDefault();
+  const ticksMuted = getChartjsAxisOptionsScalesTicksMuted();
+
+  const xTickCallback =
+    applyNullX && nullBand
+      ? function (this: Scale, tickValue: string | number, index: number, ticks: Tick[]) {
+          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+          if (Number.isFinite(v) && Math.abs(v - nullBand.xNullPos) < 1e-9) {
+            return nullBandLabel;
+          }
+          const cb = ticksDefault.callback;
+          if (cb) return cb.call(this, tickValue, index, ticks);
+          return String(tickValue);
+        }
+      : ticksDefault.callback;
+
+  const yTickCallback =
+    applyNullY && nullBand
+      ? function (this: Scale, tickValue: string | number, index: number, ticks: Tick[]) {
+          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+          if (Number.isFinite(v) && Math.abs(v - nullBand.yNullPos) < 1e-9) {
+            return nullBandLabel;
+          }
+          const cb = ticksMuted.callback;
+          if (cb) return cb.call(this, tickValue, index, ticks);
+          return String(tickValue);
+        }
+      : ticksMuted.callback;
+
+  const valueLabelOffset = (context: Context): number => {
+    const showV = valueLabelDisplay(context, options.showValueLabels);
+    const showP = pointLabelDisplay(context, options.showPointLabels);
+    if (!showV) return 0;
+    if (showP) return labelLift + 20;
+    return labelLift;
+  };
+
+  const captionLabelOffset = (context: Context): number => {
+    const showV = valueLabelDisplay(context, options.showValueLabels);
+    const showP = pointLabelDisplay(context, options.showPointLabels);
+    if (!showP) return 0;
+    if (showV) return labelLift + 4;
+    return labelLift;
+  };
+
+  const axisLineColor = getStyle('--em-chart-grid-line-color--light', '#EDEDF1');
+  const axisLineWidth = getStyleNumber('--em-chart-grid-line-width--thin', '1px') ?? 1;
+
+  const showGrid = Boolean(options.showGrid);
+  const gridStyle = getChartjsAxisOptionsScalesGrid();
+  const defaultGridColor =
+    (typeof gridStyle.color === 'string' ? gridStyle.color : undefined) ??
+    getStyle('--em-chart-grid-line-color--light', '#EDEDF1');
+
+  const xGridColor =
+    showGrid && applyNullX && nullBand
+      ? (ctx: { tick: { value: number } }) => {
+          if (Math.abs(ctx.tick.value - nullBand.xNullPos) < 1e-9) return 'transparent';
+          return defaultGridColor;
+        }
+      : gridStyle.color;
+
+  const yGridColor =
+    showGrid && applyNullY && nullBand
+      ? (ctx: { tick: { value: number } }) => {
+          if (Math.abs(ctx.tick.value - nullBand.yNullPos) < 1e-9) return 'transparent';
+          return defaultGridColor;
+        }
+      : gridStyle.color;
+
+  const newOptions: Partial<ChartOptions<'scatter'>> = {
+    interaction: {
+      mode: 'nearest',
+      intersect: true,
+    },
+    elements: {
+      point: {
+        radius: pointRadius,
+        hoverRadius: pointRadius * (4 / 3),
+        borderWidth,
+      },
+    },
+    layout: {
+      padding: {
+        top:
+          options.showValueLabels || options.showPointLabels
+            ? chartjsAxisOptionsLayoutPadding + pointRadius + 28
+            : 0,
+      },
+    },
+    plugins: {
+      datalabels: {
+        backgroundColor: 'transparent',
+        borderWidth: 0,
+        padding: 0,
+        color: getStyle('--em-chart-label-color', '#212129'),
+        textStrokeColor: getStyle('--em-chart-label-background', '#FFF'),
+        textStrokeWidth: 3,
+        labels: {
+          total: {
+            display: false,
+          },
+          value: {
+            display: (context) => valueLabelDisplay(context, options.showValueLabels),
+            anchor: 'center',
+            align: 'top',
+            offset: valueLabelOffset,
+            formatter: (_value, context) => {
+              const raw = getOriginalScatterPoint(context);
+              if (!raw || typeof raw !== 'object') return '';
+              const xs = formatMeasure(raw.x, nullBandLabel);
+              const ys = formatMeasure(raw.y, nullBandLabel);
+              return `${xs}, ${ys}`;
+            },
+          },
+          caption: {
+            display: (context) => pointLabelDisplay(context, options.showPointLabels),
+            anchor: 'center',
+            align: 'top',
+            offset: captionLabelOffset,
+            formatter: (_value, context) => {
+              const raw = getOriginalScatterPoint(context);
+              return getPointCaption(raw) ?? '';
+            },
+          },
+        },
+      },
+      legend: {
+        display: options.showLegend,
+      },
+      tooltip: {
+        enabled: options.showTooltips,
+        callbacks: {
+          label: (ctx) => scatterTooltipLabel(ctx, nullBandLabel),
+        },
+      },
+    },
+    scales: {
+      x: {
+        type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
+        grid: showGrid
+          ? {
+              display: true,
+              ...gridStyle,
+              color: xGridColor,
+            }
+          : {
+              display: false,
+            },
+        border: {
+          display: true,
+          color: axisLineColor,
+          width: axisLineWidth,
+        },
+        ticks: {
+          ...ticksDefault,
+          callback: xTickCallback,
+        },
+        title: {
+          display: Boolean(options.xAxisLabel),
+          text: options.xAxisLabel,
+        },
+        reverse: options.reverseXAxis,
+        min: mergeAxisMin(
+          options.xAxisRangeMin,
+          applyNullX ? nullBand?.computedXAxisMin : undefined,
+        ),
+        max: options.xAxisRangeMax,
+      },
+      y: {
+        type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
+        grid: showGrid
+          ? {
+              display: true,
+              ...gridStyle,
+              color: yGridColor,
+            }
+          : {
+              display: false,
+            },
+        border: {
+          display: true,
+          color: axisLineColor,
+          width: axisLineWidth,
+        },
+        ticks: {
+          ...ticksMuted,
+          callback: yTickCallback,
+        },
+        title: {
+          display: Boolean(options.yAxisLabel),
+          text: options.yAxisLabel,
+        },
+        min: mergeAxisMin(
+          options.yAxisRangeMin,
+          applyNullY ? nullBand?.computedYAxisMin : undefined,
+        ),
+        max: options.yAxisRangeMax,
+      },
+    },
+  };
+
+  return mergician(getChartjsAxisOptions(), newOptions);
+};
