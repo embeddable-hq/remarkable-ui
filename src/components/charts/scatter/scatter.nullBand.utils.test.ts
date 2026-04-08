@@ -3,6 +3,7 @@ import {
   NULL_BAND_OFFSET,
   NULL_BAND_PADDING,
   computeScatterNullBand,
+  createScatterNullBandPlugin,
 } from './scatter.nullBand.utils';
 import type { ScatterChartInputPoint } from './scatter.types';
 
@@ -76,5 +77,71 @@ describe('computeScatterNullBand', () => {
     expect(r!.xRange).toBe(1);
     expect(r!.yRange).toBe(2);
     expect(r!.hasNullX).toBe(true);
+  });
+});
+
+describe('createScatterNullBandPlugin', () => {
+  it('prepends null x tick on x scale when hasNullX', () => {
+    const nullBand = computeScatterNullBand([
+      {
+        data: [
+          { x: null, y: 1 },
+          { x: 8, y: 2 },
+        ],
+      },
+    ]);
+    expect(nullBand).not.toBeNull();
+
+    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const scale = {
+      id: 'x',
+      ticks: [{ value: 8 }, { value: 12 }],
+    };
+
+    plugin.afterBuildTicks?.({} as never, { scale } as never, {} as never);
+
+    expect(scale.ticks[0]!.value).toBe(nullBand!.xNullPos);
+    expect(scale.ticks.map((t) => t.value)).toContain(8);
+  });
+
+  it('prepends null y tick on y scale when hasNullY', () => {
+    const nullBand = computeScatterNullBand([
+      {
+        data: [
+          { x: 1, y: null },
+          { x: 2, y: 10 },
+        ],
+      },
+    ]);
+    expect(nullBand).not.toBeNull();
+
+    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const scale = {
+      id: 'y',
+      ticks: [{ value: 10 }, { value: 20 }],
+    };
+
+    plugin.afterBuildTicks?.({} as never, { scale } as never, {} as never);
+
+    expect(scale.ticks[0]!.value).toBe(nullBand!.yNullPos);
+  });
+
+  it('does nothing when scale is missing', () => {
+    const nullBand = computeScatterNullBand([{ data: [{ x: null, y: 1 }] }]);
+    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    expect(() =>
+      plugin.afterBuildTicks?.({} as never, { scale: undefined } as never, {} as never),
+    ).not.toThrow();
+  });
+
+  it('does not modify ticks for unrelated scale ids', () => {
+    const nullBand = computeScatterNullBand([{ data: [{ x: null, y: 1 }] }]);
+    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const scale = {
+      id: 'r',
+      ticks: [{ value: 1 }],
+    };
+    plugin.afterBuildTicks?.({} as never, { scale } as never, {} as never);
+    expect(scale.ticks).toEqual([{ value: 1 }]);
   });
 });
