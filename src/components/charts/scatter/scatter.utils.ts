@@ -1,4 +1,4 @@
-import { ChartData, ChartDataset, ChartOptions, Scale, Tick, TooltipItem } from 'chart.js';
+import { ChartData, ChartDataset, ChartOptions, TooltipItem } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { getChartColors } from '../charts.constants';
 import { mergician } from 'mergician';
@@ -7,13 +7,14 @@ import type { ScatterNullBandResult } from './scatter.nullBand.utils';
 import {
   getChartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
-  getChartjsAxisOptionsScalesGrid,
   getChartjsAxisOptionsScalesTicksDefault,
   getChartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
 import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
 
 const FALLBACK_POINT_COLOR = '#212129';
+
+const defaultScatterNumberFormat = new Intl.NumberFormat();
 
 const MIN_SCATTER_POINT_RADIUS_PX = 2;
 
@@ -114,20 +115,40 @@ const mergeAxisMin = (
   return Math.min(userMin, computed);
 };
 
-function formatMeasure(value: number | null | undefined, nullLabel: string): string {
+function defaultFormatMeasureValue(
+  _axis: 'x' | 'y',
+  value: number | null | undefined,
+  nullLabel: string,
+): string {
   if (value === null || value === undefined) return nullLabel;
-  return String(value);
+  return defaultScatterNumberFormat.format(value);
 }
 
-function scatterTooltipLabel(ctx: TooltipItem<'scatter'>, nullLabel: string): string | string[] {
+function formatAxisTickValue(
+  axis: 'x' | 'y',
+  tickValue: string | number,
+  formatAxisTick: ScatterChartConfigurationProps['formatAxisTick'],
+): string {
+  const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+  if (!Number.isFinite(v)) return String(tickValue);
+  return formatAxisTick?.(axis, v) ?? defaultScatterNumberFormat.format(v);
+}
+
+function scatterTooltipLabel(
+  ctx: TooltipItem<'scatter'>,
+  nullLabel: string,
+  formatMeasureValue: NonNullable<ScatterChartConfigurationProps['formatMeasureValue']>,
+): string | string[] {
   const ds = ctx.dataset as ScatterDatasetWithOriginal;
   const orig = ds.originalData?.[ctx.dataIndex];
   const prefix = ds.label ? `${ds.label}: ` : '';
   if (orig) {
-    return `${prefix}(${formatMeasure(orig.x, nullLabel)}, ${formatMeasure(orig.y, nullLabel)})`;
+    return `${prefix}(${formatMeasureValue('x', orig.x, nullLabel)}, ${formatMeasureValue('y', orig.y, nullLabel)})`;
   }
   const { x, y } = ctx.parsed;
-  return `${prefix}(${x}, ${y})`;
+  const fx = typeof x === 'number' ? formatMeasureValue('x', x, nullLabel) : String(x);
+  const fy = typeof y === 'number' ? formatMeasureValue('y', y, nullLabel) : String(y);
+  return `${prefix}(${fx}, ${fy})`;
 }
 
 export const getScatterChartData = (
@@ -241,6 +262,19 @@ export type ScatterChartOptionsNullContext = {
   nullBandLabel: string;
 };
 
+export const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
+  const color = getStyle('--em-chart-grid-line-color--subtle', '#B8B8BD');
+  const w = getStyleNumber('--em-chart-grid-line-width--thin', '1px') ?? 1;
+  const width = Math.max(1, w);
+  const border = { display: true as const, color, width };
+  return {
+    scales: {
+      x: { border },
+      y: { border },
+    },
+  };
+};
+
 export const getScatterChartOptions = (
   options: ScatterChartConfigurationProps,
   nullContext?: ScatterChartOptionsNullContext,
@@ -257,31 +291,29 @@ export const getScatterChartOptions = (
   const ticksDefault = getChartjsAxisOptionsScalesTicksDefault();
   const ticksMuted = getChartjsAxisOptionsScalesTicksMuted();
 
-  const xTickCallback =
-    applyNullX && nullBand
-      ? function (this: Scale, tickValue: string | number, index: number, ticks: Tick[]) {
-          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
-          if (Number.isFinite(v) && Math.abs(v - nullBand.xNullPos) < 1e-9) {
-            return nullBandLabel;
-          }
-          const cb = ticksDefault.callback;
-          if (cb) return cb.call(this, tickValue, index, ticks);
-          return String(tickValue);
-        }
-      : ticksDefault.callback;
+  const formatMeasureValueResolved: NonNullable<
+    ScatterChartConfigurationProps['formatMeasureValue']
+  > = options.formatMeasureValue ?? defaultFormatMeasureValue;
 
-  const yTickCallback =
-    applyNullY && nullBand
-      ? function (this: Scale, tickValue: string | number, index: number, ticks: Tick[]) {
-          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
-          if (Number.isFinite(v) && Math.abs(v - nullBand.yNullPos) < 1e-9) {
-            return nullBandLabel;
-          }
-          const cb = ticksMuted.callback;
-          if (cb) return cb.call(this, tickValue, index, ticks);
-          return String(tickValue);
-        }
-      : ticksMuted.callback;
+  const xTickCallback = (tickValue: string | number) => {
+    if (applyNullX && nullBand) {
+      const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+      if (Number.isFinite(v) && Math.abs(v - nullBand.xNullPos) < 1e-9) {
+        return nullBandLabel;
+      }
+    }
+    return formatAxisTickValue('x', tickValue, options.formatAxisTick);
+  };
+
+  const yTickCallback = (tickValue: string | number) => {
+    if (applyNullY && nullBand) {
+      const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+      if (Number.isFinite(v) && Math.abs(v - nullBand.yNullPos) < 1e-9) {
+        return nullBandLabel;
+      }
+    }
+    return formatAxisTickValue('y', tickValue, options.formatAxisTick);
+  };
 
   const valueLabelOffset = (context: Context): number => {
     const showV = valueLabelDisplay(context, options.showValueLabels);
@@ -298,31 +330,6 @@ export const getScatterChartOptions = (
     if (showV) return labelLift + 4;
     return labelLift;
   };
-
-  const axisLineColor = getStyle('--em-chart-grid-line-color--light', '#EDEDF1');
-  const axisLineWidth = getStyleNumber('--em-chart-grid-line-width--thin', '1px') ?? 1;
-
-  const showGrid = Boolean(options.showGrid);
-  const gridStyle = getChartjsAxisOptionsScalesGrid();
-  const defaultGridColor =
-    (typeof gridStyle.color === 'string' ? gridStyle.color : undefined) ??
-    getStyle('--em-chart-grid-line-color--light', '#EDEDF1');
-
-  const xGridColor =
-    showGrid && applyNullX && nullBand
-      ? (ctx: { tick: { value: number } }) => {
-          if (Math.abs(ctx.tick.value - nullBand.xNullPos) < 1e-9) return 'transparent';
-          return defaultGridColor;
-        }
-      : gridStyle.color;
-
-  const yGridColor =
-    showGrid && applyNullY && nullBand
-      ? (ctx: { tick: { value: number } }) => {
-          if (Math.abs(ctx.tick.value - nullBand.yNullPos) < 1e-9) return 'transparent';
-          return defaultGridColor;
-        }
-      : gridStyle.color;
 
   const newOptions: Partial<ChartOptions<'scatter'>> = {
     interaction: {
@@ -357,20 +364,22 @@ export const getScatterChartOptions = (
             display: false,
           },
           value: {
-            display: (context) => valueLabelDisplay(context, options.showValueLabels),
+            display: (context) =>
+              valueLabelDisplay(context, options.showValueLabels) ? 'auto' : false,
             anchor: 'center',
             align: 'top',
             offset: valueLabelOffset,
             formatter: (_value, context) => {
               const raw = getOriginalScatterPoint(context);
               if (!raw || typeof raw !== 'object') return '';
-              const xs = formatMeasure(raw.x, nullBandLabel);
-              const ys = formatMeasure(raw.y, nullBandLabel);
+              const xs = formatMeasureValueResolved('x', raw.x, nullBandLabel);
+              const ys = formatMeasureValueResolved('y', raw.y, nullBandLabel);
               return `${xs}, ${ys}`;
             },
           },
           caption: {
-            display: (context) => pointLabelDisplay(context, options.showPointLabels),
+            display: (context) =>
+              pointLabelDisplay(context, options.showPointLabels) ? 'auto' : false,
             anchor: 'center',
             align: 'top',
             offset: captionLabelOffset,
@@ -387,27 +396,14 @@ export const getScatterChartOptions = (
       tooltip: {
         enabled: options.showTooltips,
         callbacks: {
-          label: (ctx) => scatterTooltipLabel(ctx, nullBandLabel),
+          label: (ctx) => scatterTooltipLabel(ctx, nullBandLabel, formatMeasureValueResolved),
         },
       },
     },
     scales: {
       x: {
         type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
-        grid: showGrid
-          ? {
-              display: true,
-              ...gridStyle,
-              color: xGridColor,
-            }
-          : {
-              display: false,
-            },
-        border: {
-          display: true,
-          color: axisLineColor,
-          width: axisLineWidth,
-        },
+        grid: { display: false },
         ticks: {
           ...ticksDefault,
           callback: xTickCallback,
@@ -425,20 +421,8 @@ export const getScatterChartOptions = (
       },
       y: {
         type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
-        grid: showGrid
-          ? {
-              display: true,
-              ...gridStyle,
-              color: yGridColor,
-            }
-          : {
-              display: false,
-            },
-        border: {
-          display: true,
-          color: axisLineColor,
-          width: axisLineWidth,
-        },
+        ...(!options.showLogarithmicScale ? { grace: '5%' } : {}),
+        grid: { display: false },
         ticks: {
           ...ticksMuted,
           callback: yTickCallback,
