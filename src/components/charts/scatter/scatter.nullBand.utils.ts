@@ -19,29 +19,53 @@ export type ScatterNullBandResult = {
   yNumMax: number;
 };
 
+const finiteExtent = (): { min: number; max: number; count: number } => ({
+  min: Infinity,
+  max: -Infinity,
+  count: 0,
+});
+
 export function computeScatterNullBand(
   datasets: { data: ScatterChartInputPoint[] }[],
 ): ScatterNullBandResult | null {
   if (!datasets.length) return null;
 
-  const allX: number[] = [];
-  const allY: number[] = [];
   let foundNullX = false;
   let foundNullY = false;
+  const xExt = finiteExtent();
+  const yExt = finiteExtent();
 
   for (const ds of datasets) {
     for (const pt of ds.data) {
-      if (pt.x !== null && pt.x !== undefined) allX.push(pt.x);
-      else foundNullX = true;
-      if (pt.y !== null && pt.y !== undefined) allY.push(pt.y);
-      else foundNullY = true;
+      if (pt.x !== null && pt.x !== undefined) {
+        if (Number.isFinite(pt.x)) {
+          xExt.min = Math.min(xExt.min, pt.x);
+          xExt.max = Math.max(xExt.max, pt.x);
+          xExt.count += 1;
+        } else {
+          foundNullX = true;
+        }
+      } else {
+        foundNullX = true;
+      }
+      if (pt.y !== null && pt.y !== undefined) {
+        if (Number.isFinite(pt.y)) {
+          yExt.min = Math.min(yExt.min, pt.y);
+          yExt.max = Math.max(yExt.max, pt.y);
+          yExt.count += 1;
+        } else {
+          foundNullY = true;
+        }
+      } else {
+        foundNullY = true;
+      }
     }
   }
 
-  const xNumMin = allX.length ? Math.min(...allX) : 0;
-  const xNumMax = allX.length ? Math.max(...allX) : 0;
-  const yNumMin = allY.length ? Math.min(...allY) : 0;
-  const yNumMax = allY.length ? Math.max(...allY) : 0;
+  const xNumMin = xExt.count > 0 ? xExt.min : 0;
+  const xNumMax = xExt.count > 0 ? xExt.max : 0;
+  const yNumMin = yExt.count > 0 ? yExt.min : 0;
+  const yNumMax = yExt.count > 0 ? yExt.max : 0;
   const xRange = Math.max(xNumMax - xNumMin, 1);
   const yRange = Math.max(yNumMax - yNumMin, 1);
 

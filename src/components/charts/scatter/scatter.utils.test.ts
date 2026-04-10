@@ -53,6 +53,11 @@ describe('pointHasNullMeasure', () => {
     expect(pointHasNullMeasure({ x: NaN, y: 1 })).toBe(true);
   });
 
+  it('treats non-finite numbers (e.g. Infinity) as missing', () => {
+    expect(pointHasNullMeasure({ x: Infinity, y: 1 })).toBe(true);
+    expect(pointHasNullMeasure({ x: 1, y: -Infinity })).toBe(true);
+  });
+
   it('returns false for undefined point', () => {
     expect(pointHasNullMeasure(undefined)).toBe(false);
   });
@@ -153,6 +158,29 @@ describe('getScatterChartData', () => {
     expect(
       (out.datasets[0] as { originalData?: ScatterChartInputPoint[] }).originalData?.[0]?.x,
     ).toBe(null);
+  });
+
+  it('maps non-finite x to null-band position like null/undefined', () => {
+    const raw: ChartData<'scatter', ScatterChartInputPoint[]> = {
+      datasets: [
+        {
+          label: 'S',
+          data: [
+            { x: NaN, y: 10 },
+            { x: 10, y: 20 },
+          ],
+        },
+      ],
+    };
+    const nullBand = computeScatterNullBand(raw.datasets);
+    expect(nullBand!.hasNullX).toBe(true);
+    const out = getScatterChartData(raw, {
+      nullBand,
+      supportsNullMeasures: true,
+    });
+    const p0 = out.datasets[0]!.data[0] as { x: number; y: number };
+    expect(p0.x).toBe(nullBand!.xNullPos);
+    expect(p0.y).toBe(10);
   });
 
   it('skips null-band mapping when supportsNullMeasures is false', () => {
@@ -308,6 +336,25 @@ describe('getScatterChartOptions', () => {
     });
     expect(s).toContain('NV');
     expect(s).toContain('S');
+  });
+
+  it('tooltip label uses null label for non-finite measure in originalData', () => {
+    const opts = getScatterChartOptions(
+      { showTooltips: true },
+      { nullBand: null, nullBandLabel: 'NV' },
+    );
+    const labelFn = opts.plugins?.tooltip?.callbacks?.label as (ctx: {
+      dataset: { label?: string; originalData?: ScatterChartInputPoint[] };
+      dataIndex: number;
+      parsed: { x: number; y: number };
+    }) => string;
+    const s = labelFn!({
+      dataset: { label: 'S', originalData: [{ x: NaN, y: 2 }] },
+      dataIndex: 0,
+      parsed: { x: 0, y: 2 },
+    });
+    expect(s).toContain('NV');
+    expect(s).not.toContain('NaN');
   });
 
   it('tooltip label falls back to parsed when no originalData', () => {

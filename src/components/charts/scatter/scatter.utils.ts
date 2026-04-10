@@ -27,8 +27,9 @@ export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y:
   originalData?: ScatterChartInputPoint[];
 };
 
+/** True for null/undefined and non-finite numbers (NaN, ±Infinity). */
 const measureIsMissing = (v: number | null | undefined): boolean =>
-  v === null || v === undefined || (typeof v === 'number' && Number.isNaN(v));
+  v === null || v === undefined || (typeof v === 'number' && !Number.isFinite(v));
 
 export const pointHasNullMeasure = (pt: ScatterChartInputPoint | undefined): boolean => {
   if (!pt || typeof pt !== 'object') return false;
@@ -120,8 +121,8 @@ function defaultFormatMeasureValue(
   value: number | null | undefined,
   nullLabel: string,
 ): string {
-  if (value === null || value === undefined) return nullLabel;
-  return defaultScatterNumberFormat.format(value);
+  if (measureIsMissing(value)) return nullLabel;
+  return defaultScatterNumberFormat.format(value as number);
 }
 
 function formatAxisTickValue(
@@ -207,8 +208,8 @@ export const getScatterChartData = (
 
         const { xNullPos, yNullPos } = ctx.nullBand;
         const mappedData = dataset.data.map((pt) => ({
-          x: pt.x ?? xNullPos,
-          y: pt.y ?? yNullPos,
+          x: measureIsMissing(pt.x) ? xNullPos : (pt.x as number),
+          y: measureIsMissing(pt.y) ? yNullPos : (pt.y as number),
         }));
         const originalData = [...dataset.data];
 

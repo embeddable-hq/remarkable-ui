@@ -28,6 +28,20 @@ describe('computeScatterNullBand', () => {
     expect(r!.hasNullY).toBe(true);
   });
 
+  it('treats non-finite coordinates as null for hasNullX / hasNullY flags', () => {
+    const datasets: { data: ScatterChartInputPoint[] }[] = [
+      {
+        data: [
+          { x: NaN, y: 1 },
+          { x: 2, y: 3 },
+        ],
+      },
+    ];
+    const r = computeScatterNullBand(datasets);
+    expect(r!.hasNullX).toBe(true);
+    expect(r!.hasNullY).toBe(false);
+  });
+
   it('uses only non-null coordinates for numeric extent', () => {
     const datasets: { data: ScatterChartInputPoint[] }[] = [
       {
@@ -42,6 +56,25 @@ describe('computeScatterNullBand', () => {
     expect(r!.xNumMax).toBe(8);
     expect(r!.yNumMin).toBe(4);
     expect(r!.yNumMax).toBe(4);
+  });
+
+  it('ignores non-finite coordinates for extent so NaN does not break range', () => {
+    const datasets: { data: ScatterChartInputPoint[] }[] = [
+      {
+        data: [
+          { x: NaN, y: 1 },
+          { x: 10, y: Infinity },
+          { x: 2, y: 5 },
+        ],
+      },
+    ];
+    const r = computeScatterNullBand(datasets);
+    expect(r!.xNumMin).toBe(2);
+    expect(r!.xNumMax).toBe(10);
+    expect(r!.yNumMin).toBe(1);
+    expect(r!.yNumMax).toBe(5);
+    expect(Number.isFinite(r!.xNullPos)).toBe(true);
+    expect(Number.isFinite(r!.yNullPos)).toBe(true);
   });
 
   it('applies sandbox null-band position and axis min padding', () => {
