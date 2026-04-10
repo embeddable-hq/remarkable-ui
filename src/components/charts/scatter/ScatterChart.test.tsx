@@ -51,7 +51,7 @@ describe('ScatterChart', () => {
 
       render(<ScatterChart data={MOCK_DATA} />);
 
-      await expect(user.click(screen.getByTestId('scatter-chart'))).resolves.not.toThrow();
+      await expect(user.click(screen.getByTestId('scatter-chart'))).resolves.toBeUndefined();
     });
   });
 });
