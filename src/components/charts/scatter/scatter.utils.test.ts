@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { ChartData } from 'chart.js';
+import type { ChartData, ChartOptions } from 'chart.js';
 import type { ScatterChartInputPoint } from './scatter.types';
 import { computeScatterNullBand } from './scatter.nullBand.utils';
 
@@ -12,9 +12,11 @@ vi.mock('../../../styles/styles.utils', () => ({
   getStyleNumber: vi.fn((_k: string, fallback: string) => parseFloat(fallback) || 0),
 }));
 
+import { mergician } from 'mergician';
 import {
   applyOpacityToColor,
   filterNumericScatterData,
+  getScatterChartAxisBorderPatch,
   getScatterChartData,
   getScatterChartOptions,
   pointHasNullMeasure,
@@ -233,6 +235,22 @@ describe('getScatterChartData', () => {
 });
 
 describe('getScatterChartOptions', () => {
+  it('draws axis spines with visible border color and at least 1px width', () => {
+    const opts = mergician(getScatterChartOptions({}), getScatterChartAxisBorderPatch()) as Partial<
+      ChartOptions<'scatter'>
+    >;
+    expect(opts.scales?.x?.border).toMatchObject({
+      display: true,
+      color: '#B8B8BD',
+      width: 1,
+    });
+    expect(opts.scales?.y?.border).toMatchObject({
+      display: true,
+      color: '#B8B8BD',
+      width: 1,
+    });
+  });
+
   it('sets linear scale by default and logarithmic when requested', () => {
     const linear = getScatterChartOptions({});
     expect(linear.scales?.x?.type).toBe('linear');
@@ -339,22 +357,6 @@ describe('getScatterChartOptions', () => {
     expect(text).toBe('P');
   });
 
-  it('uses transparent grid at null-band tick when showGrid and null x', () => {
-    const datasets: { data: ScatterChartInputPoint[] }[] = [
-      {
-        data: [
-          { x: null, y: 1 },
-          { x: 5, y: 2 },
-        ],
-      },
-    ];
-    const nullBand = computeScatterNullBand(datasets);
-    const opts = getScatterChartOptions({ showGrid: true }, { nullBand, nullBandLabel: 'NV' });
-    const color = opts.scales?.x?.grid?.color as (ctx: { tick: { value: number } }) => string;
-    expect(color({ tick: { value: nullBand!.xNullPos } })).toBe('transparent');
-    expect(color({ tick: { value: 99 } })).not.toBe('transparent');
-  });
-
   it('shows null-band label on y tick at null position', () => {
     const datasets: { data: ScatterChartInputPoint[] }[] = [
       {
@@ -376,19 +378,29 @@ describe('getScatterChartOptions', () => {
     expect(label).toBe('NV');
   });
 
-  it('uses transparent grid on y axis at null-band y position', () => {
-    const datasets: { data: ScatterChartInputPoint[] }[] = [
-      {
-        data: [
-          { x: 1, y: null },
-          { x: 2, y: 5 },
-        ],
-      },
-    ];
-    const nullBand = computeScatterNullBand(datasets);
-    const opts = getScatterChartOptions({ showGrid: true }, { nullBand, nullBandLabel: 'NV' });
-    const color = opts.scales?.y?.grid?.color as (ctx: { tick: { value: number } }) => string;
-    expect(color({ tick: { value: nullBand!.yNullPos } })).toBe('transparent');
+  it('hides y-axis grid lines by default (no chart grid, like scatter without Show grid)', () => {
+    const opts = getScatterChartOptions({});
+    expect(opts.scales?.y?.grid?.display).toBe(false);
+    expect(opts.scales?.x?.grid?.display).toBe(false);
+  });
+
+  it('does not override Chart.js default linear-axis tick / auto-skip rules', () => {
+    const opts = getScatterChartOptions({});
+    expect(opts.scales?.x?.ticks?.maxTicksLimit).toBeUndefined();
+    expect(opts.scales?.x?.ticks?.autoSkipPadding).toBeUndefined();
+    expect(opts.scales?.y?.ticks?.maxTicksLimit).toBeUndefined();
+    expect(opts.scales?.y?.ticks?.autoSkipPadding).toBeUndefined();
+  });
+
+  it('uses grace instead of beginAtZero on linear y so the data band is not compressed', () => {
+    const opts = getScatterChartOptions({ showLogarithmicScale: false });
+    expect((opts.scales?.y as { grace?: string })?.grace).toBe('5%');
+    expect(Object.prototype.hasOwnProperty.call(opts.scales?.y ?? {}, 'beginAtZero')).toBe(false);
+  });
+
+  it('does not set grace on logarithmic y', () => {
+    const opts = getScatterChartOptions({ showLogarithmicScale: true });
+    expect((opts.scales?.y as { grace?: string })?.grace).toBeUndefined();
   });
 
   it('value label display respects chart scales and mapped point', () => {
@@ -412,7 +424,7 @@ describe('getScatterChartOptions', () => {
       },
       dataIndex: 0,
     });
-    expect(ok).toBe(true);
+    expect(ok).toBe('auto');
   });
 
   it('hides value labels on logarithmic y when mapped y is not positive', () => {
@@ -474,7 +486,7 @@ describe('getScatterChartOptions', () => {
     );
     const display = opts.plugins?.datalabels?.labels?.caption?.display as (
       ctx: MockLabelCtx,
-    ) => boolean;
+    ) => 'auto' | false;
     expect(
       display!({
         chart: { scales: { x: {}, y: {} } },
@@ -482,6 +494,16 @@ describe('getScatterChartOptions', () => {
         dataIndex: 0,
       }),
     ).toBe(false);
+  });
+
+  it('uses formatAxisTick for axis tick labels when provided', () => {
+    const opts = getScatterChartOptions({
+      formatAxisTick: (axis, v) => (axis === 'x' ? `X:${v}` : `Y:${v}`),
+    });
+    const xCb = opts.scales?.x?.ticks?.callback as (v: string | number) => string;
+    const yCb = opts.scales?.y?.ticks?.callback as (v: string | number) => string;
+    expect(xCb(1_000_000)).toBe('X:1000000');
+    expect(yCb(2)).toBe('Y:2');
   });
 });
 

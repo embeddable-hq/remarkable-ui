@@ -19,6 +19,7 @@ import { BaseScatterChartProps } from './scatter.types';
 import { computeScatterNullBand, createScatterNullBandPlugin } from './scatter.nullBand.utils';
 import {
   filterNumericScatterData,
+  getScatterChartAxisBorderPatch,
   getScatterChartData,
   getScatterChartOptions,
 } from './scatter.utils';
@@ -45,14 +46,13 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   onPointClick,
   showPointLabels = false,
   showValueLabels = false,
-  showGrid = false,
   ...props
 }) => {
   const chartRef = useRef(null);
   const nullBandLabel = props.nullBandLabel ?? 'No value';
   const configProps = useMemo(
-    () => ({ ...props, showPointLabels, showValueLabels, showGrid }),
-    [props, showPointLabels, showValueLabels, showGrid],
+    () => ({ ...props, showPointLabels, showValueLabels }),
+    [props, showPointLabels, showValueLabels],
   );
 
   const dataForChart = useMemo(() => {
@@ -81,7 +81,11 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   }, [nullBand, configProps.showLogarithmicScale]);
 
   const scatterOptions = useMemo(
-    () => mergician(getScatterChartOptions(configProps, { nullBand, nullBandLabel }), options),
+    () =>
+      mergician(
+        mergician(getScatterChartOptions(configProps, { nullBand, nullBandLabel }), options),
+        getScatterChartAxisBorderPatch(),
+      ),
     [configProps, nullBand, nullBandLabel, options],
   );
 

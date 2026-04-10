@@ -64,15 +64,6 @@ export const WidthRange: Story = {
   decorators: decoratorsSquare,
 };
 
-/** Same as default data with full tick grid (optional `showGrid`). */
-export const WithGrid: Story = {
-  args: {
-    showGrid: true,
-    showLegend: true,
-  },
-  decorators: decoratorsSquare,
-};
-
 export const Resize: Story = {
   decorators: decoratorsResizeCard,
 };

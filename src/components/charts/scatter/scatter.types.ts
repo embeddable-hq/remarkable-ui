@@ -9,9 +9,6 @@ export type ScatterChartInputPoint = {
   isNull?: boolean;
 };
 
-/** @deprecated Use {@link ScatterChartInputPoint}. */
-export type ScatterChartDataPoint = ScatterChartInputPoint;
-
 export type ScatterChartConfigurationProps = {
   showLegend?: boolean;
   showTooltips?: boolean;
@@ -25,7 +22,12 @@ export type ScatterChartConfigurationProps = {
   yAxisRangeMin?: number;
   yAxisRangeMax?: number;
   reverseXAxis?: boolean;
-  showGrid?: boolean;
+  formatAxisTick?: (axis: 'x' | 'y', value: number) => string;
+  formatMeasureValue?: (
+    axis: 'x' | 'y',
+    value: number | null | undefined,
+    nullLabel: string,
+  ) => string;
   nullBandLabel?: string;
 };
 
