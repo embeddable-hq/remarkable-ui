@@ -19,11 +19,22 @@ export type ScatterNullBandResult = {
   yNumMax: number;
 };
 
-const finiteExtent = (): { min: number; max: number; count: number } => ({
+type AxisExtent = { min: number; max: number; count: number };
+
+const finiteExtent = (): AxisExtent => ({
   min: Infinity,
   max: -Infinity,
   count: 0,
 });
+
+function accumulatePointAxisValue(ext: AxisExtent, value: number | null | undefined): boolean {
+  if (value === null || value === undefined) return true;
+  if (!Number.isFinite(value)) return true;
+  ext.min = Math.min(ext.min, value);
+  ext.max = Math.max(ext.max, value);
+  ext.count += 1;
+  return false;
+}
 
 export function computeScatterNullBand(
   datasets: { data: ScatterChartInputPoint[] }[],
@@ -37,28 +48,8 @@ export function computeScatterNullBand(
 
   for (const ds of datasets) {
     for (const pt of ds.data) {
-      if (pt.x !== null && pt.x !== undefined) {
-        if (Number.isFinite(pt.x)) {
-          xExt.min = Math.min(xExt.min, pt.x);
-          xExt.max = Math.max(xExt.max, pt.x);
-          xExt.count += 1;
-        } else {
-          foundNullX = true;
-        }
-      } else {
-        foundNullX = true;
-      }
-      if (pt.y !== null && pt.y !== undefined) {
-        if (Number.isFinite(pt.y)) {
-          yExt.min = Math.min(yExt.min, pt.y);
-          yExt.max = Math.max(yExt.max, pt.y);
-          yExt.count += 1;
-        } else {
-          foundNullY = true;
-        }
-      } else {
-        foundNullY = true;
-      }
+      if (accumulatePointAxisValue(xExt, pt.x)) foundNullX = true;
+      if (accumulatePointAxisValue(yExt, pt.y)) foundNullY = true;
     }
   }
 
