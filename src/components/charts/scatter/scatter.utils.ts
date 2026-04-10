@@ -36,6 +36,7 @@ export const pointHasNullMeasure = (pt: ScatterChartInputPoint | undefined): boo
   return measureIsMissing(pt.x) || measureIsMissing(pt.y);
 };
 
+/** For logarithmic Y: Y must be > 0; X stays linear so any finite x is allowed. */
 export function filterNumericScatterData(
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
 ): ChartData<'scatter', ScatterChartInputPoint[]> {
@@ -51,7 +52,6 @@ export function filterNumericScatterData(
           p.y !== undefined &&
           Number.isFinite(p.x) &&
           Number.isFinite(p.y) &&
-          (p.x as number) > 0 &&
           (p.y as number) > 0,
       ),
     })),
@@ -402,7 +402,8 @@ export const getScatterChartOptions = (
     },
     scales: {
       x: {
-        type: options.showLogarithmicScale ? 'logarithmic' : 'linear',
+        // Match line charts: only the value axis (Y) uses log; X stays linear for correct point spread.
+        type: 'linear',
         grid: { display: false },
         ticks: {
           ...ticksDefault,
