@@ -36,11 +36,17 @@ function accumulatePointAxisValue(ext: AxisExtent, value: number | null | undefi
   return false;
 }
 
-export function computeScatterNullBand(
-  datasets: { data: ScatterChartInputPoint[] }[],
-): ScatterNullBandResult | null {
-  if (!datasets.length) return null;
+function extentToNumBounds(ext: AxisExtent): { min: number; max: number } {
+  if (ext.count === 0) return { min: 0, max: 0 };
+  return { min: ext.min, max: ext.max };
+}
 
+function scanDatasetsForNullBandAxes(datasets: { data: ScatterChartInputPoint[] }[]): {
+  foundNullX: boolean;
+  foundNullY: boolean;
+  xExt: AxisExtent;
+  yExt: AxisExtent;
+} {
   let foundNullX = false;
   let foundNullY = false;
   const xExt = finiteExtent();
@@ -53,26 +59,38 @@ export function computeScatterNullBand(
     }
   }
 
-  const xNumMin = xExt.count > 0 ? xExt.min : 0;
-  const xNumMax = xExt.count > 0 ? xExt.max : 0;
-  const yNumMin = yExt.count > 0 ? yExt.min : 0;
-  const yNumMax = yExt.count > 0 ? yExt.max : 0;
+  return { foundNullX, foundNullY, xExt, yExt };
+}
+
+function computedAxisMinWhenNull(
+  hasNullOnAxis: boolean,
+  nullPos: number,
+  range: number,
+): number | undefined {
+  if (!hasNullOnAxis) return undefined;
+  return nullPos - NULL_BAND_PADDING * range;
+}
+
+export function computeScatterNullBand(
+  datasets: { data: ScatterChartInputPoint[] }[],
+): ScatterNullBandResult | null {
+  if (!datasets.length) return null;
+
+  const { foundNullX, foundNullY, xExt, yExt } = scanDatasetsForNullBandAxes(datasets);
+  const { min: xNumMin, max: xNumMax } = extentToNumBounds(xExt);
+  const { min: yNumMin, max: yNumMax } = extentToNumBounds(yExt);
   const xRange = Math.max(xNumMax - xNumMin, 1);
   const yRange = Math.max(yNumMax - yNumMin, 1);
-
   const xNullPos = xNumMin - NULL_BAND_OFFSET * xRange;
   const yNullPos = yNumMin - NULL_BAND_OFFSET * yRange;
-
-  const computedXAxisMin = foundNullX ? xNullPos - NULL_BAND_PADDING * xRange : undefined;
-  const computedYAxisMin = foundNullY ? yNullPos - NULL_BAND_PADDING * yRange : undefined;
 
   return {
     xNullPos,
     yNullPos,
     hasNullX: foundNullX,
     hasNullY: foundNullY,
-    computedXAxisMin,
-    computedYAxisMin,
+    computedXAxisMin: computedAxisMinWhenNull(foundNullX, xNullPos, xRange),
+    computedYAxisMin: computedAxisMinWhenNull(foundNullY, yNullPos, yRange),
     xRange,
     yRange,
     xNumMin,
