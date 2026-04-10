@@ -59,7 +59,7 @@ describe('pointHasNullMeasure', () => {
 });
 
 describe('filterNumericScatterData', () => {
-  it('keeps only points with finite positive x and y', () => {
+  it('keeps finite x (linear) and positive finite y (log Y); drops invalid y', () => {
     const data: ChartData<'scatter', ScatterChartInputPoint[]> = {
       datasets: [
         {
@@ -68,6 +68,7 @@ describe('filterNumericScatterData', () => {
             { x: 1, y: 2 },
             { x: null, y: 1 },
             { x: -1, y: 2 },
+            { x: 0, y: 3 },
             { x: 1, y: 0 },
             { x: 3, y: 4 },
           ],
@@ -77,6 +78,8 @@ describe('filterNumericScatterData', () => {
     const out = filterNumericScatterData(data);
     expect(out.datasets[0]!.data).toEqual([
       { x: 1, y: 2 },
+      { x: -1, y: 2 },
+      { x: 0, y: 3 },
       { x: 3, y: 4 },
     ]);
   });
@@ -251,11 +254,12 @@ describe('getScatterChartOptions', () => {
     });
   });
 
-  it('sets linear scale by default and logarithmic when requested', () => {
+  it('uses linear x and logarithmic y when showLogarithmicScale (matches line charts)', () => {
     const linear = getScatterChartOptions({});
     expect(linear.scales?.x?.type).toBe('linear');
+    expect(linear.scales?.y?.type).toBe('linear');
     const log = getScatterChartOptions({ showLogarithmicScale: true });
-    expect(log.scales?.x?.type).toBe('logarithmic');
+    expect(log.scales?.x?.type).toBe('linear');
     expect(log.scales?.y?.type).toBe('logarithmic');
   });
 
@@ -438,7 +442,7 @@ describe('getScatterChartOptions', () => {
     const bad = display!({
       chart: {
         scales: {
-          x: { min: 0.1, max: 10, type: 'logarithmic' },
+          x: { min: 0, max: 10, type: 'linear' },
           y: { min: 0.1, max: 10, type: 'logarithmic' },
         },
       },
