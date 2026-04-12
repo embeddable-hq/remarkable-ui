@@ -1,4 +1,4 @@
-import { CartesianTickOptions, ChartOptions, GridLineOptions } from 'chart.js';
+import { CartesianTickOptions, ChartOptions, GridLineOptions, Scale } from 'chart.js';
 import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { mergician } from 'mergician';
 import { getChartjsOptions } from './chartjs.constants';
@@ -65,8 +65,7 @@ export const getChartjsAxisOptionsScalesGrid = (): Partial<GridLineOptions> => (
   lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const filterIntegerTicks = (scale: any): void => {
+const filterIntegerTicks = (scale: Scale): void => {
   const allValues = (scale.chart.data.datasets as { data: unknown[] }[])
     .flatMap((ds) => ds.data)
     .filter((v): v is number => typeof v === 'number');
