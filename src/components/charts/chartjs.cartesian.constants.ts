@@ -66,13 +66,13 @@ export const getChartjsAxisOptionsScalesGrid = (): Partial<GridLineOptions> => (
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function filterIntegerTicks(scale: any): void {
+const filterIntegerTicks = (scale: any): void => {
   const allValues = (scale.chart.data.datasets as { data: unknown[] }[])
     .flatMap((ds) => ds.data)
     .filter((v): v is number => typeof v === 'number');
   if (!allValues.length || !allValues.every((v) => Number.isInteger(v))) return;
   scale.ticks = scale.ticks.filter((tick: { value: number }) => Number.isInteger(tick.value));
-}
+};
 
 export const getChartjsAxisOptionsScales = (): Partial<ChartOptions['scales']> => ({
   x: {
