@@ -65,7 +65,7 @@ export const getChartjsAxisOptionsScalesGrid = (): Partial<GridLineOptions> => (
   lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
 });
 
-const filterIntegerTicks = (scale: Scale): void => {
+const afterBuildTicks = (scale: Scale): void => {
   const allValues = (scale.chart.data.datasets as { data: unknown[] }[])
     .flatMap((ds) => ds.data)
     .filter((v): v is number => typeof v === 'number');
@@ -78,13 +78,13 @@ export const getChartjsAxisOptionsScales = (): Partial<ChartOptions['scales']> =
     grid: getChartjsAxisOptionsScalesGrid(),
     title: getChartjsAxisOptionsScalesTitle(),
     ticks: getChartjsAxisOptionsScalesTicksDefault(),
-    afterBuildTicks: filterIntegerTicks,
+    afterBuildTicks,
   },
   y: {
     grid: getChartjsAxisOptionsScalesGrid(),
     title: getChartjsAxisOptionsScalesTitle(),
     ticks: getChartjsAxisOptionsScalesTicksMuted(),
-    afterBuildTicks: filterIntegerTicks,
+    afterBuildTicks,
   },
 });
 
