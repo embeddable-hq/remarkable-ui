@@ -1,9 +1,13 @@
-import { ChartData, ChartDataset, ChartOptions, TooltipItem } from 'chart.js';
+import { ChartData, ChartDataset, ChartOptions, Plugin, TooltipItem } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { getChartColors } from '../charts.constants';
 import { mergician } from 'mergician';
 import { ScatterChartConfigurationProps, ScatterChartInputPoint } from './scatter.types';
-import type { ScatterNullBandResult } from './scatter.nullBand.utils';
+import {
+  computeScatterNullBand,
+  createScatterNullBandPlugin,
+  type ScatterNullBandResult,
+} from './scatter.nullBand.utils';
 import {
   getChartjsAxisOptions,
   chartjsAxisOptionsLayoutPadding,
@@ -12,16 +16,10 @@ import {
 } from '../chartjs.cartesian.constants';
 import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
 
-const FALLBACK_POINT_COLOR = '#212129';
-
 const defaultScatterNumberFormat = new Intl.NumberFormat();
 
-const MIN_SCATTER_POINT_RADIUS_PX = 2;
-
-const getScatterPointRadiusPx = (): number => {
-  const r = getStyleNumber('--em-scatterchart-point-radius', '6px') ?? 6;
-  return Math.max(r, MIN_SCATTER_POINT_RADIUS_PX);
-};
+const getScatterPointRadiusPx = (): number =>
+  getStyleNumber('--em-scatterchart-point-radius', '6px');
 
 export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y: number }[]> & {
   originalData?: ScatterChartInputPoint[];
@@ -99,10 +97,8 @@ export const applyOpacityToColor = (color: string, alpha: number): string => {
   return `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${alpha})`;
 };
 
-const resolveSeriesColor = (chartColors: string[], index: number): string => {
-  const c = chartColors[index % chartColors.length];
-  return c?.trim() ? c : FALLBACK_POINT_COLOR;
-};
+const resolveSeriesColor = (chartColors: string[], index: number): string =>
+  chartColors[index % chartColors.length] ?? '';
 
 const userControlsPointFill = (dataset: ChartDataset<'scatter'>): boolean =>
   dataset.pointBackgroundColor !== undefined || dataset.backgroundColor !== undefined;
@@ -152,13 +148,13 @@ function scatterTooltipLabel(
   return `${prefix}(${fx}, ${fy})`;
 }
 
-export const getScatterChartData = (
+export const applyScatterNullBandToData = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
   ctx: ScatterChartDataContext,
 ): ChartData<'scatter'> => {
   const chartColors = getChartColors();
-  const defaultOpacity = getStyleNumber('--em-scatterchart-opacity', '0.8') ?? 0.8;
-  const nullOpacity = getStyleNumber('--em-scatterchart-null-opacity', '0.3') ?? 0.3;
+  const defaultOpacity = getStyleNumber('--em-scatterchart-opacity', '0.8');
+  const nullOpacity = getStyleNumber('--em-scatterchart-null-opacity', '0.3');
   const pointRadiusPx = getScatterPointRadiusPx();
   const pointHoverRadiusPx = pointRadiusPx * (4 / 3);
 
@@ -232,6 +228,35 @@ export const getScatterChartData = (
         }) as ScatterDatasetWithOriginal;
       }) || [],
   };
+};
+
+export type ScatterChartDataResult = {
+  chartData: ChartData<'scatter'>;
+  nullBand: ScatterNullBandResult | null;
+  nullBandPlugin: Plugin<'scatter'> | undefined;
+};
+
+export const getScatterChartPlugins = (
+  result: ScatterChartDataResult,
+): Plugin<'scatter'>[] | undefined => (result.nullBandPlugin ? [result.nullBandPlugin] : undefined);
+
+export const getScatterChartData = (
+  data: ChartData<'scatter', ScatterChartInputPoint[]>,
+  props: ScatterChartConfigurationProps,
+): ScatterChartDataResult => {
+  const dataForChart = props.showLogarithmicScale ? filterNumericScatterData(data) : data;
+  const nullBand = props.showLogarithmicScale
+    ? null
+    : computeScatterNullBand(dataForChart.datasets);
+  const chartData = applyScatterNullBandToData(dataForChart, {
+    nullBand,
+    supportsNullMeasures: !props.showLogarithmicScale,
+  });
+  const nullBandPlugin =
+    nullBand && !props.showLogarithmicScale && (nullBand.hasNullX || nullBand.hasNullY)
+      ? createScatterNullBandPlugin({ nullBand })
+      : undefined;
+  return { chartData, nullBand, nullBandPlugin };
 };
 
 const valueLabelDisplay = (context: Context, showValueLabels: boolean | undefined): boolean => {
@@ -315,7 +340,7 @@ export const applyNullBandTickCallbacks = (
 
 export const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
   const color = getStyle('--em-chart-grid-line-color--subtle', '#B8B8BD');
-  const w = getStyleNumber('--em-chart-grid-line-width--thin', '1px') ?? 1;
+  const w = getStyleNumber('--em-chart-grid-line-width--thin', '1px');
   const width = Math.max(1, w);
   const border = { display: true as const, color, width };
   return {
@@ -331,7 +356,7 @@ export const getScatterChartOptions = (
   nullContext?: ScatterChartOptionsNullContext,
 ): Partial<ChartOptions<'scatter'>> => {
   const pointRadius = getScatterPointRadiusPx();
-  const borderWidth = getStyleNumber('--em-scatterchart-border-width', '1px') ?? 1;
+  const borderWidth = getStyleNumber('--em-scatterchart-border-width', '1px');
   const labelLift = pointRadius + 6;
 
   const nullBand = nullContext?.nullBand ?? null;
