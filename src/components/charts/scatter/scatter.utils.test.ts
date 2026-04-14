@@ -17,7 +17,7 @@ import {
   applyOpacityToColor,
   filterNumericScatterData,
   getScatterChartAxisBorderPatch,
-  getScatterChartData,
+  applyScatterNullBandToData as getScatterChartData,
   getScatterChartOptions,
   pointHasNullMeasure,
 } from './scatter.utils';

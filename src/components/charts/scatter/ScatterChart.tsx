@@ -11,18 +11,17 @@ import {
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
 import styles from '../charts.module.css';
-import { FC, useMemo, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseScatterChartProps } from './scatter.types';
-import { computeScatterNullBand, createScatterNullBandPlugin } from './scatter.nullBand.utils';
 import {
   applyNullBandTickCallbacks,
-  filterNumericScatterData,
   getScatterChartAxisBorderPatch,
   getScatterChartData,
   getScatterChartOptions,
+  getScatterChartPlugins,
 } from './scatter.utils';
 import { getScatterPointClicked } from '../chartjs.utils';
 
@@ -47,52 +46,33 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   onPointClick,
   showPointLabels = false,
   showValueLabels = false,
+  nullBandLabel = 'No value',
   ...props
 }) => {
   const chartRef = useRef(null);
-  const nullBandLabel = props.nullBandLabel ?? 'No value';
-  const configProps = useMemo(
-    () => ({ ...props, showPointLabels, showValueLabels }),
-    [props, showPointLabels, showValueLabels],
-  );
 
-  const dataForChart = useMemo(() => {
-    if (configProps.showLogarithmicScale) return filterNumericScatterData(data);
-    return data;
-  }, [data, configProps.showLogarithmicScale]);
+  const scatterChartData = getScatterChartData(data, {
+    ...props,
+    showPointLabels,
+    showValueLabels,
+    nullBandLabel,
+  });
+  const { chartData, nullBand } = scatterChartData;
 
-  const nullBand = useMemo(() => {
-    if (configProps.showLogarithmicScale) return null;
-    return computeScatterNullBand(dataForChart.datasets);
-  }, [dataForChart, configProps.showLogarithmicScale]);
-
-  const chartData = useMemo(
-    () =>
-      getScatterChartData(dataForChart, {
-        nullBand,
-        supportsNullMeasures: !configProps.showLogarithmicScale,
-      }),
-    [dataForChart, nullBand, configProps.showLogarithmicScale],
-  );
-
-  const nullBandPlugin = useMemo(() => {
-    if (!nullBand || configProps.showLogarithmicScale) return undefined;
-    if (!nullBand.hasNullX && !nullBand.hasNullY) return undefined;
-    return createScatterNullBandPlugin({ nullBand });
-  }, [nullBand, configProps.showLogarithmicScale]);
-
-  const scatterOptions = useMemo(
-    () =>
-      applyNullBandTickCallbacks(
-        mergician(
-          mergician(getScatterChartOptions(configProps, { nullBand, nullBandLabel }), options),
-          getScatterChartAxisBorderPatch(),
+  const scatterOptions = applyNullBandTickCallbacks(
+    mergician(
+      mergician(
+        getScatterChartOptions(
+          { ...props, showPointLabels, showValueLabels },
+          { nullBand, nullBandLabel },
         ),
-        nullBand,
-        nullBandLabel,
-        configProps.showLogarithmicScale,
+        options,
       ),
-    [configProps, nullBand, nullBandLabel, options],
+      getScatterChartAxisBorderPatch(),
+    ),
+    nullBand,
+    nullBandLabel,
+    props.showLogarithmicScale,
   );
 
   const handlePointClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -106,7 +86,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
         ref={chartRef}
         data={chartData}
         options={scatterOptions}
-        plugins={nullBandPlugin ? [nullBandPlugin] : undefined}
+        plugins={getScatterChartPlugins(scatterChartData)}
         onClick={handlePointClick}
       />
     </div>

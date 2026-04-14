@@ -465,6 +465,10 @@
   --em-piechart-donut-number-font-weight: var(--em-core-font-weight--bold);
   --em-piechart-donut-number-line-height: var(--em-core-line-height--xl);
   --em-piechart-font-family: var(--em-core-font-family--base);
+  --em-scatterchart-opacity: 0.8;
+  --em-scatterchart-border-width: var(--em-core-border-width--025, 1px);
+  --em-scatterchart-point-radius: var(--em-core-border-radius--150, 6px);
+  --em-scatterchart-null-opacity: 0.3;
   --em-selectfield-category-background: var(--em-sem-background--subtle);
   --em-selectfield-category-border-radius: var(--em-core-border-radius--150);
   --em-selectfield-category-color: var(--em-sem-text--neutral);
