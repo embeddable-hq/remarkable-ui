@@ -12,15 +12,21 @@ vi.mock('../../../styles/styles.utils', () => ({
   getStyleNumber: vi.fn((_k: string, fallback: string) => parseFloat(fallback) || 0),
 }));
 
-import { mergician } from 'mergician';
 import {
   applyOpacityToColor,
   filterNumericScatterData,
-  getScatterChartAxisBorderPatch,
   applyScatterNullBandToData as getScatterChartData,
   getScatterChartOptions,
   pointHasNullMeasure,
+  type ScatterChartDataResult,
 } from './scatter.utils';
+import type { ScatterNullBandResult } from './scatter.nullBand.utils';
+
+const makeDataResult = (nullBand: ScatterNullBandResult | null = null): ScatterChartDataResult => ({
+  chartData: { datasets: [] },
+  nullBand,
+  nullBandPlugin: undefined,
+});
 
 describe('pointHasNullMeasure', () => {
   it('treats (no value, value) and (value, no value) as null-measure opacity cases', () => {
@@ -267,9 +273,7 @@ describe('getScatterChartData', () => {
 
 describe('getScatterChartOptions', () => {
   it('draws axis spines with visible border color and at least 1px width', () => {
-    const opts = mergician(getScatterChartOptions({}), getScatterChartAxisBorderPatch()) as Partial<
-      ChartOptions<'scatter'>
-    >;
+    const opts = getScatterChartOptions({}, makeDataResult()) as Partial<ChartOptions<'scatter'>>;
     expect(opts.scales?.x?.border).toMatchObject({
       display: true,
       color: '#B8B8BD',
@@ -283,10 +287,10 @@ describe('getScatterChartOptions', () => {
   });
 
   it('uses linear x and logarithmic y when showLogarithmicScale (matches line charts)', () => {
-    const linear = getScatterChartOptions({});
+    const linear = getScatterChartOptions({}, makeDataResult());
     expect(linear.scales?.x?.type).toBe('linear');
     expect(linear.scales?.y?.type).toBe('linear');
-    const log = getScatterChartOptions({ showLogarithmicScale: true });
+    const log = getScatterChartOptions({ showLogarithmicScale: true }, makeDataResult());
     expect(log.scales?.x?.type).toBe('linear');
     expect(log.scales?.y?.type).toBe('logarithmic');
   });
@@ -303,7 +307,7 @@ describe('getScatterChartOptions', () => {
     const nullBand = computeScatterNullBand(datasets);
     expect(nullBand).not.toBeNull();
 
-    const opts = getScatterChartOptions({}, { nullBand, nullBandLabel: 'NV' });
+    const opts = getScatterChartOptions({ nullBandLabel: 'NV' }, makeDataResult(nullBand));
     const cb = opts.scales?.x?.ticks?.callback as
       | ((this: unknown, v: string | number, i: number, ticks: unknown[]) => string)
       | undefined;
@@ -315,14 +319,17 @@ describe('getScatterChartOptions', () => {
   it('merges user axis min with computed null-band min', () => {
     const datasets: { data: ScatterChartInputPoint[] }[] = [{ data: [{ x: null, y: 1 }] }];
     const nullBand = computeScatterNullBand(datasets);
-    const opts = getScatterChartOptions({ xAxisRangeMin: 0 }, { nullBand, nullBandLabel: 'NV' });
+    const opts = getScatterChartOptions(
+      { xAxisRangeMin: 0, nullBandLabel: 'NV' },
+      makeDataResult(nullBand),
+    );
     expect(opts.scales?.x?.min).toBe(Math.min(0, nullBand!.computedXAxisMin!));
   });
 
   it('tooltip label uses originalData when present', () => {
     const opts = getScatterChartOptions(
-      { showTooltips: true },
-      { nullBand: null, nullBandLabel: 'NV' },
+      { showTooltips: true, nullBandLabel: 'NV' },
+      makeDataResult(),
     );
     const labelFn = opts.plugins?.tooltip?.callbacks?.label as (ctx: {
       dataset: { label?: string; originalData?: ScatterChartInputPoint[] };
@@ -340,8 +347,8 @@ describe('getScatterChartOptions', () => {
 
   it('tooltip label uses null label for non-finite measure in originalData', () => {
     const opts = getScatterChartOptions(
-      { showTooltips: true },
-      { nullBand: null, nullBandLabel: 'NV' },
+      { showTooltips: true, nullBandLabel: 'NV' },
+      makeDataResult(),
     );
     const labelFn = opts.plugins?.tooltip?.callbacks?.label as (ctx: {
       dataset: { label?: string; originalData?: ScatterChartInputPoint[] };
@@ -358,10 +365,7 @@ describe('getScatterChartOptions', () => {
   });
 
   it('tooltip label falls back to parsed when no originalData', () => {
-    const opts = getScatterChartOptions(
-      { showTooltips: true },
-      { nullBand: null, nullBandLabel: 'NV' },
-    );
+    const opts = getScatterChartOptions({ showTooltips: true }, makeDataResult());
     const labelFn = opts.plugins?.tooltip?.callbacks?.label as (ctx: {
       dataset: { label?: string };
       dataIndex: number;
@@ -377,10 +381,7 @@ describe('getScatterChartOptions', () => {
   });
 
   it('value label formatter prints measure pair', () => {
-    const opts = getScatterChartOptions(
-      { showValueLabels: true },
-      { nullBand: null, nullBandLabel: 'NV' },
-    );
+    const opts = getScatterChartOptions({ showValueLabels: true }, makeDataResult());
     const fmt = opts.plugins?.datalabels?.labels?.value?.formatter as (
       v: unknown,
       ctx: { dataset: { originalData?: ScatterChartInputPoint[] }; dataIndex: number },
@@ -393,10 +394,7 @@ describe('getScatterChartOptions', () => {
   });
 
   it('caption formatter uses pointLabel', () => {
-    const opts = getScatterChartOptions(
-      { showPointLabels: true },
-      { nullBand: null, nullBandLabel: 'NV' },
-    );
+    const opts = getScatterChartOptions({ showPointLabels: true }, makeDataResult());
     const fmt = opts.plugins?.datalabels?.labels?.caption?.formatter as (
       v: unknown,
       ctx: { dataset: { originalData?: ScatterChartInputPoint[] }; dataIndex: number },
@@ -418,7 +416,7 @@ describe('getScatterChartOptions', () => {
       },
     ];
     const nullBand = computeScatterNullBand(datasets);
-    const opts = getScatterChartOptions({}, { nullBand, nullBandLabel: 'NV' });
+    const opts = getScatterChartOptions({ nullBandLabel: 'NV' }, makeDataResult(nullBand));
     const cb = opts.scales?.y?.ticks?.callback as (
       this: unknown,
       v: string | number,
@@ -430,13 +428,13 @@ describe('getScatterChartOptions', () => {
   });
 
   it('hides y-axis grid lines by default (no chart grid, like scatter without Show grid)', () => {
-    const opts = getScatterChartOptions({});
+    const opts = getScatterChartOptions({}, makeDataResult());
     expect(opts.scales?.y?.grid?.display).toBe(false);
     expect(opts.scales?.x?.grid?.display).toBe(false);
   });
 
   it('does not override Chart.js default linear-axis tick / auto-skip rules', () => {
-    const opts = getScatterChartOptions({});
+    const opts = getScatterChartOptions({}, makeDataResult());
     expect(opts.scales?.x?.ticks?.maxTicksLimit).toBeUndefined();
     expect(opts.scales?.x?.ticks?.autoSkipPadding).toBeUndefined();
     expect(opts.scales?.y?.ticks?.maxTicksLimit).toBeUndefined();
@@ -444,21 +442,18 @@ describe('getScatterChartOptions', () => {
   });
 
   it('uses grace instead of beginAtZero on linear y so the data band is not compressed', () => {
-    const opts = getScatterChartOptions({ showLogarithmicScale: false });
+    const opts = getScatterChartOptions({ showLogarithmicScale: false }, makeDataResult());
     expect((opts.scales?.y as { grace?: string })?.grace).toBe('5%');
     expect(Object.prototype.hasOwnProperty.call(opts.scales?.y ?? {}, 'beginAtZero')).toBe(false);
   });
 
   it('does not set grace on logarithmic y', () => {
-    const opts = getScatterChartOptions({ showLogarithmicScale: true });
+    const opts = getScatterChartOptions({ showLogarithmicScale: true }, makeDataResult());
     expect((opts.scales?.y as { grace?: string })?.grace).toBeUndefined();
   });
 
   it('value label display respects chart scales and mapped point', () => {
-    const opts = getScatterChartOptions(
-      { showValueLabels: true },
-      { nullBand: null, nullBandLabel: 'NV' },
-    );
+    const opts = getScatterChartOptions({ showValueLabels: true }, makeDataResult());
     const display = opts.plugins?.datalabels?.labels?.value?.display as (
       ctx: MockLabelCtx,
     ) => boolean;
@@ -481,7 +476,7 @@ describe('getScatterChartOptions', () => {
   it('hides value labels on logarithmic y when mapped y is not positive', () => {
     const opts = getScatterChartOptions(
       { showValueLabels: true, showLogarithmicScale: true },
-      { nullBand: null, nullBandLabel: 'NV' },
+      makeDataResult(),
     );
     const display = opts.plugins?.datalabels?.labels?.value?.display as (
       ctx: MockLabelCtx,
@@ -505,7 +500,7 @@ describe('getScatterChartOptions', () => {
   it('computes value and caption offsets when both value and point labels are shown', () => {
     const opts = getScatterChartOptions(
       { showValueLabels: true, showPointLabels: true },
-      { nullBand: null, nullBandLabel: 'NV' },
+      makeDataResult(),
     );
     const valueOffset = opts.plugins?.datalabels?.labels?.value?.offset as (
       ctx: MockLabelCtx,
@@ -531,10 +526,7 @@ describe('getScatterChartOptions', () => {
   });
 
   it('point label display is false when caption text is missing', () => {
-    const opts = getScatterChartOptions(
-      { showPointLabels: true },
-      { nullBand: null, nullBandLabel: 'NV' },
-    );
+    const opts = getScatterChartOptions({ showPointLabels: true }, makeDataResult());
     const display = opts.plugins?.datalabels?.labels?.caption?.display as (
       ctx: MockLabelCtx,
     ) => 'auto' | false;
@@ -548,7 +540,7 @@ describe('getScatterChartOptions', () => {
   });
 
   it('uses default number format for axis tick labels', () => {
-    const opts = getScatterChartOptions({});
+    const opts = getScatterChartOptions({}, makeDataResult());
     const xCb = opts.scales?.x?.ticks?.callback as (v: string | number) => string;
     const yCb = opts.scales?.y?.ticks?.callback as (v: string | number) => string;
     expect(xCb(1_000_000)).toBe(new Intl.NumberFormat().format(1_000_000));

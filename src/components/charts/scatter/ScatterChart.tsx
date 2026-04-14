@@ -12,13 +12,10 @@ import {
 import { Scatter } from 'react-chartjs-2';
 import styles from '../charts.module.css';
 import { FC, useRef } from 'react';
-import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseScatterChartProps } from './scatter.types';
 import {
-  applyNullBandTickCallbacks,
-  getScatterChartAxisBorderPatch,
   getScatterChartData,
   getScatterChartOptions,
   getScatterChartPlugins,
@@ -57,22 +54,10 @@ export const ScatterChart: FC<ScatterChartProps> = ({
     showValueLabels,
     nullBandLabel,
   });
-  const { chartData, nullBand } = scatterChartData;
-
-  const scatterOptions = applyNullBandTickCallbacks(
-    mergician(
-      mergician(
-        getScatterChartOptions(
-          { ...props, showPointLabels, showValueLabels },
-          { nullBand, nullBandLabel },
-        ),
-        options,
-      ),
-      getScatterChartAxisBorderPatch(),
-    ),
-    nullBand,
-    nullBandLabel,
-    props.showLogarithmicScale,
+  const scatterOptions = getScatterChartOptions(
+    { ...props, showPointLabels, showValueLabels, nullBandLabel },
+    scatterChartData,
+    options,
   );
 
   const handlePointClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -84,7 +69,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
     <div className={styles.chartContainer}>
       <Scatter
         ref={chartRef}
-        data={chartData}
+        data={scatterChartData.chartData}
         options={scatterOptions}
         plugins={getScatterChartPlugins(scatterChartData)}
         onClick={handlePointClick}

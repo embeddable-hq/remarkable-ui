@@ -283,12 +283,12 @@ const pointLabelDisplay = (context: Context, showPointLabels: boolean | undefine
   return Boolean(getPointCaption(raw));
 };
 
-export type ScatterChartOptionsNullContext = {
+type ScatterChartOptionsNullContext = {
   nullBand: ScatterNullBandResult | null;
   nullBandLabel: string;
 };
 
-export const applyNullBandTickCallbacks = (
+const applyNullBandTickCallbacks = (
   options: Partial<ChartOptions<'scatter'>>,
   nullBand: ScatterNullBandResult | null,
   nullBandLabel: string,
@@ -338,7 +338,7 @@ export const applyNullBandTickCallbacks = (
   return { ...options, scales };
 };
 
-export const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
+const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
   const color = getStyle('--em-chart-grid-line-color--subtle', '#B8B8BD');
   const w = getStyleNumber('--em-chart-grid-line-width--thin', '1px');
   const width = Math.max(1, w);
@@ -351,7 +351,7 @@ export const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'
   };
 };
 
-export const getScatterChartOptions = (
+const getScatterBaseOptions = (
   options: ScatterChartConfigurationProps,
   nullContext?: ScatterChartOptionsNullContext,
 ): Partial<ChartOptions<'scatter'>> => {
@@ -497,4 +497,22 @@ export const getScatterChartOptions = (
   };
 
   return mergician(getChartjsAxisOptions(), newOptions);
+};
+
+export const getScatterChartOptions = (
+  props: ScatterChartConfigurationProps,
+  dataResult: ScatterChartDataResult,
+  userOptions: Partial<ChartOptions<'scatter'>> = {},
+): Partial<ChartOptions<'scatter'>> => {
+  const nullBand = dataResult.nullBand;
+  const nullBandLabel = props.nullBandLabel ?? 'No value';
+  return applyNullBandTickCallbacks(
+    mergician(
+      mergician(getScatterBaseOptions(props, { nullBand, nullBandLabel }), userOptions),
+      getScatterChartAxisBorderPatch(),
+    ),
+    nullBand,
+    nullBandLabel,
+    props.showLogarithmicScale,
+  );
 };
