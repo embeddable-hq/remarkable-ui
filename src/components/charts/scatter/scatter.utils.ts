@@ -406,7 +406,7 @@ const getScatterBaseOptions = (
               if (!raw || typeof raw !== 'object') return '';
               const xs = defaultFormatMeasureValue('x', raw.x, nullBandLabel);
               const ys = defaultFormatMeasureValue('y', raw.y, nullBandLabel);
-              return `${xs}, ${ys}`;
+              return `(${xs}, ${ys})`;
             },
           },
           caption: {
