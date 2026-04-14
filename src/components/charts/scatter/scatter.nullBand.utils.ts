@@ -30,23 +30,20 @@ const finiteExtent = (): AxisExtent => ({
 const isMissingAxisValue = (value: number | null | undefined): boolean =>
   value === null || value === undefined || !Number.isFinite(value);
 
-function accumulateExtent(ext: AxisExtent, value: number): void {
+const accumulateExtent = (ext: AxisExtent, value: number): void => {
   ext.min = Math.min(ext.min, value);
   ext.max = Math.max(ext.max, value);
   ext.count += 1;
-}
+};
 
-function extentToNumBounds(ext: AxisExtent): { min: number; max: number } {
+const extentToNumBounds = (ext: AxisExtent): { min: number; max: number } => {
   if (ext.count === 0) return { min: 0, max: 0 };
   return { min: ext.min, max: ext.max };
-}
+};
 
-function scanDatasetsForNullBandAxes(datasets: { data: ScatterChartInputPoint[] }[]): {
-  foundNullX: boolean;
-  foundNullY: boolean;
-  xExt: AxisExtent;
-  yExt: AxisExtent;
-} {
+const scanDatasetsForNullBandAxes = (
+  datasets: { data: ScatterChartInputPoint[] }[],
+): { foundNullX: boolean; foundNullY: boolean; xExt: AxisExtent; yExt: AxisExtent } => {
   let foundNullX = false;
   let foundNullY = false;
   const xExt = finiteExtent();
@@ -62,20 +59,20 @@ function scanDatasetsForNullBandAxes(datasets: { data: ScatterChartInputPoint[] 
   }
 
   return { foundNullX, foundNullY, xExt, yExt };
-}
+};
 
-function computedAxisMinWhenNull(
+const computedAxisMinWhenNull = (
   hasNullOnAxis: boolean,
   nullPos: number,
   range: number,
-): number | undefined {
+): number | undefined => {
   if (!hasNullOnAxis) return undefined;
   return nullPos - NULL_BAND_PADDING * range;
-}
+};
 
-export function computeScatterNullBand(
+export const computeScatterNullBand = (
   datasets: { data: ScatterChartInputPoint[] }[],
-): ScatterNullBandResult | null {
+): ScatterNullBandResult | null => {
   if (!datasets.length) return null;
 
   const { foundNullX, foundNullY, xExt, yExt } = scanDatasetsForNullBandAxes(datasets);
@@ -102,15 +99,15 @@ export function computeScatterNullBand(
     yNumMin,
     yNumMax,
   };
-}
+};
 
 export type ScatterNullBandPluginOptions = {
   nullBand: ScatterNullBandResult;
 };
 
-export function createScatterNullBandPlugin(
+export const createScatterNullBandPlugin = (
   options: ScatterNullBandPluginOptions,
-): Plugin<'scatter'> {
+): Plugin<'scatter'> => {
   const { nullBand } = options;
   const { xNullPos, yNullPos, hasNullX, hasNullY, xNumMin, yNumMin } = nullBand;
 
@@ -130,4 +127,4 @@ export function createScatterNullBandPlugin(
       }
     },
   };
-}
+};

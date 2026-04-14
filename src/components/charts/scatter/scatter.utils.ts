@@ -36,26 +36,24 @@ export const pointHasNullMeasure = (pt: ScatterChartInputPoint | undefined): boo
 };
 
 /** For logarithmic Y: Y must be > 0; X stays linear so any finite x is allowed. */
-export function filterNumericScatterData(
+export const filterNumericScatterData = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
-): ChartData<'scatter', ScatterChartInputPoint[]> {
-  return {
-    ...data,
-    datasets: data.datasets.map((ds) => ({
-      ...ds,
-      data: ds.data.filter(
-        (p) =>
-          p.x !== null &&
-          p.x !== undefined &&
-          p.y !== null &&
-          p.y !== undefined &&
-          Number.isFinite(p.x) &&
-          Number.isFinite(p.y) &&
-          (p.y as number) > 0,
-      ),
-    })),
-  };
-}
+): ChartData<'scatter', ScatterChartInputPoint[]> => ({
+  ...data,
+  datasets: data.datasets.map((ds) => ({
+    ...ds,
+    data: ds.data.filter(
+      (p) =>
+        p.x !== null &&
+        p.x !== undefined &&
+        p.y !== null &&
+        p.y !== undefined &&
+        Number.isFinite(p.x) &&
+        Number.isFinite(p.y) &&
+        (p.y as number) > 0,
+    ),
+  })),
+});
 
 export type ScatterChartDataContext = {
   nullBand: ScatterNullBandResult | null;
@@ -112,22 +110,22 @@ const mergeAxisMin = (
   return Math.min(userMin, computed);
 };
 
-function defaultFormatMeasureValue(
+const defaultFormatMeasureValue = (
   _axis: 'x' | 'y',
   value: number | null | undefined,
   nullLabel: string,
-): string {
+): string => {
   if (measureIsMissing(value)) return nullLabel;
   return defaultScatterNumberFormat.format(value as number);
-}
+};
 
-function formatAxisTickValue(tickValue: string | number): string {
+const formatAxisTickValue = (tickValue: string | number): string => {
   const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
   if (!Number.isFinite(v)) return String(tickValue);
   return defaultScatterNumberFormat.format(v);
-}
+};
 
-function scatterTooltipLabel(
+const scatterTooltipLabel = (
   ctx: TooltipItem<'scatter'>,
   nullLabel: string,
   formatMeasureValue: (
@@ -135,7 +133,7 @@ function scatterTooltipLabel(
     value: number | null | undefined,
     nullLabel: string,
   ) => string,
-): string | string[] {
+): string | string[] => {
   const ds = ctx.dataset as ScatterDatasetWithOriginal;
   const orig = ds.originalData?.[ctx.dataIndex];
   const prefix = ds.label ? `${ds.label}: ` : '';
@@ -146,7 +144,7 @@ function scatterTooltipLabel(
   const fx = typeof x === 'number' ? formatMeasureValue('x', x, nullLabel) : String(x);
   const fy = typeof y === 'number' ? formatMeasureValue('y', y, nullLabel) : String(y);
   return `${prefix}(${fx}, ${fy})`;
-}
+};
 
 export const applyScatterNullBandToData = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
