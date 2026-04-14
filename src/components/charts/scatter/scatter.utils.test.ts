@@ -547,14 +547,12 @@ describe('getScatterChartOptions', () => {
     ).toBe(false);
   });
 
-  it('uses formatAxisTick for axis tick labels when provided', () => {
-    const opts = getScatterChartOptions({
-      formatAxisTick: (axis, v) => (axis === 'x' ? `X:${v}` : `Y:${v}`),
-    });
+  it('uses default number format for axis tick labels', () => {
+    const opts = getScatterChartOptions({});
     const xCb = opts.scales?.x?.ticks?.callback as (v: string | number) => string;
     const yCb = opts.scales?.y?.ticks?.callback as (v: string | number) => string;
-    expect(xCb(1_000_000)).toBe('X:1000000');
-    expect(yCb(2)).toBe('Y:2');
+    expect(xCb(1_000_000)).toBe(new Intl.NumberFormat().format(1_000_000));
+    expect(yCb(2)).toBe(new Intl.NumberFormat().format(2));
   });
 });
 

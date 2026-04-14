@@ -18,6 +18,7 @@ import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseScatterChartProps } from './scatter.types';
 import { computeScatterNullBand, createScatterNullBandPlugin } from './scatter.nullBand.utils';
 import {
+  applyNullBandTickCallbacks,
   filterNumericScatterData,
   getScatterChartAxisBorderPatch,
   getScatterChartData,
@@ -82,9 +83,14 @@ export const ScatterChart: FC<ScatterChartProps> = ({
 
   const scatterOptions = useMemo(
     () =>
-      mergician(
-        mergician(getScatterChartOptions(configProps, { nullBand, nullBandLabel }), options),
-        getScatterChartAxisBorderPatch(),
+      applyNullBandTickCallbacks(
+        mergician(
+          mergician(getScatterChartOptions(configProps, { nullBand, nullBandLabel }), options),
+          getScatterChartAxisBorderPatch(),
+        ),
+        nullBand,
+        nullBandLabel,
+        configProps.showLogarithmicScale,
       ),
     [configProps, nullBand, nullBandLabel, options],
   );

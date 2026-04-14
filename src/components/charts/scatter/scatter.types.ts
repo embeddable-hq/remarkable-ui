@@ -22,12 +22,6 @@ export type ScatterChartConfigurationProps = {
   yAxisRangeMin?: number;
   yAxisRangeMax?: number;
   reverseXAxis?: boolean;
-  formatAxisTick?: (axis: 'x' | 'y', value: number) => string;
-  formatMeasureValue?: (
-    axis: 'x' | 'y',
-    value: number | null | undefined,
-    nullLabel: string,
-  ) => string;
   nullBandLabel?: string;
 };
 
