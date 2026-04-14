@@ -158,10 +158,7 @@ export const applyScatterNullBandToData = (
   const pointRadiusPx = getScatterPointRadiusPx();
   const pointHoverRadiusPx = pointRadiusPx * (4 / 3);
 
-  const useNullBandMapping =
-    ctx.supportsNullMeasures &&
-    ctx.nullBand !== null &&
-    (ctx.nullBand.hasNullX || ctx.nullBand.hasNullY);
+  const useNullBandMapping = ctx.supportsNullMeasures && ctx.nullBand !== null;
 
   return {
     ...data,
@@ -173,24 +170,20 @@ export const applyScatterNullBandToData = (
           showLine: false,
           pointRadius: pointRadiusPx,
           pointHoverRadius: pointHoverRadiusPx,
-          originalData: [...dataset.data],
         };
 
         if (!userControlsPointFill(dataset)) {
-          defaultDataset.pointBackgroundColor = (c) => {
+          // Resolve the two opacity variants once per series (2 DOM mutations max, not N)
+          const defaultColor = applyOpacityToColor(baseColor, defaultOpacity);
+          const nullColor = applyOpacityToColor(baseColor, nullOpacity);
+          const colorFor = (c: { dataset: object; dataIndex: number }) => {
             const orig =
               (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
-              (c.dataset.data[c.dataIndex] as ScatterChartInputPoint | undefined);
-            const alpha = pointHasNullMeasure(orig) ? nullOpacity : defaultOpacity;
-            return applyOpacityToColor(baseColor, alpha);
+              (c.dataset as { data: ScatterChartInputPoint[] }).data[c.dataIndex];
+            return pointHasNullMeasure(orig) ? nullColor : defaultColor;
           };
-          defaultDataset.pointBorderColor = (c) => {
-            const orig =
-              (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
-              (c.dataset.data[c.dataIndex] as ScatterChartInputPoint | undefined);
-            const alpha = pointHasNullMeasure(orig) ? nullOpacity : defaultOpacity;
-            return applyOpacityToColor(baseColor, alpha);
-          };
+          defaultDataset.pointBackgroundColor = colorFor;
+          defaultDataset.pointBorderColor = colorFor;
           defaultDataset.backgroundColor = baseColor;
           defaultDataset.borderColor = baseColor;
         } else {
@@ -199,7 +192,11 @@ export const applyScatterNullBandToData = (
         }
 
         if (!useNullBandMapping || !ctx.nullBand) {
-          return mergician(defaultDataset, dataset) as ScatterDatasetWithOriginal;
+          return mergician(
+            defaultDataset,
+            { originalData: [...dataset.data] },
+            dataset,
+          ) as ScatterDatasetWithOriginal;
         }
 
         const { xNullPos, yNullPos } = ctx.nullBand;
@@ -207,24 +204,10 @@ export const applyScatterNullBandToData = (
           x: measureIsMissing(pt.x) ? xNullPos : (pt.x as number),
           y: measureIsMissing(pt.y) ? yNullPos : (pt.y as number),
         }));
-        const originalData = [...dataset.data];
-
-        if (!userControlsPointFill(dataset)) {
-          const bgColors = dataset.data.map((pt) => {
-            const alpha = pointHasNullMeasure(pt) ? nullOpacity : defaultOpacity;
-            return applyOpacityToColor(baseColor, alpha);
-          });
-          return mergician(defaultDataset, dataset, {
-            data: mappedData,
-            originalData,
-            pointBackgroundColor: bgColors,
-            pointBorderColor: bgColors,
-          }) as ScatterDatasetWithOriginal;
-        }
 
         return mergician(defaultDataset, dataset, {
           data: mappedData,
-          originalData,
+          originalData: [...dataset.data],
         }) as ScatterDatasetWithOriginal;
       }) || [],
   };
@@ -252,10 +235,7 @@ export const getScatterChartData = (
     nullBand,
     supportsNullMeasures: !props.showLogarithmicScale,
   });
-  const nullBandPlugin =
-    nullBand && !props.showLogarithmicScale && (nullBand.hasNullX || nullBand.hasNullY)
-      ? createScatterNullBandPlugin({ nullBand })
-      : undefined;
+  const nullBandPlugin = nullBand ? createScatterNullBandPlugin({ nullBand }) : undefined;
   return { chartData, nullBand, nullBandPlugin };
 };
 
@@ -295,7 +275,6 @@ const applyNullBandTickCallbacks = (
   showLogarithmicScale?: boolean,
 ): Partial<ChartOptions<'scatter'>> => {
   if (!nullBand || showLogarithmicScale) return options;
-  if (!nullBand.hasNullX && !nullBand.hasNullY) return options;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const existingScales = (options.scales ?? {}) as Record<string, any>;

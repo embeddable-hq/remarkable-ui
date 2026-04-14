@@ -251,7 +251,7 @@ describe('getScatterChartData', () => {
     expect(out.datasets[0]!.pointBackgroundColor).toBe('#aabbcc');
   });
 
-  it('uses per-point colors for null-band mapping without user fill control', () => {
+  it('uses scriptable colors for null-band mapping without user fill control', () => {
     const raw: ChartData<'scatter', ScatterChartInputPoint[]> = {
       datasets: [
         {
@@ -265,9 +265,8 @@ describe('getScatterChartData', () => {
     };
     const nullBand = computeScatterNullBand(raw.datasets);
     const out = getScatterChartData(raw, { nullBand, supportsNullMeasures: true });
-    const pbg = out.datasets[0]!.pointBackgroundColor;
-    expect(Array.isArray(pbg)).toBe(true);
-    expect((pbg as string[]).length).toBe(2);
+    expect(typeof out.datasets[0]!.pointBackgroundColor).toBe('function');
+    expect(typeof out.datasets[0]!.pointBorderColor).toBe('function');
   });
 });
 
