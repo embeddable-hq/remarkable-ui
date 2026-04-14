@@ -27,13 +27,13 @@ const finiteExtent = (): AxisExtent => ({
   count: 0,
 });
 
-function accumulatePointAxisValue(ext: AxisExtent, value: number | null | undefined): boolean {
-  if (value === null || value === undefined) return true;
-  if (!Number.isFinite(value)) return true;
+const isMissingAxisValue = (value: number | null | undefined): boolean =>
+  value === null || value === undefined || !Number.isFinite(value);
+
+function accumulateExtent(ext: AxisExtent, value: number): void {
   ext.min = Math.min(ext.min, value);
   ext.max = Math.max(ext.max, value);
   ext.count += 1;
-  return false;
 }
 
 function extentToNumBounds(ext: AxisExtent): { min: number; max: number } {
@@ -54,8 +54,10 @@ function scanDatasetsForNullBandAxes(datasets: { data: ScatterChartInputPoint[] 
 
   for (const ds of datasets) {
     for (const pt of ds.data) {
-      if (accumulatePointAxisValue(xExt, pt.x)) foundNullX = true;
-      if (accumulatePointAxisValue(yExt, pt.y)) foundNullY = true;
+      if (isMissingAxisValue(pt.x)) foundNullX = true;
+      else accumulateExtent(xExt, pt.x as number);
+      if (isMissingAxisValue(pt.y)) foundNullY = true;
+      else accumulateExtent(yExt, pt.y as number);
     }
   }
 
@@ -77,6 +79,8 @@ export function computeScatterNullBand(
   if (!datasets.length) return null;
 
   const { foundNullX, foundNullY, xExt, yExt } = scanDatasetsForNullBandAxes(datasets);
+  if (!foundNullX && !foundNullY) return null;
+
   const { min: xNumMin, max: xNumMax } = extentToNumBounds(xExt);
   const { min: yNumMin, max: yNumMax } = extentToNumBounds(yExt);
   const xRange = Math.max(xNumMax - xNumMin, 1);
