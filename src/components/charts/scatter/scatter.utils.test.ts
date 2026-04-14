@@ -389,7 +389,7 @@ describe('getScatterChartOptions', () => {
       dataset: { originalData: [{ x: 1, y: 2 }] },
       dataIndex: 0,
     });
-    expect(text).toBe('1, 2');
+    expect(text).toBe('(1, 2)');
   });
 
   it('caption formatter uses pointLabel', () => {
