@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.5
+
+### Patch Changes
+
+- 2ae2f89: Improve ticks on chartjs cartesian charts
+
 ## 3.0.4
 
 ### Patch Changes
