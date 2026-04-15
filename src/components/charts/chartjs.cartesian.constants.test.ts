@@ -31,7 +31,7 @@ describe('getChartjsAxisOptionsScales', () => {
         ],
       );
       afterBuildTicks(scale);
-      expect(scale.ticks.every((t) => Number.isInteger(t.value))).toBe(true);
+      expect(scale.ticks).toEqual([{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }]);
     });
 
     it('leaves ticks unchanged when data contains decimal values', () => {
@@ -60,7 +60,7 @@ describe('getChartjsAxisOptionsScales', () => {
         [{ value: 0 }, { value: 3.33 }, { value: 10 }, { value: 20 }, { value: 30 }],
       );
       afterBuildTicks(scale);
-      expect(scale.ticks.every((t) => Number.isInteger(t.value))).toBe(true);
+      expect(scale.ticks).toEqual([{ value: 0 }, { value: 10 }, { value: 20 }, { value: 30 }]);
     });
 
     it('handles multiple datasets correctly', () => {
@@ -70,7 +70,13 @@ describe('getChartjsAxisOptionsScales', () => {
         [{ value: 0 }, { value: 0.5 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }],
       );
       afterBuildTicks(scale);
-      expect(scale.ticks.every((t) => Number.isInteger(t.value))).toBe(true);
+      expect(scale.ticks).toEqual([
+        { value: 0 },
+        { value: 1 },
+        { value: 2 },
+        { value: 3 },
+        { value: 4 },
+      ]);
     });
   });
 
@@ -95,7 +101,7 @@ describe('getChartjsAxisOptionsScales', () => {
         ],
       );
       afterBuildTicks(scale);
-      expect(scale.ticks.every((t) => Number.isInteger(t.value))).toBe(true);
+      expect(scale.ticks).toEqual([{ value: 0 }, { value: 1 }, { value: 2 }, { value: 3 }]);
     });
 
     it('leaves ticks unchanged when data contains decimal values', () => {
