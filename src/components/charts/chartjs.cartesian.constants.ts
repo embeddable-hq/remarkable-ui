@@ -1,4 +1,4 @@
-import { CartesianTickOptions, ChartOptions, GridLineOptions } from 'chart.js';
+import { CartesianTickOptions, ChartOptions, GridLineOptions, Scale } from 'chart.js';
 import { getStyle, getStyleNumber } from '../../styles/styles.utils';
 import { mergician } from 'mergician';
 import { getChartjsOptions } from './chartjs.constants';
@@ -65,16 +65,26 @@ export const getChartjsAxisOptionsScalesGrid = (): Partial<GridLineOptions> => (
   lineWidth: getStyleNumber('--em-chart-grid-line-width--thin', '0.0625rem'),
 });
 
+const afterBuildTicks = (scale: Scale): void => {
+  const allValues = (scale.chart.data.datasets as { data: unknown[] }[])
+    .flatMap((ds) => ds.data)
+    .filter((v): v is number => typeof v === 'number');
+  if (!allValues.length || !allValues.every((v) => Number.isInteger(v))) return;
+  scale.ticks = scale.ticks.filter((tick: { value: number }) => Number.isInteger(tick.value));
+};
+
 export const getChartjsAxisOptionsScales = (): Partial<ChartOptions['scales']> => ({
   x: {
     grid: getChartjsAxisOptionsScalesGrid(),
     title: getChartjsAxisOptionsScalesTitle(),
     ticks: getChartjsAxisOptionsScalesTicksDefault(),
+    afterBuildTicks,
   },
   y: {
     grid: getChartjsAxisOptionsScalesGrid(),
     title: getChartjsAxisOptionsScalesTitle(),
     ticks: getChartjsAxisOptionsScalesTicksMuted(),
+    afterBuildTicks,
   },
 });
 
