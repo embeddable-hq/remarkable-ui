@@ -67,8 +67,8 @@ describe('ChartTabs', () => {
   it('applies tabActive class only to the active tab', () => {
     render(<ChartTabs items={items} value="revenue" onChange={vi.fn()} />);
 
-    expect(screen.getByRole('button', { name: /revenue/i }).className).toContain('tabActive');
-    expect(screen.getByRole('button', { name: /cost/i }).className).not.toContain('tabActive');
+    expect(screen.getByRole('button', { name: /revenue/i }).className).toContain('active');
+    expect(screen.getByRole('button', { name: /cost/i }).className).not.toContain('active');
   });
 
   it('displays the value for each tab', () => {
