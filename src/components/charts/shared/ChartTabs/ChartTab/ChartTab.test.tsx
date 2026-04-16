@@ -67,7 +67,7 @@ describe('ChartTabItem', () => {
     );
 
     const button = screen.getByRole('button');
-    expect(button.className).toContain('tabActive');
+    expect(button.className).toContain('active');
   });
 
   it('does not apply tabActive class when isActive is false', () => {
@@ -76,7 +76,7 @@ describe('ChartTabItem', () => {
     );
 
     const button = screen.getByRole('button');
-    expect(button.className).not.toContain('tabActive');
+    expect(button.className).not.toContain('active');
   });
 
   it('calls onClick when the button is clicked', async () => {
