@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { ChartTabItem } from './ChartTab';
+import { ChartTabsItem } from './ChartTabsItem';
 
-describe('ChartTabItem', () => {
+describe('ChartTabsItem', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it('renders the label', () => {
     render(
-      <ChartTabItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
+      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
     );
 
     expect(screen.getByText('Revenue')).toBeInTheDocument();
@@ -18,7 +18,7 @@ describe('ChartTabItem', () => {
 
   it('renders the value', () => {
     render(
-      <ChartTabItem id="revenue" label="Revenue" value={42} isActive={false} onClick={vi.fn()} />,
+      <ChartTabsItem id="revenue" label="Revenue" value={42} isActive={false} onClick={vi.fn()} />,
     );
 
     expect(screen.getByText('42')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('ChartTabItem', () => {
 
   it('renders a string value', () => {
     render(
-      <ChartTabItem
+      <ChartTabsItem
         id="revenue"
         label="Revenue"
         value="$1,000"
@@ -40,7 +40,7 @@ describe('ChartTabItem', () => {
 
   it('renders slot content', () => {
     render(
-      <ChartTabItem
+      <ChartTabsItem
         id="revenue"
         label="Revenue"
         value={100}
@@ -55,7 +55,7 @@ describe('ChartTabItem', () => {
 
   it('sets the button id based on the id prop', () => {
     render(
-      <ChartTabItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
+      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
     );
 
     expect(screen.getByRole('button')).toHaveAttribute('id', 'chart-kpi-tab-revenue');
@@ -63,7 +63,7 @@ describe('ChartTabItem', () => {
 
   it('applies tabActive class when isActive is true', () => {
     render(
-      <ChartTabItem id="revenue" label="Revenue" value={100} isActive={true} onClick={vi.fn()} />,
+      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={true} onClick={vi.fn()} />,
     );
 
     const button = screen.getByRole('button');
@@ -72,7 +72,7 @@ describe('ChartTabItem', () => {
 
   it('does not apply tabActive class when isActive is false', () => {
     render(
-      <ChartTabItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
+      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
     );
 
     const button = screen.getByRole('button');
@@ -84,7 +84,7 @@ describe('ChartTabItem', () => {
     const user = userEvent.setup();
 
     render(
-      <ChartTabItem id="revenue" label="Revenue" value={100} isActive={false} onClick={onClick} />,
+      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={onClick} />,
     );
 
     await user.click(screen.getByRole('button'));

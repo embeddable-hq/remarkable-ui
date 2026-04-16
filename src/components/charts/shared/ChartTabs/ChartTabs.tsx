@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
-import { ChartTabItem, ChartTabItemProps } from './ChartTab/ChartTab';
+import { ChartTabsItem, ChartTabsItemProps } from './ChartTabsItem/ChartTabsItem';
 import styles from './ChartTabs.module.css';
 import { useHorizontalScroll } from '../../../../hooks/useHorizontalScroll.hooks';
 import { ActionIcon } from '../../../shared/ActionIcon/ActionIcon';
 
 type ChartTabsProps = {
-  items: ChartTabItemProps[];
-  value: ChartTabItemProps['id'];
-  onChange: (value: ChartTabItemProps['id']) => void;
+  items: ChartTabsItemProps[];
+  value: ChartTabsItemProps['id'];
+  onChange: (value: ChartTabsItemProps['id']) => void;
 };
 
 export const ChartTabs: FC<ChartTabsProps> = ({ items, onChange }) => {
@@ -26,7 +26,7 @@ export const ChartTabs: FC<ChartTabsProps> = ({ items, onChange }) => {
       )}
       <div className={styles.tabsScroll} ref={scrollRef}>
         {items.map((tab) => (
-          <ChartTabItem key={tab.id} {...tab} onClick={() => onChange(tab.id)} />
+          <ChartTabsItem key={tab.id} {...tab} onClick={() => onChange(tab.id)} />
         ))}
       </div>
       {canScrollRight && (

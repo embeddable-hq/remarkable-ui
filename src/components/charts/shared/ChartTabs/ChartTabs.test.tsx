@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { ChartTabs } from './ChartTabs';
-import type { ChartTabItemProps } from './ChartTab/ChartTab';
+import type { ChartTabsItemProps } from './ChartTabsItem/ChartTabsItem';
 
 const mockHandleScrollLeft = vi.fn();
 const mockHandleScrollRight = vi.fn();
@@ -37,7 +37,7 @@ const makeItem = (
   label: string,
   value: number,
   isActive: boolean,
-): ChartTabItemProps => ({
+): ChartTabsItemProps => ({
   id,
   label,
   value,
@@ -45,7 +45,7 @@ const makeItem = (
   onClick: vi.fn(),
 });
 
-const items: ChartTabItemProps[] = [
+const items: ChartTabsItemProps[] = [
   makeItem('revenue', 'Revenue', 100, true),
   makeItem('cost', 'Cost', 50, false),
 ];

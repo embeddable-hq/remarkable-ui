@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import styles from './ChartTab.module.css';
+import styles from './ChartTabsItem.module.css';
 import clsx from 'clsx';
 
-export type ChartTabItemProps = {
+export type ChartTabsItemProps = {
   id: string;
   label: string;
   value?: number | string;
@@ -11,7 +11,7 @@ export type ChartTabItemProps = {
   onClick: () => void;
 };
 
-export const ChartTabItem: FC<ChartTabItemProps> = ({
+export const ChartTabsItem: FC<ChartTabsItemProps> = ({
   id,
   label,
   value,
