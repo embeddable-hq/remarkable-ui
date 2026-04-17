@@ -32,22 +32,16 @@ vi.mock('@tabler/icons-react', () => ({
   IconChevronRight: () => <span data-testid="icon-chevron-right" />,
 }));
 
-const makeItem = (
-  id: string,
-  label: string,
-  value: number,
-  isActive: boolean,
-): ChartTabsItemProps => ({
+const makeItem = (id: string, label: string, value: number): ChartTabsItemProps => ({
   id,
   label,
   value,
-  isActive,
   onClick: vi.fn(),
 });
 
 const items: ChartTabsItemProps[] = [
-  makeItem('revenue', 'Revenue', 100, true),
-  makeItem('cost', 'Cost', 50, false),
+  makeItem('revenue', 'Revenue', 100),
+  makeItem('cost', 'Cost', 50),
 ];
 
 describe('ChartTabs', () => {

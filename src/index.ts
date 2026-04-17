@@ -21,7 +21,6 @@ export * from './components/charts/tables/Table/table.types';
 export * from './components/charts/charts.constants';
 export * from './components/charts/chartjs.cartesian.constants';
 export * from './components/charts/shared/ChartTabs/ChartTabs';
-export * from './components/charts/shared/ChartTabs/ChartTabsItem/ChartTabsItem';
 
 // Constants
 export * from './styles/styles.constants';

@@ -9,31 +9,19 @@ describe('ChartTabsItem', () => {
   });
 
   it('renders the label', () => {
-    render(
-      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
-    );
+    render(<ChartTabsItem id="revenue" label="Revenue" value={100} onClick={vi.fn()} />);
 
     expect(screen.getByText('Revenue')).toBeInTheDocument();
   });
 
   it('renders the value', () => {
-    render(
-      <ChartTabsItem id="revenue" label="Revenue" value={42} isActive={false} onClick={vi.fn()} />,
-    );
+    render(<ChartTabsItem id="revenue" label="Revenue" value={42} onClick={vi.fn()} />);
 
     expect(screen.getByText('42')).toBeInTheDocument();
   });
 
   it('renders a string value', () => {
-    render(
-      <ChartTabsItem
-        id="revenue"
-        label="Revenue"
-        value="$1,000"
-        isActive={false}
-        onClick={vi.fn()}
-      />,
-    );
+    render(<ChartTabsItem id="revenue" label="Revenue" value="$1,000" onClick={vi.fn()} />);
 
     expect(screen.getByText('$1,000')).toBeInTheDocument();
   });
@@ -44,7 +32,6 @@ describe('ChartTabsItem', () => {
         id="revenue"
         label="Revenue"
         value={100}
-        isActive={false}
         onClick={vi.fn()}
         slot={<span>extra content</span>}
       />,
@@ -54,38 +41,16 @@ describe('ChartTabsItem', () => {
   });
 
   it('sets the button id based on the id prop', () => {
-    render(
-      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
-    );
+    render(<ChartTabsItem id="revenue" label="Revenue" value={100} onClick={vi.fn()} />);
 
     expect(screen.getByRole('button')).toHaveAttribute('id', 'chart-kpi-tab-revenue');
-  });
-
-  it('applies tabActive class when isActive is true', () => {
-    render(
-      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={true} onClick={vi.fn()} />,
-    );
-
-    const button = screen.getByRole('button');
-    expect(button.className).toContain('active');
-  });
-
-  it('does not apply tabActive class when isActive is false', () => {
-    render(
-      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={vi.fn()} />,
-    );
-
-    const button = screen.getByRole('button');
-    expect(button.className).not.toContain('active');
   });
 
   it('calls onClick when the button is clicked', async () => {
     const onClick = vi.fn();
     const user = userEvent.setup();
 
-    render(
-      <ChartTabsItem id="revenue" label="Revenue" value={100} isActive={false} onClick={onClick} />,
-    );
+    render(<ChartTabsItem id="revenue" label="Revenue" value={100} onClick={onClick} />);
 
     await user.click(screen.getByRole('button'));
     expect(onClick).toHaveBeenCalledTimes(1);

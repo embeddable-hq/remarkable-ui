@@ -14,9 +14,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockItems = [
-  { id: 'tab1', label: 'Revenue', value: '$1.2M', isActive: true, onClick: () => {} },
-  { id: 'tab2', label: 'Costs', value: '$800K', isActive: false, onClick: () => {} },
-  { id: 'tab3', label: 'Profit', value: '$400K', isActive: false, onClick: () => {} },
+  { id: 'tab1', label: 'Revenue', value: '$1.2M', onClick: () => {} },
+  { id: 'tab2', label: 'Costs', value: '$800K', onClick: () => {} },
+  { id: 'tab3', label: 'Profit', value: '$400K', onClick: () => {} },
 ];
 
 export const Default: Story = {
@@ -24,9 +24,9 @@ export const Default: Story = {
     value: 'tab1',
     onChange: (id: string) => console.log('Tab changed:', id),
     items: [
-      { id: 'tab1', label: 'Revenue', isActive: true, onClick: () => {} },
-      { id: 'tab2', label: 'Costs', isActive: false, onClick: () => {} },
-      { id: 'tab3', label: 'Profit', isActive: false, onClick: () => {} },
+      { id: 'tab1', label: 'Revenue', onClick: () => {} },
+      { id: 'tab2', label: 'Costs', onClick: () => {} },
+      { id: 'tab3', label: 'Profit', onClick: () => {} },
     ],
   },
 };
@@ -54,7 +54,7 @@ export const SingleTab: Story = {
   args: {
     value: 'tab1',
     onChange: (id: string) => console.log('Tab changed:', id),
-    items: [{ id: 'tab1', label: 'Overview', value: '42', isActive: true, onClick: () => {} }],
+    items: [{ id: 'tab1', label: 'Overview', value: '42', onClick: () => {} }],
   },
 };
 
@@ -72,10 +72,10 @@ export const Scrollable: Story = {
     onChange: (id: string) => console.log('Tab changed:', id),
     items: [
       ...mockItems,
-      { id: 'tab4', label: 'New Customers', value: '150', isActive: false, onClick: () => {} },
-      { id: 'tab5', label: 'Churn Rate', value: '5%', isActive: false, onClick: () => {} },
-      { id: 'tab6', label: 'LTV', value: '$2.5K', isActive: false, onClick: () => {} },
-      { id: 'tab7', label: 'CAC', value: '$500', isActive: false, onClick: () => {} },
+      { id: 'tab4', label: 'New Customers', value: '150', onClick: () => {} },
+      { id: 'tab5', label: 'Churn Rate', value: '5%', onClick: () => {} },
+      { id: 'tab6', label: 'LTV', value: '$2.5K', onClick: () => {} },
+      { id: 'tab7', label: 'CAC', value: '$500', onClick: () => {} },
     ],
   },
   decorators: decoratorsResize,
