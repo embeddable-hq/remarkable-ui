@@ -54,15 +54,15 @@ describe('ChartTabs', () => {
   it('renders a tab for each item', () => {
     render(<ChartTabs items={items} value="revenue" onChange={vi.fn()} />);
 
-    expect(screen.getByRole('button', { name: /revenue/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /cost/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /revenue/i })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /cost/i })).toBeInTheDocument();
   });
 
   it('applies tabActive class only to the active tab', () => {
     render(<ChartTabs items={items} value="revenue" onChange={vi.fn()} />);
 
-    expect(screen.getByRole('button', { name: /revenue/i }).className).toContain('active');
-    expect(screen.getByRole('button', { name: /cost/i }).className).not.toContain('active');
+    expect(screen.getByRole('tab', { name: /revenue/i }).className).toContain('active');
+    expect(screen.getByRole('tab', { name: /cost/i }).className).not.toContain('active');
   });
 
   it('displays the value for each tab', () => {
@@ -78,7 +78,7 @@ describe('ChartTabs', () => {
 
     render(<ChartTabs items={items} value="revenue" onChange={onChange} />);
 
-    await user.click(screen.getByRole('button', { name: /cost/i }));
+    await user.click(screen.getByRole('tab', { name: /cost/i }));
     expect(onChange).toHaveBeenCalledWith('cost');
   });
 
