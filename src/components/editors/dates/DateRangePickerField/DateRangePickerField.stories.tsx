@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { DateRangePickerField } from './DateRangePickerField';
-import { useArgs } from 'storybook/internal/preview-api';
+import { useArgs } from 'storybook/preview-api';
 import { decoratorsResizeCard } from '../../../../storybook.constants';
 
 const meta = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import { useArgs } from 'storybook/internal/preview-api';
+import { useArgs } from 'storybook/preview-api';
 
 import { ChartTabs } from './ChartTabs';
 import { decoratorsResize } from '../../../../storybook.constants';

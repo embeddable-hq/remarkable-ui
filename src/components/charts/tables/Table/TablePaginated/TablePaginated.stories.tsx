@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TablePaginated as TablePaginatedChart } from './TablePaginated';
-import { useArgs } from 'storybook/internal/preview-api';
+import { useArgs } from 'storybook/preview-api';
 import { TableSort } from '../table.types';
 import { decoratorsResizeCard } from '../../../../../storybook.constants';
 import { MockEmployee, mockMakeEmployees, mockTableHeaders } from '../tables.test.utils';
