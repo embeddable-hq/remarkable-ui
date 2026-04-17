@@ -1,0 +1,38 @@
+import { FC, ReactNode } from 'react';
+import styles from '../ChartTabs.module.css';
+import clsx from 'clsx';
+
+export type ChartTabsItemProps = {
+  id: string;
+  label: string;
+  value?: number | string;
+  slot?: ReactNode;
+  active?: boolean;
+  className?: string;
+  onClick?: () => void;
+};
+
+export const ChartTabsItem: FC<ChartTabsItemProps> = ({
+  id,
+  active,
+  label,
+  value,
+  slot,
+  className,
+  onClick,
+}) => {
+  return (
+    <button
+      id={`chart-kpi-tab-${id}`}
+      className={clsx(styles.tab, active && styles.active, className)}
+      type="button"
+      role="tab"
+      aria-selected={active}
+      onClick={onClick}
+    >
+      <span className={styles.label}>{label}</span>
+      {value && <span className={styles.value}>{value}</span>}
+      {slot}
+    </button>
+  );
+};

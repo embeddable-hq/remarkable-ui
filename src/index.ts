@@ -20,6 +20,7 @@ export * from './components/charts/tables/Table/components/TablePagination/Table
 export * from './components/charts/tables/Table/table.types';
 export * from './components/charts/charts.constants';
 export * from './components/charts/chartjs.cartesian.constants';
+export * from './components/charts/shared/ChartTabs/ChartTabs';
 
 // Constants
 export * from './styles/styles.constants';
