@@ -20,7 +20,7 @@ export const ChartTabs: FC<ChartTabsProps> = ({ value, items, className, onChang
   return (
     <div className={clsx(styles.tabs, className)}>
       {canScrollLeft && <ActionIcon icon={IconChevronLeft} onClick={handleScrollLeft} />}
-      <div className={styles.scroll} ref={scrollRef}>
+      <div role="tablist" className={styles.scroll} ref={scrollRef}>
         {items.map((item) => (
           <ChartTabsItem
             key={item.id}
