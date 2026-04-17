@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.6
+
+### Patch Changes
+
+- ffbe154: ChartTabs
+
 ## 3.0.5
 
 ### Patch Changes
