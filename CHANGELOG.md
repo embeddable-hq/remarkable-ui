@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.7
+
+### Patch Changes
+
+- 64da740: Update css variables
+
 ## 3.0.6
 
 ### Patch Changes
