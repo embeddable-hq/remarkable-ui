@@ -1,7 +1,7 @@
 /* Variables declaration */
 
 .rdp-root table {
-  margin-top: var(--em-cal-nav-padding-default, 0.5rem);
+  margin-top: var(--em-daterangepicker-table-padding-top, 0.5rem);
 }
 
 .rdp-root {

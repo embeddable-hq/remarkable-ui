@@ -18,9 +18,9 @@ const css = fs.readFileSync(inputPath, 'utf8');
 const lines = css.split(/\r?\n/);
 
 // Token buckets
-let core = {};
-let semantics = {};
-let component = {};
+const core = {};
+const semantics = {};
+const component = {};
 
 // Parse lines that contain CSS custom properties
 for (const rawLine of lines) {
@@ -44,23 +44,6 @@ for (const rawLine of lines) {
     component[name] = value;
   }
 }
-
-// --------------------------------------------------------
-// Overrides — Tokens that Figma exports incorrectly
-// --------------------------------------------------------
-core = {
-  ...core,
-  '--em-core-font-weight--bold': '700',
-  '--em-core-font-weight--medium': '500',
-  '--em-core-font-weight--regular': '400',
-};
-
-component = {
-  ...component,
-  '--em-selectfield-content-opacity--loading': '0.5',
-  // TODO: Get this fixed in Figma
-  '--em-tablechart-cell-max-width': 'calc(3 * var(--em-core-size--2000))',
-};
 
 // Build output file path
 const baseName = path.basename(inputPath, path.extname(inputPath));
