@@ -151,8 +151,8 @@ export const applyScatterNullBandToData = (
   ctx: ScatterChartDataContext,
 ): ChartData<'scatter'> => {
   const chartColors = getChartColors();
-  const defaultOpacity = getStyleNumber('--em-scatterchart-opacity', '0.8');
-  const nullOpacity = getStyleNumber('--em-scatterchart-null-opacity', '0.3');
+  const defaultOpacity = getStyleNumber('--em-scatterchart-point-opacity', '0.8');
+  const nullOpacity = getStyleNumber('--em-scatterchart-point-opacity--null', '0.3');
   const pointRadiusPx = getScatterPointRadiusPx();
   const pointHoverRadiusPx = pointRadiusPx * (4 / 3);
 
@@ -333,7 +333,7 @@ const getScatterBaseOptions = (
   nullContext?: ScatterChartOptionsNullContext,
 ): Partial<ChartOptions<'scatter'>> => {
   const pointRadius = getScatterPointRadiusPx();
-  const borderWidth = getStyleNumber('--em-scatterchart-border-width', '1px');
+  const borderWidth = getStyleNumber('--em-scatterchart-point-border-width', '1px');
   const labelLift = pointRadius + 6;
 
   const nullBand = nullContext?.nullBand ?? null;
