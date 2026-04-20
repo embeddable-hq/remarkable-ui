@@ -301,6 +301,7 @@ export const stylesTokensComponents = {
   '--em-daterangepicker-label-font-family': 'var(--em-core-font-family--base)',
   '--em-daterangepicker-label-font-size': 'var(--em-core-font-size--sm)',
   '--em-daterangepicker-label-font-weight': 'var(--em-core-font-weight--medium)',
+  '--em-daterangepicker-table-padding-top': 'var(--em-core-spacing--0200)',
   '--em-daterangepicker-weekday-color': 'var(--em-sem-text--muted)',
   '--em-daterangepicker-weekday-font-family': 'var(--em-core-font-family--base)',
   '--em-daterangepicker-weekday-font-size': 'var(--em-core-font-size--sm)',
@@ -453,6 +454,7 @@ export const stylesTokensComponents = {
   '--em-markdown-p-font-weight--regular': 'var(--em-core-font-weight--regular)',
   '--em-markdown-p-font-weight--strong': 'var(--em-core-font-weight--bold)',
   '--em-markdown-p-line-height': 'var(--em-core-line-height--md)',
+  '--em-markdown-placeholder-color': 'var(--em-core-color-gray--0400)',
   '--em-overlay-background': 'rgb(33 33 41 / 90%)',
   '--em-piechart-donut-color': 'var(--em-sem-text)',
   '--em-piechart-donut-label-font-size': 'var(--em-core-font-size--md)',
@@ -558,6 +560,7 @@ export const stylesTokensComponents = {
   '--em-tablechart-cell-background': 'var(--em-sem-background--neutral)',
   '--em-tablechart-cell-background--hover': 'var(--em-sem-background)',
   '--em-tablechart-cell-height': 'var(--em-core-size--1000)',
+  '--em-tablechart-cell-max-width': 'calc(3 * var(--em-core-size--2000))',
   '--em-tablechart-cell-min-width': 'var(--em-core-size--1200)',
   '--em-tablechart-cell-padding': 'var(--em-core-spacing--0200)',
   '--em-tablechart-color': 'var(--em-sem-text)',
@@ -622,7 +625,6 @@ export const stylesTokensComponents = {
   '--em-tooltip-max-width': '256px',
   '--em-tooltip-padding-left-right': 'var(--em-core-spacing--0200)',
   '--em-tooltip-padding-top-bottom': 'var(--em-core-spacing--0150)',
-  '--em-tablechart-cell-max-width': 'calc(3 * var(--em-core-size--2000))',
 };
 
 type StylesTokensCore = typeof stylesTokensCore;
