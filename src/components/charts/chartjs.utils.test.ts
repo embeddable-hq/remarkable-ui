@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { getScatterPointClicked, getSegmentIndexClicked } from './chartjs.utils';
+import { getSegmentIndexClicked } from './chartjs.utils';
+import { getChartPointClicked } from './chartjs.cartesian.utils';
 
 describe('getSegmentIndexClicked', () => {
   it('returns undefined when chartRef.current is null', () => {
@@ -38,12 +39,12 @@ describe('getSegmentIndexClicked', () => {
   });
 });
 
-describe('getScatterPointClicked', () => {
+describe('getChartPointClicked', () => {
   it('returns undefined when chartRef.current is null', () => {
     const chartRef = { current: null };
     const event = { nativeEvent: {} } as React.MouseEvent<HTMLCanvasElement>;
 
-    expect(getScatterPointClicked(event, chartRef)).toBeUndefined();
+    expect(getChartPointClicked(event, chartRef)).toBeUndefined();
   });
 
   it('returns datasetIndex and index of the first clicked element', () => {
@@ -52,7 +53,7 @@ describe('getScatterPointClicked', () => {
     const event = { nativeEvent: new Event('click') } as React.MouseEvent<HTMLCanvasElement>;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const result = getScatterPointClicked(event, chartRef as any);
+    const result = getChartPointClicked(event, chartRef as any);
 
     expect(result).toEqual({ datasetIndex: 1, index: 3 });
   });
@@ -63,7 +64,7 @@ describe('getScatterPointClicked', () => {
     const event = { nativeEvent: new Event('click') } as React.MouseEvent<HTMLCanvasElement>;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const result = getScatterPointClicked(event, chartRef as any);
+    const result = getChartPointClicked(event, chartRef as any);
 
     expect(result).toBeUndefined();
   });

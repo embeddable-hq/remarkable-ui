@@ -20,7 +20,7 @@ import {
   getScatterChartOptions,
   getScatterChartPlugins,
 } from './scatter.utils';
-import { getScatterPointClicked } from '../chartjs.utils';
+import { getChartPointClicked } from '../chartjs.cartesian.utils';
 
 ChartJS.register(
   ScatterController,
@@ -61,7 +61,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   );
 
   const handlePointClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const hit = getScatterPointClicked(event, chartRef);
+    const hit = getChartPointClicked(event, chartRef);
     onPointClick?.(hit);
   };
 
