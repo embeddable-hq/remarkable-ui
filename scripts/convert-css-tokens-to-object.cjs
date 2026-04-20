@@ -45,7 +45,6 @@ for (const rawLine of lines) {
   }
 }
 
-
 // Build output file path
 const baseName = path.basename(inputPath, path.extname(inputPath));
 const dirName = path.dirname(path.resolve(inputPath));
