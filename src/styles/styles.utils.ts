@@ -33,15 +33,10 @@ export const getStyle = (variableName: StylesKeys, fallbackValue?: string): stri
   return rawValue;
 };
 
-export function getStyleNumber(variableName: StylesKeys, fallbackValue: string): number;
-export function getStyleNumber(
+export const getStyleNumber = ((
   variableName: StylesKeys,
   fallbackValue?: string,
-): number | undefined;
-export function getStyleNumber(
-  variableName: StylesKeys,
-  fallbackValue?: string,
-): number | undefined {
+): number | undefined => {
   const rawValue = getStyleValue(variableName) || fallbackValue;
 
   if (!rawValue) return undefined;
@@ -65,4 +60,7 @@ export function getStyleNumber(
     return numericValue;
   }
   return undefined;
-}
+}) as {
+  (variableName: StylesKeys, fallbackValue: string): number;
+  (variableName: StylesKeys, fallbackValue?: string): number | undefined;
+};
