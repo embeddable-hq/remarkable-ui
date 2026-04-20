@@ -1,11 +1,11 @@
 import { ChartJSOrUndefined } from 'react-chartjs-2/dist/types';
 
-export type ChartPointClickHit = { datasetIndex: number; index: number };
+export type ChartPointClicked = { datasetIndex: number; index: number };
 
 export const getChartPointClicked = (
   event: React.MouseEvent<HTMLCanvasElement>,
   chartRef: React.RefObject<ChartJSOrUndefined | null>,
-): ChartPointClickHit | undefined => {
+): ChartPointClicked | undefined => {
   const chart = chartRef.current;
 
   if (!chart) return undefined;

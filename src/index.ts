@@ -7,7 +7,7 @@ export * from './components/charts/scatter/ScatterChart';
 export * from './components/charts/scatter/scatter.utils';
 export * from './components/charts/scatter/scatter.nullBand.utils';
 export * from './components/charts/scatter/scatter.types';
-export type { ChartPointClickHit } from './components/charts/chartjs.cartesian.utils';
+export type { ChartPointClicked } from './components/charts/chartjs.cartesian.utils';
 export * from './components/charts/kpis/KpiChart';
 export * from './components/charts/pies/DonutChart/DonutChart';
 export * from './components/charts/pies/PieChart/PieChart';
