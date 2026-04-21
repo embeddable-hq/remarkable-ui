@@ -1,13 +1,8 @@
 import { FC } from 'react';
 import styles from './KpiChartChange.module.css';
 import clsx from 'clsx';
-import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 import { KpiChartProps } from '../KpiChart.types';
-
-const getChangeClass = (isPositive: boolean, invertChangeColors: boolean) => {
-  if (isPositive) return invertChangeColors ? styles.negative : styles.positive;
-  return invertChangeColors ? styles.positive : styles.negative;
-};
+import { KpiTrend } from '../../../shared/KpiTrend/KpiTrend';
 
 type KpiChartChangeProps = KpiChartProps & { className?: string };
 
@@ -37,8 +32,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   }
 
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
-
-  const Icon = isPositive ? IconTrendingUp : IconTrendingDown;
+  const direction = isPositive !== invertChangeColors ? 'positive' : 'negative';
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
@@ -46,12 +40,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
     <div className={styles.kpiChangeContainerSizeGuide}>
       {/* This is responsible to setting the size of the container */}
       <div className={clsx(styles.kpiChartChangeContainer, styles.hidden)}>
-        <span
-          className={clsx(styles.kpiChangeBadge, getChangeClass(isPositive, invertChangeColors))}
-        >
-          <Icon />
-          <span>{displayValue}</span>
-        </span>
+        <KpiTrend direction={direction} value={displayValue} />
         <span className={styles.kpiComparisonLabel}>{comparisonLabel}</span>
       </div>
       {/* This is responsible for displaying the content on the available size of the container */}
@@ -61,17 +50,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
             <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
           ) : (
             <>
-              {!equalComparison && (
-                <span
-                  className={clsx(
-                    styles.kpiChangeBadge,
-                    getChangeClass(isPositive, invertChangeColors),
-                  )}
-                >
-                  <Icon />
-                  <span>{displayValue}</span>
-                </span>
-              )}
+              {!equalComparison && <KpiTrend direction={direction} value={displayValue} />}
               <span className={styles.kpiComparisonLabel}>
                 {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
               </span>

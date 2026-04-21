@@ -81,7 +81,7 @@ describe('KpiChartChange', () => {
       );
 
       const absoluteContainer = container.querySelector('.kpiAbsoluteContainer');
-      expect(absoluteContainer?.querySelector('.kpiChangeBadge')).not.toBeInTheDocument();
+      expect(absoluteContainer?.querySelector('.badge')).not.toBeInTheDocument();
     });
   });
 
@@ -141,7 +141,7 @@ describe('KpiChartChange', () => {
         <KpiChartChange value={120} comparisonValue={100} invertChangeColors />,
       );
 
-      const badges = container.querySelectorAll('.kpiChangeBadge');
+      const badges = container.querySelectorAll('.badge');
       expect(badges[0]).toHaveClass('negative');
     });
 
@@ -150,7 +150,7 @@ describe('KpiChartChange', () => {
         <KpiChartChange value={120} comparisonValue={100} invertChangeColors={false} />,
       );
 
-      const badges = container.querySelectorAll('.kpiChangeBadge');
+      const badges = container.querySelectorAll('.badge');
       expect(badges[0]).toHaveClass('positive');
     });
 
@@ -159,7 +159,7 @@ describe('KpiChartChange', () => {
         <KpiChartChange value={80} comparisonValue={100} invertChangeColors />,
       );
 
-      const badges = container.querySelectorAll('.kpiChangeBadge');
+      const badges = container.querySelectorAll('.badge');
       expect(badges[0]).toHaveClass('positive');
     });
   });
