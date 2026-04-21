@@ -32,7 +32,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   }
 
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
-  const direction = isPositive !== invertChangeColors ? 'positive' : 'negative';
+  const isBadTrend = !(isPositive !== invertChangeColors);
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
@@ -40,7 +40,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
     <div className={styles.kpiChangeContainerSizeGuide}>
       {/* This is responsible to setting the size of the container */}
       <div className={clsx(styles.kpiChartChangeContainer, styles.hidden)}>
-        <KpiTrend direction={direction} value={displayValue} />
+        <KpiTrend value={displayValue} reverseTrend={isBadTrend} />
         <span className={styles.kpiComparisonLabel}>{comparisonLabel}</span>
       </div>
       {/* This is responsible for displaying the content on the available size of the container */}
@@ -50,7 +50,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
             <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
           ) : (
             <>
-              {!equalComparison && <KpiTrend direction={direction} value={displayValue} />}
+              {!equalComparison && <KpiTrend value={displayValue} reverseTrend={isBadTrend} />}
               <span className={styles.kpiComparisonLabel}>
                 {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
               </span>

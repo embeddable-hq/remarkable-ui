@@ -5,9 +5,8 @@ const meta = {
   title: 'Charts/Shared/KpiTrend',
   component: KpiTrend,
   argTypes: {
-    direction: {
-      control: { type: 'select' },
-      options: ['positive', 'negative'],
+    reverseTrend: {
+      control: { type: 'boolean' },
     },
   },
 } satisfies Meta<typeof KpiTrend>;
@@ -16,30 +15,28 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Positive: Story = {
+export const Increasing: Story = {
   args: {
-    direction: 'positive',
     value: '+15%',
   },
 };
 
-export const Negative: Story = {
+export const Decreasing: Story = {
   args: {
-    direction: 'negative',
     value: '-10%',
   },
 };
 
-export const PositiveAbsolute: Story = {
+export const IncreasingReversed: Story = {
   args: {
-    direction: 'positive',
-    value: '+1,200',
+    value: '+15%',
+    reverseTrend: true,
   },
 };
 
-export const NegativeAbsolute: Story = {
+export const DecreasingReversed: Story = {
   args: {
-    direction: 'negative',
-    value: '-340',
+    value: '-10%',
+    reverseTrend: true,
   },
 };

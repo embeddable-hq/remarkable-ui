@@ -4,37 +4,31 @@ import { KpiTrend } from './KpiTrend';
 
 describe('KpiTrend', () => {
   it('renders the value', () => {
-    render(<KpiTrend direction="positive" value="+15%" />);
+    render(<KpiTrend value="+15%" />);
 
     expect(screen.getByText('+15%')).toBeInTheDocument();
   });
 
-  it('applies positive class for positive direction', () => {
-    const { container } = render(<KpiTrend direction="positive" value="+15%" />);
+  it('applies positive class by default', () => {
+    const { container } = render(<KpiTrend value="+15%" />);
 
     expect(container.firstChild).toHaveClass('positive');
   });
 
-  it('applies negative class for negative direction', () => {
-    const { container } = render(<KpiTrend direction="negative" value="-10%" />);
+  it('applies negative class when reverseTrend is true', () => {
+    const { container } = render(<KpiTrend value="+15%" reverseTrend />);
 
     expect(container.firstChild).toHaveClass('negative');
   });
 
-  it('renders trending up icon for positive direction', () => {
-    const { container } = render(<KpiTrend direction="positive" value="+15%" />);
-
-    expect(container.querySelector('svg')).toBeInTheDocument();
-  });
-
-  it('renders trending down icon for negative direction', () => {
-    const { container } = render(<KpiTrend direction="negative" value="-10%" />);
+  it('renders an svg icon', () => {
+    const { container } = render(<KpiTrend value="+15%" />);
 
     expect(container.querySelector('svg')).toBeInTheDocument();
   });
 
   it('applies additional className', () => {
-    const { container } = render(<KpiTrend direction="positive" value="+15%" className="extra" />);
+    const { container } = render(<KpiTrend value="+15%" className="extra" />);
 
     expect(container.firstChild).toHaveClass('extra');
   });

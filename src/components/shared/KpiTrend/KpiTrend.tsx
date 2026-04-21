@@ -3,19 +3,19 @@ import { IconTrendingUp, IconTrendingDown } from '@tabler/icons-react';
 import styles from './KpiTrend.module.css';
 import clsx from 'clsx';
 
-export type KpiTrendDirection = 'positive' | 'negative';
-
 export type KpiTrendProps = {
-  direction: KpiTrendDirection;
   value: string;
+  reverseTrend?: boolean;
   className?: string;
 };
 
-export const KpiTrend: FC<KpiTrendProps> = ({ direction, value, className }) => {
-  const Icon = direction === 'positive' ? IconTrendingUp : IconTrendingDown;
+export const KpiTrend: FC<KpiTrendProps> = ({ value, reverseTrend = false, className }) => {
+  const Icon = reverseTrend ? IconTrendingDown : IconTrendingUp;
 
   return (
-    <span className={clsx(styles.badge, styles[direction], className)}>
+    <span
+      className={clsx(styles.badge, reverseTrend ? styles.negative : styles.positive, className)}
+    >
       <Icon />
       <span>{value}</span>
     </span>
