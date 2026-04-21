@@ -420,6 +420,8 @@ export const stylesTokensComponents = {
   '--em-scatterchart-point-border-width': 'var(--em-core-border-width--025, 0.0625rem)',
   '--em-scatterchart-point-radius': 'var(--em-core-border-radius--150, 0.375rem)',
   '--em-scatterchart-point-opacity--null': '0.3',
+  '--em-scatterchart-label-stack-height': '20px',
+  '--em-scatterchart-label-stack-gap': '4px',
   '--em-markdown-background': 'var(--em-sem-background--neutral)',
   '--em-markdown-code-color': 'var(--em-sem-text)',
   '--em-markdown-code-font-family': 'var(--em-core-font-family--code)',

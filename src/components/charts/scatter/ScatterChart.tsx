@@ -12,6 +12,7 @@ import {
 import { Scatter } from 'react-chartjs-2';
 import styles from '../charts.module.css';
 import { FC, useRef } from 'react';
+import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseScatterChartProps } from './scatter.types';
@@ -41,28 +42,21 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   options = {},
   data,
   onPointClick,
-  showPointLabels = false,
-  showValueLabels = false,
   nullBandLabel = 'No value',
   ...props
 }) => {
   const chartRef = useRef(null);
+  const propsWithNullBand = { ...props, nullBandLabel };
 
-  const scatterChartData = getScatterChartData(data, {
-    ...props,
-    showPointLabels,
-    showValueLabels,
-    nullBandLabel,
-  });
-  const scatterOptions = getScatterChartOptions(
-    { ...props, showPointLabels, showValueLabels, nullBandLabel },
-    scatterChartData,
+  const scatterChartData = getScatterChartData(data, propsWithNullBand);
+  const scatterOptions = mergician(
+    getScatterChartOptions({ ...propsWithNullBand, nullBand: scatterChartData.nullBand }),
     options,
   );
 
   const handlePointClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const hit = getChartPointClicked(event, chartRef);
-    onPointClick?.(hit);
+    const point = getChartPointClicked(event, chartRef);
+    onPointClick?.(point);
   };
 
   return (

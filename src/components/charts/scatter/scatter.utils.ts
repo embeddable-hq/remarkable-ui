@@ -113,9 +113,9 @@ const mergeAxisMin = (
 const defaultFormatMeasureValue = (
   _axis: 'x' | 'y',
   value: number | null | undefined,
-  nullLabel: string,
+  nullLabel: string | undefined,
 ): string => {
-  if (measureIsMissing(value)) return nullLabel;
+  if (measureIsMissing(value)) return nullLabel ?? 'No value';
   return defaultScatterNumberFormat.format(value as number);
 };
 
@@ -127,11 +127,11 @@ const formatAxisTickValue = (tickValue: string | number): string => {
 
 const scatterTooltipLabel = (
   ctx: TooltipItem<'scatter'>,
-  nullLabel: string,
+  nullLabel: string | undefined,
   formatMeasureValue: (
     axis: 'x' | 'y',
     value: number | null | undefined,
-    nullLabel: string,
+    nullLabel: string | undefined,
   ) => string,
 ): string | string[] => {
   const ds = ctx.dataset as ScatterDatasetWithOriginal;
@@ -263,13 +263,13 @@ const pointLabelDisplay = (context: Context, showPointLabels: boolean | undefine
 
 type ScatterChartOptionsNullContext = {
   nullBand: ScatterNullBandResult | null;
-  nullBandLabel: string;
+  nullBandLabel?: string;
 };
 
 const applyNullBandTickCallbacks = (
   options: Partial<ChartOptions<'scatter'>>,
   nullBand: ScatterNullBandResult | null,
-  nullBandLabel: string,
+  nullBandLabel: string | undefined,
   showLogarithmicScale?: boolean,
 ): Partial<ChartOptions<'scatter'>> => {
   if (!nullBand || showLogarithmicScale) return options;
@@ -317,8 +317,7 @@ const applyNullBandTickCallbacks = (
 
 const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
   const color = getStyle('--em-chart-grid-line-color--subtle', '#B8B8BD');
-  const w = getStyleNumber('--em-chart-grid-line-width--thin', '1px');
-  const width = Math.max(1, w);
+  const width = Math.max(1, getStyleNumber('--em-chart-grid-line-width--thin', '1px'));
   const border = { display: true as const, color, width };
   return {
     scales: {
@@ -334,24 +333,23 @@ const getScatterBaseOptions = (
 ): Partial<ChartOptions<'scatter'>> => {
   const pointRadius = getScatterPointRadiusPx();
   const borderWidth = getStyleNumber('--em-scatterchart-point-border-width', '1px');
+  const labelStackHeight = getStyleNumber('--em-scatterchart-label-stack-height', '20px');
+  const labelStackGap = getStyleNumber('--em-scatterchart-label-stack-gap', '4px');
   const labelLift = pointRadius + 6;
 
-  const nullBand = nullContext?.nullBand ?? null;
-  const nullBandLabel = nullContext?.nullBandLabel ?? 'No value';
+  const nullBand = nullContext?.nullBand;
+  const nullBandLabel = nullContext?.nullBandLabel;
   const applyNullX = !options.showLogarithmicScale && Boolean(nullBand?.hasNullX);
   const applyNullY = !options.showLogarithmicScale && Boolean(nullBand?.hasNullY);
 
   const ticksDefault = getChartjsAxisOptionsScalesTicksDefault();
   const ticksMuted = getChartjsAxisOptionsScalesTicksMuted();
 
-  const xTickCallback = (tickValue: string | number) => formatAxisTickValue(tickValue);
-  const yTickCallback = (tickValue: string | number) => formatAxisTickValue(tickValue);
-
   const valueLabelOffset = (context: Context): number => {
     const showV = valueLabelDisplay(context, options.showValueLabels);
     const showP = pointLabelDisplay(context, options.showPointLabels);
     if (!showV) return 0;
-    if (showP) return labelLift + 20;
+    if (showP) return labelLift + labelStackHeight;
     return labelLift;
   };
 
@@ -359,7 +357,7 @@ const getScatterBaseOptions = (
     const showV = valueLabelDisplay(context, options.showValueLabels);
     const showP = pointLabelDisplay(context, options.showPointLabels);
     if (!showP) return 0;
-    if (showV) return labelLift + 4;
+    if (showV) return labelLift + labelStackGap;
     return labelLift;
   };
 
@@ -439,7 +437,7 @@ const getScatterBaseOptions = (
         grid: { display: false },
         ticks: {
           ...ticksDefault,
-          callback: xTickCallback,
+          callback: formatAxisTickValue,
         },
         title: {
           display: Boolean(options.xAxisLabel),
@@ -458,7 +456,7 @@ const getScatterBaseOptions = (
         grid: { display: false },
         ticks: {
           ...ticksMuted,
-          callback: yTickCallback,
+          callback: formatAxisTickValue,
         },
         title: {
           display: Boolean(options.yAxisLabel),
@@ -477,19 +475,19 @@ const getScatterBaseOptions = (
 };
 
 export const getScatterChartOptions = (
-  props: ScatterChartConfigurationProps,
-  dataResult: ScatterChartDataResult,
-  userOptions: Partial<ChartOptions<'scatter'>> = {},
+  config: ScatterChartConfigurationProps & { nullBand?: ScatterNullBandResult | null },
 ): Partial<ChartOptions<'scatter'>> => {
-  const nullBand = dataResult.nullBand;
-  const nullBandLabel = props.nullBandLabel ?? 'No value';
+  const { nullBand, ...props } = config;
   return applyNullBandTickCallbacks(
     mergician(
-      mergician(getScatterBaseOptions(props, { nullBand, nullBandLabel }), userOptions),
+      getScatterBaseOptions(props, {
+        nullBand: nullBand ?? null,
+        nullBandLabel: props.nullBandLabel,
+      }),
       getScatterChartAxisBorderPatch(),
     ),
-    nullBand,
-    nullBandLabel,
+    nullBand ?? null,
+    props.nullBandLabel,
     props.showLogarithmicScale,
   );
 };
