@@ -2,15 +2,15 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: var(--em-kpitrend-padding, 0.25rem);
-  border-radius: var(--em-kpitrend-border-radius, 0.375rem);
+  padding: var(--em-kpichart-trend-padding, 0.25rem);
+  border-radius: var(--em-kpichart-trend-border-radius, 0.375rem);
   width: min-content;
-  font-size: var(--em-kpitrend-font-size, inherit);
+  font-size: var(--em-kpichart-trend-font-size, inherit);
 }
 
 .badge > svg {
-  width: 1em;
-  height: 1em;
+  width: var(--em-kpichart-trend-icon-size, 1rem);
+  height: var(--em-kpichart-trend-icon-size, 1rem);
   flex-shrink: 0;
 }
 
@@ -18,18 +18,18 @@
   color: inherit;
   font-style: normal;
   font-size: 1em;
-  padding: 0 var(--em-kpitrend-padding, 0.25rem);
-  font-weight: var(--em-kpitrend-font-weight, 500);
-  line-height: var(--em-kpitrend-line-height, 1rem);
+  padding: 0 var(--em-kpichart-trend-padding, 0.25rem);
+  font-weight: var(--em-kpichart-trend-font-weight, 500);
+  line-height: var(--em-kpichart-trend-line-height, 1rem);
   white-space: nowrap;
 }
 
 .positive {
-  background: var(--em-kpitrend-background--positive, #e1f0e9);
-  color: var(--em-kpitrend-color--positive, #0f955a);
+  background: var(--em-kpichart-trend-background--positive, #e1f0e9);
+  color: var(--em-kpichart-trend-color--positive, #0f955a);
 }
 
 .negative {
-  background: var(--em-kpitrend-background--negative, #f6e2e2);
-  color: var(--em-kpitrend-color--negative, #bc1010);
+  background: var(--em-kpichart-trend-background--negative, #f6e2e2);
+  color: var(--em-kpichart-trend-color--negative, #bc1010);
 }
