@@ -41,7 +41,7 @@
 
 .tab:hover {
   border: var(--em-charttabs-item-border-width, 1px) solid
-    var(--em-charttabs-item-border-color, #b8b8bd);
+    var(--em-charttabs-item-border-color--hover, #212129);
 }
 
 .tab:hover.active {
@@ -51,7 +51,7 @@
 .active {
   opacity: var(--em-charttabs-item-opacity--active, 1);
   border: var(--em-charttabs-item-border-width--active, 1px) solid
-    var(--em-charttabs-item-border-color--active, #b8b8bd);
+    var(--em-charttabs-item-border-color--active, #212129);
 }
 
 .active:hover {
@@ -59,7 +59,7 @@
 }
 
 .label {
-  color: var(--em-charttabs-item-label-color, #000);
+  color: var(--em-charttabs-item-label-color, #212129);
   font-family: var(--em-charttabs-item-label-font-family, Inter);
   font-size: var(--em-charttabs-item-label-font-size, 0.75rem);
   font-style: normal;
@@ -68,7 +68,7 @@
 }
 
 .value {
-  color: var(--em-charttabs-item-value-color, #000);
+  color: var(--em-charttabs-item-value-color, #212129);
   font-family: var(--em-charttabs-item-value-font-family, Inter);
   font-size: var(--em-charttabs-item-value-font-size, 1.25rem);
   font-style: normal;
