@@ -669,5 +669,5 @@
   --em-charttabs-trend-font-size: var(--em-core-font-size--xs);
   --em-charttabs-trend-icon-size: var(--em-core-size--0400);
   --em-charttabs-scroll-padding: var(--em-core-spacing--0100);
-  --em-charttabs-scroll-button-width: 28px;
+  --em-charttabs-scroll-button-width: 1.75rem;
 }
