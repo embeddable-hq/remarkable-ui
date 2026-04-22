@@ -218,8 +218,8 @@ export type ScatterChartDataResult = {
 };
 
 export const getScatterChartPlugins = (
-  result: ScatterChartDataResult,
-): Plugin<'scatter'>[] | undefined => (result.nullBandPlugin ? [result.nullBandPlugin] : undefined);
+  nullBandPlugin: Plugin<'scatter'> | undefined,
+): Plugin<'scatter'>[] | undefined => (nullBandPlugin ? [nullBandPlugin] : undefined);
 
 export const getScatterChartData = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
@@ -346,18 +346,18 @@ const getScatterBaseOptions = (
   const ticksMuted = getChartjsAxisOptionsScalesTicksMuted();
 
   const valueLabelOffset = (context: Context): number => {
-    const showV = valueLabelDisplay(context, options.showValueLabels);
-    const showP = pointLabelDisplay(context, options.showPointLabels);
-    if (!showV) return 0;
-    if (showP) return labelLift + labelStackHeight;
+    const showValueLabel = valueLabelDisplay(context, options.showValueLabels);
+    const showPointLabel = pointLabelDisplay(context, options.showPointLabels);
+    if (!showValueLabel) return 0;
+    if (showPointLabel) return labelLift + labelStackHeight;
     return labelLift;
   };
 
   const captionLabelOffset = (context: Context): number => {
-    const showV = valueLabelDisplay(context, options.showValueLabels);
-    const showP = pointLabelDisplay(context, options.showPointLabels);
-    if (!showP) return 0;
-    if (showV) return labelLift + labelStackGap;
+    const showValueLabel = valueLabelDisplay(context, options.showValueLabels);
+    const showPointLabel = pointLabelDisplay(context, options.showPointLabels);
+    if (!showPointLabel) return 0;
+    if (showValueLabel) return labelLift + labelStackGap;
     return labelLift;
   };
 

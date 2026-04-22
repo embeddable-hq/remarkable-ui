@@ -65,7 +65,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
         ref={chartRef}
         data={scatterChartData.chartData}
         options={scatterOptions}
-        plugins={getScatterChartPlugins(scatterChartData)}
+        plugins={getScatterChartPlugins(scatterChartData.nullBandPlugin)}
         onClick={handlePointClick}
       />
     </div>
