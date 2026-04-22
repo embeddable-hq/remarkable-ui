@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.8
+
+### Patch Changes
+
+- b67bdc6: Extract KpiTrend as separate component
+
 ## 3.0.7
 
 ### Patch Changes
