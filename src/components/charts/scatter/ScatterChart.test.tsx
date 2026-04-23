@@ -9,8 +9,8 @@ vi.mock('react-chartjs-2', () => ({
   )),
 }));
 
-vi.mock('../chartjs.utils', () => ({
-  getScatterPointClicked: vi.fn(() => ({ datasetIndex: 0, index: 1 })),
+vi.mock('../chartjs.cartesian.utils', () => ({
+  getChartPointClicked: vi.fn(() => ({ datasetIndex: 0, index: 1 })),
 }));
 
 const MOCK_DATA = {
