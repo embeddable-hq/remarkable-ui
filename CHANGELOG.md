@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.9
+
+### Patch Changes
+
+- 10a83d0: Add Scatter plot chart
+
 ## 3.0.8
 
 ### Patch Changes
