@@ -18,9 +18,6 @@ import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
 
 const defaultScatterNumberFormat = new Intl.NumberFormat();
 
-const getScatterPointRadiusPx = (): number =>
-  getStyleNumber('--em-scatterchart-point-radius', '6px');
-
 export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y: number }[]> & {
   originalData?: ScatterChartInputPoint[];
 };
@@ -153,8 +150,8 @@ export const applyScatterNullBandToData = (
   const chartColors = getChartColors();
   const defaultOpacity = getStyleNumber('--em-scatterchart-point-opacity', '0.8');
   const nullOpacity = getStyleNumber('--em-scatterchart-point-opacity--null', '0.3');
-  const pointRadiusPx = getScatterPointRadiusPx();
-  const pointHoverRadiusPx = pointRadiusPx * (4 / 3);
+  const pointRadiusPx = getStyleNumber('--em-scatterchart-point-radius', '0.375rem');
+  const pointHoverRadiusPx = getStyleNumber('--em-scatterchart-point-radius--hover', '0.5rem');
 
   const useNullBandMapping = ctx.supportsNullMeasures && ctx.nullBand !== null;
 
@@ -267,11 +264,13 @@ type ScatterChartOptionsNullContext = {
 };
 
 const applyNullBandTickCallbacks = (
-  options: Partial<ChartOptions<'scatter'>>,
-  nullBand: ScatterNullBandResult | null,
-  nullBandLabel: string | undefined,
-  showLogarithmicScale?: boolean,
+  config: ScatterChartConfigurationProps & { nullBand?: ScatterNullBandResult | null },
 ): Partial<ChartOptions<'scatter'>> => {
+  const { nullBand, nullBandLabel, showLogarithmicScale } = config;
+  const options = mergician(
+    getScatterBaseOptions(config, { nullBand: nullBand ?? null, nullBandLabel }),
+    getScatterChartAxisBorderPatch(),
+  ) as Partial<ChartOptions<'scatter'>>;
   if (!nullBand || showLogarithmicScale) return options;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -331,11 +330,15 @@ const getScatterBaseOptions = (
   options: ScatterChartConfigurationProps,
   nullContext?: ScatterChartOptionsNullContext,
 ): Partial<ChartOptions<'scatter'>> => {
-  const pointRadius = getScatterPointRadiusPx();
-  const borderWidth = getStyleNumber('--em-scatterchart-point-border-width', '1px');
-  const labelStackHeight = getStyleNumber('--em-scatterchart-label-stack-height', '20px');
-  const labelStackGap = getStyleNumber('--em-scatterchart-label-stack-gap', '4px');
-  const labelLift = pointRadius + 6;
+  const pointRadius = getStyleNumber('--em-scatterchart-point-radius', '0.375rem');
+  const pointHoverRadius = getStyleNumber('--em-scatterchart-point-radius--hover', '0.5rem');
+  const borderWidth = getStyleNumber('--em-scatterchart-point-border-width', '0.0625rem');
+  const labelStackHeight = getStyleNumber('--em-scatterchart-label-stack-height', '1.25rem');
+  const labelStackGap = getStyleNumber('--em-scatterchart-label-stack-gap', '0.25rem');
+  const labelOffset = getStyleNumber('--em-scatterchart-label-offset', '0.375rem');
+  const labelTopPadding = getStyleNumber('--em-scatterchart-label-top-padding', '1.75rem');
+  const labelStrokeWidth = getStyleNumber('--em-scatterchart-label-stroke-width', '3');
+  const labelLift = pointRadius + labelOffset;
 
   const nullBand = nullContext?.nullBand;
   const nullBandLabel = nullContext?.nullBandLabel;
@@ -369,7 +372,7 @@ const getScatterBaseOptions = (
     elements: {
       point: {
         radius: pointRadius,
-        hoverRadius: pointRadius * (4 / 3),
+        hoverRadius: pointHoverRadius,
         borderWidth,
       },
     },
@@ -377,7 +380,7 @@ const getScatterBaseOptions = (
       padding: {
         top:
           options.showValueLabels || options.showPointLabels
-            ? chartjsAxisOptionsLayoutPadding + pointRadius + 28
+            ? chartjsAxisOptionsLayoutPadding + pointRadius + labelTopPadding
             : 0,
       },
     },
@@ -388,7 +391,7 @@ const getScatterBaseOptions = (
         padding: 0,
         color: getStyle('--em-chart-label-color', '#212129'),
         textStrokeColor: getStyle('--em-chart-label-background', '#FFF'),
-        textStrokeWidth: 3,
+        textStrokeWidth: labelStrokeWidth,
         labels: {
           total: {
             display: false,
@@ -476,18 +479,4 @@ const getScatterBaseOptions = (
 
 export const getScatterChartOptions = (
   config: ScatterChartConfigurationProps & { nullBand?: ScatterNullBandResult | null },
-): Partial<ChartOptions<'scatter'>> => {
-  const { nullBand, ...props } = config;
-  return applyNullBandTickCallbacks(
-    mergician(
-      getScatterBaseOptions(props, {
-        nullBand: nullBand ?? null,
-        nullBandLabel: props.nullBandLabel,
-      }),
-      getScatterChartAxisBorderPatch(),
-    ),
-    nullBand ?? null,
-    props.nullBandLabel,
-    props.showLogarithmicScale,
-  );
-};
+): Partial<ChartOptions<'scatter'>> => applyNullBandTickCallbacks(config);
