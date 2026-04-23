@@ -33,7 +33,7 @@ export const getStyle = (variableName: StylesKeys, fallbackValue?: string): stri
   return rawValue;
 };
 
-export const getStyleNumber = (
+export const getStyleNumber = ((
   variableName: StylesKeys,
   fallbackValue?: string,
 ): number | undefined => {
@@ -60,4 +60,7 @@ export const getStyleNumber = (
     return numericValue;
   }
   return undefined;
+}) as {
+  (variableName: StylesKeys, fallbackValue: string): number;
+  (variableName: StylesKeys, fallbackValue?: string): number | undefined;
 };
