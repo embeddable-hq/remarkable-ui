@@ -125,7 +125,7 @@ describe('createScatterNullBandPlugin', () => {
     ]);
     expect(nullBand).not.toBeNull();
 
-    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const plugin = createScatterNullBandPlugin(nullBand!);
     const scale = {
       id: 'x',
       ticks: [{ value: 8 }, { value: 12 }],
@@ -148,7 +148,7 @@ describe('createScatterNullBandPlugin', () => {
     ]);
     expect(nullBand).not.toBeNull();
 
-    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const plugin = createScatterNullBandPlugin(nullBand!);
     const scale = {
       id: 'y',
       ticks: [{ value: 10 }, { value: 20 }],
@@ -161,7 +161,7 @@ describe('createScatterNullBandPlugin', () => {
 
   it('does nothing when scale is missing', () => {
     const nullBand = computeScatterNullBand([{ data: [{ x: null, y: 1 }] }]);
-    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const plugin = createScatterNullBandPlugin(nullBand!);
     expect(() =>
       plugin.afterBuildTicks?.({} as never, { scale: undefined } as never, {} as never),
     ).not.toThrow();
@@ -169,7 +169,7 @@ describe('createScatterNullBandPlugin', () => {
 
   it('does not modify ticks for unrelated scale ids', () => {
     const nullBand = computeScatterNullBand([{ data: [{ x: null, y: 1 }] }]);
-    const plugin = createScatterNullBandPlugin({ nullBand: nullBand! });
+    const plugin = createScatterNullBandPlugin(nullBand!);
     const scale = {
       id: 'r',
       ticks: [{ value: 1 }],

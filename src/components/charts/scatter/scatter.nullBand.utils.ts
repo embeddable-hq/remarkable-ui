@@ -101,14 +101,7 @@ export const computeScatterNullBand = (
   };
 };
 
-export type ScatterNullBandPluginOptions = {
-  nullBand: ScatterNullBandResult;
-};
-
-export const createScatterNullBandPlugin = (
-  options: ScatterNullBandPluginOptions,
-): Plugin<'scatter'> => {
-  const { nullBand } = options;
+export const createScatterNullBandPlugin = (nullBand: ScatterNullBandResult): Plugin<'scatter'> => {
   const { xNullPos, yNullPos, hasNullX, hasNullY, xNumMin, yNumMin } = nullBand;
 
   return {
