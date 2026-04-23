@@ -47,12 +47,12 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   ...props
 }) => {
   const chartRef = useRef(null);
-  const propsWithNullBand = { ...props, nullBandLabel };
+  const propsWithNullBandLabel = { ...props, nullBandLabel };
 
   const nullBand = getScatterNullBand(data, props);
-  const chartData = getScatterChartData(data, { ...propsWithNullBand, nullBand });
+  const chartData = getScatterChartData(data, { ...propsWithNullBandLabel, nullBand });
   const scatterOptions = mergician(
-    getScatterChartOptions({ ...propsWithNullBand, nullBand }),
+    getScatterChartOptions({ ...propsWithNullBandLabel, nullBand }),
     options,
   );
 
