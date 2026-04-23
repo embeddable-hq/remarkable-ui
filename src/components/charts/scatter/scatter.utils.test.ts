@@ -13,9 +13,9 @@ vi.mock('../../../styles/styles.utils', () => ({
 }));
 
 import {
-  applyOpacityToColor,
+  getColorWithOpacity,
   filterNumericScatterData,
-  applyScatterNullBandToData as getScatterChartData,
+  getScatterDataWithNullBand as getScatterChartData,
   getScatterChartOptions,
   hasNullMeasure,
 } from './scatter.utils';
@@ -84,10 +84,10 @@ describe('filterNumericScatterData', () => {
   });
 });
 
-describe('applyOpacityToColor', () => {
+describe('getColorWithOpacity', () => {
   it('returns fallback rgba when color is empty', () => {
-    expect(applyOpacityToColor('', 0.5)).toBe('rgba(33, 33, 41, 0.5)');
-    expect(applyOpacityToColor('   ', 0.5)).toBe('rgba(33, 33, 41, 0.5)');
+    expect(getColorWithOpacity('', 0.5)).toBe('rgba(33, 33, 41, 0.5)');
+    expect(getColorWithOpacity('   ', 0.5)).toBe('rgba(33, 33, 41, 0.5)');
   });
 
   it('parses rgb from computed style and applies alpha', () => {
@@ -97,7 +97,7 @@ describe('applyOpacityToColor', () => {
     const rgb = getComputedStyle(el).color;
     document.body.removeChild(el);
 
-    const out = applyOpacityToColor(rgb, 0.4);
+    const out = getColorWithOpacity(rgb, 0.4);
     expect(out).toMatch(/^rgba\(\s*255\s*,\s*0\s*,\s*0\s*,\s*0\.4\s*\)$/);
   });
 
@@ -106,7 +106,7 @@ describe('applyOpacityToColor', () => {
       .spyOn(window, 'getComputedStyle')
       .mockReturnValue({ color: 'invalid' } as CSSStyleDeclaration);
     try {
-      expect(applyOpacityToColor('#ff0000', 0.2)).toBe('rgba(33, 33, 41, 0.2)');
+      expect(getColorWithOpacity('#ff0000', 0.2)).toBe('rgba(33, 33, 41, 0.2)');
     } finally {
       spy.mockRestore();
     }

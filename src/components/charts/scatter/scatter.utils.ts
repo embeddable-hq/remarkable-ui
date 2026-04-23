@@ -70,7 +70,7 @@ const getOriginalScatterPoint = (context: Context): ScatterChartInputPoint | und
   );
 };
 
-export const applyOpacityToColor = (color: string, alpha: number): string => {
+export const getColorWithOpacity = (color: string, alpha: number): string => {
   if (!color?.trim()) {
     return `rgba(33, 33, 41, ${alpha})`;
   }
@@ -98,7 +98,7 @@ const getSeriesColor = (chartColors: string[], index: number): string =>
 const isUserControlledPointFill = (dataset: ChartDataset<'scatter'>): boolean =>
   dataset.pointBackgroundColor !== undefined || dataset.backgroundColor !== undefined;
 
-const mergeAxisMin = (
+const computeAxisMin = (
   userMin: number | undefined,
   computed: number | undefined,
 ): number | undefined => {
@@ -143,7 +143,7 @@ const getScatterTooltipLabel = (
   return `${prefix}(${fx}, ${fy})`;
 };
 
-export const applyScatterNullBandToData = (
+export const getScatterDataWithNullBand = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
   ctx: ScatterChartDataContext,
 ): ChartData<'scatter'> => {
@@ -169,8 +169,8 @@ export const applyScatterNullBandToData = (
 
         if (!isUserControlledPointFill(dataset)) {
           // Resolve the two opacity variants once per series (2 DOM mutations max, not N)
-          const defaultColor = applyOpacityToColor(baseColor, defaultOpacity);
-          const nullColor = applyOpacityToColor(baseColor, nullOpacity);
+          const defaultColor = getColorWithOpacity(baseColor, defaultOpacity);
+          const nullColor = getColorWithOpacity(baseColor, nullOpacity);
           const colorFor = (c: { dataset: object; dataIndex: number }) => {
             const orig =
               (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
@@ -221,7 +221,7 @@ export const getScatterChartData = (
   props: ScatterChartConfigurationProps & { nullBand: ScatterNullBandResult | null },
 ): ChartData<'scatter'> => {
   const dataForChart = props.showLogarithmicScale ? filterNumericScatterData(data) : data;
-  return applyScatterNullBandToData(dataForChart, {
+  return getScatterDataWithNullBand(dataForChart, {
     nullBand: props.nullBand,
     supportsNullMeasures: !props.showLogarithmicScale,
   });
@@ -391,7 +391,7 @@ const getScatterBaseOptions = (
           text: options.xAxisLabel,
         },
         reverse: options.reverseXAxis,
-        min: mergeAxisMin(
+        min: computeAxisMin(
           options.xAxisRangeMin,
           applyNullX ? nullBand?.computedXAxisMin : undefined,
         ),
@@ -409,7 +409,7 @@ const getScatterBaseOptions = (
           display: Boolean(options.yAxisLabel),
           text: options.yAxisLabel,
         },
-        min: mergeAxisMin(
+        min: computeAxisMin(
           options.yAxisRangeMin,
           applyNullY ? nullBand?.computedYAxisMin : undefined,
         ),
