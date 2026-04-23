@@ -258,62 +258,6 @@ const isPointLabelVisible = (context: Context, showPointLabels: boolean | undefi
   return Boolean(getPointCaption(raw));
 };
 
-type ScatterChartOptionsNullContext = {
-  nullBand: ScatterNullBandResult | null;
-  nullBandLabel?: string;
-};
-
-const applyNullBandTickCallbacks = (
-  config: ScatterChartConfigurationProps & { nullBand?: ScatterNullBandResult | null },
-): Partial<ChartOptions<'scatter'>> => {
-  const { nullBand, nullBandLabel, showLogarithmicScale } = config;
-  const options = mergician(
-    getScatterBaseOptions(config, { nullBand: nullBand ?? null, nullBandLabel }),
-    getScatterChartAxisBorderPatch(),
-  ) as Partial<ChartOptions<'scatter'>>;
-  if (!nullBand || showLogarithmicScale) return options;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const existingScales = (options.scales ?? {}) as Record<string, any>;
-  const scales = { ...existingScales };
-
-  if (nullBand.hasNullX) {
-    const { xNullPos } = nullBand;
-    const xScale = existingScales.x ?? {};
-    const prevCb = xScale.ticks?.callback as ((v: string | number) => string) | undefined;
-    scales.x = {
-      ...xScale,
-      ticks: {
-        ...xScale.ticks,
-        callback: (tickValue: string | number) => {
-          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
-          if (Number.isFinite(v) && Math.abs(v - xNullPos) < 1e-9) return nullBandLabel;
-          return prevCb?.(tickValue) ?? formatAxisTickValue(tickValue);
-        },
-      },
-    };
-  }
-
-  if (nullBand.hasNullY) {
-    const { yNullPos } = nullBand;
-    const yScale = existingScales.y ?? {};
-    const prevCb = yScale.ticks?.callback as ((v: string | number) => string) | undefined;
-    scales.y = {
-      ...yScale,
-      ticks: {
-        ...yScale.ticks,
-        callback: (tickValue: string | number) => {
-          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
-          if (Number.isFinite(v) && Math.abs(v - yNullPos) < 1e-9) return nullBandLabel;
-          return prevCb?.(tickValue) ?? formatAxisTickValue(tickValue);
-        },
-      },
-    };
-  }
-
-  return { ...options, scales };
-};
-
 const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
   const color = getStyle('--em-chart-grid-line-color--subtle', '#B8B8BD');
   const width = Math.max(1, getStyleNumber('--em-chart-grid-line-width--thin', '1px'));
@@ -328,7 +272,7 @@ const getScatterChartAxisBorderPatch = (): Partial<ChartOptions<'scatter'>> => {
 
 const getScatterBaseOptions = (
   options: ScatterChartConfigurationProps,
-  nullContext?: ScatterChartOptionsNullContext,
+  nullContext?: { nullBand: ScatterNullBandResult | null; nullBandLabel?: string },
 ): Partial<ChartOptions<'scatter'>> => {
   const pointRadius = getStyleNumber('--em-scatterchart-point-radius', '0.375rem');
   const pointHoverRadius = getStyleNumber('--em-scatterchart-point-radius--hover', '0.5rem');
@@ -479,4 +423,51 @@ const getScatterBaseOptions = (
 
 export const getScatterChartOptions = (
   config: ScatterChartConfigurationProps & { nullBand?: ScatterNullBandResult | null },
-): Partial<ChartOptions<'scatter'>> => applyNullBandTickCallbacks(config);
+): Partial<ChartOptions<'scatter'>> => {
+  const { nullBand, nullBandLabel, showLogarithmicScale } = config;
+  const options = mergician(
+    getScatterBaseOptions(config, { nullBand: nullBand ?? null, nullBandLabel }),
+    getScatterChartAxisBorderPatch(),
+  ) as Partial<ChartOptions<'scatter'>>;
+  if (!nullBand || showLogarithmicScale) return options;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const existingScales = (options.scales ?? {}) as Record<string, any>;
+  const scales = { ...existingScales };
+
+  if (nullBand.hasNullX) {
+    const { xNullPos } = nullBand;
+    const xScale = existingScales.x ?? {};
+    const prevCb = xScale.ticks?.callback as ((v: string | number) => string) | undefined;
+    scales.x = {
+      ...xScale,
+      ticks: {
+        ...xScale.ticks,
+        callback: (tickValue: string | number) => {
+          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+          if (Number.isFinite(v) && Math.abs(v - xNullPos) < 1e-9) return nullBandLabel;
+          return prevCb?.(tickValue) ?? formatAxisTickValue(tickValue);
+        },
+      },
+    };
+  }
+
+  if (nullBand.hasNullY) {
+    const { yNullPos } = nullBand;
+    const yScale = existingScales.y ?? {};
+    const prevCb = yScale.ticks?.callback as ((v: string | number) => string) | undefined;
+    scales.y = {
+      ...yScale,
+      ticks: {
+        ...yScale.ticks,
+        callback: (tickValue: string | number) => {
+          const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
+          if (Number.isFinite(v) && Math.abs(v - yNullPos) < 1e-9) return nullBandLabel;
+          return prevCb?.(tickValue) ?? formatAxisTickValue(tickValue);
+        },
+      },
+    };
+  }
+
+  return { ...options, scales };
+};
