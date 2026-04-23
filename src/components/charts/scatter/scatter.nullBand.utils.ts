@@ -61,7 +61,7 @@ const scanDatasetsForNullBandAxes = (
   return { foundNullX, foundNullY, xExt, yExt };
 };
 
-const computedAxisMinWhenNull = (
+const computedAxisMin = (
   hasNullOnAxis: boolean,
   nullPos: number,
   range: number,
@@ -90,8 +90,8 @@ export const computeScatterNullBand = (
     yNullPos,
     hasNullX: foundNullX,
     hasNullY: foundNullY,
-    computedXAxisMin: computedAxisMinWhenNull(foundNullX, xNullPos, xRange),
-    computedYAxisMin: computedAxisMinWhenNull(foundNullY, yNullPos, yRange),
+    computedXAxisMin: computedAxisMin(foundNullX, xNullPos, xRange),
+    computedYAxisMin: computedAxisMin(foundNullY, yNullPos, yRange),
     xRange,
     yRange,
     xNumMin,
