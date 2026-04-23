@@ -41,7 +41,7 @@ const getExtentBounds = (ext: AxisExtent): { min: number; max: number } => {
   return { min: ext.min, max: ext.max };
 };
 
-const scanDatasetsForNullBandAxes = (
+const getDatasetsNullsAndExtents = (
   datasets: { data: ScatterChartInputPoint[] }[],
 ): { foundNullX: boolean; foundNullY: boolean; xExt: AxisExtent; yExt: AxisExtent } => {
   let foundNullX = false;
@@ -75,7 +75,7 @@ export const computeScatterNullBand = (
 ): ScatterNullBandResult | null => {
   if (!datasets.length) return null;
 
-  const { foundNullX, foundNullY, xExt, yExt } = scanDatasetsForNullBandAxes(datasets);
+  const { foundNullX, foundNullY, xExt, yExt } = getDatasetsNullsAndExtents(datasets);
   if (!foundNullX && !foundNullY) return null;
 
   const { min: xNumMin, max: xNumMax } = getExtentBounds(xExt);
