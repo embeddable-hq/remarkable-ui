@@ -23,13 +23,13 @@ export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y:
 };
 
 /** True for null/undefined and non-finite numbers (NaN, ±Infinity). */
-const measureIsMissing = (v: number | null | undefined): boolean =>
+const isMeasureMissing = (v: number | null | undefined): boolean =>
   v === null || v === undefined || (typeof v === 'number' && !Number.isFinite(v));
 
-export const pointHasNullMeasure = (pt: ScatterChartInputPoint | undefined): boolean => {
+export const hasNullMeasure = (pt: ScatterChartInputPoint | undefined): boolean => {
   if (!pt || typeof pt !== 'object') return false;
   if (pt.isNull) return true;
-  return measureIsMissing(pt.x) || measureIsMissing(pt.y);
+  return isMeasureMissing(pt.x) || isMeasureMissing(pt.y);
 };
 
 /** For logarithmic Y: Y must be > 0; X stays linear so any finite x is allowed. */
@@ -92,10 +92,10 @@ export const applyOpacityToColor = (color: string, alpha: number): string => {
   return `rgba(${m[1]}, ${m[2]}, ${m[3]}, ${alpha})`;
 };
 
-const resolveSeriesColor = (chartColors: string[], index: number): string =>
+const getSeriesColor = (chartColors: string[], index: number): string =>
   chartColors[index % chartColors.length] ?? '';
 
-const userControlsPointFill = (dataset: ChartDataset<'scatter'>): boolean =>
+const isUserControlledPointFill = (dataset: ChartDataset<'scatter'>): boolean =>
   dataset.pointBackgroundColor !== undefined || dataset.backgroundColor !== undefined;
 
 const mergeAxisMin = (
@@ -107,12 +107,12 @@ const mergeAxisMin = (
   return Math.min(userMin, computed);
 };
 
-const defaultFormatMeasureValue = (
+const formatMeasureValue = (
   _axis: 'x' | 'y',
   value: number | null | undefined,
   nullLabel: string | undefined,
 ): string => {
-  if (measureIsMissing(value)) return nullLabel ?? 'No value';
+  if (isMeasureMissing(value)) return nullLabel ?? 'No value';
   return defaultScatterNumberFormat.format(value as number);
 };
 
@@ -122,7 +122,7 @@ const formatAxisTickValue = (tickValue: string | number): string => {
   return defaultScatterNumberFormat.format(v);
 };
 
-const scatterTooltipLabel = (
+const getScatterTooltipLabel = (
   ctx: TooltipItem<'scatter'>,
   nullLabel: string | undefined,
   formatMeasureValue: (
@@ -159,7 +159,7 @@ export const applyScatterNullBandToData = (
     ...data,
     datasets:
       data.datasets?.map((dataset, index) => {
-        const baseColor = resolveSeriesColor(chartColors, index);
+        const baseColor = getSeriesColor(chartColors, index);
 
         const defaultDataset: Partial<ScatterDatasetWithOriginal> = {
           showLine: false,
@@ -167,7 +167,7 @@ export const applyScatterNullBandToData = (
           pointHoverRadius: pointHoverRadiusPx,
         };
 
-        if (!userControlsPointFill(dataset)) {
+        if (!isUserControlledPointFill(dataset)) {
           // Resolve the two opacity variants once per series (2 DOM mutations max, not N)
           const defaultColor = applyOpacityToColor(baseColor, defaultOpacity);
           const nullColor = applyOpacityToColor(baseColor, nullOpacity);
@@ -175,7 +175,7 @@ export const applyScatterNullBandToData = (
             const orig =
               (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
               (c.dataset as { data: ScatterChartInputPoint[] }).data[c.dataIndex];
-            return pointHasNullMeasure(orig) ? nullColor : defaultColor;
+            return hasNullMeasure(orig) ? nullColor : defaultColor;
           };
           defaultDataset.pointBackgroundColor = colorFor;
           defaultDataset.pointBorderColor = colorFor;
@@ -196,8 +196,8 @@ export const applyScatterNullBandToData = (
 
         const { xNullPos, yNullPos } = ctx.nullBand;
         const mappedData = dataset.data.map((pt) => ({
-          x: measureIsMissing(pt.x) ? xNullPos : (pt.x as number),
-          y: measureIsMissing(pt.y) ? yNullPos : (pt.y as number),
+          x: isMeasureMissing(pt.x) ? xNullPos : (pt.x as number),
+          y: isMeasureMissing(pt.y) ? yNullPos : (pt.y as number),
         }));
 
         return mergician(defaultDataset, dataset, {
@@ -234,7 +234,7 @@ export const getScatterChartPlugins = (
   return plugin ? [plugin] : undefined;
 };
 
-const valueLabelDisplay = (context: Context, showValueLabels: boolean | undefined): boolean => {
+const isValueLabelVisible = (context: Context, showValueLabels: boolean | undefined): boolean => {
   if (!showValueLabels) return false;
   const raw = getOriginalScatterPoint(context);
   if (!raw || typeof raw !== 'object') return false;
@@ -252,7 +252,7 @@ const valueLabelDisplay = (context: Context, showValueLabels: boolean | undefine
   return my >= yScale.min && my <= yScale.max && mx >= xScale.min && mx <= xScale.max;
 };
 
-const pointLabelDisplay = (context: Context, showPointLabels: boolean | undefined): boolean => {
+const isPointLabelVisible = (context: Context, showPointLabels: boolean | undefined): boolean => {
   if (!showPointLabels) return false;
   const raw = getOriginalScatterPoint(context);
   return Boolean(getPointCaption(raw));
@@ -349,16 +349,16 @@ const getScatterBaseOptions = (
   const ticksMuted = getChartjsAxisOptionsScalesTicksMuted();
 
   const valueLabelOffset = (context: Context): number => {
-    const showValueLabel = valueLabelDisplay(context, options.showValueLabels);
-    const showPointLabel = pointLabelDisplay(context, options.showPointLabels);
+    const showValueLabel = isValueLabelVisible(context, options.showValueLabels);
+    const showPointLabel = isPointLabelVisible(context, options.showPointLabels);
     if (!showValueLabel) return 0;
     if (showPointLabel) return labelLift + labelStackHeight;
     return labelLift;
   };
 
   const captionLabelOffset = (context: Context): number => {
-    const showValueLabel = valueLabelDisplay(context, options.showValueLabels);
-    const showPointLabel = pointLabelDisplay(context, options.showPointLabels);
+    const showValueLabel = isValueLabelVisible(context, options.showValueLabels);
+    const showPointLabel = isPointLabelVisible(context, options.showPointLabels);
     if (!showPointLabel) return 0;
     if (showValueLabel) return labelLift + labelStackGap;
     return labelLift;
@@ -398,21 +398,21 @@ const getScatterBaseOptions = (
           },
           value: {
             display: (context) =>
-              valueLabelDisplay(context, options.showValueLabels) ? 'auto' : false,
+              isValueLabelVisible(context, options.showValueLabels) ? 'auto' : false,
             anchor: 'center',
             align: 'top',
             offset: valueLabelOffset,
             formatter: (_value, context) => {
               const raw = getOriginalScatterPoint(context);
               if (!raw || typeof raw !== 'object') return '';
-              const xs = defaultFormatMeasureValue('x', raw.x, nullBandLabel);
-              const ys = defaultFormatMeasureValue('y', raw.y, nullBandLabel);
+              const xs = formatMeasureValue('x', raw.x, nullBandLabel);
+              const ys = formatMeasureValue('y', raw.y, nullBandLabel);
               return `(${xs}, ${ys})`;
             },
           },
           caption: {
             display: (context) =>
-              pointLabelDisplay(context, options.showPointLabels) ? 'auto' : false,
+              isPointLabelVisible(context, options.showPointLabels) ? 'auto' : false,
             anchor: 'center',
             align: 'top',
             offset: captionLabelOffset,
@@ -429,7 +429,7 @@ const getScatterBaseOptions = (
       tooltip: {
         enabled: options.showTooltips,
         callbacks: {
-          label: (ctx) => scatterTooltipLabel(ctx, nullBandLabel, defaultFormatMeasureValue),
+          label: (ctx) => getScatterTooltipLabel(ctx, nullBandLabel, formatMeasureValue),
         },
       },
     },

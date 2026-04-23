@@ -21,7 +21,7 @@ export type ScatterNullBandResult = {
 
 type AxisExtent = { min: number; max: number; count: number };
 
-const finiteExtent = (): AxisExtent => ({
+const getFiniteExtent = (): AxisExtent => ({
   min: Infinity,
   max: -Infinity,
   count: 0,
@@ -46,8 +46,8 @@ const scanDatasetsForNullBandAxes = (
 ): { foundNullX: boolean; foundNullY: boolean; xExt: AxisExtent; yExt: AxisExtent } => {
   let foundNullX = false;
   let foundNullY = false;
-  const xExt = finiteExtent();
-  const yExt = finiteExtent();
+  const xExt = getFiniteExtent();
+  const yExt = getFiniteExtent();
 
   for (const ds of datasets) {
     for (const pt of ds.data) {
@@ -61,11 +61,7 @@ const scanDatasetsForNullBandAxes = (
   return { foundNullX, foundNullY, xExt, yExt };
 };
 
-const computedAxisMin = (
-  hasNullOnAxis: boolean,
-  nullPos: number,
-  range: number,
-): number | undefined => {
+const getAxisMin = (hasNullOnAxis: boolean, nullPos: number, range: number): number | undefined => {
   if (!hasNullOnAxis) return undefined;
   return nullPos - NULL_BAND_PADDING * range;
 };
@@ -90,8 +86,8 @@ export const computeScatterNullBand = (
     yNullPos,
     hasNullX: foundNullX,
     hasNullY: foundNullY,
-    computedXAxisMin: computedAxisMin(foundNullX, xNullPos, xRange),
-    computedYAxisMin: computedAxisMin(foundNullY, yNullPos, yRange),
+    computedXAxisMin: getAxisMin(foundNullX, xNullPos, xRange),
+    computedYAxisMin: getAxisMin(foundNullY, yNullPos, yRange),
     xRange,
     yRange,
     xNumMin,
