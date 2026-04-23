@@ -17,6 +17,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseScatterChartProps } from './scatter.types';
 import {
+  getScatterNullBand,
   getScatterChartData,
   getScatterChartOptions,
   getScatterChartPlugins,
@@ -48,9 +49,10 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   const chartRef = useRef(null);
   const propsWithNullBand = { ...props, nullBandLabel };
 
-  const scatterChartData = getScatterChartData(data, propsWithNullBand);
+  const nullBand = getScatterNullBand(data, props);
+  const chartData = getScatterChartData(data, { ...propsWithNullBand, nullBand });
   const scatterOptions = mergician(
-    getScatterChartOptions({ ...propsWithNullBand, nullBand: scatterChartData.nullBand }),
+    getScatterChartOptions({ ...propsWithNullBand, nullBand }),
     options,
   );
 
@@ -63,9 +65,9 @@ export const ScatterChart: FC<ScatterChartProps> = ({
     <div className={styles.chartContainer}>
       <Scatter
         ref={chartRef}
-        data={scatterChartData.chartData}
+        data={chartData}
         options={scatterOptions}
-        plugins={getScatterChartPlugins(scatterChartData.nullBandPlugin)}
+        plugins={getScatterChartPlugins(nullBand)}
         onClick={handlePointClick}
       />
     </div>

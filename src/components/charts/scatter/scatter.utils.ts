@@ -208,30 +208,30 @@ export const applyScatterNullBandToData = (
   };
 };
 
-export type ScatterChartDataResult = {
-  chartData: ChartData<'scatter'>;
-  nullBand: ScatterNullBandResult | null;
-  nullBandPlugin: Plugin<'scatter'> | undefined;
+export const getScatterNullBand = (
+  data: ChartData<'scatter', ScatterChartInputPoint[]>,
+  { showLogarithmicScale }: Pick<ScatterChartConfigurationProps, 'showLogarithmicScale'>,
+): ScatterNullBandResult | null => {
+  if (showLogarithmicScale) return null;
+  return computeScatterNullBand(data.datasets);
 };
-
-export const getScatterChartPlugins = (
-  nullBandPlugin: Plugin<'scatter'> | undefined,
-): Plugin<'scatter'>[] | undefined => (nullBandPlugin ? [nullBandPlugin] : undefined);
 
 export const getScatterChartData = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
-  props: ScatterChartConfigurationProps,
-): ScatterChartDataResult => {
+  props: ScatterChartConfigurationProps & { nullBand: ScatterNullBandResult | null },
+): ChartData<'scatter'> => {
   const dataForChart = props.showLogarithmicScale ? filterNumericScatterData(data) : data;
-  const nullBand = props.showLogarithmicScale
-    ? null
-    : computeScatterNullBand(dataForChart.datasets);
-  const chartData = applyScatterNullBandToData(dataForChart, {
-    nullBand,
+  return applyScatterNullBandToData(dataForChart, {
+    nullBand: props.nullBand,
     supportsNullMeasures: !props.showLogarithmicScale,
   });
-  const nullBandPlugin = nullBand ? createScatterNullBandPlugin({ nullBand }) : undefined;
-  return { chartData, nullBand, nullBandPlugin };
+};
+
+export const getScatterChartPlugins = (
+  nullBand: ScatterNullBandResult | null,
+): Plugin<'scatter'>[] | undefined => {
+  const plugin = nullBand ? createScatterNullBandPlugin({ nullBand }) : undefined;
+  return plugin ? [plugin] : undefined;
 };
 
 const valueLabelDisplay = (context: Context, showValueLabels: boolean | undefined): boolean => {
