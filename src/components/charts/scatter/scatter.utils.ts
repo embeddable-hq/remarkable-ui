@@ -209,11 +209,11 @@ export const applyScatterNullBandToData = (
 };
 
 export const getScatterNullBand = (
-  data: ChartData<'scatter', ScatterChartInputPoint[]>,
-  { showLogarithmicScale }: Pick<ScatterChartConfigurationProps, 'showLogarithmicScale'>,
+  datasets: { data: ScatterChartInputPoint[] }[],
+  showLogarithmicScale: boolean | undefined,
 ): ScatterNullBandResult | null => {
   if (showLogarithmicScale) return null;
-  return computeScatterNullBand(data.datasets);
+  return computeScatterNullBand(datasets);
 };
 
 export const getScatterChartData = (
