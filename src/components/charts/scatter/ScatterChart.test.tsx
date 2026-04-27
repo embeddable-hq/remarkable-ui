@@ -9,10 +9,6 @@ vi.mock('react-chartjs-2', () => ({
   )),
 }));
 
-vi.mock('../chartjs.cartesian.utils', () => ({
-  getChartPointClicked: vi.fn(() => ({ datasetIndex: 0, index: 1 })),
-}));
-
 const MOCK_DATA = {
   datasets: [
     {
@@ -34,19 +30,21 @@ describe('ScatterChart', () => {
     });
   });
 
-  describe('onPointClick', () => {
-    it('calls onPointClick with the clicked point hit', async () => {
+  describe('onClick', () => {
+    it('calls onClick with the event and chartRef', async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
 
-      render(<ScatterChart data={MOCK_DATA} onPointClick={handleClick} />);
+      render(<ScatterChart data={MOCK_DATA} onClick={handleClick} />);
 
       await user.click(screen.getByTestId('scatter-chart'));
 
-      expect(handleClick).toHaveBeenCalledWith({ datasetIndex: 0, index: 1 });
+      expect(handleClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }), {
+        current: null,
+      });
     });
 
-    it('does not throw when onPointClick is not provided', async () => {
+    it('does not throw when onClick is not provided', async () => {
       const user = userEvent.setup();
 
       render(<ScatterChart data={MOCK_DATA} />);

@@ -9,10 +9,6 @@ vi.mock('react-chartjs-2', () => ({
   )),
 }));
 
-vi.mock('../chartjs.utils', () => ({
-  getSegmentIndexClicked: vi.fn(() => 0),
-}));
-
 const MOCK_DATA = {
   labels: ['Jan', 'Feb', 'Mar'],
   datasets: [{ data: [5, 15, 10], label: 'Sales' }],
@@ -27,19 +23,21 @@ describe('LineChart', () => {
     });
   });
 
-  describe('onSegmentClick', () => {
-    it('calls onSegmentClick with the clicked segment index', async () => {
+  describe('onClick', () => {
+    it('calls onClick with the event and chartRef', async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
 
-      render(<LineChart data={MOCK_DATA} onSegmentClick={handleClick} />);
+      render(<LineChart data={MOCK_DATA} onClick={handleClick} />);
 
       await user.click(screen.getByTestId('line-chart'));
 
-      expect(handleClick).toHaveBeenCalledWith(0);
+      expect(handleClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }), {
+        current: null,
+      });
     });
 
-    it('does not throw when onSegmentClick is not provided', async () => {
+    it('does not throw when onClick is not provided', async () => {
       const user = userEvent.setup();
 
       render(<LineChart data={MOCK_DATA} />);

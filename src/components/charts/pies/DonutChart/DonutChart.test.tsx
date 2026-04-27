@@ -9,10 +9,6 @@ vi.mock('react-chartjs-2', () => ({
   )),
 }));
 
-vi.mock('../../chartjs.utils', () => ({
-  getSegmentIndexClicked: vi.fn(() => 0),
-}));
-
 vi.mock('../../../../hooks/useResizeObserver.hook', () => ({
   useResizeObserver: vi.fn(() => ({ width: 400, height: 300 })),
 }));
@@ -40,16 +36,26 @@ describe('DonutChart', () => {
     });
   });
 
-  describe('onSegmentClick', () => {
-    it('calls onSegmentClick with the clicked segment index', async () => {
+  describe('onClick', () => {
+    it('calls onClick with the event and chartRef', async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
 
-      render(<DonutChart data={MOCK_DATA} onSegmentClick={handleClick} />);
+      render(<DonutChart data={MOCK_DATA} onClick={handleClick} />);
 
       await user.click(screen.getByTestId('donut-chart'));
 
-      expect(handleClick).toHaveBeenCalledWith(0);
+      expect(handleClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }), {
+        current: null,
+      });
+    });
+
+    it('does not throw when onClick is not provided', async () => {
+      const user = userEvent.setup();
+
+      render(<DonutChart data={MOCK_DATA} />);
+
+      await expect(user.click(screen.getByTestId('donut-chart'))).resolves.not.toThrow();
     });
   });
 });
