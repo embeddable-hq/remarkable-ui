@@ -11,7 +11,6 @@ import {
   LogarithmicScale,
 } from 'chart.js';
 import { BaseBarChartProps } from './bars.types';
-import { getSegmentIndexClicked } from '../chartjs.utils';
 import { getBarChartData, getBarChartOptions } from './bars.utils';
 import styles from '../charts.module.css';
 import { mergician } from 'mergician';
@@ -30,15 +29,9 @@ ChartJS.register(
 
 export type BarChartProps = BaseBarChartProps;
 
-export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, options = {}, ...props }) => {
+export const BarChart: FC<BarChartProps> = ({ data, onClick, options = {}, ...props }) => {
   const chartRef = useRef(null);
-
   const barChartOptions = mergician(getBarChartOptions(props), options);
-
-  const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const indexClicked = getSegmentIndexClicked(event, chartRef);
-    onSegmentClick?.(indexClicked);
-  };
 
   return (
     <div className={styles.chartContainer}>
@@ -46,7 +39,7 @@ export const BarChart: FC<BarChartProps> = ({ data, onSegmentClick, options = {}
         ref={chartRef}
         data={getBarChartData(data)}
         options={barChartOptions}
-        onClick={handleSegmentClick}
+        onClick={(event) => onClick?.(event, chartRef)}
       />
     </div>
   );

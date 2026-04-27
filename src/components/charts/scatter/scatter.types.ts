@@ -1,5 +1,4 @@
 import { ChartData, ChartOptions } from 'chart.js';
-import { ChartPointClicked } from '../chartjs.cartesian.utils';
 
 export type ScatterChartInputPoint = {
   x: number | null;
@@ -28,5 +27,5 @@ export type ScatterChartConfigurationProps = {
 export type BaseScatterChartProps = {
   data: ChartData<'scatter', ScatterChartInputPoint[]>;
   options?: Partial<ChartOptions<'scatter'>>;
-  onPointClick?: (hit: ChartPointClicked | undefined) => void;
+  onClick?: (event: React.MouseEvent<HTMLCanvasElement>, ref?: React.RefObject<null>) => void;
 } & ScatterChartConfigurationProps;

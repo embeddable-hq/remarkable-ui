@@ -15,5 +15,5 @@ export type LineChartConfigurationProps = {
 export type BaseLineChartProps = {
   data: ChartData<'line'>;
   options?: Partial<ChartOptions<'line'>>;
-  onSegmentClick?: (index: number | undefined) => void;
+  onClick?: (event: React.MouseEvent<HTMLCanvasElement>, ref?: React.RefObject<null>) => void;
 } & LineChartConfigurationProps;

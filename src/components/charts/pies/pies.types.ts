@@ -11,5 +11,5 @@ export type PieChartConfigurationProps = {
 export type BasePieChartProps = {
   data: ChartData<'pie'>;
   options?: Partial<ChartOptions<'pie'>>;
-  onSegmentClick?: (index: number | undefined) => void;
+  onClick?: (event: React.MouseEvent<HTMLCanvasElement>, ref?: React.RefObject<null>) => void;
 } & PieChartConfigurationProps;
