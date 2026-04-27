@@ -49,6 +49,7 @@ export * from './hooks/useDebounce.hook';
 export * from './hooks/useResizeObserver.hook';
 
 // Shared
+export * from './components/shared/KpiTrend/KpiTrend';
 export * from './components/shared/ActionIcon/ActionIcon';
 export * from './components/shared/Button/Button';
 export * from './components/shared/ButtonIcon/ButtonIcon';
