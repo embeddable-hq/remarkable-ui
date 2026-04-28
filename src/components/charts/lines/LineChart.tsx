@@ -11,13 +11,13 @@ import {
   Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../chartjs.utils';
 import styles from '../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
 import { BaseLineChartProps } from './lines.types';
 import { getLineChartData, getLineChartOptions } from './lines.utils';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { getSegmentIndexClicked } from '../chartjs.utils';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 
 ChartJS.register(
@@ -36,23 +36,18 @@ ChartJS.register(
 
 export type LineChartProps = BaseLineChartProps;
 
-export const LineChart: FC<LineChartProps> = ({ options = {}, data, onSegmentClick, ...props }) => {
+export const LineChart: FC<LineChartProps> = ({ options = {}, data, onClick, ...props }) => {
   const chartRef = useRef(null);
 
-  const pieOptions = mergician(getLineChartOptions(props), options);
-
-  const handleSegmentClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const indexClicked = getSegmentIndexClicked(event, chartRef);
-    onSegmentClick?.(indexClicked);
-  };
+  const lineOptions = mergician(getLineChartOptions(props), options);
 
   return (
     <div className={styles.chartContainer}>
       <Line
         ref={chartRef}
         data={getLineChartData(data)}
-        options={pieOptions}
-        onClick={handleSegmentClick}
+        options={lineOptions}
+        onClick={buildChartjsOnClick(chartRef, onClick)}
       />
     </div>
   );

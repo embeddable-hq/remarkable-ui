@@ -1,4 +1,5 @@
 import { ChartData, ChartOptions } from 'chart.js';
+import { ChartClickArgs } from '../charts.types';
 
 export type LineChartConfigurationProps = {
   showLegend?: boolean;
@@ -15,5 +16,5 @@ export type LineChartConfigurationProps = {
 export type BaseLineChartProps = {
   data: ChartData<'line'>;
   options?: Partial<ChartOptions<'line'>>;
-  onSegmentClick?: (index: number | undefined) => void;
+  onClick?: (args: ChartClickArgs) => void;
 } & LineChartConfigurationProps;

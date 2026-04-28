@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../chartjs.utils';
 import styles from '../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
@@ -22,7 +23,6 @@ import {
   getScatterChartOptions,
   getScatterChartPlugins,
 } from './scatter.utils';
-import { getChartPointClicked } from '../chartjs.cartesian.utils';
 
 ChartJS.register(
   ScatterController,
@@ -42,24 +42,19 @@ export type ScatterChartProps = BaseScatterChartProps;
 export const ScatterChart: FC<ScatterChartProps> = ({
   options = {},
   data,
-  onPointClick,
+  onClick,
   nullBandLabel = 'No value',
   ...props
 }) => {
   const chartRef = useRef(null);
-  const propsWithNullBandLabel = { ...props, nullBandLabel };
 
+  const propsWithNullBandLabel = { ...props, nullBandLabel };
   const nullBand = getScatterNullBand(data.datasets, props.showLogarithmicScale);
   const chartData = getScatterChartData(data, { ...propsWithNullBandLabel, nullBand });
   const scatterOptions = mergician(
     getScatterChartOptions({ ...propsWithNullBandLabel, nullBand }),
     options,
   );
-
-  const handlePointClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const point = getChartPointClicked(event, chartRef);
-    onPointClick?.(point);
-  };
 
   return (
     <div className={styles.chartContainer}>
@@ -68,7 +63,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
         data={chartData}
         options={scatterOptions}
         plugins={getScatterChartPlugins(nullBand)}
-        onClick={handlePointClick}
+        onClick={buildChartjsOnClick(chartRef, onClick)}
       />
     </div>
   );

@@ -23,6 +23,7 @@ export * from './components/charts/tables/Table/components/TableBody/TableBody';
 export * from './components/charts/tables/Table/components/TableHeader/TableHeader';
 export * from './components/charts/tables/Table/components/TablePagination/TablePagination';
 export * from './components/charts/tables/Table/table.types';
+export * from './components/charts/charts.types';
 export * from './components/charts/charts.constants';
 export * from './components/charts/chartjs.cartesian.constants';
 export * from './components/charts/shared/ChartTabs/ChartTabs';
