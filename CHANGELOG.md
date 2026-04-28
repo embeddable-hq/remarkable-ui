@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.10
+
+### Patch Changes
+
+- ea0880e: Add missing export for KpiTrend
+
 ## 3.0.9
 
 ### Patch Changes
