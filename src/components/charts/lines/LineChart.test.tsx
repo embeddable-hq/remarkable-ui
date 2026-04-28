@@ -3,11 +3,20 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { LineChart } from './LineChart';
 
-vi.mock('react-chartjs-2', () => ({
-  Line: vi.fn(({ onClick }: { onClick?: React.MouseEventHandler<HTMLCanvasElement> }) => (
-    <canvas data-testid="line-chart" onClick={onClick} />
-  )),
-}));
+vi.mock('react-chartjs-2', async () => {
+  const { forwardRef } = await import('react');
+  return {
+    Line: forwardRef(
+      (
+        { onClick }: { onClick?: React.MouseEventHandler<HTMLCanvasElement> },
+        ref: React.Ref<HTMLCanvasElement>,
+      ) => <canvas data-testid="line-chart" onClick={onClick} ref={ref} />,
+    ),
+    getElementAtEvent: vi.fn(() => []),
+    getElementsAtEvent: vi.fn(() => []),
+    getDatasetAtEvent: vi.fn(() => []),
+  };
+});
 
 const MOCK_DATA = {
   labels: ['Jan', 'Feb', 'Mar'],
@@ -32,8 +41,11 @@ describe('LineChart', () => {
 
       await user.click(screen.getByTestId('line-chart'));
 
-      expect(handleClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }), {
-        current: null,
+      expect(handleClick).toHaveBeenCalledWith({
+        event: expect.objectContaining({ type: 'click' }),
+        elementAtEvent: [],
+        elementsAtEvent: [],
+        datasetAtEvent: [],
       });
     });
 

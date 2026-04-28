@@ -3,11 +3,20 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { PieChart } from './PieChart';
 
-vi.mock('react-chartjs-2', () => ({
-  Pie: vi.fn(({ onClick }: { onClick?: React.MouseEventHandler<HTMLCanvasElement> }) => (
-    <canvas data-testid="pie-chart" onClick={onClick} />
-  )),
-}));
+vi.mock('react-chartjs-2', async () => {
+  const { forwardRef } = await import('react');
+  return {
+    Pie: forwardRef(
+      (
+        { onClick }: { onClick?: React.MouseEventHandler<HTMLCanvasElement> },
+        ref: React.Ref<HTMLCanvasElement>,
+      ) => <canvas data-testid="pie-chart" onClick={onClick} ref={ref} />,
+    ),
+    getElementAtEvent: vi.fn(() => []),
+    getElementsAtEvent: vi.fn(() => []),
+    getDatasetAtEvent: vi.fn(() => []),
+  };
+});
 
 const MOCK_DATA = {
   labels: ['X', 'Y', 'Z'],
@@ -32,8 +41,11 @@ describe('PieChart', () => {
 
       await user.click(screen.getByTestId('pie-chart'));
 
-      expect(handleClick).toHaveBeenCalledWith(expect.objectContaining({ type: 'click' }), {
-        current: null,
+      expect(handleClick).toHaveBeenCalledWith({
+        event: expect.objectContaining({ type: 'click' }),
+        elementAtEvent: [],
+        elementsAtEvent: [],
+        datasetAtEvent: [],
       });
     });
 
