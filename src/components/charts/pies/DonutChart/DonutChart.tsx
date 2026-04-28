@@ -1,5 +1,6 @@
 import { FC, useRef } from 'react';
-import { Pie, getElementAtEvent, getElementsAtEvent, getDatasetAtEvent } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../../chartjs.utils';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
@@ -45,15 +46,7 @@ export const DonutChart: FC<DonutLabelChartProps> = ({
           ref={chartRef}
           data={getPieChartData(data)}
           options={donutLabelOptions}
-          onClick={(event) => {
-            if (!chartRef.current) return;
-            onClick?.({
-              event,
-              elementAtEvent: getElementAtEvent(chartRef.current, event),
-              elementsAtEvent: getElementsAtEvent(chartRef.current, event),
-              datasetAtEvent: getDatasetAtEvent(chartRef.current, event),
-            });
-          }}
+          onClick={buildChartjsOnClick(chartRef, onClick)}
         />
       )}
     </div>

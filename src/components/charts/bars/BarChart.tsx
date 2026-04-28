@@ -1,5 +1,6 @@
 import { FC, useRef } from 'react';
-import { Bar, getElementAtEvent, getElementsAtEvent, getDatasetAtEvent } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../chartjs.utils';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -39,15 +40,7 @@ export const BarChart: FC<BarChartProps> = ({ data, onClick, options = {}, ...pr
         ref={chartRef}
         data={getBarChartData(data)}
         options={barChartOptions}
-        onClick={(event) => {
-          if (!chartRef.current) return;
-          onClick?.({
-            event,
-            elementAtEvent: getElementAtEvent(chartRef.current, event),
-            elementsAtEvent: getElementsAtEvent(chartRef.current, event),
-            datasetAtEvent: getDatasetAtEvent(chartRef.current, event),
-          });
-        }}
+        onClick={buildChartjsOnClick(chartRef, onClick)}
       />
     </div>
   );

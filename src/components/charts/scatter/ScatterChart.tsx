@@ -9,7 +9,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Scatter, getElementAtEvent, getElementsAtEvent, getDatasetAtEvent } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../chartjs.utils';
 import styles from '../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
@@ -62,15 +63,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
         data={chartData}
         options={scatterOptions}
         plugins={getScatterChartPlugins(nullBand)}
-        onClick={(event) => {
-          if (!chartRef.current) return;
-          onClick?.({
-            event,
-            elementAtEvent: getElementAtEvent(chartRef.current, event),
-            elementsAtEvent: getElementsAtEvent(chartRef.current, event),
-            datasetAtEvent: getDatasetAtEvent(chartRef.current, event),
-          });
-        }}
+        onClick={buildChartjsOnClick(chartRef, onClick)}
       />
     </div>
   );

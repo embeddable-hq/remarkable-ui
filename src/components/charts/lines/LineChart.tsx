@@ -10,7 +10,8 @@ import {
   LogarithmicScale,
   Filler,
 } from 'chart.js';
-import { Line, getElementAtEvent, getElementsAtEvent, getDatasetAtEvent } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../chartjs.utils';
 import styles from '../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
@@ -46,15 +47,7 @@ export const LineChart: FC<LineChartProps> = ({ options = {}, data, onClick, ...
         ref={chartRef}
         data={getLineChartData(data)}
         options={lineOptions}
-        onClick={(event) => {
-          if (!chartRef.current) return;
-          onClick?.({
-            event,
-            elementAtEvent: getElementAtEvent(chartRef.current, event),
-            elementsAtEvent: getElementsAtEvent(chartRef.current, event),
-            datasetAtEvent: getDatasetAtEvent(chartRef.current, event),
-          });
-        }}
+        onClick={buildChartjsOnClick(chartRef, onClick)}
       />
     </div>
   );
