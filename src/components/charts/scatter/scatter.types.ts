@@ -1,4 +1,5 @@
 import { ChartData, ChartOptions } from 'chart.js';
+import { ChartClickArgs } from '../charts.types';
 
 export type ScatterChartInputPoint = {
   x: number | null;
@@ -27,5 +28,5 @@ export type ScatterChartConfigurationProps = {
 export type BaseScatterChartProps = {
   data: ChartData<'scatter', ScatterChartInputPoint[]>;
   options?: Partial<ChartOptions<'scatter'>>;
-  onClick?: (event: React.MouseEvent<HTMLCanvasElement>, ref?: React.RefObject<null>) => void;
+  onClick?: (args: ChartClickArgs) => void;
 } & ScatterChartConfigurationProps;

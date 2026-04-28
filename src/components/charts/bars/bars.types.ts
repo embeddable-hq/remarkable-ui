@@ -1,4 +1,5 @@
 import { ChartData, ChartOptions } from 'chart.js';
+import { ChartClickArgs } from '../charts.types';
 
 export type BarChartDefaultConfigurationProps = {
   horizontal?: boolean;
@@ -27,5 +28,5 @@ export type BarChartHorizontalConfigurationProps = BarChartDefaultConfigurationP
 export type BaseBarChartProps = {
   data: ChartData<'bar'>;
   options?: Partial<ChartOptions<'bar'>>;
-  onClick?: (event: React.MouseEvent<HTMLCanvasElement>, ref?: React.RefObject<null>) => void;
+  onClick?: (args: ChartClickArgs) => void;
 } & (BarChartConfigurationProps | BarChartHorizontalConfigurationProps);

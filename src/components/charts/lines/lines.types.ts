@@ -1,4 +1,5 @@
 import { ChartData, ChartOptions } from 'chart.js';
+import { ChartClickArgs } from '../charts.types';
 
 export type LineChartConfigurationProps = {
   showLegend?: boolean;
@@ -15,5 +16,5 @@ export type LineChartConfigurationProps = {
 export type BaseLineChartProps = {
   data: ChartData<'line'>;
   options?: Partial<ChartOptions<'line'>>;
-  onClick?: (event: React.MouseEvent<HTMLCanvasElement>, ref?: React.RefObject<null>) => void;
+  onClick?: (args: ChartClickArgs) => void;
 } & LineChartConfigurationProps;
