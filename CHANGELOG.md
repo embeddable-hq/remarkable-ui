@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.11
+
+### Patch Changes
+
+- 12e0534: Improve interactivity
+
 ## 3.0.10
 
 ### Patch Changes
