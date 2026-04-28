@@ -67,7 +67,7 @@ describe('DonutChart', () => {
 
       render(<DonutChart data={MOCK_DATA} />);
 
-      await expect(user.click(screen.getByTestId('donut-chart'))).resolves.not.toThrow();
+      await user.click(screen.getByTestId('donut-chart'));
     });
   });
 });
