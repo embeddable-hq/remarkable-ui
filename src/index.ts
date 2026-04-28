@@ -4,6 +4,7 @@ export * from './components/charts/bars/bars.utils';
 export * from './components/charts/lines/LineChart';
 export * from './components/charts/lines/lines.utils';
 export * from './components/charts/scatter/ScatterChart';
+export * from './components/charts/scatter/BubbleChart/BubbleChart';
 export * from './components/charts/scatter/scatter.utils';
 export * from './components/charts/scatter/scatter.nullBand.utils';
 export * from './components/charts/scatter/scatter.types';
