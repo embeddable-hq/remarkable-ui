@@ -554,7 +554,7 @@ export const getBubbleChartData = (
   });
 
   const maxBubbleSize = computeMaxBubbleSize(
-    (data as unknown as ChartData<'scatter', BubbleChartInputPoint[]>).datasets,
+    (bubbleDataAsScatter as unknown as ChartData<'bubble', BubbleChartInputPoint[]>).datasets,
   );
 
   return {
@@ -562,13 +562,8 @@ export const getBubbleChartData = (
     datasets: scatterDataWithNullBand.datasets.map((dataset) => {
       const originalBubbleData = (dataset as ScatterDatasetWithOriginal)
         .originalData as unknown as BubbleChartInputPoint[];
-      const computedRadii = (originalBubbleData ?? []).map((pt) =>
-        computeBubbleRadius(
-          (pt as BubbleChartInputPoint).size,
-          maxBubbleSize,
-          bubbleMinRadiusPx,
-          bubbleMaxRadiusPx,
-        ),
+      const computedRadii = (originalBubbleData ?? []).map((point) =>
+        computeBubbleRadius(point.size, maxBubbleSize, bubbleMinRadiusPx, bubbleMaxRadiusPx),
       );
       return {
         ...dataset,
