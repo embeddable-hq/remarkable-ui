@@ -222,7 +222,7 @@ export const getScatterNullBand = (
 
 export const getScatterChartPlugins = (
   nullBand: ScatterNullBandResult | null,
-): Plugin<'scatter'>[] | undefined => {
+): Plugin[] | undefined => {
   const plugin = nullBand ? createScatterNullBandPlugin(nullBand) : undefined;
   return plugin ? [plugin] : undefined;
 };

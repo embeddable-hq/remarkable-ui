@@ -7,7 +7,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  type Plugin,
 } from 'chart.js';
 import { Bubble } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../../chartjs.utils';
@@ -57,7 +56,7 @@ export const BubbleChart: FC<BubbleChartProps> = ({
         ref={chartRef}
         data={chartData}
         options={bubbleOptions}
-        plugins={getScatterChartPlugins(nullBand) as Plugin<'bubble'>[] | undefined}
+        plugins={getScatterChartPlugins(nullBand)}
         onClick={buildChartjsOnClick(chartRef, onClick)}
       />
     </div>

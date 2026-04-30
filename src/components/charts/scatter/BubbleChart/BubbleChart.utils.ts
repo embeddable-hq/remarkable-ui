@@ -22,7 +22,7 @@ export type BubbleDatasetWithOriginal = ChartDataset<
   { x: number; y: number; r: number }[]
 > & {
   originalData?: BubbleChartInputPoint[];
-  computedRadii?: number[];
+  bubbleSizes?: number[];
 };
 
 const computeMaxBubbleSize = (datasets: { data: BubbleChartInputPoint[] }[]): number => {
@@ -100,16 +100,16 @@ export const getBubbleChartData = (
     datasets: scatterDataWithNullBand.datasets.map((dataset) => {
       const originalBubbleData = (dataset as ScatterDatasetWithOriginal)
         .originalData as unknown as BubbleChartInputPoint[];
-      const computedRadii = (originalBubbleData ?? []).map((point) =>
+      const bubbleSizes = (originalBubbleData ?? []).map((point) =>
         computeBubbleRadius(point.size, maxBubbleSize, bubbleMinRadiusPx, bubbleMaxRadiusPx),
       );
       return {
         ...dataset,
         data: (dataset.data as { x: number; y: number }[]).map((pt, i) => ({
           ...pt,
-          r: computedRadii[i],
+          r: bubbleSizes[i],
         })),
-        computedRadii,
+        bubbleSizes,
       } as unknown as BubbleDatasetWithOriginal;
     }),
   } as unknown as ChartData<'bubble'>;
@@ -133,7 +133,7 @@ export const getBubbleChartOptions = (
       point: {
         borderWidth: bubbleBorderWidth,
         hoverRadius: ((ctx: { dataIndex: number; dataset: BubbleDatasetWithOriginal }) => {
-          const r = ctx.dataset.computedRadii?.[ctx.dataIndex] ?? bubbleMinRadiusPx;
+          const r = ctx.dataset.bubbleSizes?.[ctx.dataIndex] ?? bubbleMinRadiusPx;
           return r * (bubbleHoverScale - 1);
         }) as unknown as number,
       },

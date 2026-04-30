@@ -602,16 +602,16 @@ describe('getBubbleChartData', () => {
     expect((out.datasets[0]!.data[1] as { r: number }).r).toBe(5);
   });
 
-  it('stores computedRadii on dataset for hover scaling', () => {
+  it('stores bubbleSizes on dataset for hover scaling', () => {
     const out = getBubbleChartData(baseData, {
       nullBand: null,
       bubbleRadiusMin: 5,
       bubbleRadiusMax: 40,
     });
     const ds = out.datasets[0] as BubbleDatasetWithOriginal;
-    expect(ds.computedRadii).toHaveLength(2);
-    expect(ds.computedRadii![0]).toBeCloseTo(40);
-    expect(ds.computedRadii![1]).toBeCloseTo(20);
+    expect(ds.bubbleSizes).toHaveLength(2);
+    expect(ds.bubbleSizes![0]).toBeCloseTo(40);
+    expect(ds.bubbleSizes![1]).toBeCloseTo(20);
   });
 
   it('stores originalData with full BubbleChartInputPoint shape', () => {
@@ -703,22 +703,22 @@ describe('getBubbleChartOptions', () => {
     expect(s).toContain('NV');
   });
 
-  it('hoverRadius is a function that scales proportionally to computedRadii', () => {
+  it('hoverRadius is a function that scales proportionally to bubbleSizes', () => {
     const opts = getBubbleChartOptions({});
     const hoverFn = opts.elements?.point?.hoverRadius as unknown as (ctx: {
       dataIndex: number;
-      dataset: { computedRadii?: number[] };
+      dataset: { bubbleSizes?: number[] };
     }) => number;
     expect(typeof hoverFn).toBe('function');
     // hoverScale = 1.2 (from mock), r = 20 → 20 * 0.2 = 4
-    expect(hoverFn({ dataIndex: 0, dataset: { computedRadii: [20] } })).toBeCloseTo(4);
+    expect(hoverFn({ dataIndex: 0, dataset: { bubbleSizes: [20] } })).toBeCloseTo(4);
   });
 
-  it('hoverRadius falls back to bubbleMinRadiusPx when computedRadii is absent', () => {
+  it('hoverRadius falls back to bubbleMinRadiusPx when bubbleSizes is absent', () => {
     const opts = getBubbleChartOptions({});
     const hoverFn = opts.elements?.point?.hoverRadius as unknown as (ctx: {
       dataIndex: number;
-      dataset: { computedRadii?: number[] };
+      dataset: { bubbleSizes?: number[] };
     }) => number;
     // minR = 5, hoverScale = 1.2 → 5 * 0.2 = 1
     expect(hoverFn({ dataIndex: 0, dataset: {} })).toBeCloseTo(1);
