@@ -17,12 +17,8 @@ import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseBubbleChartProps } from '../scatter.types';
-import {
-  getScatterNullBand,
-  getScatterChartPlugins,
-  getBubbleChartData,
-  getBubbleChartOptions,
-} from '../scatter.utils';
+import { getScatterNullBand, getScatterChartPlugins } from '../scatter.utils';
+import { getBubbleChartData, getBubbleChartOptions } from './BubbleChart.utils';
 
 ChartJS.register(
   BubbleController,

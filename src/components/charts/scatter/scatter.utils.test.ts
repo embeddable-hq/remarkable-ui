@@ -18,10 +18,13 @@ import {
   getScatterDataWithNullBand as getScatterChartData,
   getScatterChartOptions,
   hasNullMeasure,
+} from './scatter.utils';
+
+import {
   getBubbleChartData,
   getBubbleChartOptions,
   type BubbleDatasetWithOriginal,
-} from './scatter.utils';
+} from './BubbleChart/BubbleChart.utils';
 
 describe('hasNullMeasure', () => {
   it('treats (no value, value) and (value, no value) as null-measure opacity cases', () => {

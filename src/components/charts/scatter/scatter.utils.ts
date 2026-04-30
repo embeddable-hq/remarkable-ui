@@ -2,12 +2,7 @@ import { ChartData, ChartDataset, ChartOptions, Plugin, TooltipItem } from 'char
 import { Context } from 'chartjs-plugin-datalabels';
 import { getChartColors } from '../charts.constants';
 import { mergician } from 'mergician';
-import {
-  BubbleChartConfigurationProps,
-  BubbleChartInputPoint,
-  ScatterChartConfigurationProps,
-  ScatterChartInputPoint,
-} from './scatter.types';
+import { ScatterChartConfigurationProps, ScatterChartInputPoint } from './scatter.types';
 import {
   computeScatterNullBand,
   createScatterNullBandPlugin,
@@ -28,7 +23,7 @@ export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y:
 };
 
 /** True for null/undefined and non-finite numbers (NaN, ±Infinity). */
-const isMeasureMissing = (v: number | null | undefined): boolean =>
+export const isMeasureMissing = (v: number | null | undefined): boolean =>
   v === null || v === undefined || (typeof v === 'number' && !Number.isFinite(v));
 
 export const hasNullMeasure = (pt: ScatterChartInputPoint | undefined): boolean => {
@@ -223,17 +218,6 @@ export const getScatterNullBand = (
 ): ScatterNullBandResult | null => {
   if (showLogarithmicScale) return null;
   return computeScatterNullBand(datasets);
-};
-
-export const getScatterChartData = (
-  data: ChartData<'scatter', ScatterChartInputPoint[]>,
-  props: ScatterChartConfigurationProps & { nullBand: ScatterNullBandResult | null },
-): ChartData<'scatter'> => {
-  const dataForChart = props.showLogarithmicScale ? filterNumericScatterData(data) : data;
-  return getScatterDataWithNullBand(dataForChart, {
-    nullBand: props.nullBand,
-    supportsNullMeasures: !props.showLogarithmicScale,
-  });
 };
 
 export const getScatterChartPlugins = (
@@ -479,133 +463,4 @@ export const getScatterChartOptions = (
   }
 
   return { ...options, scales };
-};
-
-// ─── Bubble Chart ────────────────────────────────────────────────────────────
-
-export type BubbleDatasetWithOriginal = ChartDataset<
-  'bubble',
-  { x: number; y: number; r: number }[]
-> & {
-  originalData?: BubbleChartInputPoint[];
-  computedRadii?: number[];
-};
-
-const computeMaxBubbleSize = (datasets: { data: BubbleChartInputPoint[] }[]): number => {
-  let max = 0;
-  for (const ds of datasets) {
-    for (const pt of ds.data) {
-      if (!isMeasureMissing(pt.size) && (pt.size as number) > 0) {
-        max = Math.max(max, pt.size as number);
-      }
-    }
-  }
-  return max;
-};
-
-const computeBubbleRadius = (
-  size: number | null | undefined,
-  maxBubbleSize: number,
-  bubbleMinRadiusPx: number,
-  bubbleMaxRadiusPx: number,
-): number => {
-  if (isMeasureMissing(size) || (size as number) <= 0 || maxBubbleSize <= 0)
-    return bubbleMinRadiusPx;
-  return Math.max(
-    bubbleMinRadiusPx,
-    Math.sqrt((size as number) / maxBubbleSize) * bubbleMaxRadiusPx,
-  );
-};
-
-const getBubbleTooltipLabel = (
-  ctx: TooltipItem<'bubble'>,
-  nullLabel: string | undefined,
-): string => {
-  const ds = ctx.dataset as BubbleDatasetWithOriginal;
-  const orig = ds.originalData?.[ctx.dataIndex];
-  const prefix = ds.label ? `${ds.label}: ` : '';
-  const x = orig ? formatMeasureValue('x', orig.x, nullLabel) : String(ctx.parsed.x);
-  const y = orig ? formatMeasureValue('y', orig.y, nullLabel) : String(ctx.parsed.y);
-  const size = isMeasureMissing(orig?.size)
-    ? (nullLabel ?? 'No value')
-    : defaultScatterNumberFormat.format(orig!.size as number);
-  return `${prefix}(${x}, ${y}, ${size})`;
-};
-
-export const getBubbleChartData = (
-  data: ChartData<'bubble', BubbleChartInputPoint[]>,
-  props: BubbleChartConfigurationProps & { nullBand: ScatterNullBandResult | null },
-): ChartData<'bubble'> => {
-  const defaultOpacity = getStyleNumber('--em-bubblechart-point-opacity', '0.7');
-  const nullOpacity = getStyleNumber('--em-bubblechart-point-opacity--null', '0.3');
-  const bubbleMinRadiusPx =
-    props.bubbleRadiusMin ?? getStyleNumber('--em-bubblechart-point-radius--min', '5');
-  const bubbleMaxRadiusPx =
-    props.bubbleRadiusMax ?? getStyleNumber('--em-bubblechart-point-radius--max', '40');
-
-  const bubbleDataAsScatter = (props.showLogarithmicScale
-    ? filterNumericScatterData(data as unknown as ChartData<'scatter', ScatterChartInputPoint[]>)
-    : data) as unknown as ChartData<'scatter', ScatterChartInputPoint[]>;
-
-  const scatterDataWithNullBand = getScatterDataWithNullBand(bubbleDataAsScatter, {
-    nullBand: props.nullBand,
-    supportsNullMeasures: !props.showLogarithmicScale,
-    opacityOverride: { defaultOpacity, nullOpacity },
-  });
-
-  const maxBubbleSize = computeMaxBubbleSize(
-    (bubbleDataAsScatter as unknown as ChartData<'bubble', BubbleChartInputPoint[]>).datasets,
-  );
-
-  return {
-    ...scatterDataWithNullBand,
-    datasets: scatterDataWithNullBand.datasets.map((dataset) => {
-      const originalBubbleData = (dataset as ScatterDatasetWithOriginal)
-        .originalData as unknown as BubbleChartInputPoint[];
-      const computedRadii = (originalBubbleData ?? []).map((point) =>
-        computeBubbleRadius(point.size, maxBubbleSize, bubbleMinRadiusPx, bubbleMaxRadiusPx),
-      );
-      return {
-        ...dataset,
-        data: (dataset.data as { x: number; y: number }[]).map((pt, i) => ({
-          ...pt,
-          r: computedRadii[i],
-        })),
-        computedRadii,
-      } as unknown as BubbleDatasetWithOriginal;
-    }),
-  } as unknown as ChartData<'bubble'>;
-};
-
-export const getBubbleChartOptions = (
-  config: BubbleChartConfigurationProps & { nullBand?: ScatterNullBandResult | null },
-): Partial<ChartOptions<'bubble'>> => {
-  const { nullBandLabel } = config;
-  const bubbleMinRadiusPx =
-    config.bubbleRadiusMin ?? getStyleNumber('--em-bubblechart-point-radius--min', '5');
-  const bubbleHoverScale = getStyleNumber('--em-bubblechart-point-radius--hover--scale', '1.2');
-  const bubbleBorderWidth = getStyleNumber('--em-bubblechart-point-border-width', '1');
-
-  const scatterBaseOptions = getScatterChartOptions(config) as unknown as Partial<
-    ChartOptions<'bubble'>
-  >;
-
-  return mergician(scatterBaseOptions, {
-    elements: {
-      point: {
-        borderWidth: bubbleBorderWidth,
-        hoverRadius: ((ctx: { dataIndex: number; dataset: BubbleDatasetWithOriginal }) => {
-          const r = ctx.dataset.computedRadii?.[ctx.dataIndex] ?? bubbleMinRadiusPx;
-          return r * (bubbleHoverScale - 1);
-        }) as unknown as number,
-      },
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (ctx: TooltipItem<'bubble'>) => getBubbleTooltipLabel(ctx, nullBandLabel),
-        },
-      },
-    },
-  }) as Partial<ChartOptions<'bubble'>>;
 };

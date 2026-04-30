@@ -19,10 +19,10 @@ import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { BaseScatterChartProps } from './scatter.types';
 import {
   getScatterNullBand,
-  getScatterChartData,
   getScatterChartOptions,
   getScatterChartPlugins,
 } from './scatter.utils';
+import { getScatterChartData } from './ScatterChart.utils';
 
 ChartJS.register(
   ScatterController,

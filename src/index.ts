@@ -6,6 +6,8 @@ export * from './components/charts/lines/lines.utils';
 export * from './components/charts/scatter/ScatterChart';
 export * from './components/charts/scatter/BubbleChart/BubbleChart';
 export * from './components/charts/scatter/scatter.utils';
+export * from './components/charts/scatter/BubbleChart/BubbleChart.utils';
+export * from './components/charts/scatter/ScatterChart.utils';
 export * from './components/charts/scatter/scatter.nullBand.utils';
 export * from './components/charts/scatter/scatter.types';
 export * from './components/charts/chartjs.cartesian.utils';
