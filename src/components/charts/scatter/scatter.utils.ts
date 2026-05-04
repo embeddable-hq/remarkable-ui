@@ -23,7 +23,7 @@ export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y:
 };
 
 /** True for null/undefined and non-finite numbers (NaN, ±Infinity). */
-const isMeasureMissing = (v: number | null | undefined): boolean =>
+export const isMeasureMissing = (v: number | null | undefined): boolean =>
   v === null || v === undefined || (typeof v === 'number' && !Number.isFinite(v));
 
 export const hasNullMeasure = (pt: ScatterChartInputPoint | undefined): boolean => {
@@ -55,6 +55,7 @@ export const filterNumericScatterData = (
 export type ScatterChartDataContext = {
   nullBand: ScatterNullBandResult | null;
   supportsNullMeasures: boolean;
+  opacityOverride?: { defaultOpacity: number; nullOpacity: number };
 };
 
 const getPointCaption = (raw: ScatterChartInputPoint | undefined): string | undefined => {
@@ -148,8 +149,11 @@ export const getScatterDataWithNullBand = (
   ctx: ScatterChartDataContext,
 ): ChartData<'scatter'> => {
   const chartColors = getChartColors();
-  const defaultOpacity = getStyleNumber('--em-scatterchart-point-opacity', '0.8');
-  const nullOpacity = getStyleNumber('--em-scatterchart-point-opacity--null', '0.3');
+  const defaultOpacity =
+    ctx.opacityOverride?.defaultOpacity ?? getStyleNumber('--em-scatterchart-point-opacity', '0.8');
+  const nullOpacity =
+    ctx.opacityOverride?.nullOpacity ??
+    getStyleNumber('--em-scatterchart-point-opacity--null', '0.3');
   const pointRadiusPx = getStyleNumber('--em-scatterchart-point-radius', '0.375rem');
   const pointHoverRadiusPx = getStyleNumber('--em-scatterchart-point-radius--hover', '0.5rem');
 
@@ -216,20 +220,9 @@ export const getScatterNullBand = (
   return computeScatterNullBand(datasets);
 };
 
-export const getScatterChartData = (
-  data: ChartData<'scatter', ScatterChartInputPoint[]>,
-  props: ScatterChartConfigurationProps & { nullBand: ScatterNullBandResult | null },
-): ChartData<'scatter'> => {
-  const dataForChart = props.showLogarithmicScale ? filterNumericScatterData(data) : data;
-  return getScatterDataWithNullBand(dataForChart, {
-    nullBand: props.nullBand,
-    supportsNullMeasures: !props.showLogarithmicScale,
-  });
-};
-
 export const getScatterChartPlugins = (
   nullBand: ScatterNullBandResult | null,
-): Plugin<'scatter'>[] | undefined => {
+): Plugin[] | undefined => {
   const plugin = nullBand ? createScatterNullBandPlugin(nullBand) : undefined;
   return plugin ? [plugin] : undefined;
 };

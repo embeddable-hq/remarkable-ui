@@ -3,30 +3,24 @@ import {
   LinearScale,
   LogarithmicScale,
   PointElement,
-  LineElement,
-  ScatterController,
+  BubbleController,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Scatter } from 'react-chartjs-2';
-import { buildChartjsOnClick } from '../chartjs.utils';
-import styles from '../charts.module.css';
+import { Bubble } from 'react-chartjs-2';
+import { buildChartjsOnClick } from '../../chartjs.utils';
+import styles from '../../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
-import { BaseScatterChartProps } from './scatter.types';
-import {
-  getScatterNullBand,
-  getScatterChartOptions,
-  getScatterChartPlugins,
-} from './scatter.utils';
-import { getScatterChartData } from './ScatterChart.utils';
+import { BaseBubbleChartProps } from '../scatter.types';
+import { getScatterNullBand, getScatterChartPlugins } from '../scatter.utils';
+import { getBubbleChartData, getBubbleChartOptions } from './BubbleChart.utils';
 
 ChartJS.register(
-  ScatterController,
-  LineElement,
+  BubbleController,
   PointElement,
   LinearScale,
   LogarithmicScale,
@@ -37,9 +31,9 @@ ChartJS.register(
   AnnotationPlugin,
 );
 
-export type ScatterChartProps = BaseScatterChartProps;
+export type BubbleChartProps = BaseBubbleChartProps;
 
-export const ScatterChart: FC<ScatterChartProps> = ({
+export const BubbleChart: FC<BubbleChartProps> = ({
   options = {},
   data,
   onClick,
@@ -50,18 +44,18 @@ export const ScatterChart: FC<ScatterChartProps> = ({
 
   const propsWithNullBandLabel = { ...props, nullBandLabel };
   const nullBand = getScatterNullBand(data.datasets, props.showLogarithmicScale);
-  const chartData = getScatterChartData(data, { ...propsWithNullBandLabel, nullBand });
-  const scatterOptions = mergician(
-    getScatterChartOptions({ ...propsWithNullBandLabel, nullBand }),
+  const chartData = getBubbleChartData(data, { ...propsWithNullBandLabel, nullBand });
+  const bubbleOptions = mergician(
+    getBubbleChartOptions({ ...propsWithNullBandLabel, nullBand }),
     options,
   );
 
   return (
     <div className={styles.chartContainer}>
-      <Scatter
+      <Bubble
         ref={chartRef}
         data={chartData}
-        options={scatterOptions}
+        options={bubbleOptions}
         plugins={getScatterChartPlugins(nullBand)}
         onClick={buildChartjsOnClick(chartRef, onClick)}
       />

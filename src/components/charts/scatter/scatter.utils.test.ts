@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { ChartData, ChartOptions } from 'chart.js';
-import type { ScatterChartInputPoint } from './scatter.types';
+import type { BubbleChartInputPoint, ScatterChartInputPoint } from './scatter.types';
 import { computeScatterNullBand } from './scatter.nullBand.utils';
 
 vi.mock('../charts.constants', () => ({
@@ -19,6 +19,12 @@ import {
   getScatterChartOptions,
   hasNullMeasure,
 } from './scatter.utils';
+
+import {
+  getBubbleChartData,
+  getBubbleChartOptions,
+  type BubbleDatasetWithOriginal,
+} from './BubbleChart/BubbleChart.utils';
 
 describe('hasNullMeasure', () => {
   it('treats (no value, value) and (value, no value) as null-measure opacity cases', () => {
@@ -525,3 +531,225 @@ type MockLabelCtx = {
   dataset: { data: { x: number; y: number }[]; originalData?: ScatterChartInputPoint[] };
   dataIndex: number;
 };
+
+// ─── getBubbleChartData ───────────────────────────────────────────────────────
+
+describe('getBubbleChartData', () => {
+  const baseData: ChartData<'bubble', BubbleChartInputPoint[]> = {
+    datasets: [
+      {
+        label: 'S',
+        data: [
+          { x: 1, y: 2, size: 100 },
+          { x: 3, y: 4, size: 25 },
+        ],
+      },
+    ],
+  };
+
+  it('scales r proportionally to size by area (largest maps to bubbleRadiusMax)', () => {
+    const out = getBubbleChartData(baseData, {
+      nullBand: null,
+      bubbleRadiusMin: 5,
+      bubbleRadiusMax: 40,
+    });
+    const d0 = out.datasets[0]!.data[0] as { r: number };
+    const d1 = out.datasets[0]!.data[1] as { r: number };
+    expect(d0.r).toBeCloseTo(40); // sqrt(100/100) * 40
+    expect(d1.r).toBeCloseTo(20); // sqrt(25/100) * 40
+  });
+
+  it('enforces minimum radius for very small size values', () => {
+    const data: ChartData<'bubble', BubbleChartInputPoint[]> = {
+      datasets: [
+        {
+          label: 'S',
+          data: [
+            { x: 1, y: 2, size: 0.001 },
+            { x: 3, y: 4, size: 1000 },
+          ],
+        },
+      ],
+    };
+    const out = getBubbleChartData(data, {
+      nullBand: null,
+      bubbleRadiusMin: 5,
+      bubbleRadiusMax: 40,
+    });
+    const d0 = out.datasets[0]!.data[0] as { r: number };
+    expect(d0.r).toBe(5);
+  });
+
+  it('maps null and undefined size to minimum radius', () => {
+    const data: ChartData<'bubble', BubbleChartInputPoint[]> = {
+      datasets: [
+        {
+          label: 'S',
+          data: [
+            { x: 1, y: 2, size: null },
+            { x: 3, y: 4, size: undefined },
+            { x: 5, y: 6, size: 100 },
+          ],
+        },
+      ],
+    };
+    const out = getBubbleChartData(data, {
+      nullBand: null,
+      bubbleRadiusMin: 5,
+      bubbleRadiusMax: 40,
+    });
+    expect((out.datasets[0]!.data[0] as { r: number }).r).toBe(5);
+    expect((out.datasets[0]!.data[1] as { r: number }).r).toBe(5);
+  });
+
+  it('stores bubbleSizes on dataset for hover scaling', () => {
+    const out = getBubbleChartData(baseData, {
+      nullBand: null,
+      bubbleRadiusMin: 5,
+      bubbleRadiusMax: 40,
+    });
+    const ds = out.datasets[0] as BubbleDatasetWithOriginal;
+    expect(ds.bubbleSizes).toHaveLength(2);
+    expect(ds.bubbleSizes![0]).toBeCloseTo(40);
+    expect(ds.bubbleSizes![1]).toBeCloseTo(20);
+  });
+
+  it('stores originalData with full BubbleChartInputPoint shape', () => {
+    const out = getBubbleChartData(baseData, { nullBand: null });
+    const ds = out.datasets[0] as BubbleDatasetWithOriginal;
+    expect(ds.originalData?.[0]).toMatchObject({ x: 1, y: 2, size: 100 });
+  });
+
+  it('maps null x to null band position', () => {
+    const raw: ChartData<'bubble', BubbleChartInputPoint[]> = {
+      datasets: [
+        {
+          label: 'S',
+          data: [
+            { x: null, y: 10, size: 50 },
+            { x: 10, y: 20, size: 100 },
+          ],
+        },
+      ],
+    };
+    const nullBand = computeScatterNullBand(raw.datasets);
+    const out = getBubbleChartData(raw, { nullBand });
+    const p0 = out.datasets[0]!.data[0] as { x: number; y: number };
+    expect(p0.x).toBe(nullBand!.xNullPos);
+    expect(p0.y).toBe(10);
+  });
+
+  it('uses bubbleRadiusMin and bubbleRadiusMax props over CSS vars', () => {
+    const out = getBubbleChartData(baseData, {
+      nullBand: null,
+      bubbleRadiusMin: 10,
+      bubbleRadiusMax: 50,
+    });
+    const d0 = out.datasets[0]!.data[0] as { r: number };
+    const d1 = out.datasets[0]!.data[1] as { r: number };
+    expect(d0.r).toBeCloseTo(50); // sqrt(100/100) * 50
+    expect(d1.r).toBeCloseTo(25); // max(10, sqrt(25/100) * 50)
+  });
+});
+
+// ─── getBubbleChartOptions ────────────────────────────────────────────────────
+
+describe('getBubbleChartOptions', () => {
+  type BubbleTooltipCtx = {
+    dataset: { label?: string; originalData?: BubbleChartInputPoint[] };
+    dataIndex: number;
+    parsed: { x: number; y: number; r: number };
+  };
+
+  it('tooltip label shows (x, y, size) triplet with series name', () => {
+    const opts = getBubbleChartOptions({ nullBandLabel: 'NV' });
+    const labelFn = opts.plugins?.tooltip?.callbacks?.label as unknown as (
+      ctx: BubbleTooltipCtx,
+    ) => string;
+    const s = labelFn({
+      dataset: { label: 'S', originalData: [{ x: 1, y: 2, size: 300 }] },
+      dataIndex: 0,
+      parsed: { x: 1, y: 2, r: 15 },
+    });
+    expect(s).toContain('S');
+    expect(s).toContain('1');
+    expect(s).toContain('2');
+    expect(s).toContain('300');
+  });
+
+  it('tooltip label shows nullBandLabel for null size', () => {
+    const opts = getBubbleChartOptions({ nullBandLabel: 'NV' });
+    const labelFn = opts.plugins?.tooltip?.callbacks?.label as unknown as (
+      ctx: BubbleTooltipCtx,
+    ) => string;
+    const s = labelFn({
+      dataset: { label: 'S', originalData: [{ x: 1, y: 2, size: null }] },
+      dataIndex: 0,
+      parsed: { x: 1, y: 2, r: 5 },
+    });
+    expect(s).toContain('NV');
+  });
+
+  it('tooltip label shows nullBandLabel for null x', () => {
+    const opts = getBubbleChartOptions({ nullBandLabel: 'NV' });
+    const labelFn = opts.plugins?.tooltip?.callbacks?.label as unknown as (
+      ctx: BubbleTooltipCtx,
+    ) => string;
+    const s = labelFn({
+      dataset: { label: 'S', originalData: [{ x: null, y: 2, size: 100 }] },
+      dataIndex: 0,
+      parsed: { x: 0, y: 2, r: 15 },
+    });
+    expect(s).toContain('NV');
+  });
+
+  it('hoverRadius is a function that scales proportionally to bubbleSizes', () => {
+    const opts = getBubbleChartOptions({});
+    const hoverFn = opts.elements?.point?.hoverRadius as unknown as (ctx: {
+      dataIndex: number;
+      dataset: { bubbleSizes?: number[] };
+    }) => number;
+    expect(typeof hoverFn).toBe('function');
+    // hoverScale = 1.2 (from mock), r = 20 → 20 * 0.2 = 4
+    expect(hoverFn({ dataIndex: 0, dataset: { bubbleSizes: [20] } })).toBeCloseTo(4);
+  });
+
+  it('hoverRadius falls back to bubbleMinRadiusPx when bubbleSizes is absent', () => {
+    const opts = getBubbleChartOptions({});
+    const hoverFn = opts.elements?.point?.hoverRadius as unknown as (ctx: {
+      dataIndex: number;
+      dataset: { bubbleSizes?: number[] };
+    }) => number;
+    // minR = 5, hoverScale = 1.2 → 5 * 0.2 = 1
+    expect(hoverFn({ dataIndex: 0, dataset: {} })).toBeCloseTo(1);
+  });
+
+  it('inherits linear x and logarithmic y option from scatter base', () => {
+    const linear = getBubbleChartOptions({});
+    expect(linear.scales?.x?.type).toBe('linear');
+    expect(linear.scales?.y?.type).toBe('linear');
+    const log = getBubbleChartOptions({ showLogarithmicScale: true });
+    expect(log.scales?.x?.type).toBe('linear');
+    expect(log.scales?.y?.type).toBe('logarithmic');
+  });
+
+  it('shows null-band label on x tick at null position', () => {
+    const datasets: { data: BubbleChartInputPoint[] }[] = [
+      {
+        data: [
+          { x: null, y: 1, size: 10 },
+          { x: 10, y: 2, size: 20 },
+        ],
+      },
+    ];
+    const nullBand = computeScatterNullBand(datasets);
+    const opts = getBubbleChartOptions({ nullBandLabel: 'NV', nullBand });
+    const cb = opts.scales?.x?.ticks?.callback as (
+      this: unknown,
+      v: string | number,
+      i: number,
+      ticks: unknown[],
+    ) => string;
+    expect(cb!.call({}, nullBand!.xNullPos, 0, [])).toBe('NV');
+  });
+});
