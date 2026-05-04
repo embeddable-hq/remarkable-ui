@@ -129,6 +129,10 @@ export const getBubbleChartOptions = (
   >;
 
   return mergician(scatterBaseOptions, {
+    scales: {
+      x: { grace: 0 },
+      y: { grace: 0 },
+    },
     elements: {
       point: {
         borderWidth: bubbleBorderWidth,
