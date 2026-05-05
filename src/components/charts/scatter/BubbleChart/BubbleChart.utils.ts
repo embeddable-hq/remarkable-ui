@@ -7,6 +7,7 @@ import {
 } from '../scatter.types';
 import type { ScatterNullBandResult } from '../scatter.nullBand.utils';
 import { getStyleNumber } from '../../../../styles/styles.utils';
+import { numberFormat } from '../../../../utils/number.utils';
 import {
   filterNumericScatterData,
   getScatterDataWithNullBand,
@@ -14,8 +15,6 @@ import {
   isMeasureMissing,
   ScatterDatasetExtended,
 } from '../scatter.utils';
-
-const numberFormat = new Intl.NumberFormat();
 
 export type BubbleDatasetExtended = ChartDataset<
   'bubble',

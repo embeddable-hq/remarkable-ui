@@ -15,8 +15,7 @@ import {
   getChartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
 import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
-
-const defaultScatterNumberFormat = new Intl.NumberFormat();
+import { numberFormat } from '../../../utils/number.utils';
 
 export type ScatterDatasetExtended = ChartDataset<'scatter', { x: number; y: number }[]> & {
   originalData?: ScatterChartInputPoint[];
@@ -114,13 +113,13 @@ const formatMeasureValue = (
   nullLabel: string | undefined,
 ): string => {
   if (isMeasureMissing(value)) return nullLabel ?? 'No value';
-  return defaultScatterNumberFormat.format(value as number);
+  return numberFormat.format(value as number);
 };
 
 const formatAxisTickValue = (tickValue: string | number): string => {
   const v = typeof tickValue === 'number' ? tickValue : Number(tickValue);
   if (!Number.isFinite(v)) return String(tickValue);
-  return defaultScatterNumberFormat.format(v);
+  return numberFormat.format(v);
 };
 
 const getScatterTooltipLabel = (
