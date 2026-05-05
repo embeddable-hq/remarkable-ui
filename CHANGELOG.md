@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.12
+
+### Patch Changes
+
+- b7cb546: Add BubbleChart component
+
 ## 3.0.11
 
 ### Patch Changes
