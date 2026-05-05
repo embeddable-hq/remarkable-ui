@@ -18,7 +18,7 @@ import { getStyle, getStyleNumber } from '../../../styles/styles.utils';
 
 const defaultScatterNumberFormat = new Intl.NumberFormat();
 
-export type ScatterDatasetWithOriginal = ChartDataset<'scatter', { x: number; y: number }[]> & {
+export type ScatterDatasetExtended = ChartDataset<'scatter', { x: number; y: number }[]> & {
   originalData?: ScatterChartInputPoint[];
 };
 
@@ -64,7 +64,7 @@ const getPointCaption = (raw: ScatterChartInputPoint | undefined): string | unde
 };
 
 const getOriginalScatterPoint = (context: Context): ScatterChartInputPoint | undefined => {
-  const ds = context.dataset as ScatterDatasetWithOriginal;
+  const ds = context.dataset as ScatterDatasetExtended;
   return (
     ds.originalData?.[context.dataIndex] ??
     (ds.data[context.dataIndex] as ScatterChartInputPoint | undefined)
@@ -132,7 +132,7 @@ const getScatterTooltipLabel = (
     nullLabel: string | undefined,
   ) => string,
 ): string | string[] => {
-  const ds = ctx.dataset as ScatterDatasetWithOriginal;
+  const ds = ctx.dataset as ScatterDatasetExtended;
   const orig = ds.originalData?.[ctx.dataIndex];
   const prefix = ds.label ? `${ds.label}: ` : '';
   if (orig) {
@@ -165,7 +165,7 @@ export const getScatterDataWithNullBand = (
       data.datasets?.map((dataset, index) => {
         const baseColor = getSeriesColor(chartColors, index);
 
-        const defaultDataset: Partial<ScatterDatasetWithOriginal> = {
+        const defaultDataset: Partial<ScatterDatasetExtended> = {
           showLine: false,
           pointRadius: pointRadiusPx,
           pointHoverRadius: pointHoverRadiusPx,
@@ -177,7 +177,7 @@ export const getScatterDataWithNullBand = (
           const nullColor = getColorWithOpacity(baseColor, nullOpacity);
           const colorFor = (c: { dataset: object; dataIndex: number }) => {
             const orig =
-              (c.dataset as ScatterDatasetWithOriginal).originalData?.[c.dataIndex] ??
+              (c.dataset as ScatterDatasetExtended).originalData?.[c.dataIndex] ??
               (c.dataset as { data: ScatterChartInputPoint[] }).data[c.dataIndex];
             return hasNullMeasure(orig) ? nullColor : defaultColor;
           };
@@ -195,7 +195,7 @@ export const getScatterDataWithNullBand = (
             defaultDataset,
             { originalData: [...dataset.data] },
             dataset,
-          ) as ScatterDatasetWithOriginal;
+          ) as ScatterDatasetExtended;
         }
 
         const { xNullPos, yNullPos } = ctx.nullBand;
@@ -207,7 +207,7 @@ export const getScatterDataWithNullBand = (
         return mergician(defaultDataset, dataset, {
           data: mappedData,
           originalData: [...dataset.data],
-        }) as ScatterDatasetWithOriginal;
+        }) as ScatterDatasetExtended;
       }) || [],
   };
 };

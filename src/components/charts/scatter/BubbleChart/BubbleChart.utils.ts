@@ -12,17 +12,17 @@ import {
   getScatterDataWithNullBand,
   getScatterChartOptions,
   isMeasureMissing,
-  ScatterDatasetWithOriginal,
+  ScatterDatasetExtended,
 } from '../scatter.utils';
 
 const numberFormat = new Intl.NumberFormat();
 
-export type BubbleDatasetWithOriginal = ChartDataset<
+export type BubbleDatasetExtended = ChartDataset<
   'bubble',
   { x: number; y: number; r: number }[]
 > & {
   originalData?: BubbleChartInputPoint[];
-  bubbleSizes?: number[];
+  bubbleSizes: number[];
 };
 
 const computeMaxBubbleSize = (datasets: { data: BubbleChartInputPoint[] }[]): number => {
@@ -60,7 +60,7 @@ const getBubbleTooltipLabel = (
   ctx: TooltipItem<'bubble'>,
   nullLabel: string | undefined,
 ): string => {
-  const ds = ctx.dataset as BubbleDatasetWithOriginal;
+  const ds = ctx.dataset as BubbleDatasetExtended;
   const orig = ds.originalData?.[ctx.dataIndex];
   const prefix = ds.label ? `${ds.label}: ` : '';
   const x = orig ? formatValue(orig.x, nullLabel) : String(ctx.parsed.x);
@@ -98,7 +98,7 @@ export const getBubbleChartData = (
   return {
     ...scatterDataWithNullBand,
     datasets: scatterDataWithNullBand.datasets.map((dataset) => {
-      const originalBubbleData = (dataset as ScatterDatasetWithOriginal)
+      const originalBubbleData = (dataset as ScatterDatasetExtended)
         .originalData as unknown as BubbleChartInputPoint[];
       const bubbleSizes = (originalBubbleData ?? []).map((point) =>
         computeBubbleRadius(point.size, maxBubbleSize, bubbleMinRadiusPx, bubbleMaxRadiusPx),
@@ -110,7 +110,7 @@ export const getBubbleChartData = (
           r: bubbleSizes[i],
         })),
         bubbleSizes,
-      } as unknown as BubbleDatasetWithOriginal;
+      } as unknown as BubbleDatasetExtended;
     }),
   } as unknown as ChartData<'bubble'>;
 };
@@ -136,8 +136,8 @@ export const getBubbleChartOptions = (
     elements: {
       point: {
         borderWidth: bubbleBorderWidth,
-        hoverRadius: ((ctx: { dataIndex: number; dataset: BubbleDatasetWithOriginal }) => {
-          const r = ctx.dataset.bubbleSizes?.[ctx.dataIndex] ?? bubbleMinRadiusPx;
+        hoverRadius: ((ctx: { dataIndex: number; dataset: BubbleDatasetExtended }) => {
+          const r = ctx.dataset.bubbleSizes[ctx.dataIndex] ?? bubbleMinRadiusPx;
           return r * (bubbleHoverScale - 1);
         }) as unknown as number,
       },

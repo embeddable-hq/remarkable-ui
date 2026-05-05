@@ -23,7 +23,7 @@ import {
 import {
   getBubbleChartData,
   getBubbleChartOptions,
-  type BubbleDatasetWithOriginal,
+  type BubbleDatasetExtended,
 } from './BubbleChart/BubbleChart.utils';
 
 describe('hasNullMeasure', () => {
@@ -608,7 +608,7 @@ describe('getBubbleChartData', () => {
       bubbleRadiusMin: 5,
       bubbleRadiusMax: 40,
     });
-    const ds = out.datasets[0] as BubbleDatasetWithOriginal;
+    const ds = out.datasets[0] as BubbleDatasetExtended;
     expect(ds.bubbleSizes).toHaveLength(2);
     expect(ds.bubbleSizes![0]).toBeCloseTo(40);
     expect(ds.bubbleSizes![1]).toBeCloseTo(20);
@@ -616,7 +616,7 @@ describe('getBubbleChartData', () => {
 
   it('stores originalData with full BubbleChartInputPoint shape', () => {
     const out = getBubbleChartData(baseData, { nullBand: null });
-    const ds = out.datasets[0] as BubbleDatasetWithOriginal;
+    const ds = out.datasets[0] as BubbleDatasetExtended;
     expect(ds.originalData?.[0]).toMatchObject({ x: 1, y: 2, size: 100 });
   });
 
@@ -707,7 +707,7 @@ describe('getBubbleChartOptions', () => {
     const opts = getBubbleChartOptions({});
     const hoverFn = opts.elements?.point?.hoverRadius as unknown as (ctx: {
       dataIndex: number;
-      dataset: { bubbleSizes?: number[] };
+      dataset: { bubbleSizes: number[] };
     }) => number;
     expect(typeof hoverFn).toBe('function');
     // hoverScale = 1.2 (from mock), r = 20 → 20 * 0.2 = 4
@@ -718,10 +718,10 @@ describe('getBubbleChartOptions', () => {
     const opts = getBubbleChartOptions({});
     const hoverFn = opts.elements?.point?.hoverRadius as unknown as (ctx: {
       dataIndex: number;
-      dataset: { bubbleSizes?: number[] };
+      dataset: { bubbleSizes: number[] };
     }) => number;
     // minR = 5, hoverScale = 1.2 → 5 * 0.2 = 1
-    expect(hoverFn({ dataIndex: 0, dataset: {} })).toBeCloseTo(1);
+    expect(hoverFn({ dataIndex: 0, dataset: { bubbleSizes: [] } })).toBeCloseTo(1);
   });
 
   it('inherits linear x and logarithmic y option from scatter base', () => {
