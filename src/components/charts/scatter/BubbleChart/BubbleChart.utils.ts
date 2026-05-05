@@ -25,7 +25,7 @@ export type BubbleDatasetExtended = ChartDataset<
   bubbleSizes: number[];
 };
 
-const computeMaxBubbleSize = (datasets: { data: BubbleChartInputPoint[] }[]): number => {
+const getMaxBubbleSize = (datasets: { data: BubbleChartInputPoint[] }[]): number => {
   let max = 0;
   for (const ds of datasets) {
     for (const pt of ds.data) {
@@ -37,7 +37,7 @@ const computeMaxBubbleSize = (datasets: { data: BubbleChartInputPoint[] }[]): nu
   return max;
 };
 
-const computeBubbleRadius = (
+const getBubbleRadius = (
   size: number | null | undefined,
   maxBubbleSize: number,
   bubbleMinRadiusPx: number,
@@ -51,7 +51,10 @@ const computeBubbleRadius = (
   );
 };
 
-const formatValue = (value: number | null | undefined, nullLabel: string | undefined): string => {
+const getFormattedValue = (
+  value: number | null | undefined,
+  nullLabel: string | undefined,
+): string => {
   if (isMeasureMissing(value)) return nullLabel ?? 'No value';
   return numberFormat.format(value as number);
 };
@@ -63,9 +66,9 @@ const getBubbleTooltipLabel = (
   const ds = ctx.dataset as BubbleDatasetExtended;
   const orig = ds.originalData?.[ctx.dataIndex];
   const prefix = ds.label ? `${ds.label}: ` : '';
-  const x = orig ? formatValue(orig.x, nullLabel) : String(ctx.parsed.x);
-  const y = orig ? formatValue(orig.y, nullLabel) : String(ctx.parsed.y);
-  const size = formatValue(orig?.size, nullLabel);
+  const x = orig ? getFormattedValue(orig.x, nullLabel) : String(ctx.parsed.x);
+  const y = orig ? getFormattedValue(orig.y, nullLabel) : String(ctx.parsed.y);
+  const size = getFormattedValue(orig?.size, nullLabel);
   return `${prefix}(${x}, ${y}, ${size})`;
 };
 
@@ -91,7 +94,7 @@ export const getBubbleChartData = (
     opacityOverride: { defaultOpacity, nullOpacity },
   });
 
-  const maxBubbleSize = computeMaxBubbleSize(
+  const maxBubbleSize = getMaxBubbleSize(
     (bubbleDataAsScatter as unknown as ChartData<'bubble', BubbleChartInputPoint[]>).datasets,
   );
 
@@ -101,7 +104,7 @@ export const getBubbleChartData = (
       const originalBubbleData = (dataset as ScatterDatasetExtended)
         .originalData as unknown as BubbleChartInputPoint[];
       const bubbleSizes = (originalBubbleData ?? []).map((point) =>
-        computeBubbleRadius(point.size, maxBubbleSize, bubbleMinRadiusPx, bubbleMaxRadiusPx),
+        getBubbleRadius(point.size, maxBubbleSize, bubbleMinRadiusPx, bubbleMaxRadiusPx),
       );
       return {
         ...dataset,
