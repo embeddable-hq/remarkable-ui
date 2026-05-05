@@ -22,6 +22,12 @@ export type ScatterDatasetExtended = ChartDataset<'scatter', { x: number; y: num
   originalData?: ScatterChartInputPoint[];
 };
 
+export type ScatterChartDataContext = {
+  nullBand: ScatterNullBandResult | null;
+  supportsNullMeasures: boolean;
+  opacityOverride?: { defaultOpacity: number; nullOpacity: number };
+};
+
 /** True for null/undefined and non-finite numbers (NaN, ±Infinity). */
 export const isMeasureMissing = (v: number | null | undefined): boolean =>
   v === null || v === undefined || (typeof v === 'number' && !Number.isFinite(v));
@@ -51,12 +57,6 @@ export const filterNumericScatterData = (
     ),
   })),
 });
-
-export type ScatterChartDataContext = {
-  nullBand: ScatterNullBandResult | null;
-  supportsNullMeasures: boolean;
-  opacityOverride?: { defaultOpacity: number; nullOpacity: number };
-};
 
 const getPointCaption = (raw: ScatterChartInputPoint | undefined): string | undefined => {
   if (!raw || typeof raw !== 'object') return undefined;
