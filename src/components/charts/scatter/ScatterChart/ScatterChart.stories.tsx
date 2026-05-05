@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { ScatterChart } from './ScatterChart';
 import { ChartData } from 'chart.js';
-import { ScatterChartInputPoint } from './scatter.types';
-import { decoratorsResizeCard, decoratorsSquare } from '../../../storybook.constants';
+import { ScatterChartInputPoint } from '../scatter.types';
+import { decoratorsResizeCard, decoratorsSquare } from '../../../../storybook.constants';
 
 /** Two series (regions), each point is a store/city with x = AOV ($), y = monthly orders (k). */
 const data: ChartData<'scatter', ScatterChartInputPoint[]> = {

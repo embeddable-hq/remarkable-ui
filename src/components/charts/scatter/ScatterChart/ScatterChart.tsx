@@ -10,18 +10,18 @@ import {
   Legend,
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
-import { buildChartjsOnClick } from '../chartjs.utils';
-import styles from '../charts.module.css';
+import { buildChartjsOnClick } from '../../chartjs.utils';
+import styles from '../../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
-import { BaseScatterChartProps } from './scatter.types';
+import { BaseScatterChartProps } from '../scatter.types';
 import {
   getScatterNullBand,
   getScatterChartOptions,
   getScatterChartPlugins,
-} from './scatter.utils';
+} from '../scatter.utils';
 import { getScatterChartData } from './ScatterChart.utils';
 
 ChartJS.register(

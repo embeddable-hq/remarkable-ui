@@ -167,6 +167,7 @@ export const getScatterDataWithNullBand = (
 
         const defaultDataset: Partial<ScatterDatasetExtended> = {
           showLine: false,
+          clip: false,
           pointRadius: pointRadiusPx,
           pointHoverRadius: pointHoverRadiusPx,
         };

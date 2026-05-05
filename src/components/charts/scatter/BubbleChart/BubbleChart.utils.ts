@@ -108,6 +108,7 @@ export const getBubbleChartData = (
       );
       return {
         ...dataset,
+        clip: false,
         data: (dataset.data as { x: number; y: number }[]).map((pt, i) => ({
           ...pt,
           r: bubbleSizes[i],

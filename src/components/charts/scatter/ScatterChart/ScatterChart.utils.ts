@@ -1,7 +1,7 @@
 import { ChartData } from 'chart.js';
-import { ScatterChartConfigurationProps, ScatterChartInputPoint } from './scatter.types';
-import type { ScatterNullBandResult } from './scatter.nullBand.utils';
-import { filterNumericScatterData, getScatterDataWithNullBand } from './scatter.utils';
+import { ScatterChartConfigurationProps, ScatterChartInputPoint } from '../scatter.types';
+import type { ScatterNullBandResult } from '../scatter.nullBand.utils';
+import { filterNumericScatterData, getScatterDataWithNullBand } from '../scatter.utils';
 
 export const getScatterChartData = (
   data: ChartData<'scatter', ScatterChartInputPoint[]>,
