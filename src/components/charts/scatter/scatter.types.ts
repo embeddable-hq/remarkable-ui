@@ -9,6 +9,10 @@ export type ScatterChartInputPoint = {
   isNull?: boolean;
 };
 
+export type BubbleChartInputPoint = ScatterChartInputPoint & {
+  size?: number | null;
+};
+
 export type ScatterChartConfigurationProps = {
   showLegend?: boolean;
   showTooltips?: boolean;
@@ -30,3 +34,14 @@ export type BaseScatterChartProps = {
   options?: Partial<ChartOptions<'scatter'>>;
   onClick?: (args: ChartClickArgs) => void;
 } & ScatterChartConfigurationProps;
+
+export type BubbleChartConfigurationProps = ScatterChartConfigurationProps & {
+  bubbleRadiusMin?: number;
+  bubbleRadiusMax?: number;
+};
+
+export type BaseBubbleChartProps = {
+  data: ChartData<'bubble', BubbleChartInputPoint[]>;
+  options?: Partial<ChartOptions<'bubble'>>;
+  onClick?: (args: ChartClickArgs) => void;
+} & BubbleChartConfigurationProps;
