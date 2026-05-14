@@ -131,5 +131,34 @@ describe('KpiChart', () => {
 
       expect(comparisonContainer).toBeFalsy();
     });
+
+    it('does not render the comparison section when value is null, even if comparisonValue is provided', () => {
+      const { container } = render(
+        <KpiChart value={null as unknown as number} comparisonValue={80} />,
+      );
+
+      expect(container.querySelector('.kpiComparisonContainer')).toBeFalsy();
+    });
+
+    it('does not render the comparison section when value is null and comparisonValue is 0', () => {
+      const { container } = render(
+        <KpiChart value={null as unknown as number} comparisonValue={0} showChangeAsPercentage />,
+      );
+
+      expect(container.querySelector('.kpiComparisonContainer')).toBeFalsy();
+    });
+
+    it('does not render NaN when value is null and comparisonValue is 0', () => {
+      const { container } = render(
+        <KpiChart
+          value={null as unknown as number}
+          comparisonValue={0}
+          showChangeAsPercentage
+          valueFormatter={(v) => `$${v}`}
+        />,
+      );
+
+      expect(container.textContent).not.toContain('NaN');
+    });
   });
 });

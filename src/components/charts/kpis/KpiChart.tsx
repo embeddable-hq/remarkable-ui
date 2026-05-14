@@ -41,7 +41,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   displayNullAs = '',
   valueFormatter,
 }) => {
-  const hasComparisonValue = comparisonValue !== undefined;
+  const hasComparisonValue = comparisonValue !== undefined && value != null;
 
   const displayValue = getKpiDisplayValue({ value, displayNullAs, valueFormatter });
 
