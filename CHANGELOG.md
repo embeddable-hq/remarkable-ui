@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.13
+
+### Patch Changes
+
+- e33bb77: Fix KpiChart to not show NaN when value is null
+
 ## 3.0.12
 
 ### Patch Changes
