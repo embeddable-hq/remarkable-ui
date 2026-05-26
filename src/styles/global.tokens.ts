@@ -27,7 +27,7 @@ export const stylesTokensCore = {
   '--em-core-color-gray--0900': '#212129',
   '--em-core-color-gray--1000': '#000000',
   '--em-core-font-family--base': "'inter'",
-  '--em-core-font-family--code': "'monospace'",
+  '--em-core-font-family--code': 'monospace',
   '--em-core-font-size--md': '1rem',
   '--em-core-font-size--sm': '0.875rem',
   '--em-core-font-size--xl': '1.25rem',
