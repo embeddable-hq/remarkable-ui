@@ -534,9 +534,9 @@
   --em-switch-height: var(--em-core-size--0400);
   --em-switch-label-color: var(--em-sem-text);
   --em-switch-label-color--disabled: var(--em-sem-text--subtle);
-  --em-switch-label-color-font-size: var(--em-core-font-size--sm);
-  --em-switch-label-color-font-weight: var(--em-core-font-weight--medium);
-  --em-switch-label-color-line-height: var(--em-core-line-height--md);
+  --em-switch-label-font-size: var(--em-core-font-size--sm);
+  --em-switch-label-font-weight: var(--em-core-font-weight--medium);
+  --em-switch-label-line-height: var(--em-core-line-height--md);
   --em-switch-label-gap: var(--em-core-spacing--0200);
   --em-switch-shadow-blur: var(--em-core-shadow-blur);
   --em-switch-shadow-color: var(--em-core-shadow-color);

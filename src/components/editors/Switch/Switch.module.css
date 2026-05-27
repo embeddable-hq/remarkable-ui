@@ -61,9 +61,9 @@
   font-style: normal;
   color: var(--em-switch-label-color, #212129);
   font-family: var(--em-switch-font-family, sans-serif);
-  font-size: var(--em-switch-label-color-font-size, 0.875rem);
-  font-weight: var(--em-switch-label-color-font-weight, 500);
-  line-height: var(--em-switch-label-color-line-height, 16px);
+  font-size: var(--em-switch-label-font-size, 0.875rem);
+  font-weight: var(--em-switch-label-font-weight, 500);
+  line-height: var(--em-switch-label-line-height, 16px);
 }
 
 .switch.disabled .switchLabel {
