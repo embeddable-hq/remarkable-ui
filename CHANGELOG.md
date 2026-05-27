@@ -1,5 +1,12 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.14
+
+### Patch Changes
+
+- 3fd5bd3: Release
+- 31f68fe: Update monospace font on styles
+
 ## 3.0.13
 
 ### Patch Changes
