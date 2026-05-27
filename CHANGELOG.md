@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.15
+
+### Patch Changes
+
+- 723aec1: Change switch text font size
+
 ## 3.0.14
 
 ### Patch Changes
