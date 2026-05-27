@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.16
+
+### Patch Changes
+
+- f63de5b: Update css variable names for the switch
+
 ## 3.0.15
 
 ### Patch Changes
