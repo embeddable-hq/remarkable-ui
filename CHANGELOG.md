@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.17
+
+### Patch Changes
+
+- 52e3a71: add --em-core-motion-\* primitive tokens (durations + easings)
+
 ## 3.0.16
 
 ### Patch Changes
