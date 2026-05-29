@@ -38,6 +38,13 @@
   --em-core-line-height--md: 1rem;
   --em-core-line-height--sm: 0.875rem;
   --em-core-line-height--xl: 2.375rem;
+  /* motion */
+  --em-core-motion-duration--fast: 120ms;
+  --em-core-motion-duration--medium: 200ms;
+  --em-core-motion-duration--slow: 320ms;
+  --em-core-motion-easing--standard: ease;
+  --em-core-motion-easing--linear: linear;
+  --em-core-motion-easing--in-out: ease-in-out;
   --em-core-shadow-blur: 2.5rem;
   --em-core-shadow-color: #21212940;
   --em-core-shadow-position-x: 0rem;
