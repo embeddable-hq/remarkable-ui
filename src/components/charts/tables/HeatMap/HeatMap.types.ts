@@ -12,6 +12,13 @@ export type HeatMapPropsMeasure<T> = {
 
 export type HeatMapPropsThreshold = string | number | `${number}%` | undefined;
 
+export type HeatMapCellClickArg = {
+  /** Raw string value of the row dimension for the clicked cell. */
+  rowDimensionValue: string;
+  /** Raw string value of the column dimension for the clicked cell. */
+  columnDimensionValue: string;
+};
+
 export type HeatMapProps<T extends Record<string, unknown>> = {
   data: T[];
   measure: HeatMapPropsMeasure<T>;
@@ -31,4 +38,7 @@ export type HeatMapProps<T extends Record<string, unknown>> = {
   columnWidth?: number;
   firstColumnWidth?: number;
   missingCellColor?: string;
+
+  /** Optional click handler — called when a data cell is clicked. */
+  onCellClick?: (args: HeatMapCellClickArg) => void;
 };
