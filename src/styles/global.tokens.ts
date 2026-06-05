@@ -680,6 +680,21 @@ export const stylesTokensComponents = {
   '--em-charttabs-trend-icon-size': 'var(--em-core-size--0400)',
   '--em-charttabs-scroll-padding': 'var(--em-core-spacing--0100)',
   '--em-charttabs-scroll-button-width': '1.75rem',
+  '--em-canvas-overlay-position': 'fixed',
+  '--em-canvas-overlay-inset': '0',
+  '--em-canvas-overlay-backdrop-background': 'var(--em-overlay-background)',
+  '--em-canvas-overlay-content-background': 'transparent',
+  '--em-canvas-overlay-width': '100%',
+  '--em-canvas-overlay-max-width': '78rem',
+  '--em-canvas-overlay-height': 'auto',
+  '--em-canvas-overlay-max-height': 'none',
+  '--em-canvas-overlay-padding': '0 2rem 2.25rem',
+  '--em-canvas-overlay-border-radius': '1.75rem',
+  '--em-canvas-overlay-title-color': 'var(--em-sem-text--inverted)',
+  '--em-canvas-overlay-action-button-color': 'var(--em-buttonicon-color--secondary)',
+  '--em-canvas-overlay-action-button-border-radius': 'var(--em-buttonicon-border-radius)',
+  '--em-canvas-overlay-actions-justify-content': 'center',
+  '--em-canvas-overlay-actions-position': 'sticky',
 };
 
 type StylesTokensCore = typeof stylesTokensCore;
