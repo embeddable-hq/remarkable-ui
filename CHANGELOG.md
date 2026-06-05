@@ -1,5 +1,12 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.18
+
+### Patch Changes
+
+- b7508fb: Adds click handling to heatmap component
+- 12e2d01: Add new tokens related to canvas
+
 ## 3.0.17
 
 ### Patch Changes
