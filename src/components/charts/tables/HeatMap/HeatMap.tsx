@@ -29,6 +29,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
   columnWidth,
   firstColumnWidth,
   displayNullAs,
+  onCellClick,
 }: HeatMapProps<T>) => {
   // 1. Get raw min/max from data
   const { rawMin, rawMax } = useMemo(() => {
@@ -157,8 +158,18 @@ export const HeatMap = <T extends Record<string, unknown>>({
                       style={{
                         background,
                         color,
+                        cursor: onCellClick ? 'pointer' : undefined,
                         ...getTableCellWidthStyle(columnWidth),
                       }}
+                      onClick={
+                        onCellClick
+                          ? () =>
+                              onCellClick({
+                                rowDimensionValue: rv,
+                                columnDimensionValue: cv,
+                              })
+                          : undefined
+                      }
                     >
                       {getCellDisplayValue(value, showValues, measure)}
                     </td>
