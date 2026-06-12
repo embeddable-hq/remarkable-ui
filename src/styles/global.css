@@ -705,7 +705,7 @@
   --em-canvas-overlay-action-button-border-radius: var(--em-buttonicon-border-radius);
   --em-canvas-overlay-actions-justify-content: center;
   --em-canvas-overlay-actions-position: sticky;
-  --em-canvas-overlay-actions-grid-column: 1 / -1;
+  --em-canvas-overlay-actions-grid-column: 1 / 2;
   --em-canvas-overlay-actions-grid-row: 2 / 3;
   --em-canvas-overlay-actions-justify-self: center;
   --em-canvas-overlay-actions-align-self: end;
