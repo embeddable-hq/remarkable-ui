@@ -705,4 +705,24 @@
   --em-canvas-overlay-action-button-border-radius: var(--em-buttonicon-border-radius);
   --em-canvas-overlay-actions-justify-content: center;
   --em-canvas-overlay-actions-position: sticky;
+  --em-canvas-overlay-actions-grid-column: 1 / -1;
+  --em-canvas-overlay-actions-grid-row: 2 / 3;
+  --em-canvas-overlay-actions-justify-self: center;
+  --em-canvas-overlay-actions-align-self: end;
+  --em-canvas-overlay-grid-template-columns: repeat(3, minmax(22rem, 1fr));
+  --em-canvas-overlay-grid-template-columns--tablet: repeat(2, minmax(0, 1fr));
+  --em-canvas-overlay-grid-template-columns--mobile: 1fr;
+  --em-canvas-overlay-grid-auto-rows: var(--em-core-spacing--0200);
+  --em-canvas-overlay-grid-auto-flow: dense;
+  --em-canvas-overlay-grid-gap: var(--em-core-spacing--0400);
+  --em-canvas-overlay-grid-align-items: start;
+  --em-canvas-overlay-configurator-grid-template-columns: minmax(25rem, 30rem) 1fr;
+  --em-canvas-overlay-configurator-grid-template-columns--tablet: 1fr;
+  --em-canvas-overlay-configurator-grid-template-columns--mobile: 1fr;
+  --em-canvas-overlay-configurator-gap: var(--em-core-spacing--0800);
+  --em-canvas-overlay-configurator-form-background: var(--em-sem-background--neutral);
+  --em-canvas-overlay-configurator-form-padding: var(--em-core-spacing--0800);
+  --em-canvas-overlay-configurator-form-padding-bottom: var(--em-core-spacing--2000);
+  --em-canvas-overlay-configurator-form-border-radius: var(--em-card-border-radius);
+  --em-canvas-overlay-configurator-form-gap: var(--em-core-spacing--0800);
 }
