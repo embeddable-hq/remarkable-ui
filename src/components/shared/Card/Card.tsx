@@ -37,6 +37,10 @@ const getTooltipText = (tooltip: React.ReactNode): string => {
     return tooltip.map(getTooltipText).join('');
   }
 
+  if (React.isValidElement<{ children?: React.ReactNode }>(tooltip)) {
+    return getTooltipText(tooltip.props.children);
+  }
+
   return '';
 };
 

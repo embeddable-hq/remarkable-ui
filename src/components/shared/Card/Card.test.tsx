@@ -72,6 +72,17 @@ describe('CardHeader', () => {
       expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
     });
 
+    it('aligns long React element tooltips end', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip={<span>Tooltip content.</span>} />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
+    });
+
     it('returns null when no title, subtitle, or tooltip is provided', () => {
       const { container } = render(<CardHeader />);
 
