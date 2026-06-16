@@ -83,6 +83,28 @@ describe('CardHeader', () => {
       expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
     });
 
+    it('aligns long array tooltips end', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip={['Tooltip ', <span key="content">content.</span>]} />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
+    });
+
+    it('keeps short numeric tooltips centered', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip={12345} />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'center');
+    });
+
     it('returns null when no title, subtitle, or tooltip is provided', () => {
       const { container } = render(<CardHeader />);
 
