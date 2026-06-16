@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createRef } from 'react';
 import { describe, expect, it } from 'vitest';
 import { Card, CardContent, CardHeader } from './Card';
@@ -47,6 +48,61 @@ describe('CardHeader', () => {
       render(<CardHeader tooltip="Tooltip content" />);
 
       expect(screen.getByRole('button', { name: 'Info' })).toBeInTheDocument();
+    });
+
+    it('keeps info tooltips up to 15 characters centered', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip="Tooltip content" />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'center');
+    });
+
+    it('aligns info tooltips longer than 15 characters end', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip="Tooltip content." />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
+    });
+
+    it('aligns long React element tooltips end', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip={<span>Tooltip content.</span>} />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
+    });
+
+    it('aligns long array tooltips end', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip={['Tooltip ', <span key="content">content.</span>]} />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'end');
+    });
+
+    it('keeps short numeric tooltips centered', async () => {
+      const user = userEvent.setup();
+
+      render(<CardHeader tooltip={12345} />);
+
+      await user.hover(screen.getByRole('button', { name: 'Info' }));
+
+      const tooltip = await screen.findByRole('tooltip');
+      expect(tooltip.closest('[data-align]')).toHaveAttribute('data-align', 'center');
     });
 
     it('returns null when no title, subtitle, or tooltip is provided', () => {
