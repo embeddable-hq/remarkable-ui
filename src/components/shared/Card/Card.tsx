@@ -26,6 +26,28 @@ type CardHeaderProps = {
   tooltip?: React.ReactNode;
 };
 
+const LONG_TOOLTIP_TEXT_LENGTH = 15;
+
+const getTooltipText = (tooltip: React.ReactNode): string => {
+  if (typeof tooltip === 'string' || typeof tooltip === 'number') {
+    return String(tooltip);
+  }
+
+  if (Array.isArray(tooltip)) {
+    return tooltip.map(getTooltipText).join('');
+  }
+
+  return '';
+};
+
+const getCardHeaderTooltipAlign = (
+  tooltip: React.ReactNode,
+): React.ComponentProps<typeof Tooltip>['align'] => {
+  const tooltipText = getTooltipText(tooltip).trim();
+
+  return tooltipText.length > LONG_TOOLTIP_TEXT_LENGTH ? 'end' : 'center';
+};
+
 export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip }) => {
   if (!title && !subtitle && !tooltip) {
     return null;
@@ -38,7 +60,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip
         {tooltip && (
           <Tooltip
             side="top"
-            align="center"
+            align={getCardHeaderTooltipAlign(tooltip)}
             trigger={
               <button className={styles.cardHeaderTooltipButton} aria-label="Info">
                 <IconInfoCircle />
