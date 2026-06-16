@@ -24,6 +24,34 @@ export const WithTooltip = () => (
   </Card>
 );
 
+export const WithLongTooltip = () => (
+  <Card>
+    <CardHeader
+      title="Title"
+      subtitle="Subtitle"
+      tooltip="This longer tooltip should align to the end of the info icon so it expands away from right-edge scrollbars."
+    />
+    <CardContent>This is the content of the card.</CardContent>
+  </Card>
+);
+
+export const RightEdgeLongTooltip = () => (
+  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <div style={{ width: 300 }}>
+      <Card>
+        <CardHeader
+          title="Right edge card"
+          subtitle="Hover the info icon"
+          tooltip="This longer tooltip should stay readable when the card is close to the right edge of the viewport."
+        />
+        <CardContent>
+          This story demonstrates long tooltip alignment near the right edge.
+        </CardContent>
+      </Card>
+    </div>
+  </div>
+);
+
 export const LongTitle = () => (
   <div style={{ maxWidth: 300 }}>
     <Card>
