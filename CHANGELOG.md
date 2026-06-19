@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.19
+
+### Patch Changes
+
+- 5cc3fa0: Update the tooltip placement
+
 ## 3.0.18
 
 ### Patch Changes
