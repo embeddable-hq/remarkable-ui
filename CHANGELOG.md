@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.20
+
+### Patch Changes
+
+- ef68483: Add layout customization tokens to Canvas Overlay: actions-bar grid placement and self-alignment (4 tokens), templates grid with tablet/mobile responsive variants (7 tokens), and configurator layout + form card with responsive variants (9 tokens). 20 new tokens total under the `--em-canvas-overlay-*` namespace.
+
 ## 3.0.19
 
 ### Patch Changes
