@@ -1,15 +1,20 @@
 import tableBodyStyles from './TableBody.module.css';
-import { TableHeaderAlign, TableHeaderItem, TableHeaderItemAlign } from '../../table.types';
+import {
+  TableCellClickArg,
+  TableHeaderAlign,
+  TableHeaderItem,
+  TableHeaderItemAlign,
+} from '../../table.types';
 import clsx from 'clsx';
 import { ActionIcon } from '../../../../../shared/ActionIcon/ActionIcon';
 import { IconCopy, IconCopyCheckFilled } from '@tabler/icons-react';
-import { CSSProperties, FC, RefObject, useState } from 'react';
+import { CSSProperties, FC, MouseEvent, MouseEventHandler, RefObject, useState } from 'react';
 import tableStyles from '../../../tables.module.css';
 import { TablePaginatedProps } from '../../TablePaginated/TablePaginated';
 
 export type TableBodyProps<T> = Pick<
   TablePaginatedProps<T>,
-  'showIndex' | 'headers' | 'rows' | 'onRowIndexClick'
+  'showIndex' | 'headers' | 'rows' | 'onRowIndexClick' | 'onCellClick'
 > & {
   pageSize?: number;
   page?: number;
@@ -25,6 +30,7 @@ export const TableBody = <T,>({
   page,
   showIndex,
   onRowIndexClick,
+  onCellClick,
   bottomRef,
   isLoading,
   hasMoreData,
@@ -52,6 +58,7 @@ export const TableBody = <T,>({
               row={row}
               rowIndex={rowIndex}
               cellIndex={cellIndex}
+              onCellClick={onCellClick}
             />
           ))}
         </tr>
@@ -72,9 +79,10 @@ type TableBodyCellProps<T> = {
   row: T;
   rowIndex: number;
   cellIndex: number;
+  onCellClick?: (arg: TableCellClickArg<T>) => void;
 };
 
-const TableBodyCell = <T,>({ header, row }: TableBodyCellProps<T>) => {
+const TableBodyCell = <T,>({ header, row, rowIndex, onCellClick }: TableBodyCellProps<T>) => {
   const rawValue =
     header.id !== undefined
       ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,13 +91,26 @@ const TableBodyCell = <T,>({ header, row }: TableBodyCellProps<T>) => {
 
   const value = header.accessor !== undefined ? header.accessor(row) : rawValue;
 
+  // stopPropagation prevents the click from also bubbling to the row's onRowIndexClick.
+  const handleCellClick: MouseEventHandler<HTMLTableCellElement> | undefined = onCellClick
+    ? (event) => {
+        event.stopPropagation();
+        onCellClick({ rowIndex, columnId: header.id, value: rawValue, row });
+      }
+    : undefined;
+
   // Custom cell renderer
   if (header.cell) {
     return header.cell({ value, className: tableBodyStyles.tableBodyCell });
   }
 
   return (
-    <TableBodyCellWithCopy align={header.align} value={value} style={header.cellStyle?.(rawValue)}>
+    <TableBodyCellWithCopy
+      align={header.align}
+      value={value}
+      style={header.cellStyle?.(rawValue)}
+      onClick={handleCellClick}
+    >
       {value}
     </TableBodyCellWithCopy>
   );
@@ -100,16 +121,20 @@ type TableBodyCellWithCopyProps = {
   align?: TableHeaderItemAlign;
   children: React.ReactNode;
   style?: CSSProperties | undefined;
+  onClick?: MouseEventHandler<HTMLTableCellElement>;
 };
 export const TableBodyCellWithCopy: FC<TableBodyCellWithCopyProps> = ({
   value,
   align = 'left',
   children,
   style,
+  onClick,
 }) => {
   const [isPressedCopy, setIsPressedCopy] = useState(false);
 
-  const handleCopy = () => {
+  const handleCopy = (event: MouseEvent<HTMLButtonElement>) => {
+    // Keep copy isolated from the cell's onClick so copying doesn't also trigger it.
+    event.stopPropagation();
     setIsPressedCopy(true);
     if (value !== undefined) {
       navigator.clipboard.writeText(String(value));
@@ -119,7 +144,8 @@ export const TableBodyCellWithCopy: FC<TableBodyCellWithCopyProps> = ({
   return (
     <td
       title={value}
-      style={{ textAlign: align, ...style }}
+      style={{ textAlign: align, cursor: onClick ? 'pointer' : undefined, ...style }}
+      onClick={onClick}
       onMouseLeave={() => setIsPressedCopy(false)}
     >
       <ActionIcon

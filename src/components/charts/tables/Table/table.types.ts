@@ -41,3 +41,14 @@ export type TableHeaderItem<T> = {
   cell?: TableHeaderCell;
   cellStyle?: TableHeaderCellStyle;
 };
+
+export type TableCellClickArg<T> = {
+  /** Index of the clicked row within the current `rows`. */
+  rowIndex: number;
+  /** `id` of the clicked column's header. */
+  columnId: keyof T;
+  /** Raw underlying cell value (`row[columnId]`), before any `accessor`/`cell` formatting. */
+  value: unknown;
+  /** The full row the clicked cell belongs to. */
+  row: T;
+};

@@ -92,4 +92,68 @@ describe('TableBody', () => {
       expect(handleClick).toHaveBeenCalledWith(0);
     });
   });
+
+  describe('onCellClick', () => {
+    it('calls onCellClick with cell details when a cell is clicked', async () => {
+      const user = userEvent.setup();
+      const handleCellClick = vi.fn();
+
+      render(
+        <table>
+          <TableBody headers={HEADERS} rows={ROWS} onCellClick={handleCellClick} />
+        </table>,
+      );
+
+      await user.click(screen.getByText('Alice'));
+
+      expect(handleCellClick).toHaveBeenCalledWith({
+        rowIndex: 0,
+        columnId: 'name',
+        value: 'Alice',
+        row: ROWS[0],
+      });
+    });
+
+    it('passes the raw (unformatted) value for the clicked column', async () => {
+      const user = userEvent.setup();
+      const handleCellClick = vi.fn();
+
+      render(
+        <table>
+          <TableBody headers={HEADERS} rows={ROWS} onCellClick={handleCellClick} />
+        </table>,
+      );
+
+      await user.click(screen.getByText('20'));
+
+      expect(handleCellClick).toHaveBeenCalledWith({
+        rowIndex: 1,
+        columnId: 'value',
+        value: 20,
+        row: ROWS[1],
+      });
+    });
+
+    it('does not fire onRowIndexClick when a cell is clicked', async () => {
+      const user = userEvent.setup();
+      const handleCellClick = vi.fn();
+      const handleRowClick = vi.fn();
+
+      render(
+        <table>
+          <TableBody
+            headers={HEADERS}
+            rows={ROWS}
+            onCellClick={handleCellClick}
+            onRowIndexClick={handleRowClick}
+          />
+        </table>,
+      );
+
+      await user.click(screen.getByText('Alice'));
+
+      expect(handleCellClick).toHaveBeenCalledTimes(1);
+      expect(handleRowClick).not.toHaveBeenCalled();
+    });
+  });
 });

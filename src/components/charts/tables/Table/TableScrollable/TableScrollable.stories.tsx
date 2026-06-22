@@ -17,6 +17,7 @@ const meta: Meta = {
   },
   argTypes: {
     onSortChange: { action: 'onSortChange' },
+    onCellClick: { action: 'onCellClick' },
     rowHeight: { control: { type: 'number' } },
     headerHeight: { control: { type: 'number' } },
     footerHeight: { control: { type: 'number' } },

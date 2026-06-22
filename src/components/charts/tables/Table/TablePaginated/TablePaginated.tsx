@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from '../../tables.module.css';
 import clsx from 'clsx';
-import { TableHeaderItem, TableSort } from '../table.types';
+import { TableCellClickArg, TableHeaderItem, TableSort } from '../table.types';
 import { TableHeader } from '../components/TableHeader/TableHeader';
 import { TableBody } from '../components/TableBody/TableBody';
 import { TablePagination } from '../components/TablePagination/TablePagination';
@@ -17,6 +17,7 @@ export type TablePaginatedProps<T> = {
   total?: number;
   sort?: TableSort<T>;
   onRowIndexClick?: (rowIndex: number) => void;
+  onCellClick?: (arg: TableCellClickArg<T>) => void;
   onPageChange: (page: number) => void;
   onSortChange?: (value: TableSort<T> | undefined) => void;
 };
@@ -39,6 +40,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
       sort,
       showIndex = false,
       onRowIndexClick,
+      onCellClick,
       onPageChange,
       onSortChange,
     } = props;
@@ -55,6 +57,7 @@ export const TablePaginated = React.forwardRef<HTMLDivElement, TablePaginatedPro
             />
             <TableBody
               onRowIndexClick={onRowIndexClick}
+              onCellClick={onCellClick}
               showIndex={showIndex}
               headers={headers}
               rows={rows}

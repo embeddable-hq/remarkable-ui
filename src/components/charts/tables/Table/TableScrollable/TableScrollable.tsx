@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import tableStyles from '../../tables.module.css';
-import { TableHeaderItem, TableSort } from '../table.types';
+import { TableCellClickArg, TableHeaderItem, TableSort } from '../table.types';
 import { TableHeader } from '../components/TableHeader/TableHeader';
 import { TableBody } from '../components/TableBody/TableBody';
 import { useInfiniteScroll } from './TableScrollable.hooks';
@@ -23,6 +23,7 @@ export type TableScrollableProps<T> = {
   sort?: TableSort<T>;
   onNextPage: () => void;
   onRowIndexClick?: (rowIndex: number) => void;
+  onCellClick?: (arg: TableCellClickArg<T>) => void;
   onSortChange?: (value: TableSort<T> | undefined) => void;
 };
 
@@ -39,6 +40,7 @@ export const TableScrollable = forwardRef<TableScrollableHandle, TableScrollable
       hasMoreData = true,
       className,
       onRowIndexClick,
+      onCellClick,
       isLoading = false,
       loadingLabel = 'Loading...',
       bottomDistanceToPrefetch,
@@ -89,6 +91,7 @@ export const TableScrollable = forwardRef<TableScrollableHandle, TableScrollable
               headers={headers}
               rows={rows}
               onRowIndexClick={onRowIndexClick}
+              onCellClick={onCellClick}
               bottomRef={sentinelRef}
               isLoading={isLoading}
               hasMoreData={hasMoreData}

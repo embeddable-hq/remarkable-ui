@@ -91,4 +91,41 @@ describe('TablePaginated', () => {
       expect(handleRowClick).toHaveBeenCalledWith(0);
     });
   });
+
+  describe('onCellClick', () => {
+    it('calls onCellClick with cell details when a cell is clicked', async () => {
+      const user = userEvent.setup();
+      const handleCellClick = vi.fn();
+
+      render(<TablePaginated {...DEFAULT_PROPS} onCellClick={handleCellClick} />);
+
+      await user.click(screen.getByText('Alice'));
+
+      expect(handleCellClick).toHaveBeenCalledWith({
+        rowIndex: 0,
+        columnId: 'name',
+        value: 'Alice',
+        row: ROWS[0],
+      });
+    });
+
+    it('does not fire onRowIndexClick when a cell is clicked', async () => {
+      const user = userEvent.setup();
+      const handleCellClick = vi.fn();
+      const handleRowClick = vi.fn();
+
+      render(
+        <TablePaginated
+          {...DEFAULT_PROPS}
+          onCellClick={handleCellClick}
+          onRowIndexClick={handleRowClick}
+        />,
+      );
+
+      await user.click(screen.getByText('Alice'));
+
+      expect(handleCellClick).toHaveBeenCalledTimes(1);
+      expect(handleRowClick).not.toHaveBeenCalled();
+    });
+  });
 });
