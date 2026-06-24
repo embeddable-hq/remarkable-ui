@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { PivotTablePropsMeasure } from './PivotTable.types';
+import { PivotAggregationType, PivotTablePropsMeasure } from './PivotTable.types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -41,29 +41,138 @@ export const buildCellMap = (
   return map;
 };
 
-export const getMeasureTotal = (
-  totalsMap: Map<string, number[]>,
-  key: string,
-  measureIndex: number,
-  measuresCount: number,
-): number => {
-  const totals = totalsMap.get(key) ?? Array(measuresCount).fill(0);
-  return measureIndex >= 0 ? (totals[measureIndex] ?? 0) : 0;
+export const AGG_DEFAULT_LABELS: Record<PivotAggregationType, string> = {
+  sum: 'Sum',
+  min: 'Min',
+  max: 'Max',
+  average: 'Average',
 };
 
-export const computeSubRowTotal = (
+export type AggResult = {
+  sum: number[];
+  min: number[];
+  max: number[];
+  average: number[];
+};
+
+type AggAccumulator = {
+  sum: number[];
+  count: number[];
+  min: number[];
+  max: number[];
+};
+
+const makeAccumulator = (len: number): AggAccumulator => ({
+  sum: new Array(len).fill(0),
+  count: new Array(len).fill(0),
+  min: new Array(len).fill(Infinity),
+  max: new Array(len).fill(-Infinity),
+});
+
+const finaliseAccumulator = (acc: AggAccumulator): AggResult => ({
+  sum: acc.sum,
+  min: acc.min.map((v) => (v === Infinity ? 0 : v)),
+  max: acc.max.map((v) => (v === -Infinity ? 0 : v)),
+  average: acc.sum.map((s, i) => (acc.count[i]! > 0 ? s / acc.count[i]! : 0)),
+});
+
+export const getAggregatedValue = (
+  aggsMap: Map<string, AggResult>,
+  key: string,
+  measureIndex: number,
+  type: PivotAggregationType,
+  measuresCount: number,
+): number => {
+  const result = aggsMap.get(key);
+  if (!result) return 0;
+  const arr = result[type];
+  return measureIndex >= 0 && measureIndex < measuresCount ? (arr[measureIndex] ?? 0) : 0;
+};
+
+export const computeSubRowAggregation = (
   cellMap: Map<string, Map<string, Record<string, any>>>,
   rowKey: string,
   columnValues: string[],
   measureKey: string,
+  type: PivotAggregationType,
 ): number => {
-  let total = 0;
+  const values: number[] = [];
   for (const columnValue of columnValues) {
     const data = cellMap.get(rowKey)?.get(String(columnValue)) ?? {};
     const val = Number(data?.[measureKey]);
-    if (!Number.isNaN(val)) total += val;
+    if (!Number.isNaN(val)) values.push(val);
   }
-  return total;
+  if (values.length === 0) return 0;
+  switch (type) {
+    case 'sum':
+      return values.reduce((a, b) => a + b, 0);
+    case 'min':
+      return Math.min(...values);
+    case 'max':
+      return Math.max(...values);
+    case 'average':
+      return values.reduce((a, b) => a + b, 0) / values.length;
+  }
+};
+
+export const usePivotAggregations = (
+  data: any[],
+  measures: PivotTablePropsMeasure<any>[],
+  rowDimensionKey: string,
+  columnDimensionKey: string,
+  columnValues: string[],
+  rowValues: string[],
+) => {
+  return useMemo(() => {
+    const cAccs = new Map<string, AggAccumulator>();
+    const rAccs = new Map<string, AggAccumulator>();
+    const gAcc = makeAccumulator(measures.length);
+
+    for (const d of data) {
+      const r = String(d[rowDimensionKey]);
+      const c = String(d[columnDimensionKey]);
+
+      if (!cAccs.has(c)) cAccs.set(c, makeAccumulator(measures.length));
+      if (!rAccs.has(r)) rAccs.set(r, makeAccumulator(measures.length));
+
+      const cAcc = cAccs.get(c)!;
+      const rAcc = rAccs.get(r)!;
+
+      measures.forEach((m, i) => {
+        const v = Number((d as any)?.[m.key]);
+        if (!Number.isNaN(v)) {
+          cAcc.sum[i]! += v;
+          cAcc.count[i]!++;
+          cAcc.min[i] = Math.min(cAcc.min[i]!, v);
+          cAcc.max[i] = Math.max(cAcc.max[i]!, v);
+
+          rAcc.sum[i]! += v;
+          rAcc.count[i]!++;
+          rAcc.min[i] = Math.min(rAcc.min[i]!, v);
+          rAcc.max[i] = Math.max(rAcc.max[i]!, v);
+
+          gAcc.sum[i]! += v;
+          gAcc.count[i]!++;
+          gAcc.min[i] = Math.min(gAcc.min[i]!, v);
+          gAcc.max[i] = Math.max(gAcc.max[i]!, v);
+        }
+      });
+    }
+
+    for (const c of columnValues) {
+      if (!cAccs.has(String(c))) cAccs.set(String(c), makeAccumulator(measures.length));
+    }
+    for (const r of rowValues) {
+      if (!rAccs.has(String(r))) rAccs.set(String(r), makeAccumulator(measures.length));
+    }
+
+    const colAggs = new Map<string, AggResult>();
+    const rowAggs = new Map<string, AggResult>();
+    cAccs.forEach((acc, key) => colAggs.set(key, finaliseAccumulator(acc)));
+    rAccs.forEach((acc, key) => rowAggs.set(key, finaliseAccumulator(acc)));
+
+    return { colAggs, rowAggs, grandAggs: finaliseAccumulator(gAcc) };
+  }, [data, measures, rowDimensionKey, columnDimensionKey, columnValues, rowValues]);
 };
 
 export const useProgressiveRows = (
@@ -108,56 +217,4 @@ export const useProgressiveRows = (
   }, [progressive, batchSize, batchDelayMs, rowValues.length]);
 
   return progressive ? rowValues.slice(0, visibleCount) : rowValues;
-};
-
-export const usePivotTotals = (
-  data: any[],
-  measures: PivotTablePropsMeasure<any>[],
-  rowDimensionKey: string,
-  columnDimensionKey: string,
-  columnValues: string[],
-  rowValues: string[],
-) => {
-  return useMemo(() => {
-    const cTotals = new Map<string, number[]>();
-    const rTotals = new Map<string, number[]>();
-    const gTotals = measures.map(() => 0);
-
-    for (const d of data) {
-      const r = String(d[rowDimensionKey]);
-      const c = String(d[columnDimensionKey]);
-      const cArr = cTotals.get(c) ?? measures.map(() => 0);
-      const rArr = rTotals.get(r) ?? measures.map(() => 0);
-
-      measures.forEach((m, i) => {
-        const raw = (d as any)?.[m.key];
-        const v = Number(raw);
-        if (!Number.isNaN(v)) {
-          cArr[i]! += v;
-          rArr[i]! += v;
-          gTotals[i]! += v;
-        }
-      });
-
-      cTotals.set(c, cArr);
-      rTotals.set(r, rArr);
-    }
-
-    for (const c of columnValues) {
-      if (!cTotals.has(String(c)))
-        cTotals.set(
-          String(c),
-          measures.map(() => 0),
-        );
-    }
-    for (const r of rowValues) {
-      if (!rTotals.has(String(r)))
-        rTotals.set(
-          String(r),
-          measures.map(() => 0),
-        );
-    }
-
-    return { colTotals: cTotals, rowTotals: rTotals, grandTotals: gTotals };
-  }, [data, measures, rowDimensionKey, columnDimensionKey, columnValues, rowValues]);
 };

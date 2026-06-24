@@ -2,6 +2,22 @@
 
 import { ReactElement } from 'react';
 
+export const PivotAggregationType = {
+  SUM: 'sum',
+  MIN: 'min',
+  MAX: 'max',
+  AVERAGE: 'average',
+} as const;
+
+export type PivotAggregationType =
+  (typeof PivotAggregationType)[keyof typeof PivotAggregationType];
+
+/** @internal Used by the component to drive header/cell rendering in a consistent order. */
+export type PivotAggregationConfig<T> = {
+  type: PivotAggregationType;
+  measureKeys: Array<Extract<keyof T, string>>;
+};
+
 export type PivotTablePropsMeasure<T> = {
   key: Extract<keyof T, string>;
   label: string;
@@ -23,6 +39,8 @@ export type PivotTablePropsColumnDimension<T> = {
   formatValue?: (value: any) => any;
 };
 
+type MeasureKeys<T> = Array<Extract<keyof T, string>>;
+
 export type PivotTableProps<T> = {
   data: T[];
   measures: PivotTablePropsMeasure<T>[];
@@ -31,10 +49,18 @@ export type PivotTableProps<T> = {
   progressive?: boolean;
   batchSize?: number;
   batchDelayMs?: number;
-  rowTotalsFor?: Array<Extract<keyof T, string>>;
-  columnTotalsFor?: Array<Extract<keyof T, string>>;
-  showColumnPercentages?: boolean;
-  totalLabel?: string;
+  rowSumFor?: MeasureKeys<T>;
+  rowMinFor?: MeasureKeys<T>;
+  rowMaxFor?: MeasureKeys<T>;
+  rowAverageFor?: MeasureKeys<T>;
+  columnSumFor?: MeasureKeys<T>;
+  columnMinFor?: MeasureKeys<T>;
+  columnMaxFor?: MeasureKeys<T>;
+  columnAverageFor?: MeasureKeys<T>;
+  sumLabel?: string;
+  minLabel?: string;
+  maxLabel?: string;
+  averageLabel?: string;
   percentageDecimalPlaces?: number;
   columnWidth?: number;
   firstColumnWidth?: number;
