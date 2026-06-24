@@ -1,18 +1,33 @@
 import { FC, Fragment, useMemo, useState } from 'react';
 import tableStyles from '../tables.module.css';
 import clsx from 'clsx';
-import { PivotTableProps } from './PivotTable.types';
+import { PivotAggregationConfig, PivotAggregationType, PivotTableProps } from './PivotTable.types';
 import { getTableCellWidthStyle } from '../tables.utils';
 import { IconLoader2, IconChevronDown, IconChevronRight } from '@tabler/icons-react';
 import {
+  AGG_DEFAULT_LABELS,
+  AggResult,
   buildCellMap,
+  computeSubRowAggregation,
   getCellDisplayValue,
+  getAggregatedValue,
   getPercentageDisplay,
-  getMeasureTotal,
-  computeSubRowTotal,
+  usePivotAggregations,
   useProgressiveRows,
-  usePivotTotals,
 } from './PivotTable.utils';
+
+const toGroups = (
+  sum: string[],
+  min: string[],
+  max: string[],
+  average: string[],
+): PivotAggregationConfig<any>[] =>
+  [
+    { type: 'sum' as const, measureKeys: sum },
+    { type: 'min' as const, measureKeys: min },
+    { type: 'max' as const, measureKeys: max },
+    { type: 'average' as const, measureKeys: average },
+  ].filter((g) => g.measureKeys.length > 0);
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const PivotTable: FC<PivotTableProps<any>> = ({
@@ -25,9 +40,18 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   progressive = true,
   batchSize = 100,
   batchDelayMs = 0,
-  rowTotalsFor = [],
-  columnTotalsFor = [],
-  totalLabel = 'Total',
+  rowSumFor = [],
+  rowMinFor = [],
+  rowMaxFor = [],
+  rowAverageFor = [],
+  columnSumFor = [],
+  columnMinFor = [],
+  columnMaxFor = [],
+  columnAverageFor = [],
+  sumLabel,
+  minLabel,
+  maxLabel,
+  averageLabel,
   className,
   expandableRows = false,
   subRowsByRow,
@@ -35,8 +59,24 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   onRowExpand,
   subRowDimension,
 }) => {
-  // Default subRowDimension to rowDimension if not provided
   const effectiveSubRowDimension = subRowDimension ?? rowDimension;
+
+  const aggLabels: Record<string, string> = {
+    sum: sumLabel ?? AGG_DEFAULT_LABELS.sum,
+    min: minLabel ?? AGG_DEFAULT_LABELS.min,
+    max: maxLabel ?? AGG_DEFAULT_LABELS.max,
+    average: averageLabel ?? AGG_DEFAULT_LABELS.average,
+  };
+
+  const rowAggregationsFor = useMemo(
+    () => toGroups(rowSumFor, rowMinFor, rowMaxFor, rowAverageFor),
+    [rowSumFor, rowMinFor, rowMaxFor, rowAverageFor],
+  );
+  const columnAggregationsFor = useMemo(
+    () => toGroups(columnSumFor, columnMinFor, columnMaxFor, columnAverageFor),
+    [columnSumFor, columnMinFor, columnMaxFor, columnAverageFor],
+  );
+
   const rowValues = useMemo(() => {
     const s = new Set<string>();
     for (const d of data) {
@@ -60,10 +100,8 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     [data, rowDimension.key, columnDimension.key],
   );
 
-  const rowTotalsSet = useMemo(() => new Set<string>(rowTotalsFor), [rowTotalsFor]);
-  const columnTotalsSet = useMemo(() => new Set<string>(columnTotalsFor), [columnTotalsFor]);
-  const hasRowTotals = rowTotalsSet.size > 0;
-  const hasColumnTotals = columnTotalsSet.size > 0;
+  const hasRowAggs = rowAggregationsFor.length > 0;
+  const hasColumnAggs = columnAggregationsFor.length > 0;
 
   const measureIndexByKey = useMemo(() => {
     const map = new Map<string, number>();
@@ -71,7 +109,12 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     return map;
   }, [measures]);
 
-  const { colTotals, rowTotals, grandTotals } = usePivotTotals(
+  const measureByKey = useMemo(
+    () => new Map(measures.map((m) => [String(m.key), m])),
+    [measures],
+  );
+
+  const { colAggs, rowAggs, grandAggs } = usePivotAggregations(
     data,
     measures,
     rowDimension.key,
@@ -86,19 +129,14 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     setExpandedRows((prev) => {
       const next = new Set(prev);
       const wasExpanded = next.has(rowKey);
-
       if (wasExpanded) {
-        // Collapse the row
         next.delete(rowKey);
       } else {
-        // Expand the row and trigger data fetch
         next.add(rowKey);
-        // Only call onRowExpand if we don't already have the data
         if (!subRowsByRow?.has(rowKey)) {
           onRowExpand?.(rowKey);
         }
       }
-
       return next;
     });
   };
@@ -120,7 +158,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
         const value = object?.[measure.key];
         const key = `${keyPrefix}-${columnValue}-${measure.key}-${idx}`;
         const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-        const colTotal = getMeasureTotal(colTotals, String(columnValue), mi, measures.length);
+        const colTotal = getAggregatedValue(colAggs, String(columnValue), mi, 'sum', measures.length);
         const displayValue = getCellDisplayValue(value, measure, object, colTotal);
 
         return (
@@ -131,30 +169,47 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
       }),
     );
 
-  const renderRowTotalCells = (
-    getTotalValue: (measureKey: string, measureIndex: number) => number,
+  const getAggCellDisplayValue = (
+    type: PivotAggregationType,
+    value: number,
+    measure: any,
+    sourceAggs: AggResult,
+    measureIndex: number,
+  ): any => {
+    if (type === 'sum' && measure.showAsPercentage) {
+      const denominator = sourceAggs.sum[measureIndex] || 1;
+      if (typeof denominator === 'number' && denominator > 0) {
+        return getPercentageDisplay(
+          (value / denominator) * 100,
+          measure.percentageDecimalPlaces ?? 0,
+        );
+      }
+    }
+    return measure.accessor ? measure.accessor({ [measure.key]: value }) : value;
+  };
+
+  const renderRowAggCells = (
+    getAggValue: (type: PivotAggregationType, measureKey: string, measureIndex: number) => number,
+    sourceAggs: AggResult,
     keyPrefix: string,
   ) => {
-    if (!hasRowTotals) return null;
-    return measures
-      .filter((measure) => rowTotalsSet.has(measure.key))
-      .map((measure, idx) => {
-        const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
-        const key = `${keyPrefix}-${measure.key}-${idx}`;
-        const value = getTotalValue(measure.key, measureIndex);
-        const displayValue = getCellDisplayValue(
-          value,
-          measure,
-          { [measure.key]: value },
-          grandTotals[measureIndex] || 1,
-        );
+    if (!hasRowAggs) return null;
+    return rowAggregationsFor.flatMap((group: PivotAggregationConfig<any>, gi: number) =>
+      group.measureKeys.map((measureKey: string, idx: number) => {
+        const measure = measureByKey.get(measureKey);
+        if (!measure) return null;
+        const measureIndex = measureIndexByKey.get(measureKey) ?? -1;
+        const key = `${keyPrefix}-${group.type}-${gi}-${measureKey}-${idx}`;
+        const value = getAggValue(group.type, measureKey, measureIndex);
+        const displayValue = getAggCellDisplayValue(group.type, value, measure, sourceAggs, measureIndex);
 
         return (
-          <td key={key} className={tableStyles.boltCell} title={displayValue}>
+          <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
             {displayValue}
           </td>
         );
-      });
+      }),
+    );
   };
 
   const renderSubRows = (rowKey: string, subRows: any[]) => {
@@ -185,13 +240,92 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
             `sub-cell-${rowKey}-${subRowIdx}`,
           )}
 
-          {renderRowTotalCells(
-            (key) => computeSubRowTotal(subRowCellMap, String(subRowValue), columnValues, key),
-            `sub-total-${rowKey}-${subRowIdx}`,
+          {renderRowAggCells(
+            (type, measureKey) =>
+              computeSubRowAggregation(
+                subRowCellMap,
+                String(subRowValue),
+                columnValues,
+                measureKey,
+                type,
+              ),
+            grandAggs,
+            `sub-agg-${rowKey}-${subRowIdx}`,
           )}
         </tr>
       );
     });
+  };
+
+  const getColumnAggDisplayValue = (
+    type: PivotAggregationType,
+    value: number,
+    measure: any,
+  ): any => {
+    if (type === 'sum' && measure.showAsPercentage) {
+      return getPercentageDisplay(100, measure.percentageDecimalPlaces ?? 0);
+    }
+    return measure.accessor ? measure.accessor({ [measure.key]: value }) : value;
+  };
+
+  const renderColumnAggRow = (
+    group: PivotAggregationConfig<any>,
+    gi: number,
+    isLast: boolean,
+  ) => {
+    const groupLabel = aggLabels[group.type];
+    const groupMeasureKeySet = new Set(group.measureKeys);
+
+    return (
+      <tr
+        key={`col-agg-row-${group.type}-${gi}`}
+        className={isLast ? tableStyles.stickyLastRow : undefined}
+      >
+        <th
+          scope="row"
+          className={clsx(tableStyles.stickyFirstColumn, tableStyles.boltCell)}
+          title={groupLabel}
+          style={getTableCellWidthStyle(firstColumnWidth)}
+        >
+          {groupLabel}
+        </th>
+
+        {columnValues.flatMap((columnValue) =>
+          measures.map((measure, idx) => {
+            const key = `col-agg-${group.type}-${gi}-${String(columnValue)}-${measure.key}-${idx}`;
+            if (!groupMeasureKeySet.has(measure.key)) {
+              return <td key={key} className={tableStyles.boltCell}>{''}</td>;
+            }
+            const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
+            const value = getAggregatedValue(colAggs, String(columnValue), mi, group.type, measures.length);
+            const displayValue = getColumnAggDisplayValue(group.type, value, measure);
+            return (
+              <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
+                {displayValue}
+              </td>
+            );
+          }),
+        )}
+
+        {hasRowAggs &&
+          rowAggregationsFor.flatMap((rowGroup: PivotAggregationConfig<any>, rgi: number) =>
+            rowGroup.measureKeys.map((measureKey: string, idx: number) => {
+              const measure = measureByKey.get(measureKey);
+              const measureIndex = measureIndexByKey.get(measureKey) ?? -1;
+              const key = `grand-agg-${group.type}-${gi}-${rowGroup.type}-${rgi}-${measureKey}-${idx}`;
+              const value = grandAggs[group.type][measureIndex] ?? 0;
+              const displayValue = measure
+                ? getColumnAggDisplayValue(group.type, value, measure)
+                : value;
+              return (
+                <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
+                  {displayValue}
+                </td>
+              );
+            }),
+          )}
+      </tr>
+    );
   };
 
   return (
@@ -232,17 +366,21 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   </th>
                 );
               })}
-              {hasRowTotals && (
-                <th
-                  key="col-total-group"
-                  scope="colgroup"
-                  colSpan={Array.from(rowTotalsSet).length}
-                  className={tableStyles.boltCell}
-                  title={totalLabel}
-                >
-                  {totalLabel}
-                </th>
-              )}
+              {hasRowAggs &&
+                rowAggregationsFor.map((group: PivotAggregationConfig<any>, gi: number) => {
+                  const label = aggLabels[group.type];
+                  return (
+                    <th
+                      key={`agg-group-${group.type}-${gi}`}
+                      scope="colgroup"
+                      colSpan={group.measureKeys.length}
+                      className={tableStyles.boltCell}
+                      title={label}
+                    >
+                      {label}
+                    </th>
+                  );
+                })}
             </tr>
             <tr>
               <th
@@ -266,20 +404,23 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                   </th>
                 )),
               )}
-              {hasRowTotals &&
-                measures
-                  .filter((measure) => rowTotalsSet.has(measure.key))
-                  .map((measure, idx) => (
-                    <th
-                      key={`sub-total-${measure.key}-${idx}`}
-                      scope="col"
-                      className={tableStyles.boltCell}
-                      title={measure.label}
-                      style={getTableCellWidthStyle(columnWidth)}
-                    >
-                      {measure.label}
-                    </th>
-                  ))}
+              {hasRowAggs &&
+                rowAggregationsFor.flatMap((group: PivotAggregationConfig<any>, gi: number) =>
+                  group.measureKeys.map((measureKey: string, idx: number) => {
+                    const measure = measureByKey.get(measureKey);
+                    return (
+                      <th
+                        key={`agg-sub-${group.type}-${gi}-${measureKey}-${idx}`}
+                        scope="col"
+                        className={tableStyles.boltCell}
+                        title={measure?.label ?? measureKey}
+                        style={getTableCellWidthStyle(columnWidth)}
+                      >
+                        {measure?.label ?? measureKey}
+                      </th>
+                    );
+                  }),
+                )}
             </tr>
           </thead>
           <tbody>
@@ -306,7 +447,6 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
               return (
                 <Fragment key={`row-group-${rowKey}`}>
-                  {/* Parent row with expand button */}
                   <tr
                     className={clsx(isExpanded && tableStyles.expandedRow)}
                     title={rowDimensionValue}
@@ -349,85 +489,29 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
                     {renderMeasureCells(cellMap, String(row), `cell-${row}`)}
 
-                    {renderRowTotalCells(
-                      (_key, mi) => getMeasureTotal(rowTotals, String(row), mi, measures.length),
-                      `row-total-${String(row)}`,
+                    {renderRowAggCells(
+                      (_type, _measureKey, measureIndex) =>
+                        getAggregatedValue(
+                          rowAggs,
+                          String(row),
+                          measureIndex,
+                          _type,
+                          measures.length,
+                        ),
+                      rowAggs.get(String(row)) ?? grandAggs,
+                      `row-agg-${String(row)}`,
                     )}
                   </tr>
 
-                  {/* Sub-rows when expanded and loaded */}
                   {showSubRows && renderSubRows(rowKey, subRows)}
                 </Fragment>
               );
             })}
-            {hasColumnTotals && (
-              <tr key="totals-row" className={tableStyles.stickyLastRow}>
-                <th
-                  scope="row"
-                  className={clsx(tableStyles.stickyFirstColumn, tableStyles.boltCell)}
-                  title={totalLabel}
-                  style={getTableCellWidthStyle(firstColumnWidth)}
-                >
-                  {totalLabel}
-                </th>
 
-                {columnValues.flatMap((columnValue) =>
-                  measures.map((measure, idx) => {
-                    const show = columnTotalsSet.has(String(measure.key));
-                    const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-                    const key = `col-total-${String(columnValue)}-${measure.key}-${idx}`;
-                    const value = getMeasureTotal(
-                      colTotals,
-                      String(columnValue),
-                      mi,
-                      measures.length,
-                    );
-                    let displayValue: any = value;
-
-                    if (measure.showAsPercentage) {
-                      displayValue = getPercentageDisplay(
-                        100,
-                        measure.percentageDecimalPlaces ?? 0,
-                      );
-                    } else if (measure.accessor) {
-                      displayValue = measure.accessor({ [measure.key]: value });
-                    }
-                    const columnValueDisplay = show ? displayValue : '';
-
-                    return (
-                      <td key={key} className={tableStyles.boltCell} title={columnValueDisplay}>
-                        {columnValueDisplay}
-                      </td>
-                    );
-                  }),
-                )}
-
-                {hasRowTotals &&
-                  measures
-                    .filter((measure) => rowTotalsSet.has(measure.key))
-                    .map((measure, idx) => {
-                      const measureIndex = measureIndexByKey.get(measure.key) ?? -1;
-                      const key = `grand-total-${measure.key}-${idx}`;
-                      const value: number = grandTotals[measureIndex] ?? 0;
-                      let displayValue: any = value;
-
-                      if (measure.showAsPercentage) {
-                        displayValue = getPercentageDisplay(
-                          100,
-                          measure.percentageDecimalPlaces ?? 0,
-                        );
-                      } else if (measure.accessor) {
-                        displayValue = measure.accessor({ [measure.key]: value });
-                      }
-
-                      return (
-                        <td key={key} className={tableStyles.boltCell} title={displayValue}>
-                          {displayValue}
-                        </td>
-                      );
-                    })}
-              </tr>
-            )}
+            {hasColumnAggs &&
+              columnAggregationsFor.map((group: PivotAggregationConfig<any>, gi: number) =>
+                renderColumnAggRow(group, gi, gi === columnAggregationsFor.length - 1),
+              )}
           </tbody>
         </table>
       </div>

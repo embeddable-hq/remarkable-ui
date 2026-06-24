@@ -4,10 +4,12 @@ import {
   isNumber,
   getPercentageDisplay,
   buildCellMap,
-  getMeasureTotal,
-  computeSubRowTotal,
+  getAggregatedValue,
+  computeSubRowAggregation,
   getCellDisplayValue,
   useProgressiveRows,
+  usePivotAggregations,
+  AGG_DEFAULT_LABELS,
 } from './PivotTable.utils';
 
 describe('isNumber', () => {
@@ -103,35 +105,60 @@ describe('buildCellMap', () => {
   });
 });
 
-describe('getMeasureTotal', () => {
-  it('retrieves the correct total for a given key and measure index', () => {
-    const totalsMap = new Map([['North', [100, 200, 300]]]);
-
-    expect(getMeasureTotal(totalsMap, 'North', 0, 3)).toBe(100);
-    expect(getMeasureTotal(totalsMap, 'North', 1, 3)).toBe(200);
-    expect(getMeasureTotal(totalsMap, 'North', 2, 3)).toBe(300);
-  });
-
-  it('returns 0 when key is not in the map', () => {
-    const totalsMap = new Map<string, number[]>();
-
-    expect(getMeasureTotal(totalsMap, 'Missing', 0, 2)).toBe(0);
-  });
-
-  it('returns 0 when measureIndex is negative', () => {
-    const totalsMap = new Map([['North', [100]]]);
-
-    expect(getMeasureTotal(totalsMap, 'North', -1, 1)).toBe(0);
-  });
-
-  it('returns 0 when measureIndex exceeds the array length', () => {
-    const totalsMap = new Map([['North', [100]]]);
-
-    expect(getMeasureTotal(totalsMap, 'North', 5, 2)).toBe(0);
+describe('AGG_DEFAULT_LABELS', () => {
+  it('provides a human-readable label for each aggregation type', () => {
+    expect(AGG_DEFAULT_LABELS.sum).toBe('Sum');
+    expect(AGG_DEFAULT_LABELS.min).toBe('Min');
+    expect(AGG_DEFAULT_LABELS.max).toBe('Max');
+    expect(AGG_DEFAULT_LABELS.average).toBe('Average');
   });
 });
 
-describe('computeSubRowTotal', () => {
+describe('getAggregatedValue', () => {
+  const makeResult = (sum: number, min: number, max: number, average: number) => ({
+    sum: [sum],
+    min: [min],
+    max: [max],
+    average: [average],
+  });
+
+  it('retrieves sum for a given key and measure index', () => {
+    const aggsMap = new Map([['North', makeResult(300, 100, 200, 150)]]);
+    expect(getAggregatedValue(aggsMap, 'North', 0, 'sum', 1)).toBe(300);
+  });
+
+  it('retrieves min correctly', () => {
+    const aggsMap = new Map([['North', makeResult(300, 100, 200, 150)]]);
+    expect(getAggregatedValue(aggsMap, 'North', 0, 'min', 1)).toBe(100);
+  });
+
+  it('retrieves max correctly', () => {
+    const aggsMap = new Map([['North', makeResult(300, 100, 200, 150)]]);
+    expect(getAggregatedValue(aggsMap, 'North', 0, 'max', 1)).toBe(200);
+  });
+
+  it('retrieves average correctly', () => {
+    const aggsMap = new Map([['North', makeResult(300, 100, 200, 150)]]);
+    expect(getAggregatedValue(aggsMap, 'North', 0, 'average', 1)).toBe(150);
+  });
+
+  it('returns 0 when key is not in the map', () => {
+    const aggsMap = new Map<string, ReturnType<typeof makeResult>>();
+    expect(getAggregatedValue(aggsMap, 'Missing', 0, 'sum', 1)).toBe(0);
+  });
+
+  it('returns 0 when measureIndex is negative', () => {
+    const aggsMap = new Map([['North', makeResult(300, 100, 200, 150)]]);
+    expect(getAggregatedValue(aggsMap, 'North', -1, 'sum', 1)).toBe(0);
+  });
+
+  it('returns 0 when measureIndex exceeds array length', () => {
+    const aggsMap = new Map([['North', makeResult(300, 100, 200, 150)]]);
+    expect(getAggregatedValue(aggsMap, 'North', 5, 'sum', 1)).toBe(0);
+  });
+});
+
+describe('computeSubRowAggregation', () => {
   const cellMap = new Map([
     [
       'North',
@@ -143,19 +170,31 @@ describe('computeSubRowTotal', () => {
     ],
   ]);
 
-  it('sums numeric values across column values for a row key', () => {
-    expect(computeSubRowTotal(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales')).toBe(450);
+  it('sums values across column values for a row key', () => {
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'sum')).toBe(450);
+  });
+
+  it('returns the minimum value across column values', () => {
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'min')).toBe(100);
+  });
+
+  it('returns the maximum value across column values', () => {
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'max')).toBe(200);
+  });
+
+  it('returns the average of values across column values', () => {
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'average')).toBe(150);
   });
 
   it('sums only the specified columns', () => {
-    expect(computeSubRowTotal(cellMap, 'North', ['Q1', 'Q2'], 'sales')).toBe(300);
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2'], 'sales', 'sum')).toBe(300);
   });
 
   it('returns 0 for a row key not in the map', () => {
-    expect(computeSubRowTotal(cellMap, 'South', ['Q1', 'Q2'], 'sales')).toBe(0);
+    expect(computeSubRowAggregation(cellMap, 'South', ['Q1', 'Q2'], 'sales', 'sum')).toBe(0);
   });
 
-  it('skips NaN values in the sum', () => {
+  it('skips NaN values in the computation', () => {
     const mapWithNaN = new Map([
       [
         'East',
@@ -166,7 +205,104 @@ describe('computeSubRowTotal', () => {
       ],
     ]);
 
-    expect(computeSubRowTotal(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales')).toBe(100);
+    expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'sum')).toBe(100);
+    expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'min')).toBe(100);
+    expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'max')).toBe(100);
+    expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'average')).toBe(100);
+  });
+});
+
+describe('usePivotAggregations', () => {
+  const data = [
+    { country: 'US', month: 'Jan', revenue: 100 },
+    { country: 'US', month: 'Feb', revenue: 120 },
+    { country: 'UK', month: 'Jan', revenue: 80 },
+    { country: 'UK', month: 'Feb', revenue: 90 },
+  ];
+  const measures = [{ key: 'revenue' as const, label: 'Revenue' }];
+  const rowKey = 'country';
+  const colKey = 'month';
+  const columnValues = ['Jan', 'Feb'];
+  const rowValues = ['US', 'UK'];
+
+  it('computes row sums correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.rowAggs.get('US')?.sum[0]).toBe(220);
+    expect(result.current.rowAggs.get('UK')?.sum[0]).toBe(170);
+  });
+
+  it('computes column sums correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.colAggs.get('Jan')?.sum[0]).toBe(180);
+    expect(result.current.colAggs.get('Feb')?.sum[0]).toBe(210);
+  });
+
+  it('computes grand sum correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.grandAggs.sum[0]).toBe(390);
+  });
+
+  it('computes row min correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.rowAggs.get('US')?.min[0]).toBe(100);
+    expect(result.current.rowAggs.get('UK')?.min[0]).toBe(80);
+  });
+
+  it('computes row max correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.rowAggs.get('US')?.max[0]).toBe(120);
+    expect(result.current.rowAggs.get('UK')?.max[0]).toBe(90);
+  });
+
+  it('computes row average correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.rowAggs.get('US')?.average[0]).toBe(110);
+    expect(result.current.rowAggs.get('UK')?.average[0]).toBe(85);
+  });
+
+  it('computes grand average correctly', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations(data, measures, rowKey, colKey, columnValues, rowValues),
+    );
+
+    expect(result.current.grandAggs.average[0]).toBe(97.5);
+  });
+
+  it('initialises missing row keys with zero values', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations([], measures, rowKey, colKey, columnValues, ['FR']),
+    );
+
+    expect(result.current.rowAggs.get('FR')?.sum[0]).toBe(0);
+    expect(result.current.rowAggs.get('FR')?.min[0]).toBe(0);
+    expect(result.current.rowAggs.get('FR')?.max[0]).toBe(0);
+    expect(result.current.rowAggs.get('FR')?.average[0]).toBe(0);
+  });
+
+  it('initialises missing column keys with zero values', () => {
+    const { result } = renderHook(() =>
+      usePivotAggregations([], measures, rowKey, colKey, ['Mar'], rowValues),
+    );
+
+    expect(result.current.colAggs.get('Mar')?.sum[0]).toBe(0);
   });
 });
 

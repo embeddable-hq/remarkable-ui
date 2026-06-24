@@ -50,27 +50,68 @@ describe('PivotTable', () => {
     });
   });
 
-  describe('row totals', () => {
-    it('renders totals column header when rowTotalsFor is specified', () => {
-      render(<PivotTable {...DEFAULT_PROPS} rowTotalsFor={['revenue']} totalLabel="Total" />);
+  describe('row aggregations', () => {
+    it('renders Sum group header when rowSumFor is specified', () => {
+      render(<PivotTable {...DEFAULT_PROPS} rowSumFor={['revenue']} />);
 
-      expect(screen.getByText('Total')).toBeInTheDocument();
+      expect(screen.getByText('Sum')).toBeInTheDocument();
     });
 
-    it('does not render totals column when rowTotalsFor is empty', () => {
-      render(<PivotTable {...DEFAULT_PROPS} rowTotalsFor={[]} />);
+    it('renders Min and Max group headers when both props are specified', () => {
+      render(<PivotTable {...DEFAULT_PROPS} rowMinFor={['revenue']} rowMaxFor={['revenue']} />);
 
-      expect(screen.queryByText('Total')).not.toBeInTheDocument();
+      expect(screen.getByText('Min')).toBeInTheDocument();
+      expect(screen.getByText('Max')).toBeInTheDocument();
+    });
+
+    it('renders Average group header when rowAverageFor is specified', () => {
+      render(<PivotTable {...DEFAULT_PROPS} rowAverageFor={['revenue']} />);
+
+      expect(screen.getByText('Average')).toBeInTheDocument();
+    });
+
+    it('renders no aggregation columns when no row agg props are set', () => {
+      render(<PivotTable {...DEFAULT_PROPS} />);
+
+      expect(screen.queryByText('Sum')).not.toBeInTheDocument();
+      expect(screen.queryByText('Min')).not.toBeInTheDocument();
+      expect(screen.queryByText('Max')).not.toBeInTheDocument();
+      expect(screen.queryByText('Average')).not.toBeInTheDocument();
+    });
+
+    it('renders correct sum value in row aggregation cell', () => {
+      render(<PivotTable {...DEFAULT_PROPS} rowSumFor={['revenue']} />);
+
+      // US row: 100 + 120 = 220
+      expect(screen.getByTitle('220')).toBeInTheDocument();
     });
   });
 
-  describe('column totals', () => {
-    it('renders a totals row when columnTotalsFor is specified', () => {
-      render(
-        <PivotTable {...DEFAULT_PROPS} columnTotalsFor={['revenue']} totalLabel="Grand Total" />,
-      );
+  describe('column aggregations', () => {
+    it('renders a Sum footer row when columnSumFor is specified', () => {
+      render(<PivotTable {...DEFAULT_PROPS} columnSumFor={['revenue']} />);
 
-      expect(screen.getByText('Grand Total')).toBeInTheDocument();
+      expect(screen.getByText('Sum')).toBeInTheDocument();
+    });
+
+    it('renders Average footer row when columnAverageFor is specified', () => {
+      render(<PivotTable {...DEFAULT_PROPS} columnAverageFor={['revenue']} />);
+
+      expect(screen.getByText('Average')).toBeInTheDocument();
+    });
+
+    it('renders multiple footer rows when multiple column agg props are set', () => {
+      render(<PivotTable {...DEFAULT_PROPS} columnMinFor={['revenue']} columnMaxFor={['revenue']} />);
+
+      expect(screen.getByText('Min')).toBeInTheDocument();
+      expect(screen.getByText('Max')).toBeInTheDocument();
+    });
+
+    it('renders no footer rows when no column agg props are set', () => {
+      render(<PivotTable {...DEFAULT_PROPS} />);
+
+      expect(screen.queryByText('Sum')).not.toBeInTheDocument();
+      expect(screen.queryByText('Average')).not.toBeInTheDocument();
     });
   });
 
