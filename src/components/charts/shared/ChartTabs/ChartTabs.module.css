@@ -48,6 +48,14 @@
   background: var(--em-charttabs-item-background--hover, #f7f7f8);
 }
 
+.tab:hover .label {
+  color: var(--em-charttabs-item-label-color--hover, var(--em-charttabs-item-label-color, #212129));
+}
+
+.tab:hover .value {
+  color: var(--em-charttabs-item-value-color--hover, var(--em-charttabs-item-value-color, #212129));
+}
+
 .active {
   opacity: var(--em-charttabs-item-opacity--active, 1);
   border: var(--em-charttabs-item-border-width--active, 1px) solid

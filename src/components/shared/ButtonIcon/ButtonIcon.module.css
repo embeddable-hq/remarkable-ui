@@ -27,6 +27,7 @@
 .buttonIcon.primary:hover {
   background: var(--em-buttonicon-background--primary--hover, #212129);
   border-color: var(--em-buttonicon-border-color--primary--hover, rgb(255 255 255 / 0%));
+  color: var(--em-buttonicon-color--primary--hover, var(--em-buttonicon-color--primary, #fff));
 }
 
 .buttonIcon.primary:active {
@@ -48,6 +49,7 @@
 .buttonIcon.secondary:hover {
   background: var(--em-buttonicon-background--secondary--hover, #e4e4ea);
   border-color: var(--em-buttonicon-border-color--secondary--hover, rgb(255 255 255 / 0%));
+  color: var(--em-buttonicon-color--secondary--hover, var(--em-buttonicon-color--secondary, #212129));
 }
 
 .buttonIcon.secondary:active {
