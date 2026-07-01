@@ -25,7 +25,7 @@
 .ghostButton:focus-visible {
   background-color: var(--em-ghostbutton-background--hover, #f7f7f8);
   border-color: var(--em-ghostbutton-border-color--hover, rgb(255 255 255 / 0%));
-  color: var(--em-ghostbutton-color--hover, var(--em-ghostbutton-color, #212129));
+  color: var(--em-ghostbutton-color--hover, #212129);
 }
 
 .ghostButton:active {

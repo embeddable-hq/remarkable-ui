@@ -49,11 +49,11 @@
 }
 
 .tab:hover .label {
-  color: var(--em-charttabs-item-label-color--hover, var(--em-charttabs-item-label-color, #212129));
+  color: var(--em-charttabs-item-label-color--hover, #212129);
 }
 
 .tab:hover .value {
-  color: var(--em-charttabs-item-value-color--hover, var(--em-charttabs-item-value-color, #212129));
+  color: var(--em-charttabs-item-value-color--hover, #212129);
 }
 
 .active {

@@ -59,17 +59,17 @@
 
 .selectFieldOption:hover .leftContent,
 .selectFieldOption:focus-visible .leftContent {
-  color: var(--em-selectfield-item-label-left-color--hover, var(--em-selectfield-item-label-left-color, #212129));
+  color: var(--em-selectfield-item-label-left-color--hover, #212129);
 }
 
 .selectFieldOption:hover .rightContent,
 .selectFieldOption:focus-visible .rightContent {
-  color: var(--em-selectfield-item-label-right-color--hover, var(--em-selectfield-item-label-right-color, #5c5c66));
+  color: var(--em-selectfield-item-label-right-color--hover, #5c5c66);
 }
 
 .selectFieldOption:hover svg,
 .selectFieldOption:focus-visible svg {
-  color: var(--em-selectfield-item-icon-color--hover, var(--em-selectfield-item-icon-color, #212129));
+  color: var(--em-selectfield-item-icon-color--hover, #212129);
 }
 
 .selectFieldOption:active {
