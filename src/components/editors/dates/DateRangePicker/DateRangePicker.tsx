@@ -12,6 +12,8 @@ export type DateRangePickerProps = {
   onChange: (dateRange: DateRange | undefined) => void;
 };
 
+const YEARS_AFTER = 5;
+
 export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   value,
   numberOfMonths = 1,
@@ -19,6 +21,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   onChange,
 }) => {
   const [month, setMonth] = useState<Date>(value?.from ?? new Date());
+  const currentYear = new Date().getFullYear();
 
   const handleChange = (range: DateRange | undefined) => {
     if (range?.to) {
@@ -26,9 +29,6 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     }
     onChange(range);
   };
-
-  const now = new Date();
-  const endMonth = new Date(now.getFullYear() + 2, now.getMonth());
 
   return (
     <DayPicker
@@ -45,7 +45,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       timeZone="UTC"
       showOutsideDays
       captionLayout="dropdown-years"
-      endMonth={endMonth}
+      endMonth={new Date(currentYear + YEARS_AFTER, 11)}
       animate
     />
   );
