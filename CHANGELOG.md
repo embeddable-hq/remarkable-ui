@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.21
+
+### Patch Changes
+
+- 26c66f0: DateRangePicker mas limit is now 5 years from the current date
+
 ## 3.0.20
 
 ### Patch Changes
