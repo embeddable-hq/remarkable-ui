@@ -57,6 +57,21 @@
   background: var(--em-selectfield-item-background--hover, #f7f7f8);
 }
 
+.selectFieldOption:hover .leftContent,
+.selectFieldOption:focus-visible .leftContent {
+  color: var(--em-selectfield-item-label-left-color--hover, #212129);
+}
+
+.selectFieldOption:hover .rightContent,
+.selectFieldOption:focus-visible .rightContent {
+  color: var(--em-selectfield-item-label-right-color--hover, #5c5c66);
+}
+
+.selectFieldOption:hover svg,
+.selectFieldOption:focus-visible svg {
+  color: var(--em-selectfield-item-icon-color--hover, #212129);
+}
+
 .selectFieldOption:active {
   background: var(--em-selectfield-item-background--active, #ededf1);
 }

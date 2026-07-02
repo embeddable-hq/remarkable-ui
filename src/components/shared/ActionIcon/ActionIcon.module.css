@@ -22,6 +22,7 @@
 .actionIcon:hover {
   background-color: var(--em-actionicon-background--hover, #e4e4ea);
   border-color: var(--em-actionicon-border-color--hover, rgb(255 255 255 / 0%));
+  color: var(--em-actionicon-color--hover, #212129);
 }
 
 .actionIcon:active {
