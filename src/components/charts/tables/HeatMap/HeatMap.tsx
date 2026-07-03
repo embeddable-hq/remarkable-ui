@@ -160,6 +160,7 @@ export const HeatMap = <T extends Record<string, unknown>>({
                         color,
                         cursor: onCellClick ? 'pointer' : undefined,
                         ...getTableCellWidthStyle(columnWidth),
+                        ...(onCellClick ? { cursor: 'pointer' } : {}),
                       }}
                       onClick={
                         onCellClick

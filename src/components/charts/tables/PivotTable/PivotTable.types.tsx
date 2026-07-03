@@ -9,8 +9,7 @@ export const PivotAggregationType = {
   AVERAGE: 'average',
 } as const;
 
-export type PivotAggregationType =
-  (typeof PivotAggregationType)[keyof typeof PivotAggregationType];
+export type PivotAggregationType = (typeof PivotAggregationType)[keyof typeof PivotAggregationType];
 
 /** @internal Used by the component to drive header/cell rendering in a consistent order. */
 export type PivotAggregationConfig<T> = {

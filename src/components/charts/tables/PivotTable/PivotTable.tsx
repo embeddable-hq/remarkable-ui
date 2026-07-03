@@ -16,6 +16,7 @@ import {
   useProgressiveRows,
 } from './PivotTable.utils';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const toGroups = (
   sum: string[],
   min: string[],
@@ -29,7 +30,6 @@ const toGroups = (
     { type: 'average' as const, measureKeys: average },
   ].filter((g) => g.measureKeys.length > 0);
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const PivotTable: FC<PivotTableProps<any>> = ({
   columnWidth,
   firstColumnWidth,
@@ -109,10 +109,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     return map;
   }, [measures]);
 
-  const measureByKey = useMemo(
-    () => new Map(measures.map((m) => [String(m.key), m])),
-    [measures],
-  );
+  const measureByKey = useMemo(() => new Map(measures.map((m) => [String(m.key), m])), [measures]);
 
   const { colAggs, rowAggs, grandAggs } = usePivotAggregations(
     data,
@@ -158,7 +155,13 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
         const value = object?.[measure.key];
         const key = `${keyPrefix}-${columnValue}-${measure.key}-${idx}`;
         const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-        const colTotal = getAggregatedValue(colAggs, String(columnValue), mi, 'sum', measures.length);
+        const colTotal = getAggregatedValue(
+          colAggs,
+          String(columnValue),
+          mi,
+          'sum',
+          measures.length,
+        );
         const displayValue = getCellDisplayValue(value, measure, object, colTotal);
 
         return (
@@ -201,7 +204,13 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
         const measureIndex = measureIndexByKey.get(measureKey) ?? -1;
         const key = `${keyPrefix}-${group.type}-${gi}-${measureKey}-${idx}`;
         const value = getAggValue(group.type, measureKey, measureIndex);
-        const displayValue = getAggCellDisplayValue(group.type, value, measure, sourceAggs, measureIndex);
+        const displayValue = getAggCellDisplayValue(
+          group.type,
+          value,
+          measure,
+          sourceAggs,
+          measureIndex,
+        );
 
         return (
           <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
@@ -271,7 +280,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
   const renderColumnAggRow = (
     group: PivotAggregationConfig<any>,
     gi: number,
-    isLast: boolean,
+    rowsBelow: number,
   ) => {
     const groupLabel = aggLabels[group.type];
     const groupMeasureKeySet = new Set(group.measureKeys);
@@ -279,7 +288,13 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     return (
       <tr
         key={`col-agg-row-${group.type}-${gi}`}
-        className={isLast ? tableStyles.stickyLastRow : undefined}
+        className={tableStyles.stickyLastRow}
+        // Stack each total row above the one below it. `top: auto` disables top-sticking
+        // so the rows only pin to the bottom edge. Cell height is fixed by the theme.
+        style={{
+          top: 'auto',
+          bottom: `calc(var(--em-tablechart-cell-height, 2.5rem) * ${rowsBelow})`,
+        }}
       >
         <th
           scope="row"
@@ -294,10 +309,20 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
           measures.map((measure, idx) => {
             const key = `col-agg-${group.type}-${gi}-${String(columnValue)}-${measure.key}-${idx}`;
             if (!groupMeasureKeySet.has(measure.key)) {
-              return <td key={key} className={tableStyles.boltCell}>{''}</td>;
+              return (
+                <td key={key} className={tableStyles.boltCell}>
+                  {''}
+                </td>
+              );
             }
             const mi = measureIndexByKey.get(String(measure.key)) ?? -1;
-            const value = getAggregatedValue(colAggs, String(columnValue), mi, group.type, measures.length);
+            const value = getAggregatedValue(
+              colAggs,
+              String(columnValue),
+              mi,
+              group.type,
+              measures.length,
+            );
             const displayValue = getColumnAggDisplayValue(group.type, value, measure);
             return (
               <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
@@ -510,7 +535,9 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
 
             {hasColumnAggs &&
               columnAggregationsFor.map((group: PivotAggregationConfig<any>, gi: number) =>
-                renderColumnAggRow(group, gi, gi === columnAggregationsFor.length - 1),
+                // Every aggregation total row is sticky, stacked at the bottom: a row's
+                // offset from the bottom equals the number of aggregation rows below it.
+                renderColumnAggRow(group, gi, columnAggregationsFor.length - 1 - gi),
               )}
           </tbody>
         </table>

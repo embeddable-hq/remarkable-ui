@@ -171,19 +171,27 @@ describe('computeSubRowAggregation', () => {
   ]);
 
   it('sums values across column values for a row key', () => {
-    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'sum')).toBe(450);
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'sum')).toBe(
+      450,
+    );
   });
 
   it('returns the minimum value across column values', () => {
-    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'min')).toBe(100);
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'min')).toBe(
+      100,
+    );
   });
 
   it('returns the maximum value across column values', () => {
-    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'max')).toBe(200);
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'max')).toBe(
+      200,
+    );
   });
 
   it('returns the average of values across column values', () => {
-    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'average')).toBe(150);
+    expect(computeSubRowAggregation(cellMap, 'North', ['Q1', 'Q2', 'Q3'], 'sales', 'average')).toBe(
+      150,
+    );
   });
 
   it('sums only the specified columns', () => {
@@ -208,7 +216,9 @@ describe('computeSubRowAggregation', () => {
     expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'sum')).toBe(100);
     expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'min')).toBe(100);
     expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'max')).toBe(100);
-    expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'average')).toBe(100);
+    expect(computeSubRowAggregation(mapWithNaN, 'East', ['Q1', 'Q2'], 'sales', 'average')).toBe(
+      100,
+    );
   });
 });
 

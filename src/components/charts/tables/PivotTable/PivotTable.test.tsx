@@ -101,10 +101,34 @@ describe('PivotTable', () => {
     });
 
     it('renders multiple footer rows when multiple column agg props are set', () => {
-      render(<PivotTable {...DEFAULT_PROPS} columnMinFor={['revenue']} columnMaxFor={['revenue']} />);
+      render(
+        <PivotTable {...DEFAULT_PROPS} columnMinFor={['revenue']} columnMaxFor={['revenue']} />,
+      );
 
       expect(screen.getByText('Min')).toBeInTheDocument();
       expect(screen.getByText('Max')).toBeInTheDocument();
+    });
+
+    it('stacks every footer row as sticky, offset from the bottom by its position', () => {
+      render(
+        <PivotTable {...DEFAULT_PROPS} columnMinFor={['revenue']} columnMaxFor={['revenue']} />,
+      );
+
+      // Groups render in canonical order (min then max), so Min sits one row above the
+      // bottom and Max sits flush against it.
+      const minRow = screen.getByText('Min').closest('tr');
+      const maxRow = screen.getByText('Max').closest('tr');
+
+      const minStyle = minRow?.getAttribute('style') ?? '';
+      const maxStyle = maxRow?.getAttribute('style') ?? '';
+
+      // Both pin to the bottom edge only.
+      expect(minStyle).toContain('top: auto');
+      expect(maxStyle).toContain('top: auto');
+
+      // Max is the last row (0 rows below); Min has 1 row below it.
+      expect(maxStyle).toContain('* 0');
+      expect(minStyle).toContain('* 1');
     });
 
     it('renders no footer rows when no column agg props are set', () => {
