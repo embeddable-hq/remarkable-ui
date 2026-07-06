@@ -172,6 +172,64 @@ describe('PivotTable', () => {
     });
   });
 
+  describe('grand-total intersection', () => {
+    it('shows the row-agg type value at the column-footer × row-agg intersection, not the footer type', () => {
+      // columnSumFor → Sum footer row; rowMinFor → Min column
+      // Grand sum = 390; grand min = 80.
+      // The intersection cell (Sum footer × Min column) must show 80, not 390.
+      render(<PivotTable {...DEFAULT_PROPS} columnSumFor={['revenue']} rowMinFor={['revenue']} />);
+
+      // 390 (grand sum) must not appear — the Min column should never show a sum
+      expect(screen.queryByTitle('390')).not.toBeInTheDocument();
+      // 80 (grand min) appears in both the UK-Jan regular cell and the intersection
+      expect(screen.getAllByTitle('80').length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('row aggregation percentage', () => {
+    it('shows percentage relative to grand total, not 100%', () => {
+      // US revenue sum = 220, grand revenue sum = 390 → ≈56%
+      render(
+        <PivotTable
+          {...DEFAULT_PROPS}
+          rowSumFor={['revenue']}
+          measures={[
+            {
+              key: 'revenue' as const,
+              label: 'Revenue',
+              showAsPercentage: true,
+              percentageDecimalPlaces: 0,
+            },
+          ]}
+        />,
+      );
+
+      // 100% would appear if the bug is present (row agg used as its own denominator)
+      expect(screen.queryByTitle('100%')).not.toBeInTheDocument();
+      // US: 220/390 ≈ 56%; UK: 170/390 ≈ 44%
+      expect(screen.getAllByTitle('56%').length).toBeGreaterThan(0);
+      expect(screen.getAllByTitle('44%').length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('header guard for invalid measure keys', () => {
+    it('skips invalid measure keys in row-agg subheader without creating extra columns', () => {
+      // rowSumFor references 'cost' (valid) and 'nonexistent' (not in measures)
+      // Only 'Revenue' subheader should appear, not 'nonexistent'
+      render(
+        <PivotTable
+          {...DEFAULT_PROPS}
+          rowSumFor={['revenue', 'nonexistent' as (typeof DEFAULT_PROPS.measures)[0]['key']]}
+        />,
+      );
+
+      const revenueHeaders = screen.getAllByText('Revenue');
+      // Only the valid measure appears in the agg subheader
+      expect(revenueHeaders.length).toBeGreaterThan(0);
+      expect(screen.queryByText('nonexistent')).not.toBeInTheDocument();
+    });
+  });
+
   describe('loading rows', () => {
     it('shows loading indicator for rows in loadingRows set', async () => {
       const loadingRows = new Set(['US']);
