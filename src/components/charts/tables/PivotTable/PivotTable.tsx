@@ -338,9 +338,9 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               const measure = measureByKey.get(measureKey);
               const measureIndex = measureIndexByKey.get(measureKey) ?? -1;
               const key = `grand-agg-${group.type}-${gi}-${rowGroup.type}-${rgi}-${measureKey}-${idx}`;
-              const value = grandAggs[group.type][measureIndex] ?? 0;
+              const value = grandAggs[rowGroup.type][measureIndex] ?? 0;
               const displayValue = measure
-                ? getColumnAggDisplayValue(group.type, value, measure)
+                ? getColumnAggDisplayValue(rowGroup.type, value, measure)
                 : value;
               return (
                 <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
@@ -394,11 +394,12 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               {hasRowAggs &&
                 rowAggregationsFor.map((group: PivotAggregationConfig<any>, gi: number) => {
                   const label = aggLabels[group.type];
+                  const validCount = group.measureKeys.filter((k) => measureByKey.has(k)).length;
                   return (
                     <th
                       key={`agg-group-${group.type}-${gi}`}
                       scope="colgroup"
-                      colSpan={group.measureKeys.length}
+                      colSpan={validCount}
                       className={tableStyles.boltCell}
                       title={label}
                     >
@@ -433,15 +434,16 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                 rowAggregationsFor.flatMap((group: PivotAggregationConfig<any>, gi: number) =>
                   group.measureKeys.map((measureKey: string, idx: number) => {
                     const measure = measureByKey.get(measureKey);
+                    if (!measure) return null;
                     return (
                       <th
                         key={`agg-sub-${group.type}-${gi}-${measureKey}-${idx}`}
                         scope="col"
                         className={tableStyles.boltCell}
-                        title={measure?.label ?? measureKey}
+                        title={measure.label}
                         style={getTableCellWidthStyle(columnWidth)}
                       >
-                        {measure?.label ?? measureKey}
+                        {measure.label}
                       </th>
                     );
                   }),
@@ -523,7 +525,7 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
                           _type,
                           measures.length,
                         ),
-                      rowAggs.get(String(row)) ?? grandAggs,
+                      grandAggs,
                       `row-agg-${String(row)}`,
                     )}
                   </tr>

@@ -155,20 +155,27 @@ export const HeatMap = <T extends Record<string, unknown>>({
                   return (
                     <td
                       key={`cell-${rv}-${cv}`}
+                      role={onCellClick ? 'button' : undefined}
+                      tabIndex={onCellClick ? 0 : undefined}
                       style={{
                         background,
                         color,
-                        cursor: onCellClick ? 'pointer' : undefined,
-                        ...getTableCellWidthStyle(columnWidth),
                         ...(onCellClick ? { cursor: 'pointer' } : {}),
+                        ...getTableCellWidthStyle(columnWidth),
                       }}
                       onClick={
                         onCellClick
-                          ? () =>
-                              onCellClick({
-                                rowDimensionValue: rv,
-                                columnDimensionValue: cv,
-                              })
+                          ? () => onCellClick({ rowDimensionValue: rv, columnDimensionValue: cv })
+                          : undefined
+                      }
+                      onKeyDown={
+                        onCellClick
+                          ? (e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                onCellClick({ rowDimensionValue: rv, columnDimensionValue: cv });
+                              }
+                            }
                           : undefined
                       }
                     >
