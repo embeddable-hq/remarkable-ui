@@ -85,21 +85,8 @@ const meta = {
     measures,
     rowDimension,
     columnDimension,
-    rowTotalsFor: [],
-    columnTotalsFor: [],
-    totalLabel: 'Total',
     firstColumnWidth: 150,
     columnWidth: 100,
-  },
-  argTypes: {
-    columnTotalsFor: {
-      options: ['orders', 'cost'],
-      control: { type: 'check' },
-    },
-    rowTotalsFor: {
-      options: ['orders', 'cost'],
-      control: { type: 'check' },
-    },
   },
 } satisfies Meta<typeof PivotTable>;
 
@@ -109,10 +96,30 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithTotals: Story = {
+export const WithSum: Story = {
   args: {
-    rowTotalsFor: ['orders', 'cost'],
-    columnTotalsFor: ['orders', 'cost'],
+    rowSumFor: ['orders', 'cost'],
+    columnSumFor: ['orders', 'cost'],
+  },
+};
+
+export const WithMinAndMax: Story = {
+  args: {
+    rowMinFor: ['orders', 'cost'],
+    rowMaxFor: ['orders', 'cost'],
+    columnMinFor: ['orders', 'cost'],
+    columnMaxFor: ['orders', 'cost'],
+  },
+};
+
+export const WithMultipleAggregations: Story = {
+  args: {
+    rowSumFor: ['orders', 'cost'],
+    rowAverageFor: ['orders'],
+    rowMinFor: ['orders'],
+    rowMaxFor: ['orders'],
+    columnSumFor: ['orders', 'cost'],
+    columnAverageFor: ['orders'],
   },
 };
 
@@ -124,7 +131,6 @@ const ExpandableRowsStory = (args: PivotTableProps<Data>) => {
   const [subRowsByRow, setSubRowsByRow] = useState(new Map<string, Data[]>());
   const [loadingRows, setLoadingRows] = useState(new Set<string>());
 
-  // Split a parent value across cities so sub-rows sum to parent
   const splitValue = (
     parentValue: number | null,
     cityIndex: number,
@@ -138,15 +144,11 @@ const ExpandableRowsStory = (args: PivotTableProps<Data>) => {
 
   const handleRowExpand = async (rowKey: string) => {
     setLoadingRows((prev) => new Set(prev).add(rowKey));
-
-    // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Get parent data for this row
     const parentRows = data.filter((d) => d.country === rowKey);
     const cities = ['City A', 'City B'];
 
-    // Sub-row values sum to parent values so percentages add up correctly
     const mockSubRows: Data[] = cities.flatMap((city, cityIdx) =>
       parentRows.map((pd) => ({
         country: rowKey,
