@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
 import { HeatMap } from './HeatMap';
 
 type Row = { region: string; quarter: string; sales: number | null };
@@ -72,6 +73,63 @@ describe('HeatMap', () => {
       render(<HeatMap {...DEFAULT_PROPS} data={dataWithNull} showValues displayNullAs="N/A" />);
 
       expect(screen.getByText('N/A')).toBeInTheDocument();
+    });
+  });
+
+  describe('onCellClick', () => {
+    it('calls onCellClick with row and column values when a cell is clicked', async () => {
+      const user = userEvent.setup();
+      const handleClick = vi.fn();
+
+      render(<HeatMap {...DEFAULT_PROPS} onCellClick={handleClick} />);
+
+      // First button is the North × Q1 cell (columns render in data order)
+      await user.click(screen.getAllByRole('button')[0]!);
+
+      expect(handleClick).toHaveBeenCalledWith({
+        rowDimensionValue: 'North',
+        columnDimensionValue: 'Q1',
+      });
+    });
+
+    it('triggers onCellClick on Enter key press', async () => {
+      const user = userEvent.setup();
+      const handleClick = vi.fn();
+
+      render(<HeatMap {...DEFAULT_PROPS} onCellClick={handleClick} />);
+
+      const [firstCellEnter] = screen.getAllByRole('button');
+      firstCellEnter!.focus();
+      await user.keyboard('{Enter}');
+
+      expect(handleClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('triggers onCellClick on Space key press', async () => {
+      const user = userEvent.setup();
+      const handleClick = vi.fn();
+
+      render(<HeatMap {...DEFAULT_PROPS} onCellClick={handleClick} />);
+
+      const [firstCellSpace] = screen.getAllByRole('button');
+      firstCellSpace!.focus();
+      await user.keyboard(' ');
+
+      expect(handleClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('renders cells as buttons with tabIndex when onCellClick is provided', () => {
+      render(<HeatMap {...DEFAULT_PROPS} onCellClick={vi.fn()} />);
+
+      const buttons = screen.getAllByRole('button');
+      expect(buttons.length).toBeGreaterThan(0);
+      buttons.forEach((btn) => expect(btn).toHaveAttribute('tabindex', '0'));
+    });
+
+    it('renders no button role or tabIndex on cells without onCellClick', () => {
+      render(<HeatMap {...DEFAULT_PROPS} />);
+
+      expect(screen.queryAllByRole('button')).toHaveLength(0);
     });
   });
 
