@@ -309,6 +309,25 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     }
   };
 
+  // Value + sum (for percentage display) of a bottom-right "corner" cell: the
+  // rowGroup-typed values down a row-total column, combined with the column-total type.
+  const getCornerCellValue = (
+    columnAggType: PivotAggregationType,
+    rowAggType: PivotAggregationType,
+    measureIndex: number,
+  ): { value: number; sum: number } => {
+    const rowTotalColumn = rowValues.map((r) =>
+      getAggregatedValue(rowAggs, String(r), measureIndex, rowAggType, measures.length),
+    );
+    const rowSumColumn = rowValues.map((r) =>
+      getAggregatedValue(rowAggs, String(r), measureIndex, 'sum', measures.length),
+    );
+    return {
+      value: aggregateValues(columnAggType, rowTotalColumn),
+      sum: aggregateValues(columnAggType, rowSumColumn),
+    };
+  };
+
   const renderColumnAggRow = (
     group: PivotAggregationConfig<any>,
     gi: number,
@@ -378,21 +397,10 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               const measureIndex = measureIndexByKey.get(measureKey) ?? -1;
               const key = `grand-agg-${group.type}-${gi}-${rowGroup.type}-${rgi}-${measureKey}-${idx}`;
 
-              const rowTotalColumn = rowValues.map((r) =>
-                getAggregatedValue(
-                  rowAggs,
-                  String(r),
-                  measureIndex,
-                  rowGroup.type,
-                  measures.length,
-                ),
-              );
-              const value = aggregateValues(group.type, rowTotalColumn);
-              const cornerSum = aggregateValues(
+              const { value, sum: cornerSum } = getCornerCellValue(
                 group.type,
-                rowValues.map((r) =>
-                  getAggregatedValue(rowAggs, String(r), measureIndex, 'sum', measures.length),
-                ),
+                rowGroup.type,
+                measureIndex,
               );
               const displayValue = measure
                 ? getColumnAggDisplayValue(rowGroup.type, value, measure, cornerSum)
