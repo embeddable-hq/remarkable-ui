@@ -99,7 +99,8 @@ export const computeSubRowAggregation = (
   const values: number[] = [];
   for (const columnValue of columnValues) {
     const data = cellMap.get(rowKey)?.get(String(columnValue)) ?? {};
-    const val = Number(data?.[measureKey]);
+    const raw = data?.[measureKey];
+    const val = raw == null ? NaN : Number(raw);
     if (!Number.isNaN(val)) values.push(val);
   }
   if (values.length === 0) return 0;
@@ -139,7 +140,8 @@ export const usePivotAggregations = (
       const rAcc = rAccs.get(r)!;
 
       measures.forEach((m, i) => {
-        const v = Number((d as any)?.[m.key]);
+        const raw = (d as any)?.[m.key];
+        const v = raw == null ? NaN : Number(raw);
         if (!Number.isNaN(v)) {
           cAcc.sum[i]! += v;
           cAcc.count[i]!++;
@@ -189,32 +191,23 @@ export const useProgressiveRows = (
     progressive ? Math.min(batchSize, rowValues.length) : rowValues.length,
   );
 
+  // Reset count when the data length or progressive flag changes.
   useEffect(() => {
-    if (!progressive) {
-      setVisibleCount(rowValues.length);
-      return;
-    }
-    let cancelled = false;
-    let t: number | null = null;
-    setVisibleCount(Math.min(batchSize, rowValues.length));
+    setVisibleCount(progressive ? Math.min(batchSize, rowValues.length) : rowValues.length);
+  }, [progressive, batchSize, rowValues.length]);
 
-    const tick = () => {
-      setVisibleCount((prev) => {
-        const next = Math.min(prev + batchSize, rowValues.length);
-        if (next < rowValues.length && !cancelled) {
-          t = window.setTimeout(tick, batchDelayMs);
-        }
-        return next;
-      });
-    };
+  // Schedule the next batch only when more rows are waiting.
+  // Keeps setTimeout out of the state updater so it isn't called multiple
+  // times if React replays the updater in concurrent mode.
+  useEffect(() => {
+    if (!progressive || visibleCount >= rowValues.length) return;
 
-    t = window.setTimeout(tick, batchDelayMs);
+    const t = window.setTimeout(() => {
+      setVisibleCount((prev) => Math.min(prev + batchSize, rowValues.length));
+    }, batchDelayMs);
 
-    return () => {
-      cancelled = true;
-      if (t !== null) window.clearTimeout(t);
-    };
-  }, [progressive, batchSize, batchDelayMs, rowValues.length]);
+    return () => window.clearTimeout(t);
+  }, [progressive, visibleCount, rowValues.length, batchSize, batchDelayMs]);
 
   return progressive ? rowValues.slice(0, visibleCount) : rowValues;
 };

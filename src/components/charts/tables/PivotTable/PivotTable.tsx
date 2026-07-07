@@ -12,6 +12,7 @@ import {
   getCellDisplayValue,
   getAggregatedValue,
   getPercentageDisplay,
+  isNumber,
   usePivotAggregations,
   useProgressiveRows,
 } from './PivotTable.utils';
@@ -179,9 +180,16 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     sourceAggs: AggResult,
     measureIndex: number,
   ): any => {
-    if (type === 'sum' && measure.showAsPercentage) {
-      const denominator = sourceAggs.sum[measureIndex] || 1;
-      if (typeof denominator === 'number' && denominator > 0) {
+    if (measure.showAsPercentage) {
+      const denominator = sourceAggs.sum[measureIndex] || 0;
+      if (type === 'sum') {
+        if (typeof denominator === 'number' && denominator > 0) {
+          return getPercentageDisplay(
+            (value / denominator) * 100,
+            measure.percentageDecimalPlaces ?? 0,
+          );
+        }
+      } else if (isNumber(value) && isNumber(denominator) && denominator > 0) {
         return getPercentageDisplay(
           (value / denominator) * 100,
           measure.percentageDecimalPlaces ?? 0,
@@ -270,11 +278,35 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
     type: PivotAggregationType,
     value: number,
     measure: any,
+    denominator?: number,
   ): any => {
-    if (type === 'sum' && measure.showAsPercentage) {
-      return getPercentageDisplay(100, measure.percentageDecimalPlaces ?? 0);
+    if (measure.showAsPercentage) {
+      if (type === 'sum') {
+        return getPercentageDisplay(100, measure.percentageDecimalPlaces ?? 0);
+      }
+      const denom = denominator ?? 0;
+      if (isNumber(value) && denom > 0) {
+        return getPercentageDisplay((value / denom) * 100, measure.percentageDecimalPlaces ?? 0);
+      }
     }
     return measure.accessor ? measure.accessor({ [measure.key]: value }) : value;
+  };
+
+  // Combine a list of already-computed values with a given aggregation type.
+  // Used for the bottom-right "corner" cells, where a column-total row meets a
+  // row-total column and neither raw cell values nor a single grand aggregate apply.
+  const aggregateValues = (type: PivotAggregationType, values: number[]): number => {
+    if (values.length === 0) return 0;
+    switch (type) {
+      case 'sum':
+        return values.reduce((a, b) => a + b, 0);
+      case 'min':
+        return Math.min(...values);
+      case 'max':
+        return Math.max(...values);
+      case 'average':
+        return values.reduce((a, b) => a + b, 0) / values.length;
+    }
   };
 
   const renderColumnAggRow = (
@@ -323,7 +355,14 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               group.type,
               measures.length,
             );
-            const displayValue = getColumnAggDisplayValue(group.type, value, measure);
+            const colSum = getAggregatedValue(
+              colAggs,
+              String(columnValue),
+              mi,
+              'sum',
+              measures.length,
+            );
+            const displayValue = getColumnAggDisplayValue(group.type, value, measure, colSum);
             return (
               <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
                 {displayValue}
@@ -338,9 +377,25 @@ export const PivotTable: FC<PivotTableProps<any>> = ({
               const measure = measureByKey.get(measureKey);
               const measureIndex = measureIndexByKey.get(measureKey) ?? -1;
               const key = `grand-agg-${group.type}-${gi}-${rowGroup.type}-${rgi}-${measureKey}-${idx}`;
-              const value = grandAggs[rowGroup.type][measureIndex] ?? 0;
+
+              const rowTotalColumn = rowValues.map((r) =>
+                getAggregatedValue(
+                  rowAggs,
+                  String(r),
+                  measureIndex,
+                  rowGroup.type,
+                  measures.length,
+                ),
+              );
+              const value = aggregateValues(group.type, rowTotalColumn);
+              const cornerSum = aggregateValues(
+                group.type,
+                rowValues.map((r) =>
+                  getAggregatedValue(rowAggs, String(r), measureIndex, 'sum', measures.length),
+                ),
+              );
               const displayValue = measure
-                ? getColumnAggDisplayValue(rowGroup.type, value, measure)
+                ? getColumnAggDisplayValue(rowGroup.type, value, measure, cornerSum)
                 : value;
               return (
                 <td key={key} className={tableStyles.boltCell} title={String(displayValue)}>
