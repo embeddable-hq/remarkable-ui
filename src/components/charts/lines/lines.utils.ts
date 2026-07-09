@@ -57,8 +57,7 @@ export const getLineChartOptions = (
         display: (context) => {
           if (!options.showValueLabels) return false;
           const value: number | undefined = context.dataset.data[context.dataIndex] as
-            | number
-            | undefined;
+            number | undefined;
           const yScale = context.chart.scales.y;
           return value !== undefined && yScale && value >= yScale.min && value <= yScale.max
             ? 'auto'
