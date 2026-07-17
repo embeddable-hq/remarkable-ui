@@ -13,9 +13,10 @@
   padding: var(--em-selectfield-content-padding, 0.5rem);
   border-radius: var(--em-selectfield-content-border-radius, 0.75rem);
   background: var(--em-selectfield-content-background, #fff);
-  box-shadow: var(--em-selectfield-content-shadow-position-x, 0)
-    var(--em-selectfield-content-shadow-position-y, 1px)
-    var(--em-selectfield-content-shadow-blur, 40px) var(--em-selectfield-content-shadow-spread, 0)
+  box-shadow: var(--em-selectfield-content-shadow-position-x, 0rem)
+    var(--em-selectfield-content-shadow-position-y, 0.0625rem)
+    var(--em-selectfield-content-shadow-blur, 2.5rem)
+    var(--em-selectfield-content-shadow-spread, 0rem)
     var(--em-selectfield-content-shadow-color, rgba(33, 33, 41, 0.25));
 }
 
