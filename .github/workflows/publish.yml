@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ vars.BUILD_NODE_VERSION }}
           registry-url: ${{ vars.NPM_REGISTRY_URL }}
 
       - name: Update npm

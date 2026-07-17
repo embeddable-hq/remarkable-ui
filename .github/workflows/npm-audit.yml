@@ -1,0 +1,47 @@
+name: npm audit
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * MON' # Every Monday at 10AM UTC
+
+jobs:
+  npm-audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.BUILD_NODE_VERSION }}
+      - name: install dependencies
+        run: npm ci --ignore-scripts
+      - id: run_npm_audit
+        uses: oke-py/npm-audit-action@2c6b2da234031fbf72af81a04c76b3a152bb2222 # v2.4.4
+        with:
+          audit_level: ${{ vars.NPM_AUDIT_LEVEL }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          create_issues: false
+          create_pr_comments: false
+          production_flag: true
+
+      - name: Send Slack notification on failure
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2 # v2
+        if: always()
+        with:
+          status: ${{ job.status }}
+          notify_when: 'failure'
+          notification_title: '`Remarkable UI` NPM audit found some vulnerabilities'
+          message_format: ${{steps.run_npm_audit.outputs.npm_audit}}
+          footer: 'Linked to Repo <{repo_url}|{repo}>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
