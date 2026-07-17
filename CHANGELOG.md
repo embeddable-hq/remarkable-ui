@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.23
+
+### Patch Changes
+
+- e99075c: Add box-shadow to card component
+
 ## 3.0.22
 
 ### Patch Changes
