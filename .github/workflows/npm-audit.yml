@@ -26,13 +26,13 @@ jobs:
       - name: install dependencies
         run: npm ci --ignore-scripts
       - id: run_npm_audit
-        uses: oke-py/npm-audit-action@2c6b2da234031fbf72af81a04c76b3a152bb2222 # v2.4.4
+        uses: oke-py/npm-audit-action@8809ddd828be4c0bd281826b4dc61b50b1878fda # v5.4.0
         with:
           audit_level: ${{ vars.NPM_AUDIT_LEVEL }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           create_issues: false
           create_pr_comments: false
-          production_flag: true
+          production_flag: false
 
       - name: Send Slack notification on failure
         uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2 # v2
