@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.24
+
+### Patch Changes
+
+- 720f596: Update global.tokens.ts
+
 ## 3.0.23
 
 ### Patch Changes
