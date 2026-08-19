@@ -22,6 +22,7 @@ export default defineConfig({
     '@radix-ui/react-dropdown-menu',
     '@tabler/icons-react',
     'chart.js',
+    'chartjs-chart-funnel',
     'chartjs-plugin-annotation',
     'chartjs-plugin-datalabels',
     'clsx',
