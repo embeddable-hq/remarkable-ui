@@ -73,6 +73,7 @@
     "@tabler/icons-react": "^3.34.1",
     "auto-text-size": "^0.2.3",
     "chart.js": "^4.5.0",
+    "chartjs-chart-funnel": "^4.2.5",
     "chartjs-plugin-annotation": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "clsx": "^2.1.1",
