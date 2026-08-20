@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.1.0
+
+### Minor Changes
+
+- 677e56d: Add themable hover foreground/color tokens
+
 ## 3.0.25
 
 ### Patch Changes
