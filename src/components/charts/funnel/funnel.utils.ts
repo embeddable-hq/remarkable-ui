@@ -43,8 +43,9 @@ export const getFunnelChartOptions = (
       tooltip: { enabled: config.showTooltips },
       datalabels: {
         display: config.showCount || config.showPercentages ? 'auto' : false,
-        anchor: 'center',
+        anchor: 'start',
         align: 'center',
+        textAlign: 'center',
         formatter: getFunnelDatalabelFormatter(config),
       },
     },
