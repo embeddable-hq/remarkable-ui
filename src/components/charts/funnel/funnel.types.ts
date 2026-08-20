@@ -1,3 +1,4 @@
+import 'chartjs-chart-funnel';
 import { ChartData, ChartOptions } from 'chart.js';
 import { ChartClickArgs } from '../charts.types';
 

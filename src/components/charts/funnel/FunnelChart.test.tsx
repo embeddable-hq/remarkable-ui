@@ -52,7 +52,7 @@ describe('FunnelChart', () => {
 
       render(<FunnelChart data={MOCK_DATA} />);
 
-      await expect(user.click(screen.getByTestId('funnel-chart'))).resolves.not.toThrow();
+      await user.click(screen.getByTestId('funnel-chart'));
     });
   });
 });
