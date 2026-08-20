@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { FunnelChart } from './FunnelChart';
+import { funnelDataMock } from './funnel.mock';
 
 vi.mock('react-chartjs-2', async () => {
   const { forwardRef } = await import('react');
@@ -18,10 +19,7 @@ vi.mock('react-chartjs-2', async () => {
   };
 });
 
-const MOCK_DATA = {
-  labels: ['X', 'Y', 'Z'],
-  datasets: [{ data: [30, 20, 10] }],
-};
+const MOCK_DATA = funnelDataMock;
 
 describe('FunnelChart', () => {
   describe('rendering', () => {
