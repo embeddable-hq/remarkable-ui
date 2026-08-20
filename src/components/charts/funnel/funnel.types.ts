@@ -5,8 +5,8 @@ import { ChartClickArgs } from '../charts.types';
 export type FunnelChartConfigurationProps = {
   showLegend?: boolean;
   showTooltips?: boolean;
-  showCount?: boolean;
-  showPercentages?: boolean;
+  showPercentage?: boolean;
+  legendPosition?: 'bottom' | 'right';
 };
 
 export type BaseFunnelChartProps = {

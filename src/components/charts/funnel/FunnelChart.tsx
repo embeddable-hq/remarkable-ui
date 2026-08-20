@@ -27,12 +27,12 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   onClick,
   showLegend = true,
   showTooltips = true,
-  showCount = true,
-  showPercentages = true,
+  showPercentage = false,
+  legendPosition = 'bottom',
 }) => {
   const chartRef = useRef(null);
   const funnelOptions = mergician(
-    getFunnelChartOptions({ showLegend, showTooltips, showCount, showPercentages }),
+    getFunnelChartOptions({ showLegend, showTooltips, showPercentage, legendPosition }),
     options,
   );
 

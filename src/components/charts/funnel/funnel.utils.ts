@@ -1,4 +1,4 @@
-import { ChartData, ChartOptions } from 'chart.js';
+import { Chart, ChartData, ChartOptions, LegendItem } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { getChartColors } from '../charts.constants';
@@ -20,18 +20,22 @@ export const getFunnelChartData = (data: ChartData<'funnel'>): ChartData<'funnel
 
 const getFunnelDatalabelFormatter =
   (config: FunnelChartConfigurationProps) => (value: number, context: Context) => {
-    const label = context.chart.data.labels?.[context.dataIndex] ?? '';
     const data = (context.chart.data.datasets[context.datasetIndex]?.data ?? []) as number[];
     const total = data.reduce((sum, v) => sum + (v || 0), 0);
     const percentage = total > 0 ? (value / total) * 100 : 0;
 
-    const parts = [
-      config.showCount ? value.toLocaleString() : undefined,
-      config.showPercentages ? `${percentage.toFixed(1)}%` : undefined,
-    ].filter(Boolean);
-
-    return [label, parts.join(' · ')].filter(Boolean).join('\n');
+    return config.showPercentage ? `${percentage.toFixed(1)}%` : value.toLocaleString();
   };
+
+const getFunnelLegendLabels = (chart: Chart<'funnel'>): LegendItem[] => {
+  const colors = (chart.data.datasets[0]?.backgroundColor as string[]) ?? [];
+  return (chart.data.labels ?? []).map((label, index) => ({
+    text: String(label ?? ''),
+    fillStyle: colors[index],
+    strokeStyle: colors[index],
+    index,
+  }));
+};
 
 export const getFunnelChartOptions = (
   config: FunnelChartConfigurationProps,
@@ -39,10 +43,14 @@ export const getFunnelChartOptions = (
   const funnelChartOptions: Partial<ChartOptions<'funnel'>> = {
     indexAxis: 'y',
     plugins: {
-      legend: { display: config.showLegend },
+      legend: {
+        display: config.showLegend,
+        position: config.legendPosition,
+        labels: { generateLabels: getFunnelLegendLabels },
+      },
       tooltip: { enabled: config.showTooltips },
       datalabels: {
-        display: config.showCount || config.showPercentages ? 'auto' : false,
+        display: 'auto',
         anchor: 'start',
         align: 'center',
         textAlign: 'center',
