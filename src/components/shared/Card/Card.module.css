@@ -7,7 +7,10 @@
   padding: var(--em-card-padding, 2rem);
   border-radius: var(--em-card-border-radius, 2rem);
   background: var(--em-card-background, #f7f7f8);
-  border: var(--em-card-border-width, 0px) solid var(--em-card-border-color, rgb(255 255 255 / 0%));
+  border: var(--em-card-border-width, 0rem) solid var(--em-card-border-color, rgb(255 255 255 / 0%));
+  box-shadow: var(--em-card-shadow-position-x, 0rem) var(--em-card-shadow-position-y, 0rem)
+    var(--em-card-shadow-blur, 0rem) var(--em-card-shadow-spread, 0rem)
+    var(--em-card-shadow-color, #21212940);
 }
 
 .card .cardHeader {

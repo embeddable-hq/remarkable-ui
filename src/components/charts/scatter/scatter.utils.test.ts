@@ -302,8 +302,7 @@ describe('getScatterChartOptions', () => {
 
     const opts = getScatterChartOptions({ nullBandLabel: 'NV', nullBand });
     const cb = opts.scales?.x?.ticks?.callback as
-      | ((this: unknown, v: string | number, i: number, ticks: unknown[]) => string)
-      | undefined;
+      ((this: unknown, v: string | number, i: number, ticks: unknown[]) => string) | undefined;
     expect(cb).toBeDefined();
     const label = cb!.call({}, nullBand!.xNullPos, 0, []);
     expect(label).toBe('NV');

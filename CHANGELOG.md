@@ -1,5 +1,23 @@
 # @embeddable.com/remarkable-ui
 
+## 3.0.25
+
+### Patch Changes
+
+- aeb9ff9: Remove overlay css variables from code base
+
+## 3.0.24
+
+### Patch Changes
+
+- 720f596: Update global.tokens.ts
+
+## 3.0.23
+
+### Patch Changes
+
+- e99075c: Add box-shadow to card component
+
 ## 3.0.22
 
 ### Patch Changes
