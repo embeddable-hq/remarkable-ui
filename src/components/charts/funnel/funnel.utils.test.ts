@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { Chart } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
 
@@ -78,6 +79,18 @@ describe('getFunnelChartOptions', () => {
     expect(options.plugins?.legend?.display).toBe(false);
   });
 
+  it('positions the legend to the right when legendPosition is right', () => {
+    const options = getFunnelChartOptions({ legendPosition: 'right' });
+
+    expect(options.plugins?.legend?.position).toBe('right');
+  });
+
+  it('positions the legend at the bottom when legendPosition is bottom', () => {
+    const options = getFunnelChartOptions({ legendPosition: 'bottom' });
+
+    expect(options.plugins?.legend?.position).toBe('bottom');
+  });
+
   it('enables tooltips when showTooltips is true', () => {
     const options = getFunnelChartOptions({ showTooltips: true });
 
@@ -90,33 +103,15 @@ describe('getFunnelChartOptions', () => {
     expect(options.plugins?.tooltip?.enabled).toBe(false);
   });
 
-  it('shows datalabels when showCount or showPercentages is true', () => {
-    const options = getFunnelChartOptions({ showCount: true, showPercentages: false });
+  it('shows datalabels', () => {
+    const options = getFunnelChartOptions({ showPercentage: false });
 
     expect(options.plugins?.datalabels?.display).toBe('auto');
   });
 
-  it('hides datalabels when both showCount and showPercentages are false', () => {
-    const options = getFunnelChartOptions({ showCount: false, showPercentages: false });
-
-    expect(options.plugins?.datalabels?.display).toBe(false);
-  });
-
   describe('datalabels formatter', () => {
-    it('includes the count and percentage when both are enabled', () => {
-      const options = getFunnelChartOptions({ showCount: true, showPercentages: true });
-      const formatter = options.plugins?.datalabels?.formatter as (
-        value: number,
-        context: Context,
-      ) => string;
-
-      const label = formatter(30, buildContext(0));
-
-      expect(label).toBe('Near Misses\n30 · 50.0%');
-    });
-
-    it('includes only the count when showPercentages is false', () => {
-      const options = getFunnelChartOptions({ showCount: true, showPercentages: false });
+    it('includes the count when showPercentage is false', () => {
+      const options = getFunnelChartOptions({ showPercentage: false });
       const formatter = options.plugins?.datalabels?.formatter as (
         value: number,
         context: Context,
@@ -124,11 +119,11 @@ describe('getFunnelChartOptions', () => {
 
       const label = formatter(20, buildContext(1));
 
-      expect(label).toBe('Injury/Illness\n20');
+      expect(label).toBe('20');
     });
 
-    it('includes only the percentage when showCount is false', () => {
-      const options = getFunnelChartOptions({ showCount: false, showPercentages: true });
+    it('includes the percentage when showPercentage is true', () => {
+      const options = getFunnelChartOptions({ showPercentage: true });
       const formatter = options.plugins?.datalabels?.formatter as (
         value: number,
         context: Context,
@@ -136,23 +131,11 @@ describe('getFunnelChartOptions', () => {
 
       const label = formatter(10, buildContext(2));
 
-      expect(label).toBe('Recordable\n16.7%');
-    });
-
-    it('omits the parts line when both showCount and showPercentages are false', () => {
-      const options = getFunnelChartOptions({ showCount: false, showPercentages: false });
-      const formatter = options.plugins?.datalabels?.formatter as (
-        value: number,
-        context: Context,
-      ) => string;
-
-      const label = formatter(30, buildContext(0));
-
-      expect(label).toBe('Near Misses');
+      expect(label).toBe('16.7%');
     });
 
     it('falls back to a 0% share when the dataset total is 0', () => {
-      const options = getFunnelChartOptions({ showCount: false, showPercentages: true });
+      const options = getFunnelChartOptions({ showPercentage: true });
       const formatter = options.plugins?.datalabels?.formatter as (
         value: number,
         context: Context,
@@ -165,7 +148,31 @@ describe('getFunnelChartOptions', () => {
 
       const label = formatter(0, context);
 
-      expect(label).toBe('A\n0.0%');
+      expect(label).toBe('0.0%');
+    });
+  });
+
+  describe('legend labels', () => {
+    it('returns one legend item per section with its color', () => {
+      const options = getFunnelChartOptions({ showLegend: true });
+      const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
+        chart: Chart<'funnel'>,
+      ) => { text: string; fillStyle: unknown }[];
+
+      const chart = {
+        data: {
+          labels: ['Near Misses', 'Injury/Illness', 'Recordable'],
+          datasets: [{ data: [30, 20, 10], backgroundColor: ['#a', '#b', '#c'] }],
+        },
+      } as unknown as Chart<'funnel'>;
+
+      const items = generateLabels(chart);
+
+      expect(items).toEqual([
+        expect.objectContaining({ text: 'Near Misses', fillStyle: '#a' }),
+        expect.objectContaining({ text: 'Injury/Illness', fillStyle: '#b' }),
+        expect.objectContaining({ text: 'Recordable', fillStyle: '#c' }),
+      ]);
     });
   });
 });

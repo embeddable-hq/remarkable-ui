@@ -9,6 +9,8 @@ const meta = {
   component: FunnelChart,
   args: {
     data: funnelDataMock,
+    showPercentage: false,
+    legendPosition: 'bottom',
   },
 } satisfies Meta<typeof FunnelChart>;
 
