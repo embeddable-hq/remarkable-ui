@@ -225,6 +225,28 @@ export const Searchable: Story = {
   },
 };
 
+export const WithSelectAll: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    isSearchable: true,
+    showSelectAll: true,
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
+  },
+};
+
 export const WithCategories: Story = {
   args: {
     label: undefined,
