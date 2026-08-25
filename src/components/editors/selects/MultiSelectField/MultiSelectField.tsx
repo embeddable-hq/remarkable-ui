@@ -133,6 +133,13 @@ export function MultiSelectField<T extends SelectOptionValue>({
     selectableValues.length > 0 && selectableValues.every((value) => preValues.includes(value));
   const isAnySelected = selectableValues.some((value) => preValues.includes(value));
 
+  let selectAllIcon = <IconSquare />;
+  if (areAllSelected) {
+    selectAllIcon = <IconSquareCheckFilled />;
+  } else if (isAnySelected) {
+    selectAllIcon = <IconSquareMinus />;
+  }
+
   const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
@@ -248,15 +255,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
                 <SelectListOption
                   label={areAllSelected ? deselectAllLabel : selectAllLabel}
                   onClick={handleToggleSelectAll}
-                  startIcon={
-                    areAllSelected ? (
-                      <IconSquareCheckFilled />
-                    ) : isAnySelected ? (
-                      <IconSquareMinus />
-                    ) : (
-                      <IconSquare />
-                    )
-                  }
+                  startIcon={selectAllIcon}
                 />
                 <Divider className={styles.selectAllDivider} />
               </>
