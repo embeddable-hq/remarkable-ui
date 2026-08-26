@@ -196,6 +196,21 @@ describe('DateRangePickerField', () => {
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     });
 
+    it('syncs the grid when value changes externally while closed', async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(<DateRangePickerField value={JUNE_RANGE} onChange={vi.fn()} />);
+
+      const JULY_RANGE = {
+        from: new Date('2024-07-01T00:00:00.000Z'),
+        to: new Date('2024-07-31T23:59:59.999Z'),
+      };
+      rerender(<DateRangePickerField value={JULY_RANGE} onChange={vi.fn()} />);
+
+      await openDropdown(user);
+
+      expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
+    });
+
     it('calls onChange with undefined when the clear button is clicked', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
