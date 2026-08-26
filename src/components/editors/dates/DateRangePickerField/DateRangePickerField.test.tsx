@@ -208,6 +208,8 @@ describe('DateRangePickerField', () => {
 
       await openDropdown(user);
 
+      const startCell = screen.getByRole('button', { name: /july 5/i }).closest('[aria-selected]');
+      expect(startCell).toHaveAttribute('aria-selected', 'true');
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     });
 
