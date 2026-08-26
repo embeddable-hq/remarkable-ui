@@ -11,8 +11,15 @@ import {
   SelectFieldContentList,
 } from '../shared/SelectFieldContent/SelectFieldContent';
 import { groupOptionsByCategory } from '../shared/SelectFieldContent/SelectFieldContent.utils';
-import { IconProps, IconSearch, IconSquare, IconSquareCheckFilled } from '@tabler/icons-react';
+import {
+  IconProps,
+  IconSearch,
+  IconSquare,
+  IconSquareCheckFilled,
+  IconSquareMinus,
+} from '@tabler/icons-react';
 import { Button } from '../../../shared/Button/Button';
+import { Divider } from '../../../shared/Divider/Divider';
 import styles from '../selects.module.css';
 import { useSelectSearchFocus } from '../shared/useSelectSearchFocus.hook';
 import { SelectFieldCategory } from '../shared/SelectFieldContent/SelectFieldOptions/SelectFieldCategory/SelectFieldCategory';
@@ -32,6 +39,9 @@ export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   noOptionsMessage?: string;
   options: (SelectListOptionProps<T> | SelectListOptionPropsWithCategory<T>)[];
   placeholder?: string;
+  showSelectAll?: boolean;
+  selectAllLabel?: string;
+  deselectAllLabel?: string;
   submitLabel?: string;
   values?: T[];
   avoidCollisions?: boolean;
@@ -55,6 +65,9 @@ export function MultiSelectField<T extends SelectOptionValue>({
   noOptionsMessage,
   options,
   placeholder,
+  showSelectAll,
+  selectAllLabel = 'Select all',
+  deselectAllLabel = 'Deselect all',
   submitLabel = 'Apply',
   values = [],
   avoidCollisions,
@@ -107,6 +120,26 @@ export function MultiSelectField<T extends SelectOptionValue>({
 
   const groupedOptions = useMemo(() => groupOptionsByCategory(displayOptions), [displayOptions]);
 
+  // Select all only acts on the options currently displayed (e.g. after searching);
+  // deduplicated so repeated option values cannot be added to the selection twice
+  const selectableValues = [
+    ...new Set(
+      displayOptions
+        .map((option) => option.value)
+        .filter((value): value is T => value !== undefined),
+    ),
+  ];
+  const areAllSelected =
+    selectableValues.length > 0 && selectableValues.every((value) => preValues.includes(value));
+  const isAnySelected = selectableValues.some((value) => preValues.includes(value));
+
+  let selectAllIcon = <IconSquare />;
+  if (areAllSelected) {
+    selectAllIcon = <IconSquareCheckFilled />;
+  } else if (isAnySelected) {
+    selectAllIcon = <IconSquareMinus />;
+  }
+
   const isSubmitDisabled =
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
@@ -125,6 +158,16 @@ export function MultiSelectField<T extends SelectOptionValue>({
       setPreValues(next);
       onPendingChange?.(next);
     }
+  };
+
+  const handleToggleSelectAll = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+
+    const next = areAllSelected
+      ? preValues.filter((value) => !selectableValues.includes(value))
+      : [...preValues, ...selectableValues.filter((value) => !preValues.includes(value))];
+    setPreValues(next);
+    onPendingChange?.(next);
   };
 
   const handleSearch = (newSearch: string) => {
@@ -207,6 +250,16 @@ export function MultiSelectField<T extends SelectOptionValue>({
             />
           )}
           <SelectFieldContentList disabled={isLoading}>
+            {showSelectAll && selectableValues.length > 0 && (
+              <>
+                <SelectListOption
+                  label={areAllSelected ? deselectAllLabel : selectAllLabel}
+                  onClick={handleToggleSelectAll}
+                  startIcon={selectAllIcon}
+                />
+                <Divider className={styles.selectAllDivider} />
+              </>
+            )}
             {groupedOptions
               ? Object.entries(groupedOptions).map(([category, categoryOptions]) => (
                   <Fragment key={category}>
