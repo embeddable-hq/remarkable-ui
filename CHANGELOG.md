@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.1.1
+
+### Patch Changes
+
+- 376712e: Fix DateRangePickerField not syncing its calendar grid when `value` changes externally while the dropdown is closed
+
 ## 3.1.0
 
 ### Minor Changes
