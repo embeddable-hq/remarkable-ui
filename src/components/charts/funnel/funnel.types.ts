@@ -6,7 +6,6 @@ export type FunnelChartConfigurationProps = {
   showLegend?: boolean;
   showTooltips?: boolean;
   showPercentage?: boolean;
-  legendPosition?: 'bottom' | 'right';
 };
 
 export type BaseFunnelChartProps = {

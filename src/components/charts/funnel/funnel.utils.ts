@@ -45,7 +45,6 @@ export const getFunnelChartOptions = (
     plugins: {
       legend: {
         display: config.showLegend,
-        position: config.legendPosition,
         labels: { generateLabels: getFunnelLegendLabels },
       },
       tooltip: { enabled: config.showTooltips },

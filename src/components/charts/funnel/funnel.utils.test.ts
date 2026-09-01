@@ -79,18 +79,6 @@ describe('getFunnelChartOptions', () => {
     expect(options.plugins?.legend?.display).toBe(false);
   });
 
-  it('positions the legend to the right when legendPosition is right', () => {
-    const options = getFunnelChartOptions({ legendPosition: 'right' });
-
-    expect(options.plugins?.legend?.position).toBe('right');
-  });
-
-  it('positions the legend at the bottom when legendPosition is bottom', () => {
-    const options = getFunnelChartOptions({ legendPosition: 'bottom' });
-
-    expect(options.plugins?.legend?.position).toBe('bottom');
-  });
-
   it('enables tooltips when showTooltips is true', () => {
     const options = getFunnelChartOptions({ showTooltips: true });
 
