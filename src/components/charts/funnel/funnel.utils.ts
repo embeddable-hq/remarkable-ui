@@ -1,4 +1,4 @@
-import { Chart, ChartData, ChartOptions, LegendItem } from 'chart.js';
+import { Chart, ChartData, ChartDataset, ChartOptions, LegendItem } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { getChartColors } from '../charts.constants';
@@ -10,17 +10,19 @@ type FunnelChartConfig = {
   showPercentage?: boolean;
 };
 
-export const getFunnelChartData = (data: ChartData<'funnel'>): ChartData<'funnel'> => {
+export const getFunnelChartData = (data: ChartData<'funnel'>) => {
   const chartColors = getChartColors();
-  return {
+  const mergedData: ChartData<'funnel', number[], unknown> = {
     ...data,
     datasets:
       data.datasets?.map((dataset) => {
         const colors = dataset.data.map((_value, index) => chartColors[index % chartColors.length]);
         const defaultDataset = { backgroundColor: colors };
-        return mergician(defaultDataset, dataset) as typeof dataset;
+        const merged = mergician(defaultDataset, dataset) as ChartDataset<'funnel'>;
+        return merged;
       }) || [],
   };
+  return mergedData;
 };
 
 const getFunnelDatalabelFormatter =
