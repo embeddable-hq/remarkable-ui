@@ -122,6 +122,30 @@ describe('getFunnelChartOptions', () => {
       expect(label).toBe('16.7%');
     });
 
+    it('formats the percentage using percentageDecimalPlaces', () => {
+      const options = getFunnelChartOptions({ showPercentage: true, percentageDecimalPlaces: 3 });
+      const formatter = options.plugins?.datalabels?.formatter as (
+        value: number,
+        context: Context,
+      ) => string;
+
+      const label = formatter(10, buildContext(2));
+
+      expect(label).toBe('16.667%');
+    });
+
+    it('defaults to 1 decimal place when percentageDecimalPlaces is omitted', () => {
+      const options = getFunnelChartOptions({ showPercentage: true });
+      const formatter = options.plugins?.datalabels?.formatter as (
+        value: number,
+        context: Context,
+      ) => string;
+
+      const label = formatter(10, buildContext(2));
+
+      expect(label).toBe('16.7%');
+    });
+
     it('falls back to a 0% share when the dataset total is 0', () => {
       const options = getFunnelChartOptions({ showPercentage: true });
       const formatter = options.plugins?.datalabels?.formatter as (

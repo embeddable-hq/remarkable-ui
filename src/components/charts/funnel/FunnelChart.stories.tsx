@@ -10,6 +10,7 @@ const meta = {
   args: {
     data: funnelDataMock,
     showPercentage: false,
+    percentageDecimalPlaces: 1,
   },
 } satisfies Meta<typeof FunnelChart>;
 

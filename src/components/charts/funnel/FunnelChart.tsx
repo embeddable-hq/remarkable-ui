@@ -34,6 +34,7 @@ export type FunnelChartProps = {
   showLegend?: boolean;
   showTooltips?: boolean;
   showPercentage?: boolean;
+  percentageDecimalPlaces?: number;
 };
 
 export const FunnelChart: FC<FunnelChartProps> = ({
@@ -43,10 +44,11 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   showLegend = true,
   showTooltips = true,
   showPercentage = false,
+  percentageDecimalPlaces = 1,
 }) => {
   const chartRef = useRef(null);
   const funnelOptions = mergician(
-    getFunnelChartOptions({ showLegend, showTooltips, showPercentage }),
+    getFunnelChartOptions({ showLegend, showTooltips, showPercentage, percentageDecimalPlaces }),
     options,
   );
 

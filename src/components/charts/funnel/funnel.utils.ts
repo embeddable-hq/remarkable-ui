@@ -8,6 +8,7 @@ type FunnelChartConfig = {
   showLegend?: boolean;
   showTooltips?: boolean;
   showPercentage?: boolean;
+  percentageDecimalPlaces?: number;
 };
 
 export const getFunnelChartData = (data: ChartData<'funnel'>) => {
@@ -31,7 +32,9 @@ const getFunnelDatalabelFormatter =
     const total = data.reduce((sum, v) => sum + (v || 0), 0);
     const percentage = total > 0 ? (value / total) * 100 : 0;
 
-    return config.showPercentage ? `${percentage.toFixed(1)}%` : value.toLocaleString();
+    return config.showPercentage
+      ? `${percentage.toFixed(config.percentageDecimalPlaces ?? 1)}%`
+      : value.toLocaleString();
   };
 
 const getFunnelLegendLabels = (chart: Chart<'funnel'>): LegendItem[] => {
