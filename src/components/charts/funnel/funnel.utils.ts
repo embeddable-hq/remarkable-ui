@@ -7,6 +7,7 @@ import { getChartjsOptions } from '../chartjs.constants';
 type FunnelChartConfig = {
   showLegend?: boolean;
   showTooltips?: boolean;
+  showValueLabels?: boolean;
   showPercentage?: boolean;
   percentageDecimalPlaces?: number;
 };
@@ -59,7 +60,7 @@ export const getFunnelChartOptions = (
       },
       tooltip: { enabled: config.showTooltips },
       datalabels: {
-        display: 'auto',
+        display: config.showValueLabels ? 'auto' : false,
         anchor: 'start',
         align: 'center',
         textAlign: 'center',

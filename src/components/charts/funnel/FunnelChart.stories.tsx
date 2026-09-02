@@ -9,6 +9,7 @@ const meta = {
   component: FunnelChart,
   args: {
     data: funnelDataMock,
+    showValueLabels: true,
     showPercentage: false,
     percentageDecimalPlaces: 1,
   },

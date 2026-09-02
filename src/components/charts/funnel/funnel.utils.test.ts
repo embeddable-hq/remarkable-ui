@@ -91,10 +91,16 @@ describe('getFunnelChartOptions', () => {
     expect(options.plugins?.tooltip?.enabled).toBe(false);
   });
 
-  it('shows datalabels', () => {
-    const options = getFunnelChartOptions({ showPercentage: false });
+  it('shows datalabels when showValueLabels is true', () => {
+    const options = getFunnelChartOptions({ showValueLabels: true });
 
     expect(options.plugins?.datalabels?.display).toBe('auto');
+  });
+
+  it('hides datalabels when showValueLabels is false', () => {
+    const options = getFunnelChartOptions({ showValueLabels: false });
+
+    expect(options.plugins?.datalabels?.display).toBe(false);
   });
 
   describe('datalabels formatter', () => {
