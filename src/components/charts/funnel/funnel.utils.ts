@@ -3,7 +3,12 @@ import { Context } from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { getChartColors } from '../charts.constants';
 import { getChartjsOptions } from '../chartjs.constants';
-import { FunnelChartConfigurationProps } from './funnel.types';
+
+type FunnelChartConfig = {
+  showLegend?: boolean;
+  showTooltips?: boolean;
+  showPercentage?: boolean;
+};
 
 export const getFunnelChartData = (data: ChartData<'funnel'>): ChartData<'funnel'> => {
   const chartColors = getChartColors();
@@ -19,7 +24,7 @@ export const getFunnelChartData = (data: ChartData<'funnel'>): ChartData<'funnel
 };
 
 const getFunnelDatalabelFormatter =
-  (config: FunnelChartConfigurationProps) => (value: number, context: Context) => {
+  (config: FunnelChartConfig) => (value: number, context: Context) => {
     const data = (context.chart.data.datasets[context.datasetIndex]?.data ?? []) as number[];
     const total = data.reduce((sum, v) => sum + (v || 0), 0);
     const percentage = total > 0 ? (value / total) * 100 : 0;
@@ -38,7 +43,7 @@ const getFunnelLegendLabels = (chart: Chart<'funnel'>): LegendItem[] => {
 };
 
 export const getFunnelChartOptions = (
-  config: FunnelChartConfigurationProps,
+  config: FunnelChartConfig,
 ): Partial<ChartOptions<'funnel'>> => {
   const funnelChartOptions: Partial<ChartOptions<'funnel'>> = {
     indexAxis: 'y',
