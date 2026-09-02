@@ -2,6 +2,11 @@
   margin-bottom: var(--em-selectfield-content-gap, 0.5rem);
 }
 
+.selectAllDivider {
+  flex-shrink: 0;
+  margin-bottom: var(--em-selectfield-content-gap, 0.5rem);
+}
+
 .submitButton {
   margin-top: var(--em-selectfield-content-gap, 0.5rem);
   justify-content: center;

@@ -404,4 +404,180 @@ describe('MultiSelectField', () => {
       expect(handlePendingChange).toHaveBeenCalledWith([]);
     });
   });
+
+  describe('select all', () => {
+    it('does not render the select all option by default', async () => {
+      const user = userEvent.setup();
+      render(<MultiSelectField options={OPTIONS} onChange={vi.fn()} />);
+
+      await openDropdown(user);
+
+      expect(screen.queryByText('Select all')).not.toBeInTheDocument();
+    });
+
+    it('renders the select all option when showSelectAll is true', async () => {
+      const user = userEvent.setup();
+      render(<MultiSelectField options={OPTIONS} showSelectAll onChange={vi.fn()} />);
+
+      await openDropdown(user);
+
+      expect(screen.getByText('Select all')).toBeInTheDocument();
+    });
+
+    it('does not render the select all option when there are no options', async () => {
+      const user = userEvent.setup();
+      render(<MultiSelectField options={[]} showSelectAll onChange={vi.fn()} />);
+
+      await openDropdown(user);
+
+      expect(screen.queryByText('Select all')).not.toBeInTheDocument();
+    });
+
+    it('renders custom select all and deselect all labels', async () => {
+      const user = userEvent.setup();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          showSelectAll
+          selectAllLabel="Alle auswählen"
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+
+      expect(screen.getByText('Alle auswählen')).toBeInTheDocument();
+    });
+
+    it('selects all options when select all is clicked', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<MultiSelectField options={OPTIONS} showSelectAll onChange={handleChange} />);
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Select all'));
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+      expect(handleChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
+    });
+
+    it('shows the select all label when only some options are selected', async () => {
+      const user = userEvent.setup();
+      render(
+        <MultiSelectField options={OPTIONS} values={['apple']} showSelectAll onChange={vi.fn()} />,
+      );
+
+      await openDropdown(user);
+
+      expect(screen.getByText('Select all')).toBeInTheDocument();
+    });
+
+    it('shows the deselect all label when all options are selected', async () => {
+      const user = userEvent.setup();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple', 'banana', 'cherry']}
+          showSelectAll
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+
+      expect(screen.getByText('Deselect all')).toBeInTheDocument();
+    });
+
+    it('deselects all options when deselect all is clicked', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple', 'banana', 'cherry']}
+          showSelectAll
+          onChange={handleChange}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Deselect all'));
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+      expect(handleChange).toHaveBeenCalledWith([]);
+    });
+
+    it('only selects the options matching the current search', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField options={OPTIONS} showSelectAll isSearchable onChange={handleChange} />,
+      );
+
+      await openDropdown(user);
+      await user.type(screen.getByRole('searchbox'), 'app');
+      await user.click(screen.getByText('Select all'));
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+      expect(handleChange).toHaveBeenCalledWith(['apple']);
+    });
+
+    it('keeps selections outside the current search when deselecting all', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple', 'banana']}
+          showSelectAll
+          isSearchable
+          onChange={handleChange}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.type(screen.getByRole('searchbox'), 'app');
+      await user.click(screen.getByText('Deselect all'));
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+      expect(handleChange).toHaveBeenCalledWith(['banana']);
+    });
+
+    it('does not add duplicate values when options share the same value', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={[...OPTIONS, { value: 'apple', label: 'Apple (again)' }]}
+          showSelectAll
+          onChange={handleChange}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Select all'));
+      await user.click(screen.getByRole('button', { name: 'Apply' }));
+
+      expect(handleChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
+    });
+
+    it('calls onPendingChange with all values when select all is clicked', async () => {
+      const user = userEvent.setup();
+      const handlePendingChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          showSelectAll
+          onPendingChange={handlePendingChange}
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+      handlePendingChange.mockClear();
+      await user.click(screen.getByText('Select all'));
+
+      expect(handlePendingChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
+    });
+  });
 });
