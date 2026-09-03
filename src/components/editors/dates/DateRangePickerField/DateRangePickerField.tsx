@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectFieldTrigger } from '../../selects/shared/SelectFieldTrigger/SelectFieldTrigger';
@@ -59,6 +59,10 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange | undefined>(value);
+
+  useEffect(() => {
+    setCurrentDateRange(value);
+  }, [value]);
 
   const valueLabel = getDateRangePickerLabel(value, displayValue);
   const hasError = error || !!errorMessage;
