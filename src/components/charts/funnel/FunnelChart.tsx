@@ -1,18 +1,10 @@
 import { FC, useRef } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-  ChartData,
-  ChartOptions,
-} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { FunnelController, TrapezoidElement } from 'chartjs-chart-funnel';
 import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
-import { ChartClickArgs } from '../charts.types';
+import { BaseFunnelChartProps } from './funnel.types';
 import styles from '../charts.module.css';
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -27,16 +19,7 @@ ChartJS.register(
   ChartDataLabels,
 );
 
-export type FunnelChartProps = {
-  data: ChartData<'funnel'>;
-  options?: Partial<ChartOptions<'funnel'>>;
-  onClick?: (args: ChartClickArgs) => void;
-  showLegend?: boolean;
-  showTooltips?: boolean;
-  showValueLabels?: boolean;
-  showPercentage?: boolean;
-  percentageDecimalPlaces?: number;
-};
+export type FunnelChartProps = BaseFunnelChartProps;
 
 export const FunnelChart: FC<FunnelChartProps> = ({
   data,
