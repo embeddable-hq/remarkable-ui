@@ -15,6 +15,8 @@ export * from './components/charts/kpis/KpiChart';
 export * from './components/charts/pies/DonutChart/DonutChart';
 export * from './components/charts/pies/PieChart/PieChart';
 export * from './components/charts/pies/pies.utils';
+export * from './components/charts/funnel/FunnelChart';
+export * from './components/charts/funnel/funnel.utils';
 export * from './components/charts/tables/HeatMap/HeatMap';
 export * from './components/charts/tables/HeatMap/HeatMap.types';
 export * from './components/charts/tables/PivotTable/PivotTable';

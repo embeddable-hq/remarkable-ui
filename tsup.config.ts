@@ -9,7 +9,9 @@ export default defineConfig({
     styles: 'src/styles/index.ts', // 👈 new entry
   },
   format: ['esm'], // ESM-only
-  dts: true, // generate dist/index.d.ts
+  dts: {
+    banner: "import 'chartjs-chart-funnel';",
+  },
   sourcemap: true,
   clean: true,
   splitting: true, // code-splitting ESM chunks
@@ -22,6 +24,7 @@ export default defineConfig({
     '@radix-ui/react-dropdown-menu',
     '@tabler/icons-react',
     'chart.js',
+    'chartjs-chart-funnel',
     'chartjs-plugin-annotation',
     'chartjs-plugin-datalabels',
     'clsx',
