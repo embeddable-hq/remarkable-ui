@@ -1,0 +1,13 @@
+/**
+ * @license
+ *
+ * The APCA contrast prediction algorithm is based of the formulas published
+ * in the APCA-1.0.98G specification by Myndex. The specification is available at:
+ * https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAw3_0.1.17_APCA0.0.98G.svg
+ *
+ * Note that the APCA implementation is still beta, so please update to
+ * future versions of chroma.js when they become available.
+ *
+ * You can read more about the APCA Readability Criterion at
+ * https://readtech.org/ARC/
+ */
