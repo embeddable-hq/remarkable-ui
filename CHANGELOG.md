@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.2.0
+
+### Minor Changes
+
+- a484c37: Add FunnelChart component
+
 ## 3.1.1
 
 ### Patch Changes
