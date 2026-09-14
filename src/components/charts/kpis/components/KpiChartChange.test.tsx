@@ -163,4 +163,50 @@ describe('KpiChartChange', () => {
       expect(badges[0]).toHaveClass('positive');
     });
   });
+
+  describe('reverseTrendDirection (TPS-1470)', () => {
+    it('falls back to invertChangeColors for the arrow when reverseTrendDirection is not set, keeping current behavior', () => {
+      const { container } = render(
+        <KpiChartChange value={120} comparisonValue={100} invertChangeColors />,
+      );
+
+      // Positive change + invertChangeColors: color is negative and the arrow is
+      // also reversed (down), matching pre-existing coupled behavior.
+      expect(document.querySelector('.tabler-icon-trending-down')).toBeInTheDocument();
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('negative');
+    });
+
+    it('lets the arrow direction be controlled independently of the colors', () => {
+      const { container } = render(
+        <KpiChartChange
+          value={120}
+          comparisonValue={100}
+          invertChangeColors
+          reverseTrendDirection={false}
+        />,
+      );
+
+      // Colors are still reversed (negative)...
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('negative');
+      // ...but the arrow keeps pointing up, since reverseTrendDirection=false.
+      expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
+    });
+
+    it('lets the arrow be reversed while colors stay normal', () => {
+      const { container } = render(
+        <KpiChartChange
+          value={120}
+          comparisonValue={100}
+          invertChangeColors={false}
+          reverseTrendDirection
+        />,
+      );
+
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('positive');
+      expect(document.querySelector('.tabler-icon-trending-down')).toBeInTheDocument();
+    });
+  });
 });

@@ -32,4 +32,28 @@ describe('KpiTrend', () => {
 
     expect(container.firstChild).toHaveClass('extra');
   });
+
+  describe('invertColor (TPS-1470)', () => {
+    it('defaults invertColor to reverseTrend, keeping color and arrow coupled', () => {
+      const { container } = render(<KpiTrend value="+15%" reverseTrend />);
+
+      expect(container.firstChild).toHaveClass('negative');
+      expect(container.querySelector('svg')).toBeInTheDocument();
+    });
+
+    it('lets invertColor be set independently of reverseTrend', () => {
+      const { container } = render(<KpiTrend value="+15%" reverseTrend={false} invertColor />);
+
+      // Color reflects invertColor...
+      expect(container.firstChild).toHaveClass('negative');
+      expect(container.firstChild).not.toHaveClass('positive');
+    });
+
+    it('keeps the arrow direction tied to reverseTrend regardless of invertColor', () => {
+      render(<KpiTrend value="+15%" reverseTrend={false} invertColor />);
+
+      // Still the "up" trending icon, since reverseTrend is false.
+      expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
+    });
+  });
 });

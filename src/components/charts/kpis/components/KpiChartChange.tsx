@@ -11,6 +11,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   comparisonValue = 0,
   showChangeAsPercentage,
   invertChangeColors = false,
+  reverseTrendDirection,
   comparisonLabel,
   valueFormatter,
   percentageDecimalPlaces = 1,
@@ -32,7 +33,14 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   }
 
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
-  const isBadTrend = !(isPositive !== invertChangeColors);
+
+  // Whether the badge should use its "negative" color.
+  const isBadTrendColor = !(isPositive !== invertChangeColors);
+  // Whether the arrow icon should point down. Independent of the color above
+  // (TPS-1470); when `reverseTrendDirection` isn't provided, it falls back to
+  // `invertChangeColors` so the arrow keeps following the colors exactly as it
+  // did before this was split into two props.
+  const isBadTrendDirection = !(isPositive !== (reverseTrendDirection ?? invertChangeColors));
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
@@ -40,7 +48,11 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
     <div className={styles.kpiChangeContainerSizeGuide}>
       {/* This is responsible to setting the size of the container */}
       <div className={clsx(styles.kpiChartChangeContainer, styles.hidden)}>
-        <KpiTrend value={displayValue} reverseTrend={isBadTrend} />
+        <KpiTrend
+          value={displayValue}
+          reverseTrend={isBadTrendDirection}
+          invertColor={isBadTrendColor}
+        />
         <span className={styles.kpiComparisonLabel}>{comparisonLabel}</span>
       </div>
       {/* This is responsible for displaying the content on the available size of the container */}
@@ -50,7 +62,13 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
             <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
           ) : (
             <>
-              {!equalComparison && <KpiTrend value={displayValue} reverseTrend={isBadTrend} />}
+              {!equalComparison && (
+                <KpiTrend
+                  value={displayValue}
+                  reverseTrend={isBadTrendDirection}
+                  invertColor={isBadTrendColor}
+                />
+              )}
               <span className={styles.kpiComparisonLabel}>
                 {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
               </span>

@@ -161,4 +161,21 @@ describe('KpiChart', () => {
       expect(container.textContent).not.toContain('NaN');
     });
   });
+
+  describe('reverseTrendDirection (TPS-1470)', () => {
+    it('is passed through to control the arrow independently of invertChangeColors', () => {
+      const { container } = render(
+        <KpiChart
+          value={120}
+          comparisonValue={100}
+          invertChangeColors
+          reverseTrendDirection={false}
+        />,
+      );
+
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('negative');
+      expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
+    });
+  });
 });

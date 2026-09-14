@@ -34,6 +34,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   comparisonValue,
   comparisonLabel,
   invertChangeColors,
+  reverseTrendDirection,
   showChangeAsPercentage,
   percentageDecimalPlaces = 1,
   equalComparisonLabel = 'No change',
@@ -75,6 +76,7 @@ export const KpiChart: FC<KpiChartProps> = ({
               comparisonLabel={comparisonLabel}
               comparisonValue={comparisonValue}
               invertChangeColors={invertChangeColors}
+              reverseTrendDirection={reverseTrendDirection}
               percentageDecimalPlaces={percentageDecimalPlaces}
               showChangeAsPercentage={showChangeAsPercentage}
               value={value}
