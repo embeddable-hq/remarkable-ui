@@ -33,7 +33,7 @@ describe('KpiTrend', () => {
     expect(container.firstChild).toHaveClass('extra');
   });
 
-  describe('reverseColor (TPS-1470)', () => {
+  describe('reverseColor', () => {
     it('defaults reverseColor to reverseTrend, keeping color and arrow coupled', () => {
       const { container } = render(<KpiTrend value="+15%" reverseTrend />);
 

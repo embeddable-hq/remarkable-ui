@@ -164,7 +164,7 @@ describe('KpiChartChange', () => {
     });
   });
 
-  describe('invertTrendDirection (TPS-1470)', () => {
+  describe('invertTrendDirection', () => {
     it('falls back to invertChangeColors for the arrow when invertTrendDirection is not set, keeping current behavior', () => {
       const { container } = render(
         <KpiChartChange value={120} comparisonValue={100} invertChangeColors />,
