@@ -44,7 +44,6 @@ describe('KpiTrend', () => {
     it('lets reverseColor be set independently of reverseTrend', () => {
       const { container } = render(<KpiTrend value="+15%" reverseTrend={false} reverseColor />);
 
-      // Color reflects reverseColor...
       expect(container.firstChild).toHaveClass('negative');
       expect(container.firstChild).not.toHaveClass('positive');
     });
@@ -52,7 +51,6 @@ describe('KpiTrend', () => {
     it('keeps the arrow direction tied to reverseTrend regardless of reverseColor', () => {
       render(<KpiTrend value="+15%" reverseTrend={false} reverseColor />);
 
-      // Still the "up" trending icon, since reverseTrend is false.
       expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
     });
   });

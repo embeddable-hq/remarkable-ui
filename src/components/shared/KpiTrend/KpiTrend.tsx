@@ -6,12 +6,7 @@ import clsx from 'clsx';
 export type KpiTrendProps = {
   value: string;
   reverseTrend?: boolean;
-  /**
-   * Controls the badge color (positive/negative) independently of the arrow
-   * direction. Defaults to `reverseTrend`, so existing usages that only pass
-   * `reverseTrend` keep coloring and arrow direction coupled together, as
-   * before (see TPS-1470).
-   */
+  /** Controls badge color independently of arrow direction. Defaults to `reverseTrend`. */
   reverseColor?: boolean;
   className?: string;
 };

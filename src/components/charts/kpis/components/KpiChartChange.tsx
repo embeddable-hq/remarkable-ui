@@ -34,12 +34,8 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
 
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
 
-  // Whether the badge should use its "negative" color.
   const isBadTrendColor = !(isPositive !== invertChangeColors);
-  // Whether the arrow icon should point down. Independent of the color above
-  // (TPS-1470); when `reverseTrendDirection` isn't provided, it falls back to
-  // `invertChangeColors` so the arrow keeps following the colors exactly as it
-  // did before this was split into two props.
+  // Falls back to invertChangeColors when reverseTrendDirection is unset (TPS-1470).
   const isBadTrendDirection = !(isPositive !== (reverseTrendDirection ?? invertChangeColors));
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;

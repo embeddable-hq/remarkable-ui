@@ -170,8 +170,6 @@ describe('KpiChartChange', () => {
         <KpiChartChange value={120} comparisonValue={100} invertChangeColors />,
       );
 
-      // Positive change + invertChangeColors: color is negative and the arrow is
-      // also reversed (down), matching pre-existing coupled behavior.
       expect(document.querySelector('.tabler-icon-trending-down')).toBeInTheDocument();
       const badges = container.querySelectorAll('.badge');
       expect(badges[0]).toHaveClass('negative');
@@ -187,10 +185,8 @@ describe('KpiChartChange', () => {
         />,
       );
 
-      // Colors are still reversed (negative)...
       const badges = container.querySelectorAll('.badge');
       expect(badges[0]).toHaveClass('negative');
-      // ...but the arrow keeps pointing up, since reverseTrendDirection=false.
       expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
     });
 
