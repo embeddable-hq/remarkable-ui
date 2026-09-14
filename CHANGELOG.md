@@ -1,5 +1,13 @@
 # @embeddable.com/remarkable-ui
 
+## 3.3.0
+
+### Minor Changes
+
+- 3bc11b1: Allow the KPI trend arrow direction to be controlled independently of the positive/negative colors.
+
+  `KpiChart`/`KpiChartChange` gain a new optional `invertTrendDirection` prop, and `KpiTrend` gains a new optional `reverseColor` prop. Both default to mirroring the existing `invertChangeColors`/`reverseTrend` value, so current usages keep looking exactly the same until a consumer opts in to setting them independently.
+
 ## 3.2.0
 
 ### Minor Changes
