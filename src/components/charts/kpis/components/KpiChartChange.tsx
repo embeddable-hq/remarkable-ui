@@ -34,9 +34,9 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
 
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
 
-  const isBadTrendColor = !(isPositive !== invertChangeColors);
+  const isBadTrendColor = isPositive === invertChangeColors;
   // Falls back to invertChangeColors when invertTrendDirection is unset.
-  const isBadTrendDirection = !(isPositive !== (invertTrendDirection ?? invertChangeColors));
+  const isBadTrendDirection = isPositive === (invertTrendDirection ?? invertChangeColors);
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
