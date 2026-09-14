@@ -11,7 +11,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   comparisonValue = 0,
   showChangeAsPercentage,
   invertChangeColors = false,
-  reverseTrendDirection,
+  invertTrendDirection,
   comparisonLabel,
   valueFormatter,
   percentageDecimalPlaces = 1,
@@ -35,8 +35,8 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
 
   const isBadTrendColor = !(isPositive !== invertChangeColors);
-  // Falls back to invertChangeColors when reverseTrendDirection is unset (TPS-1470).
-  const isBadTrendDirection = !(isPositive !== (reverseTrendDirection ?? invertChangeColors));
+  // Falls back to invertChangeColors when invertTrendDirection is unset (TPS-1470).
+  const isBadTrendDirection = !(isPositive !== (invertTrendDirection ?? invertChangeColors));
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 

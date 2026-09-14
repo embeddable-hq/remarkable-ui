@@ -7,7 +7,7 @@ export type KpiChartProps = {
   showChangeAsPercentage?: boolean;
   invertChangeColors?: boolean;
   /** Reverses the trend arrow independently of `invertChangeColors`. Defaults to `invertChangeColors`. */
-  reverseTrendDirection?: boolean;
+  invertTrendDirection?: boolean;
   comparisonLabel?: string;
   equalComparisonLabel?: string;
   percentageDecimalPlaces?: number;
