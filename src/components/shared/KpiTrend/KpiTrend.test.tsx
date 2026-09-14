@@ -32,4 +32,26 @@ describe('KpiTrend', () => {
 
     expect(container.firstChild).toHaveClass('extra');
   });
+
+  describe('reverseColor', () => {
+    it('defaults reverseColor to reverseTrend, keeping color and arrow coupled', () => {
+      const { container } = render(<KpiTrend value="+15%" reverseTrend />);
+
+      expect(container.firstChild).toHaveClass('negative');
+      expect(container.querySelector('svg')).toBeInTheDocument();
+    });
+
+    it('lets reverseColor be set independently of reverseTrend', () => {
+      const { container } = render(<KpiTrend value="+15%" reverseTrend={false} reverseColor />);
+
+      expect(container.firstChild).toHaveClass('negative');
+      expect(container.firstChild).not.toHaveClass('positive');
+    });
+
+    it('keeps the arrow direction tied to reverseTrend regardless of reverseColor', () => {
+      render(<KpiTrend value="+15%" reverseTrend={false} reverseColor />);
+
+      expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
+    });
+  });
 });

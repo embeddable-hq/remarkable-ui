@@ -8,6 +8,9 @@ const meta = {
     reverseTrend: {
       control: { type: 'boolean' },
     },
+    reverseColor: {
+      control: { type: 'boolean' },
+    },
   },
 } satisfies Meta<typeof KpiTrend>;
 
@@ -38,5 +41,13 @@ export const DecreasingReversed: Story = {
   args: {
     value: '-10%',
     reverseTrend: true,
+  },
+};
+
+export const IncreasingWithReversedColorOnly: Story = {
+  args: {
+    value: '+15%',
+    reverseTrend: false,
+    reverseColor: true,
   },
 };

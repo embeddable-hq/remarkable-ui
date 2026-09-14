@@ -11,6 +11,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   comparisonValue = 0,
   showChangeAsPercentage,
   invertChangeColors = false,
+  invertTrendDirection,
   comparisonLabel,
   valueFormatter,
   percentageDecimalPlaces = 1,
@@ -32,7 +33,10 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   }
 
   const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
-  const isBadTrend = !(isPositive !== invertChangeColors);
+
+  const isBadTrendColor = isPositive === invertChangeColors;
+  // Falls back to invertChangeColors when invertTrendDirection is unset.
+  const isBadTrendDirection = isPositive === (invertTrendDirection ?? invertChangeColors);
 
   const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
@@ -40,7 +44,11 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
     <div className={styles.kpiChangeContainerSizeGuide}>
       {/* This is responsible to setting the size of the container */}
       <div className={clsx(styles.kpiChartChangeContainer, styles.hidden)}>
-        <KpiTrend value={displayValue} reverseTrend={isBadTrend} />
+        <KpiTrend
+          value={displayValue}
+          reverseTrend={isBadTrendDirection}
+          reverseColor={isBadTrendColor}
+        />
         <span className={styles.kpiComparisonLabel}>{comparisonLabel}</span>
       </div>
       {/* This is responsible for displaying the content on the available size of the container */}
@@ -50,7 +58,13 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
             <span className={styles.kpiComparisonLabel}>{noPreviousDataLabel}</span>
           ) : (
             <>
-              {!equalComparison && <KpiTrend value={displayValue} reverseTrend={isBadTrend} />}
+              {!equalComparison && (
+                <KpiTrend
+                  value={displayValue}
+                  reverseTrend={isBadTrendDirection}
+                  reverseColor={isBadTrendColor}
+                />
+              )}
               <span className={styles.kpiComparisonLabel}>
                 {equalComparison ? (equalComparisonLabel ?? comparisonLabel) : comparisonLabel}
               </span>

@@ -163,4 +163,46 @@ describe('KpiChartChange', () => {
       expect(badges[0]).toHaveClass('positive');
     });
   });
+
+  describe('invertTrendDirection', () => {
+    it('falls back to invertChangeColors for the arrow when invertTrendDirection is not set, keeping current behavior', () => {
+      const { container } = render(
+        <KpiChartChange value={120} comparisonValue={100} invertChangeColors />,
+      );
+
+      expect(document.querySelector('.tabler-icon-trending-down')).toBeInTheDocument();
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('negative');
+    });
+
+    it('lets the arrow direction be controlled independently of the colors', () => {
+      const { container } = render(
+        <KpiChartChange
+          value={120}
+          comparisonValue={100}
+          invertChangeColors
+          invertTrendDirection={false}
+        />,
+      );
+
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('negative');
+      expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
+    });
+
+    it('lets the arrow be reversed while colors stay normal', () => {
+      const { container } = render(
+        <KpiChartChange
+          value={120}
+          comparisonValue={100}
+          invertChangeColors={false}
+          invertTrendDirection
+        />,
+      );
+
+      const badges = container.querySelectorAll('.badge');
+      expect(badges[0]).toHaveClass('positive');
+      expect(document.querySelector('.tabler-icon-trending-down')).toBeInTheDocument();
+    });
+  });
 });
