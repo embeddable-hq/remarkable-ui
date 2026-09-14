@@ -51,7 +51,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
         <KpiTrend
           value={displayValue}
           reverseTrend={isBadTrendDirection}
-          invertColor={isBadTrendColor}
+          reverseColor={isBadTrendColor}
         />
         <span className={styles.kpiComparisonLabel}>{comparisonLabel}</span>
       </div>
@@ -66,7 +66,7 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
                 <KpiTrend
                   value={displayValue}
                   reverseTrend={isBadTrendDirection}
-                  invertColor={isBadTrendColor}
+                  reverseColor={isBadTrendColor}
                 />
               )}
               <span className={styles.kpiComparisonLabel}>

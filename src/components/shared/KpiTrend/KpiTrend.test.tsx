@@ -33,24 +33,24 @@ describe('KpiTrend', () => {
     expect(container.firstChild).toHaveClass('extra');
   });
 
-  describe('invertColor (TPS-1470)', () => {
-    it('defaults invertColor to reverseTrend, keeping color and arrow coupled', () => {
+  describe('reverseColor (TPS-1470)', () => {
+    it('defaults reverseColor to reverseTrend, keeping color and arrow coupled', () => {
       const { container } = render(<KpiTrend value="+15%" reverseTrend />);
 
       expect(container.firstChild).toHaveClass('negative');
       expect(container.querySelector('svg')).toBeInTheDocument();
     });
 
-    it('lets invertColor be set independently of reverseTrend', () => {
-      const { container } = render(<KpiTrend value="+15%" reverseTrend={false} invertColor />);
+    it('lets reverseColor be set independently of reverseTrend', () => {
+      const { container } = render(<KpiTrend value="+15%" reverseTrend={false} reverseColor />);
 
-      // Color reflects invertColor...
+      // Color reflects reverseColor...
       expect(container.firstChild).toHaveClass('negative');
       expect(container.firstChild).not.toHaveClass('positive');
     });
 
-    it('keeps the arrow direction tied to reverseTrend regardless of invertColor', () => {
-      render(<KpiTrend value="+15%" reverseTrend={false} invertColor />);
+    it('keeps the arrow direction tied to reverseTrend regardless of reverseColor', () => {
+      render(<KpiTrend value="+15%" reverseTrend={false} reverseColor />);
 
       // Still the "up" trending icon, since reverseTrend is false.
       expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();

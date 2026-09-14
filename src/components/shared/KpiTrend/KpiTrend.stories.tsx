@@ -8,7 +8,7 @@ const meta = {
     reverseTrend: {
       control: { type: 'boolean' },
     },
-    invertColor: {
+    reverseColor: {
       control: { type: 'boolean' },
     },
   },
@@ -44,10 +44,10 @@ export const DecreasingReversed: Story = {
   },
 };
 
-export const IncreasingWithColorInvertedOnly: Story = {
+export const IncreasingWithReversedColorOnly: Story = {
   args: {
     value: '+15%',
     reverseTrend: false,
-    invertColor: true,
+    reverseColor: true,
   },
 };
