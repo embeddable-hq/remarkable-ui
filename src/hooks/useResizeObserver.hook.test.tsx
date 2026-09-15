@@ -29,6 +29,12 @@ const Probe = ({ swap }: { swap: boolean }) => {
   return <div key={swap ? 'b' : 'a'} ref={ref} data-testid="box" data-height={size.height} />;
 };
 
+const RemovableProbe = ({ show }: { show: boolean }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  useResizeObserver(ref);
+  return show ? <div ref={ref} data-testid="box" /> : null;
+};
+
 describe('useResizeObserver', () => {
   beforeEach(() => {
     MockResizeObserver.instances = [];
@@ -70,6 +76,15 @@ describe('useResizeObserver', () => {
     const { unmount } = render(<Probe swap={false} />);
 
     unmount();
+
+    expect(MockResizeObserver.instances[0]!.disconnected).toBe(true);
+  });
+
+  it('disconnects when the element is conditionally removed', () => {
+    const { rerender } = render(<RemovableProbe show />);
+    expect(MockResizeObserver.instances).toHaveLength(1);
+
+    rerender(<RemovableProbe show={false} />);
 
     expect(MockResizeObserver.instances[0]!.disconnected).toBe(true);
   });

@@ -15,13 +15,22 @@ export const useResizeObserver = <T extends HTMLElement>(
   const observerRef = useRef<ResizeObserver | null>(null);
   const observedRef = useRef<T | null>(null);
 
-  timeoutMsRef.current = timeout;
+  useLayoutEffect(() => {
+    timeoutMsRef.current = timeout;
+  }, [timeout]);
 
   // Runs after every commit: a remount can point the ref at a new element
-  // (e.g. a card moving into a lightbox), so re-attach whenever it changes.
+  // (e.g. a card moving into a lightbox), so re-attach whenever it changes,
+  // and disconnect when the element is conditionally removed.
   useLayoutEffect(() => {
     const el = elRef.current;
-    if (!el || observedRef.current === el) return;
+    if (!el) {
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+      observedRef.current = null;
+      return;
+    }
+    if (observedRef.current === el) return;
 
     observerRef.current?.disconnect();
     observedRef.current = el;

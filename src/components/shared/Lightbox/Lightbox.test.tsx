@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { StrictMode } from 'react';
 import { Lightbox } from './Lightbox';
 
 // jsdom does not implement the dialog API (show/showModal/close).
@@ -123,9 +124,31 @@ describe('Lightbox', () => {
     expect(document.body.style.overflow).toBe('');
   });
 
-  it('closes the dialog when unmounted while open', () => {
-    const { container, unmount } = render(
+  it('keeps body scroll locked until the last open lightbox closes', () => {
+    const first = render(
       <Lightbox open onClose={vi.fn()}>
+        One
+      </Lightbox>,
+    );
+    const second = render(
+      <Lightbox open onClose={vi.fn()}>
+        Two
+      </Lightbox>,
+    );
+
+    expect(document.body.style.overflow).toBe('hidden');
+
+    first.unmount();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    second.unmount();
+    expect(document.body.style.overflow).toBe('');
+  });
+
+  it('closes the dialog without calling onClose when unmounted while open', () => {
+    const onClose = vi.fn();
+    const { container, unmount } = render(
+      <Lightbox open onClose={onClose}>
         Content
       </Lightbox>,
     );
@@ -136,5 +159,20 @@ describe('Lightbox', () => {
     unmount();
 
     expect(dialog.open).toBe(false);
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('does not call onClose for lifecycle closes during Strict Mode effect replay', () => {
+    const onClose = vi.fn();
+    const { container } = render(
+      <StrictMode>
+        <Lightbox open onClose={onClose}>
+          Content
+        </Lightbox>
+      </StrictMode>,
+    );
+
+    expect(getDialog(container).open).toBe(true);
+    expect(onClose).not.toHaveBeenCalled();
   });
 });
