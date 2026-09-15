@@ -53,4 +53,20 @@ describe('Tooltip', () => {
     expect(content).toHaveAttribute('data-side', 'bottom');
     expect(content).toHaveAttribute('data-align', 'start');
   });
+
+  it('portals into the containing dialog so content paints above the top layer', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <dialog open data-testid="dialog">
+        <Tooltip trigger={<button>Hover me</button>}>Tooltip content</Tooltip>
+      </dialog>,
+    );
+
+    await user.hover(screen.getByRole('button', { name: 'Hover me' }));
+
+    const tooltip = await screen.findByRole('tooltip');
+    expect(screen.getByTestId('dialog')).toContainElement(tooltip);
+    expect(document.querySelector('[embeddable-radix-overlays]')?.contains(tooltip)).not.toBe(true);
+  });
 });
