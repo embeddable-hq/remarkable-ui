@@ -3,7 +3,7 @@ import styles from './KpiChart.module.css';
 import { KpiChartChange } from './components/KpiChartChange';
 import { KpiChartProps } from './KpiChart.types';
 import { AutoTextSize } from 'auto-text-size';
-import ConditionalWrapper from '../../shared/ConditionalWrapper/ConditionalWrapper';
+import { ConditionalWrapper } from '../../shared/ConditionalWrapper/ConditionalWrapper';
 import { getStyleNumber } from '../../../styles/styles.utils';
 
 export const getKpiDisplayValue = ({

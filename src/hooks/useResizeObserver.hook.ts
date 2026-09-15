@@ -11,10 +11,29 @@ export const useResizeObserver = <T extends HTMLElement>(
 ): Size => {
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
   const timeoutRef = useRef<number | undefined>(undefined);
+  const timeoutMsRef = useRef(timeout);
+  const observerRef = useRef<ResizeObserver | null>(null);
+  const observedRef = useRef<T | null>(null);
 
   useLayoutEffect(() => {
+    timeoutMsRef.current = timeout;
+  }, [timeout]);
+
+  // Runs after every commit: a remount can point the ref at a new element
+  // (e.g. a card moving into a dialog), so re-attach whenever it changes,
+  // and disconnect when the element is conditionally removed.
+  useLayoutEffect(() => {
     const el = elRef.current;
-    if (!el) return;
+    if (!el) {
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+      observedRef.current = null;
+      return;
+    }
+    if (observedRef.current === el) return;
+
+    observerRef.current?.disconnect();
+    observedRef.current = el;
 
     const updateSize = (rect: DOMRectReadOnly | DOMRect) => {
       setSize({
@@ -33,19 +52,24 @@ export const useResizeObserver = <T extends HTMLElement>(
 
       timeoutRef.current = window.setTimeout(() => {
         updateSize(entry.contentRect);
-      }, timeout);
+      }, timeoutMsRef.current);
     });
 
+    observerRef.current = ro;
     ro.observe(el);
 
     // initial size
     updateSize(el.getBoundingClientRect());
+  });
 
+  useLayoutEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      ro.disconnect();
+      observerRef.current?.disconnect();
+      observerRef.current = null;
+      observedRef.current = null;
     };
-  }, [elRef, timeout]);
+  }, []);
 
   return size;
 };

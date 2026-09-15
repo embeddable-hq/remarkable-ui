@@ -18,7 +18,7 @@ export const getTableTotalPages = (
   total: number | undefined,
   pageSize: number,
 ): number | undefined => {
-  return total ? Math.ceil(total / pageSize) : undefined;
+  return total && pageSize ? Math.ceil(total / pageSize) : undefined;
 };
 
 export const TablePagination: FC<TablePaginationProps> = ({

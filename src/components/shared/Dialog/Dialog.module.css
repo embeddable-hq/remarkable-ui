@@ -1,0 +1,14 @@
+.dialog {
+  width: var(--em-dialog-width, calc(100% - 4rem));
+  height: var(--em-dialog-height, calc(100% - 4rem));
+  max-width: var(--em-dialog-max-width, none);
+  max-height: var(--em-dialog-max-height, none);
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.dialog::backdrop {
+  background: var(--em-dialog-backdrop-background, rgb(33 33 41 / 90%));
+}

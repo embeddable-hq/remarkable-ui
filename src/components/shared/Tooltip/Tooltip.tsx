@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback, useState } from 'react';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { getOrCreateTooltipOverlayContainer, tooltipContentStyle } from './Tooltip.utils';
 
@@ -17,11 +17,24 @@ export const Tooltip: FC<TooltipProps> = ({
   children,
   delayDuration = 0,
 }) => {
+  // Content portaled to the body-level overlay container can never paint
+  // above a modal dialog (the top layer covers the whole document), so when
+  // the trigger sits inside a dialog the content must portal into it.
+  const [dialogContainer, setDialogContainer] = useState<HTMLElement | null>(null);
+
+  const handleTriggerRef = useCallback((node: HTMLButtonElement | null) => {
+    setDialogContainer(node?.closest('dialog') ?? null);
+  }, []);
+
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root delayDuration={delayDuration}>
-        <RadixTooltip.Trigger asChild>{trigger}</RadixTooltip.Trigger>
-        <RadixTooltip.Portal container={getOrCreateTooltipOverlayContainer() ?? undefined}>
+        <RadixTooltip.Trigger asChild ref={handleTriggerRef}>
+          {trigger}
+        </RadixTooltip.Trigger>
+        <RadixTooltip.Portal
+          container={dialogContainer ?? getOrCreateTooltipOverlayContainer() ?? undefined}
+        >
           <RadixTooltip.Content
             side={side}
             align={align}

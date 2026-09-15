@@ -423,6 +423,11 @@
   --em-kpichart-trend-icon-size: var(--em-core-size--0400);
   --em-kpichart-trend-line-height: var(--em-core-line-height--md);
   --em-kpichart-trend-padding: var(--em-core-spacing--0100);
+  --em-dialog-backdrop-background: var(--em-overlay-background);
+  --em-dialog-height: calc(100% - 2 * var(--em-core-spacing--0800));
+  --em-dialog-max-height: none;
+  --em-dialog-max-width: none;
+  --em-dialog-width: calc(100% - 2 * var(--em-core-spacing--0800));
   --em-linechart-line-dash: var(--em-core-size--0100);
   --em-linechart-line-gap: var(--em-core-size--0100);
   --em-linechart-line-width: 0.125rem;
