@@ -46,7 +46,13 @@ export const Lightbox: FC<LightboxProps> = ({ open, onClose, ariaLabel, classNam
     const dialog = dialogRef.current;
     if (!open || !dialog || typeof dialog.showModal !== 'function') return;
 
-    if (!dialog.open) dialog.showModal();
+    if (!dialog.open) {
+      dialog.showModal();
+      // showModal() focuses the first focusable descendant, which can pop
+      // focus-triggered UI (e.g. a title tooltip trigger). Focus the dialog
+      // itself instead; the first control is one Tab away.
+      dialog.focus();
+    }
 
     // Closing in the cleanup (which runs while the node is still attached)
     // lets the browser restore focus to the previously focused element. This
@@ -75,6 +81,7 @@ export const Lightbox: FC<LightboxProps> = ({ open, onClose, ariaLabel, classNam
       ref={dialogRef}
       className={clsx(styles.lightbox, className)}
       aria-label={ariaLabel}
+      tabIndex={-1}
       onClose={() => {
         if (suppressNextCloseRef.current) {
           suppressNextCloseRef.current = false;

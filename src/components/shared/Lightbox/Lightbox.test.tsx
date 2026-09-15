@@ -162,6 +162,17 @@ describe('Lightbox', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  it('focuses the dialog itself on open, not the first focusable child', () => {
+    const { container } = render(
+      <Lightbox open onClose={vi.fn()}>
+        <button>Info</button>
+      </Lightbox>,
+    );
+
+    expect(document.activeElement).toBe(getDialog(container));
+    expect(document.activeElement).not.toBe(screen.getByRole('button', { name: 'Info' }));
+  });
+
   it('does not call onClose for lifecycle closes during Strict Mode effect replay', () => {
     const onClose = vi.fn();
     const { container } = render(
