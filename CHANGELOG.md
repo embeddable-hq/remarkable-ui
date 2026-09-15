@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.4.0
+
+### Minor Changes
+
+- 9997392: Add Dialog: a modal surface rendered in the browser's top layer via dialog.showModal(), so it escapes transformed/contained ancestors and shadow roots. Themeable via --em-dialog-width/height/max-width/max-height and --em-dialog-backdrop-background. Also fix useResizeObserver to re-attach when the ref points at a new element, and guard getTableTotalPages against a zero page size.
+
 ## 3.3.0
 
 ### Minor Changes
