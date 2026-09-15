@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { FC, ReactNode, useLayoutEffect, useRef } from 'react';
-import styles from './Lightbox.module.css';
+import styles from './Dialog.module.css';
 
-export type LightboxProps = {
+export type DialogProps = {
   open: boolean;
   onClose: () => void;
   ariaLabel?: string;
@@ -12,7 +12,7 @@ export type LightboxProps = {
 
 // showModal() supports stacked modal dialogs, so the body scroll lock is
 // reference-counted across instances: the original overflow value is restored
-// only when the last open Lightbox releases it.
+// only when the last open Dialog releases it.
 let scrollLockCount = 0;
 let previousBodyOverflow = '';
 
@@ -37,7 +37,7 @@ const unlockBodyScroll = () => {
  * contained ancestors and shadow roots visually, while the node stays in its
  * tree so scoped styles and CSS variables keep applying.
  */
-export const Lightbox: FC<LightboxProps> = ({ open, onClose, ariaLabel, className, children }) => {
+export const Dialog: FC<DialogProps> = ({ open, onClose, ariaLabel, className, children }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const mouseDownOnBackdropRef = useRef(false);
   const suppressNextCloseRef = useRef(false);
@@ -79,7 +79,7 @@ export const Lightbox: FC<LightboxProps> = ({ open, onClose, ariaLabel, classNam
   return (
     <dialog
       ref={dialogRef}
-      className={clsx(styles.lightbox, className)}
+      className={clsx(styles.dialog, className)}
       aria-label={ariaLabel}
       tabIndex={-1}
       onClose={() => {

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { StrictMode } from 'react';
-import { Lightbox } from './Lightbox';
+import { Dialog } from './Dialog';
 
 // jsdom does not implement the dialog API (show/showModal/close).
 if (!HTMLDialogElement.prototype.showModal) {
@@ -17,46 +17,46 @@ if (!HTMLDialogElement.prototype.showModal) {
 
 const getDialog = (container: HTMLElement) => container.querySelector('dialog')!;
 
-describe('Lightbox', () => {
+describe('Dialog', () => {
   it('opens as a modal dialog and renders children', () => {
     const { container } = render(
-      <Lightbox open onClose={vi.fn()}>
+      <Dialog open onClose={vi.fn()}>
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     expect(getDialog(container).open).toBe(true);
     expect(screen.getByText('Content')).toBeInTheDocument();
   });
 
-  it('applies the lightbox class and merges a custom className', () => {
+  it('applies the dialog class and merges a custom className', () => {
     const { container } = render(
-      <Lightbox open onClose={vi.fn()} className="custom-class">
+      <Dialog open onClose={vi.fn()} className="custom-class">
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     const dialog = getDialog(container);
-    expect(dialog).toHaveClass('lightbox');
+    expect(dialog).toHaveClass('dialog');
     expect(dialog).toHaveClass('custom-class');
   });
 
   it('sets the accessible name from ariaLabel', () => {
     const { container } = render(
-      <Lightbox open onClose={vi.fn()} ariaLabel="My lightbox">
+      <Dialog open onClose={vi.fn()} ariaLabel="My dialog">
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
-    expect(getDialog(container)).toHaveAttribute('aria-label', 'My lightbox');
+    expect(getDialog(container)).toHaveAttribute('aria-label', 'My dialog');
   });
 
   it('calls onClose when the dialog closes', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <Lightbox open onClose={onClose}>
+      <Dialog open onClose={onClose}>
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     getDialog(container).close();
@@ -67,9 +67,9 @@ describe('Lightbox', () => {
   it('closes on Escape', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <Lightbox open onClose={onClose}>
+      <Dialog open onClose={onClose}>
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     fireEvent.keyDown(getDialog(container), { key: 'Escape' });
@@ -81,9 +81,9 @@ describe('Lightbox', () => {
   it('closes when a click starts and ends on the backdrop', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <Lightbox open onClose={onClose}>
+      <Dialog open onClose={onClose}>
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     const dialog = getDialog(container);
@@ -97,9 +97,9 @@ describe('Lightbox', () => {
   it('does not close when a drag starts inside the content and ends on the backdrop', () => {
     const onClose = vi.fn();
     const { container } = render(
-      <Lightbox open onClose={onClose}>
+      <Dialog open onClose={onClose}>
         <span>Content</span>
-      </Lightbox>,
+      </Dialog>,
     );
 
     const dialog = getDialog(container);
@@ -112,9 +112,9 @@ describe('Lightbox', () => {
 
   it('locks body scroll while open and restores it on close', () => {
     const { unmount } = render(
-      <Lightbox open onClose={vi.fn()}>
+      <Dialog open onClose={vi.fn()}>
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     expect(document.body.style.overflow).toBe('hidden');
@@ -124,16 +124,16 @@ describe('Lightbox', () => {
     expect(document.body.style.overflow).toBe('');
   });
 
-  it('keeps body scroll locked until the last open lightbox closes', () => {
+  it('keeps body scroll locked until the last open dialog closes', () => {
     const first = render(
-      <Lightbox open onClose={vi.fn()}>
+      <Dialog open onClose={vi.fn()}>
         One
-      </Lightbox>,
+      </Dialog>,
     );
     const second = render(
-      <Lightbox open onClose={vi.fn()}>
+      <Dialog open onClose={vi.fn()}>
         Two
-      </Lightbox>,
+      </Dialog>,
     );
 
     expect(document.body.style.overflow).toBe('hidden');
@@ -148,9 +148,9 @@ describe('Lightbox', () => {
   it('closes the dialog without calling onClose when unmounted while open', () => {
     const onClose = vi.fn();
     const { container, unmount } = render(
-      <Lightbox open onClose={onClose}>
+      <Dialog open onClose={onClose}>
         Content
-      </Lightbox>,
+      </Dialog>,
     );
 
     const dialog = getDialog(container);
@@ -164,9 +164,9 @@ describe('Lightbox', () => {
 
   it('focuses the dialog itself on open, not the first focusable child', () => {
     const { container } = render(
-      <Lightbox open onClose={vi.fn()}>
+      <Dialog open onClose={vi.fn()}>
         <button>Info</button>
-      </Lightbox>,
+      </Dialog>,
     );
 
     expect(document.activeElement).toBe(getDialog(container));
@@ -177,9 +177,9 @@ describe('Lightbox', () => {
     const onClose = vi.fn();
     const { container } = render(
       <StrictMode>
-        <Lightbox open onClose={onClose}>
+        <Dialog open onClose={onClose}>
           Content
-        </Lightbox>
+        </Dialog>
       </StrictMode>,
     );
 
