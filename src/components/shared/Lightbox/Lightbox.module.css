@@ -1,0 +1,14 @@
+.lightbox {
+  width: var(--em-lightbox-width, calc(100% - 4rem));
+  height: var(--em-lightbox-height, calc(100% - 4rem));
+  max-width: var(--em-lightbox-max-width, none);
+  max-height: var(--em-lightbox-max-height, none);
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.lightbox::backdrop {
+  background: var(--em-lightbox-backdrop-background, rgb(33 33 41 / 90%));
+}
