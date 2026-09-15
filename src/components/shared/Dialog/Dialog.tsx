@@ -77,7 +77,7 @@ export const Dialog: FC<DialogProps> = ({ open, onClose, ariaLabel, className, c
   }, [open]);
 
   return (
-    <dialog
+    <dialog // NOSONAR(typescript:S6847) - native <dialog> backdrop dismiss pattern, not a non-interactive element
       ref={dialogRef}
       className={clsx(styles.dialog, className)}
       aria-label={ariaLabel}
