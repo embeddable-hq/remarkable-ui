@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.5.0
+
+### Minor Changes
+
+- f563a6e: Add a searchPlaceholder prop to MultiSelectField and SingleSelectField so the dropdown search field's placeholder can be translated; it was hardcoded to "Search…", which remains the default.
+
 ## 3.4.0
 
 ### Minor Changes
