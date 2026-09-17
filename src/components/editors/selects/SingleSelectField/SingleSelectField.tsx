@@ -27,6 +27,7 @@ export type SingleSelectFieldProps<T extends SelectOptionValue> = {
   value?: T | null;
   disabled?: boolean;
   placeholder?: string;
+  searchPlaceholder?: string;
   searchable?: boolean;
   clearable?: boolean;
   isLoading?: boolean;
@@ -49,6 +50,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
   options,
   disabled,
   placeholder,
+  searchPlaceholder = 'Search…',
   searchable,
   clearable,
   isLoading,
@@ -157,7 +159,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
               ref={searchFieldRef}
               startIcon={IconSearch}
               aria-label="Search options"
-              placeholder="Search…"
+              placeholder={searchPlaceholder}
               role="searchbox"
               value={searchValue}
               onKeyDown={(e) => e.stopPropagation()}
