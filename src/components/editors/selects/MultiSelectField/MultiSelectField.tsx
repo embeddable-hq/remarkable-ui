@@ -39,6 +39,7 @@ export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   noOptionsMessage?: string;
   options: (SelectListOptionProps<T> | SelectListOptionPropsWithCategory<T>)[];
   placeholder?: string;
+  searchPlaceholder?: string;
   showSelectAll?: boolean;
   selectAllLabel?: string;
   deselectAllLabel?: string;
@@ -65,6 +66,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
   noOptionsMessage,
   options,
   placeholder,
+  searchPlaceholder = 'Search…',
   showSelectAll,
   selectAllLabel = 'Select all',
   deselectAllLabel = 'Deselect all',
@@ -241,7 +243,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
               ref={searchFieldRef}
               startIcon={IconSearch}
               aria-label="Search options"
-              placeholder="Search…"
+              placeholder={searchPlaceholder}
               role="searchbox"
               value={searchValue}
               onKeyDown={(e) => e.stopPropagation()}
