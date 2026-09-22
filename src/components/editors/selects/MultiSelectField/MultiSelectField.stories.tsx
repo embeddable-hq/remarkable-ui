@@ -247,6 +247,43 @@ export const WithSelectAll: Story = {
   },
 };
 
+export const ApplyOnChange: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    isSearchable: true,
+    isClearable: true,
+    applyOnChange: true,
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
+  },
+};
+
+const manyOptions: SelectListOptionProps<string>[] = Array.from({ length: 30 }, (_, index) => ({
+  value: `store-${index + 1}`,
+  label: `Store ${index + 1}`,
+}));
+
+export const ManyOptions: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    isSearchable: true,
+    options: manyOptions,
+  },
+};
+
 export const WithCategories: Story = {
   args: {
     label: undefined,

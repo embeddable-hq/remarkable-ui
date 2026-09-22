@@ -31,6 +31,8 @@ import { SelectOptionValue } from '../SingleSelectField/SingleSelectField';
 
 export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   startIcon?: React.ComponentType<IconProps>;
+  /** Apply every tick straight away and leave the Apply button out. */
+  applyOnChange?: boolean;
   disabled?: boolean;
   disableApplyButton?: boolean;
   isClearable?: boolean;
@@ -56,6 +58,7 @@ export type MultiSelectFieldProps<T extends SelectOptionValue> = {
 
 export function MultiSelectField<T extends SelectOptionValue>({
   startIcon,
+  applyOnChange = false,
   label,
   required,
   disabled,
@@ -151,14 +154,13 @@ export function MultiSelectField<T extends SelectOptionValue>({
 
     if (newValue === undefined) return;
 
-    if (preValues.includes(newValue)) {
-      const next = preValues.filter((v) => v !== newValue);
-      setPreValues(next);
-      onPendingChange?.(next);
-    } else {
-      const next = [...preValues, newValue];
-      setPreValues(next);
-      onPendingChange?.(next);
+    const next = preValues.includes(newValue)
+      ? preValues.filter((v) => v !== newValue)
+      : [...preValues, newValue];
+    setPreValues(next);
+    onPendingChange?.(next);
+    if (applyOnChange) {
+      onChange(next);
     }
   };
 
@@ -170,6 +172,9 @@ export function MultiSelectField<T extends SelectOptionValue>({
       : [...preValues, ...selectableValues.filter((value) => !preValues.includes(value))];
     setPreValues(next);
     onPendingChange?.(next);
+    if (applyOnChange) {
+      onChange(next);
+    }
   };
 
   const handleSearch = (newSearch: string) => {
@@ -274,16 +279,18 @@ export function MultiSelectField<T extends SelectOptionValue>({
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
           </SelectFieldContentList>
-          <Button
-            className={styles.submitButton}
-            disabled={isSubmitDisabled || isLoading || disableApplyButton}
-            variant="primary"
-            size="medium"
-            onClick={() => handleSave(preValues)}
-            role="button"
-          >
-            {submitLabel}
-          </Button>
+          {!applyOnChange && (
+            <Button
+              className={styles.submitButton}
+              disabled={isSubmitDisabled || isLoading || disableApplyButton}
+              variant="primary"
+              size="medium"
+              onClick={() => handleSave(preValues)}
+              role="button"
+            >
+              {submitLabel}
+            </Button>
+          )}
         </SelectFieldContent>
       </Dropdown>
       {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}

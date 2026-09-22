@@ -580,4 +580,62 @@ describe('MultiSelectField', () => {
       expect(handlePendingChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
     });
   });
+
+  describe('applyOnChange', () => {
+    it('does not render the Apply button', async () => {
+      const user = userEvent.setup();
+      render(<MultiSelectField options={OPTIONS} applyOnChange onChange={vi.fn()} />);
+
+      await openDropdown(user);
+
+      expect(screen.queryByRole('button', { name: 'Apply' })).not.toBeInTheDocument();
+    });
+
+    it('calls onChange on every tick and untick', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<MultiSelectField options={OPTIONS} applyOnChange onChange={handleChange} />);
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+      await user.click(screen.getByText('Banana'));
+      await user.click(screen.getByText('Apple'));
+
+      expect(handleChange.mock.calls).toEqual([[['apple']], [['apple', 'banana']], [['banana']]]);
+    });
+
+    it('keeps the dropdown open after a tick', async () => {
+      const user = userEvent.setup();
+      render(<MultiSelectField options={OPTIONS} applyOnChange onChange={vi.fn()} />);
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+
+      expect(screen.getByText('Banana')).toBeInTheDocument();
+    });
+
+    it('applies select all at once', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField options={OPTIONS} applyOnChange showSelectAll onChange={handleChange} />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Select all'));
+
+      expect(handleChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
+    });
+
+    it('does not call onChange without the prop until Apply is clicked', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<MultiSelectField options={OPTIONS} onChange={handleChange} />);
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+
+      expect(handleChange).not.toHaveBeenCalled();
+    });
+  });
 });
