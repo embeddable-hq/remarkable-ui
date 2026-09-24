@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.6.0
+
+### Minor Changes
+
+- 6a06b12: Add an autoApply prop to MultiSelectField (default false). When true, the apply button is hidden and every checkbox toggle (including select/deselect all) commits immediately via onChange, with the dropdown staying open; the search resets when the dropdown closes, since there is no apply step to do it.
+
 ## 3.5.0
 
 ### Minor Changes
