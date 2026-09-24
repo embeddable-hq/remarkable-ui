@@ -247,6 +247,27 @@ export const WithSelectAll: Story = {
   },
 };
 
+export const AutoApply: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    autoApply: true,
+  },
+  render: (args) => {
+    const [, updateArgs] = useArgs();
+
+    return (
+      <MultiSelectField
+        {...args}
+        onChange={(values) => {
+          updateArgs({ values });
+          args.onChange?.(values);
+        }}
+      />
+    );
+  },
+};
+
 export const WithCategories: Story = {
   args: {
     label: undefined,

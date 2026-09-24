@@ -320,6 +320,97 @@ describe('MultiSelectField', () => {
     });
   });
 
+  describe('instant apply (autoApply)', () => {
+    it('does not render the Apply button', async () => {
+      const user = userEvent.setup();
+      render(<MultiSelectField options={OPTIONS} autoApply onChange={vi.fn()} />);
+
+      await openDropdown(user);
+
+      expect(screen.getByText('Apple')).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Apply' })).not.toBeInTheDocument();
+    });
+
+    it('calls onChange immediately when an option is selected', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<MultiSelectField options={OPTIONS} autoApply onChange={handleChange} />);
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+
+      expect(handleChange).toHaveBeenCalledOnce();
+      expect(handleChange).toHaveBeenCalledWith(['apple']);
+    });
+
+    it('calls onChange immediately when an option is deselected', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          values={['apple', 'banana']}
+          autoApply
+          onChange={handleChange}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+
+      expect(handleChange).toHaveBeenCalledOnce();
+      expect(handleChange).toHaveBeenCalledWith(['banana']);
+    });
+
+    it('calls onChange for each toggle and keeps the dropdown open', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(<MultiSelectField options={OPTIONS} autoApply onChange={handleChange} />);
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Apple'));
+      await user.click(screen.getByText('Banana'));
+
+      expect(handleChange).toHaveBeenCalledTimes(2);
+      expect(handleChange).toHaveBeenLastCalledWith(['apple', 'banana']);
+      expect(screen.getByText('Cherry')).toBeInTheDocument();
+    });
+
+    it('calls onChange immediately when select all is clicked', async () => {
+      const user = userEvent.setup();
+      const handleChange = vi.fn();
+      render(
+        <MultiSelectField options={OPTIONS} showSelectAll autoApply onChange={handleChange} />,
+      );
+
+      await openDropdown(user);
+      await user.click(screen.getByText('Select all'));
+
+      expect(handleChange).toHaveBeenCalledOnce();
+      expect(handleChange).toHaveBeenCalledWith(['apple', 'banana', 'cherry']);
+    });
+
+    it('resets the search when the dropdown is closed', async () => {
+      const user = userEvent.setup();
+      const handleSearch = vi.fn();
+      render(
+        <MultiSelectField
+          options={OPTIONS}
+          isSearchable
+          autoApply
+          onSearch={handleSearch}
+          onChange={vi.fn()}
+        />,
+      );
+
+      await openDropdown(user);
+      await user.type(screen.getByRole('searchbox'), 'app');
+      await user.keyboard('{Escape}');
+
+      expect(handleSearch).toHaveBeenLastCalledWith('');
+    });
+  });
+
   describe('search', () => {
     it('filters options based on search input', async () => {
       const user = userEvent.setup();

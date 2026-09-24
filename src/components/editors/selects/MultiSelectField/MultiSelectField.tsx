@@ -40,6 +40,7 @@ export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   options: (SelectListOptionProps<T> | SelectListOptionPropsWithCategory<T>)[];
   placeholder?: string;
   searchPlaceholder?: string;
+  autoApply?: boolean;
   showSelectAll?: boolean;
   selectAllLabel?: string;
   deselectAllLabel?: string;
@@ -67,6 +68,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
   options,
   placeholder,
   searchPlaceholder = 'Search…',
+  autoApply = false,
   showSelectAll,
   selectAllLabel = 'Select all',
   deselectAllLabel = 'Deselect all',
@@ -146,30 +148,35 @@ export function MultiSelectField<T extends SelectOptionValue>({
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
 
+  // With autoApply every toggle is committed immediately via onChange
+  const updateSelection = (next: T[]) => {
+    setPreValues(next);
+    onPendingChange?.(next);
+    if (autoApply) {
+      onChange(next);
+    }
+  };
+
   const handleSelectOption = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, newValue?: T) => {
     e.preventDefault();
 
     if (newValue === undefined) return;
 
-    if (preValues.includes(newValue)) {
-      const next = preValues.filter((v) => v !== newValue);
-      setPreValues(next);
-      onPendingChange?.(next);
-    } else {
-      const next = [...preValues, newValue];
-      setPreValues(next);
-      onPendingChange?.(next);
-    }
+    updateSelection(
+      preValues.includes(newValue)
+        ? preValues.filter((v) => v !== newValue)
+        : [...preValues, newValue],
+    );
   };
 
   const handleToggleSelectAll = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
 
-    const next = areAllSelected
-      ? preValues.filter((value) => !selectableValues.includes(value))
-      : [...preValues, ...selectableValues.filter((value) => !preValues.includes(value))];
-    setPreValues(next);
-    onPendingChange?.(next);
+    updateSelection(
+      areAllSelected
+        ? preValues.filter((value) => !selectableValues.includes(value))
+        : [...preValues, ...selectableValues.filter((value) => !preValues.includes(value))],
+    );
   };
 
   const handleSearch = (newSearch: string) => {
@@ -182,6 +189,15 @@ export function MultiSelectField<T extends SelectOptionValue>({
     setIsOpen(false);
     setSearchValue('');
     onSearch?.('');
+  };
+
+  // With autoApply there is no save step to reset the search, so reset it on close
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open && autoApply) {
+      setSearchValue('');
+      onSearch?.('');
+    }
   };
 
   const handleClearAll = () => {
@@ -218,7 +234,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
       <FieldHeader label={label} required={required} />
       <Dropdown
         open={isOpen}
-        onOpenChange={setIsOpen}
+        onOpenChange={handleOpenChange}
         disabled={disabled}
         avoidCollisions={avoidCollisions}
         triggerComponent={
@@ -274,16 +290,18 @@ export function MultiSelectField<T extends SelectOptionValue>({
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
           </SelectFieldContentList>
-          <Button
-            className={styles.submitButton}
-            disabled={isSubmitDisabled || isLoading || disableApplyButton}
-            variant="primary"
-            size="medium"
-            onClick={() => handleSave(preValues)}
-            role="button"
-          >
-            {submitLabel}
-          </Button>
+          {!autoApply && (
+            <Button
+              className={styles.submitButton}
+              disabled={isSubmitDisabled || isLoading || disableApplyButton}
+              variant="primary"
+              size="medium"
+              onClick={() => handleSave(preValues)}
+              role="button"
+            >
+              {submitLabel}
+            </Button>
+          )}
         </SelectFieldContent>
       </Dropdown>
       {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
