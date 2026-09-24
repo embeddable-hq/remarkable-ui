@@ -4,11 +4,11 @@ import clsx from 'clsx';
 import { KpiChartProps } from '../KpiChart.types';
 import { KpiTrend } from '../../../shared/KpiTrend/KpiTrend';
 
-type KpiChartChangeProps = KpiChartProps & { className?: string };
+type KpiChartChangeProps = Omit<KpiChartProps, 'value'> & { value: number; className?: string };
 
 export const KpiChartChange: FC<KpiChartChangeProps> = ({
   value,
-  comparisonValue = 0,
+  comparisonValue,
   showChangeAsPercentage,
   invertChangeColors = false,
   invertTrendDirection,
@@ -18,27 +18,34 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   equalComparisonLabel,
   noPreviousDataLabel,
 }) => {
-  const equalComparison = comparisonValue === value;
+  const showNoPreviousData = comparisonValue == null;
 
-  const difference = value - comparisonValue;
-  const isPositive = difference > 0;
+  let displayValue = '';
+  let isBadTrendColor = false;
+  let isBadTrendDirection = false;
+  let equalComparison = false;
 
-  let differenceLabel: string;
+  if (comparisonValue != null) {
+    equalComparison = comparisonValue === value;
 
-  if (showChangeAsPercentage) {
-    const percentage = (difference / comparisonValue) * 100;
-    differenceLabel = `${percentage.toFixed(percentageDecimalPlaces)}%`;
-  } else {
-    differenceLabel = valueFormatter ? valueFormatter(difference) : difference.toString();
+    const difference = value - comparisonValue;
+    const isPositive = difference > 0;
+
+    let differenceLabel: string;
+
+    if (showChangeAsPercentage && comparisonValue !== 0) {
+      const percentage = (difference / comparisonValue) * 100;
+      differenceLabel = `${percentage.toFixed(percentageDecimalPlaces)}%`;
+    } else {
+      differenceLabel = valueFormatter ? valueFormatter(difference) : difference.toString();
+    }
+
+    displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
+
+    isBadTrendColor = isPositive === invertChangeColors;
+    // Falls back to invertChangeColors when invertTrendDirection is unset.
+    isBadTrendDirection = isPositive === (invertTrendDirection ?? invertChangeColors);
   }
-
-  const displayValue = `${isPositive ? '+' : ''}${differenceLabel}`;
-
-  const isBadTrendColor = isPositive === invertChangeColors;
-  // Falls back to invertChangeColors when invertTrendDirection is unset.
-  const isBadTrendDirection = isPositive === (invertTrendDirection ?? invertChangeColors);
-
-  const showNoPreviousData = showChangeAsPercentage && Number(comparisonValue) === 0;
 
   return (
     <div className={styles.kpiChangeContainerSizeGuide}>
