@@ -247,11 +247,11 @@ export const WithSelectAll: Story = {
   },
 };
 
-export const WithoutApplyButton: Story = {
+export const AutoApply: Story = {
   args: {
     label: undefined,
     required: false,
-    showApplyButton: false,
+    autoApply: true,
   },
   render: (args) => {
     const [, updateArgs] = useArgs();

@@ -320,10 +320,10 @@ describe('MultiSelectField', () => {
     });
   });
 
-  describe('instant apply (showApplyButton=false)', () => {
+  describe('instant apply (autoApply)', () => {
     it('does not render the Apply button', async () => {
       const user = userEvent.setup();
-      render(<MultiSelectField options={OPTIONS} showApplyButton={false} onChange={vi.fn()} />);
+      render(<MultiSelectField options={OPTIONS} autoApply onChange={vi.fn()} />);
 
       await openDropdown(user);
 
@@ -334,9 +334,7 @@ describe('MultiSelectField', () => {
     it('calls onChange immediately when an option is selected', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      render(
-        <MultiSelectField options={OPTIONS} showApplyButton={false} onChange={handleChange} />,
-      );
+      render(<MultiSelectField options={OPTIONS} autoApply onChange={handleChange} />);
 
       await openDropdown(user);
       await user.click(screen.getByText('Apple'));
@@ -352,7 +350,7 @@ describe('MultiSelectField', () => {
         <MultiSelectField
           options={OPTIONS}
           values={['apple', 'banana']}
-          showApplyButton={false}
+          autoApply
           onChange={handleChange}
         />,
       );
@@ -367,9 +365,7 @@ describe('MultiSelectField', () => {
     it('calls onChange for each toggle and keeps the dropdown open', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      render(
-        <MultiSelectField options={OPTIONS} showApplyButton={false} onChange={handleChange} />,
-      );
+      render(<MultiSelectField options={OPTIONS} autoApply onChange={handleChange} />);
 
       await openDropdown(user);
       await user.click(screen.getByText('Apple'));
@@ -384,12 +380,7 @@ describe('MultiSelectField', () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
       render(
-        <MultiSelectField
-          options={OPTIONS}
-          showSelectAll
-          showApplyButton={false}
-          onChange={handleChange}
-        />,
+        <MultiSelectField options={OPTIONS} showSelectAll autoApply onChange={handleChange} />,
       );
 
       await openDropdown(user);
@@ -406,7 +397,7 @@ describe('MultiSelectField', () => {
         <MultiSelectField
           options={OPTIONS}
           isSearchable
-          showApplyButton={false}
+          autoApply
           onSearch={handleSearch}
           onChange={vi.fn()}
         />,

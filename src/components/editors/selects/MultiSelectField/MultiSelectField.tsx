@@ -40,7 +40,7 @@ export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   options: (SelectListOptionProps<T> | SelectListOptionPropsWithCategory<T>)[];
   placeholder?: string;
   searchPlaceholder?: string;
-  showApplyButton?: boolean;
+  autoApply?: boolean;
   showSelectAll?: boolean;
   selectAllLabel?: string;
   deselectAllLabel?: string;
@@ -68,7 +68,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
   options,
   placeholder,
   searchPlaceholder = 'Search…',
-  showApplyButton = true,
+  autoApply = false,
   showSelectAll,
   selectAllLabel = 'Select all',
   deselectAllLabel = 'Deselect all',
@@ -148,11 +148,11 @@ export function MultiSelectField<T extends SelectOptionValue>({
     preValues.every((preValue) => values.includes(preValue)) &&
     values.every((value) => preValues.includes(value));
 
-  // Without an apply button every toggle is committed immediately via onChange
+  // With autoApply every toggle is committed immediately via onChange
   const updateSelection = (next: T[]) => {
     setPreValues(next);
     onPendingChange?.(next);
-    if (!showApplyButton) {
+    if (autoApply) {
       onChange(next);
     }
   };
@@ -191,10 +191,10 @@ export function MultiSelectField<T extends SelectOptionValue>({
     onSearch?.('');
   };
 
-  // Without an apply button there is no save step to reset the search, so reset it on close
+  // With autoApply there is no save step to reset the search, so reset it on close
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
-    if (!open && !showApplyButton) {
+    if (!open && autoApply) {
       setSearchValue('');
       onSearch?.('');
     }
@@ -290,7 +290,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
               <SelectListOption disabled value="empty" label={noOptionsMessage} />
             )}
           </SelectFieldContentList>
-          {showApplyButton && (
+          {!autoApply && (
             <Button
               className={styles.submitButton}
               disabled={isSubmitDisabled || isLoading || disableApplyButton}
