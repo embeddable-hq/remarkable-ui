@@ -1,8 +1,8 @@
-import { FC } from 'react';
-import styles from './KpiChartChange.module.css';
 import clsx from 'clsx';
-import { KpiChartProps } from '../KpiChart.types';
+import { FC } from 'react';
 import { KpiTrend } from '../../../shared/KpiTrend/KpiTrend';
+import { KpiChartProps } from '../KpiChart.types';
+import styles from './KpiChartChange.module.css';
 
 type KpiChartChangeProps = Omit<KpiChartProps, 'value'> & { value: number; className?: string };
 
@@ -26,15 +26,18 @@ export const KpiChartChange: FC<KpiChartChangeProps> = ({
   let equalComparison = false;
 
   if (comparisonValue != null) {
-    equalComparison = comparisonValue === value;
+    const numericValue = Number(value);
+    const numericComparisonValue = Number(comparisonValue);
 
-    const difference = value - comparisonValue;
+    equalComparison = numericComparisonValue === numericValue;
+
+    const difference = numericValue - numericComparisonValue;
     const isPositive = difference > 0;
 
     let differenceLabel: string;
 
-    if (showChangeAsPercentage && comparisonValue !== 0) {
-      const percentage = (difference / comparisonValue) * 100;
+    if (showChangeAsPercentage && numericComparisonValue !== 0) {
+      const percentage = (difference / numericComparisonValue) * 100;
       differenceLabel = `${percentage.toFixed(percentageDecimalPlaces)}%`;
     } else {
       differenceLabel = valueFormatter ? valueFormatter(difference) : difference.toString();

@@ -78,6 +78,19 @@ describe('KpiChartChange', () => {
       expect(screen.queryByText(/NaN/)).not.toBeInTheDocument();
     });
 
+    it('falls back to the absolute difference instead of Infinity% when comparisonValue is the string "0" (Cube measure values arrive as numeric strings)', () => {
+      render(
+        <KpiChartChange
+          value={8}
+          comparisonValue={'0' as unknown as number}
+          showChangeAsPercentage
+        />,
+      );
+
+      expect(screen.getAllByText('+8')[0]).toBeInTheDocument();
+      expect(screen.queryByText(/Infinity/)).not.toBeInTheDocument();
+    });
+
     it('applies valueFormatter to the fallback when comparisonValue is 0 in percentage mode', () => {
       render(
         <KpiChartChange
