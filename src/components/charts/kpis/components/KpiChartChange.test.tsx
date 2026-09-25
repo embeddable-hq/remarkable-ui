@@ -57,7 +57,7 @@ describe('KpiChartChange', () => {
       expect(screen.getAllByText('+15.00%')[0]).toBeInTheDocument();
     });
 
-    it('shows noPreviousDataLabel when comparisonValue is 0 and showChangeAsPercentage', () => {
+    it('does not show noPreviousDataLabel when comparisonValue is a real 0', () => {
       render(
         <KpiChartChange
           value={100}
@@ -67,15 +67,75 @@ describe('KpiChartChange', () => {
         />,
       );
 
-      expect(screen.getAllByText('No previous data')[0]).toBeInTheDocument();
+      expect(screen.queryByText('No previous data')).not.toBeInTheDocument();
     });
 
-    it('does not show a badge in the visible section when noPreviousData', () => {
-      const { container } = render(
+    it('falls back to the absolute difference instead of Infinity% when comparisonValue is a real 0', () => {
+      render(<KpiChartChange value={100} comparisonValue={0} showChangeAsPercentage />);
+
+      expect(screen.getAllByText('+100')[0]).toBeInTheDocument();
+      expect(screen.queryByText(/Infinity/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/NaN/)).not.toBeInTheDocument();
+    });
+
+    it('falls back to the absolute difference instead of Infinity% when comparisonValue is the string "0" (Cube measure values arrive as numeric strings)', () => {
+      render(
+        <KpiChartChange
+          value={8}
+          comparisonValue={'0' as unknown as number}
+          showChangeAsPercentage
+        />,
+      );
+
+      expect(screen.getAllByText('+8')[0]).toBeInTheDocument();
+      expect(screen.queryByText(/Infinity/)).not.toBeInTheDocument();
+    });
+
+    it('applies valueFormatter to the fallback when comparisonValue is 0 in percentage mode', () => {
+      render(
         <KpiChartChange
           value={100}
           comparisonValue={0}
           showChangeAsPercentage
+          valueFormatter={(v) => `$${v}`}
+        />,
+      );
+
+      expect(screen.getAllByText('+$100')[0]).toBeInTheDocument();
+    });
+  });
+
+  describe('null comparisonValue', () => {
+    it('shows noPreviousDataLabel when comparisonValue is null and showChangeAsPercentage', () => {
+      render(
+        <KpiChartChange
+          value={100}
+          comparisonValue={null}
+          showChangeAsPercentage
+          noPreviousDataLabel="No previous data"
+        />,
+      );
+
+      expect(screen.getAllByText('No previous data')[0]).toBeInTheDocument();
+    });
+
+    it('shows noPreviousDataLabel when comparisonValue is null and showChangeAsPercentage is off', () => {
+      render(
+        <KpiChartChange
+          value={100}
+          comparisonValue={null}
+          noPreviousDataLabel="No previous data"
+        />,
+      );
+
+      expect(screen.getAllByText('No previous data')[0]).toBeInTheDocument();
+    });
+
+    it('does not show a badge in the visible section when comparisonValue is null', () => {
+      const { container } = render(
+        <KpiChartChange
+          value={100}
+          comparisonValue={null}
           noPreviousDataLabel="No previous data"
         />,
       );
