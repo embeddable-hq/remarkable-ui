@@ -1,17 +1,27 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { ChartData, ChartOptions, LegendItem } from 'chart.js';
 import { describe, expect, it, vi } from 'vitest';
 import { FunnelChart } from './FunnelChart';
 import { funnelDataMock } from './funnel.mock';
+
+const chartPropsSpy = vi.fn();
 
 vi.mock('react-chartjs-2', async () => {
   const { forwardRef } = await import('react');
   return {
     Chart: forwardRef(
       (
-        { onClick }: { onClick?: React.MouseEventHandler<HTMLCanvasElement> },
+        props: {
+          onClick?: React.MouseEventHandler<HTMLCanvasElement>;
+          data: ChartData<'funnel'>;
+          options: ChartOptions<'funnel'>;
+        },
         ref: React.Ref<HTMLCanvasElement>,
-      ) => <canvas data-testid="funnel-chart" onClick={onClick} ref={ref} />,
+      ) => {
+        chartPropsSpy(props);
+        return <canvas data-testid="funnel-chart" onClick={props.onClick} ref={ref} />;
+      },
     ),
     getElementAtEvent: vi.fn(() => []),
     getElementsAtEvent: vi.fn(() => []),
@@ -53,6 +63,47 @@ describe('FunnelChart', () => {
       render(<FunnelChart data={MOCK_DATA} />);
 
       await user.click(screen.getByTestId('funnel-chart'));
+    });
+  });
+
+  describe('legend click', () => {
+    const getLatestChartProps = () =>
+      chartPropsSpy.mock.calls.at(-1)?.[0] as {
+        data: ChartData<'funnel'>;
+        options: ChartOptions<'funnel'>;
+      };
+
+    const clickLegendItem = (index: number) => {
+      const { options } = getLatestChartProps();
+      const onClick = options.plugins?.legend?.onClick as (
+        event: unknown,
+        legendItem: LegendItem,
+        legend: unknown,
+      ) => void;
+      act(() => onClick({}, { index } as LegendItem, {}));
+    };
+
+    it('removes the clicked stage from the rendered data instead of shrinking it', () => {
+      chartPropsSpy.mockClear();
+      render(<FunnelChart data={MOCK_DATA} />);
+
+      clickLegendItem(1);
+
+      const { data } = getLatestChartProps();
+      expect(data.labels).toEqual(['Near Misses', 'Recordable', 'DART']);
+      expect(data.datasets[0]?.data).toEqual([33, 14, 5]);
+    });
+
+    it('restores the stage when clicked again', () => {
+      chartPropsSpy.mockClear();
+      render(<FunnelChart data={MOCK_DATA} />);
+
+      clickLegendItem(1);
+      clickLegendItem(1);
+
+      const { data } = getLatestChartProps();
+      expect(data.labels).toEqual(MOCK_DATA.labels);
+      expect(data.datasets[0]?.data).toEqual(MOCK_DATA.datasets[0]?.data);
     });
   });
 });
