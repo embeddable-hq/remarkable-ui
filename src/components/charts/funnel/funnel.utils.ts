@@ -45,6 +45,12 @@ export const getVisibleFunnelData = (
       backgroundColor: Array.isArray(dataset.backgroundColor)
         ? dataset.backgroundColor.filter((_color, index) => !hiddenStages.has(index))
         : dataset.backgroundColor,
+      shrinkFraction: Array.isArray(dataset.shrinkFraction)
+        ? dataset.shrinkFraction.filter((_value, index) => !hiddenStages.has(index))
+        : dataset.shrinkFraction,
+      shrinkAnchor: Array.isArray(dataset.shrinkAnchor)
+        ? dataset.shrinkAnchor.filter((_value, index) => !hiddenStages.has(index))
+        : dataset.shrinkAnchor,
     })),
   };
 };

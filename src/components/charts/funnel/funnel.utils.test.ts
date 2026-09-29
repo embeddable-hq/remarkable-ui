@@ -75,6 +75,24 @@ describe('getVisibleFunnelData', () => {
     expect(result.datasets[0]?.data).toEqual([20]);
     expect(result.datasets[0]?.backgroundColor).toEqual(['#b']);
   });
+
+  it('drops the hidden stage from per-stage shrinkFraction and shrinkAnchor arrays', () => {
+    const dataWithShrink: ChartData<'funnel', number[], unknown> = {
+      labels: ['A', 'B', 'C'],
+      datasets: [
+        {
+          data: [30, 20, 10],
+          shrinkFraction: [0.1, 0.2, 0.3],
+          shrinkAnchor: ['top', 'middle', 'bottom'],
+        },
+      ],
+    };
+
+    const result = getVisibleFunnelData(dataWithShrink, new Set([1]));
+
+    expect(result.datasets[0]?.shrinkFraction).toEqual([0.1, 0.3]);
+    expect(result.datasets[0]?.shrinkAnchor).toEqual(['top', 'bottom']);
+  });
 });
 
 describe('getFunnelChartOptions', () => {
