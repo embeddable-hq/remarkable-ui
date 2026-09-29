@@ -30,7 +30,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   showValueLabels = true,
   showPercentage = false,
   percentageDecimalPlaces = 1,
-  shrinkAnchor,
+  shrinkAnchor = 'middle',
   shrinkFraction,
 }) => {
   const chartRef = useRef(null);
