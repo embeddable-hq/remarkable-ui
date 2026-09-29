@@ -8,6 +8,8 @@ export type FunnelChartConfigurationProps = {
   showValueLabels?: boolean;
   showPercentage?: boolean;
   percentageDecimalPlaces?: number;
+  shrinkAnchor?: 'top' | 'middle' | 'bottom' | 'none';
+  shrinkFraction?: number;
 };
 
 export type BaseFunnelChartProps = {

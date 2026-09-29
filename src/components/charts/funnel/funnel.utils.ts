@@ -31,25 +31,65 @@ const getFunnelDatalabelFormatter =
       : value.toLocaleString();
   };
 
-const getFunnelLegendLabels = (chart: Chart<'funnel'>): LegendItem[] => {
-  const colors = (chart.data.datasets[0]?.backgroundColor as string[]) ?? [];
-  return (chart.data.labels ?? []).map((label, index) => ({
-    text: String(label ?? ''),
-    fillStyle: colors[index],
-    strokeStyle: colors[index],
-    index,
-  }));
+export const getVisibleFunnelData = (
+  data: ChartData<'funnel', number[], unknown>,
+  hiddenStages: Set<number>,
+): ChartData<'funnel', number[], unknown> => {
+  if (!hiddenStages.size) return data;
+  return {
+    ...data,
+    labels: (data.labels ?? []).filter((_label, index) => !hiddenStages.has(index)),
+    datasets: data.datasets.map((dataset) => ({
+      ...dataset,
+      data: dataset.data.filter((_value, index) => !hiddenStages.has(index)),
+      backgroundColor: Array.isArray(dataset.backgroundColor)
+        ? dataset.backgroundColor.filter((_color, index) => !hiddenStages.has(index))
+        : dataset.backgroundColor,
+    })),
+  };
+};
+
+const getFunnelLegendLabels =
+  (data: ChartData<'funnel', number[], unknown>, hiddenStages: Set<number>) =>
+  (chart: Chart<'funnel'>): LegendItem[] => {
+    const colors = (data.datasets[0]?.backgroundColor as string[]) ?? [];
+    const labelColor = chart.options.plugins?.legend?.labels?.color as string | undefined;
+    return (data.labels ?? []).map((label, index) => ({
+      text: String(label ?? ''),
+      fillStyle: colors[index],
+      strokeStyle: colors[index],
+      fontColor: labelColor,
+      hidden: hiddenStages.has(index),
+      index,
+    }));
+  };
+
+export type FunnelLegendState = {
+  data: ChartData<'funnel', number[], unknown>;
+  hiddenStages: Set<number>;
+  onToggleStage: (index: number) => void;
 };
 
 export const getFunnelChartOptions = (
   config: FunnelChartConfigurationProps,
+  legendState: FunnelLegendState,
 ): Partial<ChartOptions<'funnel'>> => {
+  const { data, hiddenStages, onToggleStage } = legendState;
   const funnelChartOptions: Partial<ChartOptions<'funnel'>> = {
     indexAxis: 'y',
+    elements: {
+      trapezoid: {
+        ...(config.shrinkAnchor !== undefined && { shrinkAnchor: config.shrinkAnchor }),
+        ...(config.shrinkFraction !== undefined && { shrinkFraction: config.shrinkFraction }),
+      },
+    },
     plugins: {
       legend: {
         display: config.showLegend,
-        labels: { generateLabels: getFunnelLegendLabels },
+        onClick: (_event, legendItem) => {
+          if (legendItem.index !== undefined) onToggleStage(legendItem.index);
+        },
+        labels: { generateLabels: getFunnelLegendLabels(data, hiddenStages) },
       },
       tooltip: { enabled: config.showTooltips },
       datalabels: {

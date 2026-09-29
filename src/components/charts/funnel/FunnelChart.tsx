@@ -1,9 +1,9 @@
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { FunnelController, TrapezoidElement } from 'chartjs-chart-funnel';
-import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
+import { getFunnelChartData, getFunnelChartOptions, getVisibleFunnelData } from './funnel.utils';
 import { BaseFunnelChartProps } from './funnel.types';
 import styles from '../charts.module.css';
 import { mergician } from 'mergician';
@@ -30,16 +30,42 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   showValueLabels = true,
   showPercentage = false,
   percentageDecimalPlaces = 1,
+  shrinkAnchor,
+  shrinkFraction,
 }) => {
   const chartRef = useRef(null);
+  const [hiddenStages, setHiddenStages] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    setHiddenStages(new Set());
+  }, [data]);
+
+  const toggleStage = (index: number) => {
+    setHiddenStages((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
+  const coloredData = getFunnelChartData(data);
   const funnelOptions = mergician(
-    getFunnelChartOptions({
-      showLegend,
-      showTooltips,
-      showValueLabels,
-      showPercentage,
-      percentageDecimalPlaces,
-    }),
+    getFunnelChartOptions(
+      {
+        showLegend,
+        showTooltips,
+        showValueLabels,
+        showPercentage,
+        percentageDecimalPlaces,
+        shrinkAnchor,
+        shrinkFraction,
+      },
+      { data: coloredData, hiddenStages, onToggleStage: toggleStage },
+    ),
     options,
   );
 
@@ -48,7 +74,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       <Chart
         ref={chartRef}
         type="funnel"
-        data={getFunnelChartData(data)}
+        data={getVisibleFunnelData(coloredData, hiddenStages)}
         options={funnelOptions}
         onClick={buildChartjsOnClick(chartRef, onClick)}
       />
