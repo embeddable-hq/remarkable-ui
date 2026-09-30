@@ -109,6 +109,18 @@ describe('FunnelChart', () => {
       expect(handleClick.mock.calls[0]?.[0].elementAtEvent[0].index).toBe(2);
     });
 
+    it('keeps the stage hidden when data is replaced with the same labels', () => {
+      chartPropsSpy.mockClear();
+      const { rerender } = render(<FunnelChart data={MOCK_DATA} />);
+
+      clickLegendItem(1);
+      rerender(<FunnelChart data={{ ...MOCK_DATA, datasets: [{ data: [40, 35, 20, 8] }] }} />);
+
+      const { data } = getLatestChartProps();
+      expect(data.labels).toEqual(['Near Misses', 'Recordable', 'DART']);
+      expect(data.datasets[0]?.data).toEqual([40, 20, 8]);
+    });
+
     it('restores the stage when clicked again', () => {
       chartPropsSpy.mockClear();
       render(<FunnelChart data={MOCK_DATA} />);

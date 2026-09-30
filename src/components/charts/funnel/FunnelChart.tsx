@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
@@ -40,19 +40,21 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   shrinkFraction,
 }) => {
   const chartRef = useRef(null);
-  const [hiddenStages, setHiddenStages] = useState<Set<number>>(new Set());
+  const [hiddenLabels, setHiddenLabels] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    setHiddenStages(new Set());
-  }, [data]);
+  const stageLabels = (data.labels ?? []).map((label) => String(label ?? ''));
+  const hiddenStages = new Set(
+    stageLabels.flatMap((label, index) => (hiddenLabels.has(label) ? [index] : [])),
+  );
 
   const toggleStage = (index: number) => {
-    setHiddenStages((prev) => {
+    const label = stageLabels[index] ?? '';
+    setHiddenLabels((prev) => {
       const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
+      if (next.has(label)) {
+        next.delete(label);
       } else {
-        next.add(index);
+        next.add(label);
       }
       return next;
     });
