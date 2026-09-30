@@ -81,7 +81,7 @@ describe('getFunnelLegendOptions', () => {
     onToggleSection,
   });
 
-  it('returns one legend item per section with its color, built from the original data', () => {
+  it('returns one legend item per section with its color', () => {
     const options = getFunnelLegendOptions(buildLegendState());
     const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
       chart: Chart<'funnel'>,
@@ -102,7 +102,7 @@ describe('getFunnelLegendOptions', () => {
     ]);
   });
 
-  it('marks hidden sections as hidden without dropping them from the legend', () => {
+  it('marks hidden sections as hidden in the legend', () => {
     const options = getFunnelLegendOptions(buildLegendState(new Set([1])));
     const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
       chart: Chart<'funnel'>,
@@ -113,7 +113,7 @@ describe('getFunnelLegendOptions', () => {
     expect(items.map((item) => item.hidden)).toEqual([false, true, false]);
   });
 
-  it('calls onToggleSection with the clicked index instead of toggling chart visibility', () => {
+  it('calls onToggleSection with the clicked index', () => {
     const onToggleSection = vi.fn();
     const options = getFunnelLegendOptions(buildLegendState(new Set(), onToggleSection));
 

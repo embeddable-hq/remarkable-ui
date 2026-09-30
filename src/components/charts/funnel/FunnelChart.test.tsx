@@ -84,7 +84,7 @@ describe('FunnelChart', () => {
       act(() => onClick({}, { index } as LegendItem, {}));
     };
 
-    it('removes the clicked section from the rendered data instead of shrinking it', () => {
+    it('hides the clicked section', () => {
       chartPropsSpy.mockClear();
       render(<FunnelChart data={MOCK_DATA} />);
 
