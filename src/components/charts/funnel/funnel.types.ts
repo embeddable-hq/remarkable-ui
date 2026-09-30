@@ -1,5 +1,6 @@
 import 'chartjs-chart-funnel';
 import { ChartData, ChartOptions } from 'chart.js';
+import type { TrapezoidElementOptions } from 'chartjs-chart-funnel';
 import { ChartClickArgs } from '../charts.types';
 
 export type FunnelChartConfigurationProps = {
@@ -8,8 +9,8 @@ export type FunnelChartConfigurationProps = {
   showValueLabels?: boolean;
   showPercentage?: boolean;
   percentageDecimalPlaces?: number;
-  shrinkAnchor?: 'top' | 'middle' | 'bottom' | 'none';
-  shrinkFraction?: number;
+  shrinkAnchor?: TrapezoidElementOptions['shrinkAnchor'];
+  shrinkFraction?: TrapezoidElementOptions['shrinkFraction'];
 };
 
 export type BaseFunnelChartProps = {
