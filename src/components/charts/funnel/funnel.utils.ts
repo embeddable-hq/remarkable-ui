@@ -4,7 +4,7 @@ import { mergician } from 'mergician';
 import { getChartColors } from '../charts.constants';
 import { getChartjsOptions } from '../chartjs.constants';
 import { FunnelChartConfigurationProps } from './funnel.types';
-import { getFunnelLegendLabels } from './funnel.stages.utils';
+import { getFunnelLegendLabels } from './funnel.sections.utils';
 
 export const getFunnelChartData = (data: ChartData<'funnel'>) => {
   const chartColors = getChartColors();

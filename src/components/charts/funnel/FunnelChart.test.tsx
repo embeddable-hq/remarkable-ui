@@ -84,7 +84,7 @@ describe('FunnelChart', () => {
       act(() => onClick({}, { index } as LegendItem, {}));
     };
 
-    it('removes the clicked stage from the rendered data instead of shrinking it', () => {
+    it('removes the clicked section from the rendered data instead of shrinking it', () => {
       chartPropsSpy.mockClear();
       render(<FunnelChart data={MOCK_DATA} />);
 
@@ -95,7 +95,7 @@ describe('FunnelChart', () => {
       expect(data.datasets[0]?.data).toEqual([33, 14, 5]);
     });
 
-    it('reports the original stage index on chart click after a stage is hidden', async () => {
+    it('reports the original section index on chart click after a section is hidden', async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
       render(<FunnelChart data={MOCK_DATA} onClick={handleClick} />);
@@ -109,7 +109,7 @@ describe('FunnelChart', () => {
       expect(handleClick.mock.calls[0]?.[0].elementAtEvent[0].index).toBe(2);
     });
 
-    it('keeps the stage hidden when data is replaced with the same labels', () => {
+    it('keeps the section hidden when data is replaced with the same labels', () => {
       chartPropsSpy.mockClear();
       const { rerender } = render(<FunnelChart data={MOCK_DATA} />);
 
@@ -121,7 +121,7 @@ describe('FunnelChart', () => {
       expect(data.datasets[0]?.data).toEqual([40, 20, 8]);
     });
 
-    it('restores the stage when clicked again', () => {
+    it('restores the section when clicked again', () => {
       chartPropsSpy.mockClear();
       render(<FunnelChart data={MOCK_DATA} />);
 

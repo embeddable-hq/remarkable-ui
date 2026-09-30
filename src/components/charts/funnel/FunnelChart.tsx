@@ -8,7 +8,7 @@ import {
   getFunnelLegendOptions,
   getOriginalFunnelItems,
   getFunnelChartVisibleData,
-} from './funnel.stages.utils';
+} from './funnel.sections.utils';
 import { BaseFunnelChartProps } from './funnel.types';
 import { ChartClickArgs } from '../charts.types';
 import styles from '../charts.module.css';
@@ -42,13 +42,13 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   const chartRef = useRef(null);
   const [hiddenLabels, setHiddenLabels] = useState<Set<string>>(new Set());
 
-  const stageLabels = (data.labels ?? []).map((label) => String(label ?? ''));
-  const hiddenStages = new Set(
-    stageLabels.flatMap((label, index) => (hiddenLabels.has(label) ? [index] : [])),
+  const sectionLabels = (data.labels ?? []).map((label) => String(label ?? ''));
+  const hiddenSections = new Set(
+    sectionLabels.flatMap((label, index) => (hiddenLabels.has(label) ? [index] : [])),
   );
 
-  const toggleStage = (index: number) => {
-    const label = stageLabels[index] ?? '';
+  const handleSectionToggle = (index: number) => {
+    const label = sectionLabels[index] ?? '';
     setHiddenLabels((prev) => {
       const next = new Set(prev);
       if (next.has(label)) {
@@ -65,9 +65,9 @@ export const FunnelChart: FC<FunnelChartProps> = ({
     ((args: ChartClickArgs) =>
       onClick({
         ...args,
-        elementAtEvent: getOriginalFunnelItems(args.elementAtEvent, hiddenStages),
-        elementsAtEvent: getOriginalFunnelItems(args.elementsAtEvent, hiddenStages),
-        datasetAtEvent: getOriginalFunnelItems(args.datasetAtEvent, hiddenStages),
+        elementAtEvent: getOriginalFunnelItems(args.elementAtEvent, hiddenSections),
+        elementsAtEvent: getOriginalFunnelItems(args.elementsAtEvent, hiddenSections),
+        datasetAtEvent: getOriginalFunnelItems(args.datasetAtEvent, hiddenSections),
       }));
 
   const funnelData = getFunnelChartData(data);
@@ -81,7 +81,11 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       shrinkAnchor,
       shrinkFraction,
     }),
-    getFunnelLegendOptions({ data: funnelData, hiddenStages, onToggleStage: toggleStage }),
+    getFunnelLegendOptions({
+      data: funnelData,
+      hiddenSections,
+      onToggleSection: handleSectionToggle,
+    }),
     options,
   );
 
@@ -90,7 +94,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       <Chart
         ref={chartRef}
         type="funnel"
-        data={getFunnelChartVisibleData(funnelData, hiddenStages)}
+        data={getFunnelChartVisibleData(funnelData, hiddenSections)}
         options={funnelOptions}
         onClick={buildChartjsOnClick(chartRef, handleClick)}
       />

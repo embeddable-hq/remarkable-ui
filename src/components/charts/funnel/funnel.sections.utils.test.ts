@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { Chart, ChartData } from 'chart.js';
-import { getFunnelLegendOptions, getFunnelChartVisibleData } from './funnel.stages.utils';
+import { getFunnelLegendOptions, getFunnelChartVisibleData } from './funnel.sections.utils';
 
 describe('getFunnelChartVisibleData', () => {
   const data: ChartData<'funnel', number[], unknown> = {
@@ -8,13 +8,13 @@ describe('getFunnelChartVisibleData', () => {
     datasets: [{ data: [30, 20, 10], backgroundColor: ['#a', '#b', '#c'] }],
   };
 
-  it('returns the data unchanged when no stages are hidden', () => {
+  it('returns the data unchanged when no sections are hidden', () => {
     const result = getFunnelChartVisibleData(data, new Set());
 
     expect(result).toEqual(data);
   });
 
-  it('drops the hidden stage from labels, data, and backgroundColor', () => {
+  it('drops the hidden section from labels, data, and backgroundColor', () => {
     const result = getFunnelChartVisibleData(data, new Set([1]));
 
     expect(result.labels).toEqual(['A', 'C']);
@@ -22,7 +22,7 @@ describe('getFunnelChartVisibleData', () => {
     expect(result.datasets[0]?.backgroundColor).toEqual(['#a', '#c']);
   });
 
-  it('supports hiding multiple stages', () => {
+  it('supports hiding multiple sections', () => {
     const result = getFunnelChartVisibleData(data, new Set([0, 2]));
 
     expect(result.labels).toEqual(['B']);
@@ -30,7 +30,7 @@ describe('getFunnelChartVisibleData', () => {
     expect(result.datasets[0]?.backgroundColor).toEqual(['#b']);
   });
 
-  it('drops the hidden stage from per-stage shrinkFraction and shrinkAnchor arrays', () => {
+  it('drops the hidden section from per-section shrinkFraction and shrinkAnchor arrays', () => {
     const dataWithShrink: ChartData<'funnel', number[], unknown> = {
       labels: ['A', 'B', 'C'],
       datasets: [
@@ -48,7 +48,7 @@ describe('getFunnelChartVisibleData', () => {
     expect(result.datasets[0]?.shrinkAnchor).toEqual(['top', 'bottom']);
   });
 
-  it('drops the hidden stage from any per-stage array and leaves other values as they are', () => {
+  it('drops the hidden section from any per-section array and leaves other values as they are', () => {
     const dataWithColors: ChartData<'funnel', number[], unknown> = {
       labels: ['A', 'B', 'C'],
       datasets: [
@@ -75,10 +75,10 @@ describe('getFunnelLegendOptions', () => {
     datasets: [{ data: [30, 20, 10], backgroundColor: ['#a', '#b', '#c'] }],
   };
 
-  const buildLegendState = (hiddenStages = new Set<number>(), onToggleStage = vi.fn()) => ({
+  const buildLegendState = (hiddenSections = new Set<number>(), onToggleSection = vi.fn()) => ({
     data: legendData,
-    hiddenStages,
-    onToggleStage,
+    hiddenSections,
+    onToggleSection,
   });
 
   it('returns one legend item per section with its color, built from the original data', () => {
@@ -102,7 +102,7 @@ describe('getFunnelLegendOptions', () => {
     ]);
   });
 
-  it('marks hidden stages as hidden without dropping them from the legend', () => {
+  it('marks hidden sections as hidden without dropping them from the legend', () => {
     const options = getFunnelLegendOptions(buildLegendState(new Set([1])));
     const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
       chart: Chart<'funnel'>,
@@ -113,9 +113,9 @@ describe('getFunnelLegendOptions', () => {
     expect(items.map((item) => item.hidden)).toEqual([false, true, false]);
   });
 
-  it('calls onToggleStage with the clicked index instead of toggling chart visibility', () => {
-    const onToggleStage = vi.fn();
-    const options = getFunnelLegendOptions(buildLegendState(new Set(), onToggleStage));
+  it('calls onToggleSection with the clicked index instead of toggling chart visibility', () => {
+    const onToggleSection = vi.fn();
+    const options = getFunnelLegendOptions(buildLegendState(new Set(), onToggleSection));
 
     const onClick = options.plugins?.legend?.onClick as (
       event: unknown,
@@ -124,6 +124,6 @@ describe('getFunnelLegendOptions', () => {
     ) => void;
     onClick({}, { index: 1 }, {});
 
-    expect(onToggleStage).toHaveBeenCalledWith(1);
+    expect(onToggleSection).toHaveBeenCalledWith(1);
   });
 });

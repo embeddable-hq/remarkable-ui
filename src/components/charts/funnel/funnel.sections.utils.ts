@@ -2,9 +2,9 @@ import { Chart, ChartData, ChartOptions, InteractionItem, LegendItem } from 'cha
 
 export const getFunnelChartVisibleData = (
   data: ChartData<'funnel', number[], unknown>,
-  hiddenStages: Set<number>,
+  hiddenSections: Set<number>,
 ): ChartData<'funnel', number[], unknown> => {
-  const isVisible = (_item: unknown, index: number) => !hiddenStages.has(index);
+  const isVisible = (_item: unknown, index: number) => !hiddenSections.has(index);
   return {
     ...data,
     labels: data.labels?.filter(isVisible),
@@ -22,23 +22,23 @@ export const getFunnelChartVisibleData = (
   };
 };
 
-const getOriginalFunnelIndex = (visibleIndex: number, hiddenStages: Set<number>) => {
+const getOriginalFunnelIndex = (visibleIndex: number, hiddenSections: Set<number>) => {
   let index = -1;
   for (let visible = -1; visible < visibleIndex;) {
     index++;
-    if (!hiddenStages.has(index)) visible++;
+    if (!hiddenSections.has(index)) visible++;
   }
   return index;
 };
 
 export const getOriginalFunnelItems = (
   items: InteractionItem[],
-  hiddenStages: Set<number>,
+  hiddenSections: Set<number>,
 ): InteractionItem[] =>
-  items.map((item) => ({ ...item, index: getOriginalFunnelIndex(item.index, hiddenStages) }));
+  items.map((item) => ({ ...item, index: getOriginalFunnelIndex(item.index, hiddenSections) }));
 
 export const getFunnelLegendLabels =
-  (data?: ChartData<'funnel', number[], unknown>, hiddenStages = new Set<number>()) =>
+  (data?: ChartData<'funnel', number[], unknown>, hiddenSections = new Set<number>()) =>
   (chart: Chart<'funnel'>): LegendItem[] => {
     const { labels, datasets } = data ?? chart.data;
     const colors = (datasets[0]?.backgroundColor as string[]) ?? [];
@@ -48,28 +48,28 @@ export const getFunnelLegendLabels =
       fillStyle: colors[index],
       strokeStyle: colors[index],
       fontColor: labelColor,
-      hidden: hiddenStages.has(index),
+      hidden: hiddenSections.has(index),
       index,
     }));
   };
 
 export type FunnelLegendState = {
   data: ChartData<'funnel', number[], unknown>;
-  hiddenStages: Set<number>;
-  onToggleStage: (index: number) => void;
+  hiddenSections: Set<number>;
+  onToggleSection: (index: number) => void;
 };
 
 export const getFunnelLegendOptions = ({
   data,
-  hiddenStages,
-  onToggleStage,
+  hiddenSections,
+  onToggleSection,
 }: FunnelLegendState): Partial<ChartOptions<'funnel'>> => ({
   plugins: {
     legend: {
       onClick: (_event, legendItem) => {
-        if (legendItem.index !== undefined) onToggleStage(legendItem.index);
+        if (legendItem.index !== undefined) onToggleSection(legendItem.index);
       },
-      labels: { generateLabels: getFunnelLegendLabels(data, hiddenStages) },
+      labels: { generateLabels: getFunnelLegendLabels(data, hiddenSections) },
     },
   },
 });
