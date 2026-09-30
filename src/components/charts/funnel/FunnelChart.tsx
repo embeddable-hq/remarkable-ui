@@ -3,8 +3,14 @@ import { Chart } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { FunnelController, TrapezoidElement } from 'chartjs-chart-funnel';
-import { getFunnelChartData, getFunnelChartOptions, getVisibleFunnelData } from './funnel.utils';
+import {
+  getFunnelChartData,
+  getFunnelChartOptions,
+  getOriginalFunnelItems,
+  getVisibleFunnelData,
+} from './funnel.utils';
 import { BaseFunnelChartProps } from './funnel.types';
+import { ChartClickArgs } from '../charts.types';
 import styles from '../charts.module.css';
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -52,6 +58,16 @@ export const FunnelChart: FC<FunnelChartProps> = ({
     });
   };
 
+  const handleClick =
+    onClick &&
+    ((args: ChartClickArgs) =>
+      onClick({
+        ...args,
+        elementAtEvent: getOriginalFunnelItems(args.elementAtEvent, hiddenStages),
+        elementsAtEvent: getOriginalFunnelItems(args.elementsAtEvent, hiddenStages),
+        datasetAtEvent: getOriginalFunnelItems(args.datasetAtEvent, hiddenStages),
+      }));
+
   const funnelData = getFunnelChartData(data);
   const funnelOptions = mergician(
     getFunnelChartOptions(
@@ -76,7 +92,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
         type="funnel"
         data={getVisibleFunnelData(funnelData, hiddenStages)}
         options={funnelOptions}
-        onClick={buildChartjsOnClick(chartRef, onClick)}
+        onClick={buildChartjsOnClick(chartRef, handleClick)}
       />
     </div>
   );

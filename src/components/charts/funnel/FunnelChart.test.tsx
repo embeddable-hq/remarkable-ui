@@ -1,5 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { getElementAtEvent } from 'react-chartjs-2';
 import { ChartData, ChartOptions, LegendItem } from 'chart.js';
 import { describe, expect, it, vi } from 'vitest';
 import { FunnelChart } from './FunnelChart';
@@ -92,6 +93,20 @@ describe('FunnelChart', () => {
       const { data } = getLatestChartProps();
       expect(data.labels).toEqual(['Near Misses', 'Recordable', 'DART']);
       expect(data.datasets[0]?.data).toEqual([33, 14, 5]);
+    });
+
+    it('reports the original stage index on chart click after a stage is hidden', async () => {
+      const user = userEvent.setup();
+      const handleClick = vi.fn();
+      render(<FunnelChart data={MOCK_DATA} onClick={handleClick} />);
+
+      clickLegendItem(1);
+      vi.mocked(getElementAtEvent).mockReturnValueOnce([
+        { datasetIndex: 0, index: 1, element: {} as never },
+      ]);
+      await user.click(screen.getByTestId('funnel-chart'));
+
+      expect(handleClick.mock.calls[0]?.[0].elementAtEvent[0].index).toBe(2);
     });
 
     it('restores the stage when clicked again', () => {

@@ -1,4 +1,11 @@
-import { Chart, ChartData, ChartDataset, ChartOptions, LegendItem } from 'chart.js';
+import {
+  Chart,
+  ChartData,
+  ChartDataset,
+  ChartOptions,
+  InteractionItem,
+  LegendItem,
+} from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { getChartColors } from '../charts.constants';
@@ -54,6 +61,21 @@ export const getVisibleFunnelData = (
     })),
   };
 };
+
+const getOriginalFunnelIndex = (visibleIndex: number, hiddenStages: Set<number>) => {
+  let index = -1;
+  for (let visible = -1; visible < visibleIndex;) {
+    index++;
+    if (!hiddenStages.has(index)) visible++;
+  }
+  return index;
+};
+
+export const getOriginalFunnelItems = (
+  items: InteractionItem[],
+  hiddenStages: Set<number>,
+): InteractionItem[] =>
+  items.map((item) => ({ ...item, index: getOriginalFunnelIndex(item.index, hiddenStages) }));
 
 const getFunnelLegendLabels =
   (data: ChartData<'funnel', number[], unknown>, hiddenStages: Set<number>) =>
