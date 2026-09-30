@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { Chart } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
 
@@ -64,6 +65,23 @@ describe('getFunnelChartOptions', () => {
     const options = getFunnelChartOptions({});
 
     expect(options.indexAxis).toBe('y');
+  });
+
+  it('builds one legend item per section from the chart data', () => {
+    const options = getFunnelChartOptions({});
+    const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
+      chart: Chart<'funnel'>,
+    ) => { text: string; fillStyle: unknown; hidden: boolean }[];
+
+    const chart = {
+      data: { labels: ['A', 'B'], datasets: [{ data: [20, 10], backgroundColor: ['#a', '#b'] }] },
+      options: {},
+    } as unknown as Chart<'funnel'>;
+
+    expect(generateLabels(chart)).toEqual([
+      expect.objectContaining({ text: 'A', fillStyle: '#a', hidden: false }),
+      expect.objectContaining({ text: 'B', fillStyle: '#b', hidden: false }),
+    ]);
   });
 
   it('shows the legend when showLegend is true', () => {
