@@ -3,12 +3,12 @@ import { Chart } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { FunnelController, TrapezoidElement } from 'chartjs-chart-funnel';
+import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
 import {
-  getFunnelChartData,
-  getFunnelChartOptions,
+  getFunnelLegendOptions,
   getOriginalFunnelItems,
   getVisibleFunnelData,
-} from './funnel.utils';
+} from './funnel.stages.utils';
 import { BaseFunnelChartProps } from './funnel.types';
 import { ChartClickArgs } from '../charts.types';
 import styles from '../charts.module.css';
@@ -70,18 +70,16 @@ export const FunnelChart: FC<FunnelChartProps> = ({
 
   const funnelData = getFunnelChartData(data);
   const funnelOptions = mergician(
-    getFunnelChartOptions(
-      {
-        showLegend,
-        showTooltips,
-        showValueLabels,
-        showPercentage,
-        percentageDecimalPlaces,
-        shrinkAnchor,
-        shrinkFraction,
-      },
-      { data: funnelData, hiddenStages, onToggleStage: toggleStage },
-    ),
+    getFunnelChartOptions({
+      showLegend,
+      showTooltips,
+      showValueLabels,
+      showPercentage,
+      percentageDecimalPlaces,
+      shrinkAnchor,
+      shrinkFraction,
+    }),
+    getFunnelLegendOptions({ data: funnelData, hiddenStages, onToggleStage: toggleStage }),
     options,
   );
 
