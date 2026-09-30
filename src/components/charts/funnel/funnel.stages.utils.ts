@@ -5,22 +5,21 @@ export const getVisibleFunnelData = (
   hiddenStages: Set<number>,
 ): ChartData<'funnel', number[], unknown> => {
   if (!hiddenStages.size) return data;
+  const isVisible = (_item: unknown, index: number) => !hiddenStages.has(index);
   return {
     ...data,
-    labels: (data.labels ?? []).filter((_label, index) => !hiddenStages.has(index)),
-    datasets: data.datasets.map((dataset) => ({
-      ...dataset,
-      data: dataset.data.filter((_value, index) => !hiddenStages.has(index)),
-      backgroundColor: Array.isArray(dataset.backgroundColor)
-        ? dataset.backgroundColor.filter((_color, index) => !hiddenStages.has(index))
-        : dataset.backgroundColor,
-      shrinkFraction: Array.isArray(dataset.shrinkFraction)
-        ? dataset.shrinkFraction.filter((_value, index) => !hiddenStages.has(index))
-        : dataset.shrinkFraction,
-      shrinkAnchor: Array.isArray(dataset.shrinkAnchor)
-        ? dataset.shrinkAnchor.filter((_value, index) => !hiddenStages.has(index))
-        : dataset.shrinkAnchor,
-    })),
+    labels: data.labels?.filter(isVisible),
+    datasets: data.datasets.map(
+      (dataset) =>
+        Object.fromEntries(
+          Object.entries(dataset).map(([key, value]) => [
+            key,
+            Array.isArray(value) && value.length === dataset.data.length
+              ? value.filter(isVisible)
+              : value,
+          ]),
+        ) as typeof dataset,
+    ),
   };
 };
 

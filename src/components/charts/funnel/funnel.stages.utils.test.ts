@@ -47,6 +47,26 @@ describe('getVisibleFunnelData', () => {
     expect(result.datasets[0]?.shrinkFraction).toEqual([0.1, 0.3]);
     expect(result.datasets[0]?.shrinkAnchor).toEqual(['top', 'bottom']);
   });
+
+  it('drops the hidden stage from any per-stage array and leaves other values as they are', () => {
+    const dataWithColors: ChartData<'funnel', number[], unknown> = {
+      labels: ['A', 'B', 'C'],
+      datasets: [
+        {
+          data: [30, 20, 10],
+          borderColor: ['#a', '#b', '#c'],
+          hoverBackgroundColor: ['#x', '#y', '#z'],
+          borderWidth: 2,
+        },
+      ],
+    };
+
+    const result = getVisibleFunnelData(dataWithColors, new Set([1]));
+
+    expect(result.datasets[0]?.borderColor).toEqual(['#a', '#c']);
+    expect(result.datasets[0]?.hoverBackgroundColor).toEqual(['#x', '#z']);
+    expect(result.datasets[0]?.borderWidth).toBe(2);
+  });
 });
 
 describe('getFunnelLegendOptions', () => {
