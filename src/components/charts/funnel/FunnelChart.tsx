@@ -52,7 +52,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
     });
   };
 
-  const coloredData = getFunnelChartData(data);
+  const funnelData = getFunnelChartData(data);
   const funnelOptions = mergician(
     getFunnelChartOptions(
       {
@@ -64,7 +64,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
         shrinkAnchor,
         shrinkFraction,
       },
-      { data: coloredData, hiddenStages, onToggleStage: toggleStage },
+      { data: funnelData, hiddenStages, onToggleStage: toggleStage },
     ),
     options,
   );
@@ -74,7 +74,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       <Chart
         ref={chartRef}
         type="funnel"
-        data={getVisibleFunnelData(coloredData, hiddenStages)}
+        data={getVisibleFunnelData(funnelData, hiddenStages)}
         options={funnelOptions}
         onClick={buildChartjsOnClick(chartRef, onClick)}
       />
