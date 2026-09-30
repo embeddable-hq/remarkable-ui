@@ -1,9 +1,10 @@
-import { Chart, ChartData, ChartDataset, ChartOptions, LegendItem } from 'chart.js';
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { Context } from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { getChartColors } from '../charts.constants';
 import { getChartjsOptions } from '../chartjs.constants';
 import { FunnelChartConfigurationProps } from './funnel.types';
+import { getFunnelLegendLabels } from './funnel.sections.utils';
 
 export const getFunnelChartData = (data: ChartData<'funnel'>) => {
   const chartColors = getChartColors();
@@ -31,25 +32,21 @@ const getFunnelDatalabelFormatter =
       : value.toLocaleString();
   };
 
-const getFunnelLegendLabels = (chart: Chart<'funnel'>): LegendItem[] => {
-  const colors = (chart.data.datasets[0]?.backgroundColor as string[]) ?? [];
-  return (chart.data.labels ?? []).map((label, index) => ({
-    text: String(label ?? ''),
-    fillStyle: colors[index],
-    strokeStyle: colors[index],
-    index,
-  }));
-};
-
 export const getFunnelChartOptions = (
   config: FunnelChartConfigurationProps,
 ): Partial<ChartOptions<'funnel'>> => {
   const funnelChartOptions: Partial<ChartOptions<'funnel'>> = {
     indexAxis: 'y',
+    elements: {
+      trapezoid: {
+        shrinkAnchor: config.shrinkAnchor,
+        shrinkFraction: config.shrinkFraction,
+      },
+    },
     plugins: {
       legend: {
         display: config.showLegend,
-        labels: { generateLabels: getFunnelLegendLabels },
+        labels: { generateLabels: getFunnelLegendLabels() },
       },
       tooltip: { enabled: config.showTooltips },
       datalabels: {
