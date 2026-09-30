@@ -1,21 +1,21 @@
 import { describe, expect, it, vi } from 'vitest';
 import { Chart, ChartData } from 'chart.js';
-import { getFunnelLegendOptions, getVisibleFunnelData } from './funnel.stages.utils';
+import { getFunnelLegendOptions, getFunnelChartVisibleData } from './funnel.stages.utils';
 
-describe('getVisibleFunnelData', () => {
+describe('getFunnelChartVisibleData', () => {
   const data: ChartData<'funnel', number[], unknown> = {
     labels: ['A', 'B', 'C'],
     datasets: [{ data: [30, 20, 10], backgroundColor: ['#a', '#b', '#c'] }],
   };
 
   it('returns the data unchanged when no stages are hidden', () => {
-    const result = getVisibleFunnelData(data, new Set());
+    const result = getFunnelChartVisibleData(data, new Set());
 
     expect(result).toEqual(data);
   });
 
   it('drops the hidden stage from labels, data, and backgroundColor', () => {
-    const result = getVisibleFunnelData(data, new Set([1]));
+    const result = getFunnelChartVisibleData(data, new Set([1]));
 
     expect(result.labels).toEqual(['A', 'C']);
     expect(result.datasets[0]?.data).toEqual([30, 10]);
@@ -23,7 +23,7 @@ describe('getVisibleFunnelData', () => {
   });
 
   it('supports hiding multiple stages', () => {
-    const result = getVisibleFunnelData(data, new Set([0, 2]));
+    const result = getFunnelChartVisibleData(data, new Set([0, 2]));
 
     expect(result.labels).toEqual(['B']);
     expect(result.datasets[0]?.data).toEqual([20]);
@@ -42,7 +42,7 @@ describe('getVisibleFunnelData', () => {
       ],
     };
 
-    const result = getVisibleFunnelData(dataWithShrink, new Set([1]));
+    const result = getFunnelChartVisibleData(dataWithShrink, new Set([1]));
 
     expect(result.datasets[0]?.shrinkFraction).toEqual([0.1, 0.3]);
     expect(result.datasets[0]?.shrinkAnchor).toEqual(['top', 'bottom']);
@@ -61,7 +61,7 @@ describe('getVisibleFunnelData', () => {
       ],
     };
 
-    const result = getVisibleFunnelData(dataWithColors, new Set([1]));
+    const result = getFunnelChartVisibleData(dataWithColors, new Set([1]));
 
     expect(result.datasets[0]?.borderColor).toEqual(['#a', '#c']);
     expect(result.datasets[0]?.hoverBackgroundColor).toEqual(['#x', '#z']);

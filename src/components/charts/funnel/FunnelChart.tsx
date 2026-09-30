@@ -7,7 +7,7 @@ import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
 import {
   getFunnelLegendOptions,
   getOriginalFunnelItems,
-  getVisibleFunnelData,
+  getFunnelChartVisibleData,
 } from './funnel.stages.utils';
 import { BaseFunnelChartProps } from './funnel.types';
 import { ChartClickArgs } from '../charts.types';
@@ -90,7 +90,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       <Chart
         ref={chartRef}
         type="funnel"
-        data={getVisibleFunnelData(funnelData, hiddenStages)}
+        data={getFunnelChartVisibleData(funnelData, hiddenStages)}
         options={funnelOptions}
         onClick={buildChartjsOnClick(chartRef, handleClick)}
       />

@@ -1,6 +1,6 @@
 import { Chart, ChartData, ChartOptions, InteractionItem, LegendItem } from 'chart.js';
 
-export const getVisibleFunnelData = (
+export const getFunnelChartVisibleData = (
   data: ChartData<'funnel', number[], unknown>,
   hiddenStages: Set<number>,
 ): ChartData<'funnel', number[], unknown> => {
