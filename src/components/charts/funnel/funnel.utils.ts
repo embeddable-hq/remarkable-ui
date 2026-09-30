@@ -39,8 +39,8 @@ export const getFunnelChartOptions = (
     indexAxis: 'y',
     elements: {
       trapezoid: {
-        ...(config.shrinkAnchor !== undefined && { shrinkAnchor: config.shrinkAnchor }),
-        ...(config.shrinkFraction !== undefined && { shrinkFraction: config.shrinkFraction }),
+        shrinkAnchor: config.shrinkAnchor,
+        shrinkFraction: config.shrinkFraction,
       },
     },
     plugins: {
