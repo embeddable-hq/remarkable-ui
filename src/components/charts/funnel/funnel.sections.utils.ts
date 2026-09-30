@@ -4,17 +4,17 @@ export const getFunnelChartVisibleData = (
   data: ChartData<'funnel', number[], unknown>,
   hiddenSections: Set<number>,
 ): ChartData<'funnel', number[], unknown> => {
-  const isVisible = (_item: unknown, index: number) => !hiddenSections.has(index);
+  const isVisible = (index: number) => !hiddenSections.has(index);
   return {
     ...data,
-    labels: data.labels?.filter(isVisible),
+    labels: data.labels?.filter((_item, index) => isVisible(index)),
     datasets: data.datasets.map(
       (dataset) =>
         Object.fromEntries(
           Object.entries(dataset).map(([key, value]) => [
             key,
             Array.isArray(value) && value.length === dataset.data.length
-              ? value.filter(isVisible)
+              ? value.filter((_item, index) => isVisible(index))
               : value,
           ]),
         ) as typeof dataset,
