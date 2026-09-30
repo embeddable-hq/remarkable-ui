@@ -1,5 +1,11 @@
 # @embeddable.com/remarkable-ui
 
+## 3.7.0
+
+### Minor Changes
+
+- dfc2af5: Add shrinkAnchor and shrinkFraction props to FunnelChart to control trapezoid tapering (shrinkAnchor defaults to 'middle'), and support hiding funnel sections by clicking their legend item.
+
 ## 3.6.0
 
 ### Minor Changes
