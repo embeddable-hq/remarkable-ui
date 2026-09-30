@@ -4,7 +4,6 @@ export const getVisibleFunnelData = (
   data: ChartData<'funnel', number[], unknown>,
   hiddenStages: Set<number>,
 ): ChartData<'funnel', number[], unknown> => {
-  if (!hiddenStages.size) return data;
   const isVisible = (_item: unknown, index: number) => !hiddenStages.has(index);
   return {
     ...data,

@@ -11,7 +11,7 @@ describe('getVisibleFunnelData', () => {
   it('returns the data unchanged when no stages are hidden', () => {
     const result = getVisibleFunnelData(data, new Set());
 
-    expect(result).toBe(data);
+    expect(result).toEqual(data);
   });
 
   it('drops the hidden stage from labels, data, and backgroundColor', () => {
