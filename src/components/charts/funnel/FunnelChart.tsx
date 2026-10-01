@@ -4,6 +4,7 @@ import { buildChartjsOnClick } from '../chartjs.utils';
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { FunnelController, TrapezoidElement } from 'chartjs-chart-funnel';
 import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
+import { useFunnelHiddenSections } from './useFunnelHiddenSections.hook';
 import { BaseFunnelChartProps } from './funnel.types';
 import styles from '../charts.module.css';
 import { mergician } from 'mergician';
@@ -30,8 +31,12 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   showValueLabels = true,
   showPercentage = false,
   percentageDecimalPlaces = 1,
+  shrinkAnchor = 'middle',
+  shrinkFraction,
 }) => {
   const chartRef = useRef(null);
+  const funnelData = getFunnelChartData(data);
+  const { visibleData, legendOptions, handleClick } = useFunnelHiddenSections(funnelData, onClick);
   const funnelOptions = mergician(
     getFunnelChartOptions({
       showLegend,
@@ -39,7 +44,10 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       showValueLabels,
       showPercentage,
       percentageDecimalPlaces,
+      shrinkAnchor,
+      shrinkFraction,
     }),
+    legendOptions,
     options,
   );
 
@@ -48,9 +56,9 @@ export const FunnelChart: FC<FunnelChartProps> = ({
       <Chart
         ref={chartRef}
         type="funnel"
-        data={getFunnelChartData(data)}
+        data={visibleData}
         options={funnelOptions}
-        onClick={buildChartjsOnClick(chartRef, onClick)}
+        onClick={buildChartjsOnClick(chartRef, handleClick)}
       />
     </div>
   );

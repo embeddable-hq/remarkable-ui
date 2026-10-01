@@ -67,6 +67,23 @@ describe('getFunnelChartOptions', () => {
     expect(options.indexAxis).toBe('y');
   });
 
+  it('builds one legend item per section from the chart data', () => {
+    const options = getFunnelChartOptions({});
+    const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
+      chart: Chart<'funnel'>,
+    ) => { text: string; fillStyle: unknown; hidden: boolean }[];
+
+    const chart = {
+      data: { labels: ['A', 'B'], datasets: [{ data: [20, 10], backgroundColor: ['#a', '#b'] }] },
+      options: {},
+    } as unknown as Chart<'funnel'>;
+
+    expect(generateLabels(chart)).toEqual([
+      expect.objectContaining({ text: 'A', fillStyle: '#a', hidden: false }),
+      expect.objectContaining({ text: 'B', fillStyle: '#b', hidden: false }),
+    ]);
+  });
+
   it('shows the legend when showLegend is true', () => {
     const options = getFunnelChartOptions({ showLegend: true });
 
@@ -101,6 +118,27 @@ describe('getFunnelChartOptions', () => {
     const options = getFunnelChartOptions({ showValueLabels: false });
 
     expect(options.plugins?.datalabels?.display).toBe(false);
+  });
+
+  describe('shrink options', () => {
+    it('omits shrinkAnchor/shrinkFraction when not provided', () => {
+      const options = getFunnelChartOptions({});
+
+      expect(options.elements?.trapezoid?.shrinkAnchor).toBeUndefined();
+      expect(options.elements?.trapezoid?.shrinkFraction).toBeUndefined();
+    });
+
+    it('sets shrinkAnchor when provided', () => {
+      const options = getFunnelChartOptions({ shrinkAnchor: 'middle' });
+
+      expect(options.elements?.trapezoid?.shrinkAnchor).toBe('middle');
+    });
+
+    it('sets shrinkFraction when provided', () => {
+      const options = getFunnelChartOptions({ shrinkFraction: 0.5 });
+
+      expect(options.elements?.trapezoid?.shrinkFraction).toBe(0.5);
+    });
   });
 
   describe('datalabels formatter', () => {
@@ -167,30 +205,6 @@ describe('getFunnelChartOptions', () => {
       const label = formatter(0, context);
 
       expect(label).toBe('0.0%');
-    });
-  });
-
-  describe('legend labels', () => {
-    it('returns one legend item per section with its color', () => {
-      const options = getFunnelChartOptions({ showLegend: true });
-      const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
-        chart: Chart<'funnel'>,
-      ) => { text: string; fillStyle: unknown }[];
-
-      const chart = {
-        data: {
-          labels: ['Near Misses', 'Injury/Illness', 'Recordable'],
-          datasets: [{ data: [30, 20, 10], backgroundColor: ['#a', '#b', '#c'] }],
-        },
-      } as unknown as Chart<'funnel'>;
-
-      const items = generateLabels(chart);
-
-      expect(items).toEqual([
-        expect.objectContaining({ text: 'Near Misses', fillStyle: '#a' }),
-        expect.objectContaining({ text: 'Injury/Illness', fillStyle: '#b' }),
-        expect.objectContaining({ text: 'Recordable', fillStyle: '#c' }),
-      ]);
     });
   });
 });
