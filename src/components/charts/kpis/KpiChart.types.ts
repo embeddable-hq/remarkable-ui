@@ -1,9 +1,9 @@
 import { CssSize } from '../../../types/css.types';
 
 export type KpiChartProps = {
-  value: number;
+  value: number | null;
   trendFontSize?: number;
-  comparisonValue?: number;
+  comparisonValue?: number | null;
   showChangeAsPercentage?: boolean;
   invertChangeColors?: boolean;
   /** Reverses only the trend arrow. Defaults to `invertChangeColors`. */

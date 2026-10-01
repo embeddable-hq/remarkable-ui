@@ -42,7 +42,8 @@ export const KpiChart: FC<KpiChartProps> = ({
   displayNullAs = '',
   valueFormatter,
 }) => {
-  const hasComparisonValue = comparisonValue !== undefined && value != null;
+  const hasComparisonValue = comparisonValue !== undefined;
+  const shouldRenderComparison = hasComparisonValue && value != null;
 
   const displayValue = getKpiDisplayValue({ value, displayNullAs, valueFormatter });
 
@@ -68,9 +69,9 @@ export const KpiChart: FC<KpiChartProps> = ({
         </ConditionalWrapper>
       </div>
 
-      {hasComparisonValue && (
+      {shouldRenderComparison && (
         <div className={styles.kpiComparisonContainer} style={{ fontSize: trendFontSize }}>
-          <div style={{ visibility: hasComparisonValue ? 'visible' : 'hidden' }}>
+          <div style={{ visibility: shouldRenderComparison ? 'visible' : 'hidden' }}>
             <KpiChartChange
               equalComparisonLabel={equalComparisonLabel}
               comparisonLabel={comparisonLabel}

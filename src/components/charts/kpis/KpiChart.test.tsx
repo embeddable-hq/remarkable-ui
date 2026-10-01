@@ -75,19 +75,19 @@ describe('KpiChart', () => {
 
   describe('displayNullAs', () => {
     it('shows displayNullAs when value is null', () => {
-      render(<KpiChart value={null as unknown as number} displayNullAs="N/A" />);
+      render(<KpiChart value={null} displayNullAs="N/A" />);
 
       expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('N/A');
     });
 
     it('shows empty string by default when value is null', () => {
-      render(<KpiChart value={null as unknown as number} />);
+      render(<KpiChart value={null} />);
 
       expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('');
     });
 
     it('uses displayNullAs as the h2 title attribute when value is null', () => {
-      render(<KpiChart value={null as unknown as number} displayNullAs="–" />);
+      render(<KpiChart value={null} displayNullAs="–" />);
 
       expect(screen.getByRole('heading', { level: 2 })).toHaveAttribute('title', '–');
     });
@@ -133,16 +133,14 @@ describe('KpiChart', () => {
     });
 
     it('does not render the comparison section when value is null, even if comparisonValue is provided', () => {
-      const { container } = render(
-        <KpiChart value={null as unknown as number} comparisonValue={80} />,
-      );
+      const { container } = render(<KpiChart value={null} comparisonValue={80} />);
 
       expect(container.querySelector('.kpiComparisonContainer')).toBeFalsy();
     });
 
     it('does not render the comparison section when value is null and comparisonValue is 0', () => {
       const { container } = render(
-        <KpiChart value={null as unknown as number} comparisonValue={0} showChangeAsPercentage />,
+        <KpiChart value={null} comparisonValue={0} showChangeAsPercentage />,
       );
 
       expect(container.querySelector('.kpiComparisonContainer')).toBeFalsy();
@@ -151,7 +149,7 @@ describe('KpiChart', () => {
     it('does not render NaN when value is null and comparisonValue is 0', () => {
       const { container } = render(
         <KpiChart
-          value={null as unknown as number}
+          value={null}
           comparisonValue={0}
           showChangeAsPercentage
           valueFormatter={(v) => `$${v}`}
@@ -159,6 +157,28 @@ describe('KpiChart', () => {
       );
 
       expect(container.textContent).not.toContain('NaN');
+    });
+
+    it('shows "No previous data" when comparisonValue is null', () => {
+      render(
+        <KpiChart value={100} comparisonValue={null} noPreviousDataLabel="No previous data" />,
+      );
+
+      expect(screen.getAllByText('No previous data')[0]).toBeInTheDocument();
+    });
+
+    it('does not show "No previous data" when comparisonValue is a real 0', () => {
+      render(<KpiChart value={100} comparisonValue={0} noPreviousDataLabel="No previous data" />);
+
+      expect(screen.queryByText('No previous data')).not.toBeInTheDocument();
+    });
+
+    it('does not render Infinity% when comparisonValue is 0 and showChangeAsPercentage', () => {
+      const { container } = render(
+        <KpiChart value={100} comparisonValue={0} showChangeAsPercentage />,
+      );
+
+      expect(container.textContent).not.toContain('Infinity');
     });
   });
 
