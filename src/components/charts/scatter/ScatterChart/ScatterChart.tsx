@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../../chartjs.utils';
+import { useChartFontsReady } from '../../../../hooks/useChartFontsReady.hook';
 import styles from '../../charts.module.css';
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
@@ -47,6 +48,7 @@ export const ScatterChart: FC<ScatterChartProps> = ({
   ...props
 }) => {
   const chartRef = useRef(null);
+  useChartFontsReady(chartRef);
 
   const propsWithNullBandLabel = { ...props, nullBandLabel };
   const nullBand = getScatterNullBand(data.datasets, props.showLogarithmicScale);
