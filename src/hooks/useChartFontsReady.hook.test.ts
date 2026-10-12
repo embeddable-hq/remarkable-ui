@@ -50,11 +50,19 @@ describe('useChartFontsReady', () => {
     const chart = buildChart();
     renderHook(() => useChartFontsReady({ current: chart }));
 
-    expect(chart.update).not.toHaveBeenCalled();
     fire();
 
     expect(chart.scale._longestTextCache).toEqual({});
-    expect(chart.update).toHaveBeenCalledOnce();
+    expect(chart.update).toHaveBeenCalled();
+  });
+
+  it('re-measures when the preload settles, even if loadingdone never fires', async () => {
+    setupFonts();
+    const chart = buildChart();
+    renderHook(() => useChartFontsReady({ current: chart }));
+
+    await vi.waitFor(() => expect(chart.update).toHaveBeenCalledOnce());
+    expect(chart.scale._longestTextCache).toEqual({});
   });
 
   it('does nothing when the chart is not mounted', () => {
@@ -65,13 +73,14 @@ describe('useChartFontsReady', () => {
     }).not.toThrow();
   });
 
-  it('removes the listener and ignores late events after unmount', () => {
+  it('removes the listener and ignores late events after unmount', async () => {
     const { fonts, fire } = setupFonts();
     const chart = buildChart();
     const { unmount } = renderHook(() => useChartFontsReady({ current: chart }));
 
     unmount();
     fire();
+    await Promise.resolve();
 
     expect(fonts.removeEventListener).toHaveBeenCalledWith('loadingdone', expect.any(Function));
     expect(chart.update).not.toHaveBeenCalled();

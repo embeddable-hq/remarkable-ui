@@ -25,11 +25,13 @@ export function useChartFontsReady(chartRef: RefObject<unknown>): void {
       remeasureChart(chart);
     };
 
-    // Fires whenever a batch of fonts finishes loading, including the ones requested below
-    // and any requested by other elements on the page. Fonts that were already loaded never
-    // fire it, so charts that drew with the right font are not updated needlessly.
+    // Fires whenever a batch of fonts finishes loading, including any requested by other
+    // elements on the page after the preload below has settled.
     fonts.addEventListener('loadingdone', remeasure);
-    preloadChartFonts();
+
+    // Some WebKit versions load fonts via document.fonts.load() without dispatching
+    // `loadingdone` (WebKit bug 304091), so also re-measure when the preload settles.
+    preloadChartFonts().finally(remeasure);
 
     return () => {
       cancelled = true;
