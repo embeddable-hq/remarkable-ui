@@ -31,7 +31,7 @@ export function useChartFontsReady(chartRef: RefObject<unknown>): void {
 
     // Some WebKit versions load fonts via document.fonts.load() without dispatching
     // `loadingdone` (WebKit bug 304091), so also re-measure when the preload settles.
-    preloadChartFonts().finally(remeasure);
+    preloadChartFonts().then(remeasure, remeasure);
 
     return () => {
       cancelled = true;
