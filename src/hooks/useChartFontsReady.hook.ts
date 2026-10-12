@@ -6,12 +6,7 @@ import {
   remeasureChart,
 } from '../components/charts/chartjs.fonts.utils';
 
-/**
- * Chart.js measures axis labels on the first draw. If the theme's web font hasn't loaded
- * yet, it measures with fallback font metrics and e.g. clips the longest label. This hook
- * requests the chart fonts and re-measures the chart once they are available.
- * See https://github.com/embeddable-hq/remarkable-ui/issues/433
- */
+// Re-measures the chart once its web fonts load, so labels aren't clipped (#433).
 export function useChartFontsReady(chartRef: RefObject<unknown>): void {
   useEffect(() => {
     if (!areFontsApiAvailable()) return;
@@ -25,12 +20,9 @@ export function useChartFontsReady(chartRef: RefObject<unknown>): void {
       remeasureChart(chart);
     };
 
-    // Fires whenever a batch of fonts finishes loading, including any requested by other
-    // elements on the page after the preload below has settled.
     fonts.addEventListener('loadingdone', remeasure);
 
-    // Some WebKit versions load fonts via document.fonts.load() without dispatching
-    // `loadingdone` (WebKit bug 304091), so also re-measure when the preload settles.
+    // Some WebKit versions don't fire `loadingdone` for fonts.load() (bug 304091).
     preloadChartFonts().then(remeasure, remeasure);
 
     return () => {

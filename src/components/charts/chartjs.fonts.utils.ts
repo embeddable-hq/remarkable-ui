@@ -19,11 +19,7 @@ const CHART_FONT_WEIGHT_VARIABLES: StylesKeys[] = [
 export const areFontsApiAvailable = (): boolean =>
   typeof document !== 'undefined' && !!document.fonts;
 
-/**
- * Asks the browser to load the font families (and weights) used by the charts.
- * A web font is only fetched once something in the DOM uses it, and charts draw to a
- * canvas, so without this the font may never be requested before the first draw.
- */
+// Charts draw to a canvas, so nothing in the DOM may request the web font before the first draw.
 export const preloadChartFonts = async (): Promise<void> => {
   if (!areFontsApiAvailable()) return;
 
@@ -41,16 +37,10 @@ export const preloadChartFonts = async (): Promise<void> => {
     });
   });
 
-  // A font that fails to load must never prevent the chart from rendering.
   await Promise.allSettled(loads);
 };
 
-/**
- * Chart.js caches text measurements per scale (keyed by font string, not by whether the
- * font has actually loaded), so measurements taken with a fallback font would otherwise
- * survive `chart.update()`. `_longestTextCache` is internal to Chart.js, so this is
- * guarded and degrades to a plain update if it ever goes away.
- */
+// Clears Chart.js's internal per-scale text measure cache, which `update()` alone doesn't reset.
 export const remeasureChart = (chart: Chart): void => {
   Object.values(chart.scales ?? {}).forEach((scale) => {
     const internalScale = scale as unknown as { _longestTextCache?: Record<string, unknown> };
