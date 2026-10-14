@@ -1,6 +1,7 @@
 import { FC, useRef } from 'react';
 import { Chart } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
+import { useChartFontsReady } from '../../../hooks/useChartFontsReady.hook';
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
 import { FunnelController, TrapezoidElement } from 'chartjs-chart-funnel';
 import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
@@ -35,6 +36,7 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   shrinkFraction,
 }) => {
   const chartRef = useRef(null);
+  useChartFontsReady(chartRef);
   const funnelData = getFunnelChartData(data);
   const { visibleData, legendOptions, handleClick } = useFunnelHiddenSections(funnelData, onClick);
   const funnelOptions = mergician(

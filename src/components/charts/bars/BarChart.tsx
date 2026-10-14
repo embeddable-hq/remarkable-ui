@@ -1,6 +1,7 @@
 import { FC, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../chartjs.utils';
+import { useChartFontsReady } from '../../../hooks/useChartFontsReady.hook';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,6 +33,7 @@ export type BarChartProps = BaseBarChartProps;
 
 export const BarChart: FC<BarChartProps> = ({ data, onClick, options = {}, ...props }) => {
   const chartRef = useRef(null);
+  useChartFontsReady(chartRef);
   const barChartOptions = mergician(getBarChartOptions(props), options);
 
   return (

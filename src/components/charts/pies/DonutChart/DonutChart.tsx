@@ -1,6 +1,7 @@
 import { FC, useRef } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../../chartjs.utils';
+import { useChartFontsReady } from '../../../../hooks/useChartFontsReady.hook';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import AnnotationPlugin from 'chartjs-plugin-annotation';
@@ -27,6 +28,7 @@ export const DonutChart: FC<DonutLabelChartProps> = ({
   showValueLabels = true,
 }) => {
   const chartRef = useRef(null);
+  useChartFontsReady(chartRef);
   const containerRef = useRef(null);
 
   const donutLabelOptions = mergician(
