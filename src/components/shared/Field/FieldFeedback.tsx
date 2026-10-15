@@ -6,10 +6,13 @@ export type FieldFeedbackProps = {
   message: string;
   variant?: 'error';
   className?: string;
+  id?: string;
 };
 
-export const FieldFeedback: FC<FieldFeedbackProps> = ({ message, variant, className }) => {
+export const FieldFeedback: FC<FieldFeedbackProps> = ({ message, variant, className, id }) => {
   return (
-    <p className={clsx(styles.fieldFeedback, variant && styles[variant], className)}>{message}</p>
+    <p id={id} className={clsx(styles.fieldFeedback, variant && styles[variant], className)}>
+      {message}
+    </p>
   );
 };

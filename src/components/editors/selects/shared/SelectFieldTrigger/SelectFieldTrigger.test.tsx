@@ -31,29 +31,75 @@ describe('SelectFieldTrigger', () => {
   });
 
   describe('clear button', () => {
-    it('shows clear button when valueLabel and isClearable are set', () => {
-      const handleClear = vi.fn();
+    it('renders a labelled clear button when valueLabel and isClearable are set', () => {
+      render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={vi.fn()} />);
 
-      render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={handleClear} />);
-
-      const buttons = screen.getAllByRole('button');
-      expect(buttons.length).toBeGreaterThanOrEqual(1);
+      expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();
     });
 
-    it('shows clear button when valueLabel and isClearable are set', () => {
-      const handleClear = vi.fn();
-      render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={handleClear} />);
-      const clearIcon = document.querySelector('svg[class*="tabler-icon-x"]');
-      expect(clearIcon).not.toBeNull();
+    it('does not render the clear button without a value', () => {
+      render(<SelectFieldTrigger isClearable onClear={vi.fn()} />);
+
+      expect(screen.queryByRole('button', { name: 'Clear' })).not.toBeInTheDocument();
     });
 
-    it('calls onClear when clear icon is interacted with', async () => {
+    it('uses a custom clearLabel', () => {
+      render(
+        <SelectFieldTrigger
+          valueLabel="x"
+          isClearable
+          clearLabel="Remove filter"
+          onClear={vi.fn()}
+        />,
+      );
+
+      expect(screen.getByRole('button', { name: 'Remove filter' })).toBeInTheDocument();
+    });
+
+    it('is a sibling of the trigger, not nested inside it', () => {
+      render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={vi.fn()} />);
+
+      const clear = screen.getByRole('button', { name: 'Clear' });
+      expect(clear.closest('button:not([aria-label="Clear"])')).toBeNull();
+    });
+
+    it('calls onClear on click', async () => {
       const user = userEvent.setup();
       const handleClear = vi.fn();
       render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={handleClear} />);
-      const svg = document.querySelector('svg[class*="tabler-icon-x"]');
-      expect(svg).not.toBeNull();
-      await user.pointer({ target: svg as SVGElement, keys: '[MouseLeft]' });
+
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
+
+      expect(handleClear).toHaveBeenCalledOnce();
+    });
+
+    it('is reachable and activatable by keyboard', async () => {
+      const user = userEvent.setup();
+      const handleClear = vi.fn();
+      render(<SelectFieldTrigger valueLabel="Something" isClearable onClear={handleClear} />);
+
+      await user.tab();
+      await user.tab();
+      expect(screen.getByRole('button', { name: 'Clear' })).toHaveFocus();
+      await user.keyboard('{Enter}');
+
+      expect(handleClear).toHaveBeenCalledOnce();
+    });
+
+    it('works with the ghost variant', async () => {
+      const user = userEvent.setup();
+      const handleClear = vi.fn();
+      render(
+        <SelectFieldTrigger
+          variant="ghost"
+          valueLabel="Something"
+          isClearable
+          onClear={handleClear}
+        />,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
+
       expect(handleClear).toHaveBeenCalledOnce();
     });
   });

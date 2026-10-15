@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { SelectFieldTrigger } from '../shared/SelectFieldTrigger/SelectFieldTrigger';
 import { Dropdown, DropdownProps } from '../../../shared/Dropdown/Dropdown';
 import {
@@ -39,6 +39,8 @@ export type SingleSelectFieldProps<T extends SelectOptionValue> = {
   avoidCollisions?: boolean;
   variant?: 'default' | 'ghost';
   triggerComponent?: React.ReactNode;
+  ariaLabel?: string;
+  clearLabel?: string;
 } & FieldHeaderProps &
   Pick<DropdownProps, 'side' | 'align'>;
 
@@ -64,7 +66,13 @@ export function SingleSelectField<T extends SelectOptionValue>({
   align,
   variant,
   triggerComponent,
+  ariaLabel,
+  clearLabel,
 }: SingleSelectFieldProps<T>) {
+  const baseId = useId();
+  const labelId = `${baseId}-label`;
+  const triggerId = `${baseId}-trigger`;
+  const errorId = `${baseId}-error`;
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [selectedLabel, setSelectedLabel] = useState<string>('');
@@ -128,7 +136,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
   const hasError = error || !!errorMessage;
   return (
     <div>
-      <FieldHeader label={label} required={required} />
+      <FieldHeader id={labelId} label={label} required={required} />
       <Dropdown
         open={isOpen}
         onOpenChange={setIsOpen}
@@ -140,7 +148,13 @@ export function SingleSelectField<T extends SelectOptionValue>({
           triggerComponent ?? (
             <SelectFieldTrigger
               startIcon={startIcon}
-              aria-label="Select option"
+              aria-label={ariaLabel}
+              aria-labelledby={label ? `${labelId} ${triggerId}` : undefined}
+              aria-required={required || undefined}
+              aria-invalid={hasError || undefined}
+              aria-describedby={errorMessage ? errorId : undefined}
+              id={triggerId}
+              clearLabel={clearLabel}
               placeholder={placeholder}
               disabled={disabled}
               valueLabel={selectedLabel}
@@ -182,7 +196,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
           </SelectFieldContentList>
         </SelectFieldContent>
       </Dropdown>
-      {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
+      {errorMessage && <FieldFeedback id={errorId} message={errorMessage} variant="error" />}
     </div>
   );
 }

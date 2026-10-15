@@ -11,6 +11,7 @@ type SelectFieldTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isClearable?: boolean;
   isLoading?: boolean;
   onClear?: () => void;
+  clearLabel?: string;
   error?: boolean;
   variant?: 'default' | 'ghost';
 };
@@ -24,6 +25,7 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
       isClearable,
       isLoading,
       onClear,
+      clearLabel = 'Clear',
       error = false,
       variant = 'default',
       ...props
@@ -40,30 +42,49 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
       onClear?.();
     };
 
+    // The clear control is a sibling of the trigger, not a child: interactive content
+    // can't be nested inside a <button>, and a sibling gets its own tab stop.
+    const clearButton = showClearButton && (
+      <button
+        type="button"
+        className={clsx(styles.clearButton, variant === 'ghost' && styles.clearButtonGhost)}
+        aria-label={clearLabel}
+        disabled={props.disabled}
+        onClick={handleClear}
+      >
+        <IconX aria-hidden="true" />
+      </button>
+    );
+
     if (variant === 'ghost') {
       return (
-        <GhostButton ref={ref} endIcon={isLoading ? IconLoader2 : IconCaretDownFilled} {...props}>
-          {displayValue}
-          {showClearButton && <IconX onPointerDown={handleClear} />}
-        </GhostButton>
+        <span className={clsx(styles.root, styles.rootGhost)}>
+          <GhostButton ref={ref} endIcon={isLoading ? IconLoader2 : IconCaretDownFilled} {...props}>
+            {displayValue}
+          </GhostButton>
+          {clearButton}
+        </span>
       );
     }
 
     return (
-      <button
-        ref={ref}
-        className={clsx(
-          styles.selectFieldTrigger,
-          valueLabel && styles.filled,
-          error && styles.error,
-        )}
-        {...props}
-      >
-        {StartIcon && <StartIcon />}
-        <span>{displayValue}</span>
-        {showClearButton && <IconX onPointerDown={handleClear} />}
-        {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}
-      </button>
+      <span className={styles.root}>
+        <button
+          ref={ref}
+          className={clsx(
+            styles.selectFieldTrigger,
+            valueLabel && styles.filled,
+            error && styles.error,
+            showClearButton && styles.hasClear,
+          )}
+          {...props}
+        >
+          {StartIcon && <StartIcon />}
+          <span>{displayValue}</span>
+          {isLoading ? <IconLoader2 className={styles.loading} /> : <IconCaretDownFilled />}
+        </button>
+        {clearButton}
+      </span>
     );
   },
 );

@@ -19,8 +19,11 @@ const CATEGORY_OPTIONS = [
   { value: 'carrot', label: 'Carrot', category: 'Vegetable' },
 ];
 
+const getTrigger = () =>
+  screen.getAllByRole('button').find((b) => b.hasAttribute('aria-haspopup')) as HTMLElement;
+
 const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-  await user.click(screen.getByRole('button', { name: /select option$/i }));
+  await user.click(getTrigger());
 };
 
 describe('SingleSelectField', () => {
@@ -28,7 +31,7 @@ describe('SingleSelectField', () => {
     it('renders the trigger button', () => {
       render(<SingleSelectField options={OPTIONS} onChange={vi.fn()} />);
 
-      expect(screen.getByRole('button', { name: /select option$/i })).toBeInTheDocument();
+      expect(getTrigger()).toBeInTheDocument();
     });
 
     it('shows the default placeholder when no value is provided', () => {
@@ -154,9 +157,7 @@ describe('SingleSelectField', () => {
         <SingleSelectField options={OPTIONS} value="apple" clearable onChange={handleChange} />,
       );
 
-      const trigger = screen.getByRole('button', { name: /select option$/i });
-      const clearIcon = trigger.querySelectorAll('svg')[0];
-      await user.pointer({ target: clearIcon, keys: '[MouseLeft>]' });
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
 
       expect(handleChange).toHaveBeenCalledWith(null);
     });
@@ -209,5 +210,36 @@ describe('SingleSelectField', () => {
 
       expect(handleSearch).toHaveBeenCalled();
     });
+  });
+});
+
+describe('SingleSelectField accessible naming', () => {
+  const options = [{ value: 'a', label: 'Alpha' }];
+
+  it('names the trigger from the visible label and current value', () => {
+    render(<SingleSelectField label="Country" options={options} value="a" onChange={vi.fn()} />);
+
+    expect(screen.getByRole('button', { name: /Country\s+Alpha/ })).toBeInTheDocument();
+  });
+
+  it('uses ariaLabel when there is no visible label', () => {
+    render(<SingleSelectField ariaLabel="Region" options={options} onChange={vi.fn()} />);
+
+    expect(screen.getByRole('button', { name: 'Region' })).toBeInTheDocument();
+  });
+
+  it('links the error message to the trigger', () => {
+    render(
+      <SingleSelectField
+        label="Country"
+        options={options}
+        errorMessage="Required"
+        onChange={vi.fn()}
+      />,
+    );
+
+    const trigger = screen.getByRole('button', { name: /Country/ });
+    expect(trigger).toHaveAttribute('aria-invalid', 'true');
+    expect(trigger).toHaveAccessibleDescription('Required');
   });
 });

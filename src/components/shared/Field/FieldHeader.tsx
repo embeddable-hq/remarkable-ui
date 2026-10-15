@@ -8,18 +8,21 @@ export type FieldHeaderProps = {
   requiredLabel?: string;
 };
 
+type FieldHeaderInternalProps = FieldHeaderProps & { id?: string };
+
 export const FieldHeader = ({
   label,
   required,
   requiredLabel = 'Required',
   className,
-}: FieldHeaderProps) => {
+  id,
+}: FieldHeaderInternalProps) => {
   if (!label && !required) {
     return null;
   }
 
   return (
-    <label className={clsx(styles.fieldHeader, className)}>
+    <label id={id} className={clsx(styles.fieldHeader, className)}>
       {label}
       {required && <span>{requiredLabel}</span>}
     </label>

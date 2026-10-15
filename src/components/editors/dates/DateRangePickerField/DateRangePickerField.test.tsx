@@ -8,8 +8,11 @@ const JUNE_RANGE = {
   to: new Date('2024-06-30T23:59:59.999Z'),
 };
 
+const getTrigger = () =>
+  screen.getAllByRole('button').find((b) => b.hasAttribute('aria-haspopup')) as HTMLElement;
+
 const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-  await user.click(screen.getByRole('button', { name: /select options/i }));
+  await user.click(getTrigger());
 };
 
 describe('DateRangePickerField', () => {
@@ -17,7 +20,7 @@ describe('DateRangePickerField', () => {
     it('renders the trigger button', () => {
       render(<DateRangePickerField onChange={vi.fn()} />);
 
-      expect(screen.getByRole('button', { name: /select options/i })).toBeInTheDocument();
+      expect(getTrigger()).toBeInTheDocument();
     });
 
     it('shows the default placeholder when no value is provided', () => {
@@ -225,9 +228,7 @@ describe('DateRangePickerField', () => {
         />,
       );
 
-      const trigger = screen.getByRole('button', { name: /select options/i });
-      const [clearIcon] = trigger.querySelectorAll('svg');
-      await user.pointer({ target: clearIcon, keys: '[MouseLeft>]' });
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
 
       expect(handleChange).toHaveBeenCalledWith(undefined);
     });

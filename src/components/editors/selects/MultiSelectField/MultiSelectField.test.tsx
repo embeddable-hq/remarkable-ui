@@ -19,8 +19,11 @@ const CATEGORY_OPTIONS = [
   { value: 'carrot', label: 'Carrot', category: 'Vegetable' },
 ];
 
+const getTrigger = () =>
+  screen.getAllByRole('button').find((b) => b.hasAttribute('aria-haspopup')) as HTMLElement;
+
 const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-  await user.click(screen.getByRole('button', { name: /select options/i }));
+  await user.click(getTrigger());
 };
 
 describe('MultiSelectField', () => {
@@ -28,7 +31,7 @@ describe('MultiSelectField', () => {
     it('renders the trigger button', () => {
       render(<MultiSelectField options={OPTIONS} onChange={vi.fn()} />);
 
-      expect(screen.getByRole('button', { name: /select options/i })).toBeInTheDocument();
+      expect(getTrigger()).toBeInTheDocument();
     });
 
     it('shows the default placeholder when no value is provided', () => {
@@ -312,9 +315,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      const trigger = screen.getByRole('button', { name: /select options/i });
-      const clearIcon = trigger.querySelectorAll('svg')[0];
-      await user.pointer({ target: clearIcon, keys: '[MouseLeft>]' });
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
 
       expect(handleChange).toHaveBeenCalledWith([]);
     });
