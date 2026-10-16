@@ -19,11 +19,11 @@ const CATEGORY_OPTIONS = [
   { value: 'carrot', label: 'Carrot', category: 'Vegetable' },
 ];
 
-const getTrigger = () =>
-  screen.getAllByRole('button').find((b) => b.hasAttribute('aria-haspopup')) as HTMLElement;
-
-const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-  await user.click(getTrigger());
+const openDropdown = async (
+  user: ReturnType<typeof userEvent.setup>,
+  name: string | RegExp = /^select$/i,
+) => {
+  await user.click(screen.getByRole('button', { name }));
 };
 
 describe('SingleSelectField', () => {
@@ -31,7 +31,7 @@ describe('SingleSelectField', () => {
     it('renders the trigger button', () => {
       render(<SingleSelectField options={OPTIONS} onChange={vi.fn()} />);
 
-      expect(getTrigger()).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^select$/i })).toBeInTheDocument();
     });
 
     it('shows the default placeholder when no value is provided', () => {
@@ -220,6 +220,16 @@ describe('SingleSelectField accessible naming', () => {
     render(<SingleSelectField label="Country" options={options} value="a" onChange={vi.fn()} />);
 
     expect(screen.getByRole('button', { name: /Country\s+Alpha/ })).toBeInTheDocument();
+  });
+
+  it('exposes required once, via aria-required, not in the accessible name', () => {
+    render(
+      <SingleSelectField label="Country" required options={options} value="a" onChange={vi.fn()} />,
+    );
+
+    const trigger = screen.getByRole('button', { name: /Country/ });
+    expect(trigger).toHaveAccessibleName(/^Country\s+Alpha$/);
+    expect(trigger).toHaveAttribute('aria-required', 'true');
   });
 
   it('uses ariaLabel when there is no visible label', () => {

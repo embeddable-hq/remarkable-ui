@@ -136,7 +136,7 @@ export function SingleSelectField<T extends SelectOptionValue>({
   const hasError = error || !!errorMessage;
   return (
     <div>
-      <FieldHeader id={labelId} label={label} required={required} />
+      <FieldHeader id={labelId} label={label} required={required} requiredAriaHidden />
       <Dropdown
         open={isOpen}
         onOpenChange={setIsOpen}

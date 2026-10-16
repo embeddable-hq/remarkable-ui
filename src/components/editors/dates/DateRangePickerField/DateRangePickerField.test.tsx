@@ -8,11 +8,11 @@ const JUNE_RANGE = {
   to: new Date('2024-06-30T23:59:59.999Z'),
 };
 
-const getTrigger = () =>
-  screen.getAllByRole('button').find((b) => b.hasAttribute('aria-haspopup')) as HTMLElement;
-
-const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-  await user.click(getTrigger());
+const openDropdown = async (
+  user: ReturnType<typeof userEvent.setup>,
+  name: string | RegExp = /^select$/i,
+) => {
+  await user.click(screen.getByRole('button', { name }));
 };
 
 describe('DateRangePickerField', () => {
@@ -20,7 +20,7 @@ describe('DateRangePickerField', () => {
     it('renders the trigger button', () => {
       render(<DateRangePickerField onChange={vi.fn()} />);
 
-      expect(getTrigger()).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^select$/i })).toBeInTheDocument();
     });
 
     it('shows the default placeholder when no value is provided', () => {
@@ -105,9 +105,16 @@ describe('DateRangePickerField', () => {
 
     it('renders multiple month grids when numberOfMonths is set', async () => {
       const user = userEvent.setup();
-      render(<DateRangePickerField value={JUNE_RANGE} numberOfMonths={2} onChange={vi.fn()} />);
+      render(
+        <DateRangePickerField
+          value={JUNE_RANGE}
+          displayValue="June"
+          numberOfMonths={2}
+          onChange={vi.fn()}
+        />,
+      );
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
 
       expect(screen.getAllByRole('grid')).toHaveLength(2);
     });
@@ -125,18 +132,18 @@ describe('DateRangePickerField', () => {
 
     it('is disabled when the selection matches the current value', async () => {
       const user = userEvent.setup();
-      render(<DateRangePickerField value={JUNE_RANGE} onChange={vi.fn()} />);
+      render(<DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     });
 
     it('becomes enabled after selecting a different range', async () => {
       const user = userEvent.setup();
-      render(<DateRangePickerField value={JUNE_RANGE} onChange={vi.fn()} />);
+      render(<DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
       await user.click(screen.getByRole('button', { name: /june 5/i }));
       await user.click(screen.getByRole('button', { name: /june 20/i }));
 
@@ -148,9 +155,11 @@ describe('DateRangePickerField', () => {
     it('calls onChange with the selected range when Apply is clicked', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      render(<DateRangePickerField value={JUNE_RANGE} onChange={handleChange} />);
+      render(
+        <DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={handleChange} />,
+      );
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
       await user.click(screen.getByRole('button', { name: /june 5/i }));
       await user.click(screen.getByRole('button', { name: /june 20/i }));
       await user.click(screen.getByRole('button', { name: 'Apply' }));
@@ -163,9 +172,9 @@ describe('DateRangePickerField', () => {
 
     it('closes the dropdown after Apply is clicked', async () => {
       const user = userEvent.setup();
-      render(<DateRangePickerField value={JUNE_RANGE} onChange={vi.fn()} />);
+      render(<DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
       await user.click(screen.getByRole('button', { name: /june 5/i }));
       await user.click(screen.getByRole('button', { name: /june 20/i }));
       await user.click(screen.getByRole('button', { name: 'Apply' }));
@@ -176,9 +185,11 @@ describe('DateRangePickerField', () => {
     it('does not call onChange when the dropdown is closed without applying', async () => {
       const user = userEvent.setup();
       const handleChange = vi.fn();
-      render(<DateRangePickerField value={JUNE_RANGE} onChange={handleChange} />);
+      render(
+        <DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={handleChange} />,
+      );
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
       await user.click(screen.getByRole('button', { name: /june 5/i }));
       await user.keyboard('{Escape}');
 
@@ -187,29 +198,31 @@ describe('DateRangePickerField', () => {
 
     it('reverts the selection when the dropdown is closed without applying', async () => {
       const user = userEvent.setup();
-      render(<DateRangePickerField value={JUNE_RANGE} onChange={vi.fn()} />);
+      render(<DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
       await user.click(screen.getByRole('button', { name: /june 5/i }));
       await user.click(screen.getByRole('button', { name: /june 20/i }));
       await user.keyboard('{Escape}');
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     });
 
     it('syncs the grid when value changes externally while closed', async () => {
       const user = userEvent.setup();
-      const { rerender } = render(<DateRangePickerField value={JUNE_RANGE} onChange={vi.fn()} />);
+      const { rerender } = render(
+        <DateRangePickerField value={JUNE_RANGE} displayValue="June" onChange={vi.fn()} />,
+      );
 
       const JULY_RANGE = {
         from: new Date('2024-07-01T00:00:00.000Z'),
         to: new Date('2024-07-31T23:59:59.999Z'),
       };
-      rerender(<DateRangePickerField value={JULY_RANGE} onChange={vi.fn()} />);
+      rerender(<DateRangePickerField value={JULY_RANGE} displayValue="July" onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /^(June|July)$/);
 
       const startCell = screen.getByRole('button', { name: /july 5/i }).closest('[aria-selected]');
       expect(startCell).toHaveAttribute('aria-selected', 'true');
