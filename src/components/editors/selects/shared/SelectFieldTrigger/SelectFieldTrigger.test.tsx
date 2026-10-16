@@ -86,6 +86,29 @@ describe('SelectFieldTrigger', () => {
       expect(handleClear).toHaveBeenCalledOnce();
     });
 
+    it('moves focus back to the trigger after clearing', async () => {
+      const user = userEvent.setup();
+      const { rerender } = render(
+        <SelectFieldTrigger valueLabel="Something" isClearable onClear={vi.fn()} />,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
+      rerender(<SelectFieldTrigger isClearable onClear={vi.fn()} />);
+
+      expect(screen.getByRole('button', { name: 'Select' })).toHaveFocus();
+    });
+
+    it('moves focus back to the ghost trigger after clearing', async () => {
+      const user = userEvent.setup();
+      render(
+        <SelectFieldTrigger variant="ghost" valueLabel="Something" isClearable onClear={vi.fn()} />,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
+
+      expect(screen.getByRole('button', { name: /Something/ })).toHaveFocus();
+    });
+
     it('works with the ghost variant', async () => {
       const user = userEvent.setup();
       const handleClear = vi.fn();

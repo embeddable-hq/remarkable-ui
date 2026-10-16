@@ -1,7 +1,7 @@
 import styles from './SelectFieldTrigger.module.css';
 import { IconCaretDownFilled, IconLoader2, IconProps, IconX } from '@tabler/icons-react';
 import clsx from 'clsx';
-import { forwardRef } from 'react';
+import { forwardRef, useCallback, useRef } from 'react';
 import { GhostButton } from '../../../../shared/GhostButton/GhostButton';
 
 type SelectFieldTriggerProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -32,6 +32,17 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
     },
     ref,
   ) => {
+    const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+    const setRefs = useCallback(
+      (node: HTMLButtonElement | null) => {
+        triggerRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      },
+      [ref],
+    );
+
     const displayValue = valueLabel || placeholder;
 
     const showClearButton = valueLabel && isClearable;
@@ -40,6 +51,8 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
       e.stopPropagation();
       e.preventDefault();
       onClear?.();
+      // The clear button unmounts once the value is gone; keep keyboard focus in the field (WCAG 2.4.3)
+      triggerRef.current?.focus();
     };
 
     // The clear control is a sibling of the trigger, not a child: interactive content
@@ -59,7 +72,11 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
     if (variant === 'ghost') {
       return (
         <span className={clsx(styles.root, styles.rootGhost)}>
-          <GhostButton ref={ref} endIcon={isLoading ? IconLoader2 : IconCaretDownFilled} {...props}>
+          <GhostButton
+            ref={setRefs}
+            endIcon={isLoading ? IconLoader2 : IconCaretDownFilled}
+            {...props}
+          >
             {displayValue}
           </GhostButton>
           {clearButton}
@@ -70,7 +87,7 @@ export const SelectFieldTrigger = forwardRef<HTMLButtonElement, SelectFieldTrigg
     return (
       <span className={styles.root}>
         <button
-          ref={ref}
+          ref={setRefs}
           className={clsx(
             styles.selectFieldTrigger,
             valueLabel && styles.filled,
