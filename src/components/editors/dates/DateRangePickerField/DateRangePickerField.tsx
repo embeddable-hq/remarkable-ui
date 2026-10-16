@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import { FieldHeader, FieldHeaderProps } from '../../../shared/Field/FieldHeader';
 import { Dropdown } from '../../../shared/Dropdown/Dropdown';
 import { SelectFieldTrigger } from '../../selects/shared/SelectFieldTrigger/SelectFieldTrigger';
@@ -22,6 +22,8 @@ type DateRangePickerFieldProps = {
   onChange: (dateRange: DateRange | undefined) => void;
   submitLabel?: string;
   avoidCollisions?: boolean;
+  ariaLabel?: string;
+  clearLabel?: string;
 } & FieldHeaderProps &
   DateRangePickerProps;
 
@@ -56,7 +58,13 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
   submitLabel = 'Apply',
   avoidCollisions,
   onChange,
+  ariaLabel,
+  clearLabel,
 }) => {
+  const baseId = useId();
+  const labelId = `${baseId}-label`;
+  const triggerId = `${baseId}-trigger`;
+  const errorId = `${baseId}-error`;
   const [isOpen, setIsOpen] = useState(false);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange | undefined>(value);
 
@@ -90,7 +98,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
 
   return (
     <div>
-      <FieldHeader label={label} required={required} />
+      <FieldHeader id={labelId} label={label} required={required} requiredAriaHidden />
       <Dropdown
         open={isOpen}
         onOpenChange={handleOpenChange}
@@ -99,7 +107,13 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
         triggerComponent={
           <SelectFieldTrigger
             startIcon={startIcon}
-            aria-label="Select options"
+            aria-label={ariaLabel}
+            aria-labelledby={label ? `${labelId} ${triggerId}` : undefined}
+            aria-required={required || undefined}
+            aria-invalid={hasError || undefined}
+            aria-describedby={errorMessage ? errorId : undefined}
+            id={triggerId}
+            clearLabel={clearLabel}
             placeholder={placeholder}
             disabled={disabled}
             valueLabel={valueLabel}
@@ -126,7 +140,7 @@ export const DateRangePickerField: FC<DateRangePickerFieldProps> = ({
           </Button>
         </SelectFieldContent>
       </Dropdown>
-      {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
+      {errorMessage && <FieldFeedback id={errorId} message={errorMessage} variant="error" />}
     </div>
   );
 };
