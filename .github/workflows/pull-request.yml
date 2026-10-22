@@ -16,7 +16,7 @@ permissions:
 jobs:
   test-application:
     name: Test application
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v6

@@ -12,7 +12,7 @@ on:
 jobs:
   build-and-deploy-storybook:
     name: Build and Deploy Storybook
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout project sources
         uses: actions/checkout@v5
