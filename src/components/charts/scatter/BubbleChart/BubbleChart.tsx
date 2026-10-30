@@ -12,6 +12,9 @@ import { Bubble } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../../chartjs.utils';
 import { useChartFontsReady } from '../../../../hooks/useChartFontsReady.hook';
 import styles from '../../charts.module.css';
+import { describeScatterChart } from '../../chartjs.a11y.utils';
+import { useChartA11y } from '../../useChartA11y.hook';
+
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -39,10 +42,25 @@ export const BubbleChart: FC<BubbleChartProps> = ({
   data,
   onClick,
   nullBandLabel = 'No value',
+  ariaLabel,
+  ariaDescription,
   ...props
 }) => {
   const chartRef = useRef(null);
   useChartFontsReady(chartRef);
+  const { canvasProps, description } = useChartA11y({
+    ariaLabel,
+    ariaDescription,
+    defaultLabel: 'Bubble chart',
+    getSummary: () =>
+      describeScatterChart({
+        type: 'bubble',
+        datasets: data.datasets,
+        xAxisLabel: props.xAxisLabel,
+        yAxisLabel: props.yAxisLabel,
+      }),
+    summaryDeps: [data, props.xAxisLabel, props.yAxisLabel],
+  });
 
   const propsWithNullBandLabel = { ...props, nullBandLabel };
   const nullBand = getScatterNullBand(data.datasets, props.showLogarithmicScale);
@@ -60,7 +78,9 @@ export const BubbleChart: FC<BubbleChartProps> = ({
         options={bubbleOptions}
         plugins={getScatterChartPlugins(nullBand)}
         onClick={buildChartjsOnClick(chartRef, onClick)}
+        {...canvasProps}
       />
+      {description}
     </div>
   );
 };

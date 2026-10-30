@@ -1,5 +1,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { ChartClickArgs } from '../charts.types';
+import { ChartA11yProps } from '../chartjs.a11y.utils';
 
 export type ScatterChartInputPoint = {
   x: number | null;
@@ -33,7 +34,8 @@ export type BaseScatterChartProps = {
   data: ChartData<'scatter', ScatterChartInputPoint[]>;
   options?: Partial<ChartOptions<'scatter'>>;
   onClick?: (args: ChartClickArgs) => void;
-} & ScatterChartConfigurationProps;
+} & ScatterChartConfigurationProps &
+  ChartA11yProps;
 
 export type BubbleChartConfigurationProps = ScatterChartConfigurationProps & {
   bubbleRadiusMin?: number;
@@ -44,4 +46,5 @@ export type BaseBubbleChartProps = {
   data: ChartData<'bubble', BubbleChartInputPoint[]>;
   options?: Partial<ChartOptions<'bubble'>>;
   onClick?: (args: ChartClickArgs) => void;
-} & BubbleChartConfigurationProps;
+} & BubbleChartConfigurationProps &
+  ChartA11yProps;

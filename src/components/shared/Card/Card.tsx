@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useId, useMemo } from 'react';
 import styles from './Card.module.css';
 import clsx from 'clsx';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { Tooltip } from '../Tooltip/Tooltip';
+import { CardContext } from './CardContext';
 
 type CardProps = React.HTMLAttributes<HTMLDivElement> & {
   children?: React.ReactNode;
@@ -10,10 +11,15 @@ type CardProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ children, className, ...props }, ref) => {
+    const titleId = useId();
+    const contextValue = useMemo(() => ({ titleId }), [titleId]);
+
     return (
-      <div className={clsx(styles.card, className)} ref={ref} {...props}>
-        {children}
-      </div>
+      <CardContext.Provider value={contextValue}>
+        <div className={clsx(styles.card, className)} ref={ref} {...props}>
+          {children}
+        </div>
+      </CardContext.Provider>
     );
   },
 );
@@ -53,6 +59,9 @@ const getCardHeaderTooltipAlign = (
 };
 
 export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip }) => {
+  // Lets charts inside the card use the title as their accessible name
+  const { titleId } = useContext(CardContext);
+
   if (!title && !subtitle && !tooltip) {
     return null;
   }
@@ -60,7 +69,7 @@ export const CardHeader: React.FC<CardHeaderProps> = ({ title, subtitle, tooltip
   return (
     <div className={styles.cardHeader}>
       <div className={styles.cardHeaderTitle}>
-        {title && <h1>{title}</h1>}
+        {title && <h1 id={titleId}>{title}</h1>}
         {tooltip && (
           <Tooltip
             side="top"
