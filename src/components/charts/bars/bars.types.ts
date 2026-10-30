@@ -1,5 +1,6 @@
 import { ChartData, ChartOptions } from 'chart.js';
 import { ChartClickArgs } from '../charts.types';
+import { ChartA11yProps } from '../chartjs.a11y.utils';
 
 export type BarChartDefaultConfigurationProps = {
   horizontal?: boolean;
@@ -29,4 +30,5 @@ export type BaseBarChartProps = {
   data: ChartData<'bar'>;
   options?: Partial<ChartOptions<'bar'>>;
   onClick?: (args: ChartClickArgs) => void;
-} & (BarChartConfigurationProps | BarChartHorizontalConfigurationProps);
+} & (BarChartConfigurationProps | BarChartHorizontalConfigurationProps) &
+  ChartA11yProps;

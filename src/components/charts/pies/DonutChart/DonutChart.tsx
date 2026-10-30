@@ -9,6 +9,9 @@ import { getDonutChartOptions, getPieChartData } from '../pies.utils';
 import { mergician } from 'mergician';
 import { BasePieChartProps } from '../pies.types';
 import styles from '../../charts.module.css';
+import { describePieChart } from '../../chartjs.a11y.utils';
+import { useChartA11y } from '../../useChartA11y.hook';
+
 import { useResizeObserver } from '../../../../hooks/useResizeObserver.hook';
 
 const MIN_WIDTH_HEIGHT_TO_SHOW_CHART = 10;
@@ -26,9 +29,18 @@ export const DonutChart: FC<DonutLabelChartProps> = ({
   showLegend = true,
   showTooltips = true,
   showValueLabels = true,
+  ariaLabel,
+  ariaDescription,
 }) => {
   const chartRef = useRef(null);
   useChartFontsReady(chartRef);
+  const { canvasProps, description } = useChartA11y({
+    ariaLabel,
+    ariaDescription,
+    defaultLabel: 'Donut chart',
+    getSummary: () => describePieChart({ type: 'donut', data }),
+    summaryDeps: [data],
+  });
   const containerRef = useRef(null);
 
   const donutLabelOptions = mergician(
@@ -49,8 +61,10 @@ export const DonutChart: FC<DonutLabelChartProps> = ({
           data={getPieChartData(data)}
           options={donutLabelOptions}
           onClick={buildChartjsOnClick(chartRef, onClick)}
+          {...canvasProps}
         />
       )}
+      {hideChart ? null : description}
     </div>
   );
 };

@@ -8,6 +8,9 @@ import { getFunnelChartData, getFunnelChartOptions } from './funnel.utils';
 import { useFunnelHiddenSections } from './useFunnelHiddenSections.hook';
 import { BaseFunnelChartProps } from './funnel.types';
 import styles from '../charts.module.css';
+import { describeFunnelChart } from '../chartjs.a11y.utils';
+import { useChartA11y } from '../useChartA11y.hook';
+
 import { mergician } from 'mergician';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -34,11 +37,21 @@ export const FunnelChart: FC<FunnelChartProps> = ({
   percentageDecimalPlaces = 1,
   shrinkAnchor = 'middle',
   shrinkFraction,
+  ariaLabel,
+  ariaDescription,
 }) => {
   const chartRef = useRef(null);
   useChartFontsReady(chartRef);
   const funnelData = getFunnelChartData(data);
   const { visibleData, legendOptions, handleClick } = useFunnelHiddenSections(funnelData, onClick);
+  // Describes the sections currently shown (the legend can hide some)
+  const { canvasProps, description } = useChartA11y({
+    ariaLabel,
+    ariaDescription,
+    defaultLabel: 'Funnel chart',
+    getSummary: () => describeFunnelChart(visibleData),
+    summaryDeps: [visibleData],
+  });
   const funnelOptions = mergician(
     getFunnelChartOptions({
       showLegend,
@@ -61,7 +74,9 @@ export const FunnelChart: FC<FunnelChartProps> = ({
         data={visibleData}
         options={funnelOptions}
         onClick={buildChartjsOnClick(chartRef, handleClick)}
+        {...canvasProps}
       />
+      {description}
     </div>
   );
 };

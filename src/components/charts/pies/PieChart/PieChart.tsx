@@ -8,6 +8,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { mergician } from 'mergician';
 import { BasePieChartProps } from '../pies.types';
 import styles from '../../charts.module.css';
+import { describePieChart } from '../../chartjs.a11y.utils';
+import { useChartA11y } from '../../useChartA11y.hook';
+
 import AnnotationPlugin from 'chartjs-plugin-annotation';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels, AnnotationPlugin);
@@ -21,9 +24,18 @@ export const PieChart: FC<PieChartProps> = ({
   showLegend = true,
   showTooltips = true,
   showValueLabels = true,
+  ariaLabel,
+  ariaDescription,
 }) => {
   const chartRef = useRef(null);
   useChartFontsReady(chartRef);
+  const { canvasProps, description } = useChartA11y({
+    ariaLabel,
+    ariaDescription,
+    defaultLabel: 'Pie chart',
+    getSummary: () => describePieChart({ type: 'pie', data }),
+    summaryDeps: [data],
+  });
   const pieOptions = mergician(
     getPieChartOptions({
       showLegend,
@@ -40,7 +52,9 @@ export const PieChart: FC<PieChartProps> = ({
         data={getPieChartData(data)}
         options={pieOptions}
         onClick={buildChartjsOnClick(chartRef, onClick)}
+        {...canvasProps}
       />
+      {description}
     </div>
   );
 };
