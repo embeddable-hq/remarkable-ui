@@ -13,8 +13,7 @@ import { Scatter } from 'react-chartjs-2';
 import { buildChartjsOnClick } from '../../chartjs.utils';
 import { useChartFontsReady } from '../../../../hooks/useChartFontsReady.hook';
 import styles from '../../charts.module.css';
-import { describeScatterChart } from '../../chartjs.a11y.utils';
-import { useChartA11y } from '../../useChartA11y.hook';
+import { useScatterChartA11y } from '../useScatterChartA11y.hook';
 
 import { FC, useRef } from 'react';
 import { mergician } from 'mergician';
@@ -54,18 +53,13 @@ export const ScatterChart: FC<ScatterChartProps> = ({
 }) => {
   const chartRef = useRef(null);
   useChartFontsReady(chartRef);
-  const { canvasProps, description } = useChartA11y({
+  const { canvasProps, description } = useScatterChartA11y({
+    type: 'scatter',
+    datasets: data.datasets,
     ariaLabel,
     ariaDescription,
-    defaultLabel: 'Scatter chart',
-    getSummary: () =>
-      describeScatterChart({
-        type: 'scatter',
-        datasets: data.datasets,
-        xAxisLabel: props.xAxisLabel,
-        yAxisLabel: props.yAxisLabel,
-      }),
-    summaryDeps: [data, props.xAxisLabel, props.yAxisLabel],
+    xAxisLabel: props.xAxisLabel,
+    yAxisLabel: props.yAxisLabel,
   });
 
   const propsWithNullBandLabel = { ...props, nullBandLabel };
