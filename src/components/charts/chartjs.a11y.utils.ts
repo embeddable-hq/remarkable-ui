@@ -154,10 +154,17 @@ type ScatterLikePoint = {
   isNull?: boolean;
 };
 
-const describeRange = (name: string, values: number[]) =>
-  values.length === 0
-    ? ''
-    : ` ${name} ranges from ${formatNumber(Math.min(...values))} to ${formatNumber(Math.max(...values))}.`;
+// Single pass: spreading into Math.min/Math.max throws a RangeError on very large arrays
+const describeRange = (name: string, values: number[]) => {
+  if (values.length === 0) return '';
+
+  const { min, max } = values.reduce(
+    (acc, value) => ({ min: Math.min(acc.min, value), max: Math.max(acc.max, value) }),
+    { min: Infinity, max: -Infinity },
+  );
+
+  return ` ${name} ranges from ${formatNumber(min)} to ${formatNumber(max)}.`;
+};
 
 export const describeScatterChart = ({
   type,

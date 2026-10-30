@@ -153,6 +153,14 @@ describe('describeScatterChart', () => {
     expect(summary).toContain('1 point has a missing value.');
   });
 
+  it('handles very large datasets without overflowing the call stack', () => {
+    const data = Array.from({ length: 300_000 }, (_, i) => ({ x: i, y: i + 1 }));
+
+    expect(describeScatterChart({ type: 'scatter', datasets: [{ data }] })).toBe(
+      `Scatter chart with 300000 points. X ranges from 0 to ${(299_999).toLocaleString()}. Y ranges from 1 to ${(300_000).toLocaleString()}.`,
+    );
+  });
+
   it('handles empty data', () => {
     expect(describeScatterChart({ type: 'scatter', datasets: [] })).toBe(
       'Scatter chart with no data.',
