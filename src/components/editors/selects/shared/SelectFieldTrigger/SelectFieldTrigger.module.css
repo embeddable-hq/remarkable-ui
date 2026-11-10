@@ -78,3 +78,70 @@
 .loading {
   animation: spin 1s linear infinite;
 }
+
+.root {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.rootGhost {
+  display: inline-flex;
+  width: auto;
+  align-items: center;
+}
+
+.hasClear {
+  padding-right: calc(
+    var(--em-selectfield-trigger-padding, 0.75rem) + var(--em-selectfield-trigger-icon-size, 1rem) +
+      1.5rem
+  );
+}
+
+.clearButton {
+  position: absolute;
+  top: 50%;
+  right: calc(
+    var(--em-selectfield-trigger-padding, 0.75rem) + var(--em-selectfield-trigger-icon-size, 1rem) +
+      0.25rem
+  );
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.125rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--em-selectfield-trigger-color, #212129);
+  cursor: pointer;
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 1px;
+}
+
+.clearButton:disabled {
+  pointer-events: none;
+}
+
+.clearButton svg {
+  width: var(--em-selectfield-trigger-icon-size, 1rem);
+  height: var(--em-selectfield-trigger-icon-size, 1rem);
+}
+
+.root:has(.filled) .clearButton {
+  color: var(--em-selectfield-trigger-color--filled, #fff);
+}
+
+.clearButtonGhost {
+  position: static;
+  transform: none;
+  color: var(--em-ghostbutton-color, #212129);
+}
+
+.clearButtonGhost svg {
+  width: var(--em-ghostbutton-icon-size, 0.75rem);
+  height: var(--em-ghostbutton-icon-size, 0.75rem);
+}

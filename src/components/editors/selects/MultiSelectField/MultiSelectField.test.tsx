@@ -19,8 +19,11 @@ const CATEGORY_OPTIONS = [
   { value: 'carrot', label: 'Carrot', category: 'Vegetable' },
 ];
 
-const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-  await user.click(screen.getByRole('button', { name: /select options/i }));
+const openDropdown = async (
+  user: ReturnType<typeof userEvent.setup>,
+  name: string | RegExp = /^select$/i,
+) => {
+  await user.click(screen.getByRole('button', { name }));
 };
 
 describe('MultiSelectField', () => {
@@ -28,7 +31,7 @@ describe('MultiSelectField', () => {
     it('renders the trigger button', () => {
       render(<MultiSelectField options={OPTIONS} onChange={vi.fn()} />);
 
-      expect(screen.getByRole('button', { name: /select options/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /^select$/i })).toBeInTheDocument();
     });
 
     it('shows the default placeholder when no value is provided', () => {
@@ -186,7 +189,7 @@ describe('MultiSelectField', () => {
       const user = userEvent.setup();
       render(<MultiSelectField options={OPTIONS} values={['apple']} onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     });
@@ -205,7 +208,7 @@ describe('MultiSelectField', () => {
       const user = userEvent.setup();
       render(<MultiSelectField options={OPTIONS} values={['apple']} onChange={vi.fn()} />);
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       await user.click(screen.getByText('Apple'));
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
@@ -222,7 +225,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
     });
@@ -238,7 +241,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       await user.click(screen.getByText('Banana'));
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeDisabled();
@@ -255,7 +258,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       await user.click(screen.getByText('Apple'));
 
       expect(screen.getByRole('button', { name: 'Apply' })).toBeEnabled();
@@ -312,9 +315,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      const trigger = screen.getByRole('button', { name: /select options/i });
-      const clearIcon = trigger.querySelectorAll('svg')[0];
-      await user.pointer({ target: clearIcon, keys: '[MouseLeft>]' });
+      await user.click(screen.getByRole('button', { name: 'Clear' }));
 
       expect(handleChange).toHaveBeenCalledWith([]);
     });
@@ -355,7 +356,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       await user.click(screen.getByText('Apple'));
 
       expect(handleChange).toHaveBeenCalledOnce();
@@ -469,7 +470,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       handlePendingChange.mockClear();
       await user.click(screen.getByText('Banana'));
 
@@ -488,7 +489,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       handlePendingChange.mockClear();
       await user.click(screen.getByText('Apple'));
 
@@ -558,7 +559,7 @@ describe('MultiSelectField', () => {
         <MultiSelectField options={OPTIONS} values={['apple']} showSelectAll onChange={vi.fn()} />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
 
       expect(screen.getByText('Select all')).toBeInTheDocument();
     });
@@ -574,7 +575,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
 
       expect(screen.getByText('Deselect all')).toBeInTheDocument();
     });
@@ -591,7 +592,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       await user.click(screen.getByText('Deselect all'));
       await user.click(screen.getByRole('button', { name: 'Apply' }));
 
@@ -626,7 +627,7 @@ describe('MultiSelectField', () => {
         />,
       );
 
-      await openDropdown(user);
+      await openDropdown(user, /Apple|Banana|Cherry/);
       await user.type(screen.getByRole('searchbox'), 'app');
       await user.click(screen.getByText('Deselect all'));
       await user.click(screen.getByRole('button', { name: 'Apply' }));
