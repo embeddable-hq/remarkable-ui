@@ -34,6 +34,7 @@ export type TableHeaderItem<T> = {
   id: keyof T;
   title: React.ReactNode;
   align?: TableHeaderItemAlign;
+  headerAlign?: TableHeaderItemAlign;
   field?: keyof T;
   minWidth?: CssSize;
   sort?: TableSort<T>;

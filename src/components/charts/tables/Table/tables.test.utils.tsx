@@ -43,7 +43,7 @@ export const mockTableHeaders: TableHeaderItem<MockEmployee>[] = [
     title: 'Name',
   },
   { id: 'title', title: 'Title', align: 'right' },
-  { id: 'team', title: 'Team', align: 'left' },
+  { id: 'team', title: 'Team', headerAlign: 'center' },
   {
     id: 'age',
     title: 'Age',
@@ -68,6 +68,7 @@ export const mockTableHeaders: TableHeaderItem<MockEmployee>[] = [
     id: 'location',
     title: 'Location',
     align: 'left',
+    headerAlign: 'center',
   },
   {
     id: 'object',
