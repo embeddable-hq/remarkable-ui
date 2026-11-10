@@ -1,6 +1,6 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import styles from './TableHeader.module.css';
-import { TableHeaderItem, TableSortDirection } from '../../table.types';
+import { TableHeaderAlign, TableHeaderItem, TableSortDirection } from '../../table.types';
 import tableStyles from '../../../tables.module.css';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -91,7 +91,11 @@ export const TableHeader = <T,>({
         )}
         {headers.map((header) => (
           <th
-            className={styles.tableHeaderCell}
+            className={clsx(
+              styles.tableHeaderCell,
+              header.headerAlign === TableHeaderAlign.CENTER && styles.alignCenter,
+              header.headerAlign === TableHeaderAlign.RIGHT && styles.alignRight,
+            )}
             key={header.id as string}
             style={{ minWidth: header.minWidth }}
             scope="col"
