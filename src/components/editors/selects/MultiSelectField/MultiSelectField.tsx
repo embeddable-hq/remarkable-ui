@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   SelectListOption,
   SelectListOptionProps,
@@ -53,6 +53,8 @@ export type MultiSelectFieldProps<T extends SelectOptionValue> = {
   error?: boolean;
   errorMessage?: string;
   triggerComponent?: React.ReactNode;
+  ariaLabel?: string;
+  clearLabel?: string;
 } & FieldHeaderProps;
 
 export function MultiSelectField<T extends SelectOptionValue>({
@@ -81,7 +83,13 @@ export function MultiSelectField<T extends SelectOptionValue>({
   error = false,
   errorMessage,
   triggerComponent,
+  ariaLabel,
+  clearLabel,
 }: MultiSelectFieldProps<T>) {
+  const baseId = useId();
+  const labelId = `${baseId}-label`;
+  const triggerId = `${baseId}-trigger`;
+  const errorId = `${baseId}-error`;
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [preValues, setPreValues] = useState<T[]>(values);
@@ -231,7 +239,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
 
   return (
     <div>
-      <FieldHeader label={label} required={required} />
+      <FieldHeader id={labelId} label={label} required={required} requiredAriaHidden />
       <Dropdown
         open={isOpen}
         onOpenChange={handleOpenChange}
@@ -241,7 +249,13 @@ export function MultiSelectField<T extends SelectOptionValue>({
           triggerComponent ?? (
             <SelectFieldTrigger
               startIcon={startIcon}
-              aria-label="Select options"
+              aria-label={ariaLabel}
+              aria-labelledby={label ? `${labelId} ${triggerId}` : undefined}
+              aria-required={required || undefined}
+              aria-invalid={hasError || undefined}
+              aria-describedby={errorMessage ? errorId : undefined}
+              id={triggerId}
+              clearLabel={clearLabel}
               placeholder={placeholder}
               disabled={disabled}
               valueLabel={selectedLabel}
@@ -304,7 +318,7 @@ export function MultiSelectField<T extends SelectOptionValue>({
           )}
         </SelectFieldContent>
       </Dropdown>
-      {errorMessage && <FieldFeedback message={errorMessage} variant="error" />}
+      {errorMessage && <FieldFeedback id={errorId} message={errorMessage} variant="error" />}
     </div>
   );
 }

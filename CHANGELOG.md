@@ -1,5 +1,23 @@
 # @embeddable.com/remarkable-ui
 
+## 3.8.0
+
+### Minor Changes
+
+- 861b48d: Improve accessibility of select and date-range filters (WCAG 2.1.1, 2.4.6, 4.1.2).
+
+  - Triggers are now named from the field's visible label plus the current value, instead of a hardcoded "Select option(s)". New `ariaLabel` prop covers fields without a visible label.
+  - Triggers expose `aria-required`, `aria-invalid` and `aria-describedby` (linked to the error message).
+  - The clear "x" is now a real, keyboard-focusable button with an accessible name (new `clearLabel` prop, default "Clear"), rendered as a sibling of the trigger rather than nested inside it. In the `ghost` variant it now sits after the caret.
+
+## 3.7.2
+
+### Patch Changes
+
+- 519b0ff: Fix chart axis labels being clipped when the theme's web font loads after the chart's first draw.
+
+  Charts measured their labels with fallback font metrics, and Chart.js cached those measurements. All charts (bar, line, pie, donut, scatter, bubble, funnel) now request their theme fonts up front and re-measure and redraw once the fonts finish loading.
+
 ## 3.7.1
 
 ### Patch Changes
