@@ -21,6 +21,40 @@ describe('TableHeader', () => {
       expect(screen.getByRole('columnheader', { name: /value/i })).toBeInTheDocument();
     });
 
+    it('applies headerAlign to the header cell', () => {
+      render(
+        <table>
+          <TableHeader
+            headers={[
+              { id: 'name' as const, title: 'Name' },
+              { id: 'country' as const, title: 'Country', headerAlign: 'center' as const },
+              { id: 'value' as const, title: 'Value', headerAlign: 'right' as const },
+            ]}
+          />
+        </table>,
+      );
+
+      const name = screen.getByRole('columnheader', { name: /name/i });
+      const country = screen.getByRole('columnheader', { name: /country/i });
+      const value = screen.getByRole('columnheader', { name: /value/i });
+      expect(name).not.toHaveClass('alignCenter', 'alignRight');
+      expect(country).toHaveClass('alignCenter');
+      expect(value).toHaveClass('alignRight');
+    });
+
+    it('does not apply the column align to the header cell', () => {
+      render(
+        <table>
+          <TableHeader
+            headers={[{ id: 'value' as const, title: 'Value', align: 'right' as const }]}
+          />
+        </table>,
+      );
+
+      const value = screen.getByRole('columnheader', { name: /value/i });
+      expect(value).not.toHaveClass('alignCenter', 'alignRight');
+    });
+
     it('renders index column header when showIndex is true', () => {
       render(
         <table>
