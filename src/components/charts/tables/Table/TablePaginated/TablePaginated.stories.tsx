@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { TablePaginated as TablePaginatedChart } from './TablePaginated';
 import { useArgs } from 'storybook/internal/preview-api';
-import { TableSort } from '../table.types';
+import { TableHeaderItem, TableSort } from '../table.types';
 import { decoratorsResizeCard } from '../../../../../storybook.constants';
 import { MockEmployee, mockMakeEmployees, mockTableHeaders } from '../tables.test.utils';
 
@@ -91,4 +91,17 @@ export const TablePaginated: Story = {
 export const Resize: Story = {
   render: renderPaginated,
   decorators: decoratorsResizeCard,
+};
+
+const headerAlignHeaders: TableHeaderItem<MockEmployee>[] = [
+  { id: 'name', title: 'Default' },
+  { id: 'team', title: 'Header center', headerAlign: 'center' },
+  { id: 'location', title: 'Header right', headerAlign: 'right' },
+  { id: 'title', title: 'Header center, data left', headerAlign: 'center', align: 'left' },
+  { id: 'salary', title: 'Data right', align: 'right' },
+];
+
+export const HeaderAlign: Story = {
+  args: { headers: headerAlignHeaders },
+  render: renderPaginated,
 };

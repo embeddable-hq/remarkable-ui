@@ -1,6 +1,11 @@
 import { IconCaretDownFilled, IconCaretUpDownFilled, IconCaretUpFilled } from '@tabler/icons-react';
 import styles from './TableHeader.module.css';
-import { TableHeaderItem, TableSortDirection } from '../../table.types';
+import {
+  TableHeaderAlign,
+  TableHeaderItem,
+  TableHeaderItemAlign,
+  TableSortDirection,
+} from '../../table.types';
 import tableStyles from '../../../tables.module.css';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -11,6 +16,11 @@ export type TableHeaderProps<T> = Pick<
   TablePaginatedProps<T>,
   'showIndex' | 'headers' | 'sort' | 'onSortChange'
 >;
+
+const ALIGN_CLASS: Partial<Record<TableHeaderItemAlign, string>> = {
+  [TableHeaderAlign.CENTER]: styles.alignCenter,
+  [TableHeaderAlign.RIGHT]: styles.alignRight,
+};
 
 const getHeaderAriaSort = <T,>(
   sort: TablePaginatedProps<T>['sort'],
@@ -91,7 +101,10 @@ export const TableHeader = <T,>({
         )}
         {headers.map((header) => (
           <th
-            className={styles.tableHeaderCell}
+            className={clsx(
+              styles.tableHeaderCell,
+              header.headerAlign && ALIGN_CLASS[header.headerAlign],
+            )}
             key={header.id as string}
             style={{ minWidth: header.minWidth }}
             scope="col"

@@ -53,6 +53,28 @@ describe('TableBody', () => {
       expect(screen.getByText('Alice!')).toBeInTheDocument();
     });
 
+    it('falls back to headerAlign when align is not set', () => {
+      render(
+        <table>
+          <TableBody
+            headers={[
+              { id: 'name' as const, title: 'Name', headerAlign: 'center' as const },
+              {
+                id: 'value' as const,
+                title: 'Value',
+                align: 'left' as const,
+                headerAlign: 'right' as const,
+              },
+            ]}
+            rows={ROWS}
+          />
+        </table>,
+      );
+
+      expect(screen.getByText('Alice').closest('td')).toHaveStyle({ textAlign: 'center' });
+      expect(screen.getByText('10').closest('td')).toHaveStyle({ textAlign: 'left' });
+    });
+
     it('shows index column when showIndex is true', () => {
       render(
         <table>
