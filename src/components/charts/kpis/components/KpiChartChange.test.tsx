@@ -57,6 +57,39 @@ describe('KpiChartChange', () => {
       expect(screen.getAllByText('+15.00%')[0]).toBeInTheDocument();
     });
 
+    it('formats the percentage with percentageFormatter when given', () => {
+      const germanPercent = (percentage: number) =>
+        new Intl.NumberFormat('de-DE', {
+          style: 'percent',
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1,
+        }).format(percentage / 100);
+      render(
+        <KpiChartChange
+          value={107.4}
+          comparisonValue={100}
+          showChangeAsPercentage
+          percentageFormatter={germanPercent}
+        />,
+      );
+
+      // German puts a non-breaking space before the percent sign.
+      expect(document.body.textContent).toContain('+7,4\u00a0%');
+    });
+
+    it('passes the signed percentage to percentageFormatter', () => {
+      render(
+        <KpiChartChange
+          value={90}
+          comparisonValue={100}
+          showChangeAsPercentage
+          percentageFormatter={(p) => `[${p}]`}
+        />,
+      );
+
+      expect(screen.getAllByText('[-10]')[0]).toBeInTheDocument();
+    });
+
     it('does not show noPreviousDataLabel when comparisonValue is a real 0', () => {
       render(
         <KpiChartChange
