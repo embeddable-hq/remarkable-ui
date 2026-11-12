@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { getKpiDisplayValue, KpiChart } from './KpiChart';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 vi.mock('auto-text-size', () => ({
   AutoTextSize: ({ children }: { children: React.ReactNode }) => <>{children}</>,
@@ -197,5 +199,41 @@ describe('KpiChart', () => {
       expect(badges[0]).toHaveClass('negative');
       expect(document.querySelector('.tabler-icon-trending-up')).toBeInTheDocument();
     });
+  });
+});
+
+describe('KpiChart number font size', () => {
+  // jsdom applies the cascade but resolves neither `inherit` nor `var()`, so
+  // these check which declaration wins rather than the final pixel size.
+  const css = readFileSync(resolve(__dirname, 'KpiChart.module.css'), 'utf8');
+  const hostPageH2 = 'h2 { font-size: 10px; }';
+
+  const addStyles = (...texts: string[]) =>
+    texts.forEach((text) => {
+      const style = document.createElement('style');
+      style.textContent = text;
+      document.head.appendChild(style);
+    });
+
+  afterEach(() => {
+    document.head.querySelectorAll('style').forEach((style) => style.remove());
+  });
+
+  it('sizes the number from --em-kpichart-number-font-size, not a host page h2 rule', () => {
+    addStyles(hostPageH2, css);
+    render(<KpiChart value={42} />);
+    const heading = screen.getByRole('heading');
+
+    expect(getComputedStyle(heading).fontSize).toBe('inherit');
+    expect(getComputedStyle(heading.parentElement!).fontSize).toBe(
+      'var(--em-kpichart-number-font-size, 2rem)',
+    );
+  });
+
+  it('lets valueFontSize win', () => {
+    addStyles(hostPageH2, css);
+    render(<KpiChart value={42} valueFontSize="20px" />);
+
+    expect(getComputedStyle(screen.getByRole('heading')).fontSize).toBe('20px');
   });
 });

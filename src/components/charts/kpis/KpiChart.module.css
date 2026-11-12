@@ -18,6 +18,8 @@
   /* eslint-disable-next-line css/no-important */
   align-items: center !important;
   text-align: center;
+  /* The number's size until AutoTextSize fits it; valueFontSize overrides it on the h2. */
+  font-size: var(--em-kpichart-number-font-size, 2rem);
 }
 
 .kpiChartValueContainer h2 {
@@ -29,7 +31,7 @@
   color: var(--em-kpichart-color, #212129);
   font-family: var(--em-kpichart-font-family, sans-serif);
   font-weight: var(--em-kpichart-number-font-weight, 700);
-  /* Follow AutoTextSize (or the inline valueFontSize), not a host page's h2 rule. */
+  /* Take the size above (or AutoTextSize's), never a host page's h2 rule. */
   font-size: inherit;
 }
 
