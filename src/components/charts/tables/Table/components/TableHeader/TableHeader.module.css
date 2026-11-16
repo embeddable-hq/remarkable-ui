@@ -30,3 +30,12 @@
   height: var(--em-tablechart-icon-size, 1rem);
   flex-shrink: 0;
 }
+
+.tableHeaderCell.alignCenter button {
+  justify-content: center;
+}
+
+.tableHeaderCell.alignRight button {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}

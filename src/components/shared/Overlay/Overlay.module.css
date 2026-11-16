@@ -9,4 +9,5 @@
   align-items: center;
   justify-content: center;
   background: var(--em-overlay-background, rgba(33, 33, 41, 0.8));
+  color: var(--em-overlay-color, #ffffff);
 }

@@ -89,7 +89,11 @@ const TableBodyCell = <T,>({ header, row }: TableBodyCellProps<T>) => {
   }
 
   return (
-    <TableBodyCellWithCopy align={header.align} value={value} style={header.cellStyle?.(rawValue)}>
+    <TableBodyCellWithCopy
+      align={header.align ?? header.headerAlign}
+      value={value}
+      style={header.cellStyle?.(rawValue)}
+    >
       {value}
     </TableBodyCellWithCopy>
   );

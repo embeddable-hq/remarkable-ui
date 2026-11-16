@@ -1,5 +1,17 @@
 # @embeddable.com/remarkable-ui
 
+## 3.10.0
+
+### Minor Changes
+
+- 732141d: Add an optional `headerAlign` to `TableHeaderItem` to align table headers. Data cells use `align`, and fall back to `headerAlign` when `align` is not set. Headers do not follow `align`.
+
+## 3.9.0
+
+### Minor Changes
+
+- 761a784: Add `--em-overlay-color` token so overlay text stays light regardless of light/dark theme.
+
 ## 3.8.0
 
 ### Minor Changes
