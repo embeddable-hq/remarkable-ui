@@ -62,6 +62,7 @@
 }
 
 .selectFieldTrigger svg {
+  flex-shrink: 0;
   width: var(--em-selectfield-trigger-icon-size, 1rem);
   height: var(--em-selectfield-trigger-icon-size, 1rem);
 }
@@ -91,11 +92,9 @@
   align-items: center;
 }
 
-.hasClear {
-  padding-right: calc(
-    var(--em-selectfield-trigger-padding, 0.75rem) + var(--em-selectfield-trigger-icon-size, 1rem) +
-      1.5rem
-  );
+/* The clear button sits over this gap, between the label and the caret */
+.hasClear > svg:last-child {
+  margin-left: calc(var(--em-selectfield-trigger-icon-size, 1rem) + 0.5rem);
 }
 
 .clearButton {
