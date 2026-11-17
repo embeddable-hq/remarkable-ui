@@ -504,6 +504,7 @@ export const stylesTokensComponents = {
   '--em-markdown-p-line-height': 'var(--em-core-line-height--md)',
   '--em-markdown-placeholder-color': 'var(--em-core-color-gray--0400)',
   '--em-overlay-background': '#212129e6',
+  '--em-overlay-color': '#ffffff',
   '--em-piechart-donut-color': 'var(--em-sem-text)',
   '--em-piechart-donut-label-font-size': 'var(--em-core-font-size--md)',
   '--em-piechart-donut-label-font-weight': 'var(--em-core-font-weight--medium)',
