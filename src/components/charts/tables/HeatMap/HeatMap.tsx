@@ -157,6 +157,11 @@ export const HeatMap = <T extends Record<string, unknown>>({
                       key={`cell-${rv}-${cv}`}
                       role={onCellClick ? 'button' : undefined}
                       tabIndex={onCellClick ? 0 : undefined}
+                      aria-label={
+                        onCellClick
+                          ? `${rowDimension.format ? rowDimension.format(rv) : rv}, ${columnDimension.format ? columnDimension.format(cv) : cv}: ${getCellDisplayValue(value, true, measure) ?? ''}`
+                          : undefined
+                      }
                       style={{
                         background,
                         color,

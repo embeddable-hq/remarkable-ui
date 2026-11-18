@@ -131,6 +131,33 @@ describe('HeatMap', () => {
 
       expect(screen.queryAllByRole('button')).toHaveLength(0);
     });
+
+    it('names each clickable cell by row, column and value, even with values hidden', () => {
+      render(<HeatMap {...DEFAULT_PROPS} onCellClick={vi.fn()} />);
+
+      expect(screen.queryByText('100')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'North, Q1: 100' })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'South, Q2: 150' })).toBeInTheDocument();
+    });
+
+    it('uses the dimension and measure formats in the cell name', () => {
+      render(
+        <HeatMap
+          {...DEFAULT_PROPS}
+          rowDimension={{ key: 'region', label: 'Region', format: (v) => `Region ${v}` }}
+          measure={{ key: 'sales', label: 'Sales', format: (v) => `$${v}` }}
+          onCellClick={vi.fn()}
+        />,
+      );
+
+      expect(screen.getByRole('button', { name: 'Region North, Q1: $100' })).toBeInTheDocument();
+    });
+
+    it('adds no aria-label to cells without onCellClick', () => {
+      const { container } = render(<HeatMap {...DEFAULT_PROPS} />);
+
+      expect(container.querySelectorAll('td[aria-label]')).toHaveLength(0);
+    });
   });
 
   describe('dimension formatting', () => {
