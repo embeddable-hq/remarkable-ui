@@ -31,6 +31,8 @@
   flex-direction: column;
   position: relative;
   height: 100%;
+  /* Shrink and scroll before the search field and the button do. */
+  min-height: 0;
   overflow: auto;
 }
 
