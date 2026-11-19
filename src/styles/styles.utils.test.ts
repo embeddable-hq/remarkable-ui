@@ -88,4 +88,14 @@ describe('getStyleNumber', () => {
     mockGetPropertyValue.mockReturnValue('');
     expect(getStyleNumber('--em-core-font-size--md', '1rem')).toBe(16);
   });
+
+  it('resolves the fallback against a 16px root when there is no DOM', () => {
+    vi.stubGlobal('document', undefined);
+    try {
+      expect(getStyleNumber('--em-core-font-size--md', '2rem')).toBe(32);
+      expect(getStyleNumber('--em-core-font-size--md', '8px')).toBe(8);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
 });
