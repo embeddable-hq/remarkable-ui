@@ -1,5 +1,16 @@
 # @embeddable.com/remarkable-ui
 
+## 3.10.1
+
+### Patch Changes
+
+- e32a4fa: Fix the KPI number ignoring auto-sizing when the host page styles `h2` globally (e.g. `h2 { font-size: 1.5rem }`). The number now takes `--em-kpichart-number-font-size` (2rem by default) until AutoTextSize fits it, or `valueFontSize` when set.
+- 12c971b: Three fixes that change nothing in what a chart looks like:
+
+  - `getStyleNumber` no longer throws without a DOM (server rendering). It resolves `rem` against a 16px root there.
+  - The table cell copy button is visible while keyboard focus is in its cell, not only on hover.
+  - Clickable heat map cells have an accessible name (row, column and value), so they are named even when values are hidden.
+
 ## 3.10.0
 
 ### Minor Changes
