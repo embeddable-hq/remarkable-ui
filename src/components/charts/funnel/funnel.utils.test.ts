@@ -67,6 +67,12 @@ describe('getFunnelChartOptions', () => {
     expect(options.indexAxis).toBe('y');
   });
 
+  it('ends the value scale at the largest section', () => {
+    const options = getFunnelChartOptions({});
+
+    expect(options.scales?.x?.bounds).toBe('data');
+  });
+
   it('builds one legend item per section from the chart data', () => {
     const options = getFunnelChartOptions({});
     const generateLabels = options.plugins?.legend?.labels?.generateLabels as (
