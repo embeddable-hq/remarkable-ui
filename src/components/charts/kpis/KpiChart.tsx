@@ -41,6 +41,7 @@ export const KpiChart: FC<KpiChartProps> = ({
   noPreviousDataLabel = 'No previous data',
   displayNullAs = '',
   valueFormatter,
+  percentageFormatter,
 }) => {
   const hasComparisonValue = comparisonValue !== undefined;
   const shouldRenderComparison = hasComparisonValue && value != null;
@@ -82,6 +83,7 @@ export const KpiChart: FC<KpiChartProps> = ({
               showChangeAsPercentage={showChangeAsPercentage}
               value={value}
               valueFormatter={valueFormatter}
+              percentageFormatter={percentageFormatter}
               noPreviousDataLabel={noPreviousDataLabel}
             />
           </div>
