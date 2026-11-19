@@ -236,6 +236,28 @@ export const Clearable: Story = {
   },
 };
 
+const comparisonOptions: SelectListOptionProps<string>[] = [
+  { value: 'previous-period', label: 'Previous period' },
+  { value: 'previous-year', label: 'Previous year' },
+];
+
+export const ClearableNarrow: Story = {
+  args: {
+    label: undefined,
+    required: false,
+    options: comparisonOptions,
+    value: 'previous-year',
+    clearable: true,
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: '9.5rem' }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
 export const Searchable: Story = {
   args: {
     label: undefined,
