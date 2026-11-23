@@ -15,4 +15,6 @@ export type KpiChartProps = {
   noPreviousDataLabel?: string;
   displayNullAs?: string;
   valueFormatter?: (value: number) => string;
+  /** Formats the percentage change (7.4 → '7,4 %'). */
+  percentageFormatter?: (percentage: number) => string;
 };
