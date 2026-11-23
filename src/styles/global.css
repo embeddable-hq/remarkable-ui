@@ -706,7 +706,7 @@
   --em-charttabs-item-border-radius: var(--em-core-border-radius--300);
   --em-charttabs-item-opacity: 0.5 /* from remarkable-pro */;
   --em-charttabs-item-border-color--hover: var(--em-sem-text);
-  --em-charttabs-item-background--hover: #f7f7f8 /* from remarkable-pro */;
+  --em-charttabs-item-background--hover: var(--em-sem-background);
   --em-charttabs-item-opacity--active: 1 /* from remarkable-pro */;
   --em-charttabs-item-border-width--active: var(--em-core-border-width--025);
   --em-charttabs-item-border-color--active: var(--em-sem-text);
