@@ -11,7 +11,8 @@
   right: auto;
 }
 
-.tableBody td:hover .copyButton {
+.tableBody td:hover .copyButton,
+.tableBody td:focus-within .copyButton {
   opacity: 1;
 }
 

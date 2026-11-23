@@ -42,7 +42,11 @@ export const getStyleNumber = ((
   if (!rawValue) return undefined;
 
   const numericValue = parseFloat(rawValue);
-  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  // No DOM on a server: assume the browser's default 16px root.
+  const rootFontSize =
+    typeof document === 'undefined'
+      ? 16
+      : parseFloat(getComputedStyle(document.documentElement).fontSize);
 
   // Px
   if (rawValue.slice(-2) === 'px') {
