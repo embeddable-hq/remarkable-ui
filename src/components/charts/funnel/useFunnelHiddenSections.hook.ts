@@ -10,7 +10,11 @@ import {
 export const useFunnelHiddenSections = (
   data: ChartData<'funnel', number[], unknown>,
   onClick?: (args: ChartClickArgs) => void,
-) => {
+): {
+  visibleData: ReturnType<typeof getFunnelChartVisibleData>;
+  legendOptions: ReturnType<typeof getFunnelLegendOptions>;
+  handleClick: ((args: ChartClickArgs) => void) | undefined;
+} => {
   const [hiddenLabels, setHiddenLabels] = useState<Set<string>>(new Set());
 
   const sectionLabels = (data.labels ?? []).map((label) => String(label ?? ''));

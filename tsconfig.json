@@ -7,7 +7,7 @@
 
     /* Modules */
     "module": "ESNext", // ⬅️ ESM output
-    "moduleResolution": "Node", // or "NodeNext", both fine for bundlers
+    "moduleResolution": "Bundler", // Storybook 10 needs package "exports" support
     "rootDir": "src",
 
     /* Emit */
