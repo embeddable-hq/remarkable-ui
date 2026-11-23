@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { ChartData } from 'chart.js';
 import { getLineChartData, getLineChartOptions } from './lines.utils';
 
 describe('getLineChartData', () => {
@@ -13,6 +14,19 @@ describe('getLineChartData', () => {
     expect(result.labels).toEqual(['Jan', 'Feb', 'Mar']);
     expect(result.datasets[0]?.label).toBe('Sales');
     expect(result.datasets[0]?.data).toEqual([10, 20, 30]);
+  });
+
+  it('expands clip: true into top and bottom clipping only', () => {
+    const data = {
+      labels: [],
+      datasets: [{ data: [1], clip: true }, { data: [2], clip: false }, { data: [3] }],
+    } as unknown as ChartData<'line'>;
+
+    const result = getLineChartData(data);
+
+    expect(result.datasets[0]?.clip).toEqual({ top: 0, bottom: 0, left: false, right: false });
+    expect(result.datasets[1]?.clip).toBe(false);
+    expect(result.datasets[2]?.clip).toBeUndefined();
   });
 
   it('assigns backgroundColor and borderColor to datasets', () => {

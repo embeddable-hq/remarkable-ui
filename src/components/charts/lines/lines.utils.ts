@@ -1,4 +1,4 @@
-import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+import { ChartArea, ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { getChartColors } from '../charts.constants';
 import { mergician } from 'mergician';
 import { LineChartConfigurationProps } from './lines.types';
@@ -10,6 +10,10 @@ import {
   getChartjsAxisOptionsScalesTicksMuted,
 } from '../chartjs.cartesian.constants';
 import { getStyleNumber } from '../../../styles/styles.utils';
+
+// `clip: true` on a dataset clips at the chart area top and bottom only, so edge markers stay whole.
+// Chart.js accepts per-side `false` but types `clip` as a full ChartArea.
+const clipTopAndBottom = { top: 0, bottom: 0, left: false, right: false } as unknown as ChartArea;
 
 export const getLineChartData = (data: ChartData<'line'>) => {
   const chartColors = getChartColors();
@@ -23,7 +27,7 @@ export const getLineChartData = (data: ChartData<'line'>) => {
           borderColor: colors,
         };
         const merged = mergician(defaultDataset, dataset) as ChartDataset<'line', number[]>;
-        return merged;
+        return (dataset.clip as unknown) === true ? { ...merged, clip: clipTopAndBottom } : merged;
       }) || [],
   };
   return mergedData;
