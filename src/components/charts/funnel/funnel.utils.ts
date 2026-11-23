@@ -37,6 +37,7 @@ export const getFunnelChartOptions = (
 ): Partial<ChartOptions<'funnel'>> => {
   const funnelChartOptions: Partial<ChartOptions<'funnel'>> = {
     indexAxis: 'y',
+    scales: { x: { bounds: 'data' } },
     elements: {
       trapezoid: {
         shrinkAnchor: config.shrinkAnchor,
